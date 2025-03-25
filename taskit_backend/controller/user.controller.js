@@ -28,7 +28,7 @@ const UserServices=require('../services/user.services');
             return res.status(500).json({
                 status: false,
                 message: "An error occurred: "+e.message,
-                data: 
+                data: {}
             });
         }
     }
