@@ -1,0 +1,1 @@
+const defaultAvatar='uploads/default.jpg';
