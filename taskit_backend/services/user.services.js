@@ -9,8 +9,15 @@ class UserServices{
             });
             return await createUser.save();
         }catch(e){
-            throw(e);
+            throw e;
+        }
+    }
+    static async isEmailExist(email){
+        try{
+            return await UserModel.isEmailExist(email);
+        }catch(e){
+            throw e;
         }
     }
 }
-module.exports=UserServices;
+module.exports=UserServices

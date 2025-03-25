@@ -1,7 +1,7 @@
 const app = require('./app');
 const db=require('./config/db');
-const port=3000;
-const UserModel=require('./model/user.model');
+const port=8080;
+const UserModel=require('./model/user.model')
 require('dotenv').config();
 
 app.get('/',(req,res)=>{
