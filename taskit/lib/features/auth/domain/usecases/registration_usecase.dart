@@ -1,13 +1,13 @@
 import 'package:taskit/core/resources/data_state.dart';
 import 'package:taskit/core/usecases/usecase.dart';
-import 'package:taskit/features/registration/domain/entities/registration_param.dart';
-import 'package:taskit/features/registration/domain/entities/user_entity.dart';
-import 'package:taskit/features/registration/domain/entities/registration_param.dart';
+import 'package:taskit/features/auth//domain/entities/registration_param.dart';
+import 'package:taskit/features/auth//domain/entities/user_entity.dart';
+import 'package:taskit/features/auth//domain/entities/registration_param.dart';
 
-import '../repository/registration_repository.dart';
+import '../repository/auth_repository.dart';
 
 class RegistrationUseCase implements UseCase<DataState<UserEntity>,RegistrationParam>{
-  final RegistrationRepository _regRepository;
+  final AuthRepository _regRepository;
 
   RegistrationUseCase(this._regRepository);
 
