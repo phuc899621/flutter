@@ -1,10 +1,10 @@
 
-import 'dart:io';
+import  'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:retrofit/retrofit.dart';
 import 'package:taskit/core/constants/constants.dart';
-import 'package:taskit/features/auth/data/models/user.dart';
+import 'package:taskit/features/re/data/models/user_entity.dart';
 part 'auth_api_service.g.dart';
 @RestApi(baseUrl: apiBaseUrl)
 abstract class AuthApiService{

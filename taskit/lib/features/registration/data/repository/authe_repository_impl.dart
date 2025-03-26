@@ -2,8 +2,8 @@ import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:taskit/core/resources/data_state.dart';
-import 'package:taskit/features/auth/domain/entities/user.dart';
-import 'package:taskit/features/auth/domain/repository/auth_repository.dart';
+import 'package:taskit/features/auth/domain/entities/user_entity.dart';
+import 'package:taskit/features/auth/domain/repository/registration_repository.dart';
 
 import '../data_sources/remote/auth_api_service.dart';
 

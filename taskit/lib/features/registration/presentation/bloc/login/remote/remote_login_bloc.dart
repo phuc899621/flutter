@@ -3,10 +3,10 @@ import 'package:taskit/features/auth/presentation/bloc/login/remote/remote_login
 import 'package:bloc/bloc.dart';import '../../../../../../core/resources/data_state.dart';
 
 
-import '../../../../domain/usecases/LoginUseCase.dart';
+import '../../../../domain/usecases/registration_usecase.dart';
 
 class RemoteLoginBloc extends Bloc<RemoteLoginEvent,RemoteLoginState>{
-  final LoginUseCase _loginUseCase;
+  final RegistrationUseCase _loginUseCase;
 
   RemoteLoginBloc(this._loginUseCase) : super(RemoteLoginInitial()){
     on<LoginRequest>((onLoginRequest));

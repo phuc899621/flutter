@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:equatable/equatable.dart';
 
-import '../../../../domain/entities/user.dart';
+import '../../../../domain/entities/user_entity.dart';
 
 class RemoteLoginState extends Equatable{
   final UserEntity? user;
