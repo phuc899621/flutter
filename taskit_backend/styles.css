@@ -1,0 +1,39 @@
+/* Định dạng toàn bộ trang */
+body {
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(45deg, #ff758c, #ff7eb3, #65c3ba, #65c3ff);
+    background-size: 400% 400%;
+    animation: gradientBG 8s ease infinite;
+    font-family: 'Arial', sans-serif;
+}
+
+/* Hiệu ứng gradient động */
+@keyframes gradientBG {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* Căn giữa chữ */
+.container {
+    text-align: center;
+}
+
+/* Hiệu ứng chữ phát sáng */
+.glow-text {
+    font-size: 80px;
+    font-weight: bold;
+    color: white;
+    text-shadow: 0 0 20px #fff, 0 0 30px #ff758c, 0 0 40px #ff4d6d;
+    animation: glow 2s infinite alternate;
+}
+
+/* Hiệu ứng chữ nhấp nháy */
+@keyframes glow {
+    from { text-shadow: 0 0 20px #fff, 0 0 30px #ff758c, 0 0 40px #ff4d6d; }
+    to { text-shadow: 0 0 30px #fff, 0 0 40px #ff758c, 0 0 50px #ff4d6d; }
+}
