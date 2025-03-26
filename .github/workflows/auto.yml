@@ -20,7 +20,8 @@ jobs:
         username: ${{ secrets.SSH_USER }} 
         key: ${{ secrets.SSH_PRIVATE_KEY }}  
         script: |
-          cd /var/www/flutter/taskit_backend  
-          git pull origin main -- taskit_backend 
-          npm install
+          cd /var/www/flutter
+          git pull origin main  # Cập nhật repository
+          cd taskit_backend
+          npm install --no-audit
           pm2 restart taskit_backend
