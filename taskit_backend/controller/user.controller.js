@@ -17,6 +17,7 @@ const UserServices=require('../services/user.services');
                 status: true,
                 message:"User Registered Successfully",
                 data: {
+                    id: successRes._id,
                     name: successRes.name,
                     email: successRes.email,
                     password: successRes.password,
