@@ -1,0 +1,26 @@
+# This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-nodejs
+
+name: auto 
+
+on:
+  push:
+    branches: [ "main" ]
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Deploy to VPS
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.SSH_HOST }}  
+        username: ${{ secrets.SSH_USER }} 
+        key: ${{ secrets.SSH_PRIVATE_KEY }}  
+        script: |
+          cd /var/www/flutter/taskit_backend  
+          git pull origin main -- taskit_backend 
+          npm install
+          pm2 restart taskit_backend
