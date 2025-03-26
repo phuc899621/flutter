@@ -5,7 +5,7 @@ const UserModel=require('./model/user.model')
 require('dotenv').config();
 
 app.get('/',(req,res)=>{
-    res.send("Hello world");
+    res.send("Hello ds world");
 })
 app.listen(port,()=>{
     console.log(`Server listening on port http://localhost:${port}`);
