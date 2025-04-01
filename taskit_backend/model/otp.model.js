@@ -6,6 +6,7 @@ const otpScheme = new Schema({
   email: {
     type: String, required: true, unique: true,
   },
+  
   otp:{
     type: String, required: true,
   },
