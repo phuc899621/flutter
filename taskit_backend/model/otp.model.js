@@ -6,7 +6,7 @@ const otpScheme = new Schema({
   email: {
     type: String, required: true, unique: true,
   },
-  
+
   otp:{
     type: String, required: true,
   },
@@ -14,6 +14,8 @@ const otpScheme = new Schema({
     type: Date, default: Date.now(), expires: 600
   },
 });
+
+
 //hash otp
 otpScheme.pre("save", async function () {
   try {
