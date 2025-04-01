@@ -21,6 +21,7 @@ jobs:
         key: ${{ secrets.SSH_PRIVATE_KEY }}  
         script: |
           cd /var/www/flutter
+          git reset --hard HEAD
           git pull origin main  # Cập nhật repository
           cd taskit_backend
           npm install --no-audit
