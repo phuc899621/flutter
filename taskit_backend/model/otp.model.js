@@ -13,7 +13,6 @@ const otpScheme = new Schema({
     type: Date, default: Date.now(), expires: 600
   },
 });
-
 //hash otp
 otpScheme.pre("save", async function () {
   try {
