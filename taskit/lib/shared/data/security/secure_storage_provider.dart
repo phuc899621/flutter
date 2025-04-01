@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:taskit/core/data/local/security/secure_storage.dart';
+import 'package:taskit/shared/data/security/secure_storage.dart';
 
 import 'isecure_storage.dart';
 

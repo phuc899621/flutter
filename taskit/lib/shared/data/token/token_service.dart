@@ -1,11 +1,11 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../../constants/http_status.dart';
-import '../../../dios/refresh_token_response.dart';
-import '../../local/security/isecure_storage.dart';
-import '../../local/security/secure_storage_const.dart';
-import '../../local/security/secure_storage_provider.dart';
+import '../../../constants/http_status.dart';
+import '../dtos/refresh_token_response.dart';
+import '../security/isecure_storage.dart';
+import '../security/secure_storage_const.dart';
+import '../security/secure_storage_provider.dart';
 import 'itoken_service.dart';
 
 final tokenServiceProvider = Provider.family<ITokenService, Dio>((ref, dio) {

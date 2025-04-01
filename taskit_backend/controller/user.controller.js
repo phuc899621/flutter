@@ -1,34 +1,45 @@
 const UserServices=require('../services/user.services');
-
-    exports.register=async(req,res,next)=>{
+const OtpServices=require('../services/otp.services');
+    exports.signup=async(req,res)=>{
         try{
-            const {name,email,password}=req.body;
-            const isEmailExist=await UserServices.isEmailExist(email);
-            if(isEmailExist){
+            const {name,email,password,passwordConfirm}=req.body;
+            if (!name || !email || !password) {
                 return res.status(400).json({
                     status: false,
-                    message:"Email is already taken!",
-                    data: {}
+                    message: "Please enter required information!",
+                    data:{}        
+                });
+              }
+            if(password!==passwordConfirm){
+                return res.status(400).json({
+                    status:false,
+                    message: "Passwords do not match!",
+                    data:{}
                 })
             }
-    
-            const successRes=await UserServices.register(email,name,password);
+            const isEmailExist=await UserServices.isEmailExist(email);
+            if(isEmailExist){
+                 return res.status(400).json({
+                    status: false,
+                    message:"Email is already taken!",
+                     data: {}
+                 });
+            }
+            const otp=await OtpServices.generateOTP();
+            await OtpServices.sendOTP(email,otp);
+            await OtpServices.createOtpUser(email,otp);
             return res.status(201).json({
                 status: true,
-                message:"User Registered Successfully",
+                message:"Verify code has been sent to your email",
                 data: {
-                    id: successRes._id,
-                    name: successRes.name,
-                    email: successRes.email,
-                    password: successRes.password,
-                    avatar: successRes.avatar
+                    email: email,
                 }
             })
 
         }catch(e){
             return res.status(500).json({
                 status: false,
-                message: "An error occurred: "+e.message,
+                message: "An error occurred when sign up: "+e.message,
                 data: {}
             });
         }

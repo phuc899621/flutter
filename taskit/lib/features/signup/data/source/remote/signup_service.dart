@@ -2,14 +2,14 @@
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../core/exception/failure.dart';
-import '../data/dto/request/signup_request.dart';
-import '../data/dto/response/signup_response.dart';
-import '../data/repository/signup_repository.dart';
-import '../domain/mapper/isignup_model_mapper.dart';
-import '../domain/model/signup_model.dart';
-import '../domain/repository/isignup_repository.dart';
-import 'isignup_service.dart';
+import '../../../../../core/exception/failure.dart';
+import '../../dto/request/signup_request.dart';
+import '../../dto/response/signup_response.dart';
+import '../../repository/signup_repository.dart';
+import '../../../domain/mapper/isignup_model_mapper.dart';
+import '../../../domain/model/signup_model.dart';
+import '../../../domain/repository/isignup_repository.dart';
+import '../../../domain/services/isignup_service.dart';
 import 'package:multiple_result/multiple_result.dart';
 
 final signUpServiceProvider = Provider.autoDispose<ISignUpService>((ref) {

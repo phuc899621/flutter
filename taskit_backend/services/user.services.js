@@ -1,6 +1,6 @@
 const UserModel=require('../model/user.model');
 class UserServices{
-    static async register(email,name,password){
+    static async signup(email,name,password){
         try{
             const createUser=new UserModel({
                 email:email,
