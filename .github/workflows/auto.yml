@@ -25,4 +25,4 @@ jobs:
           git pull origin main  # Cập nhật repository
           cd taskit_backend
           npm install --no-audit
-          pm2 restart taskit_backend
+          pm2 restart index
