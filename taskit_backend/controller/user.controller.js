@@ -1,7 +1,7 @@
 const UserServices=require('../services/user.services');
 const OtpServices=require('../services/otp.services');
     exports.signup=async(req,res)=>{
-        try{
+        //try{
             const {name,email,password,passwordConfirm}=req.body;
             if (!name || !email || !password) {
                 return res.status(400).json({
@@ -36,12 +36,12 @@ const OtpServices=require('../services/otp.services');
                 }
             })
 
-        }catch(e){
-            return res.status(500).json({
-                message: "An error occurred when sign up: "+e.message,
-                data: {}
-            });
-        }
+        // }catch(e){
+        //     return res.status(500).json({
+        //         message: "An error occurred when sign up: "+e.message,
+        //         data: {}
+        //     });
+        // }
     }
 
     exports.verifyEmail=async(req,res)=>{
