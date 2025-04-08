@@ -16,7 +16,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$SignupResponse {
   @JsonKey(name: "status")
-  String get status;
+  bool get status;
   @JsonKey(name: "message")
   String get message;
   @JsonKey(name: "data")
@@ -60,7 +60,7 @@ abstract mixin class $SignupResponseCopyWith<$Res> {
       _$SignupResponseCopyWithImpl;
   @useResult
   $Res call(
-      {@JsonKey(name: "status") String status,
+      {@JsonKey(name: "status") bool status,
       @JsonKey(name: "message") String message,
       @JsonKey(name: "data") Data data});
 
@@ -88,7 +88,7 @@ class _$SignupResponseCopyWithImpl<$Res>
       status: null == status
           ? _self.status
           : status // ignore: cast_nullable_to_non_nullable
-              as String,
+              as bool,
       message: null == message
           ? _self.message
           : message // ignore: cast_nullable_to_non_nullable
@@ -123,7 +123,7 @@ class _SignupResponse implements SignupResponse {
 
   @override
   @JsonKey(name: "status")
-  final String status;
+  final bool status;
   @override
   @JsonKey(name: "message")
   final String message;
@@ -175,7 +175,7 @@ abstract mixin class _$SignupResponseCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {@JsonKey(name: "status") String status,
+      {@JsonKey(name: "status") bool status,
       @JsonKey(name: "message") String message,
       @JsonKey(name: "data") Data data});
 
@@ -204,7 +204,7 @@ class __$SignupResponseCopyWithImpl<$Res>
       status: null == status
           ? _self.status
           : status // ignore: cast_nullable_to_non_nullable
-              as String,
+              as bool,
       message: null == message
           ? _self.message
           : message // ignore: cast_nullable_to_non_nullable
@@ -229,8 +229,8 @@ class __$SignupResponseCopyWithImpl<$Res>
 
 /// @nodoc
 mixin _$Data {
-  @JsonKey(name: "user")
-  User get user;
+  @JsonKey(name: "email")
+  String get email;
 
   /// Create a copy of Data
   /// with the given fields replaced by the non-null parameter values.
@@ -247,16 +247,16 @@ mixin _$Data {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is Data &&
-            (identical(other.user, user) || other.user == user));
+            (identical(other.email, email) || other.email == email));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, user);
+  int get hashCode => Object.hash(runtimeType, email);
 
   @override
   String toString() {
-    return 'Data(user: $user)';
+    return 'Data(email: $email)';
   }
 }
 
@@ -265,9 +265,7 @@ abstract mixin class $DataCopyWith<$Res> {
   factory $DataCopyWith(Data value, $Res Function(Data) _then) =
       _$DataCopyWithImpl;
   @useResult
-  $Res call({@JsonKey(name: "user") User user});
-
-  $UserCopyWith<$Res> get user;
+  $Res call({@JsonKey(name: "email") String email});
 }
 
 /// @nodoc
@@ -282,36 +280,26 @@ class _$DataCopyWithImpl<$Res> implements $DataCopyWith<$Res> {
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? user = null,
+    Object? email = null,
   }) {
     return _then(_self.copyWith(
-      user: null == user
-          ? _self.user
-          : user // ignore: cast_nullable_to_non_nullable
-              as User,
+      email: null == email
+          ? _self.email
+          : email // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
-  }
-
-  /// Create a copy of Data
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $UserCopyWith<$Res> get user {
-    return $UserCopyWith<$Res>(_self.user, (value) {
-      return _then(_self.copyWith(user: value));
-    });
   }
 }
 
 /// @nodoc
 @JsonSerializable()
 class _Data implements Data {
-  const _Data({@JsonKey(name: "user") required this.user});
+  const _Data({@JsonKey(name: "email") required this.email});
   factory _Data.fromJson(Map<String, dynamic> json) => _$DataFromJson(json);
 
   @override
-  @JsonKey(name: "user")
-  final User user;
+  @JsonKey(name: "email")
+  final String email;
 
   /// Create a copy of Data
   /// with the given fields replaced by the non-null parameter values.
@@ -333,16 +321,16 @@ class _Data implements Data {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _Data &&
-            (identical(other.user, user) || other.user == user));
+            (identical(other.email, email) || other.email == email));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, user);
+  int get hashCode => Object.hash(runtimeType, email);
 
   @override
   String toString() {
-    return 'Data(user: $user)';
+    return 'Data(email: $email)';
   }
 }
 
@@ -352,10 +340,7 @@ abstract mixin class _$DataCopyWith<$Res> implements $DataCopyWith<$Res> {
       __$DataCopyWithImpl;
   @override
   @useResult
-  $Res call({@JsonKey(name: "user") User user});
-
-  @override
-  $UserCopyWith<$Res> get user;
+  $Res call({@JsonKey(name: "email") String email});
 }
 
 /// @nodoc
@@ -370,248 +355,12 @@ class __$DataCopyWithImpl<$Res> implements _$DataCopyWith<$Res> {
   @override
   @pragma('vm:prefer-inline')
   $Res call({
-    Object? user = null,
+    Object? email = null,
   }) {
     return _then(_Data(
-      user: null == user
-          ? _self.user
-          : user // ignore: cast_nullable_to_non_nullable
-              as User,
-    ));
-  }
-
-  /// Create a copy of Data
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $UserCopyWith<$Res> get user {
-    return $UserCopyWith<$Res>(_self.user, (value) {
-      return _then(_self.copyWith(user: value));
-    });
-  }
-}
-
-/// @nodoc
-mixin _$User {
-  @JsonKey(name: "id")
-  String get id;
-  @JsonKey(name: "name")
-  String get name;
-  @JsonKey(name: "email")
-  String get email;
-  @JsonKey(name: "password")
-  String get password;
-  @JsonKey(name: "avatar")
-  String get avatar;
-
-  /// Create a copy of User
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @pragma('vm:prefer-inline')
-  $UserCopyWith<User> get copyWith =>
-      _$UserCopyWithImpl<User>(this as User, _$identity);
-
-  /// Serializes this User to a JSON map.
-  Map<String, dynamic> toJson();
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is User &&
-            (identical(other.id, id) || other.id == id) &&
-            (identical(other.name, name) || other.name == name) &&
-            (identical(other.email, email) || other.email == email) &&
-            (identical(other.password, password) ||
-                other.password == password) &&
-            (identical(other.avatar, avatar) || other.avatar == avatar));
-  }
-
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  int get hashCode =>
-      Object.hash(runtimeType, id, name, email, password, avatar);
-
-  @override
-  String toString() {
-    return 'User(id: $id, name: $name, email: $email, password: $password, avatar: $avatar)';
-  }
-}
-
-/// @nodoc
-abstract mixin class $UserCopyWith<$Res> {
-  factory $UserCopyWith(User value, $Res Function(User) _then) =
-      _$UserCopyWithImpl;
-  @useResult
-  $Res call(
-      {@JsonKey(name: "id") String id,
-      @JsonKey(name: "name") String name,
-      @JsonKey(name: "email") String email,
-      @JsonKey(name: "password") String password,
-      @JsonKey(name: "avatar") String avatar});
-}
-
-/// @nodoc
-class _$UserCopyWithImpl<$Res> implements $UserCopyWith<$Res> {
-  _$UserCopyWithImpl(this._self, this._then);
-
-  final User _self;
-  final $Res Function(User) _then;
-
-  /// Create a copy of User
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? id = null,
-    Object? name = null,
-    Object? email = null,
-    Object? password = null,
-    Object? avatar = null,
-  }) {
-    return _then(_self.copyWith(
-      id: null == id
-          ? _self.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      name: null == name
-          ? _self.name
-          : name // ignore: cast_nullable_to_non_nullable
-              as String,
       email: null == email
           ? _self.email
           : email // ignore: cast_nullable_to_non_nullable
-              as String,
-      password: null == password
-          ? _self.password
-          : password // ignore: cast_nullable_to_non_nullable
-              as String,
-      avatar: null == avatar
-          ? _self.avatar
-          : avatar // ignore: cast_nullable_to_non_nullable
-              as String,
-    ));
-  }
-}
-
-/// @nodoc
-@JsonSerializable()
-class _User implements User {
-  const _User(
-      {@JsonKey(name: "id") required this.id,
-      @JsonKey(name: "name") required this.name,
-      @JsonKey(name: "email") required this.email,
-      @JsonKey(name: "password") required this.password,
-      @JsonKey(name: "avatar") required this.avatar});
-  factory _User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
-
-  @override
-  @JsonKey(name: "id")
-  final String id;
-  @override
-  @JsonKey(name: "name")
-  final String name;
-  @override
-  @JsonKey(name: "email")
-  final String email;
-  @override
-  @JsonKey(name: "password")
-  final String password;
-  @override
-  @JsonKey(name: "avatar")
-  final String avatar;
-
-  /// Create a copy of User
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @pragma('vm:prefer-inline')
-  _$UserCopyWith<_User> get copyWith =>
-      __$UserCopyWithImpl<_User>(this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$UserToJson(
-      this,
-    );
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _User &&
-            (identical(other.id, id) || other.id == id) &&
-            (identical(other.name, name) || other.name == name) &&
-            (identical(other.email, email) || other.email == email) &&
-            (identical(other.password, password) ||
-                other.password == password) &&
-            (identical(other.avatar, avatar) || other.avatar == avatar));
-  }
-
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  int get hashCode =>
-      Object.hash(runtimeType, id, name, email, password, avatar);
-
-  @override
-  String toString() {
-    return 'User(id: $id, name: $name, email: $email, password: $password, avatar: $avatar)';
-  }
-}
-
-/// @nodoc
-abstract mixin class _$UserCopyWith<$Res> implements $UserCopyWith<$Res> {
-  factory _$UserCopyWith(_User value, $Res Function(_User) _then) =
-      __$UserCopyWithImpl;
-  @override
-  @useResult
-  $Res call(
-      {@JsonKey(name: "id") String id,
-      @JsonKey(name: "name") String name,
-      @JsonKey(name: "email") String email,
-      @JsonKey(name: "password") String password,
-      @JsonKey(name: "avatar") String avatar});
-}
-
-/// @nodoc
-class __$UserCopyWithImpl<$Res> implements _$UserCopyWith<$Res> {
-  __$UserCopyWithImpl(this._self, this._then);
-
-  final _User _self;
-  final $Res Function(_User) _then;
-
-  /// Create a copy of User
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $Res call({
-    Object? id = null,
-    Object? name = null,
-    Object? email = null,
-    Object? password = null,
-    Object? avatar = null,
-  }) {
-    return _then(_User(
-      id: null == id
-          ? _self.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      name: null == name
-          ? _self.name
-          : name // ignore: cast_nullable_to_non_nullable
-              as String,
-      email: null == email
-          ? _self.email
-          : email // ignore: cast_nullable_to_non_nullable
-              as String,
-      password: null == password
-          ? _self.password
-          : password // ignore: cast_nullable_to_non_nullable
-              as String,
-      avatar: null == avatar
-          ? _self.avatar
-          : avatar // ignore: cast_nullable_to_non_nullable
               as String,
     ));
   }

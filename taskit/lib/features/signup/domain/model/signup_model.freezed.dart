@@ -16,8 +16,6 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$SignupModel {
   String get email;
-  String get name;
-  bool get isSignUpSuccess;
 
   /// Create a copy of SignupModel
   /// with the given fields replaced by the non-null parameter values.
@@ -31,18 +29,15 @@ mixin _$SignupModel {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is SignupModel &&
-            (identical(other.email, email) || other.email == email) &&
-            (identical(other.name, name) || other.name == name) &&
-            (identical(other.isSignUpSuccess, isSignUpSuccess) ||
-                other.isSignUpSuccess == isSignUpSuccess));
+            (identical(other.email, email) || other.email == email));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, email, name, isSignUpSuccess);
+  int get hashCode => Object.hash(runtimeType, email);
 
   @override
   String toString() {
-    return 'SignupModel(email: $email, name: $name, isSignUpSuccess: $isSignUpSuccess)';
+    return 'SignupModel(email: $email)';
   }
 }
 
@@ -52,7 +47,7 @@ abstract mixin class $SignupModelCopyWith<$Res> {
           SignupModel value, $Res Function(SignupModel) _then) =
       _$SignupModelCopyWithImpl;
   @useResult
-  $Res call({String email, String name, bool isSignUpSuccess});
+  $Res call({String email});
 }
 
 /// @nodoc
@@ -68,22 +63,12 @@ class _$SignupModelCopyWithImpl<$Res> implements $SignupModelCopyWith<$Res> {
   @override
   $Res call({
     Object? email = null,
-    Object? name = null,
-    Object? isSignUpSuccess = null,
   }) {
     return _then(_self.copyWith(
       email: null == email
           ? _self.email
           : email // ignore: cast_nullable_to_non_nullable
               as String,
-      name: null == name
-          ? _self.name
-          : name // ignore: cast_nullable_to_non_nullable
-              as String,
-      isSignUpSuccess: null == isSignUpSuccess
-          ? _self.isSignUpSuccess
-          : isSignUpSuccess // ignore: cast_nullable_to_non_nullable
-              as bool,
     ));
   }
 }
@@ -91,15 +76,10 @@ class _$SignupModelCopyWithImpl<$Res> implements $SignupModelCopyWith<$Res> {
 /// @nodoc
 
 class _SignupModel implements SignupModel {
-  _SignupModel(
-      {required this.email, required this.name, required this.isSignUpSuccess});
+  _SignupModel({required this.email});
 
   @override
   final String email;
-  @override
-  final String name;
-  @override
-  final bool isSignUpSuccess;
 
   /// Create a copy of SignupModel
   /// with the given fields replaced by the non-null parameter values.
@@ -114,18 +94,15 @@ class _SignupModel implements SignupModel {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _SignupModel &&
-            (identical(other.email, email) || other.email == email) &&
-            (identical(other.name, name) || other.name == name) &&
-            (identical(other.isSignUpSuccess, isSignUpSuccess) ||
-                other.isSignUpSuccess == isSignUpSuccess));
+            (identical(other.email, email) || other.email == email));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, email, name, isSignUpSuccess);
+  int get hashCode => Object.hash(runtimeType, email);
 
   @override
   String toString() {
-    return 'SignupModel(email: $email, name: $name, isSignUpSuccess: $isSignUpSuccess)';
+    return 'SignupModel(email: $email)';
   }
 }
 
@@ -137,7 +114,7 @@ abstract mixin class _$SignupModelCopyWith<$Res>
       __$SignupModelCopyWithImpl;
   @override
   @useResult
-  $Res call({String email, String name, bool isSignUpSuccess});
+  $Res call({String email});
 }
 
 /// @nodoc
@@ -153,22 +130,12 @@ class __$SignupModelCopyWithImpl<$Res> implements _$SignupModelCopyWith<$Res> {
   @pragma('vm:prefer-inline')
   $Res call({
     Object? email = null,
-    Object? name = null,
-    Object? isSignUpSuccess = null,
   }) {
     return _then(_SignupModel(
       email: null == email
           ? _self.email
           : email // ignore: cast_nullable_to_non_nullable
               as String,
-      name: null == name
-          ? _self.name
-          : name // ignore: cast_nullable_to_non_nullable
-              as String,
-      isSignUpSuccess: null == isSignUpSuccess
-          ? _self.isSignUpSuccess
-          : isSignUpSuccess // ignore: cast_nullable_to_non_nullable
-              as bool,
     ));
   }
 }

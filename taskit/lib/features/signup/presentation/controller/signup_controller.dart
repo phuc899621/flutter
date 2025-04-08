@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../data/source/remote/signup_service.dart';
+import '../../application/signup_service.dart';
 import '../../data/dto/request/signup_request.dart';
 import '../state/signup_state.dart';
 
@@ -20,6 +20,17 @@ class SignUpController extends AutoDisposeNotifier<SignupState> {
     return SignupState();
   }
 
+  void togglePasswordVisibility() {
+    state = state.copyWith(
+      isPasswordVisibility: !state.isPasswordVisibility,
+    );
+  }
+  void toggleConfirmPasswordVisibility() {
+    state = state.copyWith(
+      isConfirmPasswordVisibility: !state.isConfirmPasswordVisibility,
+    );
+  }
+
   Future<void> signUp() async {
     try {
       //trang thai loading
@@ -34,12 +45,13 @@ class SignUpController extends AutoDisposeNotifier<SignupState> {
         name: state.signUpform['name'],
         email: state.signUpform['email'],
         password: state.signUpform['password'],
+        passwordConfirm: state.signUpform['confirmPassword'],
       );
       final result = await ref.read(signUpServiceProvider).signUp(formData);
       result.when((success) {
         state = state.copyWith(
           isLoading: false,
-          isSignUpSuccess: success.isSignUpSuccess,
+          isSignUpSuccess: true,
           signUpModel: success,
         );
       }, (failure) {
@@ -54,7 +66,7 @@ class SignUpController extends AutoDisposeNotifier<SignupState> {
       state = state.copyWith(
         isLoading: false,
         isSignUpSuccess: null,
-        error: e.toString(),
+        error:e.toString(),
       );
     }
   }

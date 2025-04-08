@@ -1,10 +1,9 @@
 
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:taskit/core/extension/string_hardcoded.dart';
 
-import '../../../../core/exception/failure.dart';
-import '../../../../core/mixin/dio_exception_mapper.dart';
+import '../../../../shared/exception/failure.dart';
+import '../../../../shared/mixin/dio_exception_mapper.dart';
 import '../../domain/repository/isignup_repository.dart';
 import '../dto/request/signup_request.dart';
 import '../dto/response/signup_response.dart';
@@ -32,9 +31,9 @@ final class SignUpRepository
     } on DioException catch (e, s) {
       throw mapDioExceptionToFailure(e, s);
     } catch (e, s) {
+      // Xử lý các lỗi không xác định khác
       throw Failure(
-        message:
-        "An unexpected error occurred. Please try again later".hardcoded,
+        message: "An unexpected error occurred. Please try again later.",
         exception: e as Exception,
         stackTrace: s,
       );

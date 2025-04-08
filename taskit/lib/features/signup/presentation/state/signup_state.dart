@@ -12,5 +12,7 @@ abstract class SignupState with _$SignupState {
     @Default(false) bool isLoading,
     String? error,
     @Default({}) Map<String, dynamic> signUpform,
+    @Default(false) bool isPasswordVisibility,
+    @Default(false) bool isConfirmPasswordVisibility,
   }) = _SignupState;
 }

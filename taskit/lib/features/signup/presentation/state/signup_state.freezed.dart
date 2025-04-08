@@ -20,6 +20,8 @@ mixin _$SignupState {
   bool get isLoading;
   String? get error;
   Map<String, dynamic> get signUpform;
+  bool get isPasswordVisibility;
+  bool get isConfirmPasswordVisibility;
 
   /// Create a copy of SignupState
   /// with the given fields replaced by the non-null parameter values.
@@ -41,16 +43,29 @@ mixin _$SignupState {
                 other.isLoading == isLoading) &&
             (identical(other.error, error) || other.error == error) &&
             const DeepCollectionEquality()
-                .equals(other.signUpform, signUpform));
+                .equals(other.signUpform, signUpform) &&
+            (identical(other.isPasswordVisibility, isPasswordVisibility) ||
+                other.isPasswordVisibility == isPasswordVisibility) &&
+            (identical(other.isConfirmPasswordVisibility,
+                    isConfirmPasswordVisibility) ||
+                other.isConfirmPasswordVisibility ==
+                    isConfirmPasswordVisibility));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, signUpModel, isSignUpSuccess,
-      isLoading, error, const DeepCollectionEquality().hash(signUpform));
+  int get hashCode => Object.hash(
+      runtimeType,
+      signUpModel,
+      isSignUpSuccess,
+      isLoading,
+      error,
+      const DeepCollectionEquality().hash(signUpform),
+      isPasswordVisibility,
+      isConfirmPasswordVisibility);
 
   @override
   String toString() {
-    return 'SignupState(signUpModel: $signUpModel, isSignUpSuccess: $isSignUpSuccess, isLoading: $isLoading, error: $error, signUpform: $signUpform)';
+    return 'SignupState(signUpModel: $signUpModel, isSignUpSuccess: $isSignUpSuccess, isLoading: $isLoading, error: $error, signUpform: $signUpform, isPasswordVisibility: $isPasswordVisibility, isConfirmPasswordVisibility: $isConfirmPasswordVisibility)';
   }
 }
 
@@ -65,7 +80,9 @@ abstract mixin class $SignupStateCopyWith<$Res> {
       bool? isSignUpSuccess,
       bool isLoading,
       String? error,
-      Map<String, dynamic> signUpform});
+      Map<String, dynamic> signUpform,
+      bool isPasswordVisibility,
+      bool isConfirmPasswordVisibility});
 
   $SignupModelCopyWith<$Res>? get signUpModel;
 }
@@ -87,6 +104,8 @@ class _$SignupStateCopyWithImpl<$Res> implements $SignupStateCopyWith<$Res> {
     Object? isLoading = null,
     Object? error = freezed,
     Object? signUpform = null,
+    Object? isPasswordVisibility = null,
+    Object? isConfirmPasswordVisibility = null,
   }) {
     return _then(_self.copyWith(
       signUpModel: freezed == signUpModel
@@ -109,6 +128,14 @@ class _$SignupStateCopyWithImpl<$Res> implements $SignupStateCopyWith<$Res> {
           ? _self.signUpform
           : signUpform // ignore: cast_nullable_to_non_nullable
               as Map<String, dynamic>,
+      isPasswordVisibility: null == isPasswordVisibility
+          ? _self.isPasswordVisibility
+          : isPasswordVisibility // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isConfirmPasswordVisibility: null == isConfirmPasswordVisibility
+          ? _self.isConfirmPasswordVisibility
+          : isConfirmPasswordVisibility // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 
@@ -135,7 +162,9 @@ class _SignupState implements SignupState {
       this.isSignUpSuccess,
       this.isLoading = false,
       this.error,
-      final Map<String, dynamic> signUpform = const {}})
+      final Map<String, dynamic> signUpform = const {},
+      this.isPasswordVisibility = false,
+      this.isConfirmPasswordVisibility = false})
       : _signUpform = signUpform;
 
   @override
@@ -155,6 +184,13 @@ class _SignupState implements SignupState {
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableMapView(_signUpform);
   }
+
+  @override
+  @JsonKey()
+  final bool isPasswordVisibility;
+  @override
+  @JsonKey()
+  final bool isConfirmPasswordVisibility;
 
   /// Create a copy of SignupState
   /// with the given fields replaced by the non-null parameter values.
@@ -177,16 +213,29 @@ class _SignupState implements SignupState {
                 other.isLoading == isLoading) &&
             (identical(other.error, error) || other.error == error) &&
             const DeepCollectionEquality()
-                .equals(other._signUpform, _signUpform));
+                .equals(other._signUpform, _signUpform) &&
+            (identical(other.isPasswordVisibility, isPasswordVisibility) ||
+                other.isPasswordVisibility == isPasswordVisibility) &&
+            (identical(other.isConfirmPasswordVisibility,
+                    isConfirmPasswordVisibility) ||
+                other.isConfirmPasswordVisibility ==
+                    isConfirmPasswordVisibility));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, signUpModel, isSignUpSuccess,
-      isLoading, error, const DeepCollectionEquality().hash(_signUpform));
+  int get hashCode => Object.hash(
+      runtimeType,
+      signUpModel,
+      isSignUpSuccess,
+      isLoading,
+      error,
+      const DeepCollectionEquality().hash(_signUpform),
+      isPasswordVisibility,
+      isConfirmPasswordVisibility);
 
   @override
   String toString() {
-    return 'SignupState(signUpModel: $signUpModel, isSignUpSuccess: $isSignUpSuccess, isLoading: $isLoading, error: $error, signUpform: $signUpform)';
+    return 'SignupState(signUpModel: $signUpModel, isSignUpSuccess: $isSignUpSuccess, isLoading: $isLoading, error: $error, signUpform: $signUpform, isPasswordVisibility: $isPasswordVisibility, isConfirmPasswordVisibility: $isConfirmPasswordVisibility)';
   }
 }
 
@@ -203,7 +252,9 @@ abstract mixin class _$SignupStateCopyWith<$Res>
       bool? isSignUpSuccess,
       bool isLoading,
       String? error,
-      Map<String, dynamic> signUpform});
+      Map<String, dynamic> signUpform,
+      bool isPasswordVisibility,
+      bool isConfirmPasswordVisibility});
 
   @override
   $SignupModelCopyWith<$Res>? get signUpModel;
@@ -226,6 +277,8 @@ class __$SignupStateCopyWithImpl<$Res> implements _$SignupStateCopyWith<$Res> {
     Object? isLoading = null,
     Object? error = freezed,
     Object? signUpform = null,
+    Object? isPasswordVisibility = null,
+    Object? isConfirmPasswordVisibility = null,
   }) {
     return _then(_SignupState(
       signUpModel: freezed == signUpModel
@@ -248,6 +301,14 @@ class __$SignupStateCopyWithImpl<$Res> implements _$SignupStateCopyWith<$Res> {
           ? _self._signUpform
           : signUpform // ignore: cast_nullable_to_non_nullable
               as Map<String, dynamic>,
+      isPasswordVisibility: null == isPasswordVisibility
+          ? _self.isPasswordVisibility
+          : isPasswordVisibility // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isConfirmPasswordVisibility: null == isConfirmPasswordVisibility
+          ? _self.isConfirmPasswordVisibility
+          : isConfirmPasswordVisibility // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 

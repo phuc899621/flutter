@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:taskit/core/extension/string_hardcoded.dart';
+import 'package:taskit/shared/extension/string_hardcoded.dart';
 
 import '../exception/failure.dart';
 
@@ -37,8 +37,13 @@ mixin DioExceptionMapper {
           stackTrace: stackTrace,
         );
       case DioExceptionType.badResponse:
+        final response=e.response?.data;
+        String message=_getErrorMessageForStatusCode(e.response?.statusCode);
+        if(response is Map<String,dynamic>){
+          message=response['message'];
+        }
         return Failure(
-          message: _getErrorMessageForStatusCode(e.response?.statusCode),
+          message: message,
           exception: e,
           stackTrace: stackTrace,
         );

@@ -22,17 +22,7 @@ const userScheme = new Schema({
   },
 });
 
-//hash password
-userScheme.pre("save", async function () {
-  try {
-    var user = this;
-    const salt = await bcrypt.genSalt(10);
-    const hashPass = await bcrypt.hash(user.password, salt);
-    user.password = hashPass;
-  } catch (e) {
-    throw e;
-  }
-});
+
 // Kiểm tra email tồn tại
 userScheme.statics.isEmailExist = async function (email) {
   const user = await this.findOne({ email });

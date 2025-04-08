@@ -3,7 +3,7 @@ const transporter = require("../config/email");
 class EmailServices{
     static async sendEmail(to, subject, text) {
       const mailOptions={
-          from: "Admin <phuc899621@gmail.com>",
+          from: "phuc899621@gmail.com",
           to: to,
           subject: subject,
           text: text

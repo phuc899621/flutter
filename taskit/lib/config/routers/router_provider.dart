@@ -1,9 +1,9 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:taskit/app/routers/router_name.dart';
+import 'package:taskit/config/routers/router_name.dart';
 
 import '../../features/login/presentation/pages/login_page.dart';
-import '../../features/signup/presentation/pages/signup_page.dart';
+import '../../features/signup/presentation/ui/signup_page.dart';
 
 // Provider GoRouter để quản lý việc điều hướng trong ứng dụng
 final goRouterProvider = Provider<GoRouter>(

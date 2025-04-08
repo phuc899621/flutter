@@ -6,7 +6,7 @@ part 'signup_response.g.dart';
 @freezed
 abstract class SignupResponse with _$SignupResponse {
   const factory SignupResponse({
-    @JsonKey(name: "status") required String status,
+    @JsonKey(name: "status") required bool status,
     @JsonKey(name: "message") required String message,
     @JsonKey(name: "data") required Data data,
   }) = _SignupResponse;
@@ -18,21 +18,8 @@ abstract class SignupResponse with _$SignupResponse {
 @freezed
 abstract class Data with _$Data {
   const factory Data({
-    @JsonKey(name: "user") required User user,
+    @JsonKey(name: "email") required String email,
   }) = _Data;
 
   factory Data.fromJson(Map<String, dynamic> json) => _$DataFromJson(json);
-}
-
-@freezed
-abstract class User with _$User {
-  const factory User({
-    @JsonKey(name: "id") required String id,
-    @JsonKey(name: "name") required String name,
-    @JsonKey(name: "email") required String email,
-    @JsonKey(name: "password") required String password,
-    @JsonKey(name: "avatar") required String avatar,
-  }) = _User;
-
-  factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
 }

@@ -9,6 +9,7 @@ abstract class SignupRequest with _$SignupRequest {
     @JsonKey(name: "name") required String name,
     @JsonKey(name: "email") required String email,
     @JsonKey(name: "password") required String password,
+    @JsonKey(name: "passwordConfirm") required String passwordConfirm,
   }) = _SignupRequest;
 
   factory SignupRequest.fromJson(Map<String, dynamic> json) =>

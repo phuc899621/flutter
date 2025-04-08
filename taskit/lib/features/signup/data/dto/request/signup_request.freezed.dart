@@ -21,6 +21,8 @@ mixin _$SignupRequest {
   String get email;
   @JsonKey(name: "password")
   String get password;
+  @JsonKey(name: "passwordConfirm")
+  String get passwordConfirm;
 
   /// Create a copy of SignupRequest
   /// with the given fields replaced by the non-null parameter values.
@@ -41,16 +43,19 @@ mixin _$SignupRequest {
             (identical(other.name, name) || other.name == name) &&
             (identical(other.email, email) || other.email == email) &&
             (identical(other.password, password) ||
-                other.password == password));
+                other.password == password) &&
+            (identical(other.passwordConfirm, passwordConfirm) ||
+                other.passwordConfirm == passwordConfirm));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, name, email, password);
+  int get hashCode =>
+      Object.hash(runtimeType, name, email, password, passwordConfirm);
 
   @override
   String toString() {
-    return 'SignupRequest(name: $name, email: $email, password: $password)';
+    return 'SignupRequest(name: $name, email: $email, password: $password, passwordConfirm: $passwordConfirm)';
   }
 }
 
@@ -63,7 +68,8 @@ abstract mixin class $SignupRequestCopyWith<$Res> {
   $Res call(
       {@JsonKey(name: "name") String name,
       @JsonKey(name: "email") String email,
-      @JsonKey(name: "password") String password});
+      @JsonKey(name: "password") String password,
+      @JsonKey(name: "passwordConfirm") String passwordConfirm});
 }
 
 /// @nodoc
@@ -82,6 +88,7 @@ class _$SignupRequestCopyWithImpl<$Res>
     Object? name = null,
     Object? email = null,
     Object? password = null,
+    Object? passwordConfirm = null,
   }) {
     return _then(_self.copyWith(
       name: null == name
@@ -96,6 +103,10 @@ class _$SignupRequestCopyWithImpl<$Res>
           ? _self.password
           : password // ignore: cast_nullable_to_non_nullable
               as String,
+      passwordConfirm: null == passwordConfirm
+          ? _self.passwordConfirm
+          : passwordConfirm // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -106,7 +117,8 @@ class _SignupRequest implements SignupRequest {
   const _SignupRequest(
       {@JsonKey(name: "name") required this.name,
       @JsonKey(name: "email") required this.email,
-      @JsonKey(name: "password") required this.password});
+      @JsonKey(name: "password") required this.password,
+      @JsonKey(name: "passwordConfirm") required this.passwordConfirm});
   factory _SignupRequest.fromJson(Map<String, dynamic> json) =>
       _$SignupRequestFromJson(json);
 
@@ -119,6 +131,9 @@ class _SignupRequest implements SignupRequest {
   @override
   @JsonKey(name: "password")
   final String password;
+  @override
+  @JsonKey(name: "passwordConfirm")
+  final String passwordConfirm;
 
   /// Create a copy of SignupRequest
   /// with the given fields replaced by the non-null parameter values.
@@ -143,16 +158,19 @@ class _SignupRequest implements SignupRequest {
             (identical(other.name, name) || other.name == name) &&
             (identical(other.email, email) || other.email == email) &&
             (identical(other.password, password) ||
-                other.password == password));
+                other.password == password) &&
+            (identical(other.passwordConfirm, passwordConfirm) ||
+                other.passwordConfirm == passwordConfirm));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, name, email, password);
+  int get hashCode =>
+      Object.hash(runtimeType, name, email, password, passwordConfirm);
 
   @override
   String toString() {
-    return 'SignupRequest(name: $name, email: $email, password: $password)';
+    return 'SignupRequest(name: $name, email: $email, password: $password, passwordConfirm: $passwordConfirm)';
   }
 }
 
@@ -167,7 +185,8 @@ abstract mixin class _$SignupRequestCopyWith<$Res>
   $Res call(
       {@JsonKey(name: "name") String name,
       @JsonKey(name: "email") String email,
-      @JsonKey(name: "password") String password});
+      @JsonKey(name: "password") String password,
+      @JsonKey(name: "passwordConfirm") String passwordConfirm});
 }
 
 /// @nodoc
@@ -186,6 +205,7 @@ class __$SignupRequestCopyWithImpl<$Res>
     Object? name = null,
     Object? email = null,
     Object? password = null,
+    Object? passwordConfirm = null,
   }) {
     return _then(_SignupRequest(
       name: null == name
@@ -199,6 +219,10 @@ class __$SignupRequestCopyWithImpl<$Res>
       password: null == password
           ? _self.password
           : password // ignore: cast_nullable_to_non_nullable
+              as String,
+      passwordConfirm: null == passwordConfirm
+          ? _self.passwordConfirm
+          : passwordConfirm // ignore: cast_nullable_to_non_nullable
               as String,
     ));
   }

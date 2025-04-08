@@ -11,6 +11,27 @@ class OtpServices{
     static async generateOTP(){
         return await Math.floor(1000+Math.random()*9000).toString();
     }
+    static async isVerifySend(email){
+        try{
+            return await OtpModel.isVerifySend(email);
+        }catch(e){
+            throw e;
+        }
+    }
+    static async deleteOtpByEmail(email){
+        try{
+            return await OtpModel.deleteOtpByEmail(email);
+        }catch(e){
+            throw e;
+        }
+    }
+    static async findOtpByEmail(email){
+        try{
+            return await OtpModel.findOtpByEmail(email);
+        }catch(e){
+            throw e;
+        }
+    }
     static async sendOTP(email,otp){
         return EmailService.sendEmail(
             email,

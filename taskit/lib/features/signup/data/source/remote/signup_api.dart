@@ -18,6 +18,6 @@ final signUpApiProvider = Provider.autoDispose<SignUpApi>((ref) {
 abstract class SignUpApi {
   factory SignUpApi(Dio dio) => _SignUpApi(dio);
 
-  @POST('/user/registration')
+  @POST('/user/signup')
   Future<SignupResponse> signUp(@Body() SignupRequest data);
 }
