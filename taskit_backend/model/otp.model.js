@@ -19,15 +19,15 @@ const otpScheme = new Schema({
     type: Date, default: Date.now(), expires: 600
   },
 });
-otpScheme.statics.isVerifyEmail=async function(email){
+otpScheme.statics.isVerifySend = async function (email){
   const otp = await this.findOne({ email });
   return otp !== null;
 }
-otpScheme.statics.deleteOtpByEmail=async function(email){
+otpScheme.statics.deleteOtpByEmail = async function (email){
   const del=await this.deleteOne({email})
   return del!==null;
 }
-otpScheme.statics.findOtpByEmail=async function(email){
+otpScheme.statics.findOtpByEmail=async function (email){
   const otp=await this.findOne({email});
   return otp;
 }
