@@ -12,9 +12,16 @@ class UserServices{
             throw e;
         }
     }
-    static async isEmailExist(email){
+    static async findUserByEmail(email){
         try{
-            return await UserModel.isEmailExist(email);
+            return await UserModel.findUserByEmail(email);
+        }catch(e){
+            throw e;
+        }
+    }
+    static async comparePassword(password,savePassword){
+        try{
+            return await UserModel.comparePassword(password,savePassword);
         }catch(e){
             throw e;
         }

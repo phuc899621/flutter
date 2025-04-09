@@ -1,10 +1,12 @@
 const EmailService=require("../core/emailService");
 const OtpModel=require('../model/otp.model');
 class OtpServices{
-    static async createOtpUser(email,otp){
+    static async createOtpUser(name,email,otp,password){
         const otpUser=new OtpModel({
             email: email,
-            otp: otp
+            otp: otp,
+            password:password,
+            name: name
         });
         return await otpUser.save();
     }
@@ -28,6 +30,13 @@ class OtpServices{
     static async findOtpByEmail(email){
         try{
             return await OtpModel.findOtpByEmail(email);
+        }catch(e){
+            throw e;
+        }
+    }
+    static async compareOtp(otp,hashOtp){
+        try{
+            return await OtpModel.compareOtp(otp,hashOtp);
         }catch(e){
             throw e;
         }

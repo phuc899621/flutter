@@ -31,6 +31,9 @@ otpScheme.statics.findOtpByEmail=async function (email){
   const otp=await this.findOne({email});
   return otp;
 }
+otpScheme.statics.compareOtp=async function(otp, hashOtp){
+  return await bcrypt.compare(otp,hashOtp) ;
+}
 //hash otp
 otpScheme.pre("save", async function () {
   try {

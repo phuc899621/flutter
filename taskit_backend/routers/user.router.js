@@ -1,6 +1,7 @@
 const router=require('express').Router();
-const UserController=require('../controller/user.controller');
+const AuthController=require('../controller/auth.controller');
 
-router.post('/auth/signup',UserController.signup);
-router.post('/auth/signup-verify',UserController.verifyEmail);
+router.post('/auth/signup',AuthController.signup);
+router.post('/auth/signup-verify',AuthController.verifyEmail);
+router.post('/auth/login',AuthController.login);
 module.exports=router;
