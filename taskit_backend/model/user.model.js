@@ -24,11 +24,6 @@ const userScheme = new Schema({
 });
 
 
-// Kiểm tra email tồn tại
-userScheme.statics.isEmailExist = async function (email) {
-  const user = await this.findOne({ email });
-  return user !== null;
-};
 userScheme.statics.findUserByEmail=async function(email){
   const user = await this.findOne({ email });
   return user;

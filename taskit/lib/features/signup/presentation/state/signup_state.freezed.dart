@@ -17,9 +17,11 @@ T _$identity<T>(T value) => value;
 mixin _$SignupState {
   SignupModel? get signUpModel;
   bool? get isSignUpSuccess;
+  bool? get isVerifySuccess;
   bool get isLoading;
   String? get error;
-  Map<String, dynamic> get signUpform;
+  Map<String, dynamic> get signupForm;
+  Map<String, dynamic> get verifyForm;
   bool get isPasswordVisibility;
   bool get isConfirmPasswordVisibility;
 
@@ -39,11 +41,15 @@ mixin _$SignupState {
                 other.signUpModel == signUpModel) &&
             (identical(other.isSignUpSuccess, isSignUpSuccess) ||
                 other.isSignUpSuccess == isSignUpSuccess) &&
+            (identical(other.isVerifySuccess, isVerifySuccess) ||
+                other.isVerifySuccess == isVerifySuccess) &&
             (identical(other.isLoading, isLoading) ||
                 other.isLoading == isLoading) &&
             (identical(other.error, error) || other.error == error) &&
             const DeepCollectionEquality()
-                .equals(other.signUpform, signUpform) &&
+                .equals(other.signupForm, signupForm) &&
+            const DeepCollectionEquality()
+                .equals(other.verifyForm, verifyForm) &&
             (identical(other.isPasswordVisibility, isPasswordVisibility) ||
                 other.isPasswordVisibility == isPasswordVisibility) &&
             (identical(other.isConfirmPasswordVisibility,
@@ -57,15 +63,17 @@ mixin _$SignupState {
       runtimeType,
       signUpModel,
       isSignUpSuccess,
+      isVerifySuccess,
       isLoading,
       error,
-      const DeepCollectionEquality().hash(signUpform),
+      const DeepCollectionEquality().hash(signupForm),
+      const DeepCollectionEquality().hash(verifyForm),
       isPasswordVisibility,
       isConfirmPasswordVisibility);
 
   @override
   String toString() {
-    return 'SignupState(signUpModel: $signUpModel, isSignUpSuccess: $isSignUpSuccess, isLoading: $isLoading, error: $error, signUpform: $signUpform, isPasswordVisibility: $isPasswordVisibility, isConfirmPasswordVisibility: $isConfirmPasswordVisibility)';
+    return 'SignupState(signUpModel: $signUpModel, isSignUpSuccess: $isSignUpSuccess, isVerifySuccess: $isVerifySuccess, isLoading: $isLoading, error: $error, signupForm: $signupForm, verifyForm: $verifyForm, isPasswordVisibility: $isPasswordVisibility, isConfirmPasswordVisibility: $isConfirmPasswordVisibility)';
   }
 }
 
@@ -78,9 +86,11 @@ abstract mixin class $SignupStateCopyWith<$Res> {
   $Res call(
       {SignupModel? signUpModel,
       bool? isSignUpSuccess,
+      bool? isVerifySuccess,
       bool isLoading,
       String? error,
-      Map<String, dynamic> signUpform,
+      Map<String, dynamic> signupForm,
+      Map<String, dynamic> verifyForm,
       bool isPasswordVisibility,
       bool isConfirmPasswordVisibility});
 
@@ -101,9 +111,11 @@ class _$SignupStateCopyWithImpl<$Res> implements $SignupStateCopyWith<$Res> {
   $Res call({
     Object? signUpModel = freezed,
     Object? isSignUpSuccess = freezed,
+    Object? isVerifySuccess = freezed,
     Object? isLoading = null,
     Object? error = freezed,
-    Object? signUpform = null,
+    Object? signupForm = null,
+    Object? verifyForm = null,
     Object? isPasswordVisibility = null,
     Object? isConfirmPasswordVisibility = null,
   }) {
@@ -116,6 +128,10 @@ class _$SignupStateCopyWithImpl<$Res> implements $SignupStateCopyWith<$Res> {
           ? _self.isSignUpSuccess
           : isSignUpSuccess // ignore: cast_nullable_to_non_nullable
               as bool?,
+      isVerifySuccess: freezed == isVerifySuccess
+          ? _self.isVerifySuccess
+          : isVerifySuccess // ignore: cast_nullable_to_non_nullable
+              as bool?,
       isLoading: null == isLoading
           ? _self.isLoading
           : isLoading // ignore: cast_nullable_to_non_nullable
@@ -124,9 +140,13 @@ class _$SignupStateCopyWithImpl<$Res> implements $SignupStateCopyWith<$Res> {
           ? _self.error
           : error // ignore: cast_nullable_to_non_nullable
               as String?,
-      signUpform: null == signUpform
-          ? _self.signUpform
-          : signUpform // ignore: cast_nullable_to_non_nullable
+      signupForm: null == signupForm
+          ? _self.signupForm
+          : signupForm // ignore: cast_nullable_to_non_nullable
+              as Map<String, dynamic>,
+      verifyForm: null == verifyForm
+          ? _self.verifyForm
+          : verifyForm // ignore: cast_nullable_to_non_nullable
               as Map<String, dynamic>,
       isPasswordVisibility: null == isPasswordVisibility
           ? _self.isPasswordVisibility
@@ -160,29 +180,43 @@ class _SignupState implements SignupState {
   _SignupState(
       {this.signUpModel,
       this.isSignUpSuccess,
+      this.isVerifySuccess,
       this.isLoading = false,
       this.error,
-      final Map<String, dynamic> signUpform = const {},
+      final Map<String, dynamic> signupForm = const {},
+      final Map<String, dynamic> verifyForm = const {},
       this.isPasswordVisibility = false,
       this.isConfirmPasswordVisibility = false})
-      : _signUpform = signUpform;
+      : _signupForm = signupForm,
+        _verifyForm = verifyForm;
 
   @override
   final SignupModel? signUpModel;
   @override
   final bool? isSignUpSuccess;
   @override
+  final bool? isVerifySuccess;
+  @override
   @JsonKey()
   final bool isLoading;
   @override
   final String? error;
-  final Map<String, dynamic> _signUpform;
+  final Map<String, dynamic> _signupForm;
   @override
   @JsonKey()
-  Map<String, dynamic> get signUpform {
-    if (_signUpform is EqualUnmodifiableMapView) return _signUpform;
+  Map<String, dynamic> get signupForm {
+    if (_signupForm is EqualUnmodifiableMapView) return _signupForm;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableMapView(_signUpform);
+    return EqualUnmodifiableMapView(_signupForm);
+  }
+
+  final Map<String, dynamic> _verifyForm;
+  @override
+  @JsonKey()
+  Map<String, dynamic> get verifyForm {
+    if (_verifyForm is EqualUnmodifiableMapView) return _verifyForm;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableMapView(_verifyForm);
   }
 
   @override
@@ -209,11 +243,15 @@ class _SignupState implements SignupState {
                 other.signUpModel == signUpModel) &&
             (identical(other.isSignUpSuccess, isSignUpSuccess) ||
                 other.isSignUpSuccess == isSignUpSuccess) &&
+            (identical(other.isVerifySuccess, isVerifySuccess) ||
+                other.isVerifySuccess == isVerifySuccess) &&
             (identical(other.isLoading, isLoading) ||
                 other.isLoading == isLoading) &&
             (identical(other.error, error) || other.error == error) &&
             const DeepCollectionEquality()
-                .equals(other._signUpform, _signUpform) &&
+                .equals(other._signupForm, _signupForm) &&
+            const DeepCollectionEquality()
+                .equals(other._verifyForm, _verifyForm) &&
             (identical(other.isPasswordVisibility, isPasswordVisibility) ||
                 other.isPasswordVisibility == isPasswordVisibility) &&
             (identical(other.isConfirmPasswordVisibility,
@@ -227,15 +265,17 @@ class _SignupState implements SignupState {
       runtimeType,
       signUpModel,
       isSignUpSuccess,
+      isVerifySuccess,
       isLoading,
       error,
-      const DeepCollectionEquality().hash(_signUpform),
+      const DeepCollectionEquality().hash(_signupForm),
+      const DeepCollectionEquality().hash(_verifyForm),
       isPasswordVisibility,
       isConfirmPasswordVisibility);
 
   @override
   String toString() {
-    return 'SignupState(signUpModel: $signUpModel, isSignUpSuccess: $isSignUpSuccess, isLoading: $isLoading, error: $error, signUpform: $signUpform, isPasswordVisibility: $isPasswordVisibility, isConfirmPasswordVisibility: $isConfirmPasswordVisibility)';
+    return 'SignupState(signUpModel: $signUpModel, isSignUpSuccess: $isSignUpSuccess, isVerifySuccess: $isVerifySuccess, isLoading: $isLoading, error: $error, signupForm: $signupForm, verifyForm: $verifyForm, isPasswordVisibility: $isPasswordVisibility, isConfirmPasswordVisibility: $isConfirmPasswordVisibility)';
   }
 }
 
@@ -250,9 +290,11 @@ abstract mixin class _$SignupStateCopyWith<$Res>
   $Res call(
       {SignupModel? signUpModel,
       bool? isSignUpSuccess,
+      bool? isVerifySuccess,
       bool isLoading,
       String? error,
-      Map<String, dynamic> signUpform,
+      Map<String, dynamic> signupForm,
+      Map<String, dynamic> verifyForm,
       bool isPasswordVisibility,
       bool isConfirmPasswordVisibility});
 
@@ -274,9 +316,11 @@ class __$SignupStateCopyWithImpl<$Res> implements _$SignupStateCopyWith<$Res> {
   $Res call({
     Object? signUpModel = freezed,
     Object? isSignUpSuccess = freezed,
+    Object? isVerifySuccess = freezed,
     Object? isLoading = null,
     Object? error = freezed,
-    Object? signUpform = null,
+    Object? signupForm = null,
+    Object? verifyForm = null,
     Object? isPasswordVisibility = null,
     Object? isConfirmPasswordVisibility = null,
   }) {
@@ -289,6 +333,10 @@ class __$SignupStateCopyWithImpl<$Res> implements _$SignupStateCopyWith<$Res> {
           ? _self.isSignUpSuccess
           : isSignUpSuccess // ignore: cast_nullable_to_non_nullable
               as bool?,
+      isVerifySuccess: freezed == isVerifySuccess
+          ? _self.isVerifySuccess
+          : isVerifySuccess // ignore: cast_nullable_to_non_nullable
+              as bool?,
       isLoading: null == isLoading
           ? _self.isLoading
           : isLoading // ignore: cast_nullable_to_non_nullable
@@ -297,9 +345,13 @@ class __$SignupStateCopyWithImpl<$Res> implements _$SignupStateCopyWith<$Res> {
           ? _self.error
           : error // ignore: cast_nullable_to_non_nullable
               as String?,
-      signUpform: null == signUpform
-          ? _self._signUpform
-          : signUpform // ignore: cast_nullable_to_non_nullable
+      signupForm: null == signupForm
+          ? _self._signupForm
+          : signupForm // ignore: cast_nullable_to_non_nullable
+              as Map<String, dynamic>,
+      verifyForm: null == verifyForm
+          ? _self._verifyForm
+          : verifyForm // ignore: cast_nullable_to_non_nullable
               as Map<String, dynamic>,
       isPasswordVisibility: null == isPasswordVisibility
           ? _self.isPasswordVisibility

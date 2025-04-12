@@ -1,4 +1,5 @@
 const UserServices=require('../services/user.services');
+const OtpAuthServices=require('../services/otp.auth.services');
 const OtpServices=require('../services/otp.services');
 const jwt = require("jsonwebtoken");
     exports.signup=async(req,res)=>{
@@ -23,13 +24,13 @@ const jwt = require("jsonwebtoken");
                      data: {}
                  });
             }
-            const isVerifySend=await OtpServices.isVerifySend(email);
+            const isVerifySend=await OtpAuthServices.isVerifySend(email);
             if(isVerifySend){
-                await OtpServices.deleteOtpByEmail(email);
+                await OtpAuthServices.deleteOtpByEmail(email);
             }
-            const otp=await OtpServices.generateOTP();
-            await OtpServices.sendOTP(email,otp);
-            await OtpServices.createOtpUser(name,email,otp,password);
+            const otp=await OtpAuthServices.generateOTP();
+            await OtpAuthServices.sendOTP(email,otp);
+            await OtpAuthServices.createOtpUser(name,email,otp,password);
             return res.status(201).json({
                 message:"Verify code has been sent to your email",
                 data: {
@@ -48,7 +49,7 @@ const jwt = require("jsonwebtoken");
     exports.verifyEmail=async(req,res)=>{
         try{
             const {email,otp}=req.body;
-            const getOtp=await OtpServices.findOtpByEmail(email);
+            const getOtp=await OtpAuthServices.findOtpByEmail(email);
             if(getOtp){
                 if(await OtpServices.compareOtp(otp,getOtp.otp)){
                     const {name,password}=getOtp;
@@ -74,7 +75,7 @@ const jwt = require("jsonwebtoken");
                 }
             }
             else{
-                return res.status(404).json({
+                return res.status(400).json({
                     message: "Invalid email",
                     data:{}
                 });
@@ -90,30 +91,150 @@ const jwt = require("jsonwebtoken");
     }
 
     exports.login=async(req,res)=>{
-        const { email, password } = req.body;
-        const user = await UserServices.findUserByEmail(email);
-
-        if (!user) {
-            return res.status(401).json({ 
-                message: "User not found!",
-                data:{}
+        try{
+            const { email, password } = req.body;
+            if(!email||!password){
+                return res.status(400).json({ 
+                    message: "Please enter your email and password!",
+                    data:{}
+                });
+            }
+            if(!email){
+                return res.status(400).json({ 
+                    message: "Please enter your email!",
+                    data:{}
+                });
+            }
+            if(!password){
+                return res.status(400).json({ 
+                    message: "Please enter your password!!",
+                    data:{}
+                });
+            }
+            const user = await UserServices.findUserByEmail(email);
+                
+            if (!user) {
+                return res.status(400).json({ 
+                    message: "User not found!",
+                    data:{}
+                });
+            }
+            if(!(await UserServices.comparePassword(password,user.password))){
+                return res.status(400).json({ 
+                    message: "Wrong password!",
+                    data:{}
+                });
+            }
+            const token = jwt.sign(
+                { id: user._id, email: user.email },
+                process.env.JWT_SECRET || "899621",
+                { expiresIn: process.env.JWT_EXPIRES_IN || "1d" }
+            );
+            return res.status(201).json({
+                message: "Login successful",
+                data:{
+                    token: token
+                },
+            });
+        }catch(e){
+            return res.status(500).json({
+                message: "An error occurred when login: "+e.message,
+                data: {}
             });
         }
-        if(!(await UserServices.comparePassword(password,user.password))){
-            return res.status(401).json({ 
-                message: "Wrong password!",
-                data:{}
+    }
+    exports.forgotPasswordVerifyEmail=async(req,res)=>{
+        try{
+            const {email} = req.body;
+            const user=await UserServices.findUserByEmail(email);
+            const userOtp=await OtpServices.findOtpByEmail(email);
+            if(!user){
+                return res.status(400).json({
+                    message: "User Not Found!",
+                    data:{}
+                });
+            }
+            if(userOtp){
+                await OtpServices.deleteOtpByEmail(email);
+            }
+            const otp=await OtpServices.generateOTP();
+            const resetToken=await OtpServices.generateResetToken();
+            await OtpServices.sendOTP(email,otp);
+            await OtpServices.createOtpUser(email,otp,resetToken);
+            return res.status(201).json({
+                message: "Verify otp has been send to your email",
+                data:{
+                    email:email
+                }
+            });
+        
+        }catch(e){
+            return res.status(500).json({
+                message: "An error occurred when verify email for forgot password: "+e.message,
+                data: {}
             });
         }
-        const token = jwt.sign(
-            { id: user._id, email: user.email },
-            process.env.JWT_SECRET || "899621",
-            { expiresIn: process.env.JWT_EXPIRES_IN || "1d" }
-        );
-        return res.status(201).json({
-            message: "Login successful",
-            data:{
-                token: token
-            },
-        });
+    }
+    exports.forgotPasswordVerifyOtp=async(req,res)=>{
+        try{
+            const {email,otp} = req.body;
+            const userOtp=await OtpServices.findOtpByEmail(email);
+            if(!userOtp){
+                return res.status(400).json({
+                    message: "Invalid Email!",
+                    data:{}
+                });
+            }
+            if(await OtpServices.compareOtp(otp,userOtp.otp)){
+                return res.status(201).json({
+                    message: "Verify successfully!",
+                    data:{
+                        email:email,
+                        resetToken:userOtp.resetToken,
+                    }
+                });
+            }
+            return res.status(400).json({
+                message: "Wrong otp!",
+                data:{}
+            });
+        
+        }catch(e){
+            return res.status(500).json({
+                message: "An error occurred when verify otp for forgot password: "+e.message,
+                data: {}
+            });
+        }
+    }
+    exports.resetPassword=async(req,res)=>{
+        try{
+            const {email,password,passwordCOnfirm} = req.body;
+            const resetToken=req.headers['Reset-Token'];
+            const userOtp=await OtpServices.findOtpByEmail(email);
+            if(!userOtp){
+                return res.status(400).json({
+                    message: "Invalid Email!",
+                    data:{}
+                });
+            }
+            if(await OtpServices.compareOtp(otp,userOtp.otp)){
+                return res.status(201).json({
+                    message: "Verify successfully!",
+                    data:{
+                        email:email,
+                        resetToken:userOtp.resetToken,
+                    }
+                });
+            }
+            return res.status(400).json({
+                message: "Wrong otp!",
+                data:{}
+            });
+        
+        }catch(e){
+            return res.status(500).json({
+                message: "An error occurred when verify otp for forgot password: "+e.message,
+                data: {}
+            });
+        }
     }

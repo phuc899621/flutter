@@ -1,20 +1,15 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:taskit/features/signup/data/dto/request/signup_verify_req/signup_verify_request.dart';
 
 import '../../application/signup_service.dart';
-import '../../data/dto/request/signup_request.dart';
+import '../../data/dto/request/signup_req/signup_request.dart';
 import '../state/signup_state.dart';
 
 final signUpControllerProvider =
-AutoDisposeNotifierProvider<SignUpController, SignupState>(
+NotifierProvider<SignUpController, SignupState>(
     SignUpController.new);
-/*
-* 1 notifier de lang nghe va cap nhat du lieu
-* - gui request dang ky
-* cap nhat tran thai
-* luu tru form dang ky
-*
-* */
-class SignUpController extends AutoDisposeNotifier<SignupState> {
+
+class SignUpController extends Notifier<SignupState> {
   @override
   SignupState build() {
     return SignupState();
@@ -42,10 +37,10 @@ class SignUpController extends AutoDisposeNotifier<SignupState> {
 
 
       final formData = SignupRequest(
-        name: state.signUpform['name'],
-        email: state.signUpform['email'],
-        password: state.signUpform['password'],
-        passwordConfirm: state.signUpform['confirmPassword'],
+        name: state.signupForm['name'],
+        email: state.signupForm['email'],
+        password: state.signupForm['password'],
+        passwordConfirm: state.signupForm['confirmPassword'],
       );
       final result = await ref.read(signUpServiceProvider).signUp(formData);
       result.when((success) {
@@ -62,7 +57,6 @@ class SignUpController extends AutoDisposeNotifier<SignupState> {
         );
       });
     } catch (e) {
-      print(e.toString());
       state = state.copyWith(
         isLoading: false,
         isSignUpSuccess: null,
@@ -73,7 +67,46 @@ class SignUpController extends AutoDisposeNotifier<SignupState> {
 
   void setFormData(Map<String, dynamic> formData) {
     state = state.copyWith(
-      signUpform: formData,
+      signupForm: formData,
+    );
+  }
+  Future<void> verify() async {
+    try {
+      //trang thai loading
+      state = state.copyWith(
+        isLoading: true,
+        error: null,
+        isVerifySuccess: null,
+      );
+      final formData = SignupVerifyRequest(
+          email: state.signupForm['email'],
+          otp: state.verifyForm['otp']
+      );
+      final result = await ref.read(signUpServiceProvider).verify(formData);
+      result.when((success) {
+        state = state.copyWith(
+          isLoading: false,
+          isVerifySuccess: true,
+        );
+      }, (failure) {
+        state = state.copyWith(
+          isLoading: false,
+          isVerifySuccess: null,
+          error: failure.message,
+        );
+      });
+    } catch (e) {
+      state = state.copyWith(
+        isLoading: false,
+        isVerifySuccess: null,
+        error:e.toString(),
+      );
+    }
+  }
+
+  void setVerifyForm(Map<String, dynamic> data) {
+    state = state.copyWith(
+      verifyForm: data,
     );
   }
 }

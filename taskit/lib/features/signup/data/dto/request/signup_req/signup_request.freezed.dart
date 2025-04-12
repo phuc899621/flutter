@@ -15,13 +15,9 @@ T _$identity<T>(T value) => value;
 
 /// @nodoc
 mixin _$SignupRequest {
-  @JsonKey(name: "name")
   String get name;
-  @JsonKey(name: "email")
   String get email;
-  @JsonKey(name: "password")
   String get password;
-  @JsonKey(name: "passwordConfirm")
   String get passwordConfirm;
 
   /// Create a copy of SignupRequest
@@ -66,10 +62,7 @@ abstract mixin class $SignupRequestCopyWith<$Res> {
       _$SignupRequestCopyWithImpl;
   @useResult
   $Res call(
-      {@JsonKey(name: "name") String name,
-      @JsonKey(name: "email") String email,
-      @JsonKey(name: "password") String password,
-      @JsonKey(name: "passwordConfirm") String passwordConfirm});
+      {String name, String email, String password, String passwordConfirm});
 }
 
 /// @nodoc
@@ -115,24 +108,20 @@ class _$SignupRequestCopyWithImpl<$Res>
 @JsonSerializable()
 class _SignupRequest implements SignupRequest {
   const _SignupRequest(
-      {@JsonKey(name: "name") required this.name,
-      @JsonKey(name: "email") required this.email,
-      @JsonKey(name: "password") required this.password,
-      @JsonKey(name: "passwordConfirm") required this.passwordConfirm});
+      {required this.name,
+      required this.email,
+      required this.password,
+      required this.passwordConfirm});
   factory _SignupRequest.fromJson(Map<String, dynamic> json) =>
       _$SignupRequestFromJson(json);
 
   @override
-  @JsonKey(name: "name")
   final String name;
   @override
-  @JsonKey(name: "email")
   final String email;
   @override
-  @JsonKey(name: "password")
   final String password;
   @override
-  @JsonKey(name: "passwordConfirm")
   final String passwordConfirm;
 
   /// Create a copy of SignupRequest
@@ -183,10 +172,7 @@ abstract mixin class _$SignupRequestCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {@JsonKey(name: "name") String name,
-      @JsonKey(name: "email") String email,
-      @JsonKey(name: "password") String password,
-      @JsonKey(name: "passwordConfirm") String passwordConfirm});
+      {String name, String email, String password, String passwordConfirm});
 }
 
 /// @nodoc

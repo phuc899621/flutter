@@ -1,14 +1,13 @@
 const EmailService=require("../core/emailService");
-const OtpModel=require('../model/otp.model');
+const OtpAuthModel=require('../model/otp.auth.model');
 const bcrypt = require("bcryptjs");
-const crypto=require("crypto");
-
-class OtpServices{
-    static async createOtpUser(email,otp,resetToken){
-        const otpUser=new OtpModel({
+class OtpAuthServices{
+    static async createOtpUser(name,email,otp,password){
+        const otpUser=new OtpAuthModel({
             email: email,
             otp: otp,
-            resetToken: resetToken,
+            password:password,
+            name: name
         });
         return await otpUser.save();
     }
@@ -17,21 +16,21 @@ class OtpServices{
     }
     static async isVerifySend(email){
         try{
-            return await OtpModel.isVerifySend(email);
+            return await OtpAuthModel.isVerifySend(email);
         }catch(e){
             throw e;
         }
     }
     static async deleteOtpByEmail(email){
         try{
-            return await OtpModel.deleteOtpByEmail(email);
+            return await OtpAuthModel.deleteOtpByEmail(email);
         }catch(e){
             throw e;
         }
     }
     static async findOtpByEmail(email){
         try{
-            return await OtpModel.findOtpByEmail(email);
+            return await OtpAuthModel.findOtpByEmail(email);
         }catch(e){
             throw e;
         }
@@ -50,12 +49,5 @@ class OtpServices{
             "Your OTP is: "+otp +". This OTP only last 15 minutes." 
         );
     }
-    static async generateResetToken(){
-        try{
-            return await crypto.randomBytes(32).toString('hex');
-        }catch(e){
-            throw e;
-        }
-    }
 }
-module.exports=OtpServices
+module.exports=OtpAuthServices

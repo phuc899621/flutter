@@ -1,13 +1,15 @@
 
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:taskit/features/signup/data/dto/request/signup_verify_req/signup_verify_request.dart';
+import 'package:taskit/features/signup/data/dto/response/signup_res/signup_data.dart';
+import 'package:taskit/shared/dto/base_response.dart';
 import '../../../shared/exception/failure.dart';
-import '../data/dto/request/signup_request.dart';
-import '../data/dto/response/signup_response.dart';
+import '../data/dto/request/signup_req/signup_request.dart';
 import '../data/repository/signup_repository.dart';
 import '../domain/mapper/isignup_model_mapper.dart';
 import '../domain/model/signup_model.dart';
-import '../domain/repository/isignup_repository.dart';
+import '../data/repository/isignup_repository.dart';
 import 'isignup_service.dart';
 import 'package:multiple_result/multiple_result.dart';
 
@@ -49,11 +51,37 @@ final class SignUpService implements ISignUpService, ISignUpModelMapper {
   }
 
   @override
-  SignupModel mapToSignUpModel(SignupResponse response) {
-    final email = response.data.email;
+  SignupModel mapToSignUpModel(BaseResponse<SignupData> data) {
+    final email = data.data.email;
 
     return SignupModel(
       email: email,
     );
   }
+
+  @override
+  Future<Result<void, Failure>> verify(SignupVerifyRequest data) async {
+    try {
+      await _signUpRepository.verify(data);
+      return Success(null);
+    } on Failure catch (e) {
+      return Error(e);
+    } catch (e, s) {
+      if (e is Exception) {
+        return Error(Failure(
+          message: e.toString(),
+          exception: e,
+          stackTrace: s,
+        ));
+      } else {
+        return Error(Failure(
+          message: e.toString(),
+          exception: Exception("Unknown error"),
+          stackTrace: s,
+        ));
+      }
+    }
+  }
+
+
 }

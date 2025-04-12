@@ -9,9 +9,11 @@ abstract class SignupState with _$SignupState {
   factory SignupState({
     SignupModel? signUpModel,
     bool? isSignUpSuccess,
+    bool? isVerifySuccess,
     @Default(false) bool isLoading,
     String? error,
-    @Default({}) Map<String, dynamic> signUpform,
+    @Default({}) Map<String, dynamic> signupForm,
+    @Default({}) Map<String, dynamic> verifyForm,
     @Default(false) bool isPasswordVisibility,
     @Default(false) bool isConfirmPasswordVisibility,
   }) = _SignupState;

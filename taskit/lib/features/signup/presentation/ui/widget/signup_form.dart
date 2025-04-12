@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:taskit/features/signup/presentation/ui/widget/signup_button.dart';
+import 'package:go_router/go_router.dart';
+import 'package:taskit/shared/presentation/widget/custom_taskit_button.dart';
 
+import '../../../../../shared/presentation/widget/custom_taskit_textfield.dart';
 import '../../controller/signup_controller.dart';
 
 class SignupForm extends ConsumerStatefulWidget{
@@ -77,62 +79,12 @@ class _SignupFormState extends ConsumerState<SignupForm>{
             Padding(
               padding: EdgeInsetsDirectional.fromSTEB(
                   0.0, 0.0, 0.0, 16.0),
-              child: Container(
+              child: SizedBox(
                 width: 370.0,
-                child: TextFormField(
+                child: TaskitOutlineTextField(
+                  labelText: 'Email',
                   controller: _emailController,
-                  autofocus: true,
-                  autofillHints: [AutofillHints.email],
-                  obscureText: false,
-                  decoration: InputDecoration(
-                    labelText: 'Email',
-                    labelStyle: Theme.of(context).textTheme
-                        .labelMedium?.copyWith(
-                      fontFamily: 'Inter',
-                      letterSpacing: 0.0,
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color: Theme.of(context)
-                            .colorScheme.primaryContainer,
-                        width: 2.0,
-                      ),
-                      borderRadius:
-                      BorderRadius.circular(12.0),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color: Theme.of(context)
-                            .colorScheme.primary,
-                        width: 2.0,
-                      ),
-                      borderRadius:
-                      BorderRadius.circular(12.0),
-                    ),
-                    errorBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color: Theme.of(context).colorScheme.background,
-                        width: 2.0,
-                      ),
-                      borderRadius:
-                      BorderRadius.circular(12.0),
-                    ),
-                    focusedErrorBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color: Theme.of(context).colorScheme.background,
-                        width: 2.0,
-                      ),
-                      borderRadius:
-                      BorderRadius.circular(12.0),
-                    ),
-                    filled: true,
-                    fillColor: Theme.of(context).colorScheme.primaryContainer,
-                  ),
-                  style: Theme.of(context).textTheme
-                      .bodyMedium?.copyWith(
-                    fontFamily: 'Inter',
-                    letterSpacing: 0.0,
-                  ),
+                  autofillHints: AutofillHints.email,
                   keyboardType: TextInputType.emailAddress,
                 ),
               ),
@@ -140,67 +92,14 @@ class _SignupFormState extends ConsumerState<SignupForm>{
             Padding(
               padding: EdgeInsetsDirectional.fromSTEB(
                   0.0, 0.0, 0.0, 16.0),
-              child: Container(
+              child: SizedBox(
                 width: 370.0,
-                child: TextFormField(
-                  controller: _nameController,
-                  autofocus: true,
-                  autofillHints: [AutofillHints.name],
-                  obscureText: false,
-                  decoration: InputDecoration(
-                    labelText: 'Full Name',
-                    labelStyle: Theme.of(context)
-                        .textTheme.labelMedium?.copyWith(
-                      fontFamily: 'Inter',
-                      letterSpacing: 0.0,
-                    ),
-                    alignLabelWithHint: false,
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color: Theme.of(context)
-                            .colorScheme.primaryContainer,
-                        width: 2.0,
-                      ),
-                      borderRadius:
-                      BorderRadius.circular(12.0),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color: Theme.of(context)
-                            .primaryColor,
-                        width: 2.0,
-                      ),
-                      borderRadius:
-                      BorderRadius.circular(12.0),
-                    ),
-                    errorBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color: Theme.of(context)
-                            .colorScheme.background,
-                        width: 2.0,
-                      ),
-                      borderRadius:
-                      BorderRadius.circular(12.0),
-                    ),
-                    focusedErrorBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color: Theme.of(context)
-                            .colorScheme.background,
-                        width: 2.0,
-                      ),
-                      borderRadius:
-                      BorderRadius.circular(12.0),
-                    ),
-                    filled: true,
-                    fillColor: Theme.of(context)
-                        .colorScheme.primaryContainer,
-                  ),
-                  style: Theme.of(context).textTheme
-                      .bodyMedium?.copyWith(
-                    fontFamily: 'Inter',
-                    letterSpacing: 0.0,
-                  ),
-                ),
+                child: TaskitOutlineTextField(
+                    labelText: "Full Name",
+                    controller: _nameController,
+                    autofillHints: AutofillHints.name,
+                    keyboardType: TextInputType.text
+                )
               ),
             ),
             Padding(
@@ -208,74 +107,8 @@ class _SignupFormState extends ConsumerState<SignupForm>{
                   0.0, 0.0, 0.0, 16.0),
               child: Container(
                 width: 370.0,
-                child: TextFormField(
-                  controller: _passwordController,
-                  autofocus: true,
-                  autofillHints: [AutofillHints.password],
-                  obscureText: !state.isPasswordVisibility,
-                  decoration: InputDecoration(
-                    labelText: 'Password',
-                    labelStyle: Theme.of(context).textTheme.labelMedium?.copyWith(
-                      fontFamily: 'Inter',
-                      letterSpacing: 0.0,
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color: Theme.of(context).colorScheme.primaryContainer,
-                        width: 2.0,
-                      ),
-                      borderRadius:
-                      BorderRadius.circular(12.0),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color: Theme.of(context)
-                            .primaryColor,
-                        width: 2.0,
-                      ),
-                      borderRadius:
-                      BorderRadius.circular(12.0),
-                    ),
-                    errorBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color: Theme.of(context)
-                            .colorScheme.background,
-                        width: 2.0,
-                      ),
-                      borderRadius:
-                      BorderRadius.circular(12.0),
-                    ),
-                    focusedErrorBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color: Theme.of(context)
-                            .colorScheme.background,
-                        width: 2.0,
-                      ),
-                      borderRadius:
-                      BorderRadius.circular(12.0),
-                    ),
-                    filled: true,
-                    fillColor: Theme.of(context)
-                        .colorScheme.primaryContainer,
-                    suffixIcon: InkWell(
-                      onTap: () => signupController.togglePasswordVisibility(),
-                      focusNode:
-                      FocusNode(skipTraversal: true),
-                      child: Icon(
-                        state.isPasswordVisibility
-                            ? Icons.visibility_outlined
-                            : Icons.visibility_off_outlined,
-                        color: Theme.of(context).colorScheme.onSecondary,
-                        size: 24.0,
-                      ),
-                    ),
-                  ),
-                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                    fontFamily: 'Inter',
-                    letterSpacing: 0.0,
-
-                  ),
-                ),
+                child: TaskitOutLineTextFieldWithPassword(
+                    labelText: 'Password', controller: _passwordController)
               ),
             ),
             Padding(
@@ -283,78 +116,14 @@ class _SignupFormState extends ConsumerState<SignupForm>{
                   0.0, 0.0, 0.0, 16.0),
               child: Container(
                 width: 370.0,
-                child: TextFormField(
-                  controller:_passwordConfirm,
-
-                  autofocus: true,
-                  autofillHints: [AutofillHints.password],
-                  obscureText:
-                  !state.isConfirmPasswordVisibility,
-                  decoration: InputDecoration(
-                    labelText: 'Confirm Password',
-                    labelStyle: Theme.of(context).textTheme.labelMedium?.copyWith(
-                      fontFamily: 'Inter',
-                      letterSpacing: 0.0,
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color: Theme.of(context).colorScheme.primaryContainer,
-                        width: 2.0,
-                      ),
-                      borderRadius:
-                      BorderRadius.circular(12.0),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color: Theme.of(context).primaryColor,
-                        width: 2.0,
-                      ),
-                      borderRadius:
-                      BorderRadius.circular(12.0),
-                    ),
-                    errorBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color: Theme.of(context)
-                            .colorScheme.background,
-                        width: 2.0,
-                      ),
-                      borderRadius:
-                      BorderRadius.circular(12.0),
-                    ),
-                    focusedErrorBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color: Theme.of(context).colorScheme.background,
-                        width: 2.0,
-                      ),
-                      borderRadius:
-                      BorderRadius.circular(12.0),
-                    ),
-                    filled: true,
-                    fillColor: Theme.of(context).colorScheme.primaryContainer,
-                    suffixIcon: InkWell(
-                      onTap: () => signupController.toggleConfirmPasswordVisibility(),
-                      focusNode:
-                      FocusNode(skipTraversal: true),
-                      child: Icon(
-                        state.isConfirmPasswordVisibility
-                            ? Icons.visibility_outlined
-                            : Icons.visibility_off_outlined,
-                        color: Theme.of(context).colorScheme.onSecondary,
-                        size: 24.0,
-                      ),
-                    ),
-                  ),
-                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                    fontFamily: 'Inter',
-                    letterSpacing: 0.0,
-                  ),
-                ),
+                child: TaskitOutLineTextFieldWithPassword(labelText: 'Confirm password',
+                    controller: _passwordConfirm)
               ),
             ),
             Padding(
               padding: EdgeInsetsDirectional.fromSTEB(
                   0.0, 0.0, 0.0, 16.0),
-              child: SignupButton(onPressed: ()=>_onSubmit(),),
+              child: TaskitFillButton(onPressed: ()=>_onSubmit(),text: "Sign Up"),
             ),
             // You will have to add an action on this rich text to go to your login page.
             Padding(
@@ -398,7 +167,7 @@ class _SignupFormState extends ConsumerState<SignupForm>{
           if (next != null) {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
-                duration: const Duration(seconds: 100),
+                duration: const Duration(seconds: 5),
                 backgroundColor: Colors.red,
                 content: Text(next),
               ),
@@ -410,7 +179,7 @@ class _SignupFormState extends ConsumerState<SignupForm>{
         signUpControllerProvider.select((value) => value.isSignUpSuccess),
             (_, next) { //_la gia tri cu, next la gia tri moi
           if (next != null && next) {
-            //
+            context.push('/signup_verify');
           }
         });
   }

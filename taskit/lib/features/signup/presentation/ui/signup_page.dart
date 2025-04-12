@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:taskit/features/signup/presentation/ui/widget/back_button.dart';
-import 'package:taskit/features/signup/presentation/ui/widget/signup_button.dart';
 import 'package:taskit/features/signup/presentation/ui/widget/signup_form.dart';
-import 'package:taskit/shared/extension/string_hardcoded.dart';
+import 'package:taskit/shared/presentation/widget/custom_taskit_button.dart';
 
-import '../controller/signup_controller.dart';
 
 class SignupPage extends ConsumerStatefulWidget{
 
@@ -16,11 +13,9 @@ class SignupPage extends ConsumerStatefulWidget{
   ConsumerState<ConsumerStatefulWidget> createState() =>_SignupPageState();
 }
 
-//man hinh rebuild khi co thay doi tu controller
 class _SignupPageState extends ConsumerState<SignupPage>{
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       body: Scaffold(
         backgroundColor: Theme.of(context).colorScheme.secondaryContainer,
@@ -68,7 +63,7 @@ class _SignupPageState extends ConsumerState<SignupPage>{
                               ),
                               Align(
                                 alignment: AlignmentDirectional(-1.0, 0.0),
-                                child: SignUpBackButton(onPressed: (){}),
+                                child: TaskitBackButton(onPressed: ()=>context.pop()),
                               ),
                             ],
                           ),
