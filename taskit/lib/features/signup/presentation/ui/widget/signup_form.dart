@@ -123,7 +123,7 @@ class _SignupFormState extends ConsumerState<SignupForm>{
             Padding(
               padding: EdgeInsetsDirectional.fromSTEB(
                   0.0, 0.0, 0.0, 16.0),
-              child: TaskitFillButton(onPressed: ()=>_onSubmit(),text: "Sign Up"),
+              child: TaskitElevationButton(onPressed: ()=>_onSubmit(),text: "Sign Up"),
             ),
             // You will have to add an action on this rich text to go to your login page.
             Padding(

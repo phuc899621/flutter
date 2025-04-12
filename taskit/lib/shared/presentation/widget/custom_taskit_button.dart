@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class TaskitFillButton extends ConsumerWidget{
+class TaskitElevationButton extends ConsumerWidget{
   final String text;
   final VoidCallback onPressed;
 
-  const TaskitFillButton({super.key,this.text="",required this.onPressed});
+  const TaskitElevationButton({super.key,this.text="",required this.onPressed});
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return ElevatedButton(

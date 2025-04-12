@@ -96,7 +96,7 @@ class TaskitOutLineTextFieldWithPassword extends ConsumerStatefulWidget{
 
 }
 class _TaskitOutLineTextFieldWithPasswordState extends ConsumerState<TaskitOutLineTextFieldWithPassword>{
-  bool _obscureText=false;
+  bool _obscureText=true;
   void _toggleObscureText() {
     setState(() {
       _obscureText = !_obscureText;
@@ -170,13 +170,13 @@ class _TaskitOutLineTextFieldWithPasswordState extends ConsumerState<TaskitOutLi
             .colorScheme
             .primaryContainer,
         suffixIcon: InkWell(
-          onTap: () => _obscureText = !_obscureText,
+          onTap: () => _toggleObscureText(),
           focusNode:
           FocusNode(skipTraversal: true),
           child: Icon(
             _obscureText
-                ? Icons.visibility_outlined
-                : Icons.visibility_off_outlined,
+                ? Icons.visibility_off_outlined
+                : Icons.visibility_outlined,
             color: Theme
                 .of(context)
                 .colorScheme

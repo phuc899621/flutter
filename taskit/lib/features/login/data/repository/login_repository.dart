@@ -23,9 +23,9 @@ class LoginRepository
   LoginRepository(this._loginApi);
 
   @override
-  Future<BaseResponse<LoginData>> login(LoginRequest data) {
+  Future<BaseResponse<LoginData>> login(LoginRequest data) async {
     try{
-      final response = _loginApi.login(data);
+      final response = await _loginApi.login(data);
       return response;
     }on DioException catch(e, s){
       throw mapDioExceptionToFailure(e, s);

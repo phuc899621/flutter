@@ -35,7 +35,7 @@ class LoginService implements ILoginService,ILoginModelMapper{
     } catch (e, s) {
       if (e is Exception) {
         return Error(Failure(
-          message: e.toString(),
+          message:e.toString(),
           exception: e,
           stackTrace: s,
         ));

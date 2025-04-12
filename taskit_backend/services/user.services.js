@@ -1,4 +1,5 @@
 const UserModel=require('../model/user.model');
+const bcrypt = require("bcryptjs");
 class UserServices{
     static async signup(email,name,password){
         try{
@@ -8,6 +9,17 @@ class UserServices{
                 password:password,
             });
             return await createUser.save();
+        }catch(e){
+            throw e;
+        }
+    }
+    static async resetPassword(email,newPassword){
+        try{
+            const user=await this.findUserByEmail(email);
+            const salt = await bcrypt.genSalt(10);
+            user.password = await bcrypt.hash(newPassword, salt);
+            await user.save();
+            return user;
         }catch(e){
             throw e;
         }

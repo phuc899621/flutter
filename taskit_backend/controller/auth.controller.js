@@ -146,6 +146,12 @@ const jwt = require("jsonwebtoken");
     exports.forgotPasswordVerifyEmail=async(req,res)=>{
         try{
             const {email} = req.body;
+            if(!email){
+                return res.status(400).json({
+                    message: "Please enter your email!",
+                    data:{}
+                });
+            }
             const user=await UserServices.findUserByEmail(email);
             const userOtp=await OtpServices.findOtpByEmail(email);
             if(!user){
@@ -163,9 +169,7 @@ const jwt = require("jsonwebtoken");
             await OtpServices.createOtpUser(email,otp,resetToken);
             return res.status(201).json({
                 message: "Verify otp has been send to your email",
-                data:{
-                    email:email
-                }
+                data:{}
             });
         
         }catch(e){
@@ -189,7 +193,6 @@ const jwt = require("jsonwebtoken");
                 return res.status(201).json({
                     message: "Verify successfully!",
                     data:{
-                        email:email,
                         resetToken:userOtp.resetToken,
                     }
                 });
@@ -208,8 +211,27 @@ const jwt = require("jsonwebtoken");
     }
     exports.resetPassword=async(req,res)=>{
         try{
-            const {email,password,passwordCOnfirm} = req.body;
-            const resetToken=req.headers['Reset-Token'];
+            const resetToken=req.headers['reset-token'];
+            if(!resetToken){
+                return res.status(400).json({
+                    message: "Reset token needed!",
+                    data:{}
+                }); 
+            }
+            const {email,password,passwordConfirm} = req.body;
+            if(!email || !password || !passwordConfirm){
+                return res.status(400).json({
+                    message: "Please enter required information!",
+                    data:{}
+                }); 
+            }
+            if(password!=passwordConfirm){
+                return res.status(400).json({
+                    message: "Passwords do not match",
+                    data:{}
+                }); 
+            }
+            
             const userOtp=await OtpServices.findOtpByEmail(email);
             if(!userOtp){
                 return res.status(400).json({
@@ -217,23 +239,22 @@ const jwt = require("jsonwebtoken");
                     data:{}
                 });
             }
-            if(await OtpServices.compareOtp(otp,userOtp.otp)){
-                return res.status(201).json({
-                    message: "Verify successfully!",
-                    data:{
-                        email:email,
-                        resetToken:userOtp.resetToken,
-                    }
+            if(userOtp.resetToken!=resetToken){
+                return res.status(400).json({
+                    message: "Invalid reset token!",
+                    data:{}
                 });
             }
-            return res.status(400).json({
-                message: "Wrong otp!",
+            await UserServices.resetPassword(email,password);
+            await OtpServices.deleteOtpByEmail(email);
+            return res.status(201).json({
+                message: "Reset password successfully!",
                 data:{}
             });
         
         }catch(e){
             return res.status(500).json({
-                message: "An error occurred when verify otp for forgot password: "+e.message,
+                message: "An error occurred when reset password: "+e.message,
                 data: {}
             });
         }

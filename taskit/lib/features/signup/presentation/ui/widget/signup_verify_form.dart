@@ -442,7 +442,7 @@ class _SignupVerifyFormState extends ConsumerState<SignupVerifyForm>{
               ),
               Padding(
                 padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 16.0),
-                child: TaskitFillButton(text: "Verify",onPressed: ()=>{
+                child: TaskitElevationButton(text: "Verify",onPressed: ()=>{
                   _onVerify()
                 })
               ),

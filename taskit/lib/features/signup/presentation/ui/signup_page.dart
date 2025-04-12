@@ -17,7 +17,6 @@ class _SignupPageState extends ConsumerState<SignupPage>{
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Scaffold(
         backgroundColor: Theme.of(context).colorScheme.secondaryContainer,
         body: SafeArea(
           top: true,
@@ -40,35 +39,14 @@ class _SignupPageState extends ConsumerState<SignupPage>{
                       children: [
                         Container(
                           width: double.infinity,
-                          height: 46.76,
+                          constraints: BoxConstraints(
+                            maxWidth: 430.0,
+                          ),
                           decoration: BoxDecoration(
                             color: Theme.of(context).colorScheme.secondaryContainer,
-                            borderRadius: BorderRadius.only(
-                              bottomLeft: Radius.circular(16.0),
-                              bottomRight: Radius.circular(16.0),
-                              topLeft: Radius.circular(0.0),
-                              topRight: Radius.circular(0.0),
-                            ),
                           ),
-                          alignment: AlignmentDirectional(-1.0, 0.0),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.max,
-                            children: [
-                              Container(
-                                width: 32.0,
-                                height: 100.0,
-                                decoration: BoxDecoration(
-                                  color: Theme.of(context).colorScheme.secondaryContainer,
-                                ),
-                              ),
-                              Align(
-                                alignment: AlignmentDirectional(-1.0, 0.0),
-                                child: TaskitBackButton(onPressed: ()=>context.pop()),
-                              ),
-                            ],
-                          ),
-                        ),
-                        const SignupForm(),
+                          child: const SignupForm(),
+                        )
                       ],
                     ),
                   ),
@@ -77,8 +55,6 @@ class _SignupPageState extends ConsumerState<SignupPage>{
             ],
           ),
         ),
-      ),
-
     );
   }
 

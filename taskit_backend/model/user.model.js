@@ -3,7 +3,7 @@ const db = require("../config/db");
 const bcrypt = require("bcryptjs");
 const { use } = require("../routers/user.router");
 const { Schema } = mongoose;
-const userScheme = new Schema({
+const userSchema = new Schema({
   email: {
     type: String,
     required: true,
@@ -23,14 +23,13 @@ const userScheme = new Schema({
   },
 });
 
-
-userScheme.statics.findUserByEmail=async function(email){
+userSchema.statics.findUserByEmail=async function(email){
   const user = await this.findOne({ email });
   return user;
 }
-userScheme.statics.comparePassword=async function(password,savePassword){
+userSchema.statics.comparePassword=async function(password,savePassword){
   return await bcrypt.compare(password,savePassword);
 }
 
-const UserModel = db.model("user", userScheme);
+const UserModel = db.model("user", userSchema);
 module.exports = UserModel;

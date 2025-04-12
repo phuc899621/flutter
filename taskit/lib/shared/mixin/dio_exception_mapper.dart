@@ -38,10 +38,14 @@ mixin DioExceptionMapper {
         );
       case DioExceptionType.badResponse:
         final response=e.response?.data;
-        String message=_getErrorMessageForStatusCode(e.response?.statusCode);
-        if(response is Map<String,dynamic>){
-          message=response['message'];
+        String message="Bad response with API server. Please try again later";
+        if (response is Map<String, dynamic>) {
+          final dynamic msg = response['message'];
+          if (msg is String && msg.isNotEmpty) {
+            message = msg;
+          }
         }
+
         return Failure(
           message: message,
           exception: e,
