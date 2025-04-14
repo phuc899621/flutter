@@ -6,5 +6,5 @@ router.post('/auth/signup-verify',AuthController.verifyEmail);
 router.post('/auth/login',AuthController.login);
 router.post('/auth/forgot-password',AuthController.forgotPasswordVerifyEmail);
 router.post('/auth/forgot-password/verify',AuthController.forgotPasswordVerifyOtp);
-router.put('/auth/reset-password',AuthController.resetPassword);
+router.put('/auth/forgot-password/reset',AuthController.resetPassword);
 module.exports=router;
