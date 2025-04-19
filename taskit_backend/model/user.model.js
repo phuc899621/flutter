@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 const db = require("../config/db");
 const bcrypt = require("bcryptjs");
 const { use } = require("../routers/user.router");
+const HTTPError=require("../utils/http.error");
 const { Schema } = mongoose;
 const userSchema = new Schema({
   email: {

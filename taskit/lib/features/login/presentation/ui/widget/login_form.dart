@@ -9,6 +9,8 @@ import 'package:taskit/shared/presentation/widget/custom_taskit_textfield.dart';
 import '../../controller/login_controller.dart';
 
 class LoginForm extends ConsumerStatefulWidget{
+  const LoginForm({super.key});
+
   @override
   ConsumerState<ConsumerStatefulWidget> createState() =>_LoginFormState();
 
@@ -36,9 +38,6 @@ class _LoginFormState extends ConsumerState<LoginForm>{
   @override
   Widget build(BuildContext context) {
     _listener();
-
-    final loginController=ref.watch(loginControllerProvider.notifier);
-    final state=ref.watch(loginControllerProvider);
     return Align(
         alignment: AlignmentDirectional(0.0, 0.0),
         child: Padding(

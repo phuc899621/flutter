@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -6,6 +7,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:taskit/shared/presentation/widget/custom_taskit_button.dart';
 
+import '../../../../../shared/presentation/widget/custom_taskit_textfield.dart';
 import '../../controller/signup_controller.dart';
 
 class SignupVerifyForm extends ConsumerStatefulWidget{
@@ -143,297 +145,30 @@ class _SignupVerifyFormState extends ConsumerState<SignupVerifyForm>{
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Expanded(
-                        child: Container(
+                        child: SizedBox(
                           width: 200.0,
-                          child: TextFormField(
-                            controller: _otpController0,
-                            autofocus: true,
-                            onChanged: (value){
-                              if(value.length==1){
-                                FocusScope.of(context).nextFocus();
-                              }
-                            },
-                            obscureText: false,
-                            decoration: InputDecoration(
-                              isDense: true,
-                              labelStyle: Theme.of(context).textTheme.labelMedium?.copyWith(
-                                fontFamily: 'Inter',
-                                letterSpacing: 0.0,
-                              ),
-                              hintStyle: Theme.of(context).textTheme
-                                  .labelMedium?.copyWith(
-                                fontFamily: 'Inter',
-                                letterSpacing: 0.0,
-                              ),
-                              enabledBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: Theme.of(context).colorScheme.background,
-                                  width: 2.0,
-                                ),
-                                borderRadius: BorderRadius.circular(12.0),
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: Theme.of(context).primaryColor,
-                                  width: 2.0,
-                                ),
-                                borderRadius: BorderRadius.circular(12.0),
-                              ),
-                              errorBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: Color(0x00000000),
-                                  width: 2.0,
-                                ),
-                                borderRadius: BorderRadius.circular(12.0),
-                              ),
-                              focusedErrorBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: Color(0x00000000),
-                                  width: 2.0,
-                                ),
-                                borderRadius: BorderRadius.circular(12.0),
-                              ),
-                              filled: true,
-                              fillColor: Theme.of(context).colorScheme.secondaryContainer,
-                            ),
-                            style: Theme.of(context).textTheme.labelMedium?.copyWith(
-                              fontFamily: 'Inter',
-                              letterSpacing: 0.0,
-                            ),
-                            maxLengthEnforcement: MaxLengthEnforcement.enforced,
-                            buildCounter: (context,
-                                {required currentLength,
-                                  required isFocused,
-                                  maxLength}) =>
-                            null,
-                            keyboardType: TextInputType.number,
-                            cursorColor:
-                            Theme.of(context).colorScheme.onPrimaryContainer,
-                            inputFormatters: [
-                              FilteringTextInputFormatter.digitsOnly,
-                              LengthLimitingTextInputFormatter(1),
-                            ],
-                          ),
+                          child: TaskitCodeTextField(controller: _otpController0),
                         ),
                       ),
                       SizedBox(width: 30.0),
                       Expanded(
-                        child: Container(
+                        child: SizedBox(
                           width: 200.0,
-                          child: TextFormField(
-                            controller: _otpController1,
-                            autofocus: true,
-                            onChanged: (value){
-                              if(value.length==1){
-                                FocusScope.of(context).nextFocus();
-                              }
-                            },
-                            obscureText: false,
-                            decoration: InputDecoration(
-                              isDense: true,
-                              labelStyle: Theme.of(context).textTheme.labelMedium?.copyWith(
-                                fontFamily: 'Inter',
-                                letterSpacing: 0.0,
-                              ),
-                              hintStyle: Theme.of(context).textTheme
-                                  .labelMedium?.copyWith(
-                                fontFamily: 'Inter',
-                                letterSpacing: 0.0,
-                              ),
-                              enabledBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: Theme.of(context).colorScheme.background,
-                                  width: 2.0,
-                                ),
-                                borderRadius: BorderRadius.circular(12.0),
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: Theme.of(context).primaryColor,
-                                  width: 2.0,
-                                ),
-                                borderRadius: BorderRadius.circular(12.0),
-                              ),
-                              errorBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: Color(0x00000000),
-                                  width: 2.0,
-                                ),
-                                borderRadius: BorderRadius.circular(12.0),
-                              ),
-                              focusedErrorBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: Color(0x00000000),
-                                  width: 2.0,
-                                ),
-                                borderRadius: BorderRadius.circular(12.0),
-                              ),
-                              filled: true,
-                              fillColor: Theme.of(context).colorScheme.secondaryContainer,
-                            ),
-                            style: Theme.of(context).textTheme.labelMedium?.copyWith(
-                              fontFamily: 'Inter',
-                              letterSpacing: 0.0,
-                            ),
-                            maxLengthEnforcement: MaxLengthEnforcement.enforced,
-                            buildCounter: (context,
-                                {required currentLength,
-                                  required isFocused,
-                                  maxLength}) =>
-                            null,
-                            keyboardType: TextInputType.number,
-                            cursorColor:
-                            Theme.of(context).colorScheme.onPrimaryContainer,
-                            inputFormatters: [
-                              FilteringTextInputFormatter.digitsOnly,
-                              LengthLimitingTextInputFormatter(1),
-                            ],
-                          ),
+                          child: TaskitCodeTextField(controller: _otpController1),
                         ),
                       ),
                       SizedBox(width: 30.0),
                       Expanded(
-                        child: Container(
+                        child: SizedBox(
                           width: 200.0,
-                          child: TextFormField(
-                            controller: _otpController2,
-                            autofocus: true,
-                            obscureText: false,
-                            onChanged: (value){
-                              if(value.length==1){
-                                FocusScope.of(context).nextFocus();
-                              }
-                            },
-                            decoration: InputDecoration(
-                              isDense: true,
-                              labelStyle: Theme.of(context).textTheme.labelMedium?.copyWith(
-                                fontFamily: 'Inter',
-                                letterSpacing: 0.0,
-                              ),
-                              hintStyle: Theme.of(context).textTheme
-                                  .labelMedium?.copyWith(
-                                fontFamily: 'Inter',
-                                letterSpacing: 0.0,
-                              ),
-                              enabledBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: Theme.of(context).colorScheme.background,
-                                  width: 2.0,
-                                ),
-                                borderRadius: BorderRadius.circular(12.0),
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: Theme.of(context).primaryColor,
-                                  width: 2.0,
-                                ),
-                                borderRadius: BorderRadius.circular(12.0),
-                              ),
-                              errorBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: Color(0x00000000),
-                                  width: 2.0,
-                                ),
-                                borderRadius: BorderRadius.circular(12.0),
-                              ),
-                              focusedErrorBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: Color(0x00000000),
-                                  width: 2.0,
-                                ),
-                                borderRadius: BorderRadius.circular(12.0),
-                              ),
-                              filled: true,
-                              fillColor: Theme.of(context).colorScheme.secondaryContainer,
-                            ),
-                            style: Theme.of(context).textTheme.labelMedium?.copyWith(
-                              fontFamily: 'Inter',
-                              letterSpacing: 0.0,
-                            ),
-                            maxLengthEnforcement: MaxLengthEnforcement.enforced,
-                            buildCounter: (context,
-                                {required currentLength,
-                                  required isFocused,
-                                  maxLength}) =>
-                            null,
-                            keyboardType: TextInputType.number,
-                            cursorColor:
-                            Theme.of(context).colorScheme.onPrimaryContainer,
-                            inputFormatters: [
-                              FilteringTextInputFormatter.digitsOnly,
-                              LengthLimitingTextInputFormatter(1),
-                            ],
-                          ),
+                          child: TaskitCodeTextField(controller: _otpController2),
                         ),
                       ),
                       SizedBox(width: 30.0),
                       Expanded(
-                        child: Container(
+                        child: SizedBox(
                           width: 200.0,
-                          child: TextFormField(
-                            controller: _otpController3,
-                            autofocus: true,
-                            obscureText: false,
-                            decoration: InputDecoration(
-                              isDense: true,
-                              labelStyle: Theme.of(context).textTheme.labelMedium?.copyWith(
-                                fontFamily: 'Inter',
-                                letterSpacing: 0.0,
-                              ),
-                              hintStyle: Theme.of(context).textTheme
-                                  .labelMedium?.copyWith(
-                                fontFamily: 'Inter',
-                                letterSpacing: 0.0,
-                              ),
-                              enabledBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: Theme.of(context).colorScheme.background,
-                                  width: 2.0,
-                                ),
-                                borderRadius: BorderRadius.circular(12.0),
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: Theme.of(context).primaryColor,
-                                  width: 2.0,
-                                ),
-                                borderRadius: BorderRadius.circular(12.0),
-                              ),
-                              errorBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: Color(0x00000000),
-                                  width: 2.0,
-                                ),
-                                borderRadius: BorderRadius.circular(12.0),
-                              ),
-                              focusedErrorBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: Color(0x00000000),
-                                  width: 2.0,
-                                ),
-                                borderRadius: BorderRadius.circular(12.0),
-                              ),
-                              filled: true,
-                              fillColor: Theme.of(context).colorScheme.secondaryContainer,
-                            ),
-                            style: Theme.of(context).textTheme.labelMedium?.copyWith(
-                              fontFamily: 'Inter',
-                              letterSpacing: 0.0,
-                            ),
-                            maxLengthEnforcement: MaxLengthEnforcement.enforced,
-                            buildCounter: (context,
-                                {required currentLength,
-                                  required isFocused,
-                                  maxLength}) =>
-                            null,
-                            keyboardType: TextInputType.number,
-                            cursorColor:
-                            Theme.of(context).colorScheme.onPrimaryContainer,
-                            inputFormatters: [
-                              FilteringTextInputFormatter.digitsOnly,
-                              LengthLimitingTextInputFormatter(1),
-                            ],
-                          ),
+                          child: TaskitCodeTextField(controller: _otpController3),
                         ),
                       ),
                     ],
@@ -472,6 +207,8 @@ class _SignupVerifyFormState extends ConsumerState<SignupVerifyForm>{
                         color: Theme.of(context).primaryColor,
                         letterSpacing: 0.0,
                       ),
+                      recognizer: TapGestureRecognizer()
+                        ..onTap = () => _onVerify(),
                     )
                   ],
                   style: Theme.of(context).textTheme.labelMedium?.copyWith(

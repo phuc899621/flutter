@@ -40,7 +40,7 @@ class TaskitBackButton extends ConsumerWidget{
         borderRadius: BorderRadius.circular(8.0),
       ),
       child: IconButton(
-        iconSize: 46.2,
+        iconSize: 50,
         icon: Icon(
           Icons.arrow_back,
           color: Colors.white,

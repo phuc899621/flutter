@@ -19,7 +19,7 @@ const otpScheme = new Schema({
 });
 otpScheme.statics.deleteOtpByEmail = async function (email){
   const del=await this.deleteOne({email})
-  return del!==null;
+  return del.deletedCount>0;
 }
 otpScheme.statics.findOtpByEmail=async function (email){
   const otp=await this.findOne({email});

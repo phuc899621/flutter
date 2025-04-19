@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:taskit/config/app.dart';
+import 'package:taskit/config/app/app.dart';
 
 BaseOptions buildBaseOptions(){
   return BaseOptions(

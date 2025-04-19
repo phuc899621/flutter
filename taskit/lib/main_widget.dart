@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:taskit/config/app_color.dart';
+import 'package:taskit/config/app/app_color.dart';
 import 'package:taskit/config/routers/router_provider.dart';
 
 class MainWidget extends ConsumerWidget {

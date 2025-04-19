@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -197,5 +198,88 @@ class _TaskitOutLineTextFieldWithPasswordState extends ConsumerState<TaskitOutLi
     );
   }
 
+
+
+}
+
+class TaskitCodeTextField extends ConsumerWidget{
+  final TextEditingController controller;
+  const TaskitCodeTextField({
+    super.key,
+    required this.controller,
+  });
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    return TextFormField(
+      controller: controller,
+      autofocus: true,
+      onChanged: (value){
+        if(value.length==1){
+          FocusScope.of(context).nextFocus();
+        }
+      },
+      obscureText: false,
+      decoration: InputDecoration(
+        isDense: true,
+        labelStyle: Theme.of(context).textTheme.labelMedium?.copyWith(
+          fontFamily: 'Inter',
+          letterSpacing: 0.0,
+        ),
+        hintStyle: Theme.of(context).textTheme
+            .labelMedium?.copyWith(
+          fontFamily: 'Inter',
+          letterSpacing: 0.0,
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderSide: BorderSide(
+            color: Theme.of(context).colorScheme.background,
+            width: 2.0,
+          ),
+          borderRadius: BorderRadius.circular(12.0),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide(
+            color: Theme.of(context).primaryColor,
+            width: 2.0,
+          ),
+          borderRadius: BorderRadius.circular(12.0),
+        ),
+        errorBorder: OutlineInputBorder(
+          borderSide: BorderSide(
+            color: Color(0x00000000),
+            width: 2.0,
+          ),
+          borderRadius: BorderRadius.circular(12.0),
+        ),
+        focusedErrorBorder: OutlineInputBorder(
+          borderSide: BorderSide(
+            color: Color(0x00000000),
+            width: 2.0,
+          ),
+          borderRadius: BorderRadius.circular(12.0),
+        ),
+        filled: true,
+        fillColor: Theme.of(context).colorScheme.secondaryContainer,
+      ),
+      style: Theme.of(context).textTheme.labelMedium?.copyWith(
+        fontFamily: 'Inter',
+        letterSpacing: 0.0,
+      ),
+      maxLengthEnforcement: MaxLengthEnforcement.enforced,
+      buildCounter: (context,
+          {required currentLength,
+            required isFocused,
+            maxLength}) =>
+      null,
+      keyboardType: TextInputType.number,
+      cursorColor:
+      Theme.of(context).colorScheme.onPrimaryContainer,
+      inputFormatters: [
+        FilteringTextInputFormatter.digitsOnly,
+        LengthLimitingTextInputFormatter(1),
+      ],
+    );
+
+  }
 
 }

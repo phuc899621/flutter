@@ -4,8 +4,10 @@ import 'package:go_router/go_router.dart';
 import 'package:taskit/config/routers/router_name.dart';
 import 'package:taskit/features/signup/presentation/ui/signup_veriry_page.dart';
 
+import '../../features/forgot_password/presentation/ui/forgot_password_page.dart';
 import '../../features/login/presentation/ui/login_page.dart';
 import '../../features/signup/presentation/ui/signup_page.dart';
+import '../app/animation/router_anim.dart';
 
 // Provider GoRouter để quản lý việc điều hướng trong ứng dụng
 final goRouterProvider = Provider<GoRouter>(
@@ -20,33 +22,26 @@ final goRouterProvider = Provider<GoRouter>(
           GoRoute(
             path: '/login',
             name: loginRoute,
-            builder: (context, state) => const LoginPage(),
+            pageBuilder: (context, state) =>
+                TaskitAnimation.slidePageTransition(context, state, const LoginPage()),
           ),
           GoRoute(
             path: '/signup',
             name: signUpRoute,
-            pageBuilder: (context, state) => CustomTransitionPage(
-                child: SignupPage(),
-                transitionDuration: const Duration(milliseconds: 800),
-                transitionsBuilder: (context, animation, secondaryAnimation, child) {
-                  final curved = CurvedAnimation(
-                  parent: animation,
-                  curve: Curves.easeInOut,
-                  );
-                  return SlideTransition(
-                        position: Tween<Offset>(
-                        begin: const Offset(1.0, 0.0),
-                    end: Offset.zero,
-                    ).animate(curved),
-                    child: child,
-                  );
-            },
-          ),
+            pageBuilder: (context, state) =>
+                TaskitAnimation.slidePageTransition(context, state, const SignupPage()),
           ),
           GoRoute(
             path: '/signup_verify',
             name: signUpVerifyRoute,
-            builder: (context, state) => const SignupVerifyPage(),
+            pageBuilder: (context, state) =>
+                TaskitAnimation.slidePageTransition(context, state, const SignupVerifyPage()),
+          ),
+          GoRoute(
+            path: '/forgot_password',
+            name: forgotPasswordRoute,
+            pageBuilder: (context, state) =>
+                TaskitAnimation.slidePageTransition(context, state, const ForgotPasswordPage()),
           ),
 
         ],
