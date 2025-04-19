@@ -12,9 +12,6 @@ part of 'forgot_pass_req.dart';
 
 // dart format off
 T _$identity<T>(T value) => value;
-ForgotPassRequest _$ForgotPassRequestFromJson(Map<String, dynamic> json) {
-  return _ForgotPassReq.fromJson(json);
-}
 
 /// @nodoc
 mixin _$ForgotPassRequest {
@@ -84,10 +81,10 @@ class _$ForgotPassRequestCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _ForgotPassReq implements ForgotPassRequest {
-  const _ForgotPassReq({required this.email});
-  factory _ForgotPassReq.fromJson(Map<String, dynamic> json) =>
-      _$ForgotPassReqFromJson(json);
+class _ForgotPassRequest implements ForgotPassRequest {
+  const _ForgotPassRequest({required this.email});
+  factory _ForgotPassRequest.fromJson(Map<String, dynamic> json) =>
+      _$ForgotPassRequestFromJson(json);
 
   @override
   final String email;
@@ -97,12 +94,12 @@ class _ForgotPassReq implements ForgotPassRequest {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$ForgotPassReqCopyWith<_ForgotPassReq> get copyWith =>
-      __$ForgotPassReqCopyWithImpl<_ForgotPassReq>(this, _$identity);
+  _$ForgotPassRequestCopyWith<_ForgotPassRequest> get copyWith =>
+      __$ForgotPassRequestCopyWithImpl<_ForgotPassRequest>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$ForgotPassReqToJson(
+    return _$ForgotPassRequestToJson(
       this,
     );
   }
@@ -111,7 +108,7 @@ class _ForgotPassReq implements ForgotPassRequest {
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _ForgotPassReq &&
+            other is _ForgotPassRequest &&
             (identical(other.email, email) || other.email == email));
   }
 
@@ -126,23 +123,23 @@ class _ForgotPassReq implements ForgotPassRequest {
 }
 
 /// @nodoc
-abstract mixin class _$ForgotPassReqCopyWith<$Res>
+abstract mixin class _$ForgotPassRequestCopyWith<$Res>
     implements $ForgotPassRequestCopyWith<$Res> {
-  factory _$ForgotPassReqCopyWith(
-          _ForgotPassReq value, $Res Function(_ForgotPassReq) _then) =
-      __$ForgotPassReqCopyWithImpl;
+  factory _$ForgotPassRequestCopyWith(
+          _ForgotPassRequest value, $Res Function(_ForgotPassRequest) _then) =
+      __$ForgotPassRequestCopyWithImpl;
   @override
   @useResult
   $Res call({String email});
 }
 
 /// @nodoc
-class __$ForgotPassReqCopyWithImpl<$Res>
-    implements _$ForgotPassReqCopyWith<$Res> {
-  __$ForgotPassReqCopyWithImpl(this._self, this._then);
+class __$ForgotPassRequestCopyWithImpl<$Res>
+    implements _$ForgotPassRequestCopyWith<$Res> {
+  __$ForgotPassRequestCopyWithImpl(this._self, this._then);
 
-  final _ForgotPassReq _self;
-  final $Res Function(_ForgotPassReq) _then;
+  final _ForgotPassRequest _self;
+  final $Res Function(_ForgotPassRequest) _then;
 
   /// Create a copy of ForgotPassRequest
   /// with the given fields replaced by the non-null parameter values.
@@ -151,7 +148,7 @@ class __$ForgotPassReqCopyWithImpl<$Res>
   $Res call({
     Object? email = null,
   }) {
-    return _then(_ForgotPassReq(
+    return _then(_ForgotPassRequest(
       email: null == email
           ? _self.email
           : email // ignore: cast_nullable_to_non_nullable
