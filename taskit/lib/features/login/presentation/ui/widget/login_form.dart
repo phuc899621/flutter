@@ -257,6 +257,7 @@ class _LoginFormState extends ConsumerState<LoginForm>{
           (_,next){
             if (next != null && next) {
               ref.read(loginControllerProvider.notifier).saveToken();
+              context.go('/list');
             }
       });
   }

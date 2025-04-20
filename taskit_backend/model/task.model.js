@@ -109,8 +109,10 @@ taskSchema.statics.findTaskById = async function (taskId) {
     const task = await this.findById(taskId);
     return task;
 }
-taskSchema.statics.findAllTaskByUserId = async function (userId) {
-    const tasks = await this.find({ userId }).populate('userId', 'name email');
+taskSchema.statics.findAllTaskByUserId = async function (userId, {status}) {
+    const query = { userId };
+    if (status) query.status = status;
+    const tasks = await this.find(query).populate('userId', 'name email');
     return tasks;
 }
 taskSchema.statics.findAllSubTask = async function (taskId) {

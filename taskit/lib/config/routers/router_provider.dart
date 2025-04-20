@@ -5,7 +5,11 @@ import 'package:taskit/config/routers/router_name.dart';
 import 'package:taskit/features/signup/presentation/ui/signup_veriry_page.dart';
 
 import '../../features/forgot_password/presentation/ui/forgot_password_page.dart';
+import '../../features/home/presentation/ui/home_page.dart';
+import '../../features/list/presentation/ui/list_page.dart';
 import '../../features/login/presentation/ui/login_page.dart';
+import '../../features/main/presentation/ui/main_page.dart';
+import '../../features/setting/presentation/ui/setting_page.dart';
 import '../../features/signup/presentation/ui/signup_page.dart';
 import '../app/animation/router_anim.dart';
 
@@ -15,8 +19,6 @@ final goRouterProvider = Provider<GoRouter>(
       return GoRouter(
         //URL mặc định khi ứng dụng mở lần đầu
         initialLocation: '/login',
-
-
         // Định nghĩa các routes của ứng dụng
         routes: [
           GoRoute(
@@ -43,7 +45,45 @@ final goRouterProvider = Provider<GoRouter>(
             pageBuilder: (context, state) =>
                 TaskitAnimation.slidePageTransition(context, state, const ForgotPasswordPage()),
           ),
+          StatefulShellRoute.indexedStack(
+            builder: (context, state, navigationShell) => MainPage(
+              navigationShell: navigationShell,
+            ),
+            branches: [
+              StatefulShellBranch(
+                routes: [
+                  GoRoute(
+                    path: '/home',
+                    name: homeRoute,
+                    pageBuilder: (context, state)
+                    =>TaskitAnimation.slidePageTransition(context, state, const HomePage()),
+                   ),
+                  ],
+                  ),
+                StatefulShellBranch(
+                  routes: [
+                  GoRoute(
+                    path: '/list',
+                    name: listRoute,
+                    pageBuilder: (context, state)
+                    => TaskitAnimation.slidePageTransition(context, state, const ListPage()),
+                  ),
+                  ],
+                ),
+                  StatefulShellBranch(
+                  routes: [
+                  GoRoute(
+                    path: '/setting',
+                    name: settingRoute,
+                    pageBuilder: (context, state)
+                    => TaskitAnimation.slidePageTransition(context, state, const SettingPage())
+                  ),
 
-        ],
-      );
+          ],
+
+          ),
+          ],
+          ),
+          ],
+          );
     });

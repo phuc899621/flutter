@@ -259,3 +259,38 @@ const jwt = require("jsonwebtoken");
             });
         }
     }
+
+    exports.verifyLogin=async(req,res)=>{
+        try{
+            const token=req.headers['authorization'].split(' ')[1];
+            if(!token){
+                return res.status(400).json({
+                    message: "Token needed",
+                    data:{}
+                });
+            }
+            const decoded=jwt.verify(token,process.env.JWT_SECRET || "899621");
+
+            const user=await UserServices.findUserByEmail(decoded.email);
+            if(!user){
+                return res.status(400).json({
+                    message: "User not found!",
+                    data:{}
+                });
+            }
+            return res.status(200).json({
+                message: "Token is valid!",
+                data:{
+                    user:{
+                        name:user.name,
+                        email:user.email,
+                    }
+                }
+            });
+        }catch(e){
+            return res.status(500).json({
+                message: "An error occurred when verify token: "+e.message,
+                data: {}
+            });
+        }   
+    }
