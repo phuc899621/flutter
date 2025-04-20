@@ -18,7 +18,9 @@ mixin _$LoginState {
   bool get isLoading;
   bool? get isLoginSuccess;
   LoginModel? get loginModel;
+  String? get token;
   String? get error;
+  LoginVerifyModel? get loginVerifyModel;
   Map<String, dynamic> get loginForm;
   bool get isPasswordVisibility;
 
@@ -40,7 +42,10 @@ mixin _$LoginState {
                 other.isLoginSuccess == isLoginSuccess) &&
             (identical(other.loginModel, loginModel) ||
                 other.loginModel == loginModel) &&
+            (identical(other.token, token) || other.token == token) &&
             (identical(other.error, error) || other.error == error) &&
+            (identical(other.loginVerifyModel, loginVerifyModel) ||
+                other.loginVerifyModel == loginVerifyModel) &&
             const DeepCollectionEquality().equals(other.loginForm, loginForm) &&
             (identical(other.isPasswordVisibility, isPasswordVisibility) ||
                 other.isPasswordVisibility == isPasswordVisibility));
@@ -52,13 +57,15 @@ mixin _$LoginState {
       isLoading,
       isLoginSuccess,
       loginModel,
+      token,
       error,
+      loginVerifyModel,
       const DeepCollectionEquality().hash(loginForm),
       isPasswordVisibility);
 
   @override
   String toString() {
-    return 'LoginState(isLoading: $isLoading, isLoginSuccess: $isLoginSuccess, loginModel: $loginModel, error: $error, loginForm: $loginForm, isPasswordVisibility: $isPasswordVisibility)';
+    return 'LoginState(isLoading: $isLoading, isLoginSuccess: $isLoginSuccess, loginModel: $loginModel, token: $token, error: $error, loginVerifyModel: $loginVerifyModel, loginForm: $loginForm, isPasswordVisibility: $isPasswordVisibility)';
   }
 }
 
@@ -72,11 +79,14 @@ abstract mixin class $LoginStateCopyWith<$Res> {
       {bool isLoading,
       bool? isLoginSuccess,
       LoginModel? loginModel,
+      String? token,
       String? error,
+      LoginVerifyModel? loginVerifyModel,
       Map<String, dynamic> loginForm,
       bool isPasswordVisibility});
 
   $LoginModelCopyWith<$Res>? get loginModel;
+  $LoginVerifyModelCopyWith<$Res>? get loginVerifyModel;
 }
 
 /// @nodoc
@@ -94,7 +104,9 @@ class _$LoginStateCopyWithImpl<$Res> implements $LoginStateCopyWith<$Res> {
     Object? isLoading = null,
     Object? isLoginSuccess = freezed,
     Object? loginModel = freezed,
+    Object? token = freezed,
     Object? error = freezed,
+    Object? loginVerifyModel = freezed,
     Object? loginForm = null,
     Object? isPasswordVisibility = null,
   }) {
@@ -111,10 +123,18 @@ class _$LoginStateCopyWithImpl<$Res> implements $LoginStateCopyWith<$Res> {
           ? _self.loginModel
           : loginModel // ignore: cast_nullable_to_non_nullable
               as LoginModel?,
+      token: freezed == token
+          ? _self.token
+          : token // ignore: cast_nullable_to_non_nullable
+              as String?,
       error: freezed == error
           ? _self.error
           : error // ignore: cast_nullable_to_non_nullable
               as String?,
+      loginVerifyModel: freezed == loginVerifyModel
+          ? _self.loginVerifyModel
+          : loginVerifyModel // ignore: cast_nullable_to_non_nullable
+              as LoginVerifyModel?,
       loginForm: null == loginForm
           ? _self.loginForm
           : loginForm // ignore: cast_nullable_to_non_nullable
@@ -139,6 +159,20 @@ class _$LoginStateCopyWithImpl<$Res> implements $LoginStateCopyWith<$Res> {
       return _then(_self.copyWith(loginModel: value));
     });
   }
+
+  /// Create a copy of LoginState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $LoginVerifyModelCopyWith<$Res>? get loginVerifyModel {
+    if (_self.loginVerifyModel == null) {
+      return null;
+    }
+
+    return $LoginVerifyModelCopyWith<$Res>(_self.loginVerifyModel!, (value) {
+      return _then(_self.copyWith(loginVerifyModel: value));
+    });
+  }
 }
 
 /// @nodoc
@@ -148,7 +182,9 @@ class _LoginState implements LoginState {
       {this.isLoading = false,
       this.isLoginSuccess,
       this.loginModel,
+      this.token,
       this.error,
+      this.loginVerifyModel,
       final Map<String, dynamic> loginForm = const {},
       this.isPasswordVisibility = false})
       : _loginForm = loginForm;
@@ -161,7 +197,11 @@ class _LoginState implements LoginState {
   @override
   final LoginModel? loginModel;
   @override
+  final String? token;
+  @override
   final String? error;
+  @override
+  final LoginVerifyModel? loginVerifyModel;
   final Map<String, dynamic> _loginForm;
   @override
   @JsonKey()
@@ -194,7 +234,10 @@ class _LoginState implements LoginState {
                 other.isLoginSuccess == isLoginSuccess) &&
             (identical(other.loginModel, loginModel) ||
                 other.loginModel == loginModel) &&
+            (identical(other.token, token) || other.token == token) &&
             (identical(other.error, error) || other.error == error) &&
+            (identical(other.loginVerifyModel, loginVerifyModel) ||
+                other.loginVerifyModel == loginVerifyModel) &&
             const DeepCollectionEquality()
                 .equals(other._loginForm, _loginForm) &&
             (identical(other.isPasswordVisibility, isPasswordVisibility) ||
@@ -207,13 +250,15 @@ class _LoginState implements LoginState {
       isLoading,
       isLoginSuccess,
       loginModel,
+      token,
       error,
+      loginVerifyModel,
       const DeepCollectionEquality().hash(_loginForm),
       isPasswordVisibility);
 
   @override
   String toString() {
-    return 'LoginState(isLoading: $isLoading, isLoginSuccess: $isLoginSuccess, loginModel: $loginModel, error: $error, loginForm: $loginForm, isPasswordVisibility: $isPasswordVisibility)';
+    return 'LoginState(isLoading: $isLoading, isLoginSuccess: $isLoginSuccess, loginModel: $loginModel, token: $token, error: $error, loginVerifyModel: $loginVerifyModel, loginForm: $loginForm, isPasswordVisibility: $isPasswordVisibility)';
   }
 }
 
@@ -229,12 +274,16 @@ abstract mixin class _$LoginStateCopyWith<$Res>
       {bool isLoading,
       bool? isLoginSuccess,
       LoginModel? loginModel,
+      String? token,
       String? error,
+      LoginVerifyModel? loginVerifyModel,
       Map<String, dynamic> loginForm,
       bool isPasswordVisibility});
 
   @override
   $LoginModelCopyWith<$Res>? get loginModel;
+  @override
+  $LoginVerifyModelCopyWith<$Res>? get loginVerifyModel;
 }
 
 /// @nodoc
@@ -252,7 +301,9 @@ class __$LoginStateCopyWithImpl<$Res> implements _$LoginStateCopyWith<$Res> {
     Object? isLoading = null,
     Object? isLoginSuccess = freezed,
     Object? loginModel = freezed,
+    Object? token = freezed,
     Object? error = freezed,
+    Object? loginVerifyModel = freezed,
     Object? loginForm = null,
     Object? isPasswordVisibility = null,
   }) {
@@ -269,10 +320,18 @@ class __$LoginStateCopyWithImpl<$Res> implements _$LoginStateCopyWith<$Res> {
           ? _self.loginModel
           : loginModel // ignore: cast_nullable_to_non_nullable
               as LoginModel?,
+      token: freezed == token
+          ? _self.token
+          : token // ignore: cast_nullable_to_non_nullable
+              as String?,
       error: freezed == error
           ? _self.error
           : error // ignore: cast_nullable_to_non_nullable
               as String?,
+      loginVerifyModel: freezed == loginVerifyModel
+          ? _self.loginVerifyModel
+          : loginVerifyModel // ignore: cast_nullable_to_non_nullable
+              as LoginVerifyModel?,
       loginForm: null == loginForm
           ? _self._loginForm
           : loginForm // ignore: cast_nullable_to_non_nullable
@@ -295,6 +354,20 @@ class __$LoginStateCopyWithImpl<$Res> implements _$LoginStateCopyWith<$Res> {
 
     return $LoginModelCopyWith<$Res>(_self.loginModel!, (value) {
       return _then(_self.copyWith(loginModel: value));
+    });
+  }
+
+  /// Create a copy of LoginState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $LoginVerifyModelCopyWith<$Res>? get loginVerifyModel {
+    if (_self.loginVerifyModel == null) {
+      return null;
+    }
+
+    return $LoginVerifyModelCopyWith<$Res>(_self.loginVerifyModel!, (value) {
+      return _then(_self.copyWith(loginVerifyModel: value));
     });
   }
 }

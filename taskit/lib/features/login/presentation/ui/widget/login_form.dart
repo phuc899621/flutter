@@ -18,6 +18,8 @@ class LoginForm extends ConsumerStatefulWidget{
 class _LoginFormState extends ConsumerState<LoginForm>{
   late TextEditingController _emailController;
   late TextEditingController _passwordController;
+  bool _hasVerifyBeenCalled = false;
+  bool _hasListenBeenCalled = false;
 
 
   @override
@@ -37,7 +39,19 @@ class _LoginFormState extends ConsumerState<LoginForm>{
 
   @override
   Widget build(BuildContext context) {
-    _listener();
+    if(!_hasListenBeenCalled) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        _listener();
+      });
+      _hasListenBeenCalled = true;
+    }
+    if(!_hasVerifyBeenCalled) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        ref.read(loginControllerProvider.notifier).verify();
+      });
+      _hasVerifyBeenCalled = true;
+    }
+
     return Align(
         alignment: AlignmentDirectional(0.0, 0.0),
         child: Padding(
@@ -260,6 +274,7 @@ class _LoginFormState extends ConsumerState<LoginForm>{
               context.go('/list');
             }
       });
+
   }
   void _onSummit(){
     final formData=({

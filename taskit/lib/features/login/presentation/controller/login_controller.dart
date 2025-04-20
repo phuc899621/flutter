@@ -1,4 +1,5 @@
 
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:taskit/features/login/presentation/state/login_state.dart';
 import 'package:taskit/shared/application/token_service.dart';
@@ -38,6 +39,7 @@ class LoginController  extends Notifier<LoginState>{
           isLoginSuccess: true,
           error: null,
           loginModel: success,
+          token: success.token,
           );
         },(failure) {
           state = state.copyWith(
@@ -56,13 +58,13 @@ class LoginController  extends Notifier<LoginState>{
   }
   Future<void> saveToken() async {
     try{
-      if(state.loginModel == null || state.loginModel?.token==null){
+      if(state.token == null){
          state=state.copyWith(
           error: 'Token is null',
         );
          return;
       }
-      await ref.read(tokenServiceProvider).saveToken(state.loginModel!.token);
+      await ref.read(tokenServiceProvider).saveToken(state.token!);
       state=state.copyWith(
         error: null,
       );
@@ -79,5 +81,41 @@ class LoginController  extends Notifier<LoginState>{
     state = state.copyWith(
       loginForm: formData,
     );
+  }
+  Future<void> verify() async {
+    try {
+      //trang thai loading
+      state = state.copyWith(
+        isLoading: true,
+        error: null,
+        isLoginSuccess: null,
+        token: null,
+      );
+      final token = await ref.read(tokenServiceProvider).getToken();
+      state=state.copyWith(
+        token: token,
+      );
+      final result = await ref.read(loginServiceProvider).verify(state.token!);
+      result.when((success) {
+        debugPrint(success.toString()+"-------------------------win");
+        state = state.copyWith(
+          isLoading: false,
+          error: null,
+          loginVerifyModel: success,
+          isLoginSuccess: true,
+        );
+      },(failure) {
+        debugPrint(failure.toString()+"-------------------------lose");
+        state = state.copyWith(
+          isLoading: false,
+          isLoginSuccess: null,
+        );
+      });
+      }catch (e) {
+        state = state.copyWith(
+          isLoading: false,
+          isLoginSuccess: null,
+        );
+      }
   }
 }

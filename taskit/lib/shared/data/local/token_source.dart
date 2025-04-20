@@ -15,7 +15,7 @@ final tokenSourceProvider=Provider<TokenSource>((ref){
 class TokenSource {
 
   final FlutterSecureStorage _storage;
-  static String _key = 'AUTH_TOKEN'.hardcoded;
+  static final String _key = 'AUTH_TOKEN'.hardcoded;
   TokenSource(this._storage);
 
   Future<void> saveToken(String token) async {

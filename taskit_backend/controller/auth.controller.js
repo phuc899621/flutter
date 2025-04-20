@@ -281,10 +281,8 @@ const jwt = require("jsonwebtoken");
             return res.status(200).json({
                 message: "Token is valid!",
                 data:{
-                    user:{
-                        name:user.name,
-                        email:user.email,
-                    }
+                    name:user.name,
+                    email:user.email,
                 }
             });
         }catch(e){
