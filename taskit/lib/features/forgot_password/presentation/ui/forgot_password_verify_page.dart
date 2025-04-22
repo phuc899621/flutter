@@ -6,6 +6,8 @@ import 'package:go_router/go_router.dart';
 import 'package:taskit/shared/presentation/widget/custom_taskit_button.dart';
 import 'package:taskit/shared/presentation/widget/custom_taskit_textfield.dart';
 
+import '../../../../config/app/app_color.dart';
+
 class ForgotPasswordVerifyPage extends ConsumerStatefulWidget{
   const ForgotPasswordVerifyPage({super.key});
   @override
@@ -16,7 +18,7 @@ class _ForgotPasswordVerifyPageState extends ConsumerState<ForgotPasswordVerifyP
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.primaryContainer,
+      backgroundColor: AppColor(context).primaryContainer,
       body: SafeArea(
         top: true,
         child: Row(
@@ -28,7 +30,7 @@ class _ForgotPasswordVerifyPageState extends ConsumerState<ForgotPasswordVerifyP
                 width: 100.0,
                 height: double.infinity,
                 decoration: BoxDecoration(
-                  color: Theme.of(context).colorScheme.primaryContainer,
+                  color: AppColor(context).primaryContainer,
                 ),
                 alignment: AlignmentDirectional(0.0, -1.0),
                 child: SingleChildScrollView(
@@ -40,8 +42,7 @@ class _ForgotPasswordVerifyPageState extends ConsumerState<ForgotPasswordVerifyP
                         width: double.infinity,
                         height: 46.76,
                         decoration: BoxDecoration(
-                          color: Theme.of(context)
-                              .colorScheme.primaryContainer,
+                          color: AppColor(context).primaryContainer,
                           borderRadius: BorderRadius.only(
                             bottomLeft: Radius.circular(16.0),
                             bottomRight: Radius.circular(16.0),
@@ -57,8 +58,7 @@ class _ForgotPasswordVerifyPageState extends ConsumerState<ForgotPasswordVerifyP
                               width: 32.0,
                               height: 100.0,
                               decoration: BoxDecoration(
-                                color: Theme.of(context)
-                                    .colorScheme.primaryContainer,
+                                color: AppColor(context).primaryContainer,
                               ),
                             ),
                             TaskitBackButton(onPressed: ()=>context.pop()),

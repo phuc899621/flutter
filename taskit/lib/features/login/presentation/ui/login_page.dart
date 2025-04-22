@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:taskit/features/login/presentation/ui/widget/login_form.dart';
 
+import '../../../../config/app/app_color.dart';
+
 class LoginPage extends ConsumerStatefulWidget{
 
   const LoginPage({super.key});
@@ -14,7 +16,7 @@ class _LoginPageState extends ConsumerState<LoginPage>{
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Theme.of(context).colorScheme.secondaryContainer,
+        backgroundColor: AppColor(context).primaryContainer,
         body: SafeArea(
           top: true,
           child: Row(
@@ -26,7 +28,7 @@ class _LoginPageState extends ConsumerState<LoginPage>{
                   width: 100.0,
                   height: double.infinity,
                   decoration: BoxDecoration(
-                    color: Theme.of(context).colorScheme.secondaryContainer,
+                    color: AppColor(context).primaryContainer,
                   ),
                   alignment: AlignmentDirectional(0.0, -1.0),
                   child: SingleChildScrollView(
@@ -38,7 +40,7 @@ class _LoginPageState extends ConsumerState<LoginPage>{
                             width: double.infinity,
                             height: 80.0,
                             decoration: BoxDecoration(
-                              color: Theme.of(context).colorScheme.secondaryContainer,
+                              color: AppColor(context).primaryContainer,
                               borderRadius: BorderRadius.only(
                                 bottomLeft: Radius.circular(16.0),
                                 bottomRight: Radius.circular(16.0),
@@ -48,8 +50,7 @@ class _LoginPageState extends ConsumerState<LoginPage>{
                             ),
                             alignment: AlignmentDirectional(-1.0, 0.0),
                             child: Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                  24.0, 0.0, 0.0, 0.0),
+                              padding: EdgeInsetsDirectional.fromSTEB(24.0, 0.0, 0.0, 0.0),
                               child: Text(
                                 'TASKIT ',
                                 style: Theme.of(context).textTheme.displaySmall?.copyWith(
@@ -65,8 +66,7 @@ class _LoginPageState extends ConsumerState<LoginPage>{
                             maxWidth: 430.0,
                           ),
                           decoration: BoxDecoration(
-                            color:
-                            Theme.of(context).colorScheme.secondaryContainer,
+                            color:AppColor(context).primaryContainer,
                           ),
                           child: LoginForm(),
                               ),

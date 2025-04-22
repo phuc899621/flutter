@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/widgets.dart';
@@ -5,6 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:taskit/shared/presentation/widget/custom_taskit_button.dart';
 
+import '../../../../../config/app/app_color.dart';
 import '../../../../../shared/presentation/widget/custom_taskit_textfield.dart';
 import '../../controller/signup_controller.dart';
 
@@ -105,16 +107,15 @@ class _SignupFormState extends ConsumerState<SignupForm>{
             Padding(
               padding: EdgeInsetsDirectional.fromSTEB(
                   0.0, 0.0, 0.0, 16.0),
-              child: Container(
+              child: SizedBox(
                 width: 370.0,
                 child: TaskitOutLineTextFieldWithPassword(
                     labelText: 'Password', controller: _passwordController)
               ),
             ),
             Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(
-                  0.0, 0.0, 0.0, 16.0),
-              child: Container(
+              padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 16.0),
+              child: SizedBox(
                 width: 370.0,
                 child: TaskitOutLineTextFieldWithPassword(labelText: 'Confirm password',
                     controller: _passwordConfirm)
@@ -143,8 +144,9 @@ class _SignupFormState extends ConsumerState<SignupForm>{
                             fontFamily: 'Inter',
                             letterSpacing: 0.0,
                             fontWeight: FontWeight.w600,
-                            color: Theme.of(context).primaryColor,
-                          )
+                            color: AppColor(context).primary,
+                          ),
+                          recognizer: TapGestureRecognizer()..onTap = () => context.pop()
                       )
                     ],
                     style: Theme.of(context).textTheme.bodyMedium?.copyWith(
@@ -168,7 +170,7 @@ class _SignupFormState extends ConsumerState<SignupForm>{
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
                 duration: const Duration(seconds: 5),
-                backgroundColor: Colors.red,
+                backgroundColor: AppColor(context).error,
                 content: Text(next),
               ),
             );

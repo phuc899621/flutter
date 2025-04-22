@@ -4,6 +4,8 @@ import 'package:go_router/go_router.dart';
 import 'package:taskit/features/signup/presentation/ui/widget/signup_form.dart';
 import 'package:taskit/shared/presentation/widget/custom_taskit_button.dart';
 
+import '../../../../config/app/app_color.dart';
+
 
 class SignupPage extends ConsumerStatefulWidget{
 
@@ -17,7 +19,7 @@ class _SignupPageState extends ConsumerState<SignupPage>{
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Theme.of(context).colorScheme.secondaryContainer,
+        backgroundColor: AppColor(context).primaryContainer,
         body: SafeArea(
           top: true,
           child: Row(
@@ -29,7 +31,7 @@ class _SignupPageState extends ConsumerState<SignupPage>{
                   width: 100.0,
                   height: double.infinity,
                   decoration: BoxDecoration(
-                    color: Theme.of(context).colorScheme.secondaryContainer,
+                    color: AppColor(context).primaryContainer,
                   ),
                   alignment: AlignmentDirectional(0.0, -1.0),
                   child: SingleChildScrollView(
@@ -43,7 +45,7 @@ class _SignupPageState extends ConsumerState<SignupPage>{
                             maxWidth: 430.0,
                           ),
                           decoration: BoxDecoration(
-                            color: Theme.of(context).colorScheme.secondaryContainer,
+                            color: AppColor(context).primaryContainer,
                           ),
                           child: const SignupForm(),
                         )

@@ -6,6 +6,8 @@ import 'package:go_router/go_router.dart';
 import 'package:taskit/features/forgot_password/presentation/ui/widget/reset_password_form.dart';
 import 'package:taskit/shared/presentation/widget/custom_taskit_button.dart';
 
+import '../../../../config/app/app_color.dart';
+
 class ResetPasswordPage extends ConsumerStatefulWidget{
   const ResetPasswordPage({super.key});
   @override
@@ -17,7 +19,7 @@ class _ResetPasswordPageState extends ConsumerState<ResetPasswordPage>{
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.primaryContainer,
+      backgroundColor: AppColor(context).primaryContainer,
       body: SafeArea(
         top: true,
         child: Row(
@@ -46,7 +48,7 @@ class _ResetPasswordPageState extends ConsumerState<ResetPasswordPage>{
                               width: 32.0,
                               height: 50.0,
                               decoration: BoxDecoration(
-                                color: Theme.of(context).colorScheme.primaryContainer,
+                                color: AppColor(context).primaryContainer,
                               ),
                             ),
                             TaskitBackButton(onPressed: () async =>context.pop())

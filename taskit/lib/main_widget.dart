@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:taskit/config/app/app_color.dart';
 import 'package:taskit/config/routers/router_provider.dart';
@@ -13,30 +14,32 @@ class MainWidget extends ConsumerWidget {
       routerConfig: router,
       theme: ThemeData(
         //primary
-        primaryColor: AppColors.primary,
-        scaffoldBackgroundColor: AppColors.primaryBackground,
+        primaryColor: ConstColor.primary,
+        scaffoldBackgroundColor: ConstColor.primaryBackground,
         textTheme: TextTheme(
           displaySmall: TextStyle(
-            color: AppColors.primaryText,
+            color: ConstColor.primaryText,
           ),
           labelMedium: TextStyle(
-            color: AppColors.secondaryText,
+            color: ConstColor.secondaryText,
           ),
           bodyMedium: TextStyle(
-            color: AppColors.primaryText,
+            color: ConstColor.primaryText,
           ),
         ),
 
         //text
         colorScheme: ColorScheme.light(
-          primary: AppColors.primary,
-          secondary: AppColors.secondary,
-          primaryContainer: AppColors.primaryBackground,
-          secondaryContainer: AppColors.secondaryBackground,
-          background: AppColors.alternative,
-          onPrimary: AppColors.primaryText,
-          onSecondary: AppColors.secondaryText,
-          onBackground: AppColors.info,
+          primary: ConstColor.primary,
+          secondary: ConstColor.secondary,
+          primaryContainer: ConstColor.primaryBackground,
+          secondaryContainer: ConstColor.secondaryBackground,
+          onPrimary: ConstColor.onPrimary,
+          onSecondary: ConstColor.onSecondary,
+          onPrimaryContainer: ConstColor.primaryText,
+          onSecondaryContainer: ConstColor.secondaryText,
+          onError: ConstColor.error,
+          onSurface: ConstColor.alternative
         )
 
       )

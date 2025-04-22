@@ -4,6 +4,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../config/app/app_color.dart';
+
 class TaskitOutlineTextField extends ConsumerWidget{
   final String labelText;
   final TextEditingController controller;
@@ -35,8 +37,7 @@ class TaskitOutlineTextField extends ConsumerWidget{
         alignLabelWithHint: false,
         enabledBorder: OutlineInputBorder(
           borderSide: BorderSide(
-            color: Theme.of(context)
-                .colorScheme.primaryContainer,
+            color: AppColor(context).primaryContainer,
             width: 2.0,
           ),
           borderRadius:
@@ -44,8 +45,7 @@ class TaskitOutlineTextField extends ConsumerWidget{
         ),
         focusedBorder: OutlineInputBorder(
           borderSide: BorderSide(
-            color: Theme.of(context)
-                .primaryColor,
+            color: AppColor(context).primary,
             width: 2.0,
           ),
           borderRadius:
@@ -53,8 +53,7 @@ class TaskitOutlineTextField extends ConsumerWidget{
         ),
         errorBorder: OutlineInputBorder(
           borderSide: BorderSide(
-            color: Theme.of(context)
-                .colorScheme.background,
+            color: AppColor(context).error,
             width: 2.0,
           ),
           borderRadius:
@@ -62,16 +61,14 @@ class TaskitOutlineTextField extends ConsumerWidget{
         ),
         focusedErrorBorder: OutlineInputBorder(
           borderSide: BorderSide(
-            color: Theme.of(context)
-                .colorScheme.background,
+            color: AppColor(context).primary,
             width: 2.0,
           ),
           borderRadius:
           BorderRadius.circular(12.0),
         ),
         filled: true,
-        fillColor: Theme.of(context)
-            .colorScheme.primaryContainer,
+        fillColor: AppColor(context).secondaryContainer,
       ),
       style: Theme.of(context).textTheme
           .bodyMedium?.copyWith(
@@ -124,10 +121,7 @@ class _TaskitOutLineTextFieldWithPasswordState extends ConsumerState<TaskitOutLi
         ),
         enabledBorder: OutlineInputBorder(
           borderSide: BorderSide(
-            color: Theme
-                .of(context)
-                .colorScheme
-                .primaryContainer,
+            color: AppColor(context).secondaryContainer,
             width: 2.0,
           ),
           borderRadius:
@@ -135,9 +129,7 @@ class _TaskitOutLineTextFieldWithPasswordState extends ConsumerState<TaskitOutLi
         ),
         focusedBorder: OutlineInputBorder(
           borderSide: BorderSide(
-            color: Theme
-                .of(context)
-                .primaryColor,
+            color: AppColor(context).primary,
             width: 2.0,
           ),
           borderRadius:
@@ -145,10 +137,7 @@ class _TaskitOutLineTextFieldWithPasswordState extends ConsumerState<TaskitOutLi
         ),
         errorBorder: OutlineInputBorder(
           borderSide: BorderSide(
-            color: Theme
-                .of(context)
-                .colorScheme
-                .background,
+            color: AppColor(context).error,
             width: 2.0,
           ),
           borderRadius:
@@ -156,20 +145,14 @@ class _TaskitOutLineTextFieldWithPasswordState extends ConsumerState<TaskitOutLi
         ),
         focusedErrorBorder: OutlineInputBorder(
           borderSide: BorderSide(
-            color: Theme
-                .of(context)
-                .colorScheme
-                .background,
+            color: AppColor(context).primary,
             width: 2.0,
           ),
           borderRadius:
           BorderRadius.circular(12.0),
         ),
         filled: true,
-        fillColor: Theme
-            .of(context)
-            .colorScheme
-            .primaryContainer,
+        fillColor: AppColor(context).secondaryContainer,
         suffixIcon: InkWell(
           onTap: () => _toggleObscureText(),
           focusNode:
@@ -178,10 +161,7 @@ class _TaskitOutLineTextFieldWithPasswordState extends ConsumerState<TaskitOutLi
             _obscureText
                 ? Icons.visibility_off_outlined
                 : Icons.visibility_outlined,
-            color: Theme
-                .of(context)
-                .colorScheme
-                .onSecondary,
+            color: AppColor(context).secondaryText,
             size: 24.0,
           ),
         ),
@@ -239,27 +219,27 @@ class TaskitCodeTextField extends ConsumerWidget{
         ),
         focusedBorder: OutlineInputBorder(
           borderSide: BorderSide(
-            color: Theme.of(context).primaryColor,
+            color: AppColor(context).primary,
             width: 2.0,
           ),
           borderRadius: BorderRadius.circular(12.0),
         ),
         errorBorder: OutlineInputBorder(
           borderSide: BorderSide(
-            color: Color(0x00000000),
+            color: AppColor(context).error,
             width: 2.0,
           ),
           borderRadius: BorderRadius.circular(12.0),
         ),
         focusedErrorBorder: OutlineInputBorder(
           borderSide: BorderSide(
-            color: Color(0x00000000),
+            color: AppColor(context).primary,
             width: 2.0,
           ),
           borderRadius: BorderRadius.circular(12.0),
         ),
         filled: true,
-        fillColor: Theme.of(context).colorScheme.secondaryContainer,
+        fillColor: AppColor(context).secondaryContainer,
       ),
       style: Theme.of(context).textTheme.labelMedium?.copyWith(
         fontFamily: 'Inter',
@@ -272,8 +252,7 @@ class TaskitCodeTextField extends ConsumerWidget{
             maxLength}) =>
       null,
       keyboardType: TextInputType.number,
-      cursorColor:
-      Theme.of(context).colorScheme.onPrimaryContainer,
+      cursorColor:AppColor(context).onPrimary,
       inputFormatters: [
         FilteringTextInputFormatter.digitsOnly,
         LengthLimitingTextInputFormatter(1),

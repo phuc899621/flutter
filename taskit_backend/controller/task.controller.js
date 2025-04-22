@@ -189,9 +189,9 @@ const TaskServices=require('../services/task.services');
                     data:{}
                 });
             }
-            const {status}=req.query;
+            const {status, dueDate}=req.query;
             const tasks=await TaskServices.findAllTaskByUserId(
-                userId,{status}
+                userId,{status,dueDate}
             );
             return res.status(201).json({
                 message: "Find all task successfully",

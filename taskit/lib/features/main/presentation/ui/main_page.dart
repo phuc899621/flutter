@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:taskit/config/app/app_color.dart';
 
 class MainPage extends ConsumerWidget{
   final StatefulNavigationShell navigationShell;
@@ -16,24 +17,30 @@ class MainPage extends ConsumerWidget{
       selectedIndex: navigationShell.currentIndex,
       destinations: [
         NavigationDestination(
-            icon: Icon(Icons.home),
-            label: 'Home',
+            icon: Icon(Icons.home,
+              color: AppColor(context).secondaryText,
+            ),
+            label: '',
             selectedIcon: Icon(
                 Icons.home_filled,
                 color: Theme.of(context).colorScheme.primaryContainer
-            )
+            ),
         ),
         NavigationDestination(
-            icon: Icon(Icons.calendar_month),
-            label: 'List',
+            icon: Icon(Icons.calendar_month,
+                color: AppColor(context).secondaryText
+            ),
+            label: '',
             selectedIcon: Icon(
               Icons.calendar_month_outlined,
               color: Theme.of(context).colorScheme.primaryContainer
             ),
         ),
         NavigationDestination(
-            icon: Icon(Icons.settings),
-            label: 'Settings',
+            icon: Icon(
+                Icons.settings,color: AppColor(context).secondaryText
+            ),
+            label: '',
             selectedIcon: Icon(
               Icons.settings_outlined,
               color: Theme.of(context).colorScheme.primaryContainer
@@ -41,7 +48,7 @@ class MainPage extends ConsumerWidget{
         ),
       ],
       onDestinationSelected:navigationShell.goBranch,
-      indicatorColor: Theme.of(context).colorScheme.primaryContainer,
+      indicatorColor: Theme.of(context).colorScheme.primary,
     )
   );
 

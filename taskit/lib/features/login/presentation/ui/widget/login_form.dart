@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 import 'package:taskit/shared/presentation/widget/custom_taskit_button.dart';
 import 'package:taskit/shared/presentation/widget/custom_taskit_textfield.dart';
 
+import '../../../../../config/app/app_color.dart';
 import '../../controller/login_controller.dart';
 
 class LoginForm extends ConsumerStatefulWidget{
@@ -19,7 +20,6 @@ class _LoginFormState extends ConsumerState<LoginForm>{
   late TextEditingController _emailController;
   late TextEditingController _passwordController;
   bool _hasVerifyBeenCalled = false;
-  bool _hasListenBeenCalled = false;
 
 
   @override
@@ -39,12 +39,7 @@ class _LoginFormState extends ConsumerState<LoginForm>{
 
   @override
   Widget build(BuildContext context) {
-    if(!_hasListenBeenCalled) {
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        _listener();
-      });
-      _hasListenBeenCalled = true;
-    }
+    _listener();
     if(!_hasVerifyBeenCalled) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         ref.read(loginControllerProvider.notifier).verify();
@@ -64,6 +59,7 @@ class _LoginFormState extends ConsumerState<LoginForm>{
                 style: Theme.of(context).textTheme.headlineLarge?.copyWith(
                   fontFamily: 'Inter Tight',
                   letterSpacing: 0.0,
+                  color: AppColor(context).primaryText
                 ),
               ),
               Padding(
@@ -76,8 +72,7 @@ class _LoginFormState extends ConsumerState<LoginForm>{
                     ),
               ),
               Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(
-                0.0, 0.0, 0.0, 16.0),
+                padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 16.0),
                 child: SizedBox(
                   width: double.infinity,
                   child: TaskitOutlineTextField(
@@ -112,10 +107,11 @@ class _LoginFormState extends ConsumerState<LoginForm>{
                         text: 'Forgot your password',
                         style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                           fontFamily: 'Inter',
-                          color: Theme.of(context).primaryColor,
+                          color: AppColor(context).primary,
                           letterSpacing: 0.0,
                           fontWeight: FontWeight.w600,
                         ),
+                          recognizer: TapGestureRecognizer()..onTap = () => context.push('/forgot_password')
                       )
                       ],
                       style: Theme.of(context).textTheme.bodyMedium?.copyWith(
@@ -127,8 +123,7 @@ class _LoginFormState extends ConsumerState<LoginForm>{
                   ),
               ),
               Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(
-                0.0, 0.0, 0.0, 16.0),
+                padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 16.0),
                 child: TaskitElevationButton(text: 'Login',onPressed: ()=>_onSummit()),
               ),
               Padding(
@@ -147,7 +142,7 @@ class _LoginFormState extends ConsumerState<LoginForm>{
                           width: double.infinity,
                           height: 2.0,
                           decoration: BoxDecoration(
-                            color:Theme.of(context).colorScheme.background,
+                            color:AppColor(context).primaryContainer,
                             border: Border.all(
                               width: 0.5,
                             ),
@@ -162,7 +157,7 @@ class _LoginFormState extends ConsumerState<LoginForm>{
                       width: 70.0,
                       height: 32.0,
                       decoration: BoxDecoration(
-                        color:Theme.of(context).colorScheme.secondaryContainer,
+                        color:AppColor(context).primaryContainer,
                       ),
                       alignment: AlignmentDirectional(0.0, 0.0),
                       child: Text(
@@ -181,7 +176,7 @@ class _LoginFormState extends ConsumerState<LoginForm>{
             ),
             Padding(
               padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 16.0),
-              child: Container(
+              child: SizedBox(
                 width: double.infinity,
                 child:  OutlinedButton.icon(
                   onPressed: () {
@@ -198,9 +193,9 @@ class _LoginFormState extends ConsumerState<LoginForm>{
                   style: OutlinedButton.styleFrom(
                   minimumSize: const Size.fromHeight(44),
                   padding: EdgeInsets.zero,
-                  backgroundColor: Theme.of(context).colorScheme.background,
+                  backgroundColor: AppColor(context).secondaryContainer,
                   side: BorderSide(
-                  color: Theme.of(context).colorScheme.background,
+                  color: AppColor(context).secondaryContainer,
                   width: 2.0,
                   ),
                   shape: RoundedRectangleBorder(
@@ -208,7 +203,7 @@ class _LoginFormState extends ConsumerState<LoginForm>{
                   ),
                   ).copyWith(
                   overlayColor: MaterialStatePropertyAll(
-                  Theme.of(context).colorScheme.primaryContainer, // hoverColor
+                    AppColor(context).secondaryContainer, // hoverColor
                   ),
                   ),
                   ),
@@ -232,7 +227,7 @@ class _LoginFormState extends ConsumerState<LoginForm>{
                   text: 'Sign up here',
                   style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                     fontFamily: 'Inter',
-                    color: Theme.of(context).primaryColor,
+                    color: AppColor(context).primary,
                     letterSpacing: 0.0,
                     fontWeight: FontWeight.w600,
                   ),
@@ -261,7 +256,7 @@ class _LoginFormState extends ConsumerState<LoginForm>{
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               duration: const Duration(seconds: 5),
-              backgroundColor: Colors.red,
+              backgroundColor: AppColor(context).error,
               content: Text(next),
             ),
           );

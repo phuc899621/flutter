@@ -6,7 +6,7 @@ part 'login_verify_data.freezed.dart';
 abstract class LoginVerifyData with _$LoginVerifyData {
   const factory LoginVerifyData({
     required String name,
-    required String gmail,
+    required String email,
   })=_LoginVerifyData;
   factory LoginVerifyData.fromJson(Map<String, dynamic> json) => _$LoginVerifyDataFromJson(json);
 

@@ -63,7 +63,7 @@ class LoginService implements ILoginService,ILoginModelMapper{
   @override
   LoginVerifyModel mapToLoginVerifyModel(BaseResponse<LoginVerifyData> data) {
     final name = data.data.name;
-    final gmail = data.data.gmail;
+    final gmail = data.data.email;
     return LoginVerifyModel(
       name: name,
       gmail: gmail,

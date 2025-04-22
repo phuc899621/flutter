@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:taskit/config/app/app_color.dart';
 
 class TaskitElevationButton extends ConsumerWidget{
   final String text;
@@ -13,7 +14,7 @@ class TaskitElevationButton extends ConsumerWidget{
       onPressed: onPressed,
       style: ElevatedButton.styleFrom(
         minimumSize: Size(double.infinity,40),
-        backgroundColor: Theme.of(context).primaryColor,
+        backgroundColor: AppColor(context).primary,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12.0),
         ),
@@ -36,14 +37,14 @@ class TaskitBackButton extends ConsumerWidget{
   Widget build(BuildContext context, WidgetRef ref) {
     return Container(
       decoration: BoxDecoration(
-        color: Theme.of(context).primaryColor,
+        color: AppColor(context).primary,
         borderRadius: BorderRadius.circular(8.0),
       ),
       child: IconButton(
         iconSize: 50,
         icon: Icon(
           Icons.arrow_back,
-          color: Colors.white,
+          color: AppColor(context).onPrimary,
           size: 24.0,
         ),
         onPressed: onPressed,

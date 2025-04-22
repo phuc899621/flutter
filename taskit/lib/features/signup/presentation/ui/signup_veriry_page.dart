@@ -3,6 +3,8 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:taskit/features/signup/presentation/ui/widget/signup_verify_form.dart';
 
+import '../../../../config/app/app_color.dart';
+
 class SignupVerifyPage extends ConsumerStatefulWidget{
   const SignupVerifyPage({super.key});
 
@@ -18,7 +20,7 @@ class _SignupVerifyPageState extends ConsumerState<SignupVerifyPage>{
   Widget build(BuildContext context) {
 
     return Scaffold(
-        backgroundColor: Theme.of(context).colorScheme.secondaryContainer,
+        backgroundColor: AppColor(context).primaryContainer,
         body: SafeArea(
           top: true,
           child: Row(
@@ -30,7 +32,7 @@ class _SignupVerifyPageState extends ConsumerState<SignupVerifyPage>{
                   width: 100.0,
                   height: double.infinity,
                   decoration: BoxDecoration(
-                    color: Theme.of(context).colorScheme.secondaryContainer,
+                    color: AppColor(context).primaryContainer,
                   ),
                   alignment: AlignmentDirectional(0.0, -1.0),
                   child: SignupVerifyForm(),

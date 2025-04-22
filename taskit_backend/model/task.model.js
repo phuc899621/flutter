@@ -109,9 +109,19 @@ taskSchema.statics.findTaskById = async function (taskId) {
     const task = await this.findById(taskId);
     return task;
 }
-taskSchema.statics.findAllTaskByUserId = async function (userId, {status}) {
+taskSchema.statics.findAllTaskByUserId = async function (userId, {status,dueDate}) {
     const query = { userId };
+    console.log(dueDate);
     if (status) query.status = status;
+    if (dueDate){
+        const date=new Date(dueDate);
+        const startDay = new Date(date.setHours(0, 0, 0, 0));
+        const endDay = new Date(date.setHours(23, 59, 59, 999));
+        query.dueDate = {
+            $gte: startDay,
+            $lt: end
+        };
+    } 
     const tasks = await this.find(query).populate('userId', 'name email');
     return tasks;
 }

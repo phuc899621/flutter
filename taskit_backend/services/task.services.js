@@ -68,9 +68,9 @@ class TaskServices{
             throw e;
         }
     }
-    static async findAllTaskByUserId(userId,{status}){
+    static async findAllTaskByUserId(userId,{status,dueDate}){
         try{
-            return await TaskModel.findAllTaskByUserId(userId,{status});
+            return await TaskModel.findAllTaskByUserId(userId,{status,dueDate});
         }catch(e){
             throw e;
         }

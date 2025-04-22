@@ -7,6 +7,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:taskit/shared/presentation/widget/custom_taskit_button.dart';
 
+import '../../../../../config/app/app_color.dart';
 import '../../../../../shared/presentation/widget/custom_taskit_textfield.dart';
 import '../../controller/signup_controller.dart';
 
@@ -48,7 +49,6 @@ class _SignupVerifyFormState extends ConsumerState<SignupVerifyForm>{
   @override
   Widget build(BuildContext context) {
     _listener();
-    final signupController=ref.watch(signUpControllerProvider.notifier);
     final state = ref.watch(signUpControllerProvider);
     return SingleChildScrollView(
       child: Column(
@@ -75,7 +75,7 @@ class _SignupVerifyFormState extends ConsumerState<SignupVerifyForm>{
                   width: 32.0,
                   height: 100.0,
                   decoration: BoxDecoration(
-                    color: Theme.of(context).colorScheme.secondaryContainer,
+                    color: AppColor(context).primaryContainer,
                   ),
                 ),
                 Align(
@@ -118,7 +118,7 @@ class _SignupVerifyFormState extends ConsumerState<SignupVerifyForm>{
                         style:
                         Theme.of(context).textTheme.labelMedium?.copyWith(
                           fontFamily: 'Inter',
-                          color: Theme.of(context).primaryColor,
+                          color: AppColor(context).primary,
                           letterSpacing: 0.0,
                         ),
                       ),
@@ -204,7 +204,7 @@ class _SignupVerifyFormState extends ConsumerState<SignupVerifyForm>{
                       text: ' Resend code!',
                       style: Theme.of(context).textTheme.labelMedium?.copyWith(
                         fontFamily: 'Inter',
-                        color: Theme.of(context).primaryColor,
+                        color: AppColor(context).primary,
                         letterSpacing: 0.0,
                       ),
                       recognizer: TapGestureRecognizer()
@@ -231,7 +231,7 @@ class _SignupVerifyFormState extends ConsumerState<SignupVerifyForm>{
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
                 duration: const Duration(seconds: 5),
-                backgroundColor: Colors.red,
+                backgroundColor: AppColor(context).error,
                 content: Text(next),
               ),
             );

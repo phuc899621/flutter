@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:taskit/features/forgot_password/presentation/controller/forgot_pass_controller.dart';
 
+import '../../../../../config/app/app_color.dart';
 import '../../../../../shared/presentation/widget/custom_taskit_button.dart';
 import '../../../../../shared/presentation/widget/custom_taskit_textfield.dart';
 
@@ -75,7 +76,7 @@ class _ForgotPasswordVerifyPageState extends ConsumerState<ForgotPasswordVerifyP
                         style: Theme.of(context).textTheme.labelMedium?.copyWith(
                           fontFamily: 'Inter',
                           letterSpacing: 0.0,
-                          color: Theme.of(context).colorScheme.primary,
+                          color: AppColor(context).primary,
                         )
                     ),
                     TextSpan(
@@ -90,7 +91,7 @@ class _ForgotPasswordVerifyPageState extends ConsumerState<ForgotPasswordVerifyP
                   style: Theme.of(context).textTheme.labelMedium?.copyWith(
                     fontFamily: 'Inter',
                     letterSpacing: 0.0,
-                    color: Theme.of(context).colorScheme.primary,
+                    color: AppColor(context).primary,
                   )
               ),
             ),
@@ -166,7 +167,7 @@ class _ForgotPasswordVerifyPageState extends ConsumerState<ForgotPasswordVerifyP
                           style: Theme.of(context).textTheme.labelMedium?.copyWith(
                               fontFamily: 'Inter',
                               letterSpacing: 0.0,
-                              color: Theme.of(context).primaryColor
+                              color: AppColor(context).primary
                           ),
                         recognizer: TapGestureRecognizer()..onTap = () => _onSummit()
                       )
@@ -190,7 +191,7 @@ class _ForgotPasswordVerifyPageState extends ConsumerState<ForgotPasswordVerifyP
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
                 duration: const Duration(seconds: 5),
-                backgroundColor: Colors.red,
+                backgroundColor: AppColor(context).error,
                 content: Text(next),
               ),
             );

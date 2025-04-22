@@ -1,20 +1,29 @@
 import 'package:dio/dio.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:retrofit/error_logger.dart';
 import 'package:retrofit/http.dart';
+import 'package:taskit/shared/data/remote/network_service.dart';
 import 'package:taskit/shared/dto/response/task/task_data.dart';
 
 import '../../../../shared/dto/base_response.dart';
 
-part 'list_api.g.dart';
+part 'task_api.g.dart';
+
+final taskApiProvider = Provider.autoDispose<TaskApi>((ref) {
+  final dio = ref.watch(networkServiceProvider);
+  return TaskApi(dio);
+});
 
 
 @RestApi()
 abstract class TaskApi{
-  factory ListApi(Dio dio)=>_ListApi(dio);
+  factory TaskApi(Dio dio)=>_TaskApi(dio);
+
   @GET('/task')
-  Future<BaseResponse<TaskDataLst>> get(
+  Future<BaseResponse<TaskDataLst>> getListTask(
       @Header('Authorization') String token,
       @Query('status') String status,
-      @Query('dueDate') String category,
-      );
+      @Query('dueDate') String dueDate,
+  );
 
 }
