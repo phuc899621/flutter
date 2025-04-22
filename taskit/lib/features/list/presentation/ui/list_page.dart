@@ -185,6 +185,9 @@ class _ListPage extends ConsumerState<ListPage>{
                             final item = tasks[index];
                             return TaskitItem(
                                 model: item,
+                              onChanged: (model,status){
+                                  controller.updateTaskStatus(model.id, status);
+                              },
                             );
                           },
                           padding: EdgeInsets.zero

@@ -3,9 +3,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:retrofit/error_logger.dart';
 import 'package:retrofit/http.dart';
 import 'package:taskit/shared/data/remote/network_service.dart';
+import 'package:taskit/shared/dto/base_response_data.dart';
 import 'package:taskit/shared/dto/response/task/task_data.dart';
 
 import '../../../../shared/dto/base_response.dart';
+import '../dto/request/status.dart';
+import '../dto/request/update.dart';
 
 part 'task_api.g.dart';
 
@@ -24,6 +27,12 @@ abstract class TaskApi{
       @Header('Authorization') String token,
       @Query('status') String status,
       @Query('dueDate') String dueDate,
+  );
+  @PUT('/task/update/{taskId}')
+  Future<BaseResponse<BaseData>> updateTaskStatus(
+      @Header('Authorization') String token,
+      @Path('taskId') String taskId,
+      @Body() Map<String, dynamic> updateStatusReq,
   );
 
 }

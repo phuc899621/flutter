@@ -17,7 +17,7 @@ T _$identity<T>(T value) => value;
 mixin _$Failure {
   String get message;
   int? get statusCode;
-  Exception? get exception;
+  Object? get exception;
   StackTrace get stackTrace;
 
   /// Create a copy of Failure
@@ -35,15 +35,14 @@ mixin _$Failure {
             (identical(other.message, message) || other.message == message) &&
             (identical(other.statusCode, statusCode) ||
                 other.statusCode == statusCode) &&
-            (identical(other.exception, exception) ||
-                other.exception == exception) &&
+            const DeepCollectionEquality().equals(other.exception, exception) &&
             (identical(other.stackTrace, stackTrace) ||
                 other.stackTrace == stackTrace));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, message, statusCode, exception, stackTrace);
+  int get hashCode => Object.hash(runtimeType, message, statusCode,
+      const DeepCollectionEquality().hash(exception), stackTrace);
 
   @override
   String toString() {
@@ -59,7 +58,7 @@ abstract mixin class $FailureCopyWith<$Res> {
   $Res call(
       {String message,
       int? statusCode,
-      Exception? exception,
+      Object? exception,
       StackTrace stackTrace});
 }
 
@@ -89,10 +88,7 @@ class _$FailureCopyWithImpl<$Res> implements $FailureCopyWith<$Res> {
           ? _self.statusCode
           : statusCode // ignore: cast_nullable_to_non_nullable
               as int?,
-      exception: freezed == exception
-          ? _self.exception
-          : exception // ignore: cast_nullable_to_non_nullable
-              as Exception?,
+      exception: freezed == exception ? _self.exception : exception,
       stackTrace: null == stackTrace
           ? _self.stackTrace
           : stackTrace // ignore: cast_nullable_to_non_nullable
@@ -115,7 +111,7 @@ class _Failure implements Failure {
   @override
   final int? statusCode;
   @override
-  final Exception? exception;
+  final Object? exception;
   @override
   @JsonKey()
   final StackTrace stackTrace;
@@ -136,15 +132,14 @@ class _Failure implements Failure {
             (identical(other.message, message) || other.message == message) &&
             (identical(other.statusCode, statusCode) ||
                 other.statusCode == statusCode) &&
-            (identical(other.exception, exception) ||
-                other.exception == exception) &&
+            const DeepCollectionEquality().equals(other.exception, exception) &&
             (identical(other.stackTrace, stackTrace) ||
                 other.stackTrace == stackTrace));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, message, statusCode, exception, stackTrace);
+  int get hashCode => Object.hash(runtimeType, message, statusCode,
+      const DeepCollectionEquality().hash(exception), stackTrace);
 
   @override
   String toString() {
@@ -161,7 +156,7 @@ abstract mixin class _$FailureCopyWith<$Res> implements $FailureCopyWith<$Res> {
   $Res call(
       {String message,
       int? statusCode,
-      Exception? exception,
+      Object? exception,
       StackTrace stackTrace});
 }
 
@@ -191,10 +186,7 @@ class __$FailureCopyWithImpl<$Res> implements _$FailureCopyWith<$Res> {
           ? _self.statusCode
           : statusCode // ignore: cast_nullable_to_non_nullable
               as int?,
-      exception: freezed == exception
-          ? _self.exception
-          : exception // ignore: cast_nullable_to_non_nullable
-              as Exception?,
+      exception: freezed == exception ? _self.exception : exception,
       stackTrace: null == stackTrace
           ? _self.stackTrace
           : stackTrace // ignore: cast_nullable_to_non_nullable

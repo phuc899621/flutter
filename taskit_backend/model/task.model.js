@@ -71,7 +71,7 @@ taskSchema.pre('save', async function (next) {
             task.subtasks.forEach(st => {
                 st.isCompleted = true;
             });
-            return next(); // xong
+            return next(); // If the task is marked as completed, set all subtasks to completed
         }
         const allCompleted = task.subtasks.every(st => st.isCompleted === true);
         task.status = allCompleted ? 'completed' : 'in-progress';
@@ -111,6 +111,15 @@ taskSchema.statics.updateListSubtask = async function (taskId, subtasks) {
 }
 taskSchema.statics.updateTask = async function (taskId, updateData) {
     const task = await this.findById(taskId);
+    //if status contant in updateData, status is not completed and it has subtask then make all subtask is inCompleted
+    if (updateData.status && updateData.status === 'pending') {
+        if (!task) throw new HTTPError('Task not found', 404);
+        if (task.subtasks && task.subtasks.length > 0) {
+            task.subtasks.forEach(st => {
+                st.isCompleted = false;
+            });
+        }
+    }
     if (!task) throw new HTTPError('Task not found', 404);
     Object.assign(task, updateData);
     return await task.save();

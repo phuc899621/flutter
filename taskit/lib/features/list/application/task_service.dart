@@ -59,7 +59,31 @@ class TaskService implements ITaskModelMapper,ITaskService{
       }else{
         return Error(Failure(
           message: e.toString(),
-          exception: Exception("Unknown error at login"),
+          exception: Exception("Unknown error at get list of task"),
+          stackTrace: s,
+        ));
+      }
+    }
+  }
+
+  @override
+  Future<Result<void, Failure>> updateTaskStatus(String token, String taskId, String status) async {
+    try{
+      await _iTaskRepository.updateTaskStatus(token, taskId, status);
+      return Success(null);
+    }on Failure catch(e){
+      return Error(e);
+    }catch(e,s){
+      if(e is Exception){
+        return Error(Failure(
+            message: e.toString(),
+            exception: e,
+            stackTrace: s,
+            ));
+      }else{
+        return Error(Failure(
+          message: e.toString(),
+          exception: Exception("Unknown error at update task status"),
           stackTrace: s,
         ));
       }

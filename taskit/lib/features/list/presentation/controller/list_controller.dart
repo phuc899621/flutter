@@ -66,6 +66,19 @@ class ListController extends Notifier<ListState>{
     }
 
   }
-
-
+  Future<void> updateTaskStatus(String taskId,String status) async {
+    try{
+      state=state.copyWith(error: null);
+      final token=await ref.read(tokenServiceProvider).getToken();
+      final result=await ref.read(taskServiceProvider).updateTaskStatus(token!,taskId,status);
+      result.when((success){
+        state=state.copyWith(
+            tasks: state.tasks.map((e) => e.id==taskId?e.copyWith(status: status):e).toList());
+        },(failure){
+        state=state.copyWith(error: failure.message);
+      });
+    }catch(e) {
+      state = state.copyWith(error: e.toString());
+    }
+  }
 }

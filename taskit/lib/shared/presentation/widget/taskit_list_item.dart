@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:intl/intl.dart';
 import 'package:taskit/config/app/app_color.dart';
 
 import '../../../features/list/domain/model/task_model.dart';
@@ -10,7 +11,8 @@ import '../../../features/list/domain/model/task_model.dart';
 
 class TaskitItem extends ConsumerStatefulWidget{
   final TaskModel model;
-  const TaskitItem({super.key,required this.model});
+  final Function(TaskModel,String) onChanged;
+  const TaskitItem({super.key,required this.model, required this.onChanged});
   @override
   ConsumerState<ConsumerStatefulWidget> createState() =>_TaskitItem();
 }
@@ -86,9 +88,9 @@ class _TaskitItem extends ConsumerState<TaskitItem>{
                       AppColor(context).onSurface,
                     ),
                     child: Checkbox(
-                      value: widget.model.status=="completed"?false:true,
+                      value: widget.model.status=="completed"?true:false,
                       onChanged: (value){
-
+                          widget.onChanged(widget.model,value==true?"completed":"pending");
                       },
                       side: BorderSide(
                         width: 2,
@@ -107,7 +109,7 @@ class _TaskitItem extends ConsumerState<TaskitItem>{
                   fontFamily: 'Inter Tight',
                   letterSpacing: 0.0,
                   color: AppColor(context).primaryText,
-                  fontWeight: FontWeight.w600,
+                  fontWeight: FontWeight.w700,
                 ),
               ),
               SizedBox(height: 6.0),
@@ -123,10 +125,11 @@ class _TaskitItem extends ConsumerState<TaskitItem>{
                   SizedBox(width: 8.0),
                   Expanded(
                     child: Text(
-                      '22/3',
+                      DateFormat('HH:mm').format(widget.model.dueDate),
                       style: Theme.of(context).textTheme.labelSmall?.copyWith(
                         fontFamily: 'Inter',
                         letterSpacing: 0.0,
+                        color: AppColor(context).secondaryText,
                       ),
                     ),
                   ),
@@ -134,7 +137,10 @@ class _TaskitItem extends ConsumerState<TaskitItem>{
                   Container(
                     height: 26.0,
                     decoration: BoxDecoration(
-                      color: AppColor(context).secondary,
+                      color: widget.model.priority=='high'?
+                      AppColor(context).error:(
+                          widget.model.priority=='medium'?Colors.amber:
+                          (widget.model.priority=='low'?Colors.green:Colors.blueGrey)),
                       borderRadius: BorderRadius.circular(12.0),
                     ),
                     alignment: AlignmentDirectional(0.0, 0.0),
@@ -147,11 +153,11 @@ class _TaskitItem extends ConsumerState<TaskitItem>{
                             padding: EdgeInsetsDirectional.fromSTEB(
                                 12.0, 0.0, 12.0, 0.0),
                             child: Text(
-                              'High',
+                              widget.model.priority,
                               style: Theme.of(context).textTheme
                                   .bodySmall?.copyWith(
                                 fontFamily: 'Inter',
-                                color: AppColor(context).onSurface,
+                                color: AppColor(context).onSecondary,
                                 letterSpacing: 0.0,
                                 fontWeight: FontWeight.w600,
                               ),

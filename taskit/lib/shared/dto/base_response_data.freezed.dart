@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 
 /// @nodoc
 mixin _$BaseData {
-  String get empty;
+  String? get empty;
 
   /// Create a copy of BaseData
   /// with the given fields replaced by the non-null parameter values.
@@ -50,7 +50,7 @@ abstract mixin class $BaseDataCopyWith<$Res> {
   factory $BaseDataCopyWith(BaseData value, $Res Function(BaseData) _then) =
       _$BaseDataCopyWithImpl;
   @useResult
-  $Res call({String empty});
+  $Res call({String? empty});
 }
 
 /// @nodoc
@@ -65,13 +65,13 @@ class _$BaseDataCopyWithImpl<$Res> implements $BaseDataCopyWith<$Res> {
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? empty = null,
+    Object? empty = freezed,
   }) {
     return _then(_self.copyWith(
-      empty: null == empty
+      empty: freezed == empty
           ? _self.empty
           : empty // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
     ));
   }
 }
@@ -79,12 +79,12 @@ class _$BaseDataCopyWithImpl<$Res> implements $BaseDataCopyWith<$Res> {
 /// @nodoc
 @JsonSerializable()
 class _BaseData implements BaseData {
-  const _BaseData({required this.empty});
+  const _BaseData({this.empty});
   factory _BaseData.fromJson(Map<String, dynamic> json) =>
       _$BaseDataFromJson(json);
 
   @override
-  final String empty;
+  final String? empty;
 
   /// Create a copy of BaseData
   /// with the given fields replaced by the non-null parameter values.
@@ -126,7 +126,7 @@ abstract mixin class _$BaseDataCopyWith<$Res>
       __$BaseDataCopyWithImpl;
   @override
   @useResult
-  $Res call({String empty});
+  $Res call({String? empty});
 }
 
 /// @nodoc
@@ -141,13 +141,13 @@ class __$BaseDataCopyWithImpl<$Res> implements _$BaseDataCopyWith<$Res> {
   @override
   @pragma('vm:prefer-inline')
   $Res call({
-    Object? empty = null,
+    Object? empty = freezed,
   }) {
     return _then(_BaseData(
-      empty: null == empty
+      empty: freezed == empty
           ? _self.empty
           : empty // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
     ));
   }
 }
