@@ -74,6 +74,7 @@ class ListController extends Notifier<ListState>{
       result.when((success){
         state=state.copyWith(
             tasks: state.tasks.map((e) => e.id==taskId?e.copyWith(status: status):e).toList());
+        
         },(failure){
         state=state.copyWith(error: failure.message);
       });
