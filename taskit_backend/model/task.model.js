@@ -57,9 +57,28 @@ const taskSchema = new Schema({
     },
 });
 
-taskSchema.pre('save', function (next) {
+taskSchema.pre('save', async function (next) {
     this.updatedAt = Date.now();
-    next();
+    const task = this;
+    if (!task.subtasks || task.subtasks.length === 0) {
+        if (!task.status || task.status === '') {
+            task.status = 'pending';
+        }
+        return next();
+    }
+    try {
+        if (task.status === 'completed') {
+            task.subtasks.forEach(st => {
+                st.isCompleted = true;
+            });
+            return next(); // xong
+        }
+        const allCompleted = task.subtasks.every(st => st.isCompleted === true);
+        task.status = allCompleted ? 'completed' : 'in-progress';
+        return next();
+      } catch (err) {
+        return next(err);
+    }
 });
 
 taskSchema.statics.addTask = async function (taskData) {
@@ -70,6 +89,8 @@ taskSchema.statics.addListSubtask = async function (taskId, subtasks) {
     const task = await this.findById(taskId);
     if (!task) throw new HTTPError('Task not found', 404);
     task.subtasks.push(...subtasks);
+    task.status = 'in-progress'; // Update status to in-progress if subtasks are added
+
     return await task.save();
 }
 taskSchema.statics.updateSubtask = async function (taskId, subtaskId, updateData) {
@@ -78,12 +99,14 @@ taskSchema.statics.updateSubtask = async function (taskId, subtaskId, updateData
     const subtask = task.subtasks.id(subtaskId);
     if (!subtask) throw new HTTPError('Subtask not found', 404);
     Object.assign(subtask, updateData);
+    task.status = 'in-progress'; // Update status to in-progress if subtasks are updated
     return await task.save();
 }
 taskSchema.statics.updateListSubtask = async function (taskId, subtasks) {
     const task = await this.findById(taskId);
     if (!task) throw new HTTPError('Task not found', 404);
     task.subtasks = subtasks;
+    task.status = 'in-progress'; // Update status to in-progress if subtasks are updated
     return await task.save();
 }
 taskSchema.statics.updateTask = async function (taskId, updateData) {
