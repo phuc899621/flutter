@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const HTTPError=require("../utils/http.error");
+const HTTPError = require("../utils/http.error");
 const { Schema } = mongoose;
 const db = require("../config/db");
 const subtaskSchema = new Schema({
@@ -24,16 +24,16 @@ const taskSchema = new Schema({
         type: String,
         trim: true,
     },
-    category:{
+    category: {
         type: String,
         required: true,
     },
-    priority:{
+    priority: {
         type: String,
-        enum: ['low', 'medium', 'high','none'],
+        enum: ['low', 'medium', 'high', 'none'],
         default: 'none',
     },
-    userId:{
+    userId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'user',
         required: true,
@@ -68,40 +68,40 @@ taskSchema.statics.addTask = async function (taskData) {
 }
 taskSchema.statics.addListSubtask = async function (taskId, subtasks) {
     const task = await this.findById(taskId);
-    if (!task) throw new HTTPError('Task not found',404);
+    if (!task) throw new HTTPError('Task not found', 404);
     task.subtasks.push(...subtasks);
     return await task.save();
 }
 taskSchema.statics.updateSubtask = async function (taskId, subtaskId, updateData) {
     const task = await this.findById(taskId);
-    if (!task) throw new HTTPError('Task not found',404);
+    if (!task) throw new HTTPError('Task not found', 404);
     const subtask = task.subtasks.id(subtaskId);
-    if (!subtask) throw new HTTPError('Subtask not found',404);
+    if (!subtask) throw new HTTPError('Subtask not found', 404);
     Object.assign(subtask, updateData);
     return await task.save();
 }
 taskSchema.statics.updateListSubtask = async function (taskId, subtasks) {
     const task = await this.findById(taskId);
-    if (!task) throw new HTTPError('Task not found',404);
+    if (!task) throw new HTTPError('Task not found', 404);
     task.subtasks = subtasks;
     return await task.save();
 }
 taskSchema.statics.updateTask = async function (taskId, updateData) {
     const task = await this.findById(taskId);
-    if (!task) throw new HTTPError('Task not found',404);
+    if (!task) throw new HTTPError('Task not found', 404);
     Object.assign(task, updateData);
     return await task.save();
 }
 taskSchema.statics.deleteTask = async function (taskId) {
     const task = await this.findById(taskId);
-    if (!task) throw new HTTPError('Task not found',404);
+    if (!task) throw new HTTPError('Task not found', 404);
     return await task.remove();
 }
 taskSchema.statics.deleteSubtask = async function (taskId, subtaskId) {
     const task = await this.findById(taskId);
-    if (!task) throw new HTTPError('Task not found',404);
+    if (!task) throw new HTTPError('Task not found', 404);
     const subtask = task.subtasks.id(subtaskId);
-    if (!subtask) throw new HTTPError('Subtask not found',404);
+    if (!subtask) throw new HTTPError('Subtask not found', 404);
     subtask.remove();
     return await task.save();
 }
@@ -109,25 +109,25 @@ taskSchema.statics.findTaskById = async function (taskId) {
     const task = await this.findById(taskId);
     return task;
 }
-taskSchema.statics.findAllTaskByUserId = async function (userId, {status,dueDate}) {
+taskSchema.statics.findAllTaskByUserId = async function (userId, { status, dueDate }) {
     const query = { userId };
     console.log(dueDate);
     if (status) query.status = status;
-    if (dueDate){
-        const date=new Date(dueDate);
+    if (dueDate) {
+        const date = new Date(dueDate);
         const startDay = new Date(date.setHours(0, 0, 0, 0));
         const endDay = new Date(date.setHours(23, 59, 59, 999));
         query.dueDate = {
             $gte: startDay,
-            $lt: end
+            $lt: endDay
         };
-    } 
+    }
     const tasks = await this.find(query).populate('userId', 'name email');
     return tasks;
 }
 taskSchema.statics.findAllSubTask = async function (taskId) {
     const task = await this.findById(taskId);
-    if (!task) throw new HTTPError('Task not found',404);
+    if (!task) throw new HTTPError('Task not found', 404);
     return task.subtasks;
 }
 const TaskModel = db.model('task', taskSchema);
