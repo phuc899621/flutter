@@ -6,9 +6,9 @@ import 'package:taskit/shared/data/remote/network_service.dart';
 import 'package:taskit/shared/dto/base_response_data.dart';
 import 'package:taskit/shared/dto/response/task/task_data.dart';
 
-import '../../../../shared/dto/base_response.dart';
-import '../dto/request/status.dart';
-import '../dto/request/update.dart';
+import '../../../dto/base_response.dart';
+import '../../../../features/list/data/dto/request/status.dart';
+import '../../../../features/list/data/dto/request/update.dart';
 
 part 'task_api.g.dart';
 
@@ -34,5 +34,11 @@ abstract class TaskApi{
       @Path('taskId') String taskId,
       @Body() Map<String, dynamic> updateStatusReq,
   );
+  @POST('/task/add')
+  Future<BaseResponse<BaseData>> addTask(
+      @Header('Authorization') String token,
+      @Body() Map<String, dynamic> addTaskReq,
+  );
+
 
 }
