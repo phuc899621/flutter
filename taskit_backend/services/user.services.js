@@ -1,4 +1,5 @@
 const UserModel=require('../model/user.model');
+const UserSettingModel=require('../model/user.setting.model');
 const bcrypt = require("bcryptjs");
 class UserServices{
     static async signup(email,name,password){
@@ -34,6 +35,14 @@ class UserServices{
     static async comparePassword(password,savePassword){
         try{
             return await UserModel.comparePassword(password,savePassword);
+        }catch(e){
+            throw e;
+        }
+    }
+    //create method for get user setting by userId
+    static async findSettingByUserId(userId){
+        try{
+            return await UserSettingModel.findSettingByUserId(userId);
         }catch(e){
             throw e;
         }

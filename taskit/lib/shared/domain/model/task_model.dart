@@ -1,7 +1,7 @@
 
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-import '../../../../shared/dto/response/task/task_data.dart';
+import '../../data/dto/response/task/task_data.dart';
 
 part 'task_model.freezed.dart';
 

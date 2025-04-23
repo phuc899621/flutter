@@ -5,16 +5,16 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:taskit/features/list/data/dto/request/status.dart';
-import 'package:taskit/features/list/data/repository/itask_repository.dart';
-import 'package:taskit/shared/dto/base_response_data.dart';
+import 'package:taskit/features/create_task/data/request/create_task/create_task.dart';
+import 'package:taskit/shared/data/repository/itask_repository.dart';
 
-import '../../../../shared/dto/base_response.dart';
-import '../../../../shared/dto/response/task/task_data.dart';
-
-import '../../../../shared/exception/failure.dart';
-import '../../../../shared/mixin/dio_exception_mapper.dart';
-import '../dto/request/update.dart';
-import '../source/task_api.dart';
+import '../../exception/failure.dart';
+import '../../mixin/dio_exception_mapper.dart';
+import '../../../features/list/data/dto/request/update.dart';
+import '../dto/base_response.dart';
+import '../dto/base_response_data.dart';
+import '../dto/response/task/task_data.dart';
+import '../source/remote/task/task_api.dart';
 
 final taskRepositoryProvider = Provider.autoDispose<ITaskRepository>((ref) {
   final taskApi = ref.watch(taskApiProvider);
@@ -68,6 +68,30 @@ class TaskRepository with DioExceptionMapper implements ITaskRepository{
         );
       }
 
+    }
+  }
+
+  @override
+  Future<BaseResponse<BaseData>> createTask(String token, CreateTaskReq createTaskReq) async {
+    try{
+      final response = await _taskApi.addTask('Bearer $token', createTaskReq);
+      return response;
+    }on DioException catch(e, s){
+      throw mapDioExceptionToFailure(e, s);
+    }catch(e,s){
+      if(e is Exception){
+        throw Failure(
+          message: e.toString(),
+          exception: e,
+          stackTrace: s,
+        );
+      }else{
+        throw Failure(
+          message: "An unexpected error occurred when create task. Please try again later.",
+          exception: e,
+          stackTrace: s,
+        );
+      }
     }
   }
 }

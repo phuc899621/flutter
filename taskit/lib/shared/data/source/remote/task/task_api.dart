@@ -2,13 +2,14 @@ import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:retrofit/error_logger.dart';
 import 'package:retrofit/http.dart';
-import 'package:taskit/shared/data/remote/network_service.dart';
-import 'package:taskit/shared/dto/base_response_data.dart';
-import 'package:taskit/shared/dto/response/task/task_data.dart';
+import 'package:taskit/features/create_task/data/request/create_task/create_task.dart';
+import 'package:taskit/shared/data/source/remote/network/network_service.dart';
 
+import '../../../../../features/list/data/dto/request/status.dart';
+import '../../../../../features/list/data/dto/request/update.dart';
 import '../../../dto/base_response.dart';
-import '../../../../features/list/data/dto/request/status.dart';
-import '../../../../features/list/data/dto/request/update.dart';
+import '../../../dto/base_response_data.dart';
+import '../../../dto/response/task/task_data.dart';
 
 part 'task_api.g.dart';
 
@@ -37,7 +38,7 @@ abstract class TaskApi{
   @POST('/task/add')
   Future<BaseResponse<BaseData>> addTask(
       @Header('Authorization') String token,
-      @Body() Map<String, dynamic> addTaskReq,
+      @Body() CreateTaskReq createTaskReq,
   );
 
 

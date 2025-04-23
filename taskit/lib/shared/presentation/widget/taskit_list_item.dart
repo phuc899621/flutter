@@ -5,7 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:taskit/config/app/app_color.dart';
 
-import '../../../features/list/domain/model/task_model.dart';
+import '../../domain/model/task_model.dart';
 
 
 

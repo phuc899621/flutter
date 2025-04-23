@@ -1,7 +1,7 @@
 
 import 'package:taskit/features/signup/data/dto/request/signup_verify_req/signup_verify_request.dart';
-import 'package:taskit/shared/dto/base_response.dart';
 
+import '../../../../shared/data/dto/base_response.dart';
 import '../dto/request/signup_req/signup_request.dart';
 import '../dto/response/signup_res/signup_data.dart';
 

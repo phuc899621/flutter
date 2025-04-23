@@ -1,6 +1,6 @@
 
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:taskit/features/list/domain/model/task_model.dart';
+import 'package:taskit/shared/domain/model/task_model.dart';
 part 'list_state.freezed.dart';
 @freezed
 abstract class ListState with _$ListState {

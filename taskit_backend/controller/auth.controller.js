@@ -130,10 +130,12 @@ const jwt = require("jsonwebtoken");
                 process.env.JWT_SECRET || "899621",
                 { expiresIn: process.env.JWT_EXPIRES_IN || "1d" }
             );
+            const userSetting=await UserServices.findSettingByUserId(user._id);
             return res.status(201).json({
                 message: "Login successful",
                 data:{
-                    token: token
+                    token: token,
+                    settings: userSetting,
                 },
             });
         }catch(e){

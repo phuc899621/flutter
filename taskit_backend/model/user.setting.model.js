@@ -4,9 +4,9 @@ const bcrypt = require("bcryptjs");
 const { Schema } = mongoose;
 const settingSchema = new Schema({
   userId: {
-    type: String,
+    type: mongoose.Schema.Types.ObjectId,
     required: true,
-    unique: true,
+    ref: 'user',
   },
   isNotificationEnabled: {
     type: Boolean,
@@ -27,11 +27,30 @@ const settingSchema = new Schema({
     enum: [15, 30,60,1440,10080], 
     default: 30, 
   },
+  category: {
+    type: [String],
+    default: ["School", "Work", "Friend", "Anything"],
+  },
 });
-settingSchema.statics.findSettingById=async function(id){
+
+settingSchema.statics.findSettingById = async function(id) {
   const user = await this.findOne({ id });
   return user;
 }
+
+settingSchema.statics.findSettingByUserId = async function (userId, updateData) {
+  const setting = await this.findOne({ userId });
+  return setting;
+};
+settingSchema.statics.updateSettingByUserId = async function (userId, updateData) {
+  const setting = await this.findOne({ userId });
+  if (!setting) {
+    throw new Error('Setting not found');
+  }
+  Object.assign(setting, updateData);
+  await setting.save();
+  return setting;
+};
 
 const SettingModel = db.model("user-setting", settingSchema);
 module.exports = SettingModel;

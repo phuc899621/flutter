@@ -5,8 +5,8 @@ import 'package:retrofit/http.dart';
 import 'package:taskit/features/login/data/dto/request/login_request.dart';
 import 'package:taskit/features/login/data/dto/response/login_verify_data.dart';
 
-import '../../../../../shared/data/remote/network_service.dart';
-import '../../../../../shared/dto/base_response.dart';
+import '../../../../../shared/data/dto/base_response.dart';
+import '../../../../../shared/data/source/remote/network/network_service.dart';
 import '../../dto/response/login_data.dart';
 
 part 'login_api.g.dart';

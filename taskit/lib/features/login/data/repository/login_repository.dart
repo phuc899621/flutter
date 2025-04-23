@@ -5,8 +5,8 @@ import 'package:taskit/features/login/data/dto/request/login_request.dart';
 import 'package:taskit/features/login/data/dto/response/login_data.dart';
 import 'package:taskit/features/login/data/dto/response/login_verify_data.dart';
 import 'package:taskit/features/login/data/repository/ilogin_repository.dart';
-import 'package:taskit/shared/dto/base_response.dart';
 
+import '../../../../shared/data/dto/base_response.dart';
 import '../../../../shared/exception/failure.dart';
 import '../../../../shared/mixin/dio_exception_mapper.dart';
 import '../source/remote/login_api.dart';

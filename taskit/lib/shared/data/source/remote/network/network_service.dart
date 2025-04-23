@@ -2,7 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:dio_http_formatter/dio_http_formatter.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:taskit/shared/data/remote/dio_options.dart';
+import 'package:taskit/shared/data/source/remote/network/dio_options.dart';
 
 import 'network_service_interceptor.dart';
 

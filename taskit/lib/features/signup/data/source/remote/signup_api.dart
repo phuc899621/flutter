@@ -3,8 +3,8 @@ import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:retrofit/retrofit.dart';
 import 'package:taskit/features/signup/data/dto/request/signup_verify_req/signup_verify_request.dart';
-import 'package:taskit/shared/dto/base_response.dart';
-import '../../../../../shared/data/remote/network_service.dart';
+import '../../../../../shared/data/dto/base_response.dart';
+import '../../../../../shared/data/source/remote/network/network_service.dart';
 import '../../dto/request/signup_req/signup_request.dart';
 import '../../dto/response/signup_res/signup_data.dart';
 

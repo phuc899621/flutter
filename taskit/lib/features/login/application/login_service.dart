@@ -13,9 +13,9 @@ import 'package:taskit/features/login/domain/mapper/ilogin_model_mapper.dart';
 import 'package:taskit/features/login/domain/model/login_model.dart';
 import 'package:taskit/features/login/domain/model/login_verify_model.dart';
 import 'package:taskit/shared/application/token_service.dart';
-import 'package:taskit/shared/dto/base_response.dart';
 import 'package:taskit/shared/exception/failure.dart';
 
+import '../../../shared/data/dto/base_response.dart';
 import '../data/repository/login_repository.dart';
 
 final loginServiceProvider = Provider.autoDispose<ILoginService>((ref) {

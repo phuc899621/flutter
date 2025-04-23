@@ -2,7 +2,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:taskit/shared/data/repository/itoken_repository.dart';
 
-import '../local/token_source.dart';
+import '../source/local/token_source.dart';
 
 final tokenRepositoryProvider=Provider<ITokenRepository>((ref){
   return TokenRepository(ref.read(tokenSourceProvider));

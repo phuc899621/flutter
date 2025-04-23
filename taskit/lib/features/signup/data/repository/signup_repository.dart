@@ -2,8 +2,8 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:taskit/features/signup/data/dto/request/signup_verify_req/signup_verify_request.dart';
-import 'package:taskit/shared/dto/base_response.dart';
 
+import '../../../../shared/data/dto/base_response.dart';
 import '../../../../shared/exception/failure.dart';
 import '../../../../shared/mixin/dio_exception_mapper.dart';
 import 'isignup_repository.dart';

@@ -3,7 +3,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:taskit/features/signup/data/dto/request/signup_verify_req/signup_verify_request.dart';
 import 'package:taskit/features/signup/data/dto/response/signup_res/signup_data.dart';
-import 'package:taskit/shared/dto/base_response.dart';
+import '../../../shared/data/dto/base_response.dart';
 import '../../../shared/exception/failure.dart';
 import '../data/dto/request/signup_req/signup_request.dart';
 import '../data/repository/signup_repository.dart';

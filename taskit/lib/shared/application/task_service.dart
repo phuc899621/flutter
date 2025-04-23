@@ -3,12 +3,13 @@
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:multiple_result/src/result.dart';
-import 'package:taskit/features/list/domain/mapper/itask_model_mapper.dart';
-import 'package:taskit/features/list/domain/model/task_model.dart';
-import 'package:taskit/shared/dto/base_response.dart';
-import 'package:taskit/shared/dto/response/task/task_data.dart';
+import 'package:taskit/features/create_task/data/request/create_task/create_task.dart';
+import 'package:taskit/shared/domain/mapper/itask_model_mapper.dart';
+import 'package:taskit/shared/domain/model/task_model.dart';
 import 'package:taskit/shared/exception/failure.dart';
 
+import '../data/dto/base_response.dart';
+import '../data/dto/response/task/task_data.dart';
 import '../data/repository/itask_repository.dart';
 import '../data/repository/task_repository.dart';
 import 'itask_service.dart';
@@ -84,6 +85,30 @@ class TaskService implements ITaskModelMapper,ITaskService{
         return Error(Failure(
           message: e.toString(),
           exception: Exception("Unknown error at update task status"),
+          stackTrace: s,
+        ));
+      }
+    }
+  }
+
+  @override
+  Future<Result<void, Failure>> createTask(String token, CreateTaskReq createTaskReq) async{
+    try{
+       await _iTaskRepository.createTask(token, createTaskReq);
+      return Success(null);
+    }on Failure catch(e){
+      return Error(e);
+    }catch(e,s){
+      if(e is Exception){
+        return Error(Failure(
+            message: e.toString(),
+            exception: e,
+            stackTrace: s,
+            ));
+      }else{
+        return Error(Failure(
+          message: e.toString(),
+          exception: Exception("Unknown error at create task"),
           stackTrace: s,
         ));
       }

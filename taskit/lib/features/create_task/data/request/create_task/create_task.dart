@@ -1,10 +1,10 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:taskit/shared/data/dto/request/subtask.dart';
+import 'package:taskit/features/create_task/data/request/create_task/subtask.dart';
 
-import '../response/task/task_data.dart';
+import '../../../../../shared/data/dto/response/task/task_data.dart';
 
-part 'create_task.g.dart';
 part 'create_task.freezed.dart';
+part 'create_task.g.dart';
 
 @freezed
 abstract class CreateTaskReq with _$CreateTaskReq{

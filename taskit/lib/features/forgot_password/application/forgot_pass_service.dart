@@ -9,11 +9,11 @@ import 'package:taskit/features/forgot_password/data/repository/forgot_pass_repo
 import 'package:taskit/features/forgot_password/domain/model/forgot_pass_verify_model.dart';
 import 'package:taskit/shared/domain/mapper/ibase_model_mapper.dart';
 import 'package:taskit/shared/domain/model/base_model.dart';
-import 'package:taskit/shared/dto/base_response.dart';
-import 'package:taskit/shared/dto/base_response_data.dart';
 
 import 'package:taskit/shared/exception/failure.dart';
 
+import '../../../shared/data/dto/base_response.dart';
+import '../../../shared/data/dto/base_response_data.dart';
 import '../data/dtos/request/forgot_pass/forgot_pass_req.dart';
 import '../data/repository/iforgot_pass_repository.dart';
 import '../domain/mapper/iforgot_pass_verify_model_mapper.dart';

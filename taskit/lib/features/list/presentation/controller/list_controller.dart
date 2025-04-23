@@ -1,11 +1,11 @@
 
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:taskit/features/list/application/itask_service.dart';
-import 'package:taskit/features/list/application/task_service.dart';
+import 'package:taskit/shared/application/itask_service.dart';
+import 'package:taskit/shared/application/task_service.dart';
 
 import '../../../../shared/application/token_service.dart';
-import '../../domain/model/task_model.dart';
+import '../../../../shared/domain/model/task_model.dart';
 import '../state/list_state.dart';
 final listControllerProvider=NotifierProvider<ListController,ListState>(ListController.new);
 
@@ -74,7 +74,7 @@ class ListController extends Notifier<ListState>{
       result.when((success){
         state=state.copyWith(
             tasks: state.tasks.map((e) => e.id==taskId?e.copyWith(status: status):e).toList());
-        
+
         },(failure){
         state=state.copyWith(error: failure.message);
       });
