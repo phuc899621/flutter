@@ -1,9 +1,11 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:taskit/features/login/domain/model/setting_model.dart';
 import 'package:taskit/features/login/presentation/state/login_state.dart';
 import 'package:taskit/shared/application/token_service.dart';
 
+import '../../../../shared/application/local_service.dart';
 import '../../application/login_service.dart';
 import '../../data/dto/request/login_request.dart';
 
@@ -33,7 +35,8 @@ class LoginController  extends Notifier<LoginState>{
         password: state.loginForm['password'],
         );
       final result = await ref.read(loginServiceProvider).login(formData);
-      result.when((success) {
+      result.when((success) async {
+        await saveSetting(success.setting);
         state = state.copyWith(
           isLoading: false,
           isLoginSuccess: true,
@@ -76,6 +79,21 @@ class LoginController  extends Notifier<LoginState>{
       );
     }
   }
+  Future<void> saveSetting(SettingModel setting) async {
+    try{
+      await ref.read(localServiceProvider).saveNotification(setting.isNotificationEnabled);
+      await ref.read(localServiceProvider).saveRemindBefore(setting.remindBefore);
+      await ref.read(localServiceProvider).saveCategories(setting.categories);
+      await ref.read(localServiceProvider).saveLanguage(setting.language);
+      await ref.read(localServiceProvider).saveTheme(setting.theme);
+      debugPrint('setting saved'+setting.toString());
+
+    }catch(e){
+      debugPrint(e.toString());
+    }
+
+  }
+
 
   void setLoginForm(Map<String, dynamic> formData) {
     state = state.copyWith(

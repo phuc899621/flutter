@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:taskit/config/app/app_color.dart';
 import 'package:taskit/shared/presentation/widget/taskit_choice_chip.dart';
 import 'package:taskit/shared/presentation/widget/taskit_list_item.dart';
@@ -49,7 +50,7 @@ class _ListPage extends ConsumerState<ListPage>{
           .primaryContainer,
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          print('FloatingActionButton pressed ...');
+          context.push('/create_task');
         },
         backgroundColor: AppColor(context).primary,
         elevation: 8.0,

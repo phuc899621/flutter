@@ -1,5 +1,6 @@
 
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:taskit/features/login/data/dto/request/login_request.dart';
 import 'package:taskit/features/login/data/dto/response/login_data.dart';
@@ -31,11 +32,22 @@ class LoginRepository
     }on DioException catch(e, s){
       throw mapDioExceptionToFailure(e, s);
     }catch(e,s){
-      throw Failure(
-        message: "An unexpected error occurred when login. Please try again later.",
-        exception: e as Exception,
-        stackTrace: s,
-      );
+      if (e is Exception) {
+        debugPrint(e.toString()+s.toString());
+        throw Failure(
+          message: "An unexpected error occurred when login. Please try again later.",
+          exception: e,
+          stackTrace: s,
+        );
+      } else {
+        debugPrint(e.toString()+s.toString());
+        throw Failure(
+          message: "An unexpected error occurred when login. Please try again later.",
+          exception: Exception(e.toString()), // Tạo một Exception mới
+          stackTrace: s,
+        );
+
+      }
     }
   }
 

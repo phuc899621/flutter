@@ -18,9 +18,11 @@ mixin _$CreateTaskState {
   bool get isLoading;
   bool? get isCreateTaskSuccess;
   String? get error;
+  List<String> get categories;
   List<SubtaskReq> get subtasks;
+  List<TextEditingController> get subtaskControllers;
   String get selectedPriority;
-  String get selectedCategory;
+  String? get selectedCategory;
   DateTime? get selectedDate;
   Map<String, dynamic> get createTaskForm;
 
@@ -42,7 +44,11 @@ mixin _$CreateTaskState {
             (identical(other.isCreateTaskSuccess, isCreateTaskSuccess) ||
                 other.isCreateTaskSuccess == isCreateTaskSuccess) &&
             (identical(other.error, error) || other.error == error) &&
+            const DeepCollectionEquality()
+                .equals(other.categories, categories) &&
             const DeepCollectionEquality().equals(other.subtasks, subtasks) &&
+            const DeepCollectionEquality()
+                .equals(other.subtaskControllers, subtaskControllers) &&
             (identical(other.selectedPriority, selectedPriority) ||
                 other.selectedPriority == selectedPriority) &&
             (identical(other.selectedCategory, selectedCategory) ||
@@ -59,7 +65,9 @@ mixin _$CreateTaskState {
       isLoading,
       isCreateTaskSuccess,
       error,
+      const DeepCollectionEquality().hash(categories),
       const DeepCollectionEquality().hash(subtasks),
+      const DeepCollectionEquality().hash(subtaskControllers),
       selectedPriority,
       selectedCategory,
       selectedDate,
@@ -67,7 +75,7 @@ mixin _$CreateTaskState {
 
   @override
   String toString() {
-    return 'CreateTaskState(isLoading: $isLoading, isCreateTaskSuccess: $isCreateTaskSuccess, error: $error, subtasks: $subtasks, selectedPriority: $selectedPriority, selectedCategory: $selectedCategory, selectedDate: $selectedDate, createTaskForm: $createTaskForm)';
+    return 'CreateTaskState(isLoading: $isLoading, isCreateTaskSuccess: $isCreateTaskSuccess, error: $error, categories: $categories, subtasks: $subtasks, subtaskControllers: $subtaskControllers, selectedPriority: $selectedPriority, selectedCategory: $selectedCategory, selectedDate: $selectedDate, createTaskForm: $createTaskForm)';
   }
 }
 
@@ -81,9 +89,11 @@ abstract mixin class $CreateTaskStateCopyWith<$Res> {
       {bool isLoading,
       bool? isCreateTaskSuccess,
       String? error,
+      List<String> categories,
       List<SubtaskReq> subtasks,
+      List<TextEditingController> subtaskControllers,
       String selectedPriority,
-      String selectedCategory,
+      String? selectedCategory,
       DateTime? selectedDate,
       Map<String, dynamic> createTaskForm});
 }
@@ -104,9 +114,11 @@ class _$CreateTaskStateCopyWithImpl<$Res>
     Object? isLoading = null,
     Object? isCreateTaskSuccess = freezed,
     Object? error = freezed,
+    Object? categories = null,
     Object? subtasks = null,
+    Object? subtaskControllers = null,
     Object? selectedPriority = null,
-    Object? selectedCategory = null,
+    Object? selectedCategory = freezed,
     Object? selectedDate = freezed,
     Object? createTaskForm = null,
   }) {
@@ -123,18 +135,26 @@ class _$CreateTaskStateCopyWithImpl<$Res>
           ? _self.error
           : error // ignore: cast_nullable_to_non_nullable
               as String?,
+      categories: null == categories
+          ? _self.categories
+          : categories // ignore: cast_nullable_to_non_nullable
+              as List<String>,
       subtasks: null == subtasks
           ? _self.subtasks
           : subtasks // ignore: cast_nullable_to_non_nullable
               as List<SubtaskReq>,
+      subtaskControllers: null == subtaskControllers
+          ? _self.subtaskControllers
+          : subtaskControllers // ignore: cast_nullable_to_non_nullable
+              as List<TextEditingController>,
       selectedPriority: null == selectedPriority
           ? _self.selectedPriority
           : selectedPriority // ignore: cast_nullable_to_non_nullable
               as String,
-      selectedCategory: null == selectedCategory
+      selectedCategory: freezed == selectedCategory
           ? _self.selectedCategory
           : selectedCategory // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       selectedDate: freezed == selectedDate
           ? _self.selectedDate
           : selectedDate // ignore: cast_nullable_to_non_nullable
@@ -154,12 +174,16 @@ class _CreateTaskState implements CreateTaskState {
       {this.isLoading = false,
       this.isCreateTaskSuccess,
       this.error,
+      final List<String> categories = const [],
       final List<SubtaskReq> subtasks = const [],
+      final List<TextEditingController> subtaskControllers = const [],
       this.selectedPriority = 'none',
-      this.selectedCategory = 'All',
+      this.selectedCategory,
       this.selectedDate,
       final Map<String, dynamic> createTaskForm = const {}})
-      : _subtasks = subtasks,
+      : _categories = categories,
+        _subtasks = subtasks,
+        _subtaskControllers = subtaskControllers,
         _createTaskForm = createTaskForm;
 
   @override
@@ -169,6 +193,15 @@ class _CreateTaskState implements CreateTaskState {
   final bool? isCreateTaskSuccess;
   @override
   final String? error;
+  final List<String> _categories;
+  @override
+  @JsonKey()
+  List<String> get categories {
+    if (_categories is EqualUnmodifiableListView) return _categories;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_categories);
+  }
+
   final List<SubtaskReq> _subtasks;
   @override
   @JsonKey()
@@ -178,12 +211,21 @@ class _CreateTaskState implements CreateTaskState {
     return EqualUnmodifiableListView(_subtasks);
   }
 
+  final List<TextEditingController> _subtaskControllers;
+  @override
+  @JsonKey()
+  List<TextEditingController> get subtaskControllers {
+    if (_subtaskControllers is EqualUnmodifiableListView)
+      return _subtaskControllers;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_subtaskControllers);
+  }
+
   @override
   @JsonKey()
   final String selectedPriority;
   @override
-  @JsonKey()
-  final String selectedCategory;
+  final String? selectedCategory;
   @override
   final DateTime? selectedDate;
   final Map<String, dynamic> _createTaskForm;
@@ -213,7 +255,11 @@ class _CreateTaskState implements CreateTaskState {
             (identical(other.isCreateTaskSuccess, isCreateTaskSuccess) ||
                 other.isCreateTaskSuccess == isCreateTaskSuccess) &&
             (identical(other.error, error) || other.error == error) &&
+            const DeepCollectionEquality()
+                .equals(other._categories, _categories) &&
             const DeepCollectionEquality().equals(other._subtasks, _subtasks) &&
+            const DeepCollectionEquality()
+                .equals(other._subtaskControllers, _subtaskControllers) &&
             (identical(other.selectedPriority, selectedPriority) ||
                 other.selectedPriority == selectedPriority) &&
             (identical(other.selectedCategory, selectedCategory) ||
@@ -230,7 +276,9 @@ class _CreateTaskState implements CreateTaskState {
       isLoading,
       isCreateTaskSuccess,
       error,
+      const DeepCollectionEquality().hash(_categories),
       const DeepCollectionEquality().hash(_subtasks),
+      const DeepCollectionEquality().hash(_subtaskControllers),
       selectedPriority,
       selectedCategory,
       selectedDate,
@@ -238,7 +286,7 @@ class _CreateTaskState implements CreateTaskState {
 
   @override
   String toString() {
-    return 'CreateTaskState(isLoading: $isLoading, isCreateTaskSuccess: $isCreateTaskSuccess, error: $error, subtasks: $subtasks, selectedPriority: $selectedPriority, selectedCategory: $selectedCategory, selectedDate: $selectedDate, createTaskForm: $createTaskForm)';
+    return 'CreateTaskState(isLoading: $isLoading, isCreateTaskSuccess: $isCreateTaskSuccess, error: $error, categories: $categories, subtasks: $subtasks, subtaskControllers: $subtaskControllers, selectedPriority: $selectedPriority, selectedCategory: $selectedCategory, selectedDate: $selectedDate, createTaskForm: $createTaskForm)';
   }
 }
 
@@ -254,9 +302,11 @@ abstract mixin class _$CreateTaskStateCopyWith<$Res>
       {bool isLoading,
       bool? isCreateTaskSuccess,
       String? error,
+      List<String> categories,
       List<SubtaskReq> subtasks,
+      List<TextEditingController> subtaskControllers,
       String selectedPriority,
-      String selectedCategory,
+      String? selectedCategory,
       DateTime? selectedDate,
       Map<String, dynamic> createTaskForm});
 }
@@ -277,9 +327,11 @@ class __$CreateTaskStateCopyWithImpl<$Res>
     Object? isLoading = null,
     Object? isCreateTaskSuccess = freezed,
     Object? error = freezed,
+    Object? categories = null,
     Object? subtasks = null,
+    Object? subtaskControllers = null,
     Object? selectedPriority = null,
-    Object? selectedCategory = null,
+    Object? selectedCategory = freezed,
     Object? selectedDate = freezed,
     Object? createTaskForm = null,
   }) {
@@ -296,18 +348,26 @@ class __$CreateTaskStateCopyWithImpl<$Res>
           ? _self.error
           : error // ignore: cast_nullable_to_non_nullable
               as String?,
+      categories: null == categories
+          ? _self._categories
+          : categories // ignore: cast_nullable_to_non_nullable
+              as List<String>,
       subtasks: null == subtasks
           ? _self._subtasks
           : subtasks // ignore: cast_nullable_to_non_nullable
               as List<SubtaskReq>,
+      subtaskControllers: null == subtaskControllers
+          ? _self._subtaskControllers
+          : subtaskControllers // ignore: cast_nullable_to_non_nullable
+              as List<TextEditingController>,
       selectedPriority: null == selectedPriority
           ? _self.selectedPriority
           : selectedPriority // ignore: cast_nullable_to_non_nullable
               as String,
-      selectedCategory: null == selectedCategory
+      selectedCategory: freezed == selectedCategory
           ? _self.selectedCategory
           : selectedCategory // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       selectedDate: freezed == selectedDate
           ? _self.selectedDate
           : selectedDate // ignore: cast_nullable_to_non_nullable

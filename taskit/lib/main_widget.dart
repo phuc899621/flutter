@@ -26,6 +26,7 @@ class MainWidget extends ConsumerWidget {
           bodyMedium: TextStyle(
             color: ConstColor.primaryText,
           ),
+
         ),
 
         //text
@@ -39,7 +40,9 @@ class MainWidget extends ConsumerWidget {
           onPrimaryContainer: ConstColor.primaryText,
           onSecondaryContainer: ConstColor.secondaryText,
           onError: ConstColor.error,
-          onSurface: ConstColor.alternative
+          onSurface: ConstColor.secondaryText,
+
+
         )
 
       )

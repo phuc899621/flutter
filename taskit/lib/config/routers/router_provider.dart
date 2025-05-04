@@ -2,9 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:taskit/config/routers/router_name.dart';
+import 'package:taskit/features/create_task/presentation/ui/create_task_page.dart';
 import 'package:taskit/features/signup/presentation/ui/signup_veriry_page.dart';
 
 import '../../features/forgot_password/presentation/ui/forgot_password_page.dart';
+import '../../features/forgot_password/presentation/ui/forgot_password_verify_page.dart';
 import '../../features/home/presentation/ui/home_page.dart';
 import '../../features/list/presentation/ui/list_page.dart';
 import '../../features/login/presentation/ui/login_page.dart';
@@ -44,6 +46,18 @@ final goRouterProvider = Provider<GoRouter>(
             name: forgotPasswordRoute,
             pageBuilder: (context, state) =>
                 TaskitAnimation.slidePageTransition(context, state, const ForgotPasswordPage()),
+          ),
+          GoRoute(
+            path: '/forgot_password_verify',
+            name: forgotPasswordVerifyRoute,
+            pageBuilder: (context, state) =>
+                TaskitAnimation.slidePageTransition(context, state, const ForgotPasswordVerifyPage()),
+          ),
+          GoRoute(
+            path: '/create_task',
+            name: createTaskRoute,
+            pageBuilder: (context, state) =>
+                TaskitAnimation.slidePageTransition(context, state, const CreateTaskPage()),
           ),
           StatefulShellRoute.indexedStack(
             builder: (context, state, navigationShell) => MainPage(

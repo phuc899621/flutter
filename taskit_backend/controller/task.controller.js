@@ -3,7 +3,7 @@ const TaskServices=require('../services/task.services');
         try{
             const {title,description,dueDate,priority,category,subtasks}=req.body;
             const userId=req.user.id;
-            if(!userId,!title||!description||!dueDate||!priority||!category){
+            if(!userId||!title||!dueDate||!priority||!category){
                 return res.status(400).json({
                     message: "Please enter all fields",
                     data:{}

@@ -16,6 +16,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$LoginData {
   String get token;
+  SettingData get settings;
 
   /// Create a copy of LoginData
   /// with the given fields replaced by the non-null parameter values.
@@ -32,16 +33,18 @@ mixin _$LoginData {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is LoginData &&
-            (identical(other.token, token) || other.token == token));
+            (identical(other.token, token) || other.token == token) &&
+            (identical(other.settings, settings) ||
+                other.settings == settings));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, token);
+  int get hashCode => Object.hash(runtimeType, token, settings);
 
   @override
   String toString() {
-    return 'LoginData(token: $token)';
+    return 'LoginData(token: $token, settings: $settings)';
   }
 }
 
@@ -50,7 +53,9 @@ abstract mixin class $LoginDataCopyWith<$Res> {
   factory $LoginDataCopyWith(LoginData value, $Res Function(LoginData) _then) =
       _$LoginDataCopyWithImpl;
   @useResult
-  $Res call({String token});
+  $Res call({String token, SettingData settings});
+
+  $SettingDataCopyWith<$Res> get settings;
 }
 
 /// @nodoc
@@ -66,25 +71,42 @@ class _$LoginDataCopyWithImpl<$Res> implements $LoginDataCopyWith<$Res> {
   @override
   $Res call({
     Object? token = null,
+    Object? settings = null,
   }) {
     return _then(_self.copyWith(
       token: null == token
           ? _self.token
           : token // ignore: cast_nullable_to_non_nullable
               as String,
+      settings: null == settings
+          ? _self.settings
+          : settings // ignore: cast_nullable_to_non_nullable
+              as SettingData,
     ));
+  }
+
+  /// Create a copy of LoginData
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $SettingDataCopyWith<$Res> get settings {
+    return $SettingDataCopyWith<$Res>(_self.settings, (value) {
+      return _then(_self.copyWith(settings: value));
+    });
   }
 }
 
 /// @nodoc
 @JsonSerializable()
 class _LoginData implements LoginData {
-  const _LoginData({required this.token});
+  const _LoginData({required this.token, required this.settings});
   factory _LoginData.fromJson(Map<String, dynamic> json) =>
       _$LoginDataFromJson(json);
 
   @override
   final String token;
+  @override
+  final SettingData settings;
 
   /// Create a copy of LoginData
   /// with the given fields replaced by the non-null parameter values.
@@ -106,16 +128,18 @@ class _LoginData implements LoginData {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _LoginData &&
-            (identical(other.token, token) || other.token == token));
+            (identical(other.token, token) || other.token == token) &&
+            (identical(other.settings, settings) ||
+                other.settings == settings));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, token);
+  int get hashCode => Object.hash(runtimeType, token, settings);
 
   @override
   String toString() {
-    return 'LoginData(token: $token)';
+    return 'LoginData(token: $token, settings: $settings)';
   }
 }
 
@@ -127,7 +151,10 @@ abstract mixin class _$LoginDataCopyWith<$Res>
       __$LoginDataCopyWithImpl;
   @override
   @useResult
-  $Res call({String token});
+  $Res call({String token, SettingData settings});
+
+  @override
+  $SettingDataCopyWith<$Res> get settings;
 }
 
 /// @nodoc
@@ -143,13 +170,28 @@ class __$LoginDataCopyWithImpl<$Res> implements _$LoginDataCopyWith<$Res> {
   @pragma('vm:prefer-inline')
   $Res call({
     Object? token = null,
+    Object? settings = null,
   }) {
     return _then(_LoginData(
       token: null == token
           ? _self.token
           : token // ignore: cast_nullable_to_non_nullable
               as String,
+      settings: null == settings
+          ? _self.settings
+          : settings // ignore: cast_nullable_to_non_nullable
+              as SettingData,
     ));
+  }
+
+  /// Create a copy of LoginData
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $SettingDataCopyWith<$Res> get settings {
+    return $SettingDataCopyWith<$Res>(_self.settings, (value) {
+      return _then(_self.copyWith(settings: value));
+    });
   }
 }
 

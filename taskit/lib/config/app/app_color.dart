@@ -21,6 +21,10 @@ class ConstColor {
   static const error = Color(0xFFFF5963);
   static const success=Color(0xFF4CAF50);
   static const warning=Color(0xFFFF9800);
+  static const none=Color(0xFF57636c);
+  static const high = Color(0xFFFF5963);
+  static const low=Color(0xFF4CAF50);
+  static const medium=Color(0xFFFF9800);
 
 }
 class AppColor {
@@ -31,8 +35,8 @@ class AppColor {
   Color get primary => Theme.of(context).colorScheme.primary;
   Color get onPrimary => Theme.of(context).colorScheme.onPrimary;
   Color get onSecondary => Theme.of(context).colorScheme.onSecondary;
-  Color get primaryText => Theme.of(context).textTheme.displaySmall?.color ?? Colors.black;
-  Color get secondaryText => Theme.of(context).textTheme.labelMedium?.color ?? Colors.grey;
+  Color get primaryText => ConstColor.primaryText ?? Colors.black;
+  Color get secondaryText => ConstColor.secondaryText ?? Colors.grey;
   Color get primaryContainer => Theme.of(context).colorScheme.primaryContainer;
   Color get secondaryContainer => Theme.of(context).colorScheme.secondaryContainer;
   Color get secondary => Theme.of(context).colorScheme.secondary;
@@ -40,6 +44,6 @@ class AppColor {
   Color get surface => Theme.of(context).colorScheme.surface;
   Color get error => Theme.of(context).colorScheme.error;
   Color get onBackground => Theme.of(context).colorScheme.onBackground;
-  Color get onSurface => Theme.of(context).colorScheme.onSurface;
+  Color get onSurface => ConstColor.alternative;
   Color get onError => Theme.of(context).colorScheme.onError;
 }

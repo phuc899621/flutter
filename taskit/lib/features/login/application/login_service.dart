@@ -17,6 +17,7 @@ import 'package:taskit/shared/exception/failure.dart';
 
 import '../../../shared/data/dto/base_response.dart';
 import '../data/repository/login_repository.dart';
+import '../domain/model/setting_model.dart';
 
 final loginServiceProvider = Provider.autoDispose<ILoginService>((ref) {
   final loginRepository = ref.watch(loginRepositoryProvider);
@@ -55,8 +56,16 @@ class LoginService implements ILoginService,ILoginModelMapper{
   @override
   LoginModel mapToLoginModel(BaseResponse<LoginData> data) {
     final token = data.data.token;
+    final settings = SettingModel(
+      isNotificationEnabled: data.data.settings.isNotificationEnabled,
+      remindBefore: data.data.settings.remindBefore,
+      categories: data.data.settings.category,
+      language: data.data.settings.language,
+      theme: data.data.settings.theme,
+    );
     return LoginModel(
       token: token,
+      setting: settings,
     );
   }
 

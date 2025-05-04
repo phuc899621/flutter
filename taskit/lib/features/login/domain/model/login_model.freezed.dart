@@ -16,6 +16,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$LoginModel {
   String get token;
+  SettingModel get setting;
 
   /// Create a copy of LoginModel
   /// with the given fields replaced by the non-null parameter values.
@@ -29,15 +30,16 @@ mixin _$LoginModel {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is LoginModel &&
-            (identical(other.token, token) || other.token == token));
+            (identical(other.token, token) || other.token == token) &&
+            (identical(other.setting, setting) || other.setting == setting));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, token);
+  int get hashCode => Object.hash(runtimeType, token, setting);
 
   @override
   String toString() {
-    return 'LoginModel(token: $token)';
+    return 'LoginModel(token: $token, setting: $setting)';
   }
 }
 
@@ -47,7 +49,9 @@ abstract mixin class $LoginModelCopyWith<$Res> {
           LoginModel value, $Res Function(LoginModel) _then) =
       _$LoginModelCopyWithImpl;
   @useResult
-  $Res call({String token});
+  $Res call({String token, SettingModel setting});
+
+  $SettingModelCopyWith<$Res> get setting;
 }
 
 /// @nodoc
@@ -63,23 +67,40 @@ class _$LoginModelCopyWithImpl<$Res> implements $LoginModelCopyWith<$Res> {
   @override
   $Res call({
     Object? token = null,
+    Object? setting = null,
   }) {
     return _then(_self.copyWith(
       token: null == token
           ? _self.token
           : token // ignore: cast_nullable_to_non_nullable
               as String,
+      setting: null == setting
+          ? _self.setting
+          : setting // ignore: cast_nullable_to_non_nullable
+              as SettingModel,
     ));
+  }
+
+  /// Create a copy of LoginModel
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $SettingModelCopyWith<$Res> get setting {
+    return $SettingModelCopyWith<$Res>(_self.setting, (value) {
+      return _then(_self.copyWith(setting: value));
+    });
   }
 }
 
 /// @nodoc
 
 class _LoginModel implements LoginModel {
-  const _LoginModel({required this.token});
+  const _LoginModel({required this.token, required this.setting});
 
   @override
   final String token;
+  @override
+  final SettingModel setting;
 
   /// Create a copy of LoginModel
   /// with the given fields replaced by the non-null parameter values.
@@ -94,15 +115,16 @@ class _LoginModel implements LoginModel {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _LoginModel &&
-            (identical(other.token, token) || other.token == token));
+            (identical(other.token, token) || other.token == token) &&
+            (identical(other.setting, setting) || other.setting == setting));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, token);
+  int get hashCode => Object.hash(runtimeType, token, setting);
 
   @override
   String toString() {
-    return 'LoginModel(token: $token)';
+    return 'LoginModel(token: $token, setting: $setting)';
   }
 }
 
@@ -114,7 +136,10 @@ abstract mixin class _$LoginModelCopyWith<$Res>
       __$LoginModelCopyWithImpl;
   @override
   @useResult
-  $Res call({String token});
+  $Res call({String token, SettingModel setting});
+
+  @override
+  $SettingModelCopyWith<$Res> get setting;
 }
 
 /// @nodoc
@@ -130,13 +155,28 @@ class __$LoginModelCopyWithImpl<$Res> implements _$LoginModelCopyWith<$Res> {
   @pragma('vm:prefer-inline')
   $Res call({
     Object? token = null,
+    Object? setting = null,
   }) {
     return _then(_LoginModel(
       token: null == token
           ? _self.token
           : token // ignore: cast_nullable_to_non_nullable
               as String,
+      setting: null == setting
+          ? _self.setting
+          : setting // ignore: cast_nullable_to_non_nullable
+              as SettingModel,
     ));
+  }
+
+  /// Create a copy of LoginModel
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $SettingModelCopyWith<$Res> get setting {
+    return $SettingModelCopyWith<$Res>(_self.setting, (value) {
+      return _then(_self.copyWith(setting: value));
+    });
   }
 }
 
