@@ -4,10 +4,13 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 import 'package:taskit/features/list/data/dto/request/status.dart';
-import 'package:taskit/features/create_task/data/request/create_task/create_task.dart';
 import 'package:taskit/shared/data/repository/itask_repository.dart';
 
+import '../../../features/create_task/data/dto/request/create_task/create_task.dart';
+import '../../../features/create_task/data/dto/request/suggest_category/suggest_category.dart';
+import '../../../features/create_task/data/dto/response/category_data.dart';
 import '../../exception/failure.dart';
 import '../../mixin/dio_exception_mapper.dart';
 import '../../../features/list/data/dto/request/update.dart';
@@ -90,6 +93,30 @@ class TaskRepository with DioExceptionMapper implements ITaskRepository{
           message: "An unexpected error occurred when create task. Please try again later.",
           exception: e,
           stackTrace: s,
+        );
+      }
+    }
+  }
+
+  @override
+  Future<BaseResponse<CategoryData>> suggestCategory(String token, SuggestCategoryReq suggestCategoryReq) async{
+    try{
+      final response = _taskApi.suggestCategory('Bearer $token', suggestCategoryReq);
+      return response;
+    }on DioException catch(e, s){
+      throw mapDioExceptionToFailure(e, s);
+    }catch(e,s){
+      if(e is Exception){
+        throw Failure(
+          message: e.toString(),
+          exception: e,
+          stackTrace: s,
+        );
+      }else{
+        throw Failure(
+          message: "An unexpected error occurred when suggest category. Please try again later.",
+          exception: e,
+            stackTrace: s,
         );
       }
     }

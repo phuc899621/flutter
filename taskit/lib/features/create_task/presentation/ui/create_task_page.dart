@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:taskit/config/app/app_color.dart';
@@ -19,6 +21,7 @@ class CreateTaskPage extends ConsumerStatefulWidget{
 }
 class _CreateTaskPageState extends ConsumerState<CreateTaskPage>{
   late TextEditingController _titleController;
+  Timer? _debounce;
   late TextEditingController _descriptionController;
   final ScrollController _scrollController=ScrollController();
   final List<TextEditingController> subtaskControllers=[TextEditingController()];
@@ -35,7 +38,14 @@ class _CreateTaskPageState extends ConsumerState<CreateTaskPage>{
     _titleController.dispose();
     _descriptionController.dispose();
     super.dispose();
-    }
+  }
+  void _onInputTitleChanged(){
+    if(_debounce?.isActive??false) _debounce!.cancel();
+    _debounce=Timer(Duration(seconds: 3),(){
+      ref.read(createTaskControllerProvider.notifier).updateAICategories(_titleController.text);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final controller=ref.read(createTaskControllerProvider.notifier);
@@ -110,6 +120,7 @@ class _CreateTaskPageState extends ConsumerState<CreateTaskPage>{
                         key:_formKey,
                         child: TextFormField(
                           controller: _titleController,
+                          onChanged: (_)=>_onInputTitleChanged(),
                           autofocus: true,
                           obscureText: false,
                           textCapitalization: TextCapitalization.words,
@@ -241,12 +252,7 @@ class _CreateTaskPageState extends ConsumerState<CreateTaskPage>{
                         ),
                       ),
                       SizedBox(height: 10,),
-                      CategoryChoiceChip(
-                          categories: state.categories,
-                          AICategories: [],
-                          onCategorySelected: (value){
-                              controller.setSelectedCategory(value);
-                          }),
+                      CategoryChoiceChip(),
                       SizedBox(height: 20,),
                       Text(
                         'Selected Priority',

@@ -1,8 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:taskit/features/create_task/data/request/create_task/subtask.dart';
+
 
 import '../../../../shared/domain/model/task_model.dart';
+import '../../data/dto/request/create_task/subtask.dart';
 
 part 'create_task_state.freezed.dart';
 
@@ -10,9 +11,11 @@ part 'create_task_state.freezed.dart';
 abstract class CreateTaskState with _$CreateTaskState {
    const factory CreateTaskState({
     @Default(false) bool isLoading,
+   @Default(false) bool isCategoriesLoading,
     bool? isCreateTaskSuccess,
     String? error,
     @Default([]) List<String> categories,
+    @Default([]) List<String> AICategories,
     @Default([]) List<SubtaskReq> subtasks,
     @Default([]) List<TextEditingController> subtaskControllers,
     @Default('none') String selectedPriority,

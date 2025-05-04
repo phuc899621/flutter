@@ -2,8 +2,12 @@ import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:retrofit/error_logger.dart';
 import 'package:retrofit/http.dart';
-import 'package:taskit/features/create_task/data/request/create_task/create_task.dart';
+
 import 'package:taskit/shared/data/source/remote/network/network_service.dart';
+
+import '../../../../../features/create_task/data/dto/request/create_task/create_task.dart';
+import '../../../../../features/create_task/data/dto/request/suggest_category/suggest_category.dart';
+import '../../../../../features/create_task/data/dto/response/category_data.dart';
 
 import '../../../../../features/list/data/dto/request/status.dart';
 import '../../../../../features/list/data/dto/request/update.dart';
@@ -40,6 +44,12 @@ abstract class TaskApi{
       @Header('Authorization') String token,
       @Body() CreateTaskReq createTaskReq,
   );
+  @GET('/ai/category')
+  Future<BaseResponse<CategoryData>> suggestCategory(
+      @Header('Authorization') String token,
+      @Body() SuggestCategoryReq suggestCategoryReq,
+  );
+
 
 
 }

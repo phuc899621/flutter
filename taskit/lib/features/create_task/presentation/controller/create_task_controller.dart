@@ -4,14 +4,17 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:taskit/features/create_task/data/request/create_task/create_task.dart';
+import 'package:taskit/features/create_task/data/dto/request/suggest_category/suggest_category.dart';
+
 import 'package:taskit/shared/application/itask_service.dart';
 import 'package:taskit/shared/application/token_service.dart';
 import 'package:taskit/shared/data/repository/itask_repository.dart';
 
 import '../../../../shared/application/local_service.dart';
 import '../../../../shared/application/task_service.dart';
-import '../../data/request/create_task/subtask.dart';
+
+import '../../data/dto/request/create_task/create_task.dart';
+import '../../data/dto/request/create_task/subtask.dart';
 import '../state/create_task_state.dart';
 
 final createTaskControllerProvider=NotifierProvider<CreateTaskController,CreateTaskState>(CreateTaskController.new);
@@ -144,6 +147,38 @@ class CreateTaskController extends Notifier<CreateTaskState>{
           TextEditingController(),
         ]
     );
+  }
+  Future<void> updateAICategories(String title)async{
+    debugPrint(title+"///////////////////////////");
+    try{
+      state = state.copyWith(
+        isCategoriesLoading: true,
+        error: null,
+      );
+      final token = await ref.read(tokenServiceProvider).getToken();
+      final result = await ref.read(taskServiceProvider).suggestCategory(token!, SuggestCategoryReq(title: title));
+
+      result.when((success) {
+        debugPrint(success.toString()+"////////////////");
+        state = state.copyWith(
+          isCategoriesLoading: false,
+          AICategories: success.categories,
+        );
+      }, (failure)
+      {
+        debugPrint(failure.toString()+"///////////////////////////");
+        state = state.copyWith(
+          isCategoriesLoading: false,
+          error: failure.message,
+        );
+      });
+    }
+    catch(e) {
+      state = state.copyWith(
+        isCategoriesLoading: false,
+        error: e.toString(),
+      );
+    }
 
   }
 

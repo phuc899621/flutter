@@ -16,9 +16,11 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$CreateTaskState {
   bool get isLoading;
+  bool get isCategoriesLoading;
   bool? get isCreateTaskSuccess;
   String? get error;
   List<String> get categories;
+  List<String> get AICategories;
   List<SubtaskReq> get subtasks;
   List<TextEditingController> get subtaskControllers;
   String get selectedPriority;
@@ -41,11 +43,15 @@ mixin _$CreateTaskState {
             other is CreateTaskState &&
             (identical(other.isLoading, isLoading) ||
                 other.isLoading == isLoading) &&
+            (identical(other.isCategoriesLoading, isCategoriesLoading) ||
+                other.isCategoriesLoading == isCategoriesLoading) &&
             (identical(other.isCreateTaskSuccess, isCreateTaskSuccess) ||
                 other.isCreateTaskSuccess == isCreateTaskSuccess) &&
             (identical(other.error, error) || other.error == error) &&
             const DeepCollectionEquality()
                 .equals(other.categories, categories) &&
+            const DeepCollectionEquality()
+                .equals(other.AICategories, AICategories) &&
             const DeepCollectionEquality().equals(other.subtasks, subtasks) &&
             const DeepCollectionEquality()
                 .equals(other.subtaskControllers, subtaskControllers) &&
@@ -63,9 +69,11 @@ mixin _$CreateTaskState {
   int get hashCode => Object.hash(
       runtimeType,
       isLoading,
+      isCategoriesLoading,
       isCreateTaskSuccess,
       error,
       const DeepCollectionEquality().hash(categories),
+      const DeepCollectionEquality().hash(AICategories),
       const DeepCollectionEquality().hash(subtasks),
       const DeepCollectionEquality().hash(subtaskControllers),
       selectedPriority,
@@ -75,7 +83,7 @@ mixin _$CreateTaskState {
 
   @override
   String toString() {
-    return 'CreateTaskState(isLoading: $isLoading, isCreateTaskSuccess: $isCreateTaskSuccess, error: $error, categories: $categories, subtasks: $subtasks, subtaskControllers: $subtaskControllers, selectedPriority: $selectedPriority, selectedCategory: $selectedCategory, selectedDate: $selectedDate, createTaskForm: $createTaskForm)';
+    return 'CreateTaskState(isLoading: $isLoading, isCategoriesLoading: $isCategoriesLoading, isCreateTaskSuccess: $isCreateTaskSuccess, error: $error, categories: $categories, AICategories: $AICategories, subtasks: $subtasks, subtaskControllers: $subtaskControllers, selectedPriority: $selectedPriority, selectedCategory: $selectedCategory, selectedDate: $selectedDate, createTaskForm: $createTaskForm)';
   }
 }
 
@@ -87,9 +95,11 @@ abstract mixin class $CreateTaskStateCopyWith<$Res> {
   @useResult
   $Res call(
       {bool isLoading,
+      bool isCategoriesLoading,
       bool? isCreateTaskSuccess,
       String? error,
       List<String> categories,
+      List<String> AICategories,
       List<SubtaskReq> subtasks,
       List<TextEditingController> subtaskControllers,
       String selectedPriority,
@@ -112,9 +122,11 @@ class _$CreateTaskStateCopyWithImpl<$Res>
   @override
   $Res call({
     Object? isLoading = null,
+    Object? isCategoriesLoading = null,
     Object? isCreateTaskSuccess = freezed,
     Object? error = freezed,
     Object? categories = null,
+    Object? AICategories = null,
     Object? subtasks = null,
     Object? subtaskControllers = null,
     Object? selectedPriority = null,
@@ -127,6 +139,10 @@ class _$CreateTaskStateCopyWithImpl<$Res>
           ? _self.isLoading
           : isLoading // ignore: cast_nullable_to_non_nullable
               as bool,
+      isCategoriesLoading: null == isCategoriesLoading
+          ? _self.isCategoriesLoading
+          : isCategoriesLoading // ignore: cast_nullable_to_non_nullable
+              as bool,
       isCreateTaskSuccess: freezed == isCreateTaskSuccess
           ? _self.isCreateTaskSuccess
           : isCreateTaskSuccess // ignore: cast_nullable_to_non_nullable
@@ -138,6 +154,10 @@ class _$CreateTaskStateCopyWithImpl<$Res>
       categories: null == categories
           ? _self.categories
           : categories // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+      AICategories: null == AICategories
+          ? _self.AICategories
+          : AICategories // ignore: cast_nullable_to_non_nullable
               as List<String>,
       subtasks: null == subtasks
           ? _self.subtasks
@@ -172,9 +192,11 @@ class _$CreateTaskStateCopyWithImpl<$Res>
 class _CreateTaskState implements CreateTaskState {
   const _CreateTaskState(
       {this.isLoading = false,
+      this.isCategoriesLoading = false,
       this.isCreateTaskSuccess,
       this.error,
       final List<String> categories = const [],
+      final List<String> AICategories = const [],
       final List<SubtaskReq> subtasks = const [],
       final List<TextEditingController> subtaskControllers = const [],
       this.selectedPriority = 'none',
@@ -182,6 +204,7 @@ class _CreateTaskState implements CreateTaskState {
       this.selectedDate,
       final Map<String, dynamic> createTaskForm = const {}})
       : _categories = categories,
+        _AICategories = AICategories,
         _subtasks = subtasks,
         _subtaskControllers = subtaskControllers,
         _createTaskForm = createTaskForm;
@@ -189,6 +212,9 @@ class _CreateTaskState implements CreateTaskState {
   @override
   @JsonKey()
   final bool isLoading;
+  @override
+  @JsonKey()
+  final bool isCategoriesLoading;
   @override
   final bool? isCreateTaskSuccess;
   @override
@@ -200,6 +226,15 @@ class _CreateTaskState implements CreateTaskState {
     if (_categories is EqualUnmodifiableListView) return _categories;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_categories);
+  }
+
+  final List<String> _AICategories;
+  @override
+  @JsonKey()
+  List<String> get AICategories {
+    if (_AICategories is EqualUnmodifiableListView) return _AICategories;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_AICategories);
   }
 
   final List<SubtaskReq> _subtasks;
@@ -252,11 +287,15 @@ class _CreateTaskState implements CreateTaskState {
             other is _CreateTaskState &&
             (identical(other.isLoading, isLoading) ||
                 other.isLoading == isLoading) &&
+            (identical(other.isCategoriesLoading, isCategoriesLoading) ||
+                other.isCategoriesLoading == isCategoriesLoading) &&
             (identical(other.isCreateTaskSuccess, isCreateTaskSuccess) ||
                 other.isCreateTaskSuccess == isCreateTaskSuccess) &&
             (identical(other.error, error) || other.error == error) &&
             const DeepCollectionEquality()
                 .equals(other._categories, _categories) &&
+            const DeepCollectionEquality()
+                .equals(other._AICategories, _AICategories) &&
             const DeepCollectionEquality().equals(other._subtasks, _subtasks) &&
             const DeepCollectionEquality()
                 .equals(other._subtaskControllers, _subtaskControllers) &&
@@ -274,9 +313,11 @@ class _CreateTaskState implements CreateTaskState {
   int get hashCode => Object.hash(
       runtimeType,
       isLoading,
+      isCategoriesLoading,
       isCreateTaskSuccess,
       error,
       const DeepCollectionEquality().hash(_categories),
+      const DeepCollectionEquality().hash(_AICategories),
       const DeepCollectionEquality().hash(_subtasks),
       const DeepCollectionEquality().hash(_subtaskControllers),
       selectedPriority,
@@ -286,7 +327,7 @@ class _CreateTaskState implements CreateTaskState {
 
   @override
   String toString() {
-    return 'CreateTaskState(isLoading: $isLoading, isCreateTaskSuccess: $isCreateTaskSuccess, error: $error, categories: $categories, subtasks: $subtasks, subtaskControllers: $subtaskControllers, selectedPriority: $selectedPriority, selectedCategory: $selectedCategory, selectedDate: $selectedDate, createTaskForm: $createTaskForm)';
+    return 'CreateTaskState(isLoading: $isLoading, isCategoriesLoading: $isCategoriesLoading, isCreateTaskSuccess: $isCreateTaskSuccess, error: $error, categories: $categories, AICategories: $AICategories, subtasks: $subtasks, subtaskControllers: $subtaskControllers, selectedPriority: $selectedPriority, selectedCategory: $selectedCategory, selectedDate: $selectedDate, createTaskForm: $createTaskForm)';
   }
 }
 
@@ -300,9 +341,11 @@ abstract mixin class _$CreateTaskStateCopyWith<$Res>
   @useResult
   $Res call(
       {bool isLoading,
+      bool isCategoriesLoading,
       bool? isCreateTaskSuccess,
       String? error,
       List<String> categories,
+      List<String> AICategories,
       List<SubtaskReq> subtasks,
       List<TextEditingController> subtaskControllers,
       String selectedPriority,
@@ -325,9 +368,11 @@ class __$CreateTaskStateCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   $Res call({
     Object? isLoading = null,
+    Object? isCategoriesLoading = null,
     Object? isCreateTaskSuccess = freezed,
     Object? error = freezed,
     Object? categories = null,
+    Object? AICategories = null,
     Object? subtasks = null,
     Object? subtaskControllers = null,
     Object? selectedPriority = null,
@@ -340,6 +385,10 @@ class __$CreateTaskStateCopyWithImpl<$Res>
           ? _self.isLoading
           : isLoading // ignore: cast_nullable_to_non_nullable
               as bool,
+      isCategoriesLoading: null == isCategoriesLoading
+          ? _self.isCategoriesLoading
+          : isCategoriesLoading // ignore: cast_nullable_to_non_nullable
+              as bool,
       isCreateTaskSuccess: freezed == isCreateTaskSuccess
           ? _self.isCreateTaskSuccess
           : isCreateTaskSuccess // ignore: cast_nullable_to_non_nullable
@@ -351,6 +400,10 @@ class __$CreateTaskStateCopyWithImpl<$Res>
       categories: null == categories
           ? _self._categories
           : categories // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+      AICategories: null == AICategories
+          ? _self._AICategories
+          : AICategories // ignore: cast_nullable_to_non_nullable
               as List<String>,
       subtasks: null == subtasks
           ? _self._subtasks

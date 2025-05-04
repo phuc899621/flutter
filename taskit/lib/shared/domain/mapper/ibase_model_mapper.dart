@@ -8,4 +8,5 @@ import '../../data/dto/base_response_data.dart';
 
 abstract interface class IBaseModelMapper{
   BaseModel mapToBaseModel(BaseResponse<BaseData> data);
+
 }

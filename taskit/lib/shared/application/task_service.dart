@@ -3,11 +3,14 @@
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:multiple_result/src/result.dart';
-import 'package:taskit/features/create_task/data/request/create_task/create_task.dart';
 import 'package:taskit/shared/domain/mapper/itask_model_mapper.dart';
+import 'package:taskit/features/create_task/domain/model/category_model.dart';
 import 'package:taskit/shared/domain/model/task_model.dart';
 import 'package:taskit/shared/exception/failure.dart';
 
+import '../../features/create_task/data/dto/request/create_task/create_task.dart';
+import '../../features/create_task/data/dto/request/suggest_category/suggest_category.dart';
+import '../../features/create_task/data/dto/response/category_data.dart';
 import '../data/dto/base_response.dart';
 import '../data/dto/response/task/task_data.dart';
 import '../data/repository/itask_repository.dart';
@@ -109,6 +112,36 @@ class TaskService implements ITaskModelMapper,ITaskService{
         return Error(Failure(
           message: e.toString(),
           exception: Exception("Unknown error at create task"),
+          stackTrace: s,
+        ));
+      }
+    }
+  }
+
+  @override
+  CategoryModel mapToCategoryModel(BaseResponse<CategoryData> response) {
+    return CategoryModel(categories: response.data.categories);
+  }
+
+  @override
+  Future<Result<CategoryModel, Failure>> suggestCategory(String token,SuggestCategoryReq suggestCategoryReq ) async {
+    try{
+      final response = await _iTaskRepository.suggestCategory(token, suggestCategoryReq);
+      final model = mapToCategoryModel(response);
+      return Success(model);
+    }on Failure catch(e){
+      return Error(e);
+    }catch(e,s){
+      if(e is Exception){
+        return Error(Failure(
+            message: e.toString(),
+            exception: e,
+            stackTrace: s,
+            ));
+      }else{
+        return Error(Failure(
+          message: e.toString(),
+          exception: Exception("Unknown error at suggest category"),
           stackTrace: s,
         ));
       }
