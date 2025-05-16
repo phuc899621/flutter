@@ -20,11 +20,14 @@ SettingData _$SettingDataFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$SettingData {
+  @JsonKey(name: '_id')
+  String get id => throw _privateConstructorUsedError;
+  String get userId => throw _privateConstructorUsedError;
   bool get isNotificationEnabled => throw _privateConstructorUsedError;
   String get language => throw _privateConstructorUsedError;
   String get theme => throw _privateConstructorUsedError;
   int get remindBefore => throw _privateConstructorUsedError;
-  List<String> get category => throw _privateConstructorUsedError;
+  List<String> get categories => throw _privateConstructorUsedError;
 
   /// Serializes this SettingData to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -43,11 +46,13 @@ abstract class $SettingDataCopyWith<$Res> {
       _$SettingDataCopyWithImpl<$Res, SettingData>;
   @useResult
   $Res call(
-      {bool isNotificationEnabled,
+      {@JsonKey(name: '_id') String id,
+      String userId,
+      bool isNotificationEnabled,
       String language,
       String theme,
       int remindBefore,
-      List<String> category});
+      List<String> categories});
 }
 
 /// @nodoc
@@ -65,13 +70,23 @@ class _$SettingDataCopyWithImpl<$Res, $Val extends SettingData>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? id = null,
+    Object? userId = null,
     Object? isNotificationEnabled = null,
     Object? language = null,
     Object? theme = null,
     Object? remindBefore = null,
-    Object? category = null,
+    Object? categories = null,
   }) {
     return _then(_value.copyWith(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      userId: null == userId
+          ? _value.userId
+          : userId // ignore: cast_nullable_to_non_nullable
+              as String,
       isNotificationEnabled: null == isNotificationEnabled
           ? _value.isNotificationEnabled
           : isNotificationEnabled // ignore: cast_nullable_to_non_nullable
@@ -88,9 +103,9 @@ class _$SettingDataCopyWithImpl<$Res, $Val extends SettingData>
           ? _value.remindBefore
           : remindBefore // ignore: cast_nullable_to_non_nullable
               as int,
-      category: null == category
-          ? _value.category
-          : category // ignore: cast_nullable_to_non_nullable
+      categories: null == categories
+          ? _value.categories
+          : categories // ignore: cast_nullable_to_non_nullable
               as List<String>,
     ) as $Val);
   }
@@ -105,11 +120,13 @@ abstract class _$$SettingDataImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {bool isNotificationEnabled,
+      {@JsonKey(name: '_id') String id,
+      String userId,
+      bool isNotificationEnabled,
       String language,
       String theme,
       int remindBefore,
-      List<String> category});
+      List<String> categories});
 }
 
 /// @nodoc
@@ -125,13 +142,23 @@ class __$$SettingDataImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? id = null,
+    Object? userId = null,
     Object? isNotificationEnabled = null,
     Object? language = null,
     Object? theme = null,
     Object? remindBefore = null,
-    Object? category = null,
+    Object? categories = null,
   }) {
     return _then(_$SettingDataImpl(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      userId: null == userId
+          ? _value.userId
+          : userId // ignore: cast_nullable_to_non_nullable
+              as String,
       isNotificationEnabled: null == isNotificationEnabled
           ? _value.isNotificationEnabled
           : isNotificationEnabled // ignore: cast_nullable_to_non_nullable
@@ -148,9 +175,9 @@ class __$$SettingDataImplCopyWithImpl<$Res>
           ? _value.remindBefore
           : remindBefore // ignore: cast_nullable_to_non_nullable
               as int,
-      category: null == category
-          ? _value._category
-          : category // ignore: cast_nullable_to_non_nullable
+      categories: null == categories
+          ? _value._categories
+          : categories // ignore: cast_nullable_to_non_nullable
               as List<String>,
     ));
   }
@@ -160,16 +187,23 @@ class __$$SettingDataImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$SettingDataImpl implements _SettingData {
   const _$SettingDataImpl(
-      {required this.isNotificationEnabled,
+      {@JsonKey(name: '_id') required this.id,
+      required this.userId,
+      required this.isNotificationEnabled,
       required this.language,
       required this.theme,
       required this.remindBefore,
-      required final List<String> category})
-      : _category = category;
+      required final List<String> categories})
+      : _categories = categories;
 
   factory _$SettingDataImpl.fromJson(Map<String, dynamic> json) =>
       _$$SettingDataImplFromJson(json);
 
+  @override
+  @JsonKey(name: '_id')
+  final String id;
+  @override
+  final String userId;
   @override
   final bool isNotificationEnabled;
   @override
@@ -178,17 +212,17 @@ class _$SettingDataImpl implements _SettingData {
   final String theme;
   @override
   final int remindBefore;
-  final List<String> _category;
+  final List<String> _categories;
   @override
-  List<String> get category {
-    if (_category is EqualUnmodifiableListView) return _category;
+  List<String> get categories {
+    if (_categories is EqualUnmodifiableListView) return _categories;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_category);
+    return EqualUnmodifiableListView(_categories);
   }
 
   @override
   String toString() {
-    return 'SettingData(isNotificationEnabled: $isNotificationEnabled, language: $language, theme: $theme, remindBefore: $remindBefore, category: $category)';
+    return 'SettingData(id: $id, userId: $userId, isNotificationEnabled: $isNotificationEnabled, language: $language, theme: $theme, remindBefore: $remindBefore, categories: $categories)';
   }
 
   @override
@@ -196,6 +230,8 @@ class _$SettingDataImpl implements _SettingData {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$SettingDataImpl &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.userId, userId) || other.userId == userId) &&
             (identical(other.isNotificationEnabled, isNotificationEnabled) ||
                 other.isNotificationEnabled == isNotificationEnabled) &&
             (identical(other.language, language) ||
@@ -203,13 +239,21 @@ class _$SettingDataImpl implements _SettingData {
             (identical(other.theme, theme) || other.theme == theme) &&
             (identical(other.remindBefore, remindBefore) ||
                 other.remindBefore == remindBefore) &&
-            const DeepCollectionEquality().equals(other._category, _category));
+            const DeepCollectionEquality()
+                .equals(other._categories, _categories));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, isNotificationEnabled, language,
-      theme, remindBefore, const DeepCollectionEquality().hash(_category));
+  int get hashCode => Object.hash(
+      runtimeType,
+      id,
+      userId,
+      isNotificationEnabled,
+      language,
+      theme,
+      remindBefore,
+      const DeepCollectionEquality().hash(_categories));
 
   /// Create a copy of SettingData
   /// with the given fields replaced by the non-null parameter values.
@@ -229,15 +273,22 @@ class _$SettingDataImpl implements _SettingData {
 
 abstract class _SettingData implements SettingData {
   const factory _SettingData(
-      {required final bool isNotificationEnabled,
+      {@JsonKey(name: '_id') required final String id,
+      required final String userId,
+      required final bool isNotificationEnabled,
       required final String language,
       required final String theme,
       required final int remindBefore,
-      required final List<String> category}) = _$SettingDataImpl;
+      required final List<String> categories}) = _$SettingDataImpl;
 
   factory _SettingData.fromJson(Map<String, dynamic> json) =
       _$SettingDataImpl.fromJson;
 
+  @override
+  @JsonKey(name: '_id')
+  String get id;
+  @override
+  String get userId;
   @override
   bool get isNotificationEnabled;
   @override
@@ -247,7 +298,7 @@ abstract class _SettingData implements SettingData {
   @override
   int get remindBefore;
   @override
-  List<String> get category;
+  List<String> get categories;
 
   /// Create a copy of SettingData
   /// with the given fields replaced by the non-null parameter values.

@@ -46,7 +46,6 @@ class SignUpController extends Notifier<SignupState> {
         state = state.copyWith(
           isLoading: false,
           isSignUpSuccess: true,
-          signUpModel: success,
         );
       }, (failure) {
         state = state.copyWith(

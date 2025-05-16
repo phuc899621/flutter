@@ -27,7 +27,7 @@ const settingSchema = new Schema({
     enum: [15, 30,60,1440,10080], 
     default: 30, 
   },
-  category: {
+  categories: {
     type: [String],
     default: ["School", "Work", "Friend", "Anything"],
   },

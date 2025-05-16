@@ -18,7 +18,6 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$LoginState {
   bool get isLoading => throw _privateConstructorUsedError;
   bool? get isLoginSuccess => throw _privateConstructorUsedError;
-  LoginModel? get loginModel => throw _privateConstructorUsedError;
   String? get token => throw _privateConstructorUsedError;
   String? get error => throw _privateConstructorUsedError;
   Map<String, dynamic> get loginForm => throw _privateConstructorUsedError;
@@ -40,13 +39,10 @@ abstract class $LoginStateCopyWith<$Res> {
   $Res call(
       {bool isLoading,
       bool? isLoginSuccess,
-      LoginModel? loginModel,
       String? token,
       String? error,
       Map<String, dynamic> loginForm,
       bool isPasswordVisibility});
-
-  $LoginModelCopyWith<$Res>? get loginModel;
 }
 
 /// @nodoc
@@ -66,7 +62,6 @@ class _$LoginStateCopyWithImpl<$Res, $Val extends LoginState>
   $Res call({
     Object? isLoading = null,
     Object? isLoginSuccess = freezed,
-    Object? loginModel = freezed,
     Object? token = freezed,
     Object? error = freezed,
     Object? loginForm = null,
@@ -81,10 +76,6 @@ class _$LoginStateCopyWithImpl<$Res, $Val extends LoginState>
           ? _value.isLoginSuccess
           : isLoginSuccess // ignore: cast_nullable_to_non_nullable
               as bool?,
-      loginModel: freezed == loginModel
-          ? _value.loginModel
-          : loginModel // ignore: cast_nullable_to_non_nullable
-              as LoginModel?,
       token: freezed == token
           ? _value.token
           : token // ignore: cast_nullable_to_non_nullable
@@ -103,20 +94,6 @@ class _$LoginStateCopyWithImpl<$Res, $Val extends LoginState>
               as bool,
     ) as $Val);
   }
-
-  /// Create a copy of LoginState
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $LoginModelCopyWith<$Res>? get loginModel {
-    if (_value.loginModel == null) {
-      return null;
-    }
-
-    return $LoginModelCopyWith<$Res>(_value.loginModel!, (value) {
-      return _then(_value.copyWith(loginModel: value) as $Val);
-    });
-  }
 }
 
 /// @nodoc
@@ -130,14 +107,10 @@ abstract class _$$LoginStateImplCopyWith<$Res>
   $Res call(
       {bool isLoading,
       bool? isLoginSuccess,
-      LoginModel? loginModel,
       String? token,
       String? error,
       Map<String, dynamic> loginForm,
       bool isPasswordVisibility});
-
-  @override
-  $LoginModelCopyWith<$Res>? get loginModel;
 }
 
 /// @nodoc
@@ -155,7 +128,6 @@ class __$$LoginStateImplCopyWithImpl<$Res>
   $Res call({
     Object? isLoading = null,
     Object? isLoginSuccess = freezed,
-    Object? loginModel = freezed,
     Object? token = freezed,
     Object? error = freezed,
     Object? loginForm = null,
@@ -170,10 +142,6 @@ class __$$LoginStateImplCopyWithImpl<$Res>
           ? _value.isLoginSuccess
           : isLoginSuccess // ignore: cast_nullable_to_non_nullable
               as bool?,
-      loginModel: freezed == loginModel
-          ? _value.loginModel
-          : loginModel // ignore: cast_nullable_to_non_nullable
-              as LoginModel?,
       token: freezed == token
           ? _value.token
           : token // ignore: cast_nullable_to_non_nullable
@@ -200,7 +168,6 @@ class _$LoginStateImpl implements _LoginState {
   const _$LoginStateImpl(
       {this.isLoading = false,
       this.isLoginSuccess,
-      this.loginModel,
       this.token,
       this.error,
       final Map<String, dynamic> loginForm = const {},
@@ -212,8 +179,6 @@ class _$LoginStateImpl implements _LoginState {
   final bool isLoading;
   @override
   final bool? isLoginSuccess;
-  @override
-  final LoginModel? loginModel;
   @override
   final String? token;
   @override
@@ -233,7 +198,7 @@ class _$LoginStateImpl implements _LoginState {
 
   @override
   String toString() {
-    return 'LoginState(isLoading: $isLoading, isLoginSuccess: $isLoginSuccess, loginModel: $loginModel, token: $token, error: $error, loginForm: $loginForm, isPasswordVisibility: $isPasswordVisibility)';
+    return 'LoginState(isLoading: $isLoading, isLoginSuccess: $isLoginSuccess, token: $token, error: $error, loginForm: $loginForm, isPasswordVisibility: $isPasswordVisibility)';
   }
 
   @override
@@ -245,8 +210,6 @@ class _$LoginStateImpl implements _LoginState {
                 other.isLoading == isLoading) &&
             (identical(other.isLoginSuccess, isLoginSuccess) ||
                 other.isLoginSuccess == isLoginSuccess) &&
-            (identical(other.loginModel, loginModel) ||
-                other.loginModel == loginModel) &&
             (identical(other.token, token) || other.token == token) &&
             (identical(other.error, error) || other.error == error) &&
             const DeepCollectionEquality()
@@ -260,7 +223,6 @@ class _$LoginStateImpl implements _LoginState {
       runtimeType,
       isLoading,
       isLoginSuccess,
-      loginModel,
       token,
       error,
       const DeepCollectionEquality().hash(_loginForm),
@@ -279,7 +241,6 @@ abstract class _LoginState implements LoginState {
   const factory _LoginState(
       {final bool isLoading,
       final bool? isLoginSuccess,
-      final LoginModel? loginModel,
       final String? token,
       final String? error,
       final Map<String, dynamic> loginForm,
@@ -289,8 +250,6 @@ abstract class _LoginState implements LoginState {
   bool get isLoading;
   @override
   bool? get isLoginSuccess;
-  @override
-  LoginModel? get loginModel;
   @override
   String? get token;
   @override

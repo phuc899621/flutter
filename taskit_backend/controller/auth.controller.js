@@ -33,9 +33,7 @@ const jwt = require("jsonwebtoken");
             await OtpAuthServices.createOtpUser(name,email,otp,password);
             return res.status(201).json({
                 message:"Verify code has been sent to your email",
-                data: {
-                    email: email,
-                }
+                data: {}
             })
 
         }catch(e){
@@ -136,6 +134,13 @@ const jwt = require("jsonwebtoken");
                 data:{
                     token: token,
                     settings: userSetting,
+                    user:{
+                        id: user._id,
+                        name: user.name,
+                        email: user.email,
+                        avatar: user.avatar,
+                    }
+
                 },
             });
         }catch(e){

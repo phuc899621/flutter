@@ -2,6 +2,8 @@ import 'package:floor/floor.dart';
 
 @Entity(tableName: 'category')
 class CategoryModel {
-  final String? name;
-  CategoryModel(this.name);
+  @PrimaryKey(autoGenerate: true)
+  final int? id;
+  final String name;
+  CategoryModel({required this.name, this.id});
 }
