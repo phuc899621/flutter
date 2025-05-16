@@ -19,7 +19,7 @@ class LoggingInterceptor extends Interceptor {
   }
 
   @override
-  void onError(DioError err, ErrorInterceptorHandler handler) {
+  void onError(DioException err, ErrorInterceptorHandler handler) {
     // Ghi lại thông tin lỗi
     print('Error: ${err.response?.statusCode} ${err.message}');
     if (err.response != null) {

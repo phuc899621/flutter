@@ -6,16 +6,16 @@ part of 'update.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_UpdateReq<T> _$UpdateReqFromJson<T>(
+_$UpdateReqImpl<T> _$$UpdateReqImplFromJson<T>(
   Map<String, dynamic> json,
   T Function(Object? json) fromJsonT,
 ) =>
-    _UpdateReq<T>(
+    _$UpdateReqImpl<T>(
       updateData: fromJsonT(json['updateData']),
     );
 
-Map<String, dynamic> _$UpdateReqToJson<T>(
-  _UpdateReq<T> instance,
+Map<String, dynamic> _$$UpdateReqImplToJson<T>(
+  _$UpdateReqImpl<T> instance,
   Object? Function(T value) toJsonT,
 ) =>
     <String, dynamic>{

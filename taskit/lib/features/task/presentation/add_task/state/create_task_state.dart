@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-import '../../../task/data/dto/req/subtask/subtask.dart';
+import '../../../data/dto/req/subtask/subtask.dart';
 
 part 'create_task_state.freezed.dart';
 

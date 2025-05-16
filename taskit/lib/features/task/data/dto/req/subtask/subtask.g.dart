@@ -6,11 +6,12 @@ part of 'subtask.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_SubtaskReq _$SubtaskReqFromJson(Map<String, dynamic> json) => _SubtaskReq(
+_$SubtaskReqImpl _$$SubtaskReqImplFromJson(Map<String, dynamic> json) =>
+    _$SubtaskReqImpl(
       title: json['title'] as String,
     );
 
-Map<String, dynamic> _$SubtaskReqToJson(_SubtaskReq instance) =>
+Map<String, dynamic> _$$SubtaskReqImplToJson(_$SubtaskReqImpl instance) =>
     <String, dynamic>{
       'title': instance.title,
     };

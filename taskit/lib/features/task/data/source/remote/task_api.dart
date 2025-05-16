@@ -4,12 +4,12 @@ import 'package:retrofit/error_logger.dart';
 import 'package:retrofit/http.dart';
 import 'package:taskit/shared/data/source/remote/network/network_service.dart';
 
-import '../../../../../features/task/data/dto/req/create_task/create_task.dart';
-import '../../../../../features/task/data/dto/req/suggest_category/suggest_category.dart';
-import '../../../../../features/task/data/dto/res/category/category_data.dart';
-import '../../../dto/base_response.dart';
-import '../../../dto/base_response_data.dart';
-import '../../../dto/response/task/task_data.dart';
+import '../../../../../shared/data/dto/response/base_response.dart';
+import '../../../../../shared/data/dto/response/base_response_data.dart';
+import '../../dto/req/create_task/create_task.dart';
+import '../../dto/req/suggest_category/suggest_category.dart';
+import '../../dto/res/category/category_data.dart';
+import '../../dto/res/task/task_data.dart';
 
 part 'task_api.g.dart';
 

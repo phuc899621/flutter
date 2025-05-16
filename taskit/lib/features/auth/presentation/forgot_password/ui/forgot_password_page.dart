@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:taskit/features/forgot_password/presentation/ui/widget/forgot_password_form.dart';
+import 'package:taskit/features/auth/presentation/forgot_password/ui/forgot_password_form.dart';
 import 'package:taskit/shared/presentation/widget/custom_taskit_button.dart';
 
-import '../../../../config/app/app_color.dart';
+import '../../../../../config/app/app_color.dart';
 
-class ForgotPasswordPage extends ConsumerStatefulWidget{
+class ForgotPasswordPage extends ConsumerStatefulWidget {
   const ForgotPasswordPage({super.key});
   @override
-  ConsumerState<ConsumerStatefulWidget> createState() =>_ForgotPasswordPageState();
+  ConsumerState<ConsumerStatefulWidget> createState() =>
+      _ForgotPasswordPageState();
 }
-class _ForgotPasswordPageState extends ConsumerState<ForgotPasswordPage>{
 
+class _ForgotPasswordPageState extends ConsumerState<ForgotPasswordPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -48,7 +49,7 @@ class _ForgotPasswordPageState extends ConsumerState<ForgotPasswordPage>{
                                 color: AppColor(context).primaryContainer,
                               ),
                             ),
-                            TaskitBackButton(onPressed: ()=>context.pop())
+                            TaskitBackButton(onPressed: () => context.pop())
                           ],
                         ),
                       ),

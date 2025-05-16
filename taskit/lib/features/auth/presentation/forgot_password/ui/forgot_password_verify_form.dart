@@ -2,18 +2,21 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:taskit/features/forgot_password/presentation/controller/forgot_pass_controller.dart';
+import 'package:taskit/features/auth/presentation/forgot_password/controller/forgot_pass_controller.dart';
 
 import '../../../../../config/app/app_color.dart';
 import '../../../../../shared/presentation/widget/custom_taskit_button.dart';
 import '../../../../../shared/presentation/widget/custom_taskit_textfield.dart';
 
-class ForgotPasswordVerifyPage extends ConsumerStatefulWidget{
+class ForgotPasswordVerifyPage extends ConsumerStatefulWidget {
   const ForgotPasswordVerifyPage({super.key});
   @override
-  ConsumerState<ConsumerStatefulWidget> createState() =>_ForgotPasswordVerifyPageState();
+  ConsumerState<ConsumerStatefulWidget> createState() =>
+      _ForgotPasswordVerifyPageState();
 }
-class _ForgotPasswordVerifyPageState extends ConsumerState<ForgotPasswordVerifyPage>{
+
+class _ForgotPasswordVerifyPageState
+    extends ConsumerState<ForgotPasswordVerifyPage> {
   late TextEditingController _otpController0;
   late TextEditingController _otpController1;
   late TextEditingController _otpController2;
@@ -27,6 +30,7 @@ class _ForgotPasswordVerifyPageState extends ConsumerState<ForgotPasswordVerifyP
     _otpController2 = TextEditingController();
     _otpController3 = TextEditingController();
   }
+
   @override
   void dispose() {
     _otpController0.dispose();
@@ -39,71 +43,63 @@ class _ForgotPasswordVerifyPageState extends ConsumerState<ForgotPasswordVerifyP
   @override
   Widget build(BuildContext context) {
     _listener();
-    final controller=ref.watch(forgotPassControllerProvider);
+    final controller = ref.watch(forgotPassControllerProvider);
     return Padding(
-      padding: const EdgeInsetsDirectional.fromSTEB(
-          32.0, 32.0, 32.0, 32.0),
+      padding: const EdgeInsetsDirectional.fromSTEB(32.0, 32.0, 32.0, 32.0),
       child: Column(
         mainAxisSize: MainAxisSize.max,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-              'Verification Code',
+          Text('Verification Code',
               style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                fontFamily: 'Inter Tight',
-                letterSpacing: 0.0,
-              )
-          ),
+                    fontFamily: 'Inter Tight',
+                    letterSpacing: 0.0,
+                  )),
           Padding(
-            padding: const EdgeInsetsDirectional.fromSTEB(
-                0.0, 12.0, 0.0, 26.0),
+            padding: const EdgeInsetsDirectional.fromSTEB(0.0, 12.0, 0.0, 26.0),
             child: RichText(
-              textScaler:
-              MediaQuery.of(context).textScaler,
+              textScaler: MediaQuery.of(context).textScaler,
               text: TextSpan(
                   children: [
                     TextSpan(
                         text: 'We sent a code to ',
-                        style: Theme.of(context).textTheme.labelMedium?.copyWith(
-                          fontFamily: 'Inter',
-                          letterSpacing: 0.0,
-
-                        )
-                    ),
+                        style:
+                            Theme.of(context).textTheme.labelMedium?.copyWith(
+                                  fontFamily: 'Inter',
+                                  letterSpacing: 0.0,
+                                )),
                     TextSpan(
                         text: controller.forgotPassForm['email'],
-                        style: Theme.of(context).textTheme.labelMedium?.copyWith(
-                          fontFamily: 'Inter',
-                          letterSpacing: 0.0,
-                          color: AppColor(context).primary,
-                        )
-                    ),
+                        style:
+                            Theme.of(context).textTheme.labelMedium?.copyWith(
+                                  fontFamily: 'Inter',
+                                  letterSpacing: 0.0,
+                                  color: AppColor(context).primary,
+                                )),
                     TextSpan(
                         text:
-                        '. Please enter 4 digit code that mentioned in the email',
-                        style: Theme.of(context).textTheme.labelMedium?.copyWith(
-                          fontFamily: 'Inter',
-                          letterSpacing: 0.0,
-                        )
-                    )
+                            '. Please enter 4 digit code that mentioned in the email',
+                        style:
+                            Theme.of(context).textTheme.labelMedium?.copyWith(
+                                  fontFamily: 'Inter',
+                                  letterSpacing: 0.0,
+                                ))
                   ],
                   style: Theme.of(context).textTheme.labelMedium?.copyWith(
-                    fontFamily: 'Inter',
-                    letterSpacing: 0.0,
-                    color: AppColor(context).primary,
-                  )
-              ),
+                        fontFamily: 'Inter',
+                        letterSpacing: 0.0,
+                        color: AppColor(context).primary,
+                      )),
             ),
           ),
           Align(
             alignment: const AlignmentDirectional(0.0, 0.0),
             child: Padding(
-              padding: const EdgeInsetsDirectional.fromSTEB(
-                  0.0, 0.0, 0.0, 26.0),
+              padding:
+                  const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 26.0),
               child: Row(
                 mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment:
-                MainAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Expanded(
                     child: SizedBox(
@@ -111,21 +107,27 @@ class _ForgotPasswordVerifyPageState extends ConsumerState<ForgotPasswordVerifyP
                       child: TaskitCodeTextField(controller: _otpController0),
                     ),
                   ),
-                  const SizedBox(width: 30.0,),
+                  const SizedBox(
+                    width: 30.0,
+                  ),
                   Expanded(
                     child: SizedBox(
                       width: 200.0,
                       child: TaskitCodeTextField(controller: _otpController1),
                     ),
                   ),
-                  const SizedBox(width: 30.0,),
+                  const SizedBox(
+                    width: 30.0,
+                  ),
                   Expanded(
                     child: SizedBox(
                       width: 200.0,
                       child: TaskitCodeTextField(controller: _otpController2),
                     ),
                   ),
-                  const SizedBox(width: 30.0,),
+                  const SizedBox(
+                    width: 30.0,
+                  ),
                   Expanded(
                     child: SizedBox(
                       width: 200.0,
@@ -137,45 +139,44 @@ class _ForgotPasswordVerifyPageState extends ConsumerState<ForgotPasswordVerifyP
             ),
           ),
           Padding(
-            padding: const EdgeInsetsDirectional.fromSTEB(
-                0.0, 0.0, 0.0, 16.0),
+            padding: const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 16.0),
             child: TaskitElevationButton(
-              onPressed:() => _onSummit(),
+              onPressed: () => _onSummit(),
               text: 'Verify',
             ),
           ),
           Align(
             alignment: const AlignmentDirectional(0.0, 0.0),
             child: Padding(
-              padding: const EdgeInsetsDirectional.fromSTEB(
-                  0.0, 30.0, 0.0, 0.0),
+              padding:
+                  const EdgeInsetsDirectional.fromSTEB(0.0, 30.0, 0.0, 0.0),
               child: RichText(
-                textScaler:
-                MediaQuery.of(context).textScaler,
+                textScaler: MediaQuery.of(context).textScaler,
                 text: TextSpan(
                     children: [
                       TextSpan(
                           text: 'Haven’t got the email yet?',
-                          style: Theme.of(context).textTheme.labelMedium?.copyWith(
-                            fontFamily: 'Inter',
-                            letterSpacing: 0.0,
-                          )
-                      ),
+                          style:
+                              Theme.of(context).textTheme.labelMedium?.copyWith(
+                                    fontFamily: 'Inter',
+                                    letterSpacing: 0.0,
+                                  )),
                       TextSpan(
                           text: ' Resend code!',
-                          style: Theme.of(context).textTheme.labelMedium?.copyWith(
-                              fontFamily: 'Inter',
-                              letterSpacing: 0.0,
-                              color: AppColor(context).primary
-                          ),
-                        recognizer: TapGestureRecognizer()..onTap = () => _onSummit()
-                      )
+                          style: Theme.of(context)
+                              .textTheme
+                              .labelMedium
+                              ?.copyWith(
+                                  fontFamily: 'Inter',
+                                  letterSpacing: 0.0,
+                                  color: AppColor(context).primary),
+                          recognizer: TapGestureRecognizer()
+                            ..onTap = () => _onSummit())
                     ],
                     style: Theme.of(context).textTheme.labelMedium?.copyWith(
-                      fontFamily: 'Inter',
-                      letterSpacing: 0.0,
-                    )
-                ),
+                          fontFamily: 'Inter',
+                          letterSpacing: 0.0,
+                        )),
               ),
             ),
           ),
@@ -183,32 +184,38 @@ class _ForgotPasswordVerifyPageState extends ConsumerState<ForgotPasswordVerifyP
       ),
     );
   }
-  void _listener(){
-    ref.listen(forgotPassControllerProvider.select((value) => value.errorVerify),
-            (_,next){
-          if (next != null) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                duration: const Duration(seconds: 5),
-                backgroundColor: AppColor(context).error,
-                content: Text(next),
-              ),
-            );
-          }
-        });
-    ref.listen(forgotPassControllerProvider.select((value)=>value.isVerifySuccess),
-            (_,next){
-          if (next != null && next) {
-            context.push('/forgot-password-reset');
-          }
-        });
+
+  void _listener() {
+    ref.listen(
+        forgotPassControllerProvider.select((value) => value.errorVerify),
+        (_, next) {
+      if (next != null) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            duration: const Duration(seconds: 5),
+            backgroundColor: AppColor(context).error,
+            content: Text(next),
+          ),
+        );
+      }
+    });
+    ref.listen(
+        forgotPassControllerProvider.select((value) => value.isVerifySuccess),
+        (_, next) {
+      if (next != null && next) {
+        context.push('/forgot_password/reset');
+      }
+    });
   }
-  void _onSummit(){
+
+  void _onSummit() {
     final formData = ({
-      'otp': _otpController0.text+_otpController1.text+_otpController2.text+_otpController3.text,
+      'otp': _otpController0.text +
+          _otpController1.text +
+          _otpController2.text +
+          _otpController3.text,
     });
     ref.read(forgotPassControllerProvider.notifier).setVerifyForm(formData);
     ref.read(forgotPassControllerProvider.notifier).verify();
-
   }
 }

@@ -33,6 +33,8 @@ abstract class $LoginModelCopyWith<$Res> {
       _$LoginModelCopyWithImpl<$Res, LoginModel>;
   @useResult
   $Res call({String token, SettingModel setting});
+
+  $SettingModelCopyWith<$Res> get setting;
 }
 
 /// @nodoc
@@ -51,18 +53,28 @@ class _$LoginModelCopyWithImpl<$Res, $Val extends LoginModel>
   @override
   $Res call({
     Object? token = null,
-    Object? setting = freezed,
+    Object? setting = null,
   }) {
     return _then(_value.copyWith(
       token: null == token
           ? _value.token
           : token // ignore: cast_nullable_to_non_nullable
               as String,
-      setting: freezed == setting
+      setting: null == setting
           ? _value.setting
           : setting // ignore: cast_nullable_to_non_nullable
               as SettingModel,
     ) as $Val);
+  }
+
+  /// Create a copy of LoginModel
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $SettingModelCopyWith<$Res> get setting {
+    return $SettingModelCopyWith<$Res>(_value.setting, (value) {
+      return _then(_value.copyWith(setting: value) as $Val);
+    });
   }
 }
 
@@ -75,6 +87,9 @@ abstract class _$$LoginModelImplCopyWith<$Res>
   @override
   @useResult
   $Res call({String token, SettingModel setting});
+
+  @override
+  $SettingModelCopyWith<$Res> get setting;
 }
 
 /// @nodoc
@@ -91,14 +106,14 @@ class __$$LoginModelImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? token = null,
-    Object? setting = freezed,
+    Object? setting = null,
   }) {
     return _then(_$LoginModelImpl(
       token: null == token
           ? _value.token
           : token // ignore: cast_nullable_to_non_nullable
               as String,
-      setting: freezed == setting
+      setting: null == setting
           ? _value.setting
           : setting // ignore: cast_nullable_to_non_nullable
               as SettingModel,
@@ -127,12 +142,11 @@ class _$LoginModelImpl implements _LoginModel {
         (other.runtimeType == runtimeType &&
             other is _$LoginModelImpl &&
             (identical(other.token, token) || other.token == token) &&
-            const DeepCollectionEquality().equals(other.setting, setting));
+            (identical(other.setting, setting) || other.setting == setting));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType, token, const DeepCollectionEquality().hash(setting));
+  int get hashCode => Object.hash(runtimeType, token, setting);
 
   /// Create a copy of LoginModel
   /// with the given fields replaced by the non-null parameter values.

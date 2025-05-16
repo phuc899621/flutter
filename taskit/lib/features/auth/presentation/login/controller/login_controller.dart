@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:taskit/features/login/domain/model/setting_model.dart';
-import 'package:taskit/features/login/presentation/state/login_state.dart';
+import 'package:taskit/features/auth/presentation/login/state/login_state.dart';
 import 'package:taskit/shared/application/token_service.dart';
 
-import '../../../../shared/application/local_service.dart';
-import '../../../auth/data/dto/req/login_request.dart';
-import '../../application/login_service.dart';
+import '../../../../../shared/application/local_service.dart';
+import '../../../application/auth_service.dart';
+import '../../../data/dto/req/login/login_request.dart';
+import '../../../domain/entites/setting/setting.dart';
 
 final loginControllerProvider =
     NotifierProvider<LoginController, LoginState>(LoginController.new);
@@ -35,7 +35,7 @@ class LoginController extends Notifier<LoginState> {
         email: state.loginForm['email'],
         password: state.loginForm['password'],
       );
-      final result = await ref.read(loginServiceProvider).login(formData);
+      final result = await ref.read(authServiceProvider).login(formData);
       result.when((success) async {
         await saveSetting(success.setting);
         state = state.copyWith(

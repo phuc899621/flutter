@@ -1,10 +1,10 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:taskit/features/forgot_password/presentation/state/forgot_pass_state.dart';
+import 'package:taskit/features/auth/application/auth_service.dart';
+import 'package:taskit/features/auth/presentation/forgot_password/state/forgot_pass_state.dart';
 
-import '../../../auth/data/dto/req/forgot_pass/forgot_pass.dart';
-import '../../../auth/data/dto/req/forgot_pass/forgot_pass_verify.dart';
-import '../../../auth/data/dto/req/forgot_pass/reset_pass.dart';
-import '../../application/forgot_pass_service.dart';
+import '../../../data/dto/req/forgot_pass/forgot_pass.dart';
+import '../../../data/dto/req/forgot_pass/forgot_pass_verify.dart';
+import '../../../data/dto/req/forgot_pass/reset_pass.dart';
 
 final forgotPassControllerProvider =
     NotifierProvider<ForgotPassController, ForgotPassState>(
@@ -25,8 +25,7 @@ class ForgotPassController extends Notifier<ForgotPassState> {
         isForgotPassSuccess: null,
       );
       final formData = ForgotPassRequest(email: state.forgotPassForm['email']);
-      final result =
-          await ref.read(forgotPassServiceProvider).forgotPass(formData);
+      final result = await ref.read(authServiceProvider).forgotPass(formData);
       result.when((success) {
         state = state.copyWith(
           isLoading: false,
@@ -77,7 +76,8 @@ class ForgotPassController extends Notifier<ForgotPassState> {
         email: state.forgotPassForm['email'],
         otp: state.verifyForm['otp'],
       );
-      final result = await ref.read(forgotPassServiceProvider).verify(formData);
+      final result =
+          await ref.read(authServiceProvider).forgotPassVerify(formData);
       result.when((success) {
         state = state.copyWith(
             isLoading: false,
@@ -112,8 +112,8 @@ class ForgotPassController extends Notifier<ForgotPassState> {
         confirmPassword: state.resetForm['confirmPassword'],
       );
       final result = await ref
-          .read(forgotPassServiceProvider)
-          .reset(formData, state.forgotPassVerifyModel!.resetToken);
+          .read(authServiceProvider)
+          .resetPass(formData, state.forgotPassVerifyModel!.resetToken);
 
       result.when((success) {
         state = state.copyWith(

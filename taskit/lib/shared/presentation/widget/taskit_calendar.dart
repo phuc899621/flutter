@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:taskit/config/app/app_color.dart';
@@ -20,12 +19,12 @@ class _TaskitWeekCalendar extends ConsumerState<TaskitWeekCalendar>{
   }
   void _goToPreviousWeek(){
     setState(() {
-      _currentDate = _currentDate.subtract(Duration(days: 7));
+      _currentDate = _currentDate.subtract(const Duration(days: 7));
     });
   }
   void _goToNextWeek(){
     setState(() {
-      _currentDate = _currentDate.add(Duration(days: 7));
+      _currentDate = _currentDate.add(const Duration(days: 7));
     });
   }
   void _onSelectedDate(DateTime date) {
@@ -64,12 +63,12 @@ class _TaskitWeekCalendar extends ConsumerState<TaskitWeekCalendar>{
         mainAxisSize: MainAxisSize.max,
         children: [
           Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 8.0),
+            padding: const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 8.0),
             child: Row(
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                SizedBox(width: 10.0),
+                const SizedBox(width: 10.0),
                 Expanded(
                   child: Text(
                     currentMonth,
@@ -80,7 +79,7 @@ class _TaskitWeekCalendar extends ConsumerState<TaskitWeekCalendar>{
                     ),
                   ),
                 ),
-                SizedBox(width: 10.0),
+                const SizedBox(width: 10.0),
                 Container(
                   width: 36.0,
                   height: 36.0,
@@ -99,7 +98,7 @@ class _TaskitWeekCalendar extends ConsumerState<TaskitWeekCalendar>{
                     splashRadius: 20.0,
                   ),
                 ),
-                SizedBox(width: 10.0),
+                const SizedBox(width: 10.0),
                 Container(
                   width: 36.0,
                   height: 36.0,
@@ -118,7 +117,7 @@ class _TaskitWeekCalendar extends ConsumerState<TaskitWeekCalendar>{
                     splashRadius: 20.0,
                   ),
                 ),
-                SizedBox(width: 10.0),
+                const SizedBox(width: 10.0),
                 Container(
                   width: 36.0,
                   height: 36.0,
@@ -137,12 +136,12 @@ class _TaskitWeekCalendar extends ConsumerState<TaskitWeekCalendar>{
                     splashRadius: 20.0,
                   ),
                 ),
-                SizedBox(width: 10.0),
+                const SizedBox(width: 10.0),
               ]
             ),
           ),
           Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(0, 0.0, 0, 10.0),
+            padding: const EdgeInsetsDirectional.fromSTEB(0, 0.0, 0, 10.0),
             child: Row(
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -178,14 +177,14 @@ class _TaskitWeekCalendar extends ConsumerState<TaskitWeekCalendar>{
           ),
           Expanded(
             child: Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(0, 0.0, 0, 0.0),
+              padding: const EdgeInsetsDirectional.fromSTEB(0, 0.0, 0, 0.0),
               child: Container(
                 width: double.infinity,
                 height: 60,
-                decoration: BoxDecoration(),
+                decoration: const BoxDecoration(),
                 child: GridView(
-                  padding: EdgeInsets.fromLTRB(0, 5, 0, 0),
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  padding: const EdgeInsets.fromLTRB(0, 5, 0, 0),
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 7,
                     crossAxisSpacing: 0.0,
                     mainAxisSpacing: 0.0,
@@ -205,7 +204,7 @@ class _TaskitWeekCalendar extends ConsumerState<TaskitWeekCalendar>{
                         shape: BoxShape.circle,
                       ),
                       child: Align(
-                        alignment: AlignmentDirectional(0, 0),
+                        alignment: const AlignmentDirectional(0, 0),
                         child: Text(
                           date.day.toString(),
                           style: Theme.of(context).textTheme.labelLarge?.copyWith(

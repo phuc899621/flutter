@@ -1,4 +1,3 @@
-import 'dart:ui';
 
 import 'package:flutter/material.dart';
 
@@ -40,10 +39,10 @@ class AppColor {
   Color get primaryContainer => Theme.of(context).colorScheme.primaryContainer;
   Color get secondaryContainer => Theme.of(context).colorScheme.secondaryContainer;
   Color get secondary => Theme.of(context).colorScheme.secondary;
-  Color get background => Theme.of(context).colorScheme.background;
+  Color get background => Theme.of(context).colorScheme.surface;
   Color get surface => Theme.of(context).colorScheme.surface;
   Color get error => Theme.of(context).colorScheme.error;
-  Color get onBackground => Theme.of(context).colorScheme.onBackground;
+  Color get onBackground => Theme.of(context).colorScheme.onSurface;
   Color get onSurface => ConstColor.alternative;
   Color get onError => Theme.of(context).colorScheme.onError;
 }

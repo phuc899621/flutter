@@ -6,7 +6,7 @@ import 'package:taskit/shared/presentation/widget/custom_taskit_button.dart';
 
 import '../../../../../config/app/app_color.dart';
 import '../../../../../shared/presentation/widget/custom_taskit_textfield.dart';
-import '../../controller/signup_controller.dart';
+import '../controller/signup_controller.dart';
 
 class SignupVerifyForm extends ConsumerStatefulWidget {
   const SignupVerifyForm({super.key});

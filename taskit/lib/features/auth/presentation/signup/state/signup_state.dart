@@ -1,6 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-import '../../../auth/domain/model/signup_model.dart';
+import '../../../domain/entites/signup/signup.dart';
 
 part 'signup_state.freezed.dart';
 

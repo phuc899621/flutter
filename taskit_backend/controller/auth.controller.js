@@ -288,7 +288,7 @@ const jwt = require("jsonwebtoken");
                 }
             });
         }catch(e){
-            return res.status(500).json({
+            return res.status(401).json({
                 message: "An error occurred when verify token: "+e.message,
                 data: {}
             });

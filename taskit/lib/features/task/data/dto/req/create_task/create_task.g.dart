@@ -6,8 +6,8 @@ part of 'create_task.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_CreateTaskReq _$CreateTaskReqFromJson(Map<String, dynamic> json) =>
-    _CreateTaskReq(
+_$CreateTaskReqImpl _$$CreateTaskReqImplFromJson(Map<String, dynamic> json) =>
+    _$CreateTaskReqImpl(
       title: json['title'] as String,
       description: json['description'] as String,
       category: json['category'] as String,
@@ -18,7 +18,7 @@ _CreateTaskReq _$CreateTaskReqFromJson(Map<String, dynamic> json) =>
           .toList(),
     );
 
-Map<String, dynamic> _$CreateTaskReqToJson(_CreateTaskReq instance) =>
+Map<String, dynamic> _$$CreateTaskReqImplToJson(_$CreateTaskReqImpl instance) =>
     <String, dynamic>{
       'title': instance.title,
       'description': instance.description,

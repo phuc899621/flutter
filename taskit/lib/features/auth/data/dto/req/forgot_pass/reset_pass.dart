@@ -1,6 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-part 'reset_pass_req.g.dart';
-part 'reset_pass_req.freezed.dart';
+
+part 'reset_pass.freezed.dart';
+part 'reset_pass.g.dart';
 
 @freezed
 abstract class ResetPassRequest with _$ResetPassRequest {
@@ -8,6 +9,7 @@ abstract class ResetPassRequest with _$ResetPassRequest {
     required String email,
     required String password,
     required String confirmPassword,
-  })=_ResetPassRequest;
-  factory ResetPassRequest.fromJson(Map<String, dynamic> json) => _$ResetPassRequestFromJson(json);
+  }) = _ResetPassRequest;
+  factory ResetPassRequest.fromJson(Map<String, dynamic> json) =>
+      _$ResetPassRequestFromJson(json);
 }

@@ -6,7 +6,8 @@ part of 'setting_data.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_SettingData _$SettingDataFromJson(Map<String, dynamic> json) => _SettingData(
+_$SettingDataImpl _$$SettingDataImplFromJson(Map<String, dynamic> json) =>
+    _$SettingDataImpl(
       isNotificationEnabled: json['isNotificationEnabled'] as bool,
       language: json['language'] as String,
       theme: json['theme'] as String,
@@ -15,7 +16,7 @@ _SettingData _$SettingDataFromJson(Map<String, dynamic> json) => _SettingData(
           (json['category'] as List<dynamic>).map((e) => e as String).toList(),
     );
 
-Map<String, dynamic> _$SettingDataToJson(_SettingData instance) =>
+Map<String, dynamic> _$$SettingDataImplToJson(_$SettingDataImpl instance) =>
     <String, dynamic>{
       'isNotificationEnabled': instance.isNotificationEnabled,
       'language': instance.language,

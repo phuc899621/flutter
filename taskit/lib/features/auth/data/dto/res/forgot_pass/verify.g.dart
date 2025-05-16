@@ -1,19 +1,19 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'forgot_pass_verify_res.dart';
+part of 'verify.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-_ForgotPassVerifyData _$ForgotPassVerifyDataFromJson(
+_$ForgotPassVerifyDataImpl _$$ForgotPassVerifyDataImplFromJson(
         Map<String, dynamic> json) =>
-    _ForgotPassVerifyData(
+    _$ForgotPassVerifyDataImpl(
       resetToken: json['resetToken'] as String,
     );
 
-Map<String, dynamic> _$ForgotPassVerifyDataToJson(
-        _ForgotPassVerifyData instance) =>
+Map<String, dynamic> _$$ForgotPassVerifyDataImplToJson(
+        _$ForgotPassVerifyDataImpl instance) =>
     <String, dynamic>{
       'resetToken': instance.resetToken,
     };

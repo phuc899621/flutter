@@ -1,4 +1,3 @@
-// dart format width=80
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
@@ -10,85 +9,38 @@ part of 'forgot_pass_state.dart';
 // FreezedGenerator
 // **************************************************************************
 
-// dart format off
 T _$identity<T>(T value) => value;
+
+final _privateConstructorUsedError = UnsupportedError(
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
 mixin _$ForgotPassState {
-  bool get isLoading;
-  bool? get isForgotPassSuccess;
-  bool? get isVerifySuccess;
-  bool? get isResetSuccess;
-  String? get errorForgotPass;
-  String? get errorVerify;
-  String? get errorReset;
-  Map<String, dynamic> get forgotPassForm;
-  Map<String, dynamic> get verifyForm;
-  Map<String, dynamic> get resetForm;
-  ForgotPassVerifyModel? get forgotPassVerifyModel;
+  bool get isLoading => throw _privateConstructorUsedError;
+  bool? get isForgotPassSuccess => throw _privateConstructorUsedError;
+  bool? get isVerifySuccess => throw _privateConstructorUsedError;
+  bool? get isResetSuccess => throw _privateConstructorUsedError;
+  String? get errorForgotPass => throw _privateConstructorUsedError;
+  String? get errorVerify => throw _privateConstructorUsedError;
+  String? get errorReset => throw _privateConstructorUsedError;
+  Map<String, dynamic> get forgotPassForm => throw _privateConstructorUsedError;
+  Map<String, dynamic> get verifyForm => throw _privateConstructorUsedError;
+  Map<String, dynamic> get resetForm => throw _privateConstructorUsedError;
+  ForgotPassVerifyModel? get forgotPassVerifyModel =>
+      throw _privateConstructorUsedError;
 
   /// Create a copy of ForgotPassState
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  @pragma('vm:prefer-inline')
   $ForgotPassStateCopyWith<ForgotPassState> get copyWith =>
-      _$ForgotPassStateCopyWithImpl<ForgotPassState>(
-          this as ForgotPassState, _$identity);
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is ForgotPassState &&
-            (identical(other.isLoading, isLoading) ||
-                other.isLoading == isLoading) &&
-            (identical(other.isForgotPassSuccess, isForgotPassSuccess) ||
-                other.isForgotPassSuccess == isForgotPassSuccess) &&
-            (identical(other.isVerifySuccess, isVerifySuccess) ||
-                other.isVerifySuccess == isVerifySuccess) &&
-            (identical(other.isResetSuccess, isResetSuccess) ||
-                other.isResetSuccess == isResetSuccess) &&
-            (identical(other.errorForgotPass, errorForgotPass) ||
-                other.errorForgotPass == errorForgotPass) &&
-            (identical(other.errorVerify, errorVerify) ||
-                other.errorVerify == errorVerify) &&
-            (identical(other.errorReset, errorReset) ||
-                other.errorReset == errorReset) &&
-            const DeepCollectionEquality()
-                .equals(other.forgotPassForm, forgotPassForm) &&
-            const DeepCollectionEquality()
-                .equals(other.verifyForm, verifyForm) &&
-            const DeepCollectionEquality().equals(other.resetForm, resetForm) &&
-            (identical(other.forgotPassVerifyModel, forgotPassVerifyModel) ||
-                other.forgotPassVerifyModel == forgotPassVerifyModel));
-  }
-
-  @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      isLoading,
-      isForgotPassSuccess,
-      isVerifySuccess,
-      isResetSuccess,
-      errorForgotPass,
-      errorVerify,
-      errorReset,
-      const DeepCollectionEquality().hash(forgotPassForm),
-      const DeepCollectionEquality().hash(verifyForm),
-      const DeepCollectionEquality().hash(resetForm),
-      forgotPassVerifyModel);
-
-  @override
-  String toString() {
-    return 'ForgotPassState(isLoading: $isLoading, isForgotPassSuccess: $isForgotPassSuccess, isVerifySuccess: $isVerifySuccess, isResetSuccess: $isResetSuccess, errorForgotPass: $errorForgotPass, errorVerify: $errorVerify, errorReset: $errorReset, forgotPassForm: $forgotPassForm, verifyForm: $verifyForm, resetForm: $resetForm, forgotPassVerifyModel: $forgotPassVerifyModel)';
-  }
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract mixin class $ForgotPassStateCopyWith<$Res> {
+abstract class $ForgotPassStateCopyWith<$Res> {
   factory $ForgotPassStateCopyWith(
-          ForgotPassState value, $Res Function(ForgotPassState) _then) =
-      _$ForgotPassStateCopyWithImpl;
+          ForgotPassState value, $Res Function(ForgotPassState) then) =
+      _$ForgotPassStateCopyWithImpl<$Res, ForgotPassState>;
   @useResult
   $Res call(
       {bool isLoading,
@@ -107,12 +59,14 @@ abstract mixin class $ForgotPassStateCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$ForgotPassStateCopyWithImpl<$Res>
+class _$ForgotPassStateCopyWithImpl<$Res, $Val extends ForgotPassState>
     implements $ForgotPassStateCopyWith<$Res> {
-  _$ForgotPassStateCopyWithImpl(this._self, this._then);
+  _$ForgotPassStateCopyWithImpl(this._value, this._then);
 
-  final ForgotPassState _self;
-  final $Res Function(ForgotPassState) _then;
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
   /// Create a copy of ForgotPassState
   /// with the given fields replaced by the non-null parameter values.
@@ -131,52 +85,52 @@ class _$ForgotPassStateCopyWithImpl<$Res>
     Object? resetForm = null,
     Object? forgotPassVerifyModel = freezed,
   }) {
-    return _then(_self.copyWith(
+    return _then(_value.copyWith(
       isLoading: null == isLoading
-          ? _self.isLoading
+          ? _value.isLoading
           : isLoading // ignore: cast_nullable_to_non_nullable
               as bool,
       isForgotPassSuccess: freezed == isForgotPassSuccess
-          ? _self.isForgotPassSuccess
+          ? _value.isForgotPassSuccess
           : isForgotPassSuccess // ignore: cast_nullable_to_non_nullable
               as bool?,
       isVerifySuccess: freezed == isVerifySuccess
-          ? _self.isVerifySuccess
+          ? _value.isVerifySuccess
           : isVerifySuccess // ignore: cast_nullable_to_non_nullable
               as bool?,
       isResetSuccess: freezed == isResetSuccess
-          ? _self.isResetSuccess
+          ? _value.isResetSuccess
           : isResetSuccess // ignore: cast_nullable_to_non_nullable
               as bool?,
       errorForgotPass: freezed == errorForgotPass
-          ? _self.errorForgotPass
+          ? _value.errorForgotPass
           : errorForgotPass // ignore: cast_nullable_to_non_nullable
               as String?,
       errorVerify: freezed == errorVerify
-          ? _self.errorVerify
+          ? _value.errorVerify
           : errorVerify // ignore: cast_nullable_to_non_nullable
               as String?,
       errorReset: freezed == errorReset
-          ? _self.errorReset
+          ? _value.errorReset
           : errorReset // ignore: cast_nullable_to_non_nullable
               as String?,
       forgotPassForm: null == forgotPassForm
-          ? _self.forgotPassForm
+          ? _value.forgotPassForm
           : forgotPassForm // ignore: cast_nullable_to_non_nullable
               as Map<String, dynamic>,
       verifyForm: null == verifyForm
-          ? _self.verifyForm
+          ? _value.verifyForm
           : verifyForm // ignore: cast_nullable_to_non_nullable
               as Map<String, dynamic>,
       resetForm: null == resetForm
-          ? _self.resetForm
+          ? _value.resetForm
           : resetForm // ignore: cast_nullable_to_non_nullable
               as Map<String, dynamic>,
       forgotPassVerifyModel: freezed == forgotPassVerifyModel
-          ? _self.forgotPassVerifyModel
+          ? _value.forgotPassVerifyModel
           : forgotPassVerifyModel // ignore: cast_nullable_to_non_nullable
               as ForgotPassVerifyModel?,
-    ));
+    ) as $Val);
   }
 
   /// Create a copy of ForgotPassState
@@ -184,21 +138,120 @@ class _$ForgotPassStateCopyWithImpl<$Res>
   @override
   @pragma('vm:prefer-inline')
   $ForgotPassVerifyModelCopyWith<$Res>? get forgotPassVerifyModel {
-    if (_self.forgotPassVerifyModel == null) {
+    if (_value.forgotPassVerifyModel == null) {
       return null;
     }
 
-    return $ForgotPassVerifyModelCopyWith<$Res>(_self.forgotPassVerifyModel!,
+    return $ForgotPassVerifyModelCopyWith<$Res>(_value.forgotPassVerifyModel!,
         (value) {
-      return _then(_self.copyWith(forgotPassVerifyModel: value));
+      return _then(_value.copyWith(forgotPassVerifyModel: value) as $Val);
     });
   }
 }
 
 /// @nodoc
+abstract class _$$ForgotPassStateImplCopyWith<$Res>
+    implements $ForgotPassStateCopyWith<$Res> {
+  factory _$$ForgotPassStateImplCopyWith(_$ForgotPassStateImpl value,
+          $Res Function(_$ForgotPassStateImpl) then) =
+      __$$ForgotPassStateImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call(
+      {bool isLoading,
+      bool? isForgotPassSuccess,
+      bool? isVerifySuccess,
+      bool? isResetSuccess,
+      String? errorForgotPass,
+      String? errorVerify,
+      String? errorReset,
+      Map<String, dynamic> forgotPassForm,
+      Map<String, dynamic> verifyForm,
+      Map<String, dynamic> resetForm,
+      ForgotPassVerifyModel? forgotPassVerifyModel});
 
-class _ForgotPassState implements ForgotPassState {
-  const _ForgotPassState(
+  @override
+  $ForgotPassVerifyModelCopyWith<$Res>? get forgotPassVerifyModel;
+}
+
+/// @nodoc
+class __$$ForgotPassStateImplCopyWithImpl<$Res>
+    extends _$ForgotPassStateCopyWithImpl<$Res, _$ForgotPassStateImpl>
+    implements _$$ForgotPassStateImplCopyWith<$Res> {
+  __$$ForgotPassStateImplCopyWithImpl(
+      _$ForgotPassStateImpl _value, $Res Function(_$ForgotPassStateImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of ForgotPassState
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? isLoading = null,
+    Object? isForgotPassSuccess = freezed,
+    Object? isVerifySuccess = freezed,
+    Object? isResetSuccess = freezed,
+    Object? errorForgotPass = freezed,
+    Object? errorVerify = freezed,
+    Object? errorReset = freezed,
+    Object? forgotPassForm = null,
+    Object? verifyForm = null,
+    Object? resetForm = null,
+    Object? forgotPassVerifyModel = freezed,
+  }) {
+    return _then(_$ForgotPassStateImpl(
+      isLoading: null == isLoading
+          ? _value.isLoading
+          : isLoading // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isForgotPassSuccess: freezed == isForgotPassSuccess
+          ? _value.isForgotPassSuccess
+          : isForgotPassSuccess // ignore: cast_nullable_to_non_nullable
+              as bool?,
+      isVerifySuccess: freezed == isVerifySuccess
+          ? _value.isVerifySuccess
+          : isVerifySuccess // ignore: cast_nullable_to_non_nullable
+              as bool?,
+      isResetSuccess: freezed == isResetSuccess
+          ? _value.isResetSuccess
+          : isResetSuccess // ignore: cast_nullable_to_non_nullable
+              as bool?,
+      errorForgotPass: freezed == errorForgotPass
+          ? _value.errorForgotPass
+          : errorForgotPass // ignore: cast_nullable_to_non_nullable
+              as String?,
+      errorVerify: freezed == errorVerify
+          ? _value.errorVerify
+          : errorVerify // ignore: cast_nullable_to_non_nullable
+              as String?,
+      errorReset: freezed == errorReset
+          ? _value.errorReset
+          : errorReset // ignore: cast_nullable_to_non_nullable
+              as String?,
+      forgotPassForm: null == forgotPassForm
+          ? _value._forgotPassForm
+          : forgotPassForm // ignore: cast_nullable_to_non_nullable
+              as Map<String, dynamic>,
+      verifyForm: null == verifyForm
+          ? _value._verifyForm
+          : verifyForm // ignore: cast_nullable_to_non_nullable
+              as Map<String, dynamic>,
+      resetForm: null == resetForm
+          ? _value._resetForm
+          : resetForm // ignore: cast_nullable_to_non_nullable
+              as Map<String, dynamic>,
+      forgotPassVerifyModel: freezed == forgotPassVerifyModel
+          ? _value.forgotPassVerifyModel
+          : forgotPassVerifyModel // ignore: cast_nullable_to_non_nullable
+              as ForgotPassVerifyModel?,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$ForgotPassStateImpl implements _ForgotPassState {
+  const _$ForgotPassStateImpl(
       {this.isLoading = false,
       this.isForgotPassSuccess,
       this.isVerifySuccess,
@@ -259,19 +312,16 @@ class _ForgotPassState implements ForgotPassState {
   @override
   final ForgotPassVerifyModel? forgotPassVerifyModel;
 
-  /// Create a copy of ForgotPassState
-  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @pragma('vm:prefer-inline')
-  _$ForgotPassStateCopyWith<_ForgotPassState> get copyWith =>
-      __$ForgotPassStateCopyWithImpl<_ForgotPassState>(this, _$identity);
+  String toString() {
+    return 'ForgotPassState(isLoading: $isLoading, isForgotPassSuccess: $isForgotPassSuccess, isVerifySuccess: $isVerifySuccess, isResetSuccess: $isResetSuccess, errorForgotPass: $errorForgotPass, errorVerify: $errorVerify, errorReset: $errorReset, forgotPassForm: $forgotPassForm, verifyForm: $verifyForm, resetForm: $resetForm, forgotPassVerifyModel: $forgotPassVerifyModel)';
+  }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _ForgotPassState &&
+            other is _$ForgotPassStateImpl &&
             (identical(other.isLoading, isLoading) ||
                 other.isLoading == isLoading) &&
             (identical(other.isForgotPassSuccess, isForgotPassSuccess) ||
@@ -311,124 +361,58 @@ class _ForgotPassState implements ForgotPassState {
       const DeepCollectionEquality().hash(_resetForm),
       forgotPassVerifyModel);
 
+  /// Create a copy of ForgotPassState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  String toString() {
-    return 'ForgotPassState(isLoading: $isLoading, isForgotPassSuccess: $isForgotPassSuccess, isVerifySuccess: $isVerifySuccess, isResetSuccess: $isResetSuccess, errorForgotPass: $errorForgotPass, errorVerify: $errorVerify, errorReset: $errorReset, forgotPassForm: $forgotPassForm, verifyForm: $verifyForm, resetForm: $resetForm, forgotPassVerifyModel: $forgotPassVerifyModel)';
-  }
+  @pragma('vm:prefer-inline')
+  _$$ForgotPassStateImplCopyWith<_$ForgotPassStateImpl> get copyWith =>
+      __$$ForgotPassStateImplCopyWithImpl<_$ForgotPassStateImpl>(
+          this, _$identity);
 }
 
-/// @nodoc
-abstract mixin class _$ForgotPassStateCopyWith<$Res>
-    implements $ForgotPassStateCopyWith<$Res> {
-  factory _$ForgotPassStateCopyWith(
-          _ForgotPassState value, $Res Function(_ForgotPassState) _then) =
-      __$ForgotPassStateCopyWithImpl;
-  @override
-  @useResult
-  $Res call(
-      {bool isLoading,
-      bool? isForgotPassSuccess,
-      bool? isVerifySuccess,
-      bool? isResetSuccess,
-      String? errorForgotPass,
-      String? errorVerify,
-      String? errorReset,
-      Map<String, dynamic> forgotPassForm,
-      Map<String, dynamic> verifyForm,
-      Map<String, dynamic> resetForm,
-      ForgotPassVerifyModel? forgotPassVerifyModel});
+abstract class _ForgotPassState implements ForgotPassState {
+  const factory _ForgotPassState(
+          {final bool isLoading,
+          final bool? isForgotPassSuccess,
+          final bool? isVerifySuccess,
+          final bool? isResetSuccess,
+          final String? errorForgotPass,
+          final String? errorVerify,
+          final String? errorReset,
+          final Map<String, dynamic> forgotPassForm,
+          final Map<String, dynamic> verifyForm,
+          final Map<String, dynamic> resetForm,
+          final ForgotPassVerifyModel? forgotPassVerifyModel}) =
+      _$ForgotPassStateImpl;
 
   @override
-  $ForgotPassVerifyModelCopyWith<$Res>? get forgotPassVerifyModel;
-}
-
-/// @nodoc
-class __$ForgotPassStateCopyWithImpl<$Res>
-    implements _$ForgotPassStateCopyWith<$Res> {
-  __$ForgotPassStateCopyWithImpl(this._self, this._then);
-
-  final _ForgotPassState _self;
-  final $Res Function(_ForgotPassState) _then;
+  bool get isLoading;
+  @override
+  bool? get isForgotPassSuccess;
+  @override
+  bool? get isVerifySuccess;
+  @override
+  bool? get isResetSuccess;
+  @override
+  String? get errorForgotPass;
+  @override
+  String? get errorVerify;
+  @override
+  String? get errorReset;
+  @override
+  Map<String, dynamic> get forgotPassForm;
+  @override
+  Map<String, dynamic> get verifyForm;
+  @override
+  Map<String, dynamic> get resetForm;
+  @override
+  ForgotPassVerifyModel? get forgotPassVerifyModel;
 
   /// Create a copy of ForgotPassState
   /// with the given fields replaced by the non-null parameter values.
   @override
-  @pragma('vm:prefer-inline')
-  $Res call({
-    Object? isLoading = null,
-    Object? isForgotPassSuccess = freezed,
-    Object? isVerifySuccess = freezed,
-    Object? isResetSuccess = freezed,
-    Object? errorForgotPass = freezed,
-    Object? errorVerify = freezed,
-    Object? errorReset = freezed,
-    Object? forgotPassForm = null,
-    Object? verifyForm = null,
-    Object? resetForm = null,
-    Object? forgotPassVerifyModel = freezed,
-  }) {
-    return _then(_ForgotPassState(
-      isLoading: null == isLoading
-          ? _self.isLoading
-          : isLoading // ignore: cast_nullable_to_non_nullable
-              as bool,
-      isForgotPassSuccess: freezed == isForgotPassSuccess
-          ? _self.isForgotPassSuccess
-          : isForgotPassSuccess // ignore: cast_nullable_to_non_nullable
-              as bool?,
-      isVerifySuccess: freezed == isVerifySuccess
-          ? _self.isVerifySuccess
-          : isVerifySuccess // ignore: cast_nullable_to_non_nullable
-              as bool?,
-      isResetSuccess: freezed == isResetSuccess
-          ? _self.isResetSuccess
-          : isResetSuccess // ignore: cast_nullable_to_non_nullable
-              as bool?,
-      errorForgotPass: freezed == errorForgotPass
-          ? _self.errorForgotPass
-          : errorForgotPass // ignore: cast_nullable_to_non_nullable
-              as String?,
-      errorVerify: freezed == errorVerify
-          ? _self.errorVerify
-          : errorVerify // ignore: cast_nullable_to_non_nullable
-              as String?,
-      errorReset: freezed == errorReset
-          ? _self.errorReset
-          : errorReset // ignore: cast_nullable_to_non_nullable
-              as String?,
-      forgotPassForm: null == forgotPassForm
-          ? _self._forgotPassForm
-          : forgotPassForm // ignore: cast_nullable_to_non_nullable
-              as Map<String, dynamic>,
-      verifyForm: null == verifyForm
-          ? _self._verifyForm
-          : verifyForm // ignore: cast_nullable_to_non_nullable
-              as Map<String, dynamic>,
-      resetForm: null == resetForm
-          ? _self._resetForm
-          : resetForm // ignore: cast_nullable_to_non_nullable
-              as Map<String, dynamic>,
-      forgotPassVerifyModel: freezed == forgotPassVerifyModel
-          ? _self.forgotPassVerifyModel
-          : forgotPassVerifyModel // ignore: cast_nullable_to_non_nullable
-              as ForgotPassVerifyModel?,
-    ));
-  }
-
-  /// Create a copy of ForgotPassState
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $ForgotPassVerifyModelCopyWith<$Res>? get forgotPassVerifyModel {
-    if (_self.forgotPassVerifyModel == null) {
-      return null;
-    }
-
-    return $ForgotPassVerifyModelCopyWith<$Res>(_self.forgotPassVerifyModel!,
-        (value) {
-      return _then(_self.copyWith(forgotPassVerifyModel: value));
-    });
-  }
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$ForgotPassStateImplCopyWith<_$ForgotPassStateImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }
-
-// dart format on

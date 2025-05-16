@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:taskit/features/login/presentation/ui/widget/login_form.dart';
+import 'package:taskit/features/auth/presentation/login/ui/login_form.dart';
 
-import '../../../../config/app/app_color.dart';
+import '../../../../../config/app/app_color.dart';
 
 class LoginPage extends ConsumerStatefulWidget {
   const LoginPage({super.key});

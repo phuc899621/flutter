@@ -6,10 +6,12 @@ part of 'base_response_data.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_BaseData _$BaseDataFromJson(Map<String, dynamic> json) => _BaseData(
+_$BaseDataImpl _$$BaseDataImplFromJson(Map<String, dynamic> json) =>
+    _$BaseDataImpl(
       empty: json['empty'] as String?,
     );
 
-Map<String, dynamic> _$BaseDataToJson(_BaseData instance) => <String, dynamic>{
+Map<String, dynamic> _$$BaseDataImplToJson(_$BaseDataImpl instance) =>
+    <String, dynamic>{
       'empty': instance.empty,
     };

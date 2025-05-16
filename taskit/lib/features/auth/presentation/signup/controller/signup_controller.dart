@@ -1,8 +1,8 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:taskit/features/auth/data/dto/req/signup_verify_request.dart';
+import 'package:taskit/features/auth/data/dto/req/signup/signup_verify_request.dart';
 
-import '../../../auth/data/dto/req/signup_request.dart';
-import '../../application/signup_service.dart';
+import '../../../application/auth_service.dart';
+import '../../../data/dto/req/signup/signup_request.dart';
 import '../state/signup_state.dart';
 
 final signUpControllerProvider =
@@ -41,7 +41,7 @@ class SignUpController extends Notifier<SignupState> {
         password: state.signupForm['password'],
         passwordConfirm: state.signupForm['confirmPassword'],
       );
-      final result = await ref.read(signUpServiceProvider).signUp(formData);
+      final result = await ref.read(authServiceProvider).signup(formData);
       result.when((success) {
         state = state.copyWith(
           isLoading: false,
@@ -80,7 +80,7 @@ class SignUpController extends Notifier<SignupState> {
       );
       final formData = SignupVerifyRequest(
           email: state.signupForm['email'], otp: state.verifyForm['otp']);
-      final result = await ref.read(signUpServiceProvider).verify(formData);
+      final result = await ref.read(authServiceProvider).signupVerify(formData);
       result.when((success) {
         state = state.copyWith(
           isLoading: false,

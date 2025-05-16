@@ -1,4 +1,3 @@
-// dart format width=80
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
@@ -10,64 +9,46 @@ part of 'list_state.dart';
 // FreezedGenerator
 // **************************************************************************
 
-// dart format off
 T _$identity<T>(T value) => value;
+
+final _privateConstructorUsedError = UnsupportedError(
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
 mixin _$ListState {
-  String? get error;
-  DateTime? get selectedDate;
-  String? get selectedStatus;
-  List<TaskModel> get tasks;
+  String? get error => throw _privateConstructorUsedError;
+  DateTime? get selectedDate => throw _privateConstructorUsedError;
+  String? get selectedStatus => throw _privateConstructorUsedError;
+  List<TaskEntity> get tasks => throw _privateConstructorUsedError;
 
   /// Create a copy of ListState
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  @pragma('vm:prefer-inline')
   $ListStateCopyWith<ListState> get copyWith =>
-      _$ListStateCopyWithImpl<ListState>(this as ListState, _$identity);
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is ListState &&
-            (identical(other.error, error) || other.error == error) &&
-            (identical(other.selectedDate, selectedDate) ||
-                other.selectedDate == selectedDate) &&
-            (identical(other.selectedStatus, selectedStatus) ||
-                other.selectedStatus == selectedStatus) &&
-            const DeepCollectionEquality().equals(other.tasks, tasks));
-  }
-
-  @override
-  int get hashCode => Object.hash(runtimeType, error, selectedDate,
-      selectedStatus, const DeepCollectionEquality().hash(tasks));
-
-  @override
-  String toString() {
-    return 'ListState(error: $error, selectedDate: $selectedDate, selectedStatus: $selectedStatus, tasks: $tasks)';
-  }
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract mixin class $ListStateCopyWith<$Res> {
-  factory $ListStateCopyWith(ListState value, $Res Function(ListState) _then) =
-      _$ListStateCopyWithImpl;
+abstract class $ListStateCopyWith<$Res> {
+  factory $ListStateCopyWith(ListState value, $Res Function(ListState) then) =
+      _$ListStateCopyWithImpl<$Res, ListState>;
   @useResult
   $Res call(
       {String? error,
       DateTime? selectedDate,
       String? selectedStatus,
-      List<TaskModel> tasks});
+      List<TaskEntity> tasks});
 }
 
 /// @nodoc
-class _$ListStateCopyWithImpl<$Res> implements $ListStateCopyWith<$Res> {
-  _$ListStateCopyWithImpl(this._self, this._then);
+class _$ListStateCopyWithImpl<$Res, $Val extends ListState>
+    implements $ListStateCopyWith<$Res> {
+  _$ListStateCopyWithImpl(this._value, this._then);
 
-  final ListState _self;
-  final $Res Function(ListState) _then;
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
   /// Create a copy of ListState
   /// with the given fields replaced by the non-null parameter values.
@@ -79,35 +60,89 @@ class _$ListStateCopyWithImpl<$Res> implements $ListStateCopyWith<$Res> {
     Object? selectedStatus = freezed,
     Object? tasks = null,
   }) {
-    return _then(_self.copyWith(
+    return _then(_value.copyWith(
       error: freezed == error
-          ? _self.error
+          ? _value.error
           : error // ignore: cast_nullable_to_non_nullable
               as String?,
       selectedDate: freezed == selectedDate
-          ? _self.selectedDate
+          ? _value.selectedDate
           : selectedDate // ignore: cast_nullable_to_non_nullable
               as DateTime?,
       selectedStatus: freezed == selectedStatus
-          ? _self.selectedStatus
+          ? _value.selectedStatus
           : selectedStatus // ignore: cast_nullable_to_non_nullable
               as String?,
       tasks: null == tasks
-          ? _self.tasks
+          ? _value.tasks
           : tasks // ignore: cast_nullable_to_non_nullable
-              as List<TaskModel>,
+              as List<TaskEntity>,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$ListStateImplCopyWith<$Res>
+    implements $ListStateCopyWith<$Res> {
+  factory _$$ListStateImplCopyWith(
+          _$ListStateImpl value, $Res Function(_$ListStateImpl) then) =
+      __$$ListStateImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call(
+      {String? error,
+      DateTime? selectedDate,
+      String? selectedStatus,
+      List<TaskEntity> tasks});
+}
+
+/// @nodoc
+class __$$ListStateImplCopyWithImpl<$Res>
+    extends _$ListStateCopyWithImpl<$Res, _$ListStateImpl>
+    implements _$$ListStateImplCopyWith<$Res> {
+  __$$ListStateImplCopyWithImpl(
+      _$ListStateImpl _value, $Res Function(_$ListStateImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of ListState
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? error = freezed,
+    Object? selectedDate = freezed,
+    Object? selectedStatus = freezed,
+    Object? tasks = null,
+  }) {
+    return _then(_$ListStateImpl(
+      error: freezed == error
+          ? _value.error
+          : error // ignore: cast_nullable_to_non_nullable
+              as String?,
+      selectedDate: freezed == selectedDate
+          ? _value.selectedDate
+          : selectedDate // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      selectedStatus: freezed == selectedStatus
+          ? _value.selectedStatus
+          : selectedStatus // ignore: cast_nullable_to_non_nullable
+              as String?,
+      tasks: null == tasks
+          ? _value._tasks
+          : tasks // ignore: cast_nullable_to_non_nullable
+              as List<TaskEntity>,
     ));
   }
 }
 
 /// @nodoc
 
-class _ListState implements ListState {
-  const _ListState(
+class _$ListStateImpl implements _ListState {
+  const _$ListStateImpl(
       {this.error,
       this.selectedDate,
       this.selectedStatus,
-      final List<TaskModel> tasks = const []})
+      final List<TaskEntity> tasks = const []})
       : _tasks = tasks;
 
   @override
@@ -116,28 +151,25 @@ class _ListState implements ListState {
   final DateTime? selectedDate;
   @override
   final String? selectedStatus;
-  final List<TaskModel> _tasks;
+  final List<TaskEntity> _tasks;
   @override
   @JsonKey()
-  List<TaskModel> get tasks {
+  List<TaskEntity> get tasks {
     if (_tasks is EqualUnmodifiableListView) return _tasks;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_tasks);
   }
 
-  /// Create a copy of ListState
-  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @pragma('vm:prefer-inline')
-  _$ListStateCopyWith<_ListState> get copyWith =>
-      __$ListStateCopyWithImpl<_ListState>(this, _$identity);
+  String toString() {
+    return 'ListState(error: $error, selectedDate: $selectedDate, selectedStatus: $selectedStatus, tasks: $tasks)';
+  }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _ListState &&
+            other is _$ListStateImpl &&
             (identical(other.error, error) || other.error == error) &&
             (identical(other.selectedDate, selectedDate) ||
                 other.selectedDate == selectedDate) &&
@@ -150,63 +182,35 @@ class _ListState implements ListState {
   int get hashCode => Object.hash(runtimeType, error, selectedDate,
       selectedStatus, const DeepCollectionEquality().hash(_tasks));
 
+  /// Create a copy of ListState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  String toString() {
-    return 'ListState(error: $error, selectedDate: $selectedDate, selectedStatus: $selectedStatus, tasks: $tasks)';
-  }
+  @pragma('vm:prefer-inline')
+  _$$ListStateImplCopyWith<_$ListStateImpl> get copyWith =>
+      __$$ListStateImplCopyWithImpl<_$ListStateImpl>(this, _$identity);
 }
 
-/// @nodoc
-abstract mixin class _$ListStateCopyWith<$Res>
-    implements $ListStateCopyWith<$Res> {
-  factory _$ListStateCopyWith(
-          _ListState value, $Res Function(_ListState) _then) =
-      __$ListStateCopyWithImpl;
+abstract class _ListState implements ListState {
+  const factory _ListState(
+      {final String? error,
+      final DateTime? selectedDate,
+      final String? selectedStatus,
+      final List<TaskEntity> tasks}) = _$ListStateImpl;
+
   @override
-  @useResult
-  $Res call(
-      {String? error,
-      DateTime? selectedDate,
-      String? selectedStatus,
-      List<TaskModel> tasks});
-}
-
-/// @nodoc
-class __$ListStateCopyWithImpl<$Res> implements _$ListStateCopyWith<$Res> {
-  __$ListStateCopyWithImpl(this._self, this._then);
-
-  final _ListState _self;
-  final $Res Function(_ListState) _then;
+  String? get error;
+  @override
+  DateTime? get selectedDate;
+  @override
+  String? get selectedStatus;
+  @override
+  List<TaskEntity> get tasks;
 
   /// Create a copy of ListState
   /// with the given fields replaced by the non-null parameter values.
   @override
-  @pragma('vm:prefer-inline')
-  $Res call({
-    Object? error = freezed,
-    Object? selectedDate = freezed,
-    Object? selectedStatus = freezed,
-    Object? tasks = null,
-  }) {
-    return _then(_ListState(
-      error: freezed == error
-          ? _self.error
-          : error // ignore: cast_nullable_to_non_nullable
-              as String?,
-      selectedDate: freezed == selectedDate
-          ? _self.selectedDate
-          : selectedDate // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
-      selectedStatus: freezed == selectedStatus
-          ? _self.selectedStatus
-          : selectedStatus // ignore: cast_nullable_to_non_nullable
-              as String?,
-      tasks: null == tasks
-          ? _self._tasks
-          : tasks // ignore: cast_nullable_to_non_nullable
-              as List<TaskModel>,
-    ));
-  }
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$ListStateImplCopyWith<_$ListStateImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }
-
-// dart format on

@@ -1,4 +1,3 @@
-// dart format width=80
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
@@ -10,70 +9,33 @@ part of 'login_state.dart';
 // FreezedGenerator
 // **************************************************************************
 
-// dart format off
 T _$identity<T>(T value) => value;
+
+final _privateConstructorUsedError = UnsupportedError(
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
 mixin _$LoginState {
-  bool get isLoading;
-  bool? get isLoginSuccess;
-  LoginModel? get loginModel;
-  String? get token;
-  String? get error;
-  LoginVerifyModel? get loginVerifyModel;
-  Map<String, dynamic> get loginForm;
-  bool get isPasswordVisibility;
+  bool get isLoading => throw _privateConstructorUsedError;
+  bool? get isLoginSuccess => throw _privateConstructorUsedError;
+  LoginModel? get loginModel => throw _privateConstructorUsedError;
+  String? get token => throw _privateConstructorUsedError;
+  String? get error => throw _privateConstructorUsedError;
+  Map<String, dynamic> get loginForm => throw _privateConstructorUsedError;
+  bool get isPasswordVisibility => throw _privateConstructorUsedError;
 
   /// Create a copy of LoginState
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  @pragma('vm:prefer-inline')
   $LoginStateCopyWith<LoginState> get copyWith =>
-      _$LoginStateCopyWithImpl<LoginState>(this as LoginState, _$identity);
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is LoginState &&
-            (identical(other.isLoading, isLoading) ||
-                other.isLoading == isLoading) &&
-            (identical(other.isLoginSuccess, isLoginSuccess) ||
-                other.isLoginSuccess == isLoginSuccess) &&
-            (identical(other.loginModel, loginModel) ||
-                other.loginModel == loginModel) &&
-            (identical(other.token, token) || other.token == token) &&
-            (identical(other.error, error) || other.error == error) &&
-            (identical(other.loginVerifyModel, loginVerifyModel) ||
-                other.loginVerifyModel == loginVerifyModel) &&
-            const DeepCollectionEquality().equals(other.loginForm, loginForm) &&
-            (identical(other.isPasswordVisibility, isPasswordVisibility) ||
-                other.isPasswordVisibility == isPasswordVisibility));
-  }
-
-  @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      isLoading,
-      isLoginSuccess,
-      loginModel,
-      token,
-      error,
-      loginVerifyModel,
-      const DeepCollectionEquality().hash(loginForm),
-      isPasswordVisibility);
-
-  @override
-  String toString() {
-    return 'LoginState(isLoading: $isLoading, isLoginSuccess: $isLoginSuccess, loginModel: $loginModel, token: $token, error: $error, loginVerifyModel: $loginVerifyModel, loginForm: $loginForm, isPasswordVisibility: $isPasswordVisibility)';
-  }
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract mixin class $LoginStateCopyWith<$Res> {
+abstract class $LoginStateCopyWith<$Res> {
   factory $LoginStateCopyWith(
-          LoginState value, $Res Function(LoginState) _then) =
-      _$LoginStateCopyWithImpl;
+          LoginState value, $Res Function(LoginState) then) =
+      _$LoginStateCopyWithImpl<$Res, LoginState>;
   @useResult
   $Res call(
       {bool isLoading,
@@ -81,20 +43,21 @@ abstract mixin class $LoginStateCopyWith<$Res> {
       LoginModel? loginModel,
       String? token,
       String? error,
-      LoginVerifyModel? loginVerifyModel,
       Map<String, dynamic> loginForm,
       bool isPasswordVisibility});
 
   $LoginModelCopyWith<$Res>? get loginModel;
-  $LoginVerifyModelCopyWith<$Res>? get loginVerifyModel;
 }
 
 /// @nodoc
-class _$LoginStateCopyWithImpl<$Res> implements $LoginStateCopyWith<$Res> {
-  _$LoginStateCopyWithImpl(this._self, this._then);
+class _$LoginStateCopyWithImpl<$Res, $Val extends LoginState>
+    implements $LoginStateCopyWith<$Res> {
+  _$LoginStateCopyWithImpl(this._value, this._then);
 
-  final LoginState _self;
-  final $Res Function(LoginState) _then;
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
   /// Create a copy of LoginState
   /// with the given fields replaced by the non-null parameter values.
@@ -106,44 +69,39 @@ class _$LoginStateCopyWithImpl<$Res> implements $LoginStateCopyWith<$Res> {
     Object? loginModel = freezed,
     Object? token = freezed,
     Object? error = freezed,
-    Object? loginVerifyModel = freezed,
     Object? loginForm = null,
     Object? isPasswordVisibility = null,
   }) {
-    return _then(_self.copyWith(
+    return _then(_value.copyWith(
       isLoading: null == isLoading
-          ? _self.isLoading
+          ? _value.isLoading
           : isLoading // ignore: cast_nullable_to_non_nullable
               as bool,
       isLoginSuccess: freezed == isLoginSuccess
-          ? _self.isLoginSuccess
+          ? _value.isLoginSuccess
           : isLoginSuccess // ignore: cast_nullable_to_non_nullable
               as bool?,
       loginModel: freezed == loginModel
-          ? _self.loginModel
+          ? _value.loginModel
           : loginModel // ignore: cast_nullable_to_non_nullable
               as LoginModel?,
       token: freezed == token
-          ? _self.token
+          ? _value.token
           : token // ignore: cast_nullable_to_non_nullable
               as String?,
       error: freezed == error
-          ? _self.error
+          ? _value.error
           : error // ignore: cast_nullable_to_non_nullable
               as String?,
-      loginVerifyModel: freezed == loginVerifyModel
-          ? _self.loginVerifyModel
-          : loginVerifyModel // ignore: cast_nullable_to_non_nullable
-              as LoginVerifyModel?,
       loginForm: null == loginForm
-          ? _self.loginForm
+          ? _value.loginForm
           : loginForm // ignore: cast_nullable_to_non_nullable
               as Map<String, dynamic>,
       isPasswordVisibility: null == isPasswordVisibility
-          ? _self.isPasswordVisibility
+          ? _value.isPasswordVisibility
           : isPasswordVisibility // ignore: cast_nullable_to_non_nullable
               as bool,
-    ));
+    ) as $Val);
   }
 
   /// Create a copy of LoginState
@@ -151,40 +109,100 @@ class _$LoginStateCopyWithImpl<$Res> implements $LoginStateCopyWith<$Res> {
   @override
   @pragma('vm:prefer-inline')
   $LoginModelCopyWith<$Res>? get loginModel {
-    if (_self.loginModel == null) {
+    if (_value.loginModel == null) {
       return null;
     }
 
-    return $LoginModelCopyWith<$Res>(_self.loginModel!, (value) {
-      return _then(_self.copyWith(loginModel: value));
-    });
-  }
-
-  /// Create a copy of LoginState
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $LoginVerifyModelCopyWith<$Res>? get loginVerifyModel {
-    if (_self.loginVerifyModel == null) {
-      return null;
-    }
-
-    return $LoginVerifyModelCopyWith<$Res>(_self.loginVerifyModel!, (value) {
-      return _then(_self.copyWith(loginVerifyModel: value));
+    return $LoginModelCopyWith<$Res>(_value.loginModel!, (value) {
+      return _then(_value.copyWith(loginModel: value) as $Val);
     });
   }
 }
 
 /// @nodoc
+abstract class _$$LoginStateImplCopyWith<$Res>
+    implements $LoginStateCopyWith<$Res> {
+  factory _$$LoginStateImplCopyWith(
+          _$LoginStateImpl value, $Res Function(_$LoginStateImpl) then) =
+      __$$LoginStateImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call(
+      {bool isLoading,
+      bool? isLoginSuccess,
+      LoginModel? loginModel,
+      String? token,
+      String? error,
+      Map<String, dynamic> loginForm,
+      bool isPasswordVisibility});
 
-class _LoginState implements LoginState {
-  const _LoginState(
+  @override
+  $LoginModelCopyWith<$Res>? get loginModel;
+}
+
+/// @nodoc
+class __$$LoginStateImplCopyWithImpl<$Res>
+    extends _$LoginStateCopyWithImpl<$Res, _$LoginStateImpl>
+    implements _$$LoginStateImplCopyWith<$Res> {
+  __$$LoginStateImplCopyWithImpl(
+      _$LoginStateImpl _value, $Res Function(_$LoginStateImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of LoginState
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? isLoading = null,
+    Object? isLoginSuccess = freezed,
+    Object? loginModel = freezed,
+    Object? token = freezed,
+    Object? error = freezed,
+    Object? loginForm = null,
+    Object? isPasswordVisibility = null,
+  }) {
+    return _then(_$LoginStateImpl(
+      isLoading: null == isLoading
+          ? _value.isLoading
+          : isLoading // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isLoginSuccess: freezed == isLoginSuccess
+          ? _value.isLoginSuccess
+          : isLoginSuccess // ignore: cast_nullable_to_non_nullable
+              as bool?,
+      loginModel: freezed == loginModel
+          ? _value.loginModel
+          : loginModel // ignore: cast_nullable_to_non_nullable
+              as LoginModel?,
+      token: freezed == token
+          ? _value.token
+          : token // ignore: cast_nullable_to_non_nullable
+              as String?,
+      error: freezed == error
+          ? _value.error
+          : error // ignore: cast_nullable_to_non_nullable
+              as String?,
+      loginForm: null == loginForm
+          ? _value._loginForm
+          : loginForm // ignore: cast_nullable_to_non_nullable
+              as Map<String, dynamic>,
+      isPasswordVisibility: null == isPasswordVisibility
+          ? _value.isPasswordVisibility
+          : isPasswordVisibility // ignore: cast_nullable_to_non_nullable
+              as bool,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$LoginStateImpl implements _LoginState {
+  const _$LoginStateImpl(
       {this.isLoading = false,
       this.isLoginSuccess,
       this.loginModel,
       this.token,
       this.error,
-      this.loginVerifyModel,
       final Map<String, dynamic> loginForm = const {},
       this.isPasswordVisibility = false})
       : _loginForm = loginForm;
@@ -200,8 +218,6 @@ class _LoginState implements LoginState {
   final String? token;
   @override
   final String? error;
-  @override
-  final LoginVerifyModel? loginVerifyModel;
   final Map<String, dynamic> _loginForm;
   @override
   @JsonKey()
@@ -215,19 +231,16 @@ class _LoginState implements LoginState {
   @JsonKey()
   final bool isPasswordVisibility;
 
-  /// Create a copy of LoginState
-  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @pragma('vm:prefer-inline')
-  _$LoginStateCopyWith<_LoginState> get copyWith =>
-      __$LoginStateCopyWithImpl<_LoginState>(this, _$identity);
+  String toString() {
+    return 'LoginState(isLoading: $isLoading, isLoginSuccess: $isLoginSuccess, loginModel: $loginModel, token: $token, error: $error, loginForm: $loginForm, isPasswordVisibility: $isPasswordVisibility)';
+  }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _LoginState &&
+            other is _$LoginStateImpl &&
             (identical(other.isLoading, isLoading) ||
                 other.isLoading == isLoading) &&
             (identical(other.isLoginSuccess, isLoginSuccess) ||
@@ -236,8 +249,6 @@ class _LoginState implements LoginState {
                 other.loginModel == loginModel) &&
             (identical(other.token, token) || other.token == token) &&
             (identical(other.error, error) || other.error == error) &&
-            (identical(other.loginVerifyModel, loginVerifyModel) ||
-                other.loginVerifyModel == loginVerifyModel) &&
             const DeepCollectionEquality()
                 .equals(other._loginForm, _loginForm) &&
             (identical(other.isPasswordVisibility, isPasswordVisibility) ||
@@ -252,124 +263,47 @@ class _LoginState implements LoginState {
       loginModel,
       token,
       error,
-      loginVerifyModel,
       const DeepCollectionEquality().hash(_loginForm),
       isPasswordVisibility);
 
+  /// Create a copy of LoginState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  String toString() {
-    return 'LoginState(isLoading: $isLoading, isLoginSuccess: $isLoginSuccess, loginModel: $loginModel, token: $token, error: $error, loginVerifyModel: $loginVerifyModel, loginForm: $loginForm, isPasswordVisibility: $isPasswordVisibility)';
-  }
+  @pragma('vm:prefer-inline')
+  _$$LoginStateImplCopyWith<_$LoginStateImpl> get copyWith =>
+      __$$LoginStateImplCopyWithImpl<_$LoginStateImpl>(this, _$identity);
 }
 
-/// @nodoc
-abstract mixin class _$LoginStateCopyWith<$Res>
-    implements $LoginStateCopyWith<$Res> {
-  factory _$LoginStateCopyWith(
-          _LoginState value, $Res Function(_LoginState) _then) =
-      __$LoginStateCopyWithImpl;
-  @override
-  @useResult
-  $Res call(
-      {bool isLoading,
-      bool? isLoginSuccess,
-      LoginModel? loginModel,
-      String? token,
-      String? error,
-      LoginVerifyModel? loginVerifyModel,
-      Map<String, dynamic> loginForm,
-      bool isPasswordVisibility});
+abstract class _LoginState implements LoginState {
+  const factory _LoginState(
+      {final bool isLoading,
+      final bool? isLoginSuccess,
+      final LoginModel? loginModel,
+      final String? token,
+      final String? error,
+      final Map<String, dynamic> loginForm,
+      final bool isPasswordVisibility}) = _$LoginStateImpl;
 
   @override
-  $LoginModelCopyWith<$Res>? get loginModel;
+  bool get isLoading;
   @override
-  $LoginVerifyModelCopyWith<$Res>? get loginVerifyModel;
-}
-
-/// @nodoc
-class __$LoginStateCopyWithImpl<$Res> implements _$LoginStateCopyWith<$Res> {
-  __$LoginStateCopyWithImpl(this._self, this._then);
-
-  final _LoginState _self;
-  final $Res Function(_LoginState) _then;
+  bool? get isLoginSuccess;
+  @override
+  LoginModel? get loginModel;
+  @override
+  String? get token;
+  @override
+  String? get error;
+  @override
+  Map<String, dynamic> get loginForm;
+  @override
+  bool get isPasswordVisibility;
 
   /// Create a copy of LoginState
   /// with the given fields replaced by the non-null parameter values.
   @override
-  @pragma('vm:prefer-inline')
-  $Res call({
-    Object? isLoading = null,
-    Object? isLoginSuccess = freezed,
-    Object? loginModel = freezed,
-    Object? token = freezed,
-    Object? error = freezed,
-    Object? loginVerifyModel = freezed,
-    Object? loginForm = null,
-    Object? isPasswordVisibility = null,
-  }) {
-    return _then(_LoginState(
-      isLoading: null == isLoading
-          ? _self.isLoading
-          : isLoading // ignore: cast_nullable_to_non_nullable
-              as bool,
-      isLoginSuccess: freezed == isLoginSuccess
-          ? _self.isLoginSuccess
-          : isLoginSuccess // ignore: cast_nullable_to_non_nullable
-              as bool?,
-      loginModel: freezed == loginModel
-          ? _self.loginModel
-          : loginModel // ignore: cast_nullable_to_non_nullable
-              as LoginModel?,
-      token: freezed == token
-          ? _self.token
-          : token // ignore: cast_nullable_to_non_nullable
-              as String?,
-      error: freezed == error
-          ? _self.error
-          : error // ignore: cast_nullable_to_non_nullable
-              as String?,
-      loginVerifyModel: freezed == loginVerifyModel
-          ? _self.loginVerifyModel
-          : loginVerifyModel // ignore: cast_nullable_to_non_nullable
-              as LoginVerifyModel?,
-      loginForm: null == loginForm
-          ? _self._loginForm
-          : loginForm // ignore: cast_nullable_to_non_nullable
-              as Map<String, dynamic>,
-      isPasswordVisibility: null == isPasswordVisibility
-          ? _self.isPasswordVisibility
-          : isPasswordVisibility // ignore: cast_nullable_to_non_nullable
-              as bool,
-    ));
-  }
-
-  /// Create a copy of LoginState
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $LoginModelCopyWith<$Res>? get loginModel {
-    if (_self.loginModel == null) {
-      return null;
-    }
-
-    return $LoginModelCopyWith<$Res>(_self.loginModel!, (value) {
-      return _then(_self.copyWith(loginModel: value));
-    });
-  }
-
-  /// Create a copy of LoginState
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $LoginVerifyModelCopyWith<$Res>? get loginVerifyModel {
-    if (_self.loginVerifyModel == null) {
-      return null;
-    }
-
-    return $LoginVerifyModelCopyWith<$Res>(_self.loginVerifyModel!, (value) {
-      return _then(_self.copyWith(loginVerifyModel: value));
-    });
-  }
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$LoginStateImplCopyWith<_$LoginStateImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }
-
-// dart format on

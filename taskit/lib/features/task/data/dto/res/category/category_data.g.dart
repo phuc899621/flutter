@@ -6,14 +6,14 @@ part of 'category_data.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_CategoryData _$CategoryDataFromJson(Map<String, dynamic> json) =>
-    _CategoryData(
+_$CategoryDataImpl _$$CategoryDataImplFromJson(Map<String, dynamic> json) =>
+    _$CategoryDataImpl(
       categories: (json['categories'] as List<dynamic>)
           .map((e) => e as String)
           .toList(),
     );
 
-Map<String, dynamic> _$CategoryDataToJson(_CategoryData instance) =>
+Map<String, dynamic> _$$CategoryDataImplToJson(_$CategoryDataImpl instance) =>
     <String, dynamic>{
       'categories': instance.categories,
     };

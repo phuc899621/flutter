@@ -2,27 +2,32 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:taskit/features/task/data/dto/req/status/status.dart';
-import 'package:taskit/shared/data/repository/itask_repository.dart';
+import 'package:taskit/features/task/data/repo/itask_repo.dart';
+import 'package:taskit/features/task/data/source/local/task_database.dart';
 
-import '../../../features/task/data/dto/req/create_task/create_task.dart';
-import '../../../features/task/data/dto/req/suggest_category/suggest_category.dart';
-import '../../../features/task/data/dto/req/update/update.dart';
-import '../../../features/task/data/dto/res/category/category_data.dart';
-import '../../exception/failure.dart';
-import '../../mixin/dio_exception_mapper.dart';
-import '../dto/base_response.dart';
-import '../dto/base_response_data.dart';
-import '../dto/response/task/task_data.dart';
-import '../source/remote/task/task_api.dart';
+import '../../../../shared/data/dto/response/base_response.dart';
+import '../../../../shared/data/dto/response/base_response_data.dart';
+import '../../../../shared/exception/failure.dart';
+import '../../../../shared/mixin/dio_exception_mapper.dart';
+import '../dto/req/create_task/create_task.dart';
+import '../dto/req/suggest_category/suggest_category.dart';
+import '../dto/req/update/update.dart';
+import '../dto/res/category/category_data.dart';
+import '../dto/res/task/task_data.dart';
+import '../source/local/DAO/task_DAO.dart';
+import '../source/remote/task_api.dart';
 
-final taskRepositoryProvider = Provider.autoDispose<ITaskRepository>((ref) {
+final taskRepoProvider = Provider<ITaskRepo>((ref) {
   final taskApi = ref.watch(taskApiProvider);
-  return TaskRepository(taskApi);
+  final db = ref.watch(taskDatabaseProvider);
+  final dao = db.taskDAO;
+  return TaskRepo(taskApi, dao);
 });
 
-class TaskRepository with DioExceptionMapper implements ITaskRepository {
+class TaskRepo with DioExceptionMapper implements ITaskRepo {
   final TaskApi _taskApi;
-  TaskRepository(this._taskApi);
+  final TaskDAO _taskDAO;
+  TaskRepo(this._taskApi, this._taskDAO);
   @override
   Future<BaseResponse<TaskDataLst>> getListTask(
       String token, String status, String dueDate) async {
@@ -126,4 +131,15 @@ class TaskRepository with DioExceptionMapper implements ITaskRepository {
       }
     }
   }
+
+  /*@override
+  Future<BaseResponse<BaseData>> addAllTask(String token) async {
+    return await _taskApi.addAllTask('Bearer $token');
+  }
+
+  @override
+  Future<BaseResponse<BaseData>> deleteAllTask(String token) {
+    // TODO: implement deleteAllTask
+    throw UnimplementedError();
+  }*/
 }

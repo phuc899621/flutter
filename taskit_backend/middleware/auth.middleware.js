@@ -5,7 +5,7 @@ const authMiddleware = (req, res, next) => {
   const token = req.headers['authorization']?.split(' ')[1]; // "Bearer <token>"
 
   if (!token) {
-    return res.status(401).json({ 
+    return res.status(404).json({ 
         message: 'Access denied. No authorization provided.' ,
         data:{}
     });

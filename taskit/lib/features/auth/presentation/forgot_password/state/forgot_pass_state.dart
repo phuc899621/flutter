@@ -1,5 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:taskit/features/auth/domain/model/forgot_pass_verify/forgot_pass_verify.dart';
+
+import '../../../domain/entites/forgot_pass/forgot_pass_verify.dart';
 
 part 'forgot_pass_state.freezed.dart';
 

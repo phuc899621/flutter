@@ -6,11 +6,12 @@ part of 'status.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_StatusReq _$StatusReqFromJson(Map<String, dynamic> json) => _StatusReq(
+_$StatusReqImpl _$$StatusReqImplFromJson(Map<String, dynamic> json) =>
+    _$StatusReqImpl(
       status: json['status'] as String,
     );
 
-Map<String, dynamic> _$StatusReqToJson(_StatusReq instance) =>
+Map<String, dynamic> _$$StatusReqImplToJson(_$StatusReqImpl instance) =>
     <String, dynamic>{
       'status': instance.status,
     };

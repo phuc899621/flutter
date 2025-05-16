@@ -6,7 +6,8 @@ part of 'task_data.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_TaskData _$TaskDataFromJson(Map<String, dynamic> json) => _TaskData(
+_$TaskDataImpl _$$TaskDataImplFromJson(Map<String, dynamic> json) =>
+    _$TaskDataImpl(
       id: json['_id'] as String,
       title: json['title'] as String,
       description: json['description'] as String,
@@ -22,7 +23,8 @@ _TaskData _$TaskDataFromJson(Map<String, dynamic> json) => _TaskData(
       updatedAt: DateTime.parse(json['updatedAt'] as String),
     );
 
-Map<String, dynamic> _$TaskDataToJson(_TaskData instance) => <String, dynamic>{
+Map<String, dynamic> _$$TaskDataImplToJson(_$TaskDataImpl instance) =>
+    <String, dynamic>{
       '_id': instance.id,
       'title': instance.title,
       'description': instance.description,
@@ -36,40 +38,42 @@ Map<String, dynamic> _$TaskDataToJson(_TaskData instance) => <String, dynamic>{
       'updatedAt': instance.updatedAt.toIso8601String(),
     };
 
-_TaskUserData _$TaskUserDataFromJson(Map<String, dynamic> json) =>
-    _TaskUserData(
+_$TaskUserDataImpl _$$TaskUserDataImplFromJson(Map<String, dynamic> json) =>
+    _$TaskUserDataImpl(
       id: json['_id'] as String,
       email: json['email'] as String,
       name: json['name'] as String,
     );
 
-Map<String, dynamic> _$TaskUserDataToJson(_TaskUserData instance) =>
+Map<String, dynamic> _$$TaskUserDataImplToJson(_$TaskUserDataImpl instance) =>
     <String, dynamic>{
       '_id': instance.id,
       'email': instance.email,
       'name': instance.name,
     };
 
-_SubtaskData _$SubtaskDataFromJson(Map<String, dynamic> json) => _SubtaskData(
+_$SubtaskDataImpl _$$SubtaskDataImplFromJson(Map<String, dynamic> json) =>
+    _$SubtaskDataImpl(
       id: json['_id'] as String,
       title: json['title'] as String,
       isCompleted: json['isCompleted'] as bool,
     );
 
-Map<String, dynamic> _$SubtaskDataToJson(_SubtaskData instance) =>
+Map<String, dynamic> _$$SubtaskDataImplToJson(_$SubtaskDataImpl instance) =>
     <String, dynamic>{
       '_id': instance.id,
       'title': instance.title,
       'isCompleted': instance.isCompleted,
     };
 
-_TaskDataLst _$TaskDataLstFromJson(Map<String, dynamic> json) => _TaskDataLst(
+_$TaskDataLstImpl _$$TaskDataLstImplFromJson(Map<String, dynamic> json) =>
+    _$TaskDataLstImpl(
       tasks: (json['tasks'] as List<dynamic>)
           .map((e) => TaskData.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
 
-Map<String, dynamic> _$TaskDataLstToJson(_TaskDataLst instance) =>
+Map<String, dynamic> _$$TaskDataLstImplToJson(_$TaskDataLstImpl instance) =>
     <String, dynamic>{
       'tasks': instance.tasks,
     };

@@ -6,14 +6,15 @@ part of 'signup_verify_request.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_SignupVerifyRequest _$SignupVerifyRequestFromJson(Map<String, dynamic> json) =>
-    _SignupVerifyRequest(
+_$SignupVerifyRequestImpl _$$SignupVerifyRequestImplFromJson(
+        Map<String, dynamic> json) =>
+    _$SignupVerifyRequestImpl(
       email: json['email'] as String,
       otp: json['otp'] as String,
     );
 
-Map<String, dynamic> _$SignupVerifyRequestToJson(
-        _SignupVerifyRequest instance) =>
+Map<String, dynamic> _$$SignupVerifyRequestImplToJson(
+        _$SignupVerifyRequestImpl instance) =>
     <String, dynamic>{
       'email': instance.email,
       'otp': instance.otp,

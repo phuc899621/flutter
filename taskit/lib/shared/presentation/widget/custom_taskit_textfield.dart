@@ -1,12 +1,10 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../config/app/app_color.dart';
 
-class TaskitOutlineTextField extends ConsumerWidget{
+class TaskitOutlineTextField extends ConsumerWidget {
   final String labelText;
   final TextEditingController controller;
   final String autofillHints;
@@ -19,68 +17,62 @@ class TaskitOutlineTextField extends ConsumerWidget{
     required this.keyboardType,
   });
 
-
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return TextFormField(
+      onTapOutside: (_) => FocusScope.of(context).unfocus(),
       controller: controller,
       autofocus: true,
       autofillHints: [autofillHints],
       obscureText: false,
       decoration: InputDecoration(
         labelText: labelText,
-        labelStyle: Theme.of(context)
-            .textTheme.labelMedium?.copyWith(
-          fontFamily: 'Inter',
-          letterSpacing: 0.0,
-        ),
+        labelStyle: Theme.of(context).textTheme.labelSmall?.copyWith(
+              fontFamily: 'Inter',
+              letterSpacing: 0.0,
+            ),
         alignLabelWithHint: false,
         enabledBorder: OutlineInputBorder(
           borderSide: BorderSide(
             color: AppColor(context).primaryContainer,
             width: 2.0,
           ),
-          borderRadius:
-          BorderRadius.circular(12.0),
+          borderRadius: BorderRadius.circular(12.0),
         ),
         focusedBorder: OutlineInputBorder(
           borderSide: BorderSide(
             color: AppColor(context).primary,
             width: 2.0,
           ),
-          borderRadius:
-          BorderRadius.circular(12.0),
+          borderRadius: BorderRadius.circular(12.0),
         ),
         errorBorder: OutlineInputBorder(
           borderSide: BorderSide(
             color: AppColor(context).error,
             width: 2.0,
           ),
-          borderRadius:
-          BorderRadius.circular(12.0),
+          borderRadius: BorderRadius.circular(12.0),
         ),
         focusedErrorBorder: OutlineInputBorder(
           borderSide: BorderSide(
             color: AppColor(context).primary,
             width: 2.0,
           ),
-          borderRadius:
-          BorderRadius.circular(12.0),
+          borderRadius: BorderRadius.circular(12.0),
         ),
         filled: true,
         fillColor: AppColor(context).secondaryContainer,
       ),
-      style: Theme.of(context).textTheme
-          .bodyMedium?.copyWith(
-        fontFamily: 'Inter',
-        letterSpacing: 0.0,
-      ),
+      style: Theme.of(context).textTheme.bodySmall?.copyWith(
+          fontFamily: 'Inter',
+          letterSpacing: 0.0,
+          color: AppColor(context).primaryText),
       keyboardType: keyboardType,
     );
   }
 }
 
-class TaskitOutLineTextFieldWithPassword extends ConsumerStatefulWidget{
+class TaskitOutLineTextFieldWithPassword extends ConsumerStatefulWidget {
   final String labelText;
   final TextEditingController controller;
 
@@ -90,11 +82,13 @@ class TaskitOutLineTextFieldWithPassword extends ConsumerStatefulWidget{
     required this.controller,
   });
   @override
-  ConsumerState<ConsumerStatefulWidget> createState() =>_TaskitOutLineTextFieldWithPasswordState();
-
+  ConsumerState<ConsumerStatefulWidget> createState() =>
+      _TaskitOutLineTextFieldWithPasswordState();
 }
-class _TaskitOutLineTextFieldWithPasswordState extends ConsumerState<TaskitOutLineTextFieldWithPassword>{
-  bool _obscureText=true;
+
+class _TaskitOutLineTextFieldWithPasswordState
+    extends ConsumerState<TaskitOutLineTextFieldWithPassword> {
+  bool _obscureText = true;
   void _toggleObscureText() {
     setState(() {
       _obscureText = !_obscureText;
@@ -106,57 +100,49 @@ class _TaskitOutLineTextFieldWithPasswordState extends ConsumerState<TaskitOutLi
     // TODO: implement build
     return TextFormField(
       controller: widget.controller,
+      onTapOutside: (_) => FocusScope.of(context).unfocus(),
       autofocus: true,
-      autofillHints: [AutofillHints.password],
+      autofillHints: const [AutofillHints.password],
       obscureText: _obscureText,
       decoration: InputDecoration(
         labelText: widget.labelText,
-        labelStyle: Theme
-            .of(context)
-            .textTheme
-            .labelMedium
-            ?.copyWith(
-          fontFamily: 'Inter',
-          letterSpacing: 0.0,
-        ),
+        labelStyle: Theme.of(context).textTheme.labelSmall?.copyWith(
+              fontFamily: 'Inter',
+              letterSpacing: 0.0,
+            ),
         enabledBorder: OutlineInputBorder(
           borderSide: BorderSide(
             color: AppColor(context).secondaryContainer,
             width: 2.0,
           ),
-          borderRadius:
-          BorderRadius.circular(12.0),
+          borderRadius: BorderRadius.circular(12.0),
         ),
         focusedBorder: OutlineInputBorder(
           borderSide: BorderSide(
             color: AppColor(context).primary,
             width: 2.0,
           ),
-          borderRadius:
-          BorderRadius.circular(12.0),
+          borderRadius: BorderRadius.circular(12.0),
         ),
         errorBorder: OutlineInputBorder(
           borderSide: BorderSide(
             color: AppColor(context).error,
             width: 2.0,
           ),
-          borderRadius:
-          BorderRadius.circular(12.0),
+          borderRadius: BorderRadius.circular(12.0),
         ),
         focusedErrorBorder: OutlineInputBorder(
           borderSide: BorderSide(
             color: AppColor(context).primary,
             width: 2.0,
           ),
-          borderRadius:
-          BorderRadius.circular(12.0),
+          borderRadius: BorderRadius.circular(12.0),
         ),
         filled: true,
         fillColor: AppColor(context).secondaryContainer,
         suffixIcon: InkWell(
           onTap: () => _toggleObscureText(),
-          focusNode:
-          FocusNode(skipTraversal: true),
+          focusNode: FocusNode(skipTraversal: true),
           child: Icon(
             _obscureText
                 ? Icons.visibility_off_outlined
@@ -166,23 +152,16 @@ class _TaskitOutLineTextFieldWithPasswordState extends ConsumerState<TaskitOutLi
           ),
         ),
       ),
-      style: Theme
-          .of(context)
-          .textTheme
-          .bodyMedium
-          ?.copyWith(
-        fontFamily: 'Inter',
-        letterSpacing: 0.0,
-
-      ),
+      style: Theme.of(context).textTheme.bodySmall?.copyWith(
+            fontFamily: 'Inter',
+            letterSpacing: 0.0,
+            color: AppColor(context).primaryText,
+          ),
     );
   }
-
-
-
 }
 
-class TaskitCodeTextField extends ConsumerWidget{
+class TaskitCodeTextField extends ConsumerWidget {
   final TextEditingController controller;
   const TaskitCodeTextField({
     super.key,
@@ -192,9 +171,10 @@ class TaskitCodeTextField extends ConsumerWidget{
   Widget build(BuildContext context, WidgetRef ref) {
     return TextFormField(
       controller: controller,
+      onTapOutside: (_) => FocusScope.of(context).unfocus(),
       autofocus: true,
-      onChanged: (value){
-        if(value.length==1){
+      onChanged: (value) {
+        if (value.length == 1) {
           FocusScope.of(context).nextFocus();
         }
       },
@@ -202,17 +182,16 @@ class TaskitCodeTextField extends ConsumerWidget{
       decoration: InputDecoration(
         isDense: true,
         labelStyle: Theme.of(context).textTheme.labelMedium?.copyWith(
-          fontFamily: 'Inter',
-          letterSpacing: 0.0,
-        ),
-        hintStyle: Theme.of(context).textTheme
-            .labelMedium?.copyWith(
-          fontFamily: 'Inter',
-          letterSpacing: 0.0,
-        ),
+              fontFamily: 'Inter',
+              letterSpacing: 0.0,
+            ),
+        hintStyle: Theme.of(context).textTheme.labelMedium?.copyWith(
+              fontFamily: 'Inter',
+              letterSpacing: 0.0,
+            ),
         enabledBorder: OutlineInputBorder(
           borderSide: BorderSide(
-            color: Theme.of(context).colorScheme.background,
+            color: Theme.of(context).colorScheme.surface,
             width: 2.0,
           ),
           borderRadius: BorderRadius.circular(12.0),
@@ -242,23 +221,19 @@ class TaskitCodeTextField extends ConsumerWidget{
         fillColor: AppColor(context).secondaryContainer,
       ),
       style: Theme.of(context).textTheme.labelMedium?.copyWith(
-        fontFamily: 'Inter',
-        letterSpacing: 0.0,
-      ),
+            fontFamily: 'Inter',
+            letterSpacing: 0.0,
+          ),
       maxLengthEnforcement: MaxLengthEnforcement.enforced,
       buildCounter: (context,
-          {required currentLength,
-            required isFocused,
-            maxLength}) =>
-      null,
+              {required currentLength, required isFocused, maxLength}) =>
+          null,
       keyboardType: TextInputType.number,
-      cursorColor:AppColor(context).onPrimary,
+      cursorColor: AppColor(context).onPrimary,
       inputFormatters: [
         FilteringTextInputFormatter.digitsOnly,
         LengthLimitingTextInputFormatter(1),
       ],
     );
-
   }
-
 }

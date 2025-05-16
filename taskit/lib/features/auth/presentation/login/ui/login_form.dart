@@ -6,7 +6,7 @@ import 'package:go_router/go_router.dart';
 import 'package:taskit/shared/presentation/widget/custom_taskit_textfield.dart';
 
 import '../../../../../config/app/app_color.dart';
-import '../../controller/login_controller.dart';
+import '../controller/login_controller.dart';
 
 class LoginForm extends ConsumerStatefulWidget {
   const LoginForm({super.key});

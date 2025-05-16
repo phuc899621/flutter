@@ -1,32 +1,28 @@
-
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:taskit/config/app/app_color.dart';
+import 'package:taskit/features/task/domain/entities/task_model.dart';
 
-import '../../domain/model/task_model.dart';
-
-
-
-class TaskitItem extends ConsumerStatefulWidget{
-  final TaskModel model;
-  final Function(TaskModel,String) onChanged;
-  const TaskitItem({super.key,required this.model, required this.onChanged});
+class TaskitItem extends ConsumerStatefulWidget {
+  final TaskEntity model;
+  final Function(TaskEntity, String) onChanged;
+  const TaskitItem({super.key, required this.model, required this.onChanged});
   @override
-  ConsumerState<ConsumerStatefulWidget> createState() =>_TaskitItem();
+  ConsumerState<ConsumerStatefulWidget> createState() => _TaskitItem();
 }
-class _TaskitItem extends ConsumerState<TaskitItem>{
+
+class _TaskitItem extends ConsumerState<TaskitItem> {
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
     return Padding(
-      padding: EdgeInsets.all(12.0),
+      padding: const EdgeInsets.all(12.0),
       child: Container(
         width: double.infinity,
         decoration: BoxDecoration(
           color: AppColor(context).secondaryContainer,
-          boxShadow: [
+          boxShadow: const [
             BoxShadow(
               blurRadius: 4.0,
               color: Color(0x33000000),
@@ -39,7 +35,7 @@ class _TaskitItem extends ConsumerState<TaskitItem>{
           borderRadius: BorderRadius.circular(10.0),
         ),
         child: Padding(
-          padding: EdgeInsets.all(3.0),
+          padding: const EdgeInsets.all(3.0),
           child: Column(
             mainAxisSize: MainAxisSize.max,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -52,17 +48,17 @@ class _TaskitItem extends ConsumerState<TaskitItem>{
                       color: AppColor(context).secondary,
                       borderRadius: BorderRadius.circular(12.0),
                     ),
-                    alignment: AlignmentDirectional(0.0, 0.0),
+                    alignment: const AlignmentDirectional(0.0, 0.0),
                     child: Padding(
-                      padding: EdgeInsets.all(6.0),
+                      padding: const EdgeInsets.all(6.0),
                       child: Text(
-                        widget.model.category,
+                        'hi',
                         style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                          fontFamily: 'Inter',
-                          color: AppColor(context).onSurface,
-                          letterSpacing: 0.0,
-                          fontWeight: FontWeight.w600,
-                        ),
+                              fontFamily: 'Inter',
+                              color: AppColor(context).onSurface,
+                              letterSpacing: 0.0,
+                              fontWeight: FontWeight.w600,
+                            ),
                       ),
                     ),
                   ),
@@ -84,13 +80,13 @@ class _TaskitItem extends ConsumerState<TaskitItem>{
                           borderRadius: BorderRadius.circular(4.0),
                         ),
                       ),
-                      unselectedWidgetColor:
-                      AppColor(context).onSurface,
+                      unselectedWidgetColor: AppColor(context).onSurface,
                     ),
                     child: Checkbox(
-                      value: widget.model.status=="completed"?true:false,
-                      onChanged: (value){
-                          widget.onChanged(widget.model,value==true?"completed":"pending");
+                      value: widget.model.status == "completed" ? true : false,
+                      onChanged: (value) {
+                        widget.onChanged(widget.model,
+                            value == true ? "completed" : "pending");
                       },
                       side: BorderSide(
                         width: 2,
@@ -102,17 +98,17 @@ class _TaskitItem extends ConsumerState<TaskitItem>{
                   ),
                 ],
               ),
-              SizedBox(height: 6.0),
+              const SizedBox(height: 6.0),
               Text(
                 widget.model.title,
                 style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                  fontFamily: 'Inter Tight',
-                  letterSpacing: 0.0,
-                  color: AppColor(context).primaryText,
-                  fontWeight: FontWeight.w700,
-                ),
+                      fontFamily: 'Inter Tight',
+                      letterSpacing: 0.0,
+                      color: AppColor(context).primaryText,
+                      fontWeight: FontWeight.w700,
+                    ),
               ),
-              SizedBox(height: 6.0),
+              const SizedBox(height: 6.0),
               Row(
                 mainAxisSize: MainAxisSize.max,
                 mainAxisAlignment: MainAxisAlignment.end,
@@ -122,45 +118,50 @@ class _TaskitItem extends ConsumerState<TaskitItem>{
                     color: AppColor(context).secondaryText,
                     size: 16.0,
                   ),
-                  SizedBox(width: 8.0),
+                  const SizedBox(width: 8.0),
                   Expanded(
                     child: Text(
                       DateFormat('HH:mm').format(widget.model.dueDate),
                       style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                        fontFamily: 'Inter',
-                        letterSpacing: 0.0,
-                        color: AppColor(context).secondaryText,
-                      ),
+                            fontFamily: 'Inter',
+                            letterSpacing: 0.0,
+                            color: AppColor(context).secondaryText,
+                          ),
                     ),
                   ),
-                  SizedBox(width: 8.0),
+                  const SizedBox(width: 8.0),
                   Container(
                     height: 26.0,
                     decoration: BoxDecoration(
-                      color: widget.model.priority=='high'?
-                      AppColor(context).error:(
-                          widget.model.priority=='medium'?Colors.amber:
-                          (widget.model.priority=='low'?Colors.green:Colors.blueGrey)),
+                      color: widget.model.priority == 'high'
+                          ? AppColor(context).error
+                          : (widget.model.priority == 'medium'
+                              ? Colors.amber
+                              : (widget.model.priority == 'low'
+                                  ? Colors.green
+                                  : Colors.blueGrey)),
                       borderRadius: BorderRadius.circular(12.0),
                     ),
-                    alignment: AlignmentDirectional(0.0, 0.0),
+                    alignment: const AlignmentDirectional(0.0, 0.0),
                     child: Padding(
-                      padding: EdgeInsets.all(4.0),
+                      padding: const EdgeInsets.all(4.0),
                       child: Row(
                         mainAxisSize: MainAxisSize.max,
                         children: [
                           Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
+                            padding: const EdgeInsetsDirectional.fromSTEB(
                                 12.0, 0.0, 12.0, 0.0),
                             child: Text(
                               widget.model.priority,
-                              style: Theme.of(context).textTheme
-                                  .bodySmall?.copyWith(
-                                fontFamily: 'Inter',
-                                color: AppColor(context).onSecondary,
-                                letterSpacing: 0.0,
-                                fontWeight: FontWeight.w600,
-                              ),
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodySmall
+                                  ?.copyWith(
+                                    fontFamily: 'Inter',
+                                    color: AppColor(context).onSecondary,
+                                    letterSpacing: 0.0,
+                                    fontWeight: FontWeight.w600,
+                                  ),
                             ),
                           ),
                         ],
@@ -175,5 +176,4 @@ class _TaskitItem extends ConsumerState<TaskitItem>{
       ),
     );
   }
-
 }

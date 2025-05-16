@@ -1,5 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:taskit/features/auth/domain/entities/setting/setting.dart';
+
+import '../setting/setting.dart';
 
 part 'login.freezed.dart';
 
