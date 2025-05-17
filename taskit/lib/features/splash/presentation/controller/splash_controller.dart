@@ -1,6 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:taskit/features/auth/application/auth_service.dart';
-import 'package:taskit/shared/application/token_service.dart';
 
 import '../state/splash_state.dart';
 
@@ -18,8 +17,7 @@ class SplashController extends Notifier<SplashState> {
       state = state.copyWith(
         isLoginExpired: null,
       );
-      final token = await ref.read(tokenServiceProvider).getToken();
-      final result = await ref.read(authServiceProvider).checkLogin(token!);
+      final result = await ref.read(authServiceProvider).checkLogin();
       result.when((success) {
         state = state.copyWith(
           isLoginExpired: false,

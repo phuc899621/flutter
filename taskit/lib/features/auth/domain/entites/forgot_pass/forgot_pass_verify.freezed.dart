@@ -15,37 +15,37 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
-mixin _$ForgotPassVerifyModel {
+mixin _$ForgotPassVerifyEntity {
   String get resetToken => throw _privateConstructorUsedError;
 
-  /// Create a copy of ForgotPassVerifyModel
+  /// Create a copy of ForgotPassVerifyEntity
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  $ForgotPassVerifyModelCopyWith<ForgotPassVerifyModel> get copyWith =>
+  $ForgotPassVerifyEntityCopyWith<ForgotPassVerifyEntity> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $ForgotPassVerifyModelCopyWith<$Res> {
-  factory $ForgotPassVerifyModelCopyWith(ForgotPassVerifyModel value,
-          $Res Function(ForgotPassVerifyModel) then) =
-      _$ForgotPassVerifyModelCopyWithImpl<$Res, ForgotPassVerifyModel>;
+abstract class $ForgotPassVerifyEntityCopyWith<$Res> {
+  factory $ForgotPassVerifyEntityCopyWith(ForgotPassVerifyEntity value,
+          $Res Function(ForgotPassVerifyEntity) then) =
+      _$ForgotPassVerifyEntityCopyWithImpl<$Res, ForgotPassVerifyEntity>;
   @useResult
   $Res call({String resetToken});
 }
 
 /// @nodoc
-class _$ForgotPassVerifyModelCopyWithImpl<$Res,
-        $Val extends ForgotPassVerifyModel>
-    implements $ForgotPassVerifyModelCopyWith<$Res> {
-  _$ForgotPassVerifyModelCopyWithImpl(this._value, this._then);
+class _$ForgotPassVerifyEntityCopyWithImpl<$Res,
+        $Val extends ForgotPassVerifyEntity>
+    implements $ForgotPassVerifyEntityCopyWith<$Res> {
+  _$ForgotPassVerifyEntityCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
 
-  /// Create a copy of ForgotPassVerifyModel
+  /// Create a copy of ForgotPassVerifyEntity
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
@@ -62,34 +62,35 @@ class _$ForgotPassVerifyModelCopyWithImpl<$Res,
 }
 
 /// @nodoc
-abstract class _$$ForgotPassVerifyModelImplCopyWith<$Res>
-    implements $ForgotPassVerifyModelCopyWith<$Res> {
-  factory _$$ForgotPassVerifyModelImplCopyWith(
-          _$ForgotPassVerifyModelImpl value,
-          $Res Function(_$ForgotPassVerifyModelImpl) then) =
-      __$$ForgotPassVerifyModelImplCopyWithImpl<$Res>;
+abstract class _$$ForgotPassVerifyEntityImplCopyWith<$Res>
+    implements $ForgotPassVerifyEntityCopyWith<$Res> {
+  factory _$$ForgotPassVerifyEntityImplCopyWith(
+          _$ForgotPassVerifyEntityImpl value,
+          $Res Function(_$ForgotPassVerifyEntityImpl) then) =
+      __$$ForgotPassVerifyEntityImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({String resetToken});
 }
 
 /// @nodoc
-class __$$ForgotPassVerifyModelImplCopyWithImpl<$Res>
-    extends _$ForgotPassVerifyModelCopyWithImpl<$Res,
-        _$ForgotPassVerifyModelImpl>
-    implements _$$ForgotPassVerifyModelImplCopyWith<$Res> {
-  __$$ForgotPassVerifyModelImplCopyWithImpl(_$ForgotPassVerifyModelImpl _value,
-      $Res Function(_$ForgotPassVerifyModelImpl) _then)
+class __$$ForgotPassVerifyEntityImplCopyWithImpl<$Res>
+    extends _$ForgotPassVerifyEntityCopyWithImpl<$Res,
+        _$ForgotPassVerifyEntityImpl>
+    implements _$$ForgotPassVerifyEntityImplCopyWith<$Res> {
+  __$$ForgotPassVerifyEntityImplCopyWithImpl(
+      _$ForgotPassVerifyEntityImpl _value,
+      $Res Function(_$ForgotPassVerifyEntityImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of ForgotPassVerifyModel
+  /// Create a copy of ForgotPassVerifyEntity
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? resetToken = null,
   }) {
-    return _then(_$ForgotPassVerifyModelImpl(
+    return _then(_$ForgotPassVerifyEntityImpl(
       resetToken: null == resetToken
           ? _value.resetToken
           : resetToken // ignore: cast_nullable_to_non_nullable
@@ -100,22 +101,22 @@ class __$$ForgotPassVerifyModelImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$ForgotPassVerifyModelImpl implements _ForgotPassVerifyModel {
-  const _$ForgotPassVerifyModelImpl({required this.resetToken});
+class _$ForgotPassVerifyEntityImpl implements _ForgotPassVerifyEntity {
+  const _$ForgotPassVerifyEntityImpl({required this.resetToken});
 
   @override
   final String resetToken;
 
   @override
   String toString() {
-    return 'ForgotPassVerifyModel(resetToken: $resetToken)';
+    return 'ForgotPassVerifyEntity(resetToken: $resetToken)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$ForgotPassVerifyModelImpl &&
+            other is _$ForgotPassVerifyEntityImpl &&
             (identical(other.resetToken, resetToken) ||
                 other.resetToken == resetToken));
   }
@@ -123,27 +124,27 @@ class _$ForgotPassVerifyModelImpl implements _ForgotPassVerifyModel {
   @override
   int get hashCode => Object.hash(runtimeType, resetToken);
 
-  /// Create a copy of ForgotPassVerifyModel
+  /// Create a copy of ForgotPassVerifyEntity
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$ForgotPassVerifyModelImplCopyWith<_$ForgotPassVerifyModelImpl>
-      get copyWith => __$$ForgotPassVerifyModelImplCopyWithImpl<
-          _$ForgotPassVerifyModelImpl>(this, _$identity);
+  _$$ForgotPassVerifyEntityImplCopyWith<_$ForgotPassVerifyEntityImpl>
+      get copyWith => __$$ForgotPassVerifyEntityImplCopyWithImpl<
+          _$ForgotPassVerifyEntityImpl>(this, _$identity);
 }
 
-abstract class _ForgotPassVerifyModel implements ForgotPassVerifyModel {
-  const factory _ForgotPassVerifyModel({required final String resetToken}) =
-      _$ForgotPassVerifyModelImpl;
+abstract class _ForgotPassVerifyEntity implements ForgotPassVerifyEntity {
+  const factory _ForgotPassVerifyEntity({required final String resetToken}) =
+      _$ForgotPassVerifyEntityImpl;
 
   @override
   String get resetToken;
 
-  /// Create a copy of ForgotPassVerifyModel
+  /// Create a copy of ForgotPassVerifyEntity
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$ForgotPassVerifyModelImplCopyWith<_$ForgotPassVerifyModelImpl>
+  _$$ForgotPassVerifyEntityImplCopyWith<_$ForgotPassVerifyEntityImpl>
       get copyWith => throw _privateConstructorUsedError;
 }

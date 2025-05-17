@@ -40,10 +40,9 @@ sealed class AuthApi {
   /*
   * Signup
   * */
-  Future<BaseResponse<SignupData>> signup(@Body() SignupRequest data);
+  Future<BaseResponse<BaseData>> signup(@Body() SignupRequest data);
   @POST('/user/auth/signup-verify')
-  Future<BaseResponse<SignupData>> signupVerify(
-      @Body() SignupVerifyRequest data);
+  Future<BaseResponse<BaseData>> signupVerify(@Body() SignupVerifyRequest data);
   @POST('/user/auth/forgot-password')
   /*
   * Forgot Password

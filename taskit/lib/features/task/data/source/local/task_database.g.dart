@@ -86,7 +86,7 @@ class _$TaskDatabase extends TaskDatabase {
     Callback? callback,
   ]) async {
     final databaseOptions = sqflite.OpenDatabaseOptions(
-      version: 1,
+      version: 3,
       onConfigure: (database) async {
         await database.execute('PRAGMA foreign_keys = ON');
         await callback?.onConfigure?.call(database);
@@ -104,7 +104,7 @@ class _$TaskDatabase extends TaskDatabase {
         await database.execute(
             'CREATE TABLE IF NOT EXISTS `tasks` (`localId` INTEGER PRIMARY KEY AUTOINCREMENT, `remoteId` TEXT NOT NULL, `title` TEXT NOT NULL, `description` TEXT NOT NULL, `userId` TEXT NOT NULL, `category` TEXT NOT NULL, `priority` TEXT NOT NULL, `status` TEXT NOT NULL, `dueDate` INTEGER NOT NULL, `subtasks` TEXT NOT NULL)');
         await database.execute(
-            'CREATE TABLE IF NOT EXISTS `category` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `name` TEXT NOT NULL)');
+            'CREATE TABLE IF NOT EXISTS `categories` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `name` TEXT NOT NULL)');
         await database.execute(
             'CREATE TABLE IF NOT EXISTS `user` (`id` TEXT NOT NULL, `name` TEXT NOT NULL, `email` TEXT NOT NULL, `avatar` TEXT NOT NULL, PRIMARY KEY (`id`))');
         await database.execute(
@@ -289,7 +289,7 @@ class _$CategoryDAO extends CategoryDAO {
   )   : _queryAdapter = QueryAdapter(database),
         _categoryModelInsertionAdapter = InsertionAdapter(
             database,
-            'category',
+            'categories',
             (CategoryModel item) =>
                 <String, Object?>{'id': item.id, 'name': item.name});
 

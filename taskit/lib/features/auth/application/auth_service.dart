@@ -2,7 +2,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:multiple_result/src/result.dart';
 import 'package:taskit/features/auth/data/dto/req/login/login_request.dart';
 import 'package:taskit/features/auth/data/dto/res/forgot_pass/verify.dart';
-import 'package:taskit/features/auth/data/dto/res/setting/setting_data.dart';
 import 'package:taskit/features/auth/data/repo/iauth_repo.dart';
 import 'package:taskit/features/auth/domain/mapper/iauth_mapper.dart';
 import 'package:taskit/shared/data/dto/response/base_response.dart';
@@ -57,9 +56,9 @@ class AuthService implements IAuthEntityMapper, IAuthService, IBaseModelMapper {
   }
 
   @override
-  Future<Result<void, Failure>> checkLogin(String token) async {
+  Future<Result<void, Failure>> checkLogin() async {
     try {
-      await _iAuthRepo.checkLogin(token);
+      await _iAuthRepo.checkLogin();
       return const Success(null);
     } on Failure catch (e) {
       return Error(e);
@@ -131,23 +130,14 @@ class AuthService implements IAuthEntityMapper, IAuthService, IBaseModelMapper {
     }
   }
 
-  @override
-  ForgotPassVerifyModel mapToForgotPassVerifyModel(
-      BaseResponse<ForgotPassData> data) {
-    return ForgotPassVerifyModel(
-      resetToken: data.data.resetToken,
-    );
-  }
-
   /*
   * Forgot Password
   * */
   @override
-  Future<Result<BaseModel, Failure>> forgotPass(ForgotPassRequest data) async {
+  Future<Result<void, Failure>> forgotPass(ForgotPassRequest data) async {
     try {
-      final response = await _iAuthRepo.forgotPass(data);
-      final model = mapToBaseModel(response);
-      return Success(model);
+      await _iAuthRepo.forgotPass(data);
+      return const Success(null);
     } on Failure catch (e) {
       return Error(e);
     } catch (e, s) {
@@ -194,12 +184,12 @@ class AuthService implements IAuthEntityMapper, IAuthService, IBaseModelMapper {
   }
 
   @override
-  Future<Result<ForgotPassVerifyModel, Failure>> forgotPassVerify(
+  Future<Result<ForgotPassVerifyEntity, Failure>> forgotPassVerify(
       ForgotPassVerifyRequest data) async {
     try {
       final response = await _iAuthRepo.forgotPassVerify(data);
-      final model = mapToForgotPassVerifyModel(response);
-      return Success(model);
+      final entity = mapToForgotPassVerifyEntity(response);
+      return Success(entity);
     } on Failure catch (e) {
       return Error(e);
     } catch (e, s) {
@@ -225,8 +215,10 @@ class AuthService implements IAuthEntityMapper, IAuthService, IBaseModelMapper {
   }
 
   @override
-  mapToSettingModel(SettingData data) {
-    // TODO: implement mapToSettingModel
-    throw UnimplementedError();
+  ForgotPassVerifyEntity mapToForgotPassVerifyEntity(
+      BaseResponse<ForgotPassData> data) {
+    return ForgotPassVerifyEntity(
+      resetToken: data.data.resetToken,
+    );
   }
 }

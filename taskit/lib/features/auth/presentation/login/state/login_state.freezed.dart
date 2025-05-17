@@ -18,7 +18,6 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$LoginState {
   bool get isLoading => throw _privateConstructorUsedError;
   bool? get isLoginSuccess => throw _privateConstructorUsedError;
-  String? get token => throw _privateConstructorUsedError;
   String? get error => throw _privateConstructorUsedError;
   Map<String, dynamic> get loginForm => throw _privateConstructorUsedError;
   bool get isPasswordVisibility => throw _privateConstructorUsedError;
@@ -39,7 +38,6 @@ abstract class $LoginStateCopyWith<$Res> {
   $Res call(
       {bool isLoading,
       bool? isLoginSuccess,
-      String? token,
       String? error,
       Map<String, dynamic> loginForm,
       bool isPasswordVisibility});
@@ -62,7 +60,6 @@ class _$LoginStateCopyWithImpl<$Res, $Val extends LoginState>
   $Res call({
     Object? isLoading = null,
     Object? isLoginSuccess = freezed,
-    Object? token = freezed,
     Object? error = freezed,
     Object? loginForm = null,
     Object? isPasswordVisibility = null,
@@ -76,10 +73,6 @@ class _$LoginStateCopyWithImpl<$Res, $Val extends LoginState>
           ? _value.isLoginSuccess
           : isLoginSuccess // ignore: cast_nullable_to_non_nullable
               as bool?,
-      token: freezed == token
-          ? _value.token
-          : token // ignore: cast_nullable_to_non_nullable
-              as String?,
       error: freezed == error
           ? _value.error
           : error // ignore: cast_nullable_to_non_nullable
@@ -107,7 +100,6 @@ abstract class _$$LoginStateImplCopyWith<$Res>
   $Res call(
       {bool isLoading,
       bool? isLoginSuccess,
-      String? token,
       String? error,
       Map<String, dynamic> loginForm,
       bool isPasswordVisibility});
@@ -128,7 +120,6 @@ class __$$LoginStateImplCopyWithImpl<$Res>
   $Res call({
     Object? isLoading = null,
     Object? isLoginSuccess = freezed,
-    Object? token = freezed,
     Object? error = freezed,
     Object? loginForm = null,
     Object? isPasswordVisibility = null,
@@ -142,10 +133,6 @@ class __$$LoginStateImplCopyWithImpl<$Res>
           ? _value.isLoginSuccess
           : isLoginSuccess // ignore: cast_nullable_to_non_nullable
               as bool?,
-      token: freezed == token
-          ? _value.token
-          : token // ignore: cast_nullable_to_non_nullable
-              as String?,
       error: freezed == error
           ? _value.error
           : error // ignore: cast_nullable_to_non_nullable
@@ -168,7 +155,6 @@ class _$LoginStateImpl implements _LoginState {
   const _$LoginStateImpl(
       {this.isLoading = false,
       this.isLoginSuccess,
-      this.token,
       this.error,
       final Map<String, dynamic> loginForm = const {},
       this.isPasswordVisibility = false})
@@ -179,8 +165,6 @@ class _$LoginStateImpl implements _LoginState {
   final bool isLoading;
   @override
   final bool? isLoginSuccess;
-  @override
-  final String? token;
   @override
   final String? error;
   final Map<String, dynamic> _loginForm;
@@ -198,7 +182,7 @@ class _$LoginStateImpl implements _LoginState {
 
   @override
   String toString() {
-    return 'LoginState(isLoading: $isLoading, isLoginSuccess: $isLoginSuccess, token: $token, error: $error, loginForm: $loginForm, isPasswordVisibility: $isPasswordVisibility)';
+    return 'LoginState(isLoading: $isLoading, isLoginSuccess: $isLoginSuccess, error: $error, loginForm: $loginForm, isPasswordVisibility: $isPasswordVisibility)';
   }
 
   @override
@@ -210,7 +194,6 @@ class _$LoginStateImpl implements _LoginState {
                 other.isLoading == isLoading) &&
             (identical(other.isLoginSuccess, isLoginSuccess) ||
                 other.isLoginSuccess == isLoginSuccess) &&
-            (identical(other.token, token) || other.token == token) &&
             (identical(other.error, error) || other.error == error) &&
             const DeepCollectionEquality()
                 .equals(other._loginForm, _loginForm) &&
@@ -219,14 +202,8 @@ class _$LoginStateImpl implements _LoginState {
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      isLoading,
-      isLoginSuccess,
-      token,
-      error,
-      const DeepCollectionEquality().hash(_loginForm),
-      isPasswordVisibility);
+  int get hashCode => Object.hash(runtimeType, isLoading, isLoginSuccess, error,
+      const DeepCollectionEquality().hash(_loginForm), isPasswordVisibility);
 
   /// Create a copy of LoginState
   /// with the given fields replaced by the non-null parameter values.
@@ -241,7 +218,6 @@ abstract class _LoginState implements LoginState {
   const factory _LoginState(
       {final bool isLoading,
       final bool? isLoginSuccess,
-      final String? token,
       final String? error,
       final Map<String, dynamic> loginForm,
       final bool isPasswordVisibility}) = _$LoginStateImpl;
@@ -250,8 +226,6 @@ abstract class _LoginState implements LoginState {
   bool get isLoading;
   @override
   bool? get isLoginSuccess;
-  @override
-  String? get token;
   @override
   String? get error;
   @override

@@ -9,19 +9,18 @@ import '../dto/req/signup/signup_verify_request.dart';
 import '../dto/res/forgot_pass/verify.dart';
 import '../dto/res/login/login_data.dart';
 import '../dto/res/login/login_verify_data.dart';
-import '../dto/res/signup/signup_data.dart';
 
 abstract interface class IAuthRepo {
   /*
   * Login
   * */
   Future<BaseResponse<LoginData>> login(LoginRequest data);
-  Future<BaseResponse<LoginVerifyData>> checkLogin(String token);
+  Future<BaseResponse<LoginVerifyData>> checkLogin();
   /*
   * Sign up
   * */
-  Future<BaseResponse<SignupData>> signup(SignupRequest data);
-  Future<BaseResponse<SignupData>> signupVerify(SignupVerifyRequest data);
+  Future<BaseResponse<BaseData>> signup(SignupRequest data);
+  Future<BaseResponse<BaseData>> signupVerify(SignupVerifyRequest data);
   /*
   * Forgot Password
   * */

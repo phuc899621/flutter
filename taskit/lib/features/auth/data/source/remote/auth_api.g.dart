@@ -95,12 +95,12 @@ class _AuthApi implements AuthApi {
   }
 
   @override
-  Future<BaseResponse<SignupData>> signup(SignupRequest data) async {
+  Future<BaseResponse<BaseData>> signup(SignupRequest data) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = data;
-    final _options = _setStreamType<BaseResponse<SignupData>>(Options(
+    final _options = _setStreamType<BaseResponse<BaseData>>(Options(
       method: 'POST',
       headers: _headers,
       extra: _extra,
@@ -117,11 +117,11 @@ class _AuthApi implements AuthApi {
           baseUrl,
         )));
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late BaseResponse<SignupData> _value;
+    late BaseResponse<BaseData> _value;
     try {
-      _value = BaseResponse<SignupData>.fromJson(
+      _value = BaseResponse<BaseData>.fromJson(
         _result.data!,
-        (json) => SignupData.fromJson(json as Map<String, dynamic>),
+        (json) => BaseData.fromJson(json as Map<String, dynamic>),
       );
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options);
@@ -131,13 +131,12 @@ class _AuthApi implements AuthApi {
   }
 
   @override
-  Future<BaseResponse<SignupData>> signupVerify(
-      SignupVerifyRequest data) async {
+  Future<BaseResponse<BaseData>> signupVerify(SignupVerifyRequest data) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = data;
-    final _options = _setStreamType<BaseResponse<SignupData>>(Options(
+    final _options = _setStreamType<BaseResponse<BaseData>>(Options(
       method: 'POST',
       headers: _headers,
       extra: _extra,
@@ -154,11 +153,11 @@ class _AuthApi implements AuthApi {
           baseUrl,
         )));
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late BaseResponse<SignupData> _value;
+    late BaseResponse<BaseData> _value;
     try {
-      _value = BaseResponse<SignupData>.fromJson(
+      _value = BaseResponse<BaseData>.fromJson(
         _result.data!,
-        (json) => SignupData.fromJson(json as Map<String, dynamic>),
+        (json) => BaseData.fromJson(json as Map<String, dynamic>),
       );
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options);

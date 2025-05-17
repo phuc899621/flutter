@@ -26,8 +26,7 @@ mixin _$ForgotPassState {
   Map<String, dynamic> get forgotPassForm => throw _privateConstructorUsedError;
   Map<String, dynamic> get verifyForm => throw _privateConstructorUsedError;
   Map<String, dynamic> get resetForm => throw _privateConstructorUsedError;
-  ForgotPassVerifyModel? get forgotPassVerifyModel =>
-      throw _privateConstructorUsedError;
+  String? get resetToken => throw _privateConstructorUsedError;
 
   /// Create a copy of ForgotPassState
   /// with the given fields replaced by the non-null parameter values.
@@ -53,9 +52,7 @@ abstract class $ForgotPassStateCopyWith<$Res> {
       Map<String, dynamic> forgotPassForm,
       Map<String, dynamic> verifyForm,
       Map<String, dynamic> resetForm,
-      ForgotPassVerifyModel? forgotPassVerifyModel});
-
-  $ForgotPassVerifyModelCopyWith<$Res>? get forgotPassVerifyModel;
+      String? resetToken});
 }
 
 /// @nodoc
@@ -83,7 +80,7 @@ class _$ForgotPassStateCopyWithImpl<$Res, $Val extends ForgotPassState>
     Object? forgotPassForm = null,
     Object? verifyForm = null,
     Object? resetForm = null,
-    Object? forgotPassVerifyModel = freezed,
+    Object? resetToken = freezed,
   }) {
     return _then(_value.copyWith(
       isLoading: null == isLoading
@@ -126,26 +123,11 @@ class _$ForgotPassStateCopyWithImpl<$Res, $Val extends ForgotPassState>
           ? _value.resetForm
           : resetForm // ignore: cast_nullable_to_non_nullable
               as Map<String, dynamic>,
-      forgotPassVerifyModel: freezed == forgotPassVerifyModel
-          ? _value.forgotPassVerifyModel
-          : forgotPassVerifyModel // ignore: cast_nullable_to_non_nullable
-              as ForgotPassVerifyModel?,
+      resetToken: freezed == resetToken
+          ? _value.resetToken
+          : resetToken // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
-  }
-
-  /// Create a copy of ForgotPassState
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $ForgotPassVerifyModelCopyWith<$Res>? get forgotPassVerifyModel {
-    if (_value.forgotPassVerifyModel == null) {
-      return null;
-    }
-
-    return $ForgotPassVerifyModelCopyWith<$Res>(_value.forgotPassVerifyModel!,
-        (value) {
-      return _then(_value.copyWith(forgotPassVerifyModel: value) as $Val);
-    });
   }
 }
 
@@ -168,10 +150,7 @@ abstract class _$$ForgotPassStateImplCopyWith<$Res>
       Map<String, dynamic> forgotPassForm,
       Map<String, dynamic> verifyForm,
       Map<String, dynamic> resetForm,
-      ForgotPassVerifyModel? forgotPassVerifyModel});
-
-  @override
-  $ForgotPassVerifyModelCopyWith<$Res>? get forgotPassVerifyModel;
+      String? resetToken});
 }
 
 /// @nodoc
@@ -197,7 +176,7 @@ class __$$ForgotPassStateImplCopyWithImpl<$Res>
     Object? forgotPassForm = null,
     Object? verifyForm = null,
     Object? resetForm = null,
-    Object? forgotPassVerifyModel = freezed,
+    Object? resetToken = freezed,
   }) {
     return _then(_$ForgotPassStateImpl(
       isLoading: null == isLoading
@@ -240,10 +219,10 @@ class __$$ForgotPassStateImplCopyWithImpl<$Res>
           ? _value._resetForm
           : resetForm // ignore: cast_nullable_to_non_nullable
               as Map<String, dynamic>,
-      forgotPassVerifyModel: freezed == forgotPassVerifyModel
-          ? _value.forgotPassVerifyModel
-          : forgotPassVerifyModel // ignore: cast_nullable_to_non_nullable
-              as ForgotPassVerifyModel?,
+      resetToken: freezed == resetToken
+          ? _value.resetToken
+          : resetToken // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -262,7 +241,7 @@ class _$ForgotPassStateImpl implements _ForgotPassState {
       final Map<String, dynamic> forgotPassForm = const {},
       final Map<String, dynamic> verifyForm = const {},
       final Map<String, dynamic> resetForm = const {},
-      this.forgotPassVerifyModel})
+      this.resetToken})
       : _forgotPassForm = forgotPassForm,
         _verifyForm = verifyForm,
         _resetForm = resetForm;
@@ -310,11 +289,11 @@ class _$ForgotPassStateImpl implements _ForgotPassState {
   }
 
   @override
-  final ForgotPassVerifyModel? forgotPassVerifyModel;
+  final String? resetToken;
 
   @override
   String toString() {
-    return 'ForgotPassState(isLoading: $isLoading, isForgotPassSuccess: $isForgotPassSuccess, isVerifySuccess: $isVerifySuccess, isResetSuccess: $isResetSuccess, errorForgotPass: $errorForgotPass, errorVerify: $errorVerify, errorReset: $errorReset, forgotPassForm: $forgotPassForm, verifyForm: $verifyForm, resetForm: $resetForm, forgotPassVerifyModel: $forgotPassVerifyModel)';
+    return 'ForgotPassState(isLoading: $isLoading, isForgotPassSuccess: $isForgotPassSuccess, isVerifySuccess: $isVerifySuccess, isResetSuccess: $isResetSuccess, errorForgotPass: $errorForgotPass, errorVerify: $errorVerify, errorReset: $errorReset, forgotPassForm: $forgotPassForm, verifyForm: $verifyForm, resetForm: $resetForm, resetToken: $resetToken)';
   }
 
   @override
@@ -342,8 +321,8 @@ class _$ForgotPassStateImpl implements _ForgotPassState {
                 .equals(other._verifyForm, _verifyForm) &&
             const DeepCollectionEquality()
                 .equals(other._resetForm, _resetForm) &&
-            (identical(other.forgotPassVerifyModel, forgotPassVerifyModel) ||
-                other.forgotPassVerifyModel == forgotPassVerifyModel));
+            (identical(other.resetToken, resetToken) ||
+                other.resetToken == resetToken));
   }
 
   @override
@@ -359,7 +338,7 @@ class _$ForgotPassStateImpl implements _ForgotPassState {
       const DeepCollectionEquality().hash(_forgotPassForm),
       const DeepCollectionEquality().hash(_verifyForm),
       const DeepCollectionEquality().hash(_resetForm),
-      forgotPassVerifyModel);
+      resetToken);
 
   /// Create a copy of ForgotPassState
   /// with the given fields replaced by the non-null parameter values.
@@ -373,18 +352,17 @@ class _$ForgotPassStateImpl implements _ForgotPassState {
 
 abstract class _ForgotPassState implements ForgotPassState {
   const factory _ForgotPassState(
-          {final bool isLoading,
-          final bool? isForgotPassSuccess,
-          final bool? isVerifySuccess,
-          final bool? isResetSuccess,
-          final String? errorForgotPass,
-          final String? errorVerify,
-          final String? errorReset,
-          final Map<String, dynamic> forgotPassForm,
-          final Map<String, dynamic> verifyForm,
-          final Map<String, dynamic> resetForm,
-          final ForgotPassVerifyModel? forgotPassVerifyModel}) =
-      _$ForgotPassStateImpl;
+      {final bool isLoading,
+      final bool? isForgotPassSuccess,
+      final bool? isVerifySuccess,
+      final bool? isResetSuccess,
+      final String? errorForgotPass,
+      final String? errorVerify,
+      final String? errorReset,
+      final Map<String, dynamic> forgotPassForm,
+      final Map<String, dynamic> verifyForm,
+      final Map<String, dynamic> resetForm,
+      final String? resetToken}) = _$ForgotPassStateImpl;
 
   @override
   bool get isLoading;
@@ -407,7 +385,7 @@ abstract class _ForgotPassState implements ForgotPassState {
   @override
   Map<String, dynamic> get resetForm;
   @override
-  ForgotPassVerifyModel? get forgotPassVerifyModel;
+  String? get resetToken;
 
   /// Create a copy of ForgotPassState
   /// with the given fields replaced by the non-null parameter values.

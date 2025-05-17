@@ -169,71 +169,75 @@ class TaskitCodeTextField extends ConsumerWidget {
   });
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return TextFormField(
-      controller: controller,
-      onTapOutside: (_) => FocusScope.of(context).unfocus(),
-      autofocus: true,
-      onChanged: (value) {
-        if (value.length == 1) {
-          FocusScope.of(context).nextFocus();
-        }
-      },
-      obscureText: false,
-      decoration: InputDecoration(
-        isDense: true,
-        labelStyle: Theme.of(context).textTheme.labelMedium?.copyWith(
+    return Center(
+      child: TextFormField(
+        textAlign: TextAlign.center,
+        controller: controller,
+        onTapOutside: (_) => FocusScope.of(context).unfocus(),
+        autofocus: true,
+        onChanged: (value) {
+          if (value.length == 1) {
+            FocusScope.of(context).nextFocus();
+          }
+        },
+        obscureText: false,
+        decoration: InputDecoration(
+          isDense: true,
+          contentPadding: const EdgeInsets.symmetric(vertical: 20),
+          labelStyle: Theme.of(context).textTheme.labelMedium?.copyWith(
+                fontFamily: 'Inter',
+                letterSpacing: 0.0,
+              ),
+          hintStyle: Theme.of(context).textTheme.labelMedium?.copyWith(
+                fontFamily: 'Inter',
+                letterSpacing: 0.0,
+              ),
+          enabledBorder: OutlineInputBorder(
+            borderSide: BorderSide(
+              color: Theme.of(context).colorScheme.surface,
+              width: 2.0,
+            ),
+            borderRadius: BorderRadius.circular(12.0),
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderSide: BorderSide(
+              color: AppColor(context).primary,
+              width: 2.0,
+            ),
+            borderRadius: BorderRadius.circular(12.0),
+          ),
+          errorBorder: OutlineInputBorder(
+            borderSide: BorderSide(
+              color: AppColor(context).error,
+              width: 2.0,
+            ),
+            borderRadius: BorderRadius.circular(12.0),
+          ),
+          focusedErrorBorder: OutlineInputBorder(
+            borderSide: BorderSide(
+              color: AppColor(context).primary,
+              width: 2.0,
+            ),
+            borderRadius: BorderRadius.circular(12.0),
+          ),
+          filled: true,
+          fillColor: AppColor(context).secondaryContainer,
+        ),
+        style: Theme.of(context).textTheme.labelLarge?.copyWith(
               fontFamily: 'Inter',
               letterSpacing: 0.0,
             ),
-        hintStyle: Theme.of(context).textTheme.labelMedium?.copyWith(
-              fontFamily: 'Inter',
-              letterSpacing: 0.0,
-            ),
-        enabledBorder: OutlineInputBorder(
-          borderSide: BorderSide(
-            color: Theme.of(context).colorScheme.surface,
-            width: 2.0,
-          ),
-          borderRadius: BorderRadius.circular(12.0),
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderSide: BorderSide(
-            color: AppColor(context).primary,
-            width: 2.0,
-          ),
-          borderRadius: BorderRadius.circular(12.0),
-        ),
-        errorBorder: OutlineInputBorder(
-          borderSide: BorderSide(
-            color: AppColor(context).error,
-            width: 2.0,
-          ),
-          borderRadius: BorderRadius.circular(12.0),
-        ),
-        focusedErrorBorder: OutlineInputBorder(
-          borderSide: BorderSide(
-            color: AppColor(context).primary,
-            width: 2.0,
-          ),
-          borderRadius: BorderRadius.circular(12.0),
-        ),
-        filled: true,
-        fillColor: AppColor(context).secondaryContainer,
+        maxLengthEnforcement: MaxLengthEnforcement.enforced,
+        buildCounter: (context,
+                {required currentLength, required isFocused, maxLength}) =>
+            null,
+        keyboardType: TextInputType.number,
+        cursorColor: AppColor(context).onPrimary,
+        inputFormatters: [
+          FilteringTextInputFormatter.digitsOnly,
+          LengthLimitingTextInputFormatter(1),
+        ],
       ),
-      style: Theme.of(context).textTheme.labelMedium?.copyWith(
-            fontFamily: 'Inter',
-            letterSpacing: 0.0,
-          ),
-      maxLengthEnforcement: MaxLengthEnforcement.enforced,
-      buildCounter: (context,
-              {required currentLength, required isFocused, maxLength}) =>
-          null,
-      keyboardType: TextInputType.number,
-      cursorColor: AppColor(context).onPrimary,
-      inputFormatters: [
-        FilteringTextInputFormatter.digitsOnly,
-        LengthLimitingTextInputFormatter(1),
-      ],
     );
   }
 }

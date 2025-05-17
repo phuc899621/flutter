@@ -17,6 +17,6 @@ abstract class ForgotPassState with _$ForgotPassState {
     @Default({}) Map<String, dynamic> forgotPassForm,
     @Default({}) Map<String, dynamic> verifyForm,
     @Default({}) Map<String, dynamic> resetForm,
-    ForgotPassVerifyModel? forgotPassVerifyModel,
+    String? resetToken,
   }) = _ForgotPassState;
 }

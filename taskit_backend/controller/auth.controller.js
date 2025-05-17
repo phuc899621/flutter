@@ -47,12 +47,15 @@ const jwt = require("jsonwebtoken");
     exports.verifyEmail=async(req,res)=>{
         try{
             const {email,otp}=req.body;
+            console.log(email,otp);
             const getOtp=await OtpAuthServices.findOtpByEmail(email);
+            console.log(getOtp);
             if(getOtp){
                 if(await OtpServices.compareOtp(otp,getOtp.otp)){
                     const {name,password}=getOtp;
                     const user=await UserServices.signup(email,name,password);
                     if(user){
+                        await OtpAuthServices.deleteOtpByEmail(email);
                         return res.status(201).json({
                             message:"Verify your account successfully!",
                             data:{}

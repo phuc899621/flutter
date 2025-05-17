@@ -21,7 +21,7 @@ final taskDatabaseProvider = Provider<TaskDatabase>((ref) {
 });
 
 @Database(
-    version: 1, entities: [TaskModel, CategoryModel, UserModel, SettingModel])
+    version: 3, entities: [TaskModel, CategoryModel, UserModel, SettingModel])
 abstract class TaskDatabase extends FloorDatabase {
   TaskDAO get taskDAO;
   UserDAO get userDAO;

@@ -7,7 +7,6 @@ abstract class LoginState with _$LoginState {
   const factory LoginState({
     @Default(false) bool isLoading,
     bool? isLoginSuccess,
-    String? token,
     String? error,
     @Default({}) Map<String, dynamic> loginForm,
     @Default(false) bool isPasswordVisibility,

@@ -1,6 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:taskit/features/auth/presentation/login/state/login_state.dart';
-import 'package:taskit/shared/application/token_service.dart';
 
 import '../../../application/auth_service.dart';
 import '../../../data/dto/req/login/login_request.dart';
@@ -46,27 +45,6 @@ class LoginController extends Notifier<LoginState> {
           error: failure.message,
         );
       });
-    } catch (e) {
-      state = state.copyWith(
-        isLoading: false,
-        isLoginSuccess: null,
-        error: e.toString(),
-      );
-    }
-  }
-
-  Future<void> saveToken() async {
-    try {
-      if (state.token == null) {
-        state = state.copyWith(
-          error: 'Token is null',
-        );
-        return;
-      }
-      await ref.read(tokenServiceProvider).saveToken(state.token!);
-      state = state.copyWith(
-        error: null,
-      );
     } catch (e) {
       state = state.copyWith(
         isLoading: false,

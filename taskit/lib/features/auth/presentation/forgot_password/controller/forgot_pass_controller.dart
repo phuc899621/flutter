@@ -82,7 +82,7 @@ class ForgotPassController extends Notifier<ForgotPassState> {
         state = state.copyWith(
             isLoading: false,
             isVerifySuccess: true,
-            forgotPassVerifyModel: success);
+            resetToken: success.resetToken);
       }, (failure) {
         state = state.copyWith(
           isLoading: false,
@@ -113,7 +113,7 @@ class ForgotPassController extends Notifier<ForgotPassState> {
       );
       final result = await ref
           .read(authServiceProvider)
-          .resetPass(formData, state.forgotPassVerifyModel!.resetToken);
+          .resetPass(formData, state.resetToken!);
 
       result.when((success) {
         state = state.copyWith(

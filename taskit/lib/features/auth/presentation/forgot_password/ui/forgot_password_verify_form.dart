@@ -8,15 +8,15 @@ import '../../../../../config/app/app_color.dart';
 import '../../../../../shared/presentation/widget/custom_taskit_button.dart';
 import '../../../../../shared/presentation/widget/custom_taskit_textfield.dart';
 
-class ForgotPasswordVerifyPage extends ConsumerStatefulWidget {
-  const ForgotPasswordVerifyPage({super.key});
+class ForgotPasswordVerifyForm extends ConsumerStatefulWidget {
+  const ForgotPasswordVerifyForm({super.key});
   @override
   ConsumerState<ConsumerStatefulWidget> createState() =>
-      _ForgotPasswordVerifyPageState();
+      _ForgotPasswordVerifyFormState();
 }
 
-class _ForgotPasswordVerifyPageState
-    extends ConsumerState<ForgotPasswordVerifyPage> {
+class _ForgotPasswordVerifyFormState
+    extends ConsumerState<ForgotPasswordVerifyForm> {
   late TextEditingController _otpController0;
   late TextEditingController _otpController1;
   late TextEditingController _otpController2;
@@ -54,6 +54,7 @@ class _ForgotPasswordVerifyPageState
               style: Theme.of(context).textTheme.headlineMedium?.copyWith(
                     fontFamily: 'Inter Tight',
                     letterSpacing: 0.0,
+                    color: AppColor(context).primaryText,
                   )),
           Padding(
             padding: const EdgeInsetsDirectional.fromSTEB(0.0, 12.0, 0.0, 26.0),
