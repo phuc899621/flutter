@@ -1,3 +1,4 @@
+// dart format width=80
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
@@ -9,107 +10,61 @@ part of 'create_task.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// dart format off
 T _$identity<T>(T value) => value;
-
-final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
-
-CreateTaskReq _$CreateTaskReqFromJson(Map<String, dynamic> json) {
-  return _CreateTaskReq.fromJson(json);
-}
 
 /// @nodoc
 mixin _$CreateTaskReq {
-  String get title => throw _privateConstructorUsedError;
-  String get description => throw _privateConstructorUsedError;
-  String get category => throw _privateConstructorUsedError;
-  String get priority => throw _privateConstructorUsedError;
-  DateTime get dueDate => throw _privateConstructorUsedError;
-  List<SubtaskReq> get subtasks => throw _privateConstructorUsedError;
-
-  /// Serializes this CreateTaskReq to a JSON map.
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  String get title;
+  String get description;
+  String get category;
+  String get priority;
+  DateTime get dueDate;
+  List<SubtaskReq> get subtasks;
 
   /// Create a copy of CreateTaskReq
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  $CreateTaskReqCopyWith<CreateTaskReq> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $CreateTaskReqCopyWith<$Res> {
-  factory $CreateTaskReqCopyWith(
-          CreateTaskReq value, $Res Function(CreateTaskReq) then) =
-      _$CreateTaskReqCopyWithImpl<$Res, CreateTaskReq>;
-  @useResult
-  $Res call(
-      {String title,
-      String description,
-      String category,
-      String priority,
-      DateTime dueDate,
-      List<SubtaskReq> subtasks});
-}
-
-/// @nodoc
-class _$CreateTaskReqCopyWithImpl<$Res, $Val extends CreateTaskReq>
-    implements $CreateTaskReqCopyWith<$Res> {
-  _$CreateTaskReqCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  /// Create a copy of CreateTaskReq
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
+  $CreateTaskReqCopyWith<CreateTaskReq> get copyWith =>
+      _$CreateTaskReqCopyWithImpl<CreateTaskReq>(
+          this as CreateTaskReq, _$identity);
+
+  /// Serializes this CreateTaskReq to a JSON map.
+  Map<String, dynamic> toJson();
+
   @override
-  $Res call({
-    Object? title = null,
-    Object? description = null,
-    Object? category = null,
-    Object? priority = null,
-    Object? dueDate = null,
-    Object? subtasks = null,
-  }) {
-    return _then(_value.copyWith(
-      title: null == title
-          ? _value.title
-          : title // ignore: cast_nullable_to_non_nullable
-              as String,
-      description: null == description
-          ? _value.description
-          : description // ignore: cast_nullable_to_non_nullable
-              as String,
-      category: null == category
-          ? _value.category
-          : category // ignore: cast_nullable_to_non_nullable
-              as String,
-      priority: null == priority
-          ? _value.priority
-          : priority // ignore: cast_nullable_to_non_nullable
-              as String,
-      dueDate: null == dueDate
-          ? _value.dueDate
-          : dueDate // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      subtasks: null == subtasks
-          ? _value.subtasks
-          : subtasks // ignore: cast_nullable_to_non_nullable
-              as List<SubtaskReq>,
-    ) as $Val);
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is CreateTaskReq &&
+            (identical(other.title, title) || other.title == title) &&
+            (identical(other.description, description) ||
+                other.description == description) &&
+            (identical(other.category, category) ||
+                other.category == category) &&
+            (identical(other.priority, priority) ||
+                other.priority == priority) &&
+            (identical(other.dueDate, dueDate) || other.dueDate == dueDate) &&
+            const DeepCollectionEquality().equals(other.subtasks, subtasks));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hash(runtimeType, title, description, category,
+      priority, dueDate, const DeepCollectionEquality().hash(subtasks));
+
+  @override
+  String toString() {
+    return 'CreateTaskReq(title: $title, description: $description, category: $category, priority: $priority, dueDate: $dueDate, subtasks: $subtasks)';
   }
 }
 
 /// @nodoc
-abstract class _$$CreateTaskReqImplCopyWith<$Res>
-    implements $CreateTaskReqCopyWith<$Res> {
-  factory _$$CreateTaskReqImplCopyWith(
-          _$CreateTaskReqImpl value, $Res Function(_$CreateTaskReqImpl) then) =
-      __$$CreateTaskReqImplCopyWithImpl<$Res>;
-  @override
+abstract mixin class $CreateTaskReqCopyWith<$Res> {
+  factory $CreateTaskReqCopyWith(
+          CreateTaskReq value, $Res Function(CreateTaskReq) _then) =
+      _$CreateTaskReqCopyWithImpl;
   @useResult
   $Res call(
       {String title,
@@ -121,12 +76,12 @@ abstract class _$$CreateTaskReqImplCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$CreateTaskReqImplCopyWithImpl<$Res>
-    extends _$CreateTaskReqCopyWithImpl<$Res, _$CreateTaskReqImpl>
-    implements _$$CreateTaskReqImplCopyWith<$Res> {
-  __$$CreateTaskReqImplCopyWithImpl(
-      _$CreateTaskReqImpl _value, $Res Function(_$CreateTaskReqImpl) _then)
-      : super(_value, _then);
+class _$CreateTaskReqCopyWithImpl<$Res>
+    implements $CreateTaskReqCopyWith<$Res> {
+  _$CreateTaskReqCopyWithImpl(this._self, this._then);
+
+  final CreateTaskReq _self;
+  final $Res Function(CreateTaskReq) _then;
 
   /// Create a copy of CreateTaskReq
   /// with the given fields replaced by the non-null parameter values.
@@ -140,29 +95,29 @@ class __$$CreateTaskReqImplCopyWithImpl<$Res>
     Object? dueDate = null,
     Object? subtasks = null,
   }) {
-    return _then(_$CreateTaskReqImpl(
+    return _then(_self.copyWith(
       title: null == title
-          ? _value.title
+          ? _self.title
           : title // ignore: cast_nullable_to_non_nullable
               as String,
       description: null == description
-          ? _value.description
+          ? _self.description
           : description // ignore: cast_nullable_to_non_nullable
               as String,
       category: null == category
-          ? _value.category
+          ? _self.category
           : category // ignore: cast_nullable_to_non_nullable
               as String,
       priority: null == priority
-          ? _value.priority
+          ? _self.priority
           : priority // ignore: cast_nullable_to_non_nullable
               as String,
       dueDate: null == dueDate
-          ? _value.dueDate
+          ? _self.dueDate
           : dueDate // ignore: cast_nullable_to_non_nullable
               as DateTime,
       subtasks: null == subtasks
-          ? _value._subtasks
+          ? _self.subtasks
           : subtasks // ignore: cast_nullable_to_non_nullable
               as List<SubtaskReq>,
     ));
@@ -171,8 +126,8 @@ class __$$CreateTaskReqImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$CreateTaskReqImpl implements _CreateTaskReq {
-  const _$CreateTaskReqImpl(
+class _CreateTaskReq implements CreateTaskReq {
+  const _CreateTaskReq(
       {required this.title,
       required this.description,
       required this.category,
@@ -180,9 +135,8 @@ class _$CreateTaskReqImpl implements _CreateTaskReq {
       required this.dueDate,
       required final List<SubtaskReq> subtasks})
       : _subtasks = subtasks;
-
-  factory _$CreateTaskReqImpl.fromJson(Map<String, dynamic> json) =>
-      _$$CreateTaskReqImplFromJson(json);
+  factory _CreateTaskReq.fromJson(Map<String, dynamic> json) =>
+      _$CreateTaskReqFromJson(json);
 
   @override
   final String title;
@@ -202,16 +156,26 @@ class _$CreateTaskReqImpl implements _CreateTaskReq {
     return EqualUnmodifiableListView(_subtasks);
   }
 
+  /// Create a copy of CreateTaskReq
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  String toString() {
-    return 'CreateTaskReq(title: $title, description: $description, category: $category, priority: $priority, dueDate: $dueDate, subtasks: $subtasks)';
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$CreateTaskReqCopyWith<_CreateTaskReq> get copyWith =>
+      __$CreateTaskReqCopyWithImpl<_CreateTaskReq>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$CreateTaskReqToJson(
+      this,
+    );
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$CreateTaskReqImpl &&
+            other is _CreateTaskReq &&
             (identical(other.title, title) || other.title == title) &&
             (identical(other.description, description) ||
                 other.description == description) &&
@@ -228,51 +192,76 @@ class _$CreateTaskReqImpl implements _CreateTaskReq {
   int get hashCode => Object.hash(runtimeType, title, description, category,
       priority, dueDate, const DeepCollectionEquality().hash(_subtasks));
 
-  /// Create a copy of CreateTaskReq
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  @pragma('vm:prefer-inline')
-  _$$CreateTaskReqImplCopyWith<_$CreateTaskReqImpl> get copyWith =>
-      __$$CreateTaskReqImplCopyWithImpl<_$CreateTaskReqImpl>(this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$CreateTaskReqImplToJson(
-      this,
-    );
+  String toString() {
+    return 'CreateTaskReq(title: $title, description: $description, category: $category, priority: $priority, dueDate: $dueDate, subtasks: $subtasks)';
   }
 }
 
-abstract class _CreateTaskReq implements CreateTaskReq {
-  const factory _CreateTaskReq(
-      {required final String title,
-      required final String description,
-      required final String category,
-      required final String priority,
-      required final DateTime dueDate,
-      required final List<SubtaskReq> subtasks}) = _$CreateTaskReqImpl;
+/// @nodoc
+abstract mixin class _$CreateTaskReqCopyWith<$Res>
+    implements $CreateTaskReqCopyWith<$Res> {
+  factory _$CreateTaskReqCopyWith(
+          _CreateTaskReq value, $Res Function(_CreateTaskReq) _then) =
+      __$CreateTaskReqCopyWithImpl;
+  @override
+  @useResult
+  $Res call(
+      {String title,
+      String description,
+      String category,
+      String priority,
+      DateTime dueDate,
+      List<SubtaskReq> subtasks});
+}
 
-  factory _CreateTaskReq.fromJson(Map<String, dynamic> json) =
-      _$CreateTaskReqImpl.fromJson;
+/// @nodoc
+class __$CreateTaskReqCopyWithImpl<$Res>
+    implements _$CreateTaskReqCopyWith<$Res> {
+  __$CreateTaskReqCopyWithImpl(this._self, this._then);
 
-  @override
-  String get title;
-  @override
-  String get description;
-  @override
-  String get category;
-  @override
-  String get priority;
-  @override
-  DateTime get dueDate;
-  @override
-  List<SubtaskReq> get subtasks;
+  final _CreateTaskReq _self;
+  final $Res Function(_CreateTaskReq) _then;
 
   /// Create a copy of CreateTaskReq
   /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$CreateTaskReqImplCopyWith<_$CreateTaskReqImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+  @pragma('vm:prefer-inline')
+  $Res call({
+    Object? title = null,
+    Object? description = null,
+    Object? category = null,
+    Object? priority = null,
+    Object? dueDate = null,
+    Object? subtasks = null,
+  }) {
+    return _then(_CreateTaskReq(
+      title: null == title
+          ? _self.title
+          : title // ignore: cast_nullable_to_non_nullable
+              as String,
+      description: null == description
+          ? _self.description
+          : description // ignore: cast_nullable_to_non_nullable
+              as String,
+      category: null == category
+          ? _self.category
+          : category // ignore: cast_nullable_to_non_nullable
+              as String,
+      priority: null == priority
+          ? _self.priority
+          : priority // ignore: cast_nullable_to_non_nullable
+              as String,
+      dueDate: null == dueDate
+          ? _self.dueDate
+          : dueDate // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+      subtasks: null == subtasks
+          ? _self._subtasks
+          : subtasks // ignore: cast_nullable_to_non_nullable
+              as List<SubtaskReq>,
+    ));
+  }
 }
+
+// dart format on

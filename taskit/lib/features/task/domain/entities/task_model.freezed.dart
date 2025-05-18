@@ -1,3 +1,4 @@
+// dart format width=80
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
@@ -9,37 +10,79 @@ part of 'task_model.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// dart format off
 T _$identity<T>(T value) => value;
-
-final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
 mixin _$TaskEntity {
-  String get id => throw _privateConstructorUsedError;
-  String get title => throw _privateConstructorUsedError;
-  String get description => throw _privateConstructorUsedError;
-  String get category => throw _privateConstructorUsedError;
-  String get priority => throw _privateConstructorUsedError;
-  UserData get userId => throw _privateConstructorUsedError;
-  String get status => throw _privateConstructorUsedError;
-  DateTime get dueDate => throw _privateConstructorUsedError;
-  List<SubtaskData> get subtasks => throw _privateConstructorUsedError;
-  DateTime get createdAt => throw _privateConstructorUsedError;
-  DateTime get updatedAt => throw _privateConstructorUsedError;
+  String get id;
+  String get title;
+  String get description;
+  String get category;
+  String get priority;
+  UserData get userId;
+  String get status;
+  DateTime get dueDate;
+  List<SubtaskData> get subtasks;
+  DateTime get createdAt;
+  DateTime get updatedAt;
 
   /// Create a copy of TaskEntity
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
   $TaskEntityCopyWith<TaskEntity> get copyWith =>
-      throw _privateConstructorUsedError;
+      _$TaskEntityCopyWithImpl<TaskEntity>(this as TaskEntity, _$identity);
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is TaskEntity &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.title, title) || other.title == title) &&
+            (identical(other.description, description) ||
+                other.description == description) &&
+            (identical(other.category, category) ||
+                other.category == category) &&
+            (identical(other.priority, priority) ||
+                other.priority == priority) &&
+            (identical(other.userId, userId) || other.userId == userId) &&
+            (identical(other.status, status) || other.status == status) &&
+            (identical(other.dueDate, dueDate) || other.dueDate == dueDate) &&
+            const DeepCollectionEquality().equals(other.subtasks, subtasks) &&
+            (identical(other.createdAt, createdAt) ||
+                other.createdAt == createdAt) &&
+            (identical(other.updatedAt, updatedAt) ||
+                other.updatedAt == updatedAt));
+  }
+
+  @override
+  int get hashCode => Object.hash(
+      runtimeType,
+      id,
+      title,
+      description,
+      category,
+      priority,
+      userId,
+      status,
+      dueDate,
+      const DeepCollectionEquality().hash(subtasks),
+      createdAt,
+      updatedAt);
+
+  @override
+  String toString() {
+    return 'TaskEntity(id: $id, title: $title, description: $description, category: $category, priority: $priority, userId: $userId, status: $status, dueDate: $dueDate, subtasks: $subtasks, createdAt: $createdAt, updatedAt: $updatedAt)';
+  }
 }
 
 /// @nodoc
-abstract class $TaskEntityCopyWith<$Res> {
+abstract mixin class $TaskEntityCopyWith<$Res> {
   factory $TaskEntityCopyWith(
-          TaskEntity value, $Res Function(TaskEntity) then) =
-      _$TaskEntityCopyWithImpl<$Res, TaskEntity>;
+          TaskEntity value, $Res Function(TaskEntity) _then) =
+      _$TaskEntityCopyWithImpl;
   @useResult
   $Res call(
       {String id,
@@ -58,14 +101,11 @@ abstract class $TaskEntityCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$TaskEntityCopyWithImpl<$Res, $Val extends TaskEntity>
-    implements $TaskEntityCopyWith<$Res> {
-  _$TaskEntityCopyWithImpl(this._value, this._then);
+class _$TaskEntityCopyWithImpl<$Res> implements $TaskEntityCopyWith<$Res> {
+  _$TaskEntityCopyWithImpl(this._self, this._then);
 
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
+  final TaskEntity _self;
+  final $Res Function(TaskEntity) _then;
 
   /// Create a copy of TaskEntity
   /// with the given fields replaced by the non-null parameter values.
@@ -84,52 +124,52 @@ class _$TaskEntityCopyWithImpl<$Res, $Val extends TaskEntity>
     Object? createdAt = null,
     Object? updatedAt = null,
   }) {
-    return _then(_value.copyWith(
+    return _then(_self.copyWith(
       id: null == id
-          ? _value.id
+          ? _self.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
       title: null == title
-          ? _value.title
+          ? _self.title
           : title // ignore: cast_nullable_to_non_nullable
               as String,
       description: null == description
-          ? _value.description
+          ? _self.description
           : description // ignore: cast_nullable_to_non_nullable
               as String,
       category: null == category
-          ? _value.category
+          ? _self.category
           : category // ignore: cast_nullable_to_non_nullable
               as String,
       priority: null == priority
-          ? _value.priority
+          ? _self.priority
           : priority // ignore: cast_nullable_to_non_nullable
               as String,
       userId: null == userId
-          ? _value.userId
+          ? _self.userId
           : userId // ignore: cast_nullable_to_non_nullable
               as UserData,
       status: null == status
-          ? _value.status
+          ? _self.status
           : status // ignore: cast_nullable_to_non_nullable
               as String,
       dueDate: null == dueDate
-          ? _value.dueDate
+          ? _self.dueDate
           : dueDate // ignore: cast_nullable_to_non_nullable
               as DateTime,
       subtasks: null == subtasks
-          ? _value.subtasks
+          ? _self.subtasks
           : subtasks // ignore: cast_nullable_to_non_nullable
               as List<SubtaskData>,
       createdAt: null == createdAt
-          ? _value.createdAt
+          ? _self.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
               as DateTime,
       updatedAt: null == updatedAt
-          ? _value.updatedAt
+          ? _self.updatedAt
           : updatedAt // ignore: cast_nullable_to_non_nullable
               as DateTime,
-    ) as $Val);
+    ));
   }
 
   /// Create a copy of TaskEntity
@@ -137,115 +177,16 @@ class _$TaskEntityCopyWithImpl<$Res, $Val extends TaskEntity>
   @override
   @pragma('vm:prefer-inline')
   $UserDataCopyWith<$Res> get userId {
-    return $UserDataCopyWith<$Res>(_value.userId, (value) {
-      return _then(_value.copyWith(userId: value) as $Val);
+    return $UserDataCopyWith<$Res>(_self.userId, (value) {
+      return _then(_self.copyWith(userId: value));
     });
   }
 }
 
 /// @nodoc
-abstract class _$$TaskEntityImplCopyWith<$Res>
-    implements $TaskEntityCopyWith<$Res> {
-  factory _$$TaskEntityImplCopyWith(
-          _$TaskEntityImpl value, $Res Function(_$TaskEntityImpl) then) =
-      __$$TaskEntityImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call(
-      {String id,
-      String title,
-      String description,
-      String category,
-      String priority,
-      UserData userId,
-      String status,
-      DateTime dueDate,
-      List<SubtaskData> subtasks,
-      DateTime createdAt,
-      DateTime updatedAt});
 
-  @override
-  $UserDataCopyWith<$Res> get userId;
-}
-
-/// @nodoc
-class __$$TaskEntityImplCopyWithImpl<$Res>
-    extends _$TaskEntityCopyWithImpl<$Res, _$TaskEntityImpl>
-    implements _$$TaskEntityImplCopyWith<$Res> {
-  __$$TaskEntityImplCopyWithImpl(
-      _$TaskEntityImpl _value, $Res Function(_$TaskEntityImpl) _then)
-      : super(_value, _then);
-
-  /// Create a copy of TaskEntity
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? id = null,
-    Object? title = null,
-    Object? description = null,
-    Object? category = null,
-    Object? priority = null,
-    Object? userId = null,
-    Object? status = null,
-    Object? dueDate = null,
-    Object? subtasks = null,
-    Object? createdAt = null,
-    Object? updatedAt = null,
-  }) {
-    return _then(_$TaskEntityImpl(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      title: null == title
-          ? _value.title
-          : title // ignore: cast_nullable_to_non_nullable
-              as String,
-      description: null == description
-          ? _value.description
-          : description // ignore: cast_nullable_to_non_nullable
-              as String,
-      category: null == category
-          ? _value.category
-          : category // ignore: cast_nullable_to_non_nullable
-              as String,
-      priority: null == priority
-          ? _value.priority
-          : priority // ignore: cast_nullable_to_non_nullable
-              as String,
-      userId: null == userId
-          ? _value.userId
-          : userId // ignore: cast_nullable_to_non_nullable
-              as UserData,
-      status: null == status
-          ? _value.status
-          : status // ignore: cast_nullable_to_non_nullable
-              as String,
-      dueDate: null == dueDate
-          ? _value.dueDate
-          : dueDate // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      subtasks: null == subtasks
-          ? _value._subtasks
-          : subtasks // ignore: cast_nullable_to_non_nullable
-              as List<SubtaskData>,
-      createdAt: null == createdAt
-          ? _value.createdAt
-          : createdAt // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      updatedAt: null == updatedAt
-          ? _value.updatedAt
-          : updatedAt // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-    ));
-  }
-}
-
-/// @nodoc
-
-class _$TaskEntityImpl implements _TaskEntity {
-  const _$TaskEntityImpl(
+class _TaskEntity implements TaskEntity {
+  const _TaskEntity(
       {required this.id,
       required this.title,
       required this.description,
@@ -288,16 +229,19 @@ class _$TaskEntityImpl implements _TaskEntity {
   @override
   final DateTime updatedAt;
 
+  /// Create a copy of TaskEntity
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  String toString() {
-    return 'TaskEntity(id: $id, title: $title, description: $description, category: $category, priority: $priority, userId: $userId, status: $status, dueDate: $dueDate, subtasks: $subtasks, createdAt: $createdAt, updatedAt: $updatedAt)';
-  }
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$TaskEntityCopyWith<_TaskEntity> get copyWith =>
+      __$TaskEntityCopyWithImpl<_TaskEntity>(this, _$identity);
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$TaskEntityImpl &&
+            other is _TaskEntity &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.title, title) || other.title == title) &&
             (identical(other.description, description) ||
@@ -331,124 +275,166 @@ class _$TaskEntityImpl implements _TaskEntity {
       createdAt,
       updatedAt);
 
-  /// Create a copy of TaskEntity
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  @pragma('vm:prefer-inline')
-  _$$TaskEntityImplCopyWith<_$TaskEntityImpl> get copyWith =>
-      __$$TaskEntityImplCopyWithImpl<_$TaskEntityImpl>(this, _$identity);
-}
-
-abstract class _TaskEntity implements TaskEntity {
-  const factory _TaskEntity(
-      {required final String id,
-      required final String title,
-      required final String description,
-      required final String category,
-      required final String priority,
-      required final UserData userId,
-      required final String status,
-      required final DateTime dueDate,
-      required final List<SubtaskData> subtasks,
-      required final DateTime createdAt,
-      required final DateTime updatedAt}) = _$TaskEntityImpl;
-
-  @override
-  String get id;
-  @override
-  String get title;
-  @override
-  String get description;
-  @override
-  String get category;
-  @override
-  String get priority;
-  @override
-  UserData get userId;
-  @override
-  String get status;
-  @override
-  DateTime get dueDate;
-  @override
-  List<SubtaskData> get subtasks;
-  @override
-  DateTime get createdAt;
-  @override
-  DateTime get updatedAt;
-
-  /// Create a copy of TaskEntity
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$TaskEntityImplCopyWith<_$TaskEntityImpl> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-mixin _$LstTaskEntity {
-  List<TaskEntity> get tasks => throw _privateConstructorUsedError;
-
-  /// Create a copy of LstTaskEntity
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  $LstTaskEntityCopyWith<LstTaskEntity> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $LstTaskEntityCopyWith<$Res> {
-  factory $LstTaskEntityCopyWith(
-          LstTaskEntity value, $Res Function(LstTaskEntity) then) =
-      _$LstTaskEntityCopyWithImpl<$Res, LstTaskEntity>;
-  @useResult
-  $Res call({List<TaskEntity> tasks});
-}
-
-/// @nodoc
-class _$LstTaskEntityCopyWithImpl<$Res, $Val extends LstTaskEntity>
-    implements $LstTaskEntityCopyWith<$Res> {
-  _$LstTaskEntityCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  /// Create a copy of LstTaskEntity
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? tasks = null,
-  }) {
-    return _then(_value.copyWith(
-      tasks: null == tasks
-          ? _value.tasks
-          : tasks // ignore: cast_nullable_to_non_nullable
-              as List<TaskEntity>,
-    ) as $Val);
+  String toString() {
+    return 'TaskEntity(id: $id, title: $title, description: $description, category: $category, priority: $priority, userId: $userId, status: $status, dueDate: $dueDate, subtasks: $subtasks, createdAt: $createdAt, updatedAt: $updatedAt)';
   }
 }
 
 /// @nodoc
-abstract class _$$LstTaskEntityImplCopyWith<$Res>
-    implements $LstTaskEntityCopyWith<$Res> {
-  factory _$$LstTaskEntityImplCopyWith(
-          _$LstTaskEntityImpl value, $Res Function(_$LstTaskEntityImpl) then) =
-      __$$LstTaskEntityImplCopyWithImpl<$Res>;
+abstract mixin class _$TaskEntityCopyWith<$Res>
+    implements $TaskEntityCopyWith<$Res> {
+  factory _$TaskEntityCopyWith(
+          _TaskEntity value, $Res Function(_TaskEntity) _then) =
+      __$TaskEntityCopyWithImpl;
   @override
+  @useResult
+  $Res call(
+      {String id,
+      String title,
+      String description,
+      String category,
+      String priority,
+      UserData userId,
+      String status,
+      DateTime dueDate,
+      List<SubtaskData> subtasks,
+      DateTime createdAt,
+      DateTime updatedAt});
+
+  @override
+  $UserDataCopyWith<$Res> get userId;
+}
+
+/// @nodoc
+class __$TaskEntityCopyWithImpl<$Res> implements _$TaskEntityCopyWith<$Res> {
+  __$TaskEntityCopyWithImpl(this._self, this._then);
+
+  final _TaskEntity _self;
+  final $Res Function(_TaskEntity) _then;
+
+  /// Create a copy of TaskEntity
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $Res call({
+    Object? id = null,
+    Object? title = null,
+    Object? description = null,
+    Object? category = null,
+    Object? priority = null,
+    Object? userId = null,
+    Object? status = null,
+    Object? dueDate = null,
+    Object? subtasks = null,
+    Object? createdAt = null,
+    Object? updatedAt = null,
+  }) {
+    return _then(_TaskEntity(
+      id: null == id
+          ? _self.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      title: null == title
+          ? _self.title
+          : title // ignore: cast_nullable_to_non_nullable
+              as String,
+      description: null == description
+          ? _self.description
+          : description // ignore: cast_nullable_to_non_nullable
+              as String,
+      category: null == category
+          ? _self.category
+          : category // ignore: cast_nullable_to_non_nullable
+              as String,
+      priority: null == priority
+          ? _self.priority
+          : priority // ignore: cast_nullable_to_non_nullable
+              as String,
+      userId: null == userId
+          ? _self.userId
+          : userId // ignore: cast_nullable_to_non_nullable
+              as UserData,
+      status: null == status
+          ? _self.status
+          : status // ignore: cast_nullable_to_non_nullable
+              as String,
+      dueDate: null == dueDate
+          ? _self.dueDate
+          : dueDate // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+      subtasks: null == subtasks
+          ? _self._subtasks
+          : subtasks // ignore: cast_nullable_to_non_nullable
+              as List<SubtaskData>,
+      createdAt: null == createdAt
+          ? _self.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+      updatedAt: null == updatedAt
+          ? _self.updatedAt
+          : updatedAt // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+    ));
+  }
+
+  /// Create a copy of TaskEntity
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $UserDataCopyWith<$Res> get userId {
+    return $UserDataCopyWith<$Res>(_self.userId, (value) {
+      return _then(_self.copyWith(userId: value));
+    });
+  }
+}
+
+/// @nodoc
+mixin _$LstTaskEntity {
+  List<TaskEntity> get tasks;
+
+  /// Create a copy of LstTaskEntity
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  $LstTaskEntityCopyWith<LstTaskEntity> get copyWith =>
+      _$LstTaskEntityCopyWithImpl<LstTaskEntity>(
+          this as LstTaskEntity, _$identity);
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is LstTaskEntity &&
+            const DeepCollectionEquality().equals(other.tasks, tasks));
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(tasks));
+
+  @override
+  String toString() {
+    return 'LstTaskEntity(tasks: $tasks)';
+  }
+}
+
+/// @nodoc
+abstract mixin class $LstTaskEntityCopyWith<$Res> {
+  factory $LstTaskEntityCopyWith(
+          LstTaskEntity value, $Res Function(LstTaskEntity) _then) =
+      _$LstTaskEntityCopyWithImpl;
   @useResult
   $Res call({List<TaskEntity> tasks});
 }
 
 /// @nodoc
-class __$$LstTaskEntityImplCopyWithImpl<$Res>
-    extends _$LstTaskEntityCopyWithImpl<$Res, _$LstTaskEntityImpl>
-    implements _$$LstTaskEntityImplCopyWith<$Res> {
-  __$$LstTaskEntityImplCopyWithImpl(
-      _$LstTaskEntityImpl _value, $Res Function(_$LstTaskEntityImpl) _then)
-      : super(_value, _then);
+class _$LstTaskEntityCopyWithImpl<$Res>
+    implements $LstTaskEntityCopyWith<$Res> {
+  _$LstTaskEntityCopyWithImpl(this._self, this._then);
+
+  final LstTaskEntity _self;
+  final $Res Function(LstTaskEntity) _then;
 
   /// Create a copy of LstTaskEntity
   /// with the given fields replaced by the non-null parameter values.
@@ -457,9 +443,9 @@ class __$$LstTaskEntityImplCopyWithImpl<$Res>
   $Res call({
     Object? tasks = null,
   }) {
-    return _then(_$LstTaskEntityImpl(
+    return _then(_self.copyWith(
       tasks: null == tasks
-          ? _value._tasks
+          ? _self.tasks
           : tasks // ignore: cast_nullable_to_non_nullable
               as List<TaskEntity>,
     ));
@@ -468,8 +454,8 @@ class __$$LstTaskEntityImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$LstTaskEntityImpl implements _LstTaskEntity {
-  const _$LstTaskEntityImpl({required final List<TaskEntity> tasks})
+class _LstTaskEntity implements LstTaskEntity {
+  const _LstTaskEntity({required final List<TaskEntity> tasks})
       : _tasks = tasks;
 
   final List<TaskEntity> _tasks;
@@ -480,16 +466,19 @@ class _$LstTaskEntityImpl implements _LstTaskEntity {
     return EqualUnmodifiableListView(_tasks);
   }
 
+  /// Create a copy of LstTaskEntity
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  String toString() {
-    return 'LstTaskEntity(tasks: $tasks)';
-  }
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$LstTaskEntityCopyWith<_LstTaskEntity> get copyWith =>
+      __$LstTaskEntityCopyWithImpl<_LstTaskEntity>(this, _$identity);
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$LstTaskEntityImpl &&
+            other is _LstTaskEntity &&
             const DeepCollectionEquality().equals(other._tasks, _tasks));
   }
 
@@ -497,26 +486,45 @@ class _$LstTaskEntityImpl implements _LstTaskEntity {
   int get hashCode =>
       Object.hash(runtimeType, const DeepCollectionEquality().hash(_tasks));
 
+  @override
+  String toString() {
+    return 'LstTaskEntity(tasks: $tasks)';
+  }
+}
+
+/// @nodoc
+abstract mixin class _$LstTaskEntityCopyWith<$Res>
+    implements $LstTaskEntityCopyWith<$Res> {
+  factory _$LstTaskEntityCopyWith(
+          _LstTaskEntity value, $Res Function(_LstTaskEntity) _then) =
+      __$LstTaskEntityCopyWithImpl;
+  @override
+  @useResult
+  $Res call({List<TaskEntity> tasks});
+}
+
+/// @nodoc
+class __$LstTaskEntityCopyWithImpl<$Res>
+    implements _$LstTaskEntityCopyWith<$Res> {
+  __$LstTaskEntityCopyWithImpl(this._self, this._then);
+
+  final _LstTaskEntity _self;
+  final $Res Function(_LstTaskEntity) _then;
+
   /// Create a copy of LstTaskEntity
   /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$LstTaskEntityImplCopyWith<_$LstTaskEntityImpl> get copyWith =>
-      __$$LstTaskEntityImplCopyWithImpl<_$LstTaskEntityImpl>(this, _$identity);
+  $Res call({
+    Object? tasks = null,
+  }) {
+    return _then(_LstTaskEntity(
+      tasks: null == tasks
+          ? _self._tasks
+          : tasks // ignore: cast_nullable_to_non_nullable
+              as List<TaskEntity>,
+    ));
+  }
 }
 
-abstract class _LstTaskEntity implements LstTaskEntity {
-  const factory _LstTaskEntity({required final List<TaskEntity> tasks}) =
-      _$LstTaskEntityImpl;
-
-  @override
-  List<TaskEntity> get tasks;
-
-  /// Create a copy of LstTaskEntity
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$LstTaskEntityImplCopyWith<_$LstTaskEntityImpl> get copyWith =>
-      throw _privateConstructorUsedError;
-}
+// dart format on

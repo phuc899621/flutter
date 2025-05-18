@@ -1,16 +1,8 @@
 import 'package:dio/dio.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:taskit/features/auth/data/dto/req/login/login_request.dart';
 import 'package:taskit/features/auth/data/dto/res/login/login_data.dart';
-import 'package:taskit/features/auth/data/dto/res/setting/setting_data.dart';
-import 'package:taskit/features/auth/data/dto/res/user/user_data.dart';
-import 'package:taskit/features/auth/data/model/setting.dart';
-import 'package:taskit/features/auth/data/model/user.dart';
 import 'package:taskit/features/auth/data/repo/iauth_repo.dart';
-import 'package:taskit/features/auth/data/source/local/auth_local.dart';
-import 'package:taskit/features/auth/domain/mapper/iauth_mapper.dart';
-import 'package:taskit/features/task/data/model/category.dart';
 import 'package:taskit/shared/application/itoken_service.dart';
 import 'package:taskit/shared/application/token_service.dart';
 import 'package:taskit/shared/data/dto/response/base_response.dart';
@@ -30,15 +22,16 @@ import '../source/remote/auth_api.dart';
 final authRepoProvider = Provider<IAuthRepo>((ref) {
   final authApi = ref.watch(authApiProvider);
   final iTokenService = ref.watch(tokenServiceProvider);
-  final authLocalDataSource = ref.watch(authLocalDataSourceProvider);
-  return AuthRepo(authApi, iTokenService, authLocalDataSource);
+  return AuthRepo(
+    authApi,
+    iTokenService,
+  );
 });
 
-class AuthRepo with DioExceptionMapper implements IAuthRepo, IAuthModelMapper {
+class AuthRepo with DioExceptionMapper implements IAuthRepo {
   final AuthApi _authApi;
   final ITokenService _iTokenService;
-  final AuthLocalDataSource _authLocalDataSource;
-  AuthRepo(this._authApi, this._iTokenService, this._authLocalDataSource);
+  AuthRepo(this._authApi, this._iTokenService);
 
   /*
   *
@@ -48,19 +41,6 @@ class AuthRepo with DioExceptionMapper implements IAuthRepo, IAuthModelMapper {
   Future<BaseResponse<LoginData>> login(LoginRequest data) async {
     try {
       final response = await _authApi.login(data);
-      debugPrint(response.toString());
-
-      final userModel = mapToUserModel(response.data.user);
-      final settingModel = mapToSettingModel(response.data.settings);
-      final categoryModels =
-          mapToCategoryModels(response.data.settings.categories);
-
-      await _iTokenService.saveToken(response.data.token);
-      await _authLocalDataSource.cacheLoginData(
-        userModel,
-        settingModel,
-        categoryModels,
-      );
       return response;
     } on DioException catch (e, s) {
       throw mapDioExceptionToFailure(e, s);
@@ -204,26 +184,4 @@ class AuthRepo with DioExceptionMapper implements IAuthRepo, IAuthModelMapper {
   /*
   * Mapper
   * */
-  @override
-  UserModel mapToUserModel(UserData data) {
-    return UserModel(
-        id: data.id, name: data.name, email: data.email, avatar: data.avatar);
-  }
-
-  @override
-  List<CategoryModel> mapToCategoryModels(List<String> data) {
-    return data.map((e) => CategoryModel(name: e)).toList();
-  }
-
-  @override
-  SettingModel mapToSettingModel(SettingData data) {
-    return SettingModel(
-      userId: data.userId,
-      id: data.id,
-      isNotificationEnable: data.isNotificationEnabled,
-      language: data.language,
-      theme: data.theme,
-      remindBefore: data.remindBefore,
-    );
-  }
 }

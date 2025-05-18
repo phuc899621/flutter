@@ -6,14 +6,14 @@ part of 'verify.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$ForgotPassVerifyDataImpl _$$ForgotPassVerifyDataImplFromJson(
+_ForgotPassVerifyData _$ForgotPassVerifyDataFromJson(
         Map<String, dynamic> json) =>
-    _$ForgotPassVerifyDataImpl(
+    _ForgotPassVerifyData(
       resetToken: json['resetToken'] as String,
     );
 
-Map<String, dynamic> _$$ForgotPassVerifyDataImplToJson(
-        _$ForgotPassVerifyDataImpl instance) =>
+Map<String, dynamic> _$ForgotPassVerifyDataToJson(
+        _ForgotPassVerifyData instance) =>
     <String, dynamic>{
       'resetToken': instance.resetToken,
     };

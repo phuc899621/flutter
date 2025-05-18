@@ -6,8 +6,7 @@ part of 'setting_data.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$SettingDataImpl _$$SettingDataImplFromJson(Map<String, dynamic> json) =>
-    _$SettingDataImpl(
+_SettingData _$SettingDataFromJson(Map<String, dynamic> json) => _SettingData(
       id: json['_id'] as String,
       userId: json['userId'] as String,
       isNotificationEnabled: json['isNotificationEnabled'] as bool,
@@ -19,7 +18,7 @@ _$SettingDataImpl _$$SettingDataImplFromJson(Map<String, dynamic> json) =>
           .toList(),
     );
 
-Map<String, dynamic> _$$SettingDataImplToJson(_$SettingDataImpl instance) =>
+Map<String, dynamic> _$SettingDataToJson(_SettingData instance) =>
     <String, dynamic>{
       '_id': instance.id,
       'userId': instance.userId,

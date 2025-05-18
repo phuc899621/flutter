@@ -1,3 +1,4 @@
+// dart format width=80
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
@@ -9,93 +10,52 @@ part of 'user_data.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// dart format off
 T _$identity<T>(T value) => value;
-
-final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
-
-UserData _$UserDataFromJson(Map<String, dynamic> json) {
-  return _UserData.fromJson(json);
-}
 
 /// @nodoc
 mixin _$UserData {
   @JsonKey(name: '_id')
-  String get id => throw _privateConstructorUsedError;
-  String get name => throw _privateConstructorUsedError;
-  String get email => throw _privateConstructorUsedError;
-  String get avatar => throw _privateConstructorUsedError;
-
-  /// Serializes this UserData to a JSON map.
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  String get id;
+  String get name;
+  String get email;
+  String get avatar;
 
   /// Create a copy of UserData
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  $UserDataCopyWith<UserData> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $UserDataCopyWith<$Res> {
-  factory $UserDataCopyWith(UserData value, $Res Function(UserData) then) =
-      _$UserDataCopyWithImpl<$Res, UserData>;
-  @useResult
-  $Res call(
-      {@JsonKey(name: '_id') String id,
-      String name,
-      String email,
-      String avatar});
-}
-
-/// @nodoc
-class _$UserDataCopyWithImpl<$Res, $Val extends UserData>
-    implements $UserDataCopyWith<$Res> {
-  _$UserDataCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  /// Create a copy of UserData
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
+  $UserDataCopyWith<UserData> get copyWith =>
+      _$UserDataCopyWithImpl<UserData>(this as UserData, _$identity);
+
+  /// Serializes this UserData to a JSON map.
+  Map<String, dynamic> toJson();
+
   @override
-  $Res call({
-    Object? id = null,
-    Object? name = null,
-    Object? email = null,
-    Object? avatar = null,
-  }) {
-    return _then(_value.copyWith(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      name: null == name
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
-              as String,
-      email: null == email
-          ? _value.email
-          : email // ignore: cast_nullable_to_non_nullable
-              as String,
-      avatar: null == avatar
-          ? _value.avatar
-          : avatar // ignore: cast_nullable_to_non_nullable
-              as String,
-    ) as $Val);
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is UserData &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.name, name) || other.name == name) &&
+            (identical(other.email, email) || other.email == email) &&
+            (identical(other.avatar, avatar) || other.avatar == avatar));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hash(runtimeType, id, name, email, avatar);
+
+  @override
+  String toString() {
+    return 'UserData(id: $id, name: $name, email: $email, avatar: $avatar)';
   }
 }
 
 /// @nodoc
-abstract class _$$UserDataImplCopyWith<$Res>
-    implements $UserDataCopyWith<$Res> {
-  factory _$$UserDataImplCopyWith(
-          _$UserDataImpl value, $Res Function(_$UserDataImpl) then) =
-      __$$UserDataImplCopyWithImpl<$Res>;
-  @override
+abstract mixin class $UserDataCopyWith<$Res> {
+  factory $UserDataCopyWith(UserData value, $Res Function(UserData) _then) =
+      _$UserDataCopyWithImpl;
   @useResult
   $Res call(
       {@JsonKey(name: '_id') String id,
@@ -105,12 +65,11 @@ abstract class _$$UserDataImplCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$UserDataImplCopyWithImpl<$Res>
-    extends _$UserDataCopyWithImpl<$Res, _$UserDataImpl>
-    implements _$$UserDataImplCopyWith<$Res> {
-  __$$UserDataImplCopyWithImpl(
-      _$UserDataImpl _value, $Res Function(_$UserDataImpl) _then)
-      : super(_value, _then);
+class _$UserDataCopyWithImpl<$Res> implements $UserDataCopyWith<$Res> {
+  _$UserDataCopyWithImpl(this._self, this._then);
+
+  final UserData _self;
+  final $Res Function(UserData) _then;
 
   /// Create a copy of UserData
   /// with the given fields replaced by the non-null parameter values.
@@ -122,21 +81,21 @@ class __$$UserDataImplCopyWithImpl<$Res>
     Object? email = null,
     Object? avatar = null,
   }) {
-    return _then(_$UserDataImpl(
+    return _then(_self.copyWith(
       id: null == id
-          ? _value.id
+          ? _self.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
       name: null == name
-          ? _value.name
+          ? _self.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
       email: null == email
-          ? _value.email
+          ? _self.email
           : email // ignore: cast_nullable_to_non_nullable
               as String,
       avatar: null == avatar
-          ? _value.avatar
+          ? _self.avatar
           : avatar // ignore: cast_nullable_to_non_nullable
               as String,
     ));
@@ -145,15 +104,14 @@ class __$$UserDataImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$UserDataImpl implements _UserData {
-  const _$UserDataImpl(
+class _UserData implements UserData {
+  const _UserData(
       {@JsonKey(name: '_id') required this.id,
       required this.name,
       required this.email,
       required this.avatar});
-
-  factory _$UserDataImpl.fromJson(Map<String, dynamic> json) =>
-      _$$UserDataImplFromJson(json);
+  factory _UserData.fromJson(Map<String, dynamic> json) =>
+      _$UserDataFromJson(json);
 
   @override
   @JsonKey(name: '_id')
@@ -165,16 +123,26 @@ class _$UserDataImpl implements _UserData {
   @override
   final String avatar;
 
+  /// Create a copy of UserData
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  String toString() {
-    return 'UserData(id: $id, name: $name, email: $email, avatar: $avatar)';
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$UserDataCopyWith<_UserData> get copyWith =>
+      __$UserDataCopyWithImpl<_UserData>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$UserDataToJson(
+      this,
+    );
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$UserDataImpl &&
+            other is _UserData &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.email, email) || other.email == email) &&
@@ -185,46 +153,62 @@ class _$UserDataImpl implements _UserData {
   @override
   int get hashCode => Object.hash(runtimeType, id, name, email, avatar);
 
-  /// Create a copy of UserData
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  @pragma('vm:prefer-inline')
-  _$$UserDataImplCopyWith<_$UserDataImpl> get copyWith =>
-      __$$UserDataImplCopyWithImpl<_$UserDataImpl>(this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$UserDataImplToJson(
-      this,
-    );
+  String toString() {
+    return 'UserData(id: $id, name: $name, email: $email, avatar: $avatar)';
   }
 }
 
-abstract class _UserData implements UserData {
-  const factory _UserData(
-      {@JsonKey(name: '_id') required final String id,
-      required final String name,
-      required final String email,
-      required final String avatar}) = _$UserDataImpl;
+/// @nodoc
+abstract mixin class _$UserDataCopyWith<$Res>
+    implements $UserDataCopyWith<$Res> {
+  factory _$UserDataCopyWith(_UserData value, $Res Function(_UserData) _then) =
+      __$UserDataCopyWithImpl;
+  @override
+  @useResult
+  $Res call(
+      {@JsonKey(name: '_id') String id,
+      String name,
+      String email,
+      String avatar});
+}
 
-  factory _UserData.fromJson(Map<String, dynamic> json) =
-      _$UserDataImpl.fromJson;
+/// @nodoc
+class __$UserDataCopyWithImpl<$Res> implements _$UserDataCopyWith<$Res> {
+  __$UserDataCopyWithImpl(this._self, this._then);
 
-  @override
-  @JsonKey(name: '_id')
-  String get id;
-  @override
-  String get name;
-  @override
-  String get email;
-  @override
-  String get avatar;
+  final _UserData _self;
+  final $Res Function(_UserData) _then;
 
   /// Create a copy of UserData
   /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$UserDataImplCopyWith<_$UserDataImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+  @pragma('vm:prefer-inline')
+  $Res call({
+    Object? id = null,
+    Object? name = null,
+    Object? email = null,
+    Object? avatar = null,
+  }) {
+    return _then(_UserData(
+      id: null == id
+          ? _self.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      name: null == name
+          ? _self.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
+      email: null == email
+          ? _self.email
+          : email // ignore: cast_nullable_to_non_nullable
+              as String,
+      avatar: null == avatar
+          ? _self.avatar
+          : avatar // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
 }
+
+// dart format on

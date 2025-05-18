@@ -6,8 +6,7 @@ part of 'task_data.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$TaskDataImpl _$$TaskDataImplFromJson(Map<String, dynamic> json) =>
-    _$TaskDataImpl(
+_TaskData _$TaskDataFromJson(Map<String, dynamic> json) => _TaskData(
       id: json['_id'] as String,
       title: json['title'] as String,
       description: json['description'] as String,
@@ -23,8 +22,7 @@ _$TaskDataImpl _$$TaskDataImplFromJson(Map<String, dynamic> json) =>
       updatedAt: DateTime.parse(json['updatedAt'] as String),
     );
 
-Map<String, dynamic> _$$TaskDataImplToJson(_$TaskDataImpl instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$TaskDataToJson(_TaskData instance) => <String, dynamic>{
       '_id': instance.id,
       'title': instance.title,
       'description': instance.description,
@@ -38,28 +36,26 @@ Map<String, dynamic> _$$TaskDataImplToJson(_$TaskDataImpl instance) =>
       'updatedAt': instance.updatedAt.toIso8601String(),
     };
 
-_$SubtaskDataImpl _$$SubtaskDataImplFromJson(Map<String, dynamic> json) =>
-    _$SubtaskDataImpl(
+_SubtaskData _$SubtaskDataFromJson(Map<String, dynamic> json) => _SubtaskData(
       id: json['_id'] as String,
       title: json['title'] as String,
       isCompleted: json['isCompleted'] as bool,
     );
 
-Map<String, dynamic> _$$SubtaskDataImplToJson(_$SubtaskDataImpl instance) =>
+Map<String, dynamic> _$SubtaskDataToJson(_SubtaskData instance) =>
     <String, dynamic>{
       '_id': instance.id,
       'title': instance.title,
       'isCompleted': instance.isCompleted,
     };
 
-_$TaskDataLstImpl _$$TaskDataLstImplFromJson(Map<String, dynamic> json) =>
-    _$TaskDataLstImpl(
+_TaskDataLst _$TaskDataLstFromJson(Map<String, dynamic> json) => _TaskDataLst(
       tasks: (json['tasks'] as List<dynamic>)
           .map((e) => TaskData.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
 
-Map<String, dynamic> _$$TaskDataLstImplToJson(_$TaskDataLstImpl instance) =>
+Map<String, dynamic> _$TaskDataLstToJson(_TaskDataLst instance) =>
     <String, dynamic>{
       'tasks': instance.tasks,
     };

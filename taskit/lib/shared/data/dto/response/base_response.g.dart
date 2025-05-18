@@ -6,17 +6,17 @@ part of 'base_response.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$BaseResponseImpl<T> _$$BaseResponseImplFromJson<T>(
+_BaseResponse<T> _$BaseResponseFromJson<T>(
   Map<String, dynamic> json,
   T Function(Object? json) fromJsonT,
 ) =>
-    _$BaseResponseImpl<T>(
+    _BaseResponse<T>(
       message: json['message'] as String,
       data: fromJsonT(json['data']),
     );
 
-Map<String, dynamic> _$$BaseResponseImplToJson<T>(
-  _$BaseResponseImpl<T> instance,
+Map<String, dynamic> _$BaseResponseToJson<T>(
+  _BaseResponse<T> instance,
   Object? Function(T value) toJsonT,
 ) =>
     <String, dynamic>{
@@ -24,11 +24,10 @@ Map<String, dynamic> _$$BaseResponseImplToJson<T>(
       'data': toJsonT(instance.data),
     };
 
-_$DataImpl _$$DataImplFromJson(Map<String, dynamic> json) => _$DataImpl(
+_Data _$DataFromJson(Map<String, dynamic> json) => _Data(
       email: json['email'] as String,
     );
 
-Map<String, dynamic> _$$DataImplToJson(_$DataImpl instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$DataToJson(_Data instance) => <String, dynamic>{
       'email': instance.email,
     };

@@ -1,3 +1,4 @@
+// dart format width=80
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
@@ -9,75 +10,53 @@ part of 'splash_state.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// dart format off
 T _$identity<T>(T value) => value;
-
-final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
 mixin _$SplashState {
-  bool? get isLoginExpired => throw _privateConstructorUsedError;
+  bool? get isLoginExpired;
 
   /// Create a copy of SplashState
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  $SplashStateCopyWith<SplashState> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $SplashStateCopyWith<$Res> {
-  factory $SplashStateCopyWith(
-          SplashState value, $Res Function(SplashState) then) =
-      _$SplashStateCopyWithImpl<$Res, SplashState>;
-  @useResult
-  $Res call({bool? isLoginExpired});
-}
-
-/// @nodoc
-class _$SplashStateCopyWithImpl<$Res, $Val extends SplashState>
-    implements $SplashStateCopyWith<$Res> {
-  _$SplashStateCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  /// Create a copy of SplashState
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
+  $SplashStateCopyWith<SplashState> get copyWith =>
+      _$SplashStateCopyWithImpl<SplashState>(this as SplashState, _$identity);
+
   @override
-  $Res call({
-    Object? isLoginExpired = freezed,
-  }) {
-    return _then(_value.copyWith(
-      isLoginExpired: freezed == isLoginExpired
-          ? _value.isLoginExpired
-          : isLoginExpired // ignore: cast_nullable_to_non_nullable
-              as bool?,
-    ) as $Val);
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is SplashState &&
+            (identical(other.isLoginExpired, isLoginExpired) ||
+                other.isLoginExpired == isLoginExpired));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, isLoginExpired);
+
+  @override
+  String toString() {
+    return 'SplashState(isLoginExpired: $isLoginExpired)';
   }
 }
 
 /// @nodoc
-abstract class _$$SplashStateImplCopyWith<$Res>
-    implements $SplashStateCopyWith<$Res> {
-  factory _$$SplashStateImplCopyWith(
-          _$SplashStateImpl value, $Res Function(_$SplashStateImpl) then) =
-      __$$SplashStateImplCopyWithImpl<$Res>;
-  @override
+abstract mixin class $SplashStateCopyWith<$Res> {
+  factory $SplashStateCopyWith(
+          SplashState value, $Res Function(SplashState) _then) =
+      _$SplashStateCopyWithImpl;
   @useResult
   $Res call({bool? isLoginExpired});
 }
 
 /// @nodoc
-class __$$SplashStateImplCopyWithImpl<$Res>
-    extends _$SplashStateCopyWithImpl<$Res, _$SplashStateImpl>
-    implements _$$SplashStateImplCopyWith<$Res> {
-  __$$SplashStateImplCopyWithImpl(
-      _$SplashStateImpl _value, $Res Function(_$SplashStateImpl) _then)
-      : super(_value, _then);
+class _$SplashStateCopyWithImpl<$Res> implements $SplashStateCopyWith<$Res> {
+  _$SplashStateCopyWithImpl(this._self, this._then);
+
+  final SplashState _self;
+  final $Res Function(SplashState) _then;
 
   /// Create a copy of SplashState
   /// with the given fields replaced by the non-null parameter values.
@@ -86,9 +65,9 @@ class __$$SplashStateImplCopyWithImpl<$Res>
   $Res call({
     Object? isLoginExpired = freezed,
   }) {
-    return _then(_$SplashStateImpl(
+    return _then(_self.copyWith(
       isLoginExpired: freezed == isLoginExpired
-          ? _value.isLoginExpired
+          ? _self.isLoginExpired
           : isLoginExpired // ignore: cast_nullable_to_non_nullable
               as bool?,
     ));
@@ -97,22 +76,25 @@ class __$$SplashStateImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$SplashStateImpl implements _SplashState {
-  const _$SplashStateImpl({this.isLoginExpired});
+class _SplashState implements SplashState {
+  const _SplashState({this.isLoginExpired});
 
   @override
   final bool? isLoginExpired;
 
+  /// Create a copy of SplashState
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  String toString() {
-    return 'SplashState(isLoginExpired: $isLoginExpired)';
-  }
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$SplashStateCopyWith<_SplashState> get copyWith =>
+      __$SplashStateCopyWithImpl<_SplashState>(this, _$identity);
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$SplashStateImpl &&
+            other is _SplashState &&
             (identical(other.isLoginExpired, isLoginExpired) ||
                 other.isLoginExpired == isLoginExpired));
   }
@@ -120,25 +102,44 @@ class _$SplashStateImpl implements _SplashState {
   @override
   int get hashCode => Object.hash(runtimeType, isLoginExpired);
 
+  @override
+  String toString() {
+    return 'SplashState(isLoginExpired: $isLoginExpired)';
+  }
+}
+
+/// @nodoc
+abstract mixin class _$SplashStateCopyWith<$Res>
+    implements $SplashStateCopyWith<$Res> {
+  factory _$SplashStateCopyWith(
+          _SplashState value, $Res Function(_SplashState) _then) =
+      __$SplashStateCopyWithImpl;
+  @override
+  @useResult
+  $Res call({bool? isLoginExpired});
+}
+
+/// @nodoc
+class __$SplashStateCopyWithImpl<$Res> implements _$SplashStateCopyWith<$Res> {
+  __$SplashStateCopyWithImpl(this._self, this._then);
+
+  final _SplashState _self;
+  final $Res Function(_SplashState) _then;
+
   /// Create a copy of SplashState
   /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$SplashStateImplCopyWith<_$SplashStateImpl> get copyWith =>
-      __$$SplashStateImplCopyWithImpl<_$SplashStateImpl>(this, _$identity);
+  $Res call({
+    Object? isLoginExpired = freezed,
+  }) {
+    return _then(_SplashState(
+      isLoginExpired: freezed == isLoginExpired
+          ? _self.isLoginExpired
+          : isLoginExpired // ignore: cast_nullable_to_non_nullable
+              as bool?,
+    ));
+  }
 }
 
-abstract class _SplashState implements SplashState {
-  const factory _SplashState({final bool? isLoginExpired}) = _$SplashStateImpl;
-
-  @override
-  bool? get isLoginExpired;
-
-  /// Create a copy of SplashState
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$SplashStateImplCopyWith<_$SplashStateImpl> get copyWith =>
-      throw _privateConstructorUsedError;
-}
+// dart format on

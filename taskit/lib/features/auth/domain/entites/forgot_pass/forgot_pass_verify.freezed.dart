@@ -1,3 +1,4 @@
+// dart format width=80
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
@@ -9,79 +10,55 @@ part of 'forgot_pass_verify.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// dart format off
 T _$identity<T>(T value) => value;
-
-final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
 mixin _$ForgotPassVerifyEntity {
-  String get resetToken => throw _privateConstructorUsedError;
+  String get resetToken;
 
   /// Create a copy of ForgotPassVerifyEntity
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  $ForgotPassVerifyEntityCopyWith<ForgotPassVerifyEntity> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $ForgotPassVerifyEntityCopyWith<$Res> {
-  factory $ForgotPassVerifyEntityCopyWith(ForgotPassVerifyEntity value,
-          $Res Function(ForgotPassVerifyEntity) then) =
-      _$ForgotPassVerifyEntityCopyWithImpl<$Res, ForgotPassVerifyEntity>;
-  @useResult
-  $Res call({String resetToken});
-}
-
-/// @nodoc
-class _$ForgotPassVerifyEntityCopyWithImpl<$Res,
-        $Val extends ForgotPassVerifyEntity>
-    implements $ForgotPassVerifyEntityCopyWith<$Res> {
-  _$ForgotPassVerifyEntityCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  /// Create a copy of ForgotPassVerifyEntity
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
+  $ForgotPassVerifyEntityCopyWith<ForgotPassVerifyEntity> get copyWith =>
+      _$ForgotPassVerifyEntityCopyWithImpl<ForgotPassVerifyEntity>(
+          this as ForgotPassVerifyEntity, _$identity);
+
   @override
-  $Res call({
-    Object? resetToken = null,
-  }) {
-    return _then(_value.copyWith(
-      resetToken: null == resetToken
-          ? _value.resetToken
-          : resetToken // ignore: cast_nullable_to_non_nullable
-              as String,
-    ) as $Val);
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is ForgotPassVerifyEntity &&
+            (identical(other.resetToken, resetToken) ||
+                other.resetToken == resetToken));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, resetToken);
+
+  @override
+  String toString() {
+    return 'ForgotPassVerifyEntity(resetToken: $resetToken)';
   }
 }
 
 /// @nodoc
-abstract class _$$ForgotPassVerifyEntityImplCopyWith<$Res>
-    implements $ForgotPassVerifyEntityCopyWith<$Res> {
-  factory _$$ForgotPassVerifyEntityImplCopyWith(
-          _$ForgotPassVerifyEntityImpl value,
-          $Res Function(_$ForgotPassVerifyEntityImpl) then) =
-      __$$ForgotPassVerifyEntityImplCopyWithImpl<$Res>;
-  @override
+abstract mixin class $ForgotPassVerifyEntityCopyWith<$Res> {
+  factory $ForgotPassVerifyEntityCopyWith(ForgotPassVerifyEntity value,
+          $Res Function(ForgotPassVerifyEntity) _then) =
+      _$ForgotPassVerifyEntityCopyWithImpl;
   @useResult
   $Res call({String resetToken});
 }
 
 /// @nodoc
-class __$$ForgotPassVerifyEntityImplCopyWithImpl<$Res>
-    extends _$ForgotPassVerifyEntityCopyWithImpl<$Res,
-        _$ForgotPassVerifyEntityImpl>
-    implements _$$ForgotPassVerifyEntityImplCopyWith<$Res> {
-  __$$ForgotPassVerifyEntityImplCopyWithImpl(
-      _$ForgotPassVerifyEntityImpl _value,
-      $Res Function(_$ForgotPassVerifyEntityImpl) _then)
-      : super(_value, _then);
+class _$ForgotPassVerifyEntityCopyWithImpl<$Res>
+    implements $ForgotPassVerifyEntityCopyWith<$Res> {
+  _$ForgotPassVerifyEntityCopyWithImpl(this._self, this._then);
+
+  final ForgotPassVerifyEntity _self;
+  final $Res Function(ForgotPassVerifyEntity) _then;
 
   /// Create a copy of ForgotPassVerifyEntity
   /// with the given fields replaced by the non-null parameter values.
@@ -90,9 +67,9 @@ class __$$ForgotPassVerifyEntityImplCopyWithImpl<$Res>
   $Res call({
     Object? resetToken = null,
   }) {
-    return _then(_$ForgotPassVerifyEntityImpl(
+    return _then(_self.copyWith(
       resetToken: null == resetToken
-          ? _value.resetToken
+          ? _self.resetToken
           : resetToken // ignore: cast_nullable_to_non_nullable
               as String,
     ));
@@ -101,22 +78,26 @@ class __$$ForgotPassVerifyEntityImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$ForgotPassVerifyEntityImpl implements _ForgotPassVerifyEntity {
-  const _$ForgotPassVerifyEntityImpl({required this.resetToken});
+class _ForgotPassVerifyEntity implements ForgotPassVerifyEntity {
+  const _ForgotPassVerifyEntity({required this.resetToken});
 
   @override
   final String resetToken;
 
+  /// Create a copy of ForgotPassVerifyEntity
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  String toString() {
-    return 'ForgotPassVerifyEntity(resetToken: $resetToken)';
-  }
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$ForgotPassVerifyEntityCopyWith<_ForgotPassVerifyEntity> get copyWith =>
+      __$ForgotPassVerifyEntityCopyWithImpl<_ForgotPassVerifyEntity>(
+          this, _$identity);
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$ForgotPassVerifyEntityImpl &&
+            other is _ForgotPassVerifyEntity &&
             (identical(other.resetToken, resetToken) ||
                 other.resetToken == resetToken));
   }
@@ -124,27 +105,45 @@ class _$ForgotPassVerifyEntityImpl implements _ForgotPassVerifyEntity {
   @override
   int get hashCode => Object.hash(runtimeType, resetToken);
 
+  @override
+  String toString() {
+    return 'ForgotPassVerifyEntity(resetToken: $resetToken)';
+  }
+}
+
+/// @nodoc
+abstract mixin class _$ForgotPassVerifyEntityCopyWith<$Res>
+    implements $ForgotPassVerifyEntityCopyWith<$Res> {
+  factory _$ForgotPassVerifyEntityCopyWith(_ForgotPassVerifyEntity value,
+          $Res Function(_ForgotPassVerifyEntity) _then) =
+      __$ForgotPassVerifyEntityCopyWithImpl;
+  @override
+  @useResult
+  $Res call({String resetToken});
+}
+
+/// @nodoc
+class __$ForgotPassVerifyEntityCopyWithImpl<$Res>
+    implements _$ForgotPassVerifyEntityCopyWith<$Res> {
+  __$ForgotPassVerifyEntityCopyWithImpl(this._self, this._then);
+
+  final _ForgotPassVerifyEntity _self;
+  final $Res Function(_ForgotPassVerifyEntity) _then;
+
   /// Create a copy of ForgotPassVerifyEntity
   /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$ForgotPassVerifyEntityImplCopyWith<_$ForgotPassVerifyEntityImpl>
-      get copyWith => __$$ForgotPassVerifyEntityImplCopyWithImpl<
-          _$ForgotPassVerifyEntityImpl>(this, _$identity);
+  $Res call({
+    Object? resetToken = null,
+  }) {
+    return _then(_ForgotPassVerifyEntity(
+      resetToken: null == resetToken
+          ? _self.resetToken
+          : resetToken // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
 }
 
-abstract class _ForgotPassVerifyEntity implements ForgotPassVerifyEntity {
-  const factory _ForgotPassVerifyEntity({required final String resetToken}) =
-      _$ForgotPassVerifyEntityImpl;
-
-  @override
-  String get resetToken;
-
-  /// Create a copy of ForgotPassVerifyEntity
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$ForgotPassVerifyEntityImplCopyWith<_$ForgotPassVerifyEntityImpl>
-      get copyWith => throw _privateConstructorUsedError;
-}
+// dart format on

@@ -1,3 +1,4 @@
+// dart format width=80
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
@@ -9,120 +10,32 @@ part of 'verify.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// dart format off
 T _$identity<T>(T value) => value;
-
-final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
-
 ForgotPassData _$ForgotPassDataFromJson(Map<String, dynamic> json) {
   return _ForgotPassVerifyData.fromJson(json);
 }
 
 /// @nodoc
 mixin _$ForgotPassData {
-  String get resetToken => throw _privateConstructorUsedError;
-
-  /// Serializes this ForgotPassData to a JSON map.
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  String get resetToken;
 
   /// Create a copy of ForgotPassData
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
   $ForgotPassDataCopyWith<ForgotPassData> get copyWith =>
-      throw _privateConstructorUsedError;
-}
+      _$ForgotPassDataCopyWithImpl<ForgotPassData>(
+          this as ForgotPassData, _$identity);
 
-/// @nodoc
-abstract class $ForgotPassDataCopyWith<$Res> {
-  factory $ForgotPassDataCopyWith(
-          ForgotPassData value, $Res Function(ForgotPassData) then) =
-      _$ForgotPassDataCopyWithImpl<$Res, ForgotPassData>;
-  @useResult
-  $Res call({String resetToken});
-}
-
-/// @nodoc
-class _$ForgotPassDataCopyWithImpl<$Res, $Val extends ForgotPassData>
-    implements $ForgotPassDataCopyWith<$Res> {
-  _$ForgotPassDataCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  /// Create a copy of ForgotPassData
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? resetToken = null,
-  }) {
-    return _then(_value.copyWith(
-      resetToken: null == resetToken
-          ? _value.resetToken
-          : resetToken // ignore: cast_nullable_to_non_nullable
-              as String,
-    ) as $Val);
-  }
-}
-
-/// @nodoc
-abstract class _$$ForgotPassVerifyDataImplCopyWith<$Res>
-    implements $ForgotPassDataCopyWith<$Res> {
-  factory _$$ForgotPassVerifyDataImplCopyWith(_$ForgotPassVerifyDataImpl value,
-          $Res Function(_$ForgotPassVerifyDataImpl) then) =
-      __$$ForgotPassVerifyDataImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call({String resetToken});
-}
-
-/// @nodoc
-class __$$ForgotPassVerifyDataImplCopyWithImpl<$Res>
-    extends _$ForgotPassDataCopyWithImpl<$Res, _$ForgotPassVerifyDataImpl>
-    implements _$$ForgotPassVerifyDataImplCopyWith<$Res> {
-  __$$ForgotPassVerifyDataImplCopyWithImpl(_$ForgotPassVerifyDataImpl _value,
-      $Res Function(_$ForgotPassVerifyDataImpl) _then)
-      : super(_value, _then);
-
-  /// Create a copy of ForgotPassData
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? resetToken = null,
-  }) {
-    return _then(_$ForgotPassVerifyDataImpl(
-      resetToken: null == resetToken
-          ? _value.resetToken
-          : resetToken // ignore: cast_nullable_to_non_nullable
-              as String,
-    ));
-  }
-}
-
-/// @nodoc
-@JsonSerializable()
-class _$ForgotPassVerifyDataImpl implements _ForgotPassVerifyData {
-  const _$ForgotPassVerifyDataImpl({required this.resetToken});
-
-  factory _$ForgotPassVerifyDataImpl.fromJson(Map<String, dynamic> json) =>
-      _$$ForgotPassVerifyDataImplFromJson(json);
-
-  @override
-  final String resetToken;
-
-  @override
-  String toString() {
-    return 'ForgotPassData(resetToken: $resetToken)';
-  }
+  /// Serializes this ForgotPassData to a JSON map.
+  Map<String, dynamic> toJson();
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$ForgotPassVerifyDataImpl &&
+            other is ForgotPassData &&
             (identical(other.resetToken, resetToken) ||
                 other.resetToken == resetToken));
   }
@@ -131,38 +44,123 @@ class _$ForgotPassVerifyDataImpl implements _ForgotPassVerifyData {
   @override
   int get hashCode => Object.hash(runtimeType, resetToken);
 
-  /// Create a copy of ForgotPassData
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  @pragma('vm:prefer-inline')
-  _$$ForgotPassVerifyDataImplCopyWith<_$ForgotPassVerifyDataImpl>
-      get copyWith =>
-          __$$ForgotPassVerifyDataImplCopyWithImpl<_$ForgotPassVerifyDataImpl>(
-              this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$ForgotPassVerifyDataImplToJson(
-      this,
-    );
+  String toString() {
+    return 'ForgotPassData(resetToken: $resetToken)';
   }
 }
 
-abstract class _ForgotPassVerifyData implements ForgotPassData {
-  const factory _ForgotPassVerifyData({required final String resetToken}) =
-      _$ForgotPassVerifyDataImpl;
+/// @nodoc
+abstract mixin class $ForgotPassDataCopyWith<$Res> {
+  factory $ForgotPassDataCopyWith(
+          ForgotPassData value, $Res Function(ForgotPassData) _then) =
+      _$ForgotPassDataCopyWithImpl;
+  @useResult
+  $Res call({String resetToken});
+}
 
-  factory _ForgotPassVerifyData.fromJson(Map<String, dynamic> json) =
-      _$ForgotPassVerifyDataImpl.fromJson;
+/// @nodoc
+class _$ForgotPassDataCopyWithImpl<$Res>
+    implements $ForgotPassDataCopyWith<$Res> {
+  _$ForgotPassDataCopyWithImpl(this._self, this._then);
+
+  final ForgotPassData _self;
+  final $Res Function(ForgotPassData) _then;
+
+  /// Create a copy of ForgotPassData
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? resetToken = null,
+  }) {
+    return _then(_self.copyWith(
+      resetToken: null == resetToken
+          ? _self.resetToken
+          : resetToken // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _ForgotPassVerifyData implements ForgotPassData {
+  const _ForgotPassVerifyData({required this.resetToken});
+  factory _ForgotPassVerifyData.fromJson(Map<String, dynamic> json) =>
+      _$ForgotPassVerifyDataFromJson(json);
 
   @override
-  String get resetToken;
+  final String resetToken;
 
   /// Create a copy of ForgotPassData
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$ForgotPassVerifyDataImplCopyWith<_$ForgotPassVerifyDataImpl>
-      get copyWith => throw _privateConstructorUsedError;
+  @pragma('vm:prefer-inline')
+  _$ForgotPassVerifyDataCopyWith<_ForgotPassVerifyData> get copyWith =>
+      __$ForgotPassVerifyDataCopyWithImpl<_ForgotPassVerifyData>(
+          this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$ForgotPassVerifyDataToJson(
+      this,
+    );
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _ForgotPassVerifyData &&
+            (identical(other.resetToken, resetToken) ||
+                other.resetToken == resetToken));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hash(runtimeType, resetToken);
+
+  @override
+  String toString() {
+    return 'ForgotPassData(resetToken: $resetToken)';
+  }
 }
+
+/// @nodoc
+abstract mixin class _$ForgotPassVerifyDataCopyWith<$Res>
+    implements $ForgotPassDataCopyWith<$Res> {
+  factory _$ForgotPassVerifyDataCopyWith(_ForgotPassVerifyData value,
+          $Res Function(_ForgotPassVerifyData) _then) =
+      __$ForgotPassVerifyDataCopyWithImpl;
+  @override
+  @useResult
+  $Res call({String resetToken});
+}
+
+/// @nodoc
+class __$ForgotPassVerifyDataCopyWithImpl<$Res>
+    implements _$ForgotPassVerifyDataCopyWith<$Res> {
+  __$ForgotPassVerifyDataCopyWithImpl(this._self, this._then);
+
+  final _ForgotPassVerifyData _self;
+  final $Res Function(_ForgotPassVerifyData) _then;
+
+  /// Create a copy of ForgotPassData
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $Res call({
+    Object? resetToken = null,
+  }) {
+    return _then(_ForgotPassVerifyData(
+      resetToken: null == resetToken
+          ? _self.resetToken
+          : resetToken // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+// dart format on

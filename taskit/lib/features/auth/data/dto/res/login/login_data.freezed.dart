@@ -1,3 +1,4 @@
+// dart format width=80
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
@@ -9,205 +10,31 @@ part of 'login_data.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// dart format off
 T _$identity<T>(T value) => value;
-
-final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
-
-LoginData _$LoginDataFromJson(Map<String, dynamic> json) {
-  return _LoginData.fromJson(json);
-}
 
 /// @nodoc
 mixin _$LoginData {
-  String get token => throw _privateConstructorUsedError;
-  SettingData get settings => throw _privateConstructorUsedError;
-  UserData get user => throw _privateConstructorUsedError;
-  TaskDataLst get tasks => throw _privateConstructorUsedError;
-
-  /// Serializes this LoginData to a JSON map.
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  String get token;
+  SettingData get settings;
+  UserData get user;
+  TaskData get tasks;
 
   /// Create a copy of LoginData
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
   $LoginDataCopyWith<LoginData> get copyWith =>
-      throw _privateConstructorUsedError;
-}
+      _$LoginDataCopyWithImpl<LoginData>(this as LoginData, _$identity);
 
-/// @nodoc
-abstract class $LoginDataCopyWith<$Res> {
-  factory $LoginDataCopyWith(LoginData value, $Res Function(LoginData) then) =
-      _$LoginDataCopyWithImpl<$Res, LoginData>;
-  @useResult
-  $Res call(
-      {String token, SettingData settings, UserData user, TaskDataLst tasks});
-
-  $SettingDataCopyWith<$Res> get settings;
-  $UserDataCopyWith<$Res> get user;
-  $TaskDataLstCopyWith<$Res> get tasks;
-}
-
-/// @nodoc
-class _$LoginDataCopyWithImpl<$Res, $Val extends LoginData>
-    implements $LoginDataCopyWith<$Res> {
-  _$LoginDataCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  /// Create a copy of LoginData
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? token = null,
-    Object? settings = null,
-    Object? user = null,
-    Object? tasks = null,
-  }) {
-    return _then(_value.copyWith(
-      token: null == token
-          ? _value.token
-          : token // ignore: cast_nullable_to_non_nullable
-              as String,
-      settings: null == settings
-          ? _value.settings
-          : settings // ignore: cast_nullable_to_non_nullable
-              as SettingData,
-      user: null == user
-          ? _value.user
-          : user // ignore: cast_nullable_to_non_nullable
-              as UserData,
-      tasks: null == tasks
-          ? _value.tasks
-          : tasks // ignore: cast_nullable_to_non_nullable
-              as TaskDataLst,
-    ) as $Val);
-  }
-
-  /// Create a copy of LoginData
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $SettingDataCopyWith<$Res> get settings {
-    return $SettingDataCopyWith<$Res>(_value.settings, (value) {
-      return _then(_value.copyWith(settings: value) as $Val);
-    });
-  }
-
-  /// Create a copy of LoginData
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $UserDataCopyWith<$Res> get user {
-    return $UserDataCopyWith<$Res>(_value.user, (value) {
-      return _then(_value.copyWith(user: value) as $Val);
-    });
-  }
-
-  /// Create a copy of LoginData
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $TaskDataLstCopyWith<$Res> get tasks {
-    return $TaskDataLstCopyWith<$Res>(_value.tasks, (value) {
-      return _then(_value.copyWith(tasks: value) as $Val);
-    });
-  }
-}
-
-/// @nodoc
-abstract class _$$LoginDataImplCopyWith<$Res>
-    implements $LoginDataCopyWith<$Res> {
-  factory _$$LoginDataImplCopyWith(
-          _$LoginDataImpl value, $Res Function(_$LoginDataImpl) then) =
-      __$$LoginDataImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call(
-      {String token, SettingData settings, UserData user, TaskDataLst tasks});
-
-  @override
-  $SettingDataCopyWith<$Res> get settings;
-  @override
-  $UserDataCopyWith<$Res> get user;
-  @override
-  $TaskDataLstCopyWith<$Res> get tasks;
-}
-
-/// @nodoc
-class __$$LoginDataImplCopyWithImpl<$Res>
-    extends _$LoginDataCopyWithImpl<$Res, _$LoginDataImpl>
-    implements _$$LoginDataImplCopyWith<$Res> {
-  __$$LoginDataImplCopyWithImpl(
-      _$LoginDataImpl _value, $Res Function(_$LoginDataImpl) _then)
-      : super(_value, _then);
-
-  /// Create a copy of LoginData
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? token = null,
-    Object? settings = null,
-    Object? user = null,
-    Object? tasks = null,
-  }) {
-    return _then(_$LoginDataImpl(
-      token: null == token
-          ? _value.token
-          : token // ignore: cast_nullable_to_non_nullable
-              as String,
-      settings: null == settings
-          ? _value.settings
-          : settings // ignore: cast_nullable_to_non_nullable
-              as SettingData,
-      user: null == user
-          ? _value.user
-          : user // ignore: cast_nullable_to_non_nullable
-              as UserData,
-      tasks: null == tasks
-          ? _value.tasks
-          : tasks // ignore: cast_nullable_to_non_nullable
-              as TaskDataLst,
-    ));
-  }
-}
-
-/// @nodoc
-@JsonSerializable()
-class _$LoginDataImpl implements _LoginData {
-  const _$LoginDataImpl(
-      {required this.token,
-      required this.settings,
-      required this.user,
-      required this.tasks});
-
-  factory _$LoginDataImpl.fromJson(Map<String, dynamic> json) =>
-      _$$LoginDataImplFromJson(json);
-
-  @override
-  final String token;
-  @override
-  final SettingData settings;
-  @override
-  final UserData user;
-  @override
-  final TaskDataLst tasks;
-
-  @override
-  String toString() {
-    return 'LoginData(token: $token, settings: $settings, user: $user, tasks: $tasks)';
-  }
+  /// Serializes this LoginData to a JSON map.
+  Map<String, dynamic> toJson();
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$LoginDataImpl &&
+            other is LoginData &&
             (identical(other.token, token) || other.token == token) &&
             (identical(other.settings, settings) ||
                 other.settings == settings) &&
@@ -219,45 +46,235 @@ class _$LoginDataImpl implements _LoginData {
   @override
   int get hashCode => Object.hash(runtimeType, token, settings, user, tasks);
 
-  /// Create a copy of LoginData
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  @pragma('vm:prefer-inline')
-  _$$LoginDataImplCopyWith<_$LoginDataImpl> get copyWith =>
-      __$$LoginDataImplCopyWithImpl<_$LoginDataImpl>(this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$LoginDataImplToJson(
-      this,
-    );
+  String toString() {
+    return 'LoginData(token: $token, settings: $settings, user: $user, tasks: $tasks)';
   }
 }
 
-abstract class _LoginData implements LoginData {
-  const factory _LoginData(
-      {required final String token,
-      required final SettingData settings,
-      required final UserData user,
-      required final TaskDataLst tasks}) = _$LoginDataImpl;
+/// @nodoc
+abstract mixin class $LoginDataCopyWith<$Res> {
+  factory $LoginDataCopyWith(LoginData value, $Res Function(LoginData) _then) =
+      _$LoginDataCopyWithImpl;
+  @useResult
+  $Res call(
+      {String token, SettingData settings, UserData user, TaskData tasks});
 
-  factory _LoginData.fromJson(Map<String, dynamic> json) =
-      _$LoginDataImpl.fromJson;
+  $SettingDataCopyWith<$Res> get settings;
+  $UserDataCopyWith<$Res> get user;
+  $TaskDataCopyWith<$Res> get tasks;
+}
+
+/// @nodoc
+class _$LoginDataCopyWithImpl<$Res> implements $LoginDataCopyWith<$Res> {
+  _$LoginDataCopyWithImpl(this._self, this._then);
+
+  final LoginData _self;
+  final $Res Function(LoginData) _then;
+
+  /// Create a copy of LoginData
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? token = null,
+    Object? settings = null,
+    Object? user = null,
+    Object? tasks = null,
+  }) {
+    return _then(_self.copyWith(
+      token: null == token
+          ? _self.token
+          : token // ignore: cast_nullable_to_non_nullable
+              as String,
+      settings: null == settings
+          ? _self.settings
+          : settings // ignore: cast_nullable_to_non_nullable
+              as SettingData,
+      user: null == user
+          ? _self.user
+          : user // ignore: cast_nullable_to_non_nullable
+              as UserData,
+      tasks: null == tasks
+          ? _self.tasks
+          : tasks // ignore: cast_nullable_to_non_nullable
+              as TaskData,
+    ));
+  }
+
+  /// Create a copy of LoginData
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $SettingDataCopyWith<$Res> get settings {
+    return $SettingDataCopyWith<$Res>(_self.settings, (value) {
+      return _then(_self.copyWith(settings: value));
+    });
+  }
+
+  /// Create a copy of LoginData
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $UserDataCopyWith<$Res> get user {
+    return $UserDataCopyWith<$Res>(_self.user, (value) {
+      return _then(_self.copyWith(user: value));
+    });
+  }
+
+  /// Create a copy of LoginData
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $TaskDataCopyWith<$Res> get tasks {
+    return $TaskDataCopyWith<$Res>(_self.tasks, (value) {
+      return _then(_self.copyWith(tasks: value));
+    });
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _LoginData implements LoginData {
+  const _LoginData(
+      {required this.token,
+      required this.settings,
+      required this.user,
+      required this.tasks});
+  factory _LoginData.fromJson(Map<String, dynamic> json) =>
+      _$LoginDataFromJson(json);
 
   @override
-  String get token;
+  final String token;
   @override
-  SettingData get settings;
+  final SettingData settings;
   @override
-  UserData get user;
+  final UserData user;
   @override
-  TaskDataLst get tasks;
+  final TaskData tasks;
 
   /// Create a copy of LoginData
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$LoginDataImplCopyWith<_$LoginDataImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+  @pragma('vm:prefer-inline')
+  _$LoginDataCopyWith<_LoginData> get copyWith =>
+      __$LoginDataCopyWithImpl<_LoginData>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$LoginDataToJson(
+      this,
+    );
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _LoginData &&
+            (identical(other.token, token) || other.token == token) &&
+            (identical(other.settings, settings) ||
+                other.settings == settings) &&
+            (identical(other.user, user) || other.user == user) &&
+            (identical(other.tasks, tasks) || other.tasks == tasks));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hash(runtimeType, token, settings, user, tasks);
+
+  @override
+  String toString() {
+    return 'LoginData(token: $token, settings: $settings, user: $user, tasks: $tasks)';
+  }
 }
+
+/// @nodoc
+abstract mixin class _$LoginDataCopyWith<$Res>
+    implements $LoginDataCopyWith<$Res> {
+  factory _$LoginDataCopyWith(
+          _LoginData value, $Res Function(_LoginData) _then) =
+      __$LoginDataCopyWithImpl;
+  @override
+  @useResult
+  $Res call(
+      {String token, SettingData settings, UserData user, TaskData tasks});
+
+  @override
+  $SettingDataCopyWith<$Res> get settings;
+  @override
+  $UserDataCopyWith<$Res> get user;
+  @override
+  $TaskDataCopyWith<$Res> get tasks;
+}
+
+/// @nodoc
+class __$LoginDataCopyWithImpl<$Res> implements _$LoginDataCopyWith<$Res> {
+  __$LoginDataCopyWithImpl(this._self, this._then);
+
+  final _LoginData _self;
+  final $Res Function(_LoginData) _then;
+
+  /// Create a copy of LoginData
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $Res call({
+    Object? token = null,
+    Object? settings = null,
+    Object? user = null,
+    Object? tasks = null,
+  }) {
+    return _then(_LoginData(
+      token: null == token
+          ? _self.token
+          : token // ignore: cast_nullable_to_non_nullable
+              as String,
+      settings: null == settings
+          ? _self.settings
+          : settings // ignore: cast_nullable_to_non_nullable
+              as SettingData,
+      user: null == user
+          ? _self.user
+          : user // ignore: cast_nullable_to_non_nullable
+              as UserData,
+      tasks: null == tasks
+          ? _self.tasks
+          : tasks // ignore: cast_nullable_to_non_nullable
+              as TaskData,
+    ));
+  }
+
+  /// Create a copy of LoginData
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $SettingDataCopyWith<$Res> get settings {
+    return $SettingDataCopyWith<$Res>(_self.settings, (value) {
+      return _then(_self.copyWith(settings: value));
+    });
+  }
+
+  /// Create a copy of LoginData
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $UserDataCopyWith<$Res> get user {
+    return $UserDataCopyWith<$Res>(_self.user, (value) {
+      return _then(_self.copyWith(user: value));
+    });
+  }
+
+  /// Create a copy of LoginData
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $TaskDataCopyWith<$Res> get tasks {
+    return $TaskDataCopyWith<$Res>(_self.tasks, (value) {
+      return _then(_self.copyWith(tasks: value));
+    });
+  }
+}
+
+// dart format on

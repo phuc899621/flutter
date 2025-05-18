@@ -1,3 +1,4 @@
+// dart format width=80
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
@@ -9,80 +10,50 @@ part of 'failure.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// dart format off
 T _$identity<T>(T value) => value;
-
-final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
 mixin _$Failure {
-  String get message => throw _privateConstructorUsedError;
-  int? get statusCode => throw _privateConstructorUsedError;
-  Object? get exception => throw _privateConstructorUsedError;
-  StackTrace get stackTrace => throw _privateConstructorUsedError;
+  String get message;
+  int? get statusCode;
+  Object? get exception;
+  StackTrace get stackTrace;
 
   /// Create a copy of Failure
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  $FailureCopyWith<Failure> get copyWith => throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $FailureCopyWith<$Res> {
-  factory $FailureCopyWith(Failure value, $Res Function(Failure) then) =
-      _$FailureCopyWithImpl<$Res, Failure>;
-  @useResult
-  $Res call(
-      {String message,
-      int? statusCode,
-      Object? exception,
-      StackTrace stackTrace});
-}
-
-/// @nodoc
-class _$FailureCopyWithImpl<$Res, $Val extends Failure>
-    implements $FailureCopyWith<$Res> {
-  _$FailureCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  /// Create a copy of Failure
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
+  $FailureCopyWith<Failure> get copyWith =>
+      _$FailureCopyWithImpl<Failure>(this as Failure, _$identity);
+
   @override
-  $Res call({
-    Object? message = null,
-    Object? statusCode = freezed,
-    Object? exception = freezed,
-    Object? stackTrace = null,
-  }) {
-    return _then(_value.copyWith(
-      message: null == message
-          ? _value.message
-          : message // ignore: cast_nullable_to_non_nullable
-              as String,
-      statusCode: freezed == statusCode
-          ? _value.statusCode
-          : statusCode // ignore: cast_nullable_to_non_nullable
-              as int?,
-      exception: freezed == exception ? _value.exception : exception,
-      stackTrace: null == stackTrace
-          ? _value.stackTrace
-          : stackTrace // ignore: cast_nullable_to_non_nullable
-              as StackTrace,
-    ) as $Val);
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is Failure &&
+            (identical(other.message, message) || other.message == message) &&
+            (identical(other.statusCode, statusCode) ||
+                other.statusCode == statusCode) &&
+            const DeepCollectionEquality().equals(other.exception, exception) &&
+            (identical(other.stackTrace, stackTrace) ||
+                other.stackTrace == stackTrace));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, message, statusCode,
+      const DeepCollectionEquality().hash(exception), stackTrace);
+
+  @override
+  String toString() {
+    return 'Failure(message: $message, statusCode: $statusCode, exception: $exception, stackTrace: $stackTrace)';
   }
 }
 
 /// @nodoc
-abstract class _$$FailureImplCopyWith<$Res> implements $FailureCopyWith<$Res> {
-  factory _$$FailureImplCopyWith(
-          _$FailureImpl value, $Res Function(_$FailureImpl) then) =
-      __$$FailureImplCopyWithImpl<$Res>;
-  @override
+abstract mixin class $FailureCopyWith<$Res> {
+  factory $FailureCopyWith(Failure value, $Res Function(Failure) _then) =
+      _$FailureCopyWithImpl;
   @useResult
   $Res call(
       {String message,
@@ -92,12 +63,11 @@ abstract class _$$FailureImplCopyWith<$Res> implements $FailureCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$FailureImplCopyWithImpl<$Res>
-    extends _$FailureCopyWithImpl<$Res, _$FailureImpl>
-    implements _$$FailureImplCopyWith<$Res> {
-  __$$FailureImplCopyWithImpl(
-      _$FailureImpl _value, $Res Function(_$FailureImpl) _then)
-      : super(_value, _then);
+class _$FailureCopyWithImpl<$Res> implements $FailureCopyWith<$Res> {
+  _$FailureCopyWithImpl(this._self, this._then);
+
+  final Failure _self;
+  final $Res Function(Failure) _then;
 
   /// Create a copy of Failure
   /// with the given fields replaced by the non-null parameter values.
@@ -109,18 +79,18 @@ class __$$FailureImplCopyWithImpl<$Res>
     Object? exception = freezed,
     Object? stackTrace = null,
   }) {
-    return _then(_$FailureImpl(
+    return _then(_self.copyWith(
       message: null == message
-          ? _value.message
+          ? _self.message
           : message // ignore: cast_nullable_to_non_nullable
               as String,
       statusCode: freezed == statusCode
-          ? _value.statusCode
+          ? _self.statusCode
           : statusCode // ignore: cast_nullable_to_non_nullable
               as int?,
-      exception: freezed == exception ? _value.exception : exception,
+      exception: freezed == exception ? _self.exception : exception,
       stackTrace: null == stackTrace
-          ? _value.stackTrace
+          ? _self.stackTrace
           : stackTrace // ignore: cast_nullable_to_non_nullable
               as StackTrace,
     ));
@@ -129,8 +99,8 @@ class __$$FailureImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$FailureImpl implements _Failure {
-  const _$FailureImpl(
+class _Failure implements Failure {
+  const _Failure(
       {required this.message,
       this.statusCode,
       this.exception,
@@ -146,16 +116,19 @@ class _$FailureImpl implements _Failure {
   @JsonKey()
   final StackTrace stackTrace;
 
+  /// Create a copy of Failure
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  String toString() {
-    return 'Failure(message: $message, statusCode: $statusCode, exception: $exception, stackTrace: $stackTrace)';
-  }
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$FailureCopyWith<_Failure> get copyWith =>
+      __$FailureCopyWithImpl<_Failure>(this, _$identity);
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$FailureImpl &&
+            other is _Failure &&
             (identical(other.message, message) || other.message == message) &&
             (identical(other.statusCode, statusCode) ||
                 other.statusCode == statusCode) &&
@@ -168,35 +141,58 @@ class _$FailureImpl implements _Failure {
   int get hashCode => Object.hash(runtimeType, message, statusCode,
       const DeepCollectionEquality().hash(exception), stackTrace);
 
+  @override
+  String toString() {
+    return 'Failure(message: $message, statusCode: $statusCode, exception: $exception, stackTrace: $stackTrace)';
+  }
+}
+
+/// @nodoc
+abstract mixin class _$FailureCopyWith<$Res> implements $FailureCopyWith<$Res> {
+  factory _$FailureCopyWith(_Failure value, $Res Function(_Failure) _then) =
+      __$FailureCopyWithImpl;
+  @override
+  @useResult
+  $Res call(
+      {String message,
+      int? statusCode,
+      Object? exception,
+      StackTrace stackTrace});
+}
+
+/// @nodoc
+class __$FailureCopyWithImpl<$Res> implements _$FailureCopyWith<$Res> {
+  __$FailureCopyWithImpl(this._self, this._then);
+
+  final _Failure _self;
+  final $Res Function(_Failure) _then;
+
   /// Create a copy of Failure
   /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$FailureImplCopyWith<_$FailureImpl> get copyWith =>
-      __$$FailureImplCopyWithImpl<_$FailureImpl>(this, _$identity);
+  $Res call({
+    Object? message = null,
+    Object? statusCode = freezed,
+    Object? exception = freezed,
+    Object? stackTrace = null,
+  }) {
+    return _then(_Failure(
+      message: null == message
+          ? _self.message
+          : message // ignore: cast_nullable_to_non_nullable
+              as String,
+      statusCode: freezed == statusCode
+          ? _self.statusCode
+          : statusCode // ignore: cast_nullable_to_non_nullable
+              as int?,
+      exception: freezed == exception ? _self.exception : exception,
+      stackTrace: null == stackTrace
+          ? _self.stackTrace
+          : stackTrace // ignore: cast_nullable_to_non_nullable
+              as StackTrace,
+    ));
+  }
 }
 
-abstract class _Failure implements Failure {
-  const factory _Failure(
-      {required final String message,
-      final int? statusCode,
-      final Object? exception,
-      final StackTrace stackTrace}) = _$FailureImpl;
-
-  @override
-  String get message;
-  @override
-  int? get statusCode;
-  @override
-  Object? get exception;
-  @override
-  StackTrace get stackTrace;
-
-  /// Create a copy of Failure
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$FailureImplCopyWith<_$FailureImpl> get copyWith =>
-      throw _privateConstructorUsedError;
-}
+// dart format on

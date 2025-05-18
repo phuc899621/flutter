@@ -2,6 +2,7 @@ const UserServices=require('../services/user.services');
 const OtpAuthServices=require('../services/otp.auth.services');
 const OtpServices=require('../services/otp.services');
 const TaskServices=require('../services/task.services');
+const CategoryServices=require('../services/category.services');
 const jwt = require("jsonwebtoken");
     exports.signup=async(req,res)=>{
         try{
@@ -57,6 +58,7 @@ const jwt = require("jsonwebtoken");
                     const user=await UserServices.signup(email,name,password);
                     if(user){
                         await OtpAuthServices.deleteOtpByEmail(email);
+                        await CategoryServices.addDefaultCategories(user._id);
                         return res.status(201).json({
                             message:"Verify your account successfully!",
                             data:{}
@@ -134,6 +136,7 @@ const jwt = require("jsonwebtoken");
             );
             const userSetting=await UserServices.findSettingByUserId(user._id);
             const tasks=await TaskServices.findAllTaskByUserId(user._id,{});
+            const categories=await CategoryServices.findAllCategories(user._id);
             return res.status(201).json({
                 message: "Login successful",
                 data:{
@@ -146,6 +149,7 @@ const jwt = require("jsonwebtoken");
                         avatar: user.avatar,
                     },
                     tasks: tasks,
+                    categories: categories,
 
                 },
             });

@@ -1,13 +1,12 @@
+/*
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:taskit/config/app/app_color.dart';
-import 'package:taskit/features/task/domain/entities/task_model.dart';
 
 class TaskitItem extends ConsumerStatefulWidget {
-  final TaskEntity model;
-  final Function(TaskEntity, String) onChanged;
-  const TaskitItem({super.key, required this.model, required this.onChanged});
+  final Function(String) onChanged;
+  const TaskitItem({super.key, required this.onChanged});
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => _TaskitItem();
 }
@@ -177,3 +176,4 @@ class _TaskitItem extends ConsumerState<TaskitItem> {
     );
   }
 }
+*/

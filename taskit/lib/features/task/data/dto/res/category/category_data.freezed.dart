@@ -1,3 +1,4 @@
+// dart format width=80
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
@@ -9,82 +10,59 @@ part of 'category_data.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// dart format off
 T _$identity<T>(T value) => value;
-
-final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
-
-CategoryData _$CategoryDataFromJson(Map<String, dynamic> json) {
-  return _CategoryData.fromJson(json);
-}
 
 /// @nodoc
 mixin _$CategoryData {
-  List<String> get categories => throw _privateConstructorUsedError;
-
-  /// Serializes this CategoryData to a JSON map.
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  List<String> get categories;
 
   /// Create a copy of CategoryData
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  $CategoryDataCopyWith<CategoryData> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $CategoryDataCopyWith<$Res> {
-  factory $CategoryDataCopyWith(
-          CategoryData value, $Res Function(CategoryData) then) =
-      _$CategoryDataCopyWithImpl<$Res, CategoryData>;
-  @useResult
-  $Res call({List<String> categories});
-}
-
-/// @nodoc
-class _$CategoryDataCopyWithImpl<$Res, $Val extends CategoryData>
-    implements $CategoryDataCopyWith<$Res> {
-  _$CategoryDataCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  /// Create a copy of CategoryData
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
+  $CategoryDataCopyWith<CategoryData> get copyWith =>
+      _$CategoryDataCopyWithImpl<CategoryData>(
+          this as CategoryData, _$identity);
+
+  /// Serializes this CategoryData to a JSON map.
+  Map<String, dynamic> toJson();
+
   @override
-  $Res call({
-    Object? categories = null,
-  }) {
-    return _then(_value.copyWith(
-      categories: null == categories
-          ? _value.categories
-          : categories // ignore: cast_nullable_to_non_nullable
-              as List<String>,
-    ) as $Val);
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is CategoryData &&
+            const DeepCollectionEquality()
+                .equals(other.categories, categories));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(categories));
+
+  @override
+  String toString() {
+    return 'CategoryData(categories: $categories)';
   }
 }
 
 /// @nodoc
-abstract class _$$CategoryDataImplCopyWith<$Res>
-    implements $CategoryDataCopyWith<$Res> {
-  factory _$$CategoryDataImplCopyWith(
-          _$CategoryDataImpl value, $Res Function(_$CategoryDataImpl) then) =
-      __$$CategoryDataImplCopyWithImpl<$Res>;
-  @override
+abstract mixin class $CategoryDataCopyWith<$Res> {
+  factory $CategoryDataCopyWith(
+          CategoryData value, $Res Function(CategoryData) _then) =
+      _$CategoryDataCopyWithImpl;
   @useResult
   $Res call({List<String> categories});
 }
 
 /// @nodoc
-class __$$CategoryDataImplCopyWithImpl<$Res>
-    extends _$CategoryDataCopyWithImpl<$Res, _$CategoryDataImpl>
-    implements _$$CategoryDataImplCopyWith<$Res> {
-  __$$CategoryDataImplCopyWithImpl(
-      _$CategoryDataImpl _value, $Res Function(_$CategoryDataImpl) _then)
-      : super(_value, _then);
+class _$CategoryDataCopyWithImpl<$Res> implements $CategoryDataCopyWith<$Res> {
+  _$CategoryDataCopyWithImpl(this._self, this._then);
+
+  final CategoryData _self;
+  final $Res Function(CategoryData) _then;
 
   /// Create a copy of CategoryData
   /// with the given fields replaced by the non-null parameter values.
@@ -93,9 +71,9 @@ class __$$CategoryDataImplCopyWithImpl<$Res>
   $Res call({
     Object? categories = null,
   }) {
-    return _then(_$CategoryDataImpl(
+    return _then(_self.copyWith(
       categories: null == categories
-          ? _value._categories
+          ? _self.categories
           : categories // ignore: cast_nullable_to_non_nullable
               as List<String>,
     ));
@@ -104,12 +82,11 @@ class __$$CategoryDataImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$CategoryDataImpl implements _CategoryData {
-  const _$CategoryDataImpl({required final List<String> categories})
+class _CategoryData implements CategoryData {
+  const _CategoryData({required final List<String> categories})
       : _categories = categories;
-
-  factory _$CategoryDataImpl.fromJson(Map<String, dynamic> json) =>
-      _$$CategoryDataImplFromJson(json);
+  factory _CategoryData.fromJson(Map<String, dynamic> json) =>
+      _$CategoryDataFromJson(json);
 
   final List<String> _categories;
   @override
@@ -119,16 +96,26 @@ class _$CategoryDataImpl implements _CategoryData {
     return EqualUnmodifiableListView(_categories);
   }
 
+  /// Create a copy of CategoryData
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  String toString() {
-    return 'CategoryData(categories: $categories)';
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$CategoryDataCopyWith<_CategoryData> get copyWith =>
+      __$CategoryDataCopyWithImpl<_CategoryData>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$CategoryDataToJson(
+      this,
+    );
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$CategoryDataImpl &&
+            other is _CategoryData &&
             const DeepCollectionEquality()
                 .equals(other._categories, _categories));
   }
@@ -138,36 +125,45 @@ class _$CategoryDataImpl implements _CategoryData {
   int get hashCode => Object.hash(
       runtimeType, const DeepCollectionEquality().hash(_categories));
 
-  /// Create a copy of CategoryData
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  @pragma('vm:prefer-inline')
-  _$$CategoryDataImplCopyWith<_$CategoryDataImpl> get copyWith =>
-      __$$CategoryDataImplCopyWithImpl<_$CategoryDataImpl>(this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$CategoryDataImplToJson(
-      this,
-    );
+  String toString() {
+    return 'CategoryData(categories: $categories)';
   }
 }
 
-abstract class _CategoryData implements CategoryData {
-  const factory _CategoryData({required final List<String> categories}) =
-      _$CategoryDataImpl;
-
-  factory _CategoryData.fromJson(Map<String, dynamic> json) =
-      _$CategoryDataImpl.fromJson;
-
+/// @nodoc
+abstract mixin class _$CategoryDataCopyWith<$Res>
+    implements $CategoryDataCopyWith<$Res> {
+  factory _$CategoryDataCopyWith(
+          _CategoryData value, $Res Function(_CategoryData) _then) =
+      __$CategoryDataCopyWithImpl;
   @override
-  List<String> get categories;
+  @useResult
+  $Res call({List<String> categories});
+}
+
+/// @nodoc
+class __$CategoryDataCopyWithImpl<$Res>
+    implements _$CategoryDataCopyWith<$Res> {
+  __$CategoryDataCopyWithImpl(this._self, this._then);
+
+  final _CategoryData _self;
+  final $Res Function(_CategoryData) _then;
 
   /// Create a copy of CategoryData
   /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$CategoryDataImplCopyWith<_$CategoryDataImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+  @pragma('vm:prefer-inline')
+  $Res call({
+    Object? categories = null,
+  }) {
+    return _then(_CategoryData(
+      categories: null == categories
+          ? _self._categories
+          : categories // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+    ));
+  }
 }
+
+// dart format on

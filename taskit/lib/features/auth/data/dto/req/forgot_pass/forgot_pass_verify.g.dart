@@ -6,15 +6,15 @@ part of 'forgot_pass_verify.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$ForgotPassVerifyRequestImpl _$$ForgotPassVerifyRequestImplFromJson(
+_ForgotPassVerifyRequest _$ForgotPassVerifyRequestFromJson(
         Map<String, dynamic> json) =>
-    _$ForgotPassVerifyRequestImpl(
+    _ForgotPassVerifyRequest(
       email: json['email'] as String,
       otp: json['otp'] as String,
     );
 
-Map<String, dynamic> _$$ForgotPassVerifyRequestImplToJson(
-        _$ForgotPassVerifyRequestImpl instance) =>
+Map<String, dynamic> _$ForgotPassVerifyRequestToJson(
+        _ForgotPassVerifyRequest instance) =>
     <String, dynamic>{
       'email': instance.email,
       'otp': instance.otp,

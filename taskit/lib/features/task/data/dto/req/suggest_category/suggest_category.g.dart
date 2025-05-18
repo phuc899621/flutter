@@ -6,14 +6,12 @@ part of 'suggest_category.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$SuggestCategoryReqImpl _$$SuggestCategoryReqImplFromJson(
-        Map<String, dynamic> json) =>
-    _$SuggestCategoryReqImpl(
+_SuggestCategoryReq _$SuggestCategoryReqFromJson(Map<String, dynamic> json) =>
+    _SuggestCategoryReq(
       title: json['title'] as String,
     );
 
-Map<String, dynamic> _$$SuggestCategoryReqImplToJson(
-        _$SuggestCategoryReqImpl instance) =>
+Map<String, dynamic> _$SuggestCategoryReqToJson(_SuggestCategoryReq instance) =>
     <String, dynamic>{
       'title': instance.title,
     };
