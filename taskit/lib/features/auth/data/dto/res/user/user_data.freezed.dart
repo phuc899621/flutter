@@ -20,6 +20,7 @@ UserData _$UserDataFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$UserData {
+  @JsonKey(name: '_id')
   String get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   String get email => throw _privateConstructorUsedError;
@@ -40,7 +41,11 @@ abstract class $UserDataCopyWith<$Res> {
   factory $UserDataCopyWith(UserData value, $Res Function(UserData) then) =
       _$UserDataCopyWithImpl<$Res, UserData>;
   @useResult
-  $Res call({String id, String name, String email, String avatar});
+  $Res call(
+      {@JsonKey(name: '_id') String id,
+      String name,
+      String email,
+      String avatar});
 }
 
 /// @nodoc
@@ -92,7 +97,11 @@ abstract class _$$UserDataImplCopyWith<$Res>
       __$$UserDataImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String id, String name, String email, String avatar});
+  $Res call(
+      {@JsonKey(name: '_id') String id,
+      String name,
+      String email,
+      String avatar});
 }
 
 /// @nodoc
@@ -138,7 +147,7 @@ class __$$UserDataImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$UserDataImpl implements _UserData {
   const _$UserDataImpl(
-      {required this.id,
+      {@JsonKey(name: '_id') required this.id,
       required this.name,
       required this.email,
       required this.avatar});
@@ -147,6 +156,7 @@ class _$UserDataImpl implements _UserData {
       _$$UserDataImplFromJson(json);
 
   @override
+  @JsonKey(name: '_id')
   final String id;
   @override
   final String name;
@@ -193,7 +203,7 @@ class _$UserDataImpl implements _UserData {
 
 abstract class _UserData implements UserData {
   const factory _UserData(
-      {required final String id,
+      {@JsonKey(name: '_id') required final String id,
       required final String name,
       required final String email,
       required final String avatar}) = _$UserDataImpl;
@@ -202,6 +212,7 @@ abstract class _UserData implements UserData {
       _$UserDataImpl.fromJson;
 
   @override
+  @JsonKey(name: '_id')
   String get id;
   @override
   String get name;

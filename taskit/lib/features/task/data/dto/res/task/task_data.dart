@@ -1,36 +1,27 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-part 'task_data.g.dart';
+import '../../../../../auth/data/dto/res/user/user_data.dart';
+
 part 'task_data.freezed.dart';
+part 'task_data.g.dart';
 
 @freezed
-abstract class TaskData with _$TaskData{
+abstract class TaskData with _$TaskData {
   const factory TaskData({
     @JsonKey(name: '_id') required String id,
     required String title,
     required String description,
     required String category,
     required String priority,
-    required TaskUserData userId,
+    required UserData userId,
     required String status,
     required DateTime dueDate,
     required List<SubtaskData> subtasks,
     required DateTime createdAt,
     required DateTime updatedAt,
-
-  })=_TaskData;
-  factory TaskData.fromJson(Map<String, dynamic> json) => _$TaskDataFromJson(json);
-
-}
-
-@freezed
-abstract class TaskUserData with _$TaskUserData {
-  const factory TaskUserData({
-    @JsonKey(name: '_id') required String id,
-    required String email,
-    required String name,
-  })=_TaskUserData;
-  factory TaskUserData.fromJson(Map<String, dynamic> json) => _$TaskUserDataFromJson(json);
+  }) = _TaskData;
+  factory TaskData.fromJson(Map<String, dynamic> json) =>
+      _$TaskDataFromJson(json);
 }
 
 @freezed
@@ -39,7 +30,7 @@ abstract class SubtaskData with _$SubtaskData {
     @JsonKey(name: '_id') required String id,
     required String title,
     required bool isCompleted,
-  })=_SubtaskData;
+  }) = _SubtaskData;
 
   factory SubtaskData.fromJson(Map<String, dynamic> json) =>
       _$SubtaskDataFromJson(json);
@@ -49,9 +40,7 @@ abstract class SubtaskData with _$SubtaskData {
 abstract class TaskDataLst with _$TaskDataLst {
   const factory TaskDataLst({
     required List<TaskData> tasks,
-  })=_TaskDataLst;
+  }) = _TaskDataLst;
   factory TaskDataLst.fromJson(Map<String, dynamic> json) =>
       _$TaskDataLstFromJson(json);
-
-
 }

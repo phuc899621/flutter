@@ -21,7 +21,7 @@ mixin _$TaskEntity {
   String get description => throw _privateConstructorUsedError;
   String get category => throw _privateConstructorUsedError;
   String get priority => throw _privateConstructorUsedError;
-  TaskUserData get userId => throw _privateConstructorUsedError;
+  UserData get userId => throw _privateConstructorUsedError;
   String get status => throw _privateConstructorUsedError;
   DateTime get dueDate => throw _privateConstructorUsedError;
   List<SubtaskData> get subtasks => throw _privateConstructorUsedError;
@@ -47,14 +47,14 @@ abstract class $TaskEntityCopyWith<$Res> {
       String description,
       String category,
       String priority,
-      TaskUserData userId,
+      UserData userId,
       String status,
       DateTime dueDate,
       List<SubtaskData> subtasks,
       DateTime createdAt,
       DateTime updatedAt});
 
-  $TaskUserDataCopyWith<$Res> get userId;
+  $UserDataCopyWith<$Res> get userId;
 }
 
 /// @nodoc
@@ -108,7 +108,7 @@ class _$TaskEntityCopyWithImpl<$Res, $Val extends TaskEntity>
       userId: null == userId
           ? _value.userId
           : userId // ignore: cast_nullable_to_non_nullable
-              as TaskUserData,
+              as UserData,
       status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
@@ -136,8 +136,8 @@ class _$TaskEntityCopyWithImpl<$Res, $Val extends TaskEntity>
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $TaskUserDataCopyWith<$Res> get userId {
-    return $TaskUserDataCopyWith<$Res>(_value.userId, (value) {
+  $UserDataCopyWith<$Res> get userId {
+    return $UserDataCopyWith<$Res>(_value.userId, (value) {
       return _then(_value.copyWith(userId: value) as $Val);
     });
   }
@@ -157,7 +157,7 @@ abstract class _$$TaskEntityImplCopyWith<$Res>
       String description,
       String category,
       String priority,
-      TaskUserData userId,
+      UserData userId,
       String status,
       DateTime dueDate,
       List<SubtaskData> subtasks,
@@ -165,7 +165,7 @@ abstract class _$$TaskEntityImplCopyWith<$Res>
       DateTime updatedAt});
 
   @override
-  $TaskUserDataCopyWith<$Res> get userId;
+  $UserDataCopyWith<$Res> get userId;
 }
 
 /// @nodoc
@@ -217,7 +217,7 @@ class __$$TaskEntityImplCopyWithImpl<$Res>
       userId: null == userId
           ? _value.userId
           : userId // ignore: cast_nullable_to_non_nullable
-              as TaskUserData,
+              as UserData,
       status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
@@ -270,7 +270,7 @@ class _$TaskEntityImpl implements _TaskEntity {
   @override
   final String priority;
   @override
-  final TaskUserData userId;
+  final UserData userId;
   @override
   final String status;
   @override
@@ -347,7 +347,7 @@ abstract class _TaskEntity implements TaskEntity {
       required final String description,
       required final String category,
       required final String priority,
-      required final TaskUserData userId,
+      required final UserData userId,
       required final String status,
       required final DateTime dueDate,
       required final List<SubtaskData> subtasks,
@@ -365,7 +365,7 @@ abstract class _TaskEntity implements TaskEntity {
   @override
   String get priority;
   @override
-  TaskUserData get userId;
+  UserData get userId;
   @override
   String get status;
   @override

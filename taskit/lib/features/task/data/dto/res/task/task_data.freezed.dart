@@ -26,7 +26,7 @@ mixin _$TaskData {
   String get description => throw _privateConstructorUsedError;
   String get category => throw _privateConstructorUsedError;
   String get priority => throw _privateConstructorUsedError;
-  TaskUserData get userId => throw _privateConstructorUsedError;
+  UserData get userId => throw _privateConstructorUsedError;
   String get status => throw _privateConstructorUsedError;
   DateTime get dueDate => throw _privateConstructorUsedError;
   List<SubtaskData> get subtasks => throw _privateConstructorUsedError;
@@ -54,14 +54,14 @@ abstract class $TaskDataCopyWith<$Res> {
       String description,
       String category,
       String priority,
-      TaskUserData userId,
+      UserData userId,
       String status,
       DateTime dueDate,
       List<SubtaskData> subtasks,
       DateTime createdAt,
       DateTime updatedAt});
 
-  $TaskUserDataCopyWith<$Res> get userId;
+  $UserDataCopyWith<$Res> get userId;
 }
 
 /// @nodoc
@@ -115,7 +115,7 @@ class _$TaskDataCopyWithImpl<$Res, $Val extends TaskData>
       userId: null == userId
           ? _value.userId
           : userId // ignore: cast_nullable_to_non_nullable
-              as TaskUserData,
+              as UserData,
       status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
@@ -143,8 +143,8 @@ class _$TaskDataCopyWithImpl<$Res, $Val extends TaskData>
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $TaskUserDataCopyWith<$Res> get userId {
-    return $TaskUserDataCopyWith<$Res>(_value.userId, (value) {
+  $UserDataCopyWith<$Res> get userId {
+    return $UserDataCopyWith<$Res>(_value.userId, (value) {
       return _then(_value.copyWith(userId: value) as $Val);
     });
   }
@@ -164,7 +164,7 @@ abstract class _$$TaskDataImplCopyWith<$Res>
       String description,
       String category,
       String priority,
-      TaskUserData userId,
+      UserData userId,
       String status,
       DateTime dueDate,
       List<SubtaskData> subtasks,
@@ -172,7 +172,7 @@ abstract class _$$TaskDataImplCopyWith<$Res>
       DateTime updatedAt});
 
   @override
-  $TaskUserDataCopyWith<$Res> get userId;
+  $UserDataCopyWith<$Res> get userId;
 }
 
 /// @nodoc
@@ -224,7 +224,7 @@ class __$$TaskDataImplCopyWithImpl<$Res>
       userId: null == userId
           ? _value.userId
           : userId // ignore: cast_nullable_to_non_nullable
-              as TaskUserData,
+              as UserData,
       status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
@@ -281,7 +281,7 @@ class _$TaskDataImpl implements _TaskData {
   @override
   final String priority;
   @override
-  final TaskUserData userId;
+  final UserData userId;
   @override
   final String status;
   @override
@@ -366,7 +366,7 @@ abstract class _TaskData implements TaskData {
       required final String description,
       required final String category,
       required final String priority,
-      required final TaskUserData userId,
+      required final UserData userId,
       required final String status,
       required final DateTime dueDate,
       required final List<SubtaskData> subtasks,
@@ -388,7 +388,7 @@ abstract class _TaskData implements TaskData {
   @override
   String get priority;
   @override
-  TaskUserData get userId;
+  UserData get userId;
   @override
   String get status;
   @override
@@ -405,196 +405,6 @@ abstract class _TaskData implements TaskData {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$TaskDataImplCopyWith<_$TaskDataImpl> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-TaskUserData _$TaskUserDataFromJson(Map<String, dynamic> json) {
-  return _TaskUserData.fromJson(json);
-}
-
-/// @nodoc
-mixin _$TaskUserData {
-  @JsonKey(name: '_id')
-  String get id => throw _privateConstructorUsedError;
-  String get email => throw _privateConstructorUsedError;
-  String get name => throw _privateConstructorUsedError;
-
-  /// Serializes this TaskUserData to a JSON map.
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-
-  /// Create a copy of TaskUserData
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  $TaskUserDataCopyWith<TaskUserData> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $TaskUserDataCopyWith<$Res> {
-  factory $TaskUserDataCopyWith(
-          TaskUserData value, $Res Function(TaskUserData) then) =
-      _$TaskUserDataCopyWithImpl<$Res, TaskUserData>;
-  @useResult
-  $Res call({@JsonKey(name: '_id') String id, String email, String name});
-}
-
-/// @nodoc
-class _$TaskUserDataCopyWithImpl<$Res, $Val extends TaskUserData>
-    implements $TaskUserDataCopyWith<$Res> {
-  _$TaskUserDataCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  /// Create a copy of TaskUserData
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? id = null,
-    Object? email = null,
-    Object? name = null,
-  }) {
-    return _then(_value.copyWith(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      email: null == email
-          ? _value.email
-          : email // ignore: cast_nullable_to_non_nullable
-              as String,
-      name: null == name
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
-              as String,
-    ) as $Val);
-  }
-}
-
-/// @nodoc
-abstract class _$$TaskUserDataImplCopyWith<$Res>
-    implements $TaskUserDataCopyWith<$Res> {
-  factory _$$TaskUserDataImplCopyWith(
-          _$TaskUserDataImpl value, $Res Function(_$TaskUserDataImpl) then) =
-      __$$TaskUserDataImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call({@JsonKey(name: '_id') String id, String email, String name});
-}
-
-/// @nodoc
-class __$$TaskUserDataImplCopyWithImpl<$Res>
-    extends _$TaskUserDataCopyWithImpl<$Res, _$TaskUserDataImpl>
-    implements _$$TaskUserDataImplCopyWith<$Res> {
-  __$$TaskUserDataImplCopyWithImpl(
-      _$TaskUserDataImpl _value, $Res Function(_$TaskUserDataImpl) _then)
-      : super(_value, _then);
-
-  /// Create a copy of TaskUserData
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? id = null,
-    Object? email = null,
-    Object? name = null,
-  }) {
-    return _then(_$TaskUserDataImpl(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      email: null == email
-          ? _value.email
-          : email // ignore: cast_nullable_to_non_nullable
-              as String,
-      name: null == name
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
-              as String,
-    ));
-  }
-}
-
-/// @nodoc
-@JsonSerializable()
-class _$TaskUserDataImpl implements _TaskUserData {
-  const _$TaskUserDataImpl(
-      {@JsonKey(name: '_id') required this.id,
-      required this.email,
-      required this.name});
-
-  factory _$TaskUserDataImpl.fromJson(Map<String, dynamic> json) =>
-      _$$TaskUserDataImplFromJson(json);
-
-  @override
-  @JsonKey(name: '_id')
-  final String id;
-  @override
-  final String email;
-  @override
-  final String name;
-
-  @override
-  String toString() {
-    return 'TaskUserData(id: $id, email: $email, name: $name)';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$TaskUserDataImpl &&
-            (identical(other.id, id) || other.id == id) &&
-            (identical(other.email, email) || other.email == email) &&
-            (identical(other.name, name) || other.name == name));
-  }
-
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  int get hashCode => Object.hash(runtimeType, id, email, name);
-
-  /// Create a copy of TaskUserData
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$TaskUserDataImplCopyWith<_$TaskUserDataImpl> get copyWith =>
-      __$$TaskUserDataImplCopyWithImpl<_$TaskUserDataImpl>(this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$TaskUserDataImplToJson(
-      this,
-    );
-  }
-}
-
-abstract class _TaskUserData implements TaskUserData {
-  const factory _TaskUserData(
-      {@JsonKey(name: '_id') required final String id,
-      required final String email,
-      required final String name}) = _$TaskUserDataImpl;
-
-  factory _TaskUserData.fromJson(Map<String, dynamic> json) =
-      _$TaskUserDataImpl.fromJson;
-
-  @override
-  @JsonKey(name: '_id')
-  String get id;
-  @override
-  String get email;
-  @override
-  String get name;
-
-  /// Create a copy of TaskUserData
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$TaskUserDataImplCopyWith<_$TaskUserDataImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 

@@ -23,6 +23,7 @@ mixin _$LoginData {
   String get token => throw _privateConstructorUsedError;
   SettingData get settings => throw _privateConstructorUsedError;
   UserData get user => throw _privateConstructorUsedError;
+  TaskDataLst get tasks => throw _privateConstructorUsedError;
 
   /// Serializes this LoginData to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -39,10 +40,12 @@ abstract class $LoginDataCopyWith<$Res> {
   factory $LoginDataCopyWith(LoginData value, $Res Function(LoginData) then) =
       _$LoginDataCopyWithImpl<$Res, LoginData>;
   @useResult
-  $Res call({String token, SettingData settings, UserData user});
+  $Res call(
+      {String token, SettingData settings, UserData user, TaskDataLst tasks});
 
   $SettingDataCopyWith<$Res> get settings;
   $UserDataCopyWith<$Res> get user;
+  $TaskDataLstCopyWith<$Res> get tasks;
 }
 
 /// @nodoc
@@ -63,6 +66,7 @@ class _$LoginDataCopyWithImpl<$Res, $Val extends LoginData>
     Object? token = null,
     Object? settings = null,
     Object? user = null,
+    Object? tasks = null,
   }) {
     return _then(_value.copyWith(
       token: null == token
@@ -77,6 +81,10 @@ class _$LoginDataCopyWithImpl<$Res, $Val extends LoginData>
           ? _value.user
           : user // ignore: cast_nullable_to_non_nullable
               as UserData,
+      tasks: null == tasks
+          ? _value.tasks
+          : tasks // ignore: cast_nullable_to_non_nullable
+              as TaskDataLst,
     ) as $Val);
   }
 
@@ -99,6 +107,16 @@ class _$LoginDataCopyWithImpl<$Res, $Val extends LoginData>
       return _then(_value.copyWith(user: value) as $Val);
     });
   }
+
+  /// Create a copy of LoginData
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $TaskDataLstCopyWith<$Res> get tasks {
+    return $TaskDataLstCopyWith<$Res>(_value.tasks, (value) {
+      return _then(_value.copyWith(tasks: value) as $Val);
+    });
+  }
 }
 
 /// @nodoc
@@ -109,12 +127,15 @@ abstract class _$$LoginDataImplCopyWith<$Res>
       __$$LoginDataImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String token, SettingData settings, UserData user});
+  $Res call(
+      {String token, SettingData settings, UserData user, TaskDataLst tasks});
 
   @override
   $SettingDataCopyWith<$Res> get settings;
   @override
   $UserDataCopyWith<$Res> get user;
+  @override
+  $TaskDataLstCopyWith<$Res> get tasks;
 }
 
 /// @nodoc
@@ -133,6 +154,7 @@ class __$$LoginDataImplCopyWithImpl<$Res>
     Object? token = null,
     Object? settings = null,
     Object? user = null,
+    Object? tasks = null,
   }) {
     return _then(_$LoginDataImpl(
       token: null == token
@@ -147,6 +169,10 @@ class __$$LoginDataImplCopyWithImpl<$Res>
           ? _value.user
           : user // ignore: cast_nullable_to_non_nullable
               as UserData,
+      tasks: null == tasks
+          ? _value.tasks
+          : tasks // ignore: cast_nullable_to_non_nullable
+              as TaskDataLst,
     ));
   }
 }
@@ -155,7 +181,10 @@ class __$$LoginDataImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$LoginDataImpl implements _LoginData {
   const _$LoginDataImpl(
-      {required this.token, required this.settings, required this.user});
+      {required this.token,
+      required this.settings,
+      required this.user,
+      required this.tasks});
 
   factory _$LoginDataImpl.fromJson(Map<String, dynamic> json) =>
       _$$LoginDataImplFromJson(json);
@@ -166,10 +195,12 @@ class _$LoginDataImpl implements _LoginData {
   final SettingData settings;
   @override
   final UserData user;
+  @override
+  final TaskDataLst tasks;
 
   @override
   String toString() {
-    return 'LoginData(token: $token, settings: $settings, user: $user)';
+    return 'LoginData(token: $token, settings: $settings, user: $user, tasks: $tasks)';
   }
 
   @override
@@ -180,12 +211,13 @@ class _$LoginDataImpl implements _LoginData {
             (identical(other.token, token) || other.token == token) &&
             (identical(other.settings, settings) ||
                 other.settings == settings) &&
-            (identical(other.user, user) || other.user == user));
+            (identical(other.user, user) || other.user == user) &&
+            (identical(other.tasks, tasks) || other.tasks == tasks));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, token, settings, user);
+  int get hashCode => Object.hash(runtimeType, token, settings, user, tasks);
 
   /// Create a copy of LoginData
   /// with the given fields replaced by the non-null parameter values.
@@ -207,7 +239,8 @@ abstract class _LoginData implements LoginData {
   const factory _LoginData(
       {required final String token,
       required final SettingData settings,
-      required final UserData user}) = _$LoginDataImpl;
+      required final UserData user,
+      required final TaskDataLst tasks}) = _$LoginDataImpl;
 
   factory _LoginData.fromJson(Map<String, dynamic> json) =
       _$LoginDataImpl.fromJson;
@@ -218,6 +251,8 @@ abstract class _LoginData implements LoginData {
   SettingData get settings;
   @override
   UserData get user;
+  @override
+  TaskDataLst get tasks;
 
   /// Create a copy of LoginData
   /// with the given fields replaced by the non-null parameter values.

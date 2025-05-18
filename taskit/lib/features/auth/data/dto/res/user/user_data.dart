@@ -6,7 +6,7 @@ part 'user_data.g.dart';
 @freezed
 sealed class UserData with _$UserData {
   const factory UserData(
-      {required String id,
+      {@JsonKey(name: '_id') required String id,
       required String name,
       required String email,
       required String avatar}) = _UserData;

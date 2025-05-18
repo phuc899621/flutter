@@ -1,6 +1,7 @@
 const UserServices=require('../services/user.services');
 const OtpAuthServices=require('../services/otp.auth.services');
 const OtpServices=require('../services/otp.services');
+const TaskServices=require('../services/task.services');
 const jwt = require("jsonwebtoken");
     exports.signup=async(req,res)=>{
         try{
@@ -132,17 +133,19 @@ const jwt = require("jsonwebtoken");
                 { expiresIn: process.env.JWT_EXPIRES_IN || "1d" }
             );
             const userSetting=await UserServices.findSettingByUserId(user._id);
+            const tasks=await TaskServices.findAllTaskByUserId(user._id,{});
             return res.status(201).json({
                 message: "Login successful",
                 data:{
                     token: token,
                     settings: userSetting,
                     user:{
-                        id: user._id,
+                        _id: user._id,
                         name: user.name,
                         email: user.email,
                         avatar: user.avatar,
-                    }
+                    },
+                    tasks: tasks,
 
                 },
             });
@@ -241,7 +244,7 @@ const jwt = require("jsonwebtoken");
                     data:{}
                 }); 
             }
-            
+    
             const userOtp=await OtpServices.findOtpByEmail(email);
             if(!userOtp){
                 return res.status(400).json({

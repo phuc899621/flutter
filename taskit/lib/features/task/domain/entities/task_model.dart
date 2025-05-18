@@ -1,4 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:taskit/features/auth/data/dto/res/user/user_data.dart';
 
 import '../../data/dto/res/task/task_data.dart';
 
@@ -12,7 +13,7 @@ abstract class TaskEntity with _$TaskEntity {
     required String description,
     required String category,
     required String priority,
-    required TaskUserData userId,
+    required UserData userId,
     required String status,
     required DateTime dueDate,
     required List<SubtaskData> subtasks,

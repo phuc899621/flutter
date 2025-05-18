@@ -3,10 +3,10 @@ import 'dart:core';
 import 'package:floor/floor.dart';
 import 'package:taskit/shared/data/source/local/type_converter.dart';
 
+import '../../../auth/data/dto/res/user/user_data.dart';
 import '../dto/res/task/task_data.dart';
 
-@TypeConverters(
-    [DateTimeConverter, SubtaskListConverter, TaskUserDataConverter])
+@TypeConverters([DateTimeConverter, SubtaskListConverter, UserDataConverter])
 @Entity(tableName: 'tasks')
 class TaskModel {
   @PrimaryKey(autoGenerate: true)
@@ -14,7 +14,7 @@ class TaskModel {
   final String remoteId;
   final String title;
   final String description;
-  final TaskUserData userId;
+  final UserData userId;
   final String category;
   final String priority;
   final String status;

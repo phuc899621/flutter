@@ -150,7 +150,7 @@ class _$TaskDAO extends TaskDAO {
                   'remoteId': item.remoteId,
                   'title': item.title,
                   'description': item.description,
-                  'userId': _taskUserDataConverter.encode(item.userId),
+                  'userId': _userDataConverter.encode(item.userId),
                   'category': item.category,
                   'priority': item.priority,
                   'status': item.status,
@@ -178,7 +178,7 @@ class _$TaskDAO extends TaskDAO {
             row['status'] as String,
             _dateTimeConverter.decode(row['dueDate'] as int),
             _subtaskListConverter.decode(row['subtasks'] as String),
-            _taskUserDataConverter.decode(row['userId'] as String),
+            _userDataConverter.decode(row['userId'] as String),
             localId: row['localId'] as int?));
   }
 
@@ -324,4 +324,4 @@ class _$CategoryDAO extends CategoryDAO {
 // ignore_for_file: unused_element
 final _dateTimeConverter = DateTimeConverter();
 final _subtaskListConverter = SubtaskListConverter();
-final _taskUserDataConverter = TaskUserDataConverter();
+final _userDataConverter = UserDataConverter();

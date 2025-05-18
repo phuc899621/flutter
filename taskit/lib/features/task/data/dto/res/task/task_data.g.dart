@@ -13,7 +13,7 @@ _$TaskDataImpl _$$TaskDataImplFromJson(Map<String, dynamic> json) =>
       description: json['description'] as String,
       category: json['category'] as String,
       priority: json['priority'] as String,
-      userId: TaskUserData.fromJson(json['userId'] as Map<String, dynamic>),
+      userId: UserData.fromJson(json['userId'] as Map<String, dynamic>),
       status: json['status'] as String,
       dueDate: DateTime.parse(json['dueDate'] as String),
       subtasks: (json['subtasks'] as List<dynamic>)
@@ -36,20 +36,6 @@ Map<String, dynamic> _$$TaskDataImplToJson(_$TaskDataImpl instance) =>
       'subtasks': instance.subtasks,
       'createdAt': instance.createdAt.toIso8601String(),
       'updatedAt': instance.updatedAt.toIso8601String(),
-    };
-
-_$TaskUserDataImpl _$$TaskUserDataImplFromJson(Map<String, dynamic> json) =>
-    _$TaskUserDataImpl(
-      id: json['_id'] as String,
-      email: json['email'] as String,
-      name: json['name'] as String,
-    );
-
-Map<String, dynamic> _$$TaskUserDataImplToJson(_$TaskUserDataImpl instance) =>
-    <String, dynamic>{
-      '_id': instance.id,
-      'email': instance.email,
-      'name': instance.name,
     };
 
 _$SubtaskDataImpl _$$SubtaskDataImplFromJson(Map<String, dynamic> json) =>

@@ -3,6 +3,8 @@ import 'dart:convert';
 import 'package:floor/floor.dart';
 import 'package:taskit/features/task/data/dto/res/task/task_data.dart';
 
+import '../../../../features/auth/data/dto/res/user/user_data.dart';
+
 class DateTimeConverter extends TypeConverter<DateTime, int> {
   @override
   DateTime decode(int databaseValue) {
@@ -46,14 +48,14 @@ class StringListConverter extends TypeConverter<List<String>, String> {
   }
 }
 
-class TaskUserDataConverter extends TypeConverter<TaskUserData, String> {
+class UserDataConverter extends TypeConverter<UserData, String> {
   @override
-  TaskUserData decode(String databaseValue) {
+  UserData decode(String databaseValue) {
     return json.decode(databaseValue);
   }
 
   @override
-  String encode(TaskUserData value) {
+  String encode(UserData value) {
     return json.encode(value);
   }
 }

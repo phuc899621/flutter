@@ -154,7 +154,7 @@ taskSchema.statics.findAllTaskByUserId = async function (userId, { status, dueDa
             $lt: endDay
         };
     }
-    const tasks = await this.find(query).populate('userId', 'name email');
+    const tasks = await this.find(query).populate('userId', '_id name email avatar');
     return tasks;
 }
 taskSchema.statics.findAllSubTask = async function (taskId) {
