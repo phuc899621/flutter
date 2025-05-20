@@ -30,6 +30,10 @@ userSchema.statics.findUserByEmail = async function (email) {
   const user = await this.findOne({ email });
   return user;
 };
+userSchema.statics.findUserById = async function (id) {
+  const user = await this.findById(id);
+  return user;
+}
 
 // Static method to compare passwords
 userSchema.statics.comparePassword = async function (password, savePassword) {

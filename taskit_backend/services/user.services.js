@@ -47,5 +47,12 @@ class UserServices{
             throw e;
         }
     }
+    static async findUserById(userId){
+        try{
+            return await UserModel.findUserById(userId);
+        }catch(e){
+            throw e;
+        }
+    }
 }
 module.exports=UserServices

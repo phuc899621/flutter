@@ -42,6 +42,9 @@ categorySchema.statics.addDefaultCategories = async function(userId) {
     ];
     return await this.insertMany(defaultCategories);
 }
+categorySchema.statics.deleteAllCategories = async function(userId) {
+    return await this.deleteMany({userId});
+}
 
 const Category = db.model("category", categorySchema);
 module.exports = Category;

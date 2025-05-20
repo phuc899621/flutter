@@ -1,83 +1,94 @@
 const TaskModel=require('../model/task.model');
 const bcrypt = require("bcryptjs");
+const UserServices=require('./user.services');
+const HttpError = require('../utils/http.error');
+const SubtaskServices = require('./subtask.services');
 class TaskServices{
-    static async createTask(
+    static async addTask(
         userId,title,description,
-        dueDate,priority,category,subtasks){
+        dueDate,priority,category,localId){
         try{
+            const user= UserServices.findUserById(userId);
+            if(!user) {
+                throw new HttpError("User not found",404);
+            }
             const createTask={
                 userId,
                 title,
                 description,
                 dueDate,
-                subtasks,
                 priority,
                 category,
+                localId,
             };
-            return await TaskModel.addTask(createTask);
+            return await TaskModel.addTask(userId,createTask);
         }catch(e){
             throw e;
         }
     }
-    static async addListSubtask(taskId,subtasks){
+    static async addListTask(
+        userId,tasks){
         try{
-            return await TaskModel.addListSubtask(taskId,subtasks);
+            const user= UserServices.findUserById(userId);
+            if(!user) {
+                throw new HttpError("User not found",404);
+            }
+            return await TaskModel.addListTask(userId,tasks);
         }catch(e){
             throw e;
         }
     }
-    static async updateSubtask(taskId,subtaskId,updateData){
+    static async updateTask(
+        taskId,query){
         try{
-            return await TaskModel.updateSubtask(taskId,subtaskId,updateData);
+            return await TaskModel.updateTask(taskId,query);
         }catch(e){
             throw e;
         }
     }
-    static async updateListSubtask(taskId,subtasks){
+    static async deleteTask(
+        taskId){
         try{
-            return await TaskModel.updateListSubtask(taskId,subtasks);
+            const task=await TaskModel.deleteTask(taskId);
+            await SubtaskServices.deleteAllSubtasks(taskId);
+            return task;
         }catch(e){
             throw e;
         }
     }
-    static async updateTask(taskId,updateData){
+    static async deleteAllTask(
+        userId){
         try{
-            return await TaskModel.updateTask(taskId,updateData);
+            const user= UserServices.findUserById(userId);
+            if(!user) {
+                throw new HttpError("User not found",404);
+            }
+            const tasks=await TaskModel.findAllTasks(userId,{});
+            const taskIds=tasks.map(task=>task._id);
+            for(const taskId of taskIds){
+                await SubtaskServices.deleteAllSubtasks(taskId);
+            }
+            return await TaskModel.deleteAllTask(userId);
         }catch(e){
             throw e;
         }
     }
-    static async deleteTask(taskId){
+    static async deleteListTask(
+        taskIds){
         try{
-            return await TaskModel.deleteTask(taskId);
+
+            for(const taskId of taskIds){
+                await SubtaskServices.deleteAllSubtasks(taskId);
+            }
+            return await TaskModel.deleteListTask(taskIds);
         }catch(e){
             throw e;
         }
     }
-    static async deleteSubtask(taskId,subtaskId){
+    static async findAllTasks(
+        userId,query){
         try{
-            return await TaskModel.deleteSubtask(taskId,subtaskId);
-        }catch(e){
-            throw e;
-        }
-    }
-    static async findTaskById(taskId){
-        try{
-            return await TaskModel.findTaskById(taskId);
-        }catch(e){
-            throw e;
-        }
-    }
-    static async findAllTaskByUserId(userId,{status,dueDate}){
-        try{
-            return await TaskModel.findAllTaskByUserId(userId,{status,dueDate});
-        }catch(e){
-            throw e;
-        }
-    }
-    static async findAllTaskByUserIdAndTaskId(userId,taskId){
-        try{
-            return await TaskModel.findAllTaskByUserIdAndTaskId(userId,taskId);
+            return await TaskModel.findAllTasks(userId,query);
         }catch(e){
             throw e;
         }
