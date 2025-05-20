@@ -6,7 +6,7 @@ import '../dto/res/category/category_data.dart';
 import '../dto/res/task/task_data.dart';
 
 abstract interface class ITaskRepo {
-  Future<BaseResponse<TaskDataLst>> getListTask(
+  Future<BaseResponse<List<TaskData>>> getListTask(
       String token, String status, String dueDate);
   Future<BaseResponse<BaseData>> updateTaskStatus(
       String token, String taskId, String status);

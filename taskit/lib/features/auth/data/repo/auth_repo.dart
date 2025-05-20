@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:taskit/features/auth/data/dto/req/login/login_request.dart';
 import 'package:taskit/features/auth/data/dto/res/login/login_data.dart';
 import 'package:taskit/features/auth/data/repo/iauth_repo.dart';
+import 'package:taskit/features/auth/data/source/local/iauth_local.dart';
 import 'package:taskit/shared/application/itoken_service.dart';
 import 'package:taskit/shared/application/token_service.dart';
 import 'package:taskit/shared/data/dto/response/base_response.dart';
@@ -17,21 +18,25 @@ import '../dto/req/signup/signup_request.dart';
 import '../dto/req/signup/signup_verify_request.dart';
 import '../dto/res/forgot_pass/verify.dart';
 import '../dto/res/login/login_verify_data.dart';
+import '../source/local/auth_local.dart';
 import '../source/remote/auth_api.dart';
 
 final authRepoProvider = Provider<IAuthRepo>((ref) {
   final authApi = ref.watch(authApiProvider);
   final iTokenService = ref.watch(tokenServiceProvider);
+  final iAuthLocalDataSouce = ref.watch(authLocalDataSourceProvider);
   return AuthRepo(
     authApi,
     iTokenService,
+    iAuthLocalDataSouce,
   );
 });
 
 class AuthRepo with DioExceptionMapper implements IAuthRepo {
   final AuthApi _authApi;
   final ITokenService _iTokenService;
-  AuthRepo(this._authApi, this._iTokenService);
+  final IAuthLocalDataSource _iAuthLocalDataSource;
+  AuthRepo(this._authApi, this._iTokenService, this._iAuthLocalDataSource);
 
   /*
   *
@@ -41,6 +46,7 @@ class AuthRepo with DioExceptionMapper implements IAuthRepo {
   Future<BaseResponse<LoginData>> login(LoginRequest data) async {
     try {
       final response = await _authApi.login(data);
+      await _iAuthLocalDataSource.cacheLogin(response.data!);
       return response;
     } on DioException catch (e, s) {
       throw mapDioExceptionToFailure(e, s);

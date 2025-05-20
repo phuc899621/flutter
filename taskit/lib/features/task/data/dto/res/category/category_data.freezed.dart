@@ -15,7 +15,9 @@ T _$identity<T>(T value) => value;
 
 /// @nodoc
 mixin _$CategoryData {
-  List<String> get categories;
+  String get id;
+  String get name;
+  String get userId;
 
   /// Create a copy of CategoryData
   /// with the given fields replaced by the non-null parameter values.
@@ -33,18 +35,18 @@ mixin _$CategoryData {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is CategoryData &&
-            const DeepCollectionEquality()
-                .equals(other.categories, categories));
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.name, name) || other.name == name) &&
+            (identical(other.userId, userId) || other.userId == userId));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(categories));
+  int get hashCode => Object.hash(runtimeType, id, name, userId);
 
   @override
   String toString() {
-    return 'CategoryData(categories: $categories)';
+    return 'CategoryData(id: $id, name: $name, userId: $userId)';
   }
 }
 
@@ -54,7 +56,7 @@ abstract mixin class $CategoryDataCopyWith<$Res> {
           CategoryData value, $Res Function(CategoryData) _then) =
       _$CategoryDataCopyWithImpl;
   @useResult
-  $Res call({List<String> categories});
+  $Res call({String id, String name, String userId});
 }
 
 /// @nodoc
@@ -69,13 +71,23 @@ class _$CategoryDataCopyWithImpl<$Res> implements $CategoryDataCopyWith<$Res> {
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? categories = null,
+    Object? id = null,
+    Object? name = null,
+    Object? userId = null,
   }) {
     return _then(_self.copyWith(
-      categories: null == categories
-          ? _self.categories
-          : categories // ignore: cast_nullable_to_non_nullable
-              as List<String>,
+      id: null == id
+          ? _self.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      name: null == name
+          ? _self.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
+      userId: null == userId
+          ? _self.userId
+          : userId // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -83,18 +95,17 @@ class _$CategoryDataCopyWithImpl<$Res> implements $CategoryDataCopyWith<$Res> {
 /// @nodoc
 @JsonSerializable()
 class _CategoryData implements CategoryData {
-  const _CategoryData({required final List<String> categories})
-      : _categories = categories;
+  const _CategoryData(
+      {required this.id, required this.name, required this.userId});
   factory _CategoryData.fromJson(Map<String, dynamic> json) =>
       _$CategoryDataFromJson(json);
 
-  final List<String> _categories;
   @override
-  List<String> get categories {
-    if (_categories is EqualUnmodifiableListView) return _categories;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_categories);
-  }
+  final String id;
+  @override
+  final String name;
+  @override
+  final String userId;
 
   /// Create a copy of CategoryData
   /// with the given fields replaced by the non-null parameter values.
@@ -116,18 +127,18 @@ class _CategoryData implements CategoryData {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _CategoryData &&
-            const DeepCollectionEquality()
-                .equals(other._categories, _categories));
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.name, name) || other.name == name) &&
+            (identical(other.userId, userId) || other.userId == userId));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(
-      runtimeType, const DeepCollectionEquality().hash(_categories));
+  int get hashCode => Object.hash(runtimeType, id, name, userId);
 
   @override
   String toString() {
-    return 'CategoryData(categories: $categories)';
+    return 'CategoryData(id: $id, name: $name, userId: $userId)';
   }
 }
 
@@ -139,7 +150,7 @@ abstract mixin class _$CategoryDataCopyWith<$Res>
       __$CategoryDataCopyWithImpl;
   @override
   @useResult
-  $Res call({List<String> categories});
+  $Res call({String id, String name, String userId});
 }
 
 /// @nodoc
@@ -155,13 +166,23 @@ class __$CategoryDataCopyWithImpl<$Res>
   @override
   @pragma('vm:prefer-inline')
   $Res call({
-    Object? categories = null,
+    Object? id = null,
+    Object? name = null,
+    Object? userId = null,
   }) {
     return _then(_CategoryData(
-      categories: null == categories
-          ? _self._categories
-          : categories // ignore: cast_nullable_to_non_nullable
-              as List<String>,
+      id: null == id
+          ? _self.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      name: null == name
+          ? _self.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
+      userId: null == userId
+          ? _self.userId
+          : userId // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }

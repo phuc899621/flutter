@@ -40,6 +40,7 @@ _SubtaskData _$SubtaskDataFromJson(Map<String, dynamic> json) => _SubtaskData(
       id: json['_id'] as String,
       title: json['title'] as String,
       isCompleted: json['isCompleted'] as bool,
+      taskId: json['taskId'] as String,
     );
 
 Map<String, dynamic> _$SubtaskDataToJson(_SubtaskData instance) =>
@@ -47,15 +48,5 @@ Map<String, dynamic> _$SubtaskDataToJson(_SubtaskData instance) =>
       '_id': instance.id,
       'title': instance.title,
       'isCompleted': instance.isCompleted,
-    };
-
-_TaskDataLst _$TaskDataLstFromJson(Map<String, dynamic> json) => _TaskDataLst(
-      tasks: (json['tasks'] as List<dynamic>)
-          .map((e) => TaskData.fromJson(e as Map<String, dynamic>))
-          .toList(),
-    );
-
-Map<String, dynamic> _$TaskDataLstToJson(_TaskDataLst instance) =>
-    <String, dynamic>{
-      'tasks': instance.tasks,
+      'taskId': instance.taskId,
     };

@@ -26,21 +26,12 @@ abstract class TaskData with _$TaskData {
 
 @freezed
 abstract class SubtaskData with _$SubtaskData {
-  const factory SubtaskData({
-    @JsonKey(name: '_id') required String id,
-    required String title,
-    required bool isCompleted,
-  }) = _SubtaskData;
+  const factory SubtaskData(
+      {@JsonKey(name: '_id') required String id,
+      required String title,
+      required bool isCompleted,
+      required String taskId}) = _SubtaskData;
 
   factory SubtaskData.fromJson(Map<String, dynamic> json) =>
       _$SubtaskDataFromJson(json);
-}
-
-@freezed
-abstract class TaskDataLst with _$TaskDataLst {
-  const factory TaskDataLst({
-    required List<TaskData> tasks,
-  }) = _TaskDataLst;
-  factory TaskDataLst.fromJson(Map<String, dynamic> json) =>
-      _$TaskDataLstFromJson(json);
 }

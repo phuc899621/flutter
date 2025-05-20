@@ -11,5 +11,5 @@ class SettingTable extends Table {
   TextColumn get language => text()();
   TextColumn get theme => text()();
   IntColumn get remindBefore => integer()();
-  BoolColumn get isSync => boolean()();
+  BoolColumn get isSynced => boolean()();
 }

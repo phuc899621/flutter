@@ -12,7 +12,6 @@ abstract class SettingData with _$SettingData {
     required String language,
     required String theme,
     required int remindBefore,
-    required List<String> categories,
   }) = _SettingData;
   factory SettingData.fromJson(Map<String, dynamic> json) =>
       _$SettingDataFromJson(json);

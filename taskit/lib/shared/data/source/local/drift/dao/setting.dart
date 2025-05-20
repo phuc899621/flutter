@@ -14,7 +14,8 @@ final settingDaoProvider = Provider<SettingDao>((ref) {
 @DriftAccessor(tables: [SettingTable])
 class SettingDao extends DatabaseAccessor<AppDatabase> with _$SettingDaoMixin {
   SettingDao(super.db);
-  Future<SettingTableData> getSetting() => select(settingTable).getSingle();
+  Future<SettingTableData?> getSetting() =>
+      select(settingTable).getSingleOrNull();
   Future<int> insertSetting(SettingTableCompanion setting) =>
       into(settingTable).insert(setting);
   Future<bool> updateSetting(SettingTableCompanion setting) =>

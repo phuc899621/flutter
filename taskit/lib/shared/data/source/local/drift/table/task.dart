@@ -8,10 +8,12 @@ class TaskTable extends Table {
   TextColumn get title => text()();
   TextColumn get description => text()();
   TextColumn get category => text()();
-  BoolColumn get isSync => boolean()();
+  BoolColumn get isSynced => boolean()();
   TextColumn get priority => text()();
   IntColumn get userLocalId => integer()
       .customConstraint('REFERENCES user(localId) ON DELETE CASCADE')();
   TextColumn get status => text()();
   DateTimeColumn get dueDate => dateTime()();
+  DateTimeColumn get createdAt => dateTime()();
+  DateTimeColumn get updatedAt => dateTime()();
 }

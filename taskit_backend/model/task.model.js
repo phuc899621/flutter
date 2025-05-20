@@ -136,7 +136,20 @@ taskSchema.statics.findAllTasks = async function (userId, query) {
             $lt: endDay
         };
     }
-    const tasks = await this.find(query).populate('userId', '_id name email avatar');
+    const pipeLine = [
+        {
+            $match: query
+        },
+        {
+            $lookup: {
+                from: 'subtasks',
+                localField: '_id',
+                foreignField: 'taskId',
+                as: 'subtasks'
+            }
+        },
+    ];
+    const tasks = await this.aggregate(pipeLine);
     return tasks;
 }
 const TaskModel = db.model('task', taskSchema);

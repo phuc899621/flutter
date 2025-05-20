@@ -14,8 +14,7 @@ final userDaoProvider = Provider<UserDao>((ref) {
 @DriftAccessor(tables: [UserTable])
 class UserDao extends DatabaseAccessor<AppDatabase> with _$UserDaoMixin {
   UserDao(super.db);
-
-  Future<UserTableData> getUser() => select(userTable).getSingle();
+  Future<UserTableData?> getUser() => select(userTable).getSingleOrNull();
   Future<int> insertUser(UserTableCompanion user) =>
       into(userTable).insert(user);
   Future<bool> updateUser(UserTableCompanion user) =>

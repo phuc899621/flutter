@@ -409,6 +409,7 @@ mixin _$SubtaskData {
   String get id;
   String get title;
   bool get isCompleted;
+  String get taskId;
 
   /// Create a copy of SubtaskData
   /// with the given fields replaced by the non-null parameter values.
@@ -428,16 +429,17 @@ mixin _$SubtaskData {
             (identical(other.id, id) || other.id == id) &&
             (identical(other.title, title) || other.title == title) &&
             (identical(other.isCompleted, isCompleted) ||
-                other.isCompleted == isCompleted));
+                other.isCompleted == isCompleted) &&
+            (identical(other.taskId, taskId) || other.taskId == taskId));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, id, title, isCompleted);
+  int get hashCode => Object.hash(runtimeType, id, title, isCompleted, taskId);
 
   @override
   String toString() {
-    return 'SubtaskData(id: $id, title: $title, isCompleted: $isCompleted)';
+    return 'SubtaskData(id: $id, title: $title, isCompleted: $isCompleted, taskId: $taskId)';
   }
 }
 
@@ -447,7 +449,11 @@ abstract mixin class $SubtaskDataCopyWith<$Res> {
           SubtaskData value, $Res Function(SubtaskData) _then) =
       _$SubtaskDataCopyWithImpl;
   @useResult
-  $Res call({@JsonKey(name: '_id') String id, String title, bool isCompleted});
+  $Res call(
+      {@JsonKey(name: '_id') String id,
+      String title,
+      bool isCompleted,
+      String taskId});
 }
 
 /// @nodoc
@@ -465,6 +471,7 @@ class _$SubtaskDataCopyWithImpl<$Res> implements $SubtaskDataCopyWith<$Res> {
     Object? id = null,
     Object? title = null,
     Object? isCompleted = null,
+    Object? taskId = null,
   }) {
     return _then(_self.copyWith(
       id: null == id
@@ -479,6 +486,10 @@ class _$SubtaskDataCopyWithImpl<$Res> implements $SubtaskDataCopyWith<$Res> {
           ? _self.isCompleted
           : isCompleted // ignore: cast_nullable_to_non_nullable
               as bool,
+      taskId: null == taskId
+          ? _self.taskId
+          : taskId // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -489,7 +500,8 @@ class _SubtaskData implements SubtaskData {
   const _SubtaskData(
       {@JsonKey(name: '_id') required this.id,
       required this.title,
-      required this.isCompleted});
+      required this.isCompleted,
+      required this.taskId});
   factory _SubtaskData.fromJson(Map<String, dynamic> json) =>
       _$SubtaskDataFromJson(json);
 
@@ -500,6 +512,8 @@ class _SubtaskData implements SubtaskData {
   final String title;
   @override
   final bool isCompleted;
+  @override
+  final String taskId;
 
   /// Create a copy of SubtaskData
   /// with the given fields replaced by the non-null parameter values.
@@ -524,16 +538,17 @@ class _SubtaskData implements SubtaskData {
             (identical(other.id, id) || other.id == id) &&
             (identical(other.title, title) || other.title == title) &&
             (identical(other.isCompleted, isCompleted) ||
-                other.isCompleted == isCompleted));
+                other.isCompleted == isCompleted) &&
+            (identical(other.taskId, taskId) || other.taskId == taskId));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, id, title, isCompleted);
+  int get hashCode => Object.hash(runtimeType, id, title, isCompleted, taskId);
 
   @override
   String toString() {
-    return 'SubtaskData(id: $id, title: $title, isCompleted: $isCompleted)';
+    return 'SubtaskData(id: $id, title: $title, isCompleted: $isCompleted, taskId: $taskId)';
   }
 }
 
@@ -545,7 +560,11 @@ abstract mixin class _$SubtaskDataCopyWith<$Res>
       __$SubtaskDataCopyWithImpl;
   @override
   @useResult
-  $Res call({@JsonKey(name: '_id') String id, String title, bool isCompleted});
+  $Res call(
+      {@JsonKey(name: '_id') String id,
+      String title,
+      bool isCompleted,
+      String taskId});
 }
 
 /// @nodoc
@@ -563,6 +582,7 @@ class __$SubtaskDataCopyWithImpl<$Res> implements _$SubtaskDataCopyWith<$Res> {
     Object? id = null,
     Object? title = null,
     Object? isCompleted = null,
+    Object? taskId = null,
   }) {
     return _then(_SubtaskData(
       id: null == id
@@ -577,154 +597,10 @@ class __$SubtaskDataCopyWithImpl<$Res> implements _$SubtaskDataCopyWith<$Res> {
           ? _self.isCompleted
           : isCompleted // ignore: cast_nullable_to_non_nullable
               as bool,
-    ));
-  }
-}
-
-/// @nodoc
-mixin _$TaskDataLst {
-  List<TaskData> get tasks;
-
-  /// Create a copy of TaskDataLst
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @pragma('vm:prefer-inline')
-  $TaskDataLstCopyWith<TaskDataLst> get copyWith =>
-      _$TaskDataLstCopyWithImpl<TaskDataLst>(this as TaskDataLst, _$identity);
-
-  /// Serializes this TaskDataLst to a JSON map.
-  Map<String, dynamic> toJson();
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is TaskDataLst &&
-            const DeepCollectionEquality().equals(other.tasks, tasks));
-  }
-
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(tasks));
-
-  @override
-  String toString() {
-    return 'TaskDataLst(tasks: $tasks)';
-  }
-}
-
-/// @nodoc
-abstract mixin class $TaskDataLstCopyWith<$Res> {
-  factory $TaskDataLstCopyWith(
-          TaskDataLst value, $Res Function(TaskDataLst) _then) =
-      _$TaskDataLstCopyWithImpl;
-  @useResult
-  $Res call({List<TaskData> tasks});
-}
-
-/// @nodoc
-class _$TaskDataLstCopyWithImpl<$Res> implements $TaskDataLstCopyWith<$Res> {
-  _$TaskDataLstCopyWithImpl(this._self, this._then);
-
-  final TaskDataLst _self;
-  final $Res Function(TaskDataLst) _then;
-
-  /// Create a copy of TaskDataLst
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? tasks = null,
-  }) {
-    return _then(_self.copyWith(
-      tasks: null == tasks
-          ? _self.tasks
-          : tasks // ignore: cast_nullable_to_non_nullable
-              as List<TaskData>,
-    ));
-  }
-}
-
-/// @nodoc
-@JsonSerializable()
-class _TaskDataLst implements TaskDataLst {
-  const _TaskDataLst({required final List<TaskData> tasks}) : _tasks = tasks;
-  factory _TaskDataLst.fromJson(Map<String, dynamic> json) =>
-      _$TaskDataLstFromJson(json);
-
-  final List<TaskData> _tasks;
-  @override
-  List<TaskData> get tasks {
-    if (_tasks is EqualUnmodifiableListView) return _tasks;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_tasks);
-  }
-
-  /// Create a copy of TaskDataLst
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @pragma('vm:prefer-inline')
-  _$TaskDataLstCopyWith<_TaskDataLst> get copyWith =>
-      __$TaskDataLstCopyWithImpl<_TaskDataLst>(this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$TaskDataLstToJson(
-      this,
-    );
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _TaskDataLst &&
-            const DeepCollectionEquality().equals(other._tasks, _tasks));
-  }
-
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(_tasks));
-
-  @override
-  String toString() {
-    return 'TaskDataLst(tasks: $tasks)';
-  }
-}
-
-/// @nodoc
-abstract mixin class _$TaskDataLstCopyWith<$Res>
-    implements $TaskDataLstCopyWith<$Res> {
-  factory _$TaskDataLstCopyWith(
-          _TaskDataLst value, $Res Function(_TaskDataLst) _then) =
-      __$TaskDataLstCopyWithImpl;
-  @override
-  @useResult
-  $Res call({List<TaskData> tasks});
-}
-
-/// @nodoc
-class __$TaskDataLstCopyWithImpl<$Res> implements _$TaskDataLstCopyWith<$Res> {
-  __$TaskDataLstCopyWithImpl(this._self, this._then);
-
-  final _TaskDataLst _self;
-  final $Res Function(_TaskDataLst) _then;
-
-  /// Create a copy of TaskDataLst
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $Res call({
-    Object? tasks = null,
-  }) {
-    return _then(_TaskDataLst(
-      tasks: null == tasks
-          ? _self._tasks
-          : tasks // ignore: cast_nullable_to_non_nullable
-              as List<TaskData>,
+      taskId: null == taskId
+          ? _self.taskId
+          : taskId // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }

@@ -17,6 +17,32 @@ const subtaskSchema = new Schema({
         ref: 'task',
         required: true,
     },
+    createdAt: {
+        type: Date,
+        default: Date.now,
+    },
+    updatedAt: {
+        type: Date,
+        default: Date.now,
+    },
+});
+subtaskSchema.pre('save', async function (next) {
+    this.updatedAt = Date.now();
+    next();
+});
+subtaskSchema.pre('updateOne', async function (next) {
+    this.set({ updatedAt: Date.now() });
+    next();
+});
+subtaskSchema.pre('updateMany', async function (next) {
+    this.set({ updatedAt: Date.now() });
+    next();
+});
+subtaskSchema.pre('insertMany', async function (next, docs) {
+    docs.forEach(doc => {
+        doc.updatedAt = Date.now();
+    });
+    next();
 });
 subtaskSchema.statics.addListSubtask = async function (taskId, subtasks) {
     const newSubtasks = subtasks.map(subtask => ({

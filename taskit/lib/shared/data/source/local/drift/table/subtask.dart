@@ -6,8 +6,10 @@ class SubtaskTable extends Table {
   IntColumn get localId => integer().autoIncrement()();
   TextColumn get remoteId => text().withDefault(const Constant(''))();
   TextColumn get title => text()();
-  BoolColumn get isSync => boolean()();
+  BoolColumn get isSynced => boolean()();
   BoolColumn get isCompleted => boolean()();
   IntColumn get taskLocalId => integer()
       .customConstraint('REFERENCES task(localId) ON DELETE CASCADE')();
+  DateTimeColumn get createdAt => dateTime()();
+  DateTimeColumn get updatedAt => dateTime()();
 }

@@ -8,12 +8,14 @@ part of 'category_data.dart';
 
 _CategoryData _$CategoryDataFromJson(Map<String, dynamic> json) =>
     _CategoryData(
-      categories: (json['categories'] as List<dynamic>)
-          .map((e) => e as String)
-          .toList(),
+      id: json['id'] as String,
+      name: json['name'] as String,
+      userId: json['userId'] as String,
     );
 
 Map<String, dynamic> _$CategoryDataToJson(_CategoryData instance) =>
     <String, dynamic>{
-      'categories': instance.categories,
+      'id': instance.id,
+      'name': instance.name,
+      'userId': instance.userId,
     };

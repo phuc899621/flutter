@@ -44,14 +44,15 @@ class $TaskTableTable extends TaskTable
   late final GeneratedColumn<String> category = GeneratedColumn<String>(
       'category', aliasedName, false,
       type: DriftSqlType.string, requiredDuringInsert: true);
-  static const VerificationMeta _isSyncMeta = const VerificationMeta('isSync');
+  static const VerificationMeta _isSyncedMeta =
+      const VerificationMeta('isSynced');
   @override
-  late final GeneratedColumn<bool> isSync = GeneratedColumn<bool>(
-      'is_sync', aliasedName, false,
+  late final GeneratedColumn<bool> isSynced = GeneratedColumn<bool>(
+      'is_synced', aliasedName, false,
       type: DriftSqlType.bool,
       requiredDuringInsert: true,
       defaultConstraints:
-          GeneratedColumn.constraintIsAlways('CHECK ("is_sync" IN (0, 1))'));
+          GeneratedColumn.constraintIsAlways('CHECK ("is_synced" IN (0, 1))'));
   static const VerificationMeta _priorityMeta =
       const VerificationMeta('priority');
   @override
@@ -77,6 +78,18 @@ class $TaskTableTable extends TaskTable
   late final GeneratedColumn<DateTime> dueDate = GeneratedColumn<DateTime>(
       'due_date', aliasedName, false,
       type: DriftSqlType.dateTime, requiredDuringInsert: true);
+  static const VerificationMeta _createdAtMeta =
+      const VerificationMeta('createdAt');
+  @override
+  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
+      'created_at', aliasedName, false,
+      type: DriftSqlType.dateTime, requiredDuringInsert: true);
+  static const VerificationMeta _updatedAtMeta =
+      const VerificationMeta('updatedAt');
+  @override
+  late final GeneratedColumn<DateTime> updatedAt = GeneratedColumn<DateTime>(
+      'updated_at', aliasedName, false,
+      type: DriftSqlType.dateTime, requiredDuringInsert: true);
   @override
   List<GeneratedColumn> get $columns => [
         localId,
@@ -84,11 +97,13 @@ class $TaskTableTable extends TaskTable
         title,
         description,
         category,
-        isSync,
+        isSynced,
         priority,
         userLocalId,
         status,
-        dueDate
+        dueDate,
+        createdAt,
+        updatedAt
       ];
   @override
   String get aliasedName => _alias ?? actualTableName;
@@ -128,11 +143,11 @@ class $TaskTableTable extends TaskTable
     } else if (isInserting) {
       context.missing(_categoryMeta);
     }
-    if (data.containsKey('is_sync')) {
-      context.handle(_isSyncMeta,
-          isSync.isAcceptableOrUnknown(data['is_sync']!, _isSyncMeta));
+    if (data.containsKey('is_synced')) {
+      context.handle(_isSyncedMeta,
+          isSynced.isAcceptableOrUnknown(data['is_synced']!, _isSyncedMeta));
     } else if (isInserting) {
-      context.missing(_isSyncMeta);
+      context.missing(_isSyncedMeta);
     }
     if (data.containsKey('priority')) {
       context.handle(_priorityMeta,
@@ -160,6 +175,18 @@ class $TaskTableTable extends TaskTable
     } else if (isInserting) {
       context.missing(_dueDateMeta);
     }
+    if (data.containsKey('created_at')) {
+      context.handle(_createdAtMeta,
+          createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta));
+    } else if (isInserting) {
+      context.missing(_createdAtMeta);
+    }
+    if (data.containsKey('updated_at')) {
+      context.handle(_updatedAtMeta,
+          updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta));
+    } else if (isInserting) {
+      context.missing(_updatedAtMeta);
+    }
     return context;
   }
 
@@ -179,8 +206,8 @@ class $TaskTableTable extends TaskTable
           .read(DriftSqlType.string, data['${effectivePrefix}description'])!,
       category: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}category'])!,
-      isSync: attachedDatabase.typeMapping
-          .read(DriftSqlType.bool, data['${effectivePrefix}is_sync'])!,
+      isSynced: attachedDatabase.typeMapping
+          .read(DriftSqlType.bool, data['${effectivePrefix}is_synced'])!,
       priority: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}priority'])!,
       userLocalId: attachedDatabase.typeMapping
@@ -189,6 +216,10 @@ class $TaskTableTable extends TaskTable
           .read(DriftSqlType.string, data['${effectivePrefix}status'])!,
       dueDate: attachedDatabase.typeMapping
           .read(DriftSqlType.dateTime, data['${effectivePrefix}due_date'])!,
+      createdAt: attachedDatabase.typeMapping
+          .read(DriftSqlType.dateTime, data['${effectivePrefix}created_at'])!,
+      updatedAt: attachedDatabase.typeMapping
+          .read(DriftSqlType.dateTime, data['${effectivePrefix}updated_at'])!,
     );
   }
 
@@ -204,22 +235,26 @@ class TaskTableData extends DataClass implements Insertable<TaskTableData> {
   final String title;
   final String description;
   final String category;
-  final bool isSync;
+  final bool isSynced;
   final String priority;
   final int userLocalId;
   final String status;
   final DateTime dueDate;
+  final DateTime createdAt;
+  final DateTime updatedAt;
   const TaskTableData(
       {required this.localId,
       required this.remoteId,
       required this.title,
       required this.description,
       required this.category,
-      required this.isSync,
+      required this.isSynced,
       required this.priority,
       required this.userLocalId,
       required this.status,
-      required this.dueDate});
+      required this.dueDate,
+      required this.createdAt,
+      required this.updatedAt});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
@@ -228,11 +263,13 @@ class TaskTableData extends DataClass implements Insertable<TaskTableData> {
     map['title'] = Variable<String>(title);
     map['description'] = Variable<String>(description);
     map['category'] = Variable<String>(category);
-    map['is_sync'] = Variable<bool>(isSync);
+    map['is_synced'] = Variable<bool>(isSynced);
     map['priority'] = Variable<String>(priority);
     map['user_local_id'] = Variable<int>(userLocalId);
     map['status'] = Variable<String>(status);
     map['due_date'] = Variable<DateTime>(dueDate);
+    map['created_at'] = Variable<DateTime>(createdAt);
+    map['updated_at'] = Variable<DateTime>(updatedAt);
     return map;
   }
 
@@ -243,11 +280,13 @@ class TaskTableData extends DataClass implements Insertable<TaskTableData> {
       title: Value(title),
       description: Value(description),
       category: Value(category),
-      isSync: Value(isSync),
+      isSynced: Value(isSynced),
       priority: Value(priority),
       userLocalId: Value(userLocalId),
       status: Value(status),
       dueDate: Value(dueDate),
+      createdAt: Value(createdAt),
+      updatedAt: Value(updatedAt),
     );
   }
 
@@ -260,11 +299,13 @@ class TaskTableData extends DataClass implements Insertable<TaskTableData> {
       title: serializer.fromJson<String>(json['title']),
       description: serializer.fromJson<String>(json['description']),
       category: serializer.fromJson<String>(json['category']),
-      isSync: serializer.fromJson<bool>(json['isSync']),
+      isSynced: serializer.fromJson<bool>(json['isSynced']),
       priority: serializer.fromJson<String>(json['priority']),
       userLocalId: serializer.fromJson<int>(json['userLocalId']),
       status: serializer.fromJson<String>(json['status']),
       dueDate: serializer.fromJson<DateTime>(json['dueDate']),
+      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
+      updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
     );
   }
   @override
@@ -276,11 +317,13 @@ class TaskTableData extends DataClass implements Insertable<TaskTableData> {
       'title': serializer.toJson<String>(title),
       'description': serializer.toJson<String>(description),
       'category': serializer.toJson<String>(category),
-      'isSync': serializer.toJson<bool>(isSync),
+      'isSynced': serializer.toJson<bool>(isSynced),
       'priority': serializer.toJson<String>(priority),
       'userLocalId': serializer.toJson<int>(userLocalId),
       'status': serializer.toJson<String>(status),
       'dueDate': serializer.toJson<DateTime>(dueDate),
+      'createdAt': serializer.toJson<DateTime>(createdAt),
+      'updatedAt': serializer.toJson<DateTime>(updatedAt),
     };
   }
 
@@ -290,22 +333,26 @@ class TaskTableData extends DataClass implements Insertable<TaskTableData> {
           String? title,
           String? description,
           String? category,
-          bool? isSync,
+          bool? isSynced,
           String? priority,
           int? userLocalId,
           String? status,
-          DateTime? dueDate}) =>
+          DateTime? dueDate,
+          DateTime? createdAt,
+          DateTime? updatedAt}) =>
       TaskTableData(
         localId: localId ?? this.localId,
         remoteId: remoteId ?? this.remoteId,
         title: title ?? this.title,
         description: description ?? this.description,
         category: category ?? this.category,
-        isSync: isSync ?? this.isSync,
+        isSynced: isSynced ?? this.isSynced,
         priority: priority ?? this.priority,
         userLocalId: userLocalId ?? this.userLocalId,
         status: status ?? this.status,
         dueDate: dueDate ?? this.dueDate,
+        createdAt: createdAt ?? this.createdAt,
+        updatedAt: updatedAt ?? this.updatedAt,
       );
   TaskTableData copyWithCompanion(TaskTableCompanion data) {
     return TaskTableData(
@@ -315,12 +362,14 @@ class TaskTableData extends DataClass implements Insertable<TaskTableData> {
       description:
           data.description.present ? data.description.value : this.description,
       category: data.category.present ? data.category.value : this.category,
-      isSync: data.isSync.present ? data.isSync.value : this.isSync,
+      isSynced: data.isSynced.present ? data.isSynced.value : this.isSynced,
       priority: data.priority.present ? data.priority.value : this.priority,
       userLocalId:
           data.userLocalId.present ? data.userLocalId.value : this.userLocalId,
       status: data.status.present ? data.status.value : this.status,
       dueDate: data.dueDate.present ? data.dueDate.value : this.dueDate,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
     );
   }
 
@@ -332,18 +381,31 @@ class TaskTableData extends DataClass implements Insertable<TaskTableData> {
           ..write('title: $title, ')
           ..write('description: $description, ')
           ..write('category: $category, ')
-          ..write('isSync: $isSync, ')
+          ..write('isSynced: $isSynced, ')
           ..write('priority: $priority, ')
           ..write('userLocalId: $userLocalId, ')
           ..write('status: $status, ')
-          ..write('dueDate: $dueDate')
+          ..write('dueDate: $dueDate, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode => Object.hash(localId, remoteId, title, description,
-      category, isSync, priority, userLocalId, status, dueDate);
+  int get hashCode => Object.hash(
+      localId,
+      remoteId,
+      title,
+      description,
+      category,
+      isSynced,
+      priority,
+      userLocalId,
+      status,
+      dueDate,
+      createdAt,
+      updatedAt);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -353,11 +415,13 @@ class TaskTableData extends DataClass implements Insertable<TaskTableData> {
           other.title == this.title &&
           other.description == this.description &&
           other.category == this.category &&
-          other.isSync == this.isSync &&
+          other.isSynced == this.isSynced &&
           other.priority == this.priority &&
           other.userLocalId == this.userLocalId &&
           other.status == this.status &&
-          other.dueDate == this.dueDate);
+          other.dueDate == this.dueDate &&
+          other.createdAt == this.createdAt &&
+          other.updatedAt == this.updatedAt);
 }
 
 class TaskTableCompanion extends UpdateCompanion<TaskTableData> {
@@ -366,22 +430,26 @@ class TaskTableCompanion extends UpdateCompanion<TaskTableData> {
   final Value<String> title;
   final Value<String> description;
   final Value<String> category;
-  final Value<bool> isSync;
+  final Value<bool> isSynced;
   final Value<String> priority;
   final Value<int> userLocalId;
   final Value<String> status;
   final Value<DateTime> dueDate;
+  final Value<DateTime> createdAt;
+  final Value<DateTime> updatedAt;
   const TaskTableCompanion({
     this.localId = const Value.absent(),
     this.remoteId = const Value.absent(),
     this.title = const Value.absent(),
     this.description = const Value.absent(),
     this.category = const Value.absent(),
-    this.isSync = const Value.absent(),
+    this.isSynced = const Value.absent(),
     this.priority = const Value.absent(),
     this.userLocalId = const Value.absent(),
     this.status = const Value.absent(),
     this.dueDate = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
   });
   TaskTableCompanion.insert({
     this.localId = const Value.absent(),
@@ -389,30 +457,36 @@ class TaskTableCompanion extends UpdateCompanion<TaskTableData> {
     required String title,
     required String description,
     required String category,
-    required bool isSync,
+    required bool isSynced,
     required String priority,
     required int userLocalId,
     required String status,
     required DateTime dueDate,
+    required DateTime createdAt,
+    required DateTime updatedAt,
   })  : title = Value(title),
         description = Value(description),
         category = Value(category),
-        isSync = Value(isSync),
+        isSynced = Value(isSynced),
         priority = Value(priority),
         userLocalId = Value(userLocalId),
         status = Value(status),
-        dueDate = Value(dueDate);
+        dueDate = Value(dueDate),
+        createdAt = Value(createdAt),
+        updatedAt = Value(updatedAt);
   static Insertable<TaskTableData> custom({
     Expression<int>? localId,
     Expression<String>? remoteId,
     Expression<String>? title,
     Expression<String>? description,
     Expression<String>? category,
-    Expression<bool>? isSync,
+    Expression<bool>? isSynced,
     Expression<String>? priority,
     Expression<int>? userLocalId,
     Expression<String>? status,
     Expression<DateTime>? dueDate,
+    Expression<DateTime>? createdAt,
+    Expression<DateTime>? updatedAt,
   }) {
     return RawValuesInsertable({
       if (localId != null) 'local_id': localId,
@@ -420,11 +494,13 @@ class TaskTableCompanion extends UpdateCompanion<TaskTableData> {
       if (title != null) 'title': title,
       if (description != null) 'description': description,
       if (category != null) 'category': category,
-      if (isSync != null) 'is_sync': isSync,
+      if (isSynced != null) 'is_synced': isSynced,
       if (priority != null) 'priority': priority,
       if (userLocalId != null) 'user_local_id': userLocalId,
       if (status != null) 'status': status,
       if (dueDate != null) 'due_date': dueDate,
+      if (createdAt != null) 'created_at': createdAt,
+      if (updatedAt != null) 'updated_at': updatedAt,
     });
   }
 
@@ -434,22 +510,26 @@ class TaskTableCompanion extends UpdateCompanion<TaskTableData> {
       Value<String>? title,
       Value<String>? description,
       Value<String>? category,
-      Value<bool>? isSync,
+      Value<bool>? isSynced,
       Value<String>? priority,
       Value<int>? userLocalId,
       Value<String>? status,
-      Value<DateTime>? dueDate}) {
+      Value<DateTime>? dueDate,
+      Value<DateTime>? createdAt,
+      Value<DateTime>? updatedAt}) {
     return TaskTableCompanion(
       localId: localId ?? this.localId,
       remoteId: remoteId ?? this.remoteId,
       title: title ?? this.title,
       description: description ?? this.description,
       category: category ?? this.category,
-      isSync: isSync ?? this.isSync,
+      isSynced: isSynced ?? this.isSynced,
       priority: priority ?? this.priority,
       userLocalId: userLocalId ?? this.userLocalId,
       status: status ?? this.status,
       dueDate: dueDate ?? this.dueDate,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
     );
   }
 
@@ -471,8 +551,8 @@ class TaskTableCompanion extends UpdateCompanion<TaskTableData> {
     if (category.present) {
       map['category'] = Variable<String>(category.value);
     }
-    if (isSync.present) {
-      map['is_sync'] = Variable<bool>(isSync.value);
+    if (isSynced.present) {
+      map['is_synced'] = Variable<bool>(isSynced.value);
     }
     if (priority.present) {
       map['priority'] = Variable<String>(priority.value);
@@ -486,6 +566,12 @@ class TaskTableCompanion extends UpdateCompanion<TaskTableData> {
     if (dueDate.present) {
       map['due_date'] = Variable<DateTime>(dueDate.value);
     }
+    if (createdAt.present) {
+      map['created_at'] = Variable<DateTime>(createdAt.value);
+    }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<DateTime>(updatedAt.value);
+    }
     return map;
   }
 
@@ -497,11 +583,13 @@ class TaskTableCompanion extends UpdateCompanion<TaskTableData> {
           ..write('title: $title, ')
           ..write('description: $description, ')
           ..write('category: $category, ')
-          ..write('isSync: $isSync, ')
+          ..write('isSynced: $isSynced, ')
           ..write('priority: $priority, ')
           ..write('userLocalId: $userLocalId, ')
           ..write('status: $status, ')
-          ..write('dueDate: $dueDate')
+          ..write('dueDate: $dueDate, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt')
           ..write(')'))
         .toString();
   }
@@ -536,14 +624,15 @@ class $SubtaskTableTable extends SubtaskTable
   late final GeneratedColumn<String> title = GeneratedColumn<String>(
       'title', aliasedName, false,
       type: DriftSqlType.string, requiredDuringInsert: true);
-  static const VerificationMeta _isSyncMeta = const VerificationMeta('isSync');
+  static const VerificationMeta _isSyncedMeta =
+      const VerificationMeta('isSynced');
   @override
-  late final GeneratedColumn<bool> isSync = GeneratedColumn<bool>(
-      'is_sync', aliasedName, false,
+  late final GeneratedColumn<bool> isSynced = GeneratedColumn<bool>(
+      'is_synced', aliasedName, false,
       type: DriftSqlType.bool,
       requiredDuringInsert: true,
       defaultConstraints:
-          GeneratedColumn.constraintIsAlways('CHECK ("is_sync" IN (0, 1))'));
+          GeneratedColumn.constraintIsAlways('CHECK ("is_synced" IN (0, 1))'));
   static const VerificationMeta _isCompletedMeta =
       const VerificationMeta('isCompleted');
   @override
@@ -561,9 +650,29 @@ class $SubtaskTableTable extends SubtaskTable
       type: DriftSqlType.int,
       requiredDuringInsert: true,
       $customConstraints: 'REFERENCES task(localId) ON DELETE CASCADE');
+  static const VerificationMeta _createdAtMeta =
+      const VerificationMeta('createdAt');
   @override
-  List<GeneratedColumn> get $columns =>
-      [localId, remoteId, title, isSync, isCompleted, taskLocalId];
+  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
+      'created_at', aliasedName, false,
+      type: DriftSqlType.dateTime, requiredDuringInsert: true);
+  static const VerificationMeta _updatedAtMeta =
+      const VerificationMeta('updatedAt');
+  @override
+  late final GeneratedColumn<DateTime> updatedAt = GeneratedColumn<DateTime>(
+      'updated_at', aliasedName, false,
+      type: DriftSqlType.dateTime, requiredDuringInsert: true);
+  @override
+  List<GeneratedColumn> get $columns => [
+        localId,
+        remoteId,
+        title,
+        isSynced,
+        isCompleted,
+        taskLocalId,
+        createdAt,
+        updatedAt
+      ];
   @override
   String get aliasedName => _alias ?? actualTableName;
   @override
@@ -588,11 +697,11 @@ class $SubtaskTableTable extends SubtaskTable
     } else if (isInserting) {
       context.missing(_titleMeta);
     }
-    if (data.containsKey('is_sync')) {
-      context.handle(_isSyncMeta,
-          isSync.isAcceptableOrUnknown(data['is_sync']!, _isSyncMeta));
+    if (data.containsKey('is_synced')) {
+      context.handle(_isSyncedMeta,
+          isSynced.isAcceptableOrUnknown(data['is_synced']!, _isSyncedMeta));
     } else if (isInserting) {
-      context.missing(_isSyncMeta);
+      context.missing(_isSyncedMeta);
     }
     if (data.containsKey('is_completed')) {
       context.handle(
@@ -610,6 +719,18 @@ class $SubtaskTableTable extends SubtaskTable
     } else if (isInserting) {
       context.missing(_taskLocalIdMeta);
     }
+    if (data.containsKey('created_at')) {
+      context.handle(_createdAtMeta,
+          createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta));
+    } else if (isInserting) {
+      context.missing(_createdAtMeta);
+    }
+    if (data.containsKey('updated_at')) {
+      context.handle(_updatedAtMeta,
+          updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta));
+    } else if (isInserting) {
+      context.missing(_updatedAtMeta);
+    }
     return context;
   }
 
@@ -625,12 +746,16 @@ class $SubtaskTableTable extends SubtaskTable
           .read(DriftSqlType.string, data['${effectivePrefix}remote_id'])!,
       title: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}title'])!,
-      isSync: attachedDatabase.typeMapping
-          .read(DriftSqlType.bool, data['${effectivePrefix}is_sync'])!,
+      isSynced: attachedDatabase.typeMapping
+          .read(DriftSqlType.bool, data['${effectivePrefix}is_synced'])!,
       isCompleted: attachedDatabase.typeMapping
           .read(DriftSqlType.bool, data['${effectivePrefix}is_completed'])!,
       taskLocalId: attachedDatabase.typeMapping
           .read(DriftSqlType.int, data['${effectivePrefix}task_local_id'])!,
+      createdAt: attachedDatabase.typeMapping
+          .read(DriftSqlType.dateTime, data['${effectivePrefix}created_at'])!,
+      updatedAt: attachedDatabase.typeMapping
+          .read(DriftSqlType.dateTime, data['${effectivePrefix}updated_at'])!,
     );
   }
 
@@ -645,25 +770,31 @@ class SubtaskTableData extends DataClass
   final int localId;
   final String remoteId;
   final String title;
-  final bool isSync;
+  final bool isSynced;
   final bool isCompleted;
   final int taskLocalId;
+  final DateTime createdAt;
+  final DateTime updatedAt;
   const SubtaskTableData(
       {required this.localId,
       required this.remoteId,
       required this.title,
-      required this.isSync,
+      required this.isSynced,
       required this.isCompleted,
-      required this.taskLocalId});
+      required this.taskLocalId,
+      required this.createdAt,
+      required this.updatedAt});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
     map['local_id'] = Variable<int>(localId);
     map['remote_id'] = Variable<String>(remoteId);
     map['title'] = Variable<String>(title);
-    map['is_sync'] = Variable<bool>(isSync);
+    map['is_synced'] = Variable<bool>(isSynced);
     map['is_completed'] = Variable<bool>(isCompleted);
     map['task_local_id'] = Variable<int>(taskLocalId);
+    map['created_at'] = Variable<DateTime>(createdAt);
+    map['updated_at'] = Variable<DateTime>(updatedAt);
     return map;
   }
 
@@ -672,9 +803,11 @@ class SubtaskTableData extends DataClass
       localId: Value(localId),
       remoteId: Value(remoteId),
       title: Value(title),
-      isSync: Value(isSync),
+      isSynced: Value(isSynced),
       isCompleted: Value(isCompleted),
       taskLocalId: Value(taskLocalId),
+      createdAt: Value(createdAt),
+      updatedAt: Value(updatedAt),
     );
   }
 
@@ -685,9 +818,11 @@ class SubtaskTableData extends DataClass
       localId: serializer.fromJson<int>(json['localId']),
       remoteId: serializer.fromJson<String>(json['remoteId']),
       title: serializer.fromJson<String>(json['title']),
-      isSync: serializer.fromJson<bool>(json['isSync']),
+      isSynced: serializer.fromJson<bool>(json['isSynced']),
       isCompleted: serializer.fromJson<bool>(json['isCompleted']),
       taskLocalId: serializer.fromJson<int>(json['taskLocalId']),
+      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
+      updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
     );
   }
   @override
@@ -697,9 +832,11 @@ class SubtaskTableData extends DataClass
       'localId': serializer.toJson<int>(localId),
       'remoteId': serializer.toJson<String>(remoteId),
       'title': serializer.toJson<String>(title),
-      'isSync': serializer.toJson<bool>(isSync),
+      'isSynced': serializer.toJson<bool>(isSynced),
       'isCompleted': serializer.toJson<bool>(isCompleted),
       'taskLocalId': serializer.toJson<int>(taskLocalId),
+      'createdAt': serializer.toJson<DateTime>(createdAt),
+      'updatedAt': serializer.toJson<DateTime>(updatedAt),
     };
   }
 
@@ -707,27 +844,33 @@ class SubtaskTableData extends DataClass
           {int? localId,
           String? remoteId,
           String? title,
-          bool? isSync,
+          bool? isSynced,
           bool? isCompleted,
-          int? taskLocalId}) =>
+          int? taskLocalId,
+          DateTime? createdAt,
+          DateTime? updatedAt}) =>
       SubtaskTableData(
         localId: localId ?? this.localId,
         remoteId: remoteId ?? this.remoteId,
         title: title ?? this.title,
-        isSync: isSync ?? this.isSync,
+        isSynced: isSynced ?? this.isSynced,
         isCompleted: isCompleted ?? this.isCompleted,
         taskLocalId: taskLocalId ?? this.taskLocalId,
+        createdAt: createdAt ?? this.createdAt,
+        updatedAt: updatedAt ?? this.updatedAt,
       );
   SubtaskTableData copyWithCompanion(SubtaskTableCompanion data) {
     return SubtaskTableData(
       localId: data.localId.present ? data.localId.value : this.localId,
       remoteId: data.remoteId.present ? data.remoteId.value : this.remoteId,
       title: data.title.present ? data.title.value : this.title,
-      isSync: data.isSync.present ? data.isSync.value : this.isSync,
+      isSynced: data.isSynced.present ? data.isSynced.value : this.isSynced,
       isCompleted:
           data.isCompleted.present ? data.isCompleted.value : this.isCompleted,
       taskLocalId:
           data.taskLocalId.present ? data.taskLocalId.value : this.taskLocalId,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
     );
   }
 
@@ -737,16 +880,18 @@ class SubtaskTableData extends DataClass
           ..write('localId: $localId, ')
           ..write('remoteId: $remoteId, ')
           ..write('title: $title, ')
-          ..write('isSync: $isSync, ')
+          ..write('isSynced: $isSynced, ')
           ..write('isCompleted: $isCompleted, ')
-          ..write('taskLocalId: $taskLocalId')
+          ..write('taskLocalId: $taskLocalId, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode =>
-      Object.hash(localId, remoteId, title, isSync, isCompleted, taskLocalId);
+  int get hashCode => Object.hash(localId, remoteId, title, isSynced,
+      isCompleted, taskLocalId, createdAt, updatedAt);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -754,52 +899,66 @@ class SubtaskTableData extends DataClass
           other.localId == this.localId &&
           other.remoteId == this.remoteId &&
           other.title == this.title &&
-          other.isSync == this.isSync &&
+          other.isSynced == this.isSynced &&
           other.isCompleted == this.isCompleted &&
-          other.taskLocalId == this.taskLocalId);
+          other.taskLocalId == this.taskLocalId &&
+          other.createdAt == this.createdAt &&
+          other.updatedAt == this.updatedAt);
 }
 
 class SubtaskTableCompanion extends UpdateCompanion<SubtaskTableData> {
   final Value<int> localId;
   final Value<String> remoteId;
   final Value<String> title;
-  final Value<bool> isSync;
+  final Value<bool> isSynced;
   final Value<bool> isCompleted;
   final Value<int> taskLocalId;
+  final Value<DateTime> createdAt;
+  final Value<DateTime> updatedAt;
   const SubtaskTableCompanion({
     this.localId = const Value.absent(),
     this.remoteId = const Value.absent(),
     this.title = const Value.absent(),
-    this.isSync = const Value.absent(),
+    this.isSynced = const Value.absent(),
     this.isCompleted = const Value.absent(),
     this.taskLocalId = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
   });
   SubtaskTableCompanion.insert({
     this.localId = const Value.absent(),
     this.remoteId = const Value.absent(),
     required String title,
-    required bool isSync,
+    required bool isSynced,
     required bool isCompleted,
     required int taskLocalId,
+    required DateTime createdAt,
+    required DateTime updatedAt,
   })  : title = Value(title),
-        isSync = Value(isSync),
+        isSynced = Value(isSynced),
         isCompleted = Value(isCompleted),
-        taskLocalId = Value(taskLocalId);
+        taskLocalId = Value(taskLocalId),
+        createdAt = Value(createdAt),
+        updatedAt = Value(updatedAt);
   static Insertable<SubtaskTableData> custom({
     Expression<int>? localId,
     Expression<String>? remoteId,
     Expression<String>? title,
-    Expression<bool>? isSync,
+    Expression<bool>? isSynced,
     Expression<bool>? isCompleted,
     Expression<int>? taskLocalId,
+    Expression<DateTime>? createdAt,
+    Expression<DateTime>? updatedAt,
   }) {
     return RawValuesInsertable({
       if (localId != null) 'local_id': localId,
       if (remoteId != null) 'remote_id': remoteId,
       if (title != null) 'title': title,
-      if (isSync != null) 'is_sync': isSync,
+      if (isSynced != null) 'is_synced': isSynced,
       if (isCompleted != null) 'is_completed': isCompleted,
       if (taskLocalId != null) 'task_local_id': taskLocalId,
+      if (createdAt != null) 'created_at': createdAt,
+      if (updatedAt != null) 'updated_at': updatedAt,
     });
   }
 
@@ -807,16 +966,20 @@ class SubtaskTableCompanion extends UpdateCompanion<SubtaskTableData> {
       {Value<int>? localId,
       Value<String>? remoteId,
       Value<String>? title,
-      Value<bool>? isSync,
+      Value<bool>? isSynced,
       Value<bool>? isCompleted,
-      Value<int>? taskLocalId}) {
+      Value<int>? taskLocalId,
+      Value<DateTime>? createdAt,
+      Value<DateTime>? updatedAt}) {
     return SubtaskTableCompanion(
       localId: localId ?? this.localId,
       remoteId: remoteId ?? this.remoteId,
       title: title ?? this.title,
-      isSync: isSync ?? this.isSync,
+      isSynced: isSynced ?? this.isSynced,
       isCompleted: isCompleted ?? this.isCompleted,
       taskLocalId: taskLocalId ?? this.taskLocalId,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
     );
   }
 
@@ -832,14 +995,20 @@ class SubtaskTableCompanion extends UpdateCompanion<SubtaskTableData> {
     if (title.present) {
       map['title'] = Variable<String>(title.value);
     }
-    if (isSync.present) {
-      map['is_sync'] = Variable<bool>(isSync.value);
+    if (isSynced.present) {
+      map['is_synced'] = Variable<bool>(isSynced.value);
     }
     if (isCompleted.present) {
       map['is_completed'] = Variable<bool>(isCompleted.value);
     }
     if (taskLocalId.present) {
       map['task_local_id'] = Variable<int>(taskLocalId.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<DateTime>(createdAt.value);
+    }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<DateTime>(updatedAt.value);
     }
     return map;
   }
@@ -850,9 +1019,11 @@ class SubtaskTableCompanion extends UpdateCompanion<SubtaskTableData> {
           ..write('localId: $localId, ')
           ..write('remoteId: $remoteId, ')
           ..write('title: $title, ')
-          ..write('isSync: $isSync, ')
+          ..write('isSynced: $isSynced, ')
           ..write('isCompleted: $isCompleted, ')
-          ..write('taskLocalId: $taskLocalId')
+          ..write('taskLocalId: $taskLocalId, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt')
           ..write(')'))
         .toString();
   }
@@ -1213,14 +1384,15 @@ class $SettingTableTable extends SettingTable
   late final GeneratedColumn<int> remindBefore = GeneratedColumn<int>(
       'remind_before', aliasedName, false,
       type: DriftSqlType.int, requiredDuringInsert: true);
-  static const VerificationMeta _isSyncMeta = const VerificationMeta('isSync');
+  static const VerificationMeta _isSyncedMeta =
+      const VerificationMeta('isSynced');
   @override
-  late final GeneratedColumn<bool> isSync = GeneratedColumn<bool>(
-      'is_sync', aliasedName, false,
+  late final GeneratedColumn<bool> isSynced = GeneratedColumn<bool>(
+      'is_synced', aliasedName, false,
       type: DriftSqlType.bool,
       requiredDuringInsert: true,
       defaultConstraints:
-          GeneratedColumn.constraintIsAlways('CHECK ("is_sync" IN (0, 1))'));
+          GeneratedColumn.constraintIsAlways('CHECK ("is_synced" IN (0, 1))'));
   @override
   List<GeneratedColumn> get $columns => [
         localId,
@@ -1230,7 +1402,7 @@ class $SettingTableTable extends SettingTable
         language,
         theme,
         remindBefore,
-        isSync
+        isSynced
       ];
   @override
   String get aliasedName => _alias ?? actualTableName;
@@ -1286,11 +1458,11 @@ class $SettingTableTable extends SettingTable
     } else if (isInserting) {
       context.missing(_remindBeforeMeta);
     }
-    if (data.containsKey('is_sync')) {
-      context.handle(_isSyncMeta,
-          isSync.isAcceptableOrUnknown(data['is_sync']!, _isSyncMeta));
+    if (data.containsKey('is_synced')) {
+      context.handle(_isSyncedMeta,
+          isSynced.isAcceptableOrUnknown(data['is_synced']!, _isSyncedMeta));
     } else if (isInserting) {
-      context.missing(_isSyncMeta);
+      context.missing(_isSyncedMeta);
     }
     return context;
   }
@@ -1316,8 +1488,8 @@ class $SettingTableTable extends SettingTable
           .read(DriftSqlType.string, data['${effectivePrefix}theme'])!,
       remindBefore: attachedDatabase.typeMapping
           .read(DriftSqlType.int, data['${effectivePrefix}remind_before'])!,
-      isSync: attachedDatabase.typeMapping
-          .read(DriftSqlType.bool, data['${effectivePrefix}is_sync'])!,
+      isSynced: attachedDatabase.typeMapping
+          .read(DriftSqlType.bool, data['${effectivePrefix}is_synced'])!,
     );
   }
 
@@ -1336,7 +1508,7 @@ class SettingTableData extends DataClass
   final String language;
   final String theme;
   final int remindBefore;
-  final bool isSync;
+  final bool isSynced;
   const SettingTableData(
       {required this.localId,
       required this.remoteId,
@@ -1345,7 +1517,7 @@ class SettingTableData extends DataClass
       required this.language,
       required this.theme,
       required this.remindBefore,
-      required this.isSync});
+      required this.isSynced});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
@@ -1356,7 +1528,7 @@ class SettingTableData extends DataClass
     map['language'] = Variable<String>(language);
     map['theme'] = Variable<String>(theme);
     map['remind_before'] = Variable<int>(remindBefore);
-    map['is_sync'] = Variable<bool>(isSync);
+    map['is_synced'] = Variable<bool>(isSynced);
     return map;
   }
 
@@ -1369,7 +1541,7 @@ class SettingTableData extends DataClass
       language: Value(language),
       theme: Value(theme),
       remindBefore: Value(remindBefore),
-      isSync: Value(isSync),
+      isSynced: Value(isSynced),
     );
   }
 
@@ -1385,7 +1557,7 @@ class SettingTableData extends DataClass
       language: serializer.fromJson<String>(json['language']),
       theme: serializer.fromJson<String>(json['theme']),
       remindBefore: serializer.fromJson<int>(json['remindBefore']),
-      isSync: serializer.fromJson<bool>(json['isSync']),
+      isSynced: serializer.fromJson<bool>(json['isSynced']),
     );
   }
   @override
@@ -1399,7 +1571,7 @@ class SettingTableData extends DataClass
       'language': serializer.toJson<String>(language),
       'theme': serializer.toJson<String>(theme),
       'remindBefore': serializer.toJson<int>(remindBefore),
-      'isSync': serializer.toJson<bool>(isSync),
+      'isSynced': serializer.toJson<bool>(isSynced),
     };
   }
 
@@ -1411,7 +1583,7 @@ class SettingTableData extends DataClass
           String? language,
           String? theme,
           int? remindBefore,
-          bool? isSync}) =>
+          bool? isSynced}) =>
       SettingTableData(
         localId: localId ?? this.localId,
         remoteId: remoteId ?? this.remoteId,
@@ -1421,7 +1593,7 @@ class SettingTableData extends DataClass
         language: language ?? this.language,
         theme: theme ?? this.theme,
         remindBefore: remindBefore ?? this.remindBefore,
-        isSync: isSync ?? this.isSync,
+        isSynced: isSynced ?? this.isSynced,
       );
   SettingTableData copyWithCompanion(SettingTableCompanion data) {
     return SettingTableData(
@@ -1437,7 +1609,7 @@ class SettingTableData extends DataClass
       remindBefore: data.remindBefore.present
           ? data.remindBefore.value
           : this.remindBefore,
-      isSync: data.isSync.present ? data.isSync.value : this.isSync,
+      isSynced: data.isSynced.present ? data.isSynced.value : this.isSynced,
     );
   }
 
@@ -1451,14 +1623,14 @@ class SettingTableData extends DataClass
           ..write('language: $language, ')
           ..write('theme: $theme, ')
           ..write('remindBefore: $remindBefore, ')
-          ..write('isSync: $isSync')
+          ..write('isSynced: $isSynced')
           ..write(')'))
         .toString();
   }
 
   @override
   int get hashCode => Object.hash(localId, remoteId, userLocalId,
-      isNotificationEnabled, language, theme, remindBefore, isSync);
+      isNotificationEnabled, language, theme, remindBefore, isSynced);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -1470,7 +1642,7 @@ class SettingTableData extends DataClass
           other.language == this.language &&
           other.theme == this.theme &&
           other.remindBefore == this.remindBefore &&
-          other.isSync == this.isSync);
+          other.isSynced == this.isSynced);
 }
 
 class SettingTableCompanion extends UpdateCompanion<SettingTableData> {
@@ -1481,7 +1653,7 @@ class SettingTableCompanion extends UpdateCompanion<SettingTableData> {
   final Value<String> language;
   final Value<String> theme;
   final Value<int> remindBefore;
-  final Value<bool> isSync;
+  final Value<bool> isSynced;
   const SettingTableCompanion({
     this.localId = const Value.absent(),
     this.remoteId = const Value.absent(),
@@ -1490,7 +1662,7 @@ class SettingTableCompanion extends UpdateCompanion<SettingTableData> {
     this.language = const Value.absent(),
     this.theme = const Value.absent(),
     this.remindBefore = const Value.absent(),
-    this.isSync = const Value.absent(),
+    this.isSynced = const Value.absent(),
   });
   SettingTableCompanion.insert({
     this.localId = const Value.absent(),
@@ -1500,13 +1672,13 @@ class SettingTableCompanion extends UpdateCompanion<SettingTableData> {
     required String language,
     required String theme,
     required int remindBefore,
-    required bool isSync,
+    required bool isSynced,
   })  : userLocalId = Value(userLocalId),
         isNotificationEnabled = Value(isNotificationEnabled),
         language = Value(language),
         theme = Value(theme),
         remindBefore = Value(remindBefore),
-        isSync = Value(isSync);
+        isSynced = Value(isSynced);
   static Insertable<SettingTableData> custom({
     Expression<int>? localId,
     Expression<String>? remoteId,
@@ -1515,7 +1687,7 @@ class SettingTableCompanion extends UpdateCompanion<SettingTableData> {
     Expression<String>? language,
     Expression<String>? theme,
     Expression<int>? remindBefore,
-    Expression<bool>? isSync,
+    Expression<bool>? isSynced,
   }) {
     return RawValuesInsertable({
       if (localId != null) 'local_id': localId,
@@ -1526,7 +1698,7 @@ class SettingTableCompanion extends UpdateCompanion<SettingTableData> {
       if (language != null) 'language': language,
       if (theme != null) 'theme': theme,
       if (remindBefore != null) 'remind_before': remindBefore,
-      if (isSync != null) 'is_sync': isSync,
+      if (isSynced != null) 'is_synced': isSynced,
     });
   }
 
@@ -1538,7 +1710,7 @@ class SettingTableCompanion extends UpdateCompanion<SettingTableData> {
       Value<String>? language,
       Value<String>? theme,
       Value<int>? remindBefore,
-      Value<bool>? isSync}) {
+      Value<bool>? isSynced}) {
     return SettingTableCompanion(
       localId: localId ?? this.localId,
       remoteId: remoteId ?? this.remoteId,
@@ -1548,7 +1720,7 @@ class SettingTableCompanion extends UpdateCompanion<SettingTableData> {
       language: language ?? this.language,
       theme: theme ?? this.theme,
       remindBefore: remindBefore ?? this.remindBefore,
-      isSync: isSync ?? this.isSync,
+      isSynced: isSynced ?? this.isSynced,
     );
   }
 
@@ -1577,8 +1749,8 @@ class SettingTableCompanion extends UpdateCompanion<SettingTableData> {
     if (remindBefore.present) {
       map['remind_before'] = Variable<int>(remindBefore.value);
     }
-    if (isSync.present) {
-      map['is_sync'] = Variable<bool>(isSync.value);
+    if (isSynced.present) {
+      map['is_synced'] = Variable<bool>(isSynced.value);
     }
     return map;
   }
@@ -1593,7 +1765,7 @@ class SettingTableCompanion extends UpdateCompanion<SettingTableData> {
           ..write('language: $language, ')
           ..write('theme: $theme, ')
           ..write('remindBefore: $remindBefore, ')
-          ..write('isSync: $isSync')
+          ..write('isSynced: $isSynced')
           ..write(')'))
         .toString();
   }
@@ -1628,25 +1800,38 @@ class $CategoryTableTable extends CategoryTable
   late final GeneratedColumn<String> name = GeneratedColumn<String>(
       'name', aliasedName, false,
       type: DriftSqlType.string, requiredDuringInsert: true);
-  static const VerificationMeta _isSyncMeta = const VerificationMeta('isSync');
+  static const VerificationMeta _isSyncedMeta =
+      const VerificationMeta('isSynced');
   @override
-  late final GeneratedColumn<bool> isSync = GeneratedColumn<bool>(
-      'is_sync', aliasedName, false,
+  late final GeneratedColumn<bool> isSynced = GeneratedColumn<bool>(
+      'is_synced', aliasedName, false,
       type: DriftSqlType.bool,
       requiredDuringInsert: true,
       defaultConstraints:
-          GeneratedColumn.constraintIsAlways('CHECK ("is_sync" IN (0, 1))'));
-  static const VerificationMeta _settingLocalIdMeta =
-      const VerificationMeta('settingLocalId');
+          GeneratedColumn.constraintIsAlways('CHECK ("is_synced" IN (0, 1))'));
+  static const VerificationMeta _userLocalIdMeta =
+      const VerificationMeta('userLocalId');
   @override
-  late final GeneratedColumn<int> settingLocalId = GeneratedColumn<int>(
-      'setting_local_id', aliasedName, true,
+  late final GeneratedColumn<int> userLocalId = GeneratedColumn<int>(
+      'user_local_id', aliasedName, true,
       type: DriftSqlType.int,
       requiredDuringInsert: false,
-      $customConstraints: 'REFERENCES setting(localId) ON DELETE CASCADE');
+      $customConstraints: 'REFERENCES user(localId) ON DELETE CASCADE');
+  static const VerificationMeta _createdAtMeta =
+      const VerificationMeta('createdAt');
+  @override
+  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
+      'created_at', aliasedName, false,
+      type: DriftSqlType.dateTime, requiredDuringInsert: true);
+  static const VerificationMeta _updatedAtMeta =
+      const VerificationMeta('updatedAt');
+  @override
+  late final GeneratedColumn<DateTime> updatedAt = GeneratedColumn<DateTime>(
+      'updated_at', aliasedName, false,
+      type: DriftSqlType.dateTime, requiredDuringInsert: true);
   @override
   List<GeneratedColumn> get $columns =>
-      [localId, remoteId, name, isSync, settingLocalId];
+      [localId, remoteId, name, isSynced, userLocalId, createdAt, updatedAt];
   @override
   String get aliasedName => _alias ?? actualTableName;
   @override
@@ -1671,17 +1856,29 @@ class $CategoryTableTable extends CategoryTable
     } else if (isInserting) {
       context.missing(_nameMeta);
     }
-    if (data.containsKey('is_sync')) {
-      context.handle(_isSyncMeta,
-          isSync.isAcceptableOrUnknown(data['is_sync']!, _isSyncMeta));
+    if (data.containsKey('is_synced')) {
+      context.handle(_isSyncedMeta,
+          isSynced.isAcceptableOrUnknown(data['is_synced']!, _isSyncedMeta));
     } else if (isInserting) {
-      context.missing(_isSyncMeta);
+      context.missing(_isSyncedMeta);
     }
-    if (data.containsKey('setting_local_id')) {
+    if (data.containsKey('user_local_id')) {
       context.handle(
-          _settingLocalIdMeta,
-          settingLocalId.isAcceptableOrUnknown(
-              data['setting_local_id']!, _settingLocalIdMeta));
+          _userLocalIdMeta,
+          userLocalId.isAcceptableOrUnknown(
+              data['user_local_id']!, _userLocalIdMeta));
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(_createdAtMeta,
+          createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta));
+    } else if (isInserting) {
+      context.missing(_createdAtMeta);
+    }
+    if (data.containsKey('updated_at')) {
+      context.handle(_updatedAtMeta,
+          updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta));
+    } else if (isInserting) {
+      context.missing(_updatedAtMeta);
     }
     return context;
   }
@@ -1698,10 +1895,14 @@ class $CategoryTableTable extends CategoryTable
           .read(DriftSqlType.string, data['${effectivePrefix}remote_id'])!,
       name: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}name'])!,
-      isSync: attachedDatabase.typeMapping
-          .read(DriftSqlType.bool, data['${effectivePrefix}is_sync'])!,
-      settingLocalId: attachedDatabase.typeMapping
-          .read(DriftSqlType.int, data['${effectivePrefix}setting_local_id']),
+      isSynced: attachedDatabase.typeMapping
+          .read(DriftSqlType.bool, data['${effectivePrefix}is_synced'])!,
+      userLocalId: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}user_local_id']),
+      createdAt: attachedDatabase.typeMapping
+          .read(DriftSqlType.dateTime, data['${effectivePrefix}created_at'])!,
+      updatedAt: attachedDatabase.typeMapping
+          .read(DriftSqlType.dateTime, data['${effectivePrefix}updated_at'])!,
     );
   }
 
@@ -1716,24 +1917,30 @@ class CategoryTableData extends DataClass
   final int localId;
   final String remoteId;
   final String name;
-  final bool isSync;
-  final int? settingLocalId;
+  final bool isSynced;
+  final int? userLocalId;
+  final DateTime createdAt;
+  final DateTime updatedAt;
   const CategoryTableData(
       {required this.localId,
       required this.remoteId,
       required this.name,
-      required this.isSync,
-      this.settingLocalId});
+      required this.isSynced,
+      this.userLocalId,
+      required this.createdAt,
+      required this.updatedAt});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
     map['local_id'] = Variable<int>(localId);
     map['remote_id'] = Variable<String>(remoteId);
     map['name'] = Variable<String>(name);
-    map['is_sync'] = Variable<bool>(isSync);
-    if (!nullToAbsent || settingLocalId != null) {
-      map['setting_local_id'] = Variable<int>(settingLocalId);
+    map['is_synced'] = Variable<bool>(isSynced);
+    if (!nullToAbsent || userLocalId != null) {
+      map['user_local_id'] = Variable<int>(userLocalId);
     }
+    map['created_at'] = Variable<DateTime>(createdAt);
+    map['updated_at'] = Variable<DateTime>(updatedAt);
     return map;
   }
 
@@ -1742,10 +1949,12 @@ class CategoryTableData extends DataClass
       localId: Value(localId),
       remoteId: Value(remoteId),
       name: Value(name),
-      isSync: Value(isSync),
-      settingLocalId: settingLocalId == null && nullToAbsent
+      isSynced: Value(isSynced),
+      userLocalId: userLocalId == null && nullToAbsent
           ? const Value.absent()
-          : Value(settingLocalId),
+          : Value(userLocalId),
+      createdAt: Value(createdAt),
+      updatedAt: Value(updatedAt),
     );
   }
 
@@ -1756,8 +1965,10 @@ class CategoryTableData extends DataClass
       localId: serializer.fromJson<int>(json['localId']),
       remoteId: serializer.fromJson<String>(json['remoteId']),
       name: serializer.fromJson<String>(json['name']),
-      isSync: serializer.fromJson<bool>(json['isSync']),
-      settingLocalId: serializer.fromJson<int?>(json['settingLocalId']),
+      isSynced: serializer.fromJson<bool>(json['isSynced']),
+      userLocalId: serializer.fromJson<int?>(json['userLocalId']),
+      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
+      updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
     );
   }
   @override
@@ -1767,8 +1978,10 @@ class CategoryTableData extends DataClass
       'localId': serializer.toJson<int>(localId),
       'remoteId': serializer.toJson<String>(remoteId),
       'name': serializer.toJson<String>(name),
-      'isSync': serializer.toJson<bool>(isSync),
-      'settingLocalId': serializer.toJson<int?>(settingLocalId),
+      'isSynced': serializer.toJson<bool>(isSynced),
+      'userLocalId': serializer.toJson<int?>(userLocalId),
+      'createdAt': serializer.toJson<DateTime>(createdAt),
+      'updatedAt': serializer.toJson<DateTime>(updatedAt),
     };
   }
 
@@ -1776,25 +1989,29 @@ class CategoryTableData extends DataClass
           {int? localId,
           String? remoteId,
           String? name,
-          bool? isSync,
-          Value<int?> settingLocalId = const Value.absent()}) =>
+          bool? isSynced,
+          Value<int?> userLocalId = const Value.absent(),
+          DateTime? createdAt,
+          DateTime? updatedAt}) =>
       CategoryTableData(
         localId: localId ?? this.localId,
         remoteId: remoteId ?? this.remoteId,
         name: name ?? this.name,
-        isSync: isSync ?? this.isSync,
-        settingLocalId:
-            settingLocalId.present ? settingLocalId.value : this.settingLocalId,
+        isSynced: isSynced ?? this.isSynced,
+        userLocalId: userLocalId.present ? userLocalId.value : this.userLocalId,
+        createdAt: createdAt ?? this.createdAt,
+        updatedAt: updatedAt ?? this.updatedAt,
       );
   CategoryTableData copyWithCompanion(CategoryTableCompanion data) {
     return CategoryTableData(
       localId: data.localId.present ? data.localId.value : this.localId,
       remoteId: data.remoteId.present ? data.remoteId.value : this.remoteId,
       name: data.name.present ? data.name.value : this.name,
-      isSync: data.isSync.present ? data.isSync.value : this.isSync,
-      settingLocalId: data.settingLocalId.present
-          ? data.settingLocalId.value
-          : this.settingLocalId,
+      isSynced: data.isSynced.present ? data.isSynced.value : this.isSynced,
+      userLocalId:
+          data.userLocalId.present ? data.userLocalId.value : this.userLocalId,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
     );
   }
 
@@ -1804,15 +2021,17 @@ class CategoryTableData extends DataClass
           ..write('localId: $localId, ')
           ..write('remoteId: $remoteId, ')
           ..write('name: $name, ')
-          ..write('isSync: $isSync, ')
-          ..write('settingLocalId: $settingLocalId')
+          ..write('isSynced: $isSynced, ')
+          ..write('userLocalId: $userLocalId, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode =>
-      Object.hash(localId, remoteId, name, isSync, settingLocalId);
+  int get hashCode => Object.hash(
+      localId, remoteId, name, isSynced, userLocalId, createdAt, updatedAt);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -1820,44 +2039,58 @@ class CategoryTableData extends DataClass
           other.localId == this.localId &&
           other.remoteId == this.remoteId &&
           other.name == this.name &&
-          other.isSync == this.isSync &&
-          other.settingLocalId == this.settingLocalId);
+          other.isSynced == this.isSynced &&
+          other.userLocalId == this.userLocalId &&
+          other.createdAt == this.createdAt &&
+          other.updatedAt == this.updatedAt);
 }
 
 class CategoryTableCompanion extends UpdateCompanion<CategoryTableData> {
   final Value<int> localId;
   final Value<String> remoteId;
   final Value<String> name;
-  final Value<bool> isSync;
-  final Value<int?> settingLocalId;
+  final Value<bool> isSynced;
+  final Value<int?> userLocalId;
+  final Value<DateTime> createdAt;
+  final Value<DateTime> updatedAt;
   const CategoryTableCompanion({
     this.localId = const Value.absent(),
     this.remoteId = const Value.absent(),
     this.name = const Value.absent(),
-    this.isSync = const Value.absent(),
-    this.settingLocalId = const Value.absent(),
+    this.isSynced = const Value.absent(),
+    this.userLocalId = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
   });
   CategoryTableCompanion.insert({
     this.localId = const Value.absent(),
     this.remoteId = const Value.absent(),
     required String name,
-    required bool isSync,
-    this.settingLocalId = const Value.absent(),
+    required bool isSynced,
+    this.userLocalId = const Value.absent(),
+    required DateTime createdAt,
+    required DateTime updatedAt,
   })  : name = Value(name),
-        isSync = Value(isSync);
+        isSynced = Value(isSynced),
+        createdAt = Value(createdAt),
+        updatedAt = Value(updatedAt);
   static Insertable<CategoryTableData> custom({
     Expression<int>? localId,
     Expression<String>? remoteId,
     Expression<String>? name,
-    Expression<bool>? isSync,
-    Expression<int>? settingLocalId,
+    Expression<bool>? isSynced,
+    Expression<int>? userLocalId,
+    Expression<DateTime>? createdAt,
+    Expression<DateTime>? updatedAt,
   }) {
     return RawValuesInsertable({
       if (localId != null) 'local_id': localId,
       if (remoteId != null) 'remote_id': remoteId,
       if (name != null) 'name': name,
-      if (isSync != null) 'is_sync': isSync,
-      if (settingLocalId != null) 'setting_local_id': settingLocalId,
+      if (isSynced != null) 'is_synced': isSynced,
+      if (userLocalId != null) 'user_local_id': userLocalId,
+      if (createdAt != null) 'created_at': createdAt,
+      if (updatedAt != null) 'updated_at': updatedAt,
     });
   }
 
@@ -1865,14 +2098,18 @@ class CategoryTableCompanion extends UpdateCompanion<CategoryTableData> {
       {Value<int>? localId,
       Value<String>? remoteId,
       Value<String>? name,
-      Value<bool>? isSync,
-      Value<int?>? settingLocalId}) {
+      Value<bool>? isSynced,
+      Value<int?>? userLocalId,
+      Value<DateTime>? createdAt,
+      Value<DateTime>? updatedAt}) {
     return CategoryTableCompanion(
       localId: localId ?? this.localId,
       remoteId: remoteId ?? this.remoteId,
       name: name ?? this.name,
-      isSync: isSync ?? this.isSync,
-      settingLocalId: settingLocalId ?? this.settingLocalId,
+      isSynced: isSynced ?? this.isSynced,
+      userLocalId: userLocalId ?? this.userLocalId,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
     );
   }
 
@@ -1888,11 +2125,17 @@ class CategoryTableCompanion extends UpdateCompanion<CategoryTableData> {
     if (name.present) {
       map['name'] = Variable<String>(name.value);
     }
-    if (isSync.present) {
-      map['is_sync'] = Variable<bool>(isSync.value);
+    if (isSynced.present) {
+      map['is_synced'] = Variable<bool>(isSynced.value);
     }
-    if (settingLocalId.present) {
-      map['setting_local_id'] = Variable<int>(settingLocalId.value);
+    if (userLocalId.present) {
+      map['user_local_id'] = Variable<int>(userLocalId.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<DateTime>(createdAt.value);
+    }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<DateTime>(updatedAt.value);
     }
     return map;
   }
@@ -1903,8 +2146,10 @@ class CategoryTableCompanion extends UpdateCompanion<CategoryTableData> {
           ..write('localId: $localId, ')
           ..write('remoteId: $remoteId, ')
           ..write('name: $name, ')
-          ..write('isSync: $isSync, ')
-          ..write('settingLocalId: $settingLocalId')
+          ..write('isSynced: $isSynced, ')
+          ..write('userLocalId: $userLocalId, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt')
           ..write(')'))
         .toString();
   }
@@ -1937,11 +2182,13 @@ typedef $$TaskTableTableCreateCompanionBuilder = TaskTableCompanion Function({
   required String title,
   required String description,
   required String category,
-  required bool isSync,
+  required bool isSynced,
   required String priority,
   required int userLocalId,
   required String status,
   required DateTime dueDate,
+  required DateTime createdAt,
+  required DateTime updatedAt,
 });
 typedef $$TaskTableTableUpdateCompanionBuilder = TaskTableCompanion Function({
   Value<int> localId,
@@ -1949,11 +2196,13 @@ typedef $$TaskTableTableUpdateCompanionBuilder = TaskTableCompanion Function({
   Value<String> title,
   Value<String> description,
   Value<String> category,
-  Value<bool> isSync,
+  Value<bool> isSynced,
   Value<String> priority,
   Value<int> userLocalId,
   Value<String> status,
   Value<DateTime> dueDate,
+  Value<DateTime> createdAt,
+  Value<DateTime> updatedAt,
 });
 
 class $$TaskTableTableFilterComposer
@@ -1980,8 +2229,8 @@ class $$TaskTableTableFilterComposer
   ColumnFilters<String> get category => $composableBuilder(
       column: $table.category, builder: (column) => ColumnFilters(column));
 
-  ColumnFilters<bool> get isSync => $composableBuilder(
-      column: $table.isSync, builder: (column) => ColumnFilters(column));
+  ColumnFilters<bool> get isSynced => $composableBuilder(
+      column: $table.isSynced, builder: (column) => ColumnFilters(column));
 
   ColumnFilters<String> get priority => $composableBuilder(
       column: $table.priority, builder: (column) => ColumnFilters(column));
@@ -1994,6 +2243,12 @@ class $$TaskTableTableFilterComposer
 
   ColumnFilters<DateTime> get dueDate => $composableBuilder(
       column: $table.dueDate, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<DateTime> get createdAt => $composableBuilder(
+      column: $table.createdAt, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<DateTime> get updatedAt => $composableBuilder(
+      column: $table.updatedAt, builder: (column) => ColumnFilters(column));
 }
 
 class $$TaskTableTableOrderingComposer
@@ -2020,8 +2275,8 @@ class $$TaskTableTableOrderingComposer
   ColumnOrderings<String> get category => $composableBuilder(
       column: $table.category, builder: (column) => ColumnOrderings(column));
 
-  ColumnOrderings<bool> get isSync => $composableBuilder(
-      column: $table.isSync, builder: (column) => ColumnOrderings(column));
+  ColumnOrderings<bool> get isSynced => $composableBuilder(
+      column: $table.isSynced, builder: (column) => ColumnOrderings(column));
 
   ColumnOrderings<String> get priority => $composableBuilder(
       column: $table.priority, builder: (column) => ColumnOrderings(column));
@@ -2034,6 +2289,12 @@ class $$TaskTableTableOrderingComposer
 
   ColumnOrderings<DateTime> get dueDate => $composableBuilder(
       column: $table.dueDate, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<DateTime> get createdAt => $composableBuilder(
+      column: $table.createdAt, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<DateTime> get updatedAt => $composableBuilder(
+      column: $table.updatedAt, builder: (column) => ColumnOrderings(column));
 }
 
 class $$TaskTableTableAnnotationComposer
@@ -2060,8 +2321,8 @@ class $$TaskTableTableAnnotationComposer
   GeneratedColumn<String> get category =>
       $composableBuilder(column: $table.category, builder: (column) => column);
 
-  GeneratedColumn<bool> get isSync =>
-      $composableBuilder(column: $table.isSync, builder: (column) => column);
+  GeneratedColumn<bool> get isSynced =>
+      $composableBuilder(column: $table.isSynced, builder: (column) => column);
 
   GeneratedColumn<String> get priority =>
       $composableBuilder(column: $table.priority, builder: (column) => column);
@@ -2074,6 +2335,12 @@ class $$TaskTableTableAnnotationComposer
 
   GeneratedColumn<DateTime> get dueDate =>
       $composableBuilder(column: $table.dueDate, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get createdAt =>
+      $composableBuilder(column: $table.createdAt, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get updatedAt =>
+      $composableBuilder(column: $table.updatedAt, builder: (column) => column);
 }
 
 class $$TaskTableTableTableManager extends RootTableManager<
@@ -2107,11 +2374,13 @@ class $$TaskTableTableTableManager extends RootTableManager<
             Value<String> title = const Value.absent(),
             Value<String> description = const Value.absent(),
             Value<String> category = const Value.absent(),
-            Value<bool> isSync = const Value.absent(),
+            Value<bool> isSynced = const Value.absent(),
             Value<String> priority = const Value.absent(),
             Value<int> userLocalId = const Value.absent(),
             Value<String> status = const Value.absent(),
             Value<DateTime> dueDate = const Value.absent(),
+            Value<DateTime> createdAt = const Value.absent(),
+            Value<DateTime> updatedAt = const Value.absent(),
           }) =>
               TaskTableCompanion(
             localId: localId,
@@ -2119,11 +2388,13 @@ class $$TaskTableTableTableManager extends RootTableManager<
             title: title,
             description: description,
             category: category,
-            isSync: isSync,
+            isSynced: isSynced,
             priority: priority,
             userLocalId: userLocalId,
             status: status,
             dueDate: dueDate,
+            createdAt: createdAt,
+            updatedAt: updatedAt,
           ),
           createCompanionCallback: ({
             Value<int> localId = const Value.absent(),
@@ -2131,11 +2402,13 @@ class $$TaskTableTableTableManager extends RootTableManager<
             required String title,
             required String description,
             required String category,
-            required bool isSync,
+            required bool isSynced,
             required String priority,
             required int userLocalId,
             required String status,
             required DateTime dueDate,
+            required DateTime createdAt,
+            required DateTime updatedAt,
           }) =>
               TaskTableCompanion.insert(
             localId: localId,
@@ -2143,11 +2416,13 @@ class $$TaskTableTableTableManager extends RootTableManager<
             title: title,
             description: description,
             category: category,
-            isSync: isSync,
+            isSynced: isSynced,
             priority: priority,
             userLocalId: userLocalId,
             status: status,
             dueDate: dueDate,
+            createdAt: createdAt,
+            updatedAt: updatedAt,
           ),
           withReferenceMapper: (p0) => p0
               .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
@@ -2176,18 +2451,22 @@ typedef $$SubtaskTableTableCreateCompanionBuilder = SubtaskTableCompanion
   Value<int> localId,
   Value<String> remoteId,
   required String title,
-  required bool isSync,
+  required bool isSynced,
   required bool isCompleted,
   required int taskLocalId,
+  required DateTime createdAt,
+  required DateTime updatedAt,
 });
 typedef $$SubtaskTableTableUpdateCompanionBuilder = SubtaskTableCompanion
     Function({
   Value<int> localId,
   Value<String> remoteId,
   Value<String> title,
-  Value<bool> isSync,
+  Value<bool> isSynced,
   Value<bool> isCompleted,
   Value<int> taskLocalId,
+  Value<DateTime> createdAt,
+  Value<DateTime> updatedAt,
 });
 
 class $$SubtaskTableTableFilterComposer
@@ -2208,14 +2487,20 @@ class $$SubtaskTableTableFilterComposer
   ColumnFilters<String> get title => $composableBuilder(
       column: $table.title, builder: (column) => ColumnFilters(column));
 
-  ColumnFilters<bool> get isSync => $composableBuilder(
-      column: $table.isSync, builder: (column) => ColumnFilters(column));
+  ColumnFilters<bool> get isSynced => $composableBuilder(
+      column: $table.isSynced, builder: (column) => ColumnFilters(column));
 
   ColumnFilters<bool> get isCompleted => $composableBuilder(
       column: $table.isCompleted, builder: (column) => ColumnFilters(column));
 
   ColumnFilters<int> get taskLocalId => $composableBuilder(
       column: $table.taskLocalId, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<DateTime> get createdAt => $composableBuilder(
+      column: $table.createdAt, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<DateTime> get updatedAt => $composableBuilder(
+      column: $table.updatedAt, builder: (column) => ColumnFilters(column));
 }
 
 class $$SubtaskTableTableOrderingComposer
@@ -2236,14 +2521,20 @@ class $$SubtaskTableTableOrderingComposer
   ColumnOrderings<String> get title => $composableBuilder(
       column: $table.title, builder: (column) => ColumnOrderings(column));
 
-  ColumnOrderings<bool> get isSync => $composableBuilder(
-      column: $table.isSync, builder: (column) => ColumnOrderings(column));
+  ColumnOrderings<bool> get isSynced => $composableBuilder(
+      column: $table.isSynced, builder: (column) => ColumnOrderings(column));
 
   ColumnOrderings<bool> get isCompleted => $composableBuilder(
       column: $table.isCompleted, builder: (column) => ColumnOrderings(column));
 
   ColumnOrderings<int> get taskLocalId => $composableBuilder(
       column: $table.taskLocalId, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<DateTime> get createdAt => $composableBuilder(
+      column: $table.createdAt, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<DateTime> get updatedAt => $composableBuilder(
+      column: $table.updatedAt, builder: (column) => ColumnOrderings(column));
 }
 
 class $$SubtaskTableTableAnnotationComposer
@@ -2264,14 +2555,20 @@ class $$SubtaskTableTableAnnotationComposer
   GeneratedColumn<String> get title =>
       $composableBuilder(column: $table.title, builder: (column) => column);
 
-  GeneratedColumn<bool> get isSync =>
-      $composableBuilder(column: $table.isSync, builder: (column) => column);
+  GeneratedColumn<bool> get isSynced =>
+      $composableBuilder(column: $table.isSynced, builder: (column) => column);
 
   GeneratedColumn<bool> get isCompleted => $composableBuilder(
       column: $table.isCompleted, builder: (column) => column);
 
   GeneratedColumn<int> get taskLocalId => $composableBuilder(
       column: $table.taskLocalId, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get createdAt =>
+      $composableBuilder(column: $table.createdAt, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get updatedAt =>
+      $composableBuilder(column: $table.updatedAt, builder: (column) => column);
 }
 
 class $$SubtaskTableTableTableManager extends RootTableManager<
@@ -2303,33 +2600,41 @@ class $$SubtaskTableTableTableManager extends RootTableManager<
             Value<int> localId = const Value.absent(),
             Value<String> remoteId = const Value.absent(),
             Value<String> title = const Value.absent(),
-            Value<bool> isSync = const Value.absent(),
+            Value<bool> isSynced = const Value.absent(),
             Value<bool> isCompleted = const Value.absent(),
             Value<int> taskLocalId = const Value.absent(),
+            Value<DateTime> createdAt = const Value.absent(),
+            Value<DateTime> updatedAt = const Value.absent(),
           }) =>
               SubtaskTableCompanion(
             localId: localId,
             remoteId: remoteId,
             title: title,
-            isSync: isSync,
+            isSynced: isSynced,
             isCompleted: isCompleted,
             taskLocalId: taskLocalId,
+            createdAt: createdAt,
+            updatedAt: updatedAt,
           ),
           createCompanionCallback: ({
             Value<int> localId = const Value.absent(),
             Value<String> remoteId = const Value.absent(),
             required String title,
-            required bool isSync,
+            required bool isSynced,
             required bool isCompleted,
             required int taskLocalId,
+            required DateTime createdAt,
+            required DateTime updatedAt,
           }) =>
               SubtaskTableCompanion.insert(
             localId: localId,
             remoteId: remoteId,
             title: title,
-            isSync: isSync,
+            isSynced: isSynced,
             isCompleted: isCompleted,
             taskLocalId: taskLocalId,
+            createdAt: createdAt,
+            updatedAt: updatedAt,
           ),
           withReferenceMapper: (p0) => p0
               .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
@@ -2527,7 +2832,7 @@ typedef $$SettingTableTableCreateCompanionBuilder = SettingTableCompanion
   required String language,
   required String theme,
   required int remindBefore,
-  required bool isSync,
+  required bool isSynced,
 });
 typedef $$SettingTableTableUpdateCompanionBuilder = SettingTableCompanion
     Function({
@@ -2538,7 +2843,7 @@ typedef $$SettingTableTableUpdateCompanionBuilder = SettingTableCompanion
   Value<String> language,
   Value<String> theme,
   Value<int> remindBefore,
-  Value<bool> isSync,
+  Value<bool> isSynced,
 });
 
 class $$SettingTableTableFilterComposer
@@ -2572,8 +2877,8 @@ class $$SettingTableTableFilterComposer
   ColumnFilters<int> get remindBefore => $composableBuilder(
       column: $table.remindBefore, builder: (column) => ColumnFilters(column));
 
-  ColumnFilters<bool> get isSync => $composableBuilder(
-      column: $table.isSync, builder: (column) => ColumnFilters(column));
+  ColumnFilters<bool> get isSynced => $composableBuilder(
+      column: $table.isSynced, builder: (column) => ColumnFilters(column));
 }
 
 class $$SettingTableTableOrderingComposer
@@ -2608,8 +2913,8 @@ class $$SettingTableTableOrderingComposer
       column: $table.remindBefore,
       builder: (column) => ColumnOrderings(column));
 
-  ColumnOrderings<bool> get isSync => $composableBuilder(
-      column: $table.isSync, builder: (column) => ColumnOrderings(column));
+  ColumnOrderings<bool> get isSynced => $composableBuilder(
+      column: $table.isSynced, builder: (column) => ColumnOrderings(column));
 }
 
 class $$SettingTableTableAnnotationComposer
@@ -2642,8 +2947,8 @@ class $$SettingTableTableAnnotationComposer
   GeneratedColumn<int> get remindBefore => $composableBuilder(
       column: $table.remindBefore, builder: (column) => column);
 
-  GeneratedColumn<bool> get isSync =>
-      $composableBuilder(column: $table.isSync, builder: (column) => column);
+  GeneratedColumn<bool> get isSynced =>
+      $composableBuilder(column: $table.isSynced, builder: (column) => column);
 }
 
 class $$SettingTableTableTableManager extends RootTableManager<
@@ -2679,7 +2984,7 @@ class $$SettingTableTableTableManager extends RootTableManager<
             Value<String> language = const Value.absent(),
             Value<String> theme = const Value.absent(),
             Value<int> remindBefore = const Value.absent(),
-            Value<bool> isSync = const Value.absent(),
+            Value<bool> isSynced = const Value.absent(),
           }) =>
               SettingTableCompanion(
             localId: localId,
@@ -2689,7 +2994,7 @@ class $$SettingTableTableTableManager extends RootTableManager<
             language: language,
             theme: theme,
             remindBefore: remindBefore,
-            isSync: isSync,
+            isSynced: isSynced,
           ),
           createCompanionCallback: ({
             Value<int> localId = const Value.absent(),
@@ -2699,7 +3004,7 @@ class $$SettingTableTableTableManager extends RootTableManager<
             required String language,
             required String theme,
             required int remindBefore,
-            required bool isSync,
+            required bool isSynced,
           }) =>
               SettingTableCompanion.insert(
             localId: localId,
@@ -2709,7 +3014,7 @@ class $$SettingTableTableTableManager extends RootTableManager<
             language: language,
             theme: theme,
             remindBefore: remindBefore,
-            isSync: isSync,
+            isSynced: isSynced,
           ),
           withReferenceMapper: (p0) => p0
               .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
@@ -2738,16 +3043,20 @@ typedef $$CategoryTableTableCreateCompanionBuilder = CategoryTableCompanion
   Value<int> localId,
   Value<String> remoteId,
   required String name,
-  required bool isSync,
-  Value<int?> settingLocalId,
+  required bool isSynced,
+  Value<int?> userLocalId,
+  required DateTime createdAt,
+  required DateTime updatedAt,
 });
 typedef $$CategoryTableTableUpdateCompanionBuilder = CategoryTableCompanion
     Function({
   Value<int> localId,
   Value<String> remoteId,
   Value<String> name,
-  Value<bool> isSync,
-  Value<int?> settingLocalId,
+  Value<bool> isSynced,
+  Value<int?> userLocalId,
+  Value<DateTime> createdAt,
+  Value<DateTime> updatedAt,
 });
 
 class $$CategoryTableTableFilterComposer
@@ -2768,12 +3077,17 @@ class $$CategoryTableTableFilterComposer
   ColumnFilters<String> get name => $composableBuilder(
       column: $table.name, builder: (column) => ColumnFilters(column));
 
-  ColumnFilters<bool> get isSync => $composableBuilder(
-      column: $table.isSync, builder: (column) => ColumnFilters(column));
+  ColumnFilters<bool> get isSynced => $composableBuilder(
+      column: $table.isSynced, builder: (column) => ColumnFilters(column));
 
-  ColumnFilters<int> get settingLocalId => $composableBuilder(
-      column: $table.settingLocalId,
-      builder: (column) => ColumnFilters(column));
+  ColumnFilters<int> get userLocalId => $composableBuilder(
+      column: $table.userLocalId, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<DateTime> get createdAt => $composableBuilder(
+      column: $table.createdAt, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<DateTime> get updatedAt => $composableBuilder(
+      column: $table.updatedAt, builder: (column) => ColumnFilters(column));
 }
 
 class $$CategoryTableTableOrderingComposer
@@ -2794,12 +3108,17 @@ class $$CategoryTableTableOrderingComposer
   ColumnOrderings<String> get name => $composableBuilder(
       column: $table.name, builder: (column) => ColumnOrderings(column));
 
-  ColumnOrderings<bool> get isSync => $composableBuilder(
-      column: $table.isSync, builder: (column) => ColumnOrderings(column));
+  ColumnOrderings<bool> get isSynced => $composableBuilder(
+      column: $table.isSynced, builder: (column) => ColumnOrderings(column));
 
-  ColumnOrderings<int> get settingLocalId => $composableBuilder(
-      column: $table.settingLocalId,
-      builder: (column) => ColumnOrderings(column));
+  ColumnOrderings<int> get userLocalId => $composableBuilder(
+      column: $table.userLocalId, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<DateTime> get createdAt => $composableBuilder(
+      column: $table.createdAt, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<DateTime> get updatedAt => $composableBuilder(
+      column: $table.updatedAt, builder: (column) => ColumnOrderings(column));
 }
 
 class $$CategoryTableTableAnnotationComposer
@@ -2820,11 +3139,17 @@ class $$CategoryTableTableAnnotationComposer
   GeneratedColumn<String> get name =>
       $composableBuilder(column: $table.name, builder: (column) => column);
 
-  GeneratedColumn<bool> get isSync =>
-      $composableBuilder(column: $table.isSync, builder: (column) => column);
+  GeneratedColumn<bool> get isSynced =>
+      $composableBuilder(column: $table.isSynced, builder: (column) => column);
 
-  GeneratedColumn<int> get settingLocalId => $composableBuilder(
-      column: $table.settingLocalId, builder: (column) => column);
+  GeneratedColumn<int> get userLocalId => $composableBuilder(
+      column: $table.userLocalId, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get createdAt =>
+      $composableBuilder(column: $table.createdAt, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get updatedAt =>
+      $composableBuilder(column: $table.updatedAt, builder: (column) => column);
 }
 
 class $$CategoryTableTableTableManager extends RootTableManager<
@@ -2856,29 +3181,37 @@ class $$CategoryTableTableTableManager extends RootTableManager<
             Value<int> localId = const Value.absent(),
             Value<String> remoteId = const Value.absent(),
             Value<String> name = const Value.absent(),
-            Value<bool> isSync = const Value.absent(),
-            Value<int?> settingLocalId = const Value.absent(),
+            Value<bool> isSynced = const Value.absent(),
+            Value<int?> userLocalId = const Value.absent(),
+            Value<DateTime> createdAt = const Value.absent(),
+            Value<DateTime> updatedAt = const Value.absent(),
           }) =>
               CategoryTableCompanion(
             localId: localId,
             remoteId: remoteId,
             name: name,
-            isSync: isSync,
-            settingLocalId: settingLocalId,
+            isSynced: isSynced,
+            userLocalId: userLocalId,
+            createdAt: createdAt,
+            updatedAt: updatedAt,
           ),
           createCompanionCallback: ({
             Value<int> localId = const Value.absent(),
             Value<String> remoteId = const Value.absent(),
             required String name,
-            required bool isSync,
-            Value<int?> settingLocalId = const Value.absent(),
+            required bool isSynced,
+            Value<int?> userLocalId = const Value.absent(),
+            required DateTime createdAt,
+            required DateTime updatedAt,
           }) =>
               CategoryTableCompanion.insert(
             localId: localId,
             remoteId: remoteId,
             name: name,
-            isSync: isSync,
-            settingLocalId: settingLocalId,
+            isSynced: isSynced,
+            userLocalId: userLocalId,
+            createdAt: createdAt,
+            updatedAt: updatedAt,
           ),
           withReferenceMapper: (p0) => p0
               .map((e) => (e.readTable(table), BaseReferences(db, table, e)))

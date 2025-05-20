@@ -23,7 +23,7 @@ abstract class TaskApi {
   factory TaskApi(Dio dio) => _TaskApi(dio);
 
   @GET('/task')
-  Future<BaseResponse<TaskDataLst>> getListTask(
+  Future<BaseResponse<List<TaskData>>> getListTask(
     @Header('Authorization') String token,
     @Query('status') String status,
     @Query('dueDate') String dueDate,

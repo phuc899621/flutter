@@ -3,6 +3,7 @@ const OtpAuthServices=require('../services/otp.auth.services');
 const OtpServices=require('../services/otp.services');
 const TaskServices=require('../services/task.services');
 const CategoryServices=require('../services/category.services');
+const SubtaskServices=require('../services/subtask.services');
 const jwt = require("jsonwebtoken");
     exports.signup=async(req,res)=>{
         try{
@@ -135,7 +136,7 @@ const jwt = require("jsonwebtoken");
                 { expiresIn: process.env.JWT_EXPIRES_IN || "1d" }
             );
             const userSetting=await UserServices.findSettingByUserId(user._id);
-            const tasks=await TaskServices.findAllTaskByUserId(user._id,{});
+            const tasks=await TaskServices.findAllTasks(user._id,{});
             const categories=await CategoryServices.findAllCategories(user._id);
             return res.status(201).json({
                 message: "Login successful",

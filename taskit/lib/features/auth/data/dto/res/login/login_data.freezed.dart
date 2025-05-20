@@ -18,7 +18,8 @@ mixin _$LoginData {
   String get token;
   SettingData get settings;
   UserData get user;
-  TaskData get tasks;
+  List<TaskData> get tasks;
+  List<CategoryData> get categories;
 
   /// Create a copy of LoginData
   /// with the given fields replaced by the non-null parameter values.
@@ -39,16 +40,24 @@ mixin _$LoginData {
             (identical(other.settings, settings) ||
                 other.settings == settings) &&
             (identical(other.user, user) || other.user == user) &&
-            (identical(other.tasks, tasks) || other.tasks == tasks));
+            const DeepCollectionEquality().equals(other.tasks, tasks) &&
+            const DeepCollectionEquality()
+                .equals(other.categories, categories));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, token, settings, user, tasks);
+  int get hashCode => Object.hash(
+      runtimeType,
+      token,
+      settings,
+      user,
+      const DeepCollectionEquality().hash(tasks),
+      const DeepCollectionEquality().hash(categories));
 
   @override
   String toString() {
-    return 'LoginData(token: $token, settings: $settings, user: $user, tasks: $tasks)';
+    return 'LoginData(token: $token, settings: $settings, user: $user, tasks: $tasks, categories: $categories)';
   }
 }
 
@@ -58,11 +67,14 @@ abstract mixin class $LoginDataCopyWith<$Res> {
       _$LoginDataCopyWithImpl;
   @useResult
   $Res call(
-      {String token, SettingData settings, UserData user, TaskData tasks});
+      {String token,
+      SettingData settings,
+      UserData user,
+      List<TaskData> tasks,
+      List<CategoryData> categories});
 
   $SettingDataCopyWith<$Res> get settings;
   $UserDataCopyWith<$Res> get user;
-  $TaskDataCopyWith<$Res> get tasks;
 }
 
 /// @nodoc
@@ -81,6 +93,7 @@ class _$LoginDataCopyWithImpl<$Res> implements $LoginDataCopyWith<$Res> {
     Object? settings = null,
     Object? user = null,
     Object? tasks = null,
+    Object? categories = null,
   }) {
     return _then(_self.copyWith(
       token: null == token
@@ -98,7 +111,11 @@ class _$LoginDataCopyWithImpl<$Res> implements $LoginDataCopyWith<$Res> {
       tasks: null == tasks
           ? _self.tasks
           : tasks // ignore: cast_nullable_to_non_nullable
-              as TaskData,
+              as List<TaskData>,
+      categories: null == categories
+          ? _self.categories
+          : categories // ignore: cast_nullable_to_non_nullable
+              as List<CategoryData>,
     ));
   }
 
@@ -121,16 +138,6 @@ class _$LoginDataCopyWithImpl<$Res> implements $LoginDataCopyWith<$Res> {
       return _then(_self.copyWith(user: value));
     });
   }
-
-  /// Create a copy of LoginData
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $TaskDataCopyWith<$Res> get tasks {
-    return $TaskDataCopyWith<$Res>(_self.tasks, (value) {
-      return _then(_self.copyWith(tasks: value));
-    });
-  }
 }
 
 /// @nodoc
@@ -140,7 +147,10 @@ class _LoginData implements LoginData {
       {required this.token,
       required this.settings,
       required this.user,
-      required this.tasks});
+      required final List<TaskData> tasks,
+      required final List<CategoryData> categories})
+      : _tasks = tasks,
+        _categories = categories;
   factory _LoginData.fromJson(Map<String, dynamic> json) =>
       _$LoginDataFromJson(json);
 
@@ -150,8 +160,21 @@ class _LoginData implements LoginData {
   final SettingData settings;
   @override
   final UserData user;
+  final List<TaskData> _tasks;
   @override
-  final TaskData tasks;
+  List<TaskData> get tasks {
+    if (_tasks is EqualUnmodifiableListView) return _tasks;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_tasks);
+  }
+
+  final List<CategoryData> _categories;
+  @override
+  List<CategoryData> get categories {
+    if (_categories is EqualUnmodifiableListView) return _categories;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_categories);
+  }
 
   /// Create a copy of LoginData
   /// with the given fields replaced by the non-null parameter values.
@@ -177,16 +200,24 @@ class _LoginData implements LoginData {
             (identical(other.settings, settings) ||
                 other.settings == settings) &&
             (identical(other.user, user) || other.user == user) &&
-            (identical(other.tasks, tasks) || other.tasks == tasks));
+            const DeepCollectionEquality().equals(other._tasks, _tasks) &&
+            const DeepCollectionEquality()
+                .equals(other._categories, _categories));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, token, settings, user, tasks);
+  int get hashCode => Object.hash(
+      runtimeType,
+      token,
+      settings,
+      user,
+      const DeepCollectionEquality().hash(_tasks),
+      const DeepCollectionEquality().hash(_categories));
 
   @override
   String toString() {
-    return 'LoginData(token: $token, settings: $settings, user: $user, tasks: $tasks)';
+    return 'LoginData(token: $token, settings: $settings, user: $user, tasks: $tasks, categories: $categories)';
   }
 }
 
@@ -199,14 +230,16 @@ abstract mixin class _$LoginDataCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {String token, SettingData settings, UserData user, TaskData tasks});
+      {String token,
+      SettingData settings,
+      UserData user,
+      List<TaskData> tasks,
+      List<CategoryData> categories});
 
   @override
   $SettingDataCopyWith<$Res> get settings;
   @override
   $UserDataCopyWith<$Res> get user;
-  @override
-  $TaskDataCopyWith<$Res> get tasks;
 }
 
 /// @nodoc
@@ -225,6 +258,7 @@ class __$LoginDataCopyWithImpl<$Res> implements _$LoginDataCopyWith<$Res> {
     Object? settings = null,
     Object? user = null,
     Object? tasks = null,
+    Object? categories = null,
   }) {
     return _then(_LoginData(
       token: null == token
@@ -240,9 +274,13 @@ class __$LoginDataCopyWithImpl<$Res> implements _$LoginDataCopyWith<$Res> {
           : user // ignore: cast_nullable_to_non_nullable
               as UserData,
       tasks: null == tasks
-          ? _self.tasks
+          ? _self._tasks
           : tasks // ignore: cast_nullable_to_non_nullable
-              as TaskData,
+              as List<TaskData>,
+      categories: null == categories
+          ? _self._categories
+          : categories // ignore: cast_nullable_to_non_nullable
+              as List<CategoryData>,
     ));
   }
 
@@ -263,16 +301,6 @@ class __$LoginDataCopyWithImpl<$Res> implements _$LoginDataCopyWith<$Res> {
   $UserDataCopyWith<$Res> get user {
     return $UserDataCopyWith<$Res>(_self.user, (value) {
       return _then(_self.copyWith(user: value));
-    });
-  }
-
-  /// Create a copy of LoginData
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $TaskDataCopyWith<$Res> get tasks {
-    return $TaskDataCopyWith<$Res>(_self.tasks, (value) {
-      return _then(_self.copyWith(tasks: value));
     });
   }
 }

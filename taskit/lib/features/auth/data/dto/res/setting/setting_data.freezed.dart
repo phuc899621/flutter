@@ -22,7 +22,6 @@ mixin _$SettingData {
   String get language;
   String get theme;
   int get remindBefore;
-  List<String> get categories;
 
   /// Create a copy of SettingData
   /// with the given fields replaced by the non-null parameter values.
@@ -47,26 +46,17 @@ mixin _$SettingData {
                 other.language == language) &&
             (identical(other.theme, theme) || other.theme == theme) &&
             (identical(other.remindBefore, remindBefore) ||
-                other.remindBefore == remindBefore) &&
-            const DeepCollectionEquality()
-                .equals(other.categories, categories));
+                other.remindBefore == remindBefore));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      id,
-      userId,
-      isNotificationEnabled,
-      language,
-      theme,
-      remindBefore,
-      const DeepCollectionEquality().hash(categories));
+  int get hashCode => Object.hash(runtimeType, id, userId,
+      isNotificationEnabled, language, theme, remindBefore);
 
   @override
   String toString() {
-    return 'SettingData(id: $id, userId: $userId, isNotificationEnabled: $isNotificationEnabled, language: $language, theme: $theme, remindBefore: $remindBefore, categories: $categories)';
+    return 'SettingData(id: $id, userId: $userId, isNotificationEnabled: $isNotificationEnabled, language: $language, theme: $theme, remindBefore: $remindBefore)';
   }
 }
 
@@ -82,8 +72,7 @@ abstract mixin class $SettingDataCopyWith<$Res> {
       bool isNotificationEnabled,
       String language,
       String theme,
-      int remindBefore,
-      List<String> categories});
+      int remindBefore});
 }
 
 /// @nodoc
@@ -104,7 +93,6 @@ class _$SettingDataCopyWithImpl<$Res> implements $SettingDataCopyWith<$Res> {
     Object? language = null,
     Object? theme = null,
     Object? remindBefore = null,
-    Object? categories = null,
   }) {
     return _then(_self.copyWith(
       id: null == id
@@ -131,10 +119,6 @@ class _$SettingDataCopyWithImpl<$Res> implements $SettingDataCopyWith<$Res> {
           ? _self.remindBefore
           : remindBefore // ignore: cast_nullable_to_non_nullable
               as int,
-      categories: null == categories
-          ? _self.categories
-          : categories // ignore: cast_nullable_to_non_nullable
-              as List<String>,
     ));
   }
 }
@@ -148,9 +132,7 @@ class _SettingData implements SettingData {
       required this.isNotificationEnabled,
       required this.language,
       required this.theme,
-      required this.remindBefore,
-      required final List<String> categories})
-      : _categories = categories;
+      required this.remindBefore});
   factory _SettingData.fromJson(Map<String, dynamic> json) =>
       _$SettingDataFromJson(json);
 
@@ -167,13 +149,6 @@ class _SettingData implements SettingData {
   final String theme;
   @override
   final int remindBefore;
-  final List<String> _categories;
-  @override
-  List<String> get categories {
-    if (_categories is EqualUnmodifiableListView) return _categories;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_categories);
-  }
 
   /// Create a copy of SettingData
   /// with the given fields replaced by the non-null parameter values.
@@ -203,26 +178,17 @@ class _SettingData implements SettingData {
                 other.language == language) &&
             (identical(other.theme, theme) || other.theme == theme) &&
             (identical(other.remindBefore, remindBefore) ||
-                other.remindBefore == remindBefore) &&
-            const DeepCollectionEquality()
-                .equals(other._categories, _categories));
+                other.remindBefore == remindBefore));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      id,
-      userId,
-      isNotificationEnabled,
-      language,
-      theme,
-      remindBefore,
-      const DeepCollectionEquality().hash(_categories));
+  int get hashCode => Object.hash(runtimeType, id, userId,
+      isNotificationEnabled, language, theme, remindBefore);
 
   @override
   String toString() {
-    return 'SettingData(id: $id, userId: $userId, isNotificationEnabled: $isNotificationEnabled, language: $language, theme: $theme, remindBefore: $remindBefore, categories: $categories)';
+    return 'SettingData(id: $id, userId: $userId, isNotificationEnabled: $isNotificationEnabled, language: $language, theme: $theme, remindBefore: $remindBefore)';
   }
 }
 
@@ -240,8 +206,7 @@ abstract mixin class _$SettingDataCopyWith<$Res>
       bool isNotificationEnabled,
       String language,
       String theme,
-      int remindBefore,
-      List<String> categories});
+      int remindBefore});
 }
 
 /// @nodoc
@@ -262,7 +227,6 @@ class __$SettingDataCopyWithImpl<$Res> implements _$SettingDataCopyWith<$Res> {
     Object? language = null,
     Object? theme = null,
     Object? remindBefore = null,
-    Object? categories = null,
   }) {
     return _then(_SettingData(
       id: null == id
@@ -289,10 +253,6 @@ class __$SettingDataCopyWithImpl<$Res> implements _$SettingDataCopyWith<$Res> {
           ? _self.remindBefore
           : remindBefore // ignore: cast_nullable_to_non_nullable
               as int,
-      categories: null == categories
-          ? _self._categories
-          : categories // ignore: cast_nullable_to_non_nullable
-              as List<String>,
     ));
   }
 }

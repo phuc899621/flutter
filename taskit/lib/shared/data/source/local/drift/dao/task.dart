@@ -15,6 +15,10 @@ final taskDaoProvider = Provider<TaskDao>((ref) {
 class TaskDao extends DatabaseAccessor<AppDatabase> with _$TaskDaoMixin {
   TaskDao(super.db);
   Future<List<TaskTableData>> getTasks() => select(taskTable).get();
+  //get task by remoteId
+  Future<TaskTableData?> getTaskByRemoteId(String remoteId) =>
+      (select(taskTable)..where((tbl) => tbl.remoteId.equals(remoteId)))
+          .getSingleOrNull();
   Future<int> insertTask(TaskTableCompanion task) =>
       into(taskTable).insert(task);
   Future<bool> updateTask(TaskTableCompanion task) =>

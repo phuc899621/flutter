@@ -4,5 +4,6 @@ import 'package:taskit/main_widget.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
   runApp(const ProviderScope(child: MainWidget()));
 }

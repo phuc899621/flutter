@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:taskit/features/task/data/dto/req/status/status.dart';
 import 'package:taskit/features/task/data/repo/itask_repo.dart';
-import 'package:taskit/features/task/data/source/local/task_database.dart';
+import 'package:taskit/shared/data/source/local/drift/dao/task.dart';
 
 import '../../../../shared/data/dto/response/base_response.dart';
 import '../../../../shared/data/dto/response/base_response_data.dart';
@@ -14,22 +14,20 @@ import '../dto/req/suggest_category/suggest_category.dart';
 import '../dto/req/update/update.dart';
 import '../dto/res/category/category_data.dart';
 import '../dto/res/task/task_data.dart';
-import '../source/local/DAO/task_DAO.dart';
 import '../source/remote/task_api.dart';
 
 final taskRepoProvider = Provider<ITaskRepo>((ref) {
   final taskApi = ref.watch(taskApiProvider);
-  final db = ref.watch(taskDatabaseProvider);
-  final dao = db.taskDAO;
+  final dao = ref.watch(taskDaoProvider);
   return TaskRepo(taskApi, dao);
 });
 
 class TaskRepo with DioExceptionMapper implements ITaskRepo {
   final TaskApi _taskApi;
-  final TaskDAO _taskDAO;
+  final TaskDao _taskDAO;
   TaskRepo(this._taskApi, this._taskDAO);
   @override
-  Future<BaseResponse<TaskDataLst>> getListTask(
+  Future<BaseResponse<List<TaskData>>> getListTask(
       String token, String status, String dueDate) async {
     try {
       final response =

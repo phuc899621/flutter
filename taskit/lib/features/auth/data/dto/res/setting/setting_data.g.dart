@@ -13,9 +13,6 @@ _SettingData _$SettingDataFromJson(Map<String, dynamic> json) => _SettingData(
       language: json['language'] as String,
       theme: json['theme'] as String,
       remindBefore: (json['remindBefore'] as num).toInt(),
-      categories: (json['categories'] as List<dynamic>)
-          .map((e) => e as String)
-          .toList(),
     );
 
 Map<String, dynamic> _$SettingDataToJson(_SettingData instance) =>
@@ -26,5 +23,4 @@ Map<String, dynamic> _$SettingDataToJson(_SettingData instance) =>
       'language': instance.language,
       'theme': instance.theme,
       'remindBefore': instance.remindBefore,
-      'categories': instance.categories,
     };
