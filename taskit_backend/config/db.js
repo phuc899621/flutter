@@ -1,5 +1,8 @@
-require('dotenv').config();
-const mongoose = require('mongoose');
+import dotenv from 'dotenv';
+dotenv.config();
+import mongoose from 'mongoose';
+
+
 const mongoURI=process.env.MONGODB_URI;
 const connection = mongoose.createConnection(mongoURI,{
     ssl: true, // Bắt buộc dùng SSL cho MongoDB Atlas
@@ -8,4 +11,4 @@ const connection = mongoose.createConnection(mongoURI,{
 }).on('error',(err)=>{
     console.log("MongoDB connected failed",err);
 });
-module.exports=connection;
+export default connection;

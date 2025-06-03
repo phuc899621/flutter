@@ -1,10 +1,12 @@
-const router=require('express').Router();
-const CategoryController=require('../controller/category.controller');
-const AuthMiddleware=require('../middleware/auth.middleware');
+import express from 'express';
+import * as CategoryController from '../controller/category.controller.js';
+import {jwtMiddleware} from '../middleware/jwt.middleware.js';
 
-router.get('/',AuthMiddleware,CategoryController.findAllCategories);
-router.post('/',AuthMiddleware,CategoryController.addCategory);
-router.put('/',AuthMiddleware,CategoryController.updateCategory);
-router.delete('/',AuthMiddleware,CategoryController.deleteCategory);
+const router=express.Router();
 
-module.exports=router;
+router.get('/',jwtMiddleware,CategoryController.findAllCategories);
+router.post('/',jwtMiddleware,CategoryController.addCategory);
+router.put('/',jwtMiddleware,CategoryController.updateCategory);
+router.delete('/',jwtMiddleware,CategoryController.deleteCategory);
+
+export default router;

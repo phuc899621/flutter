@@ -3,6 +3,303 @@
 part of 'database.dart';
 
 // ignore_for_file: type=lint
+class $UserTableTable extends UserTable
+    with TableInfo<$UserTableTable, UserTableData> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $UserTableTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _localIdMeta =
+      const VerificationMeta('localId');
+  @override
+  late final GeneratedColumn<int> localId = GeneratedColumn<int>(
+      'local_id', aliasedName, false,
+      hasAutoIncrement: true,
+      type: DriftSqlType.int,
+      requiredDuringInsert: false,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('PRIMARY KEY AUTOINCREMENT'));
+  static const VerificationMeta _remoteIdMeta =
+      const VerificationMeta('remoteId');
+  @override
+  late final GeneratedColumn<String> remoteId = GeneratedColumn<String>(
+      'remote_id', aliasedName, false,
+      type: DriftSqlType.string,
+      requiredDuringInsert: false,
+      defaultValue: const Constant(''));
+  static const VerificationMeta _emailMeta = const VerificationMeta('email');
+  @override
+  late final GeneratedColumn<String> email = GeneratedColumn<String>(
+      'email', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _nameMeta = const VerificationMeta('name');
+  @override
+  late final GeneratedColumn<String> name = GeneratedColumn<String>(
+      'name', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _avatarMeta = const VerificationMeta('avatar');
+  @override
+  late final GeneratedColumn<String> avatar = GeneratedColumn<String>(
+      'avatar', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  @override
+  List<GeneratedColumn> get $columns =>
+      [localId, remoteId, email, name, avatar];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'user';
+  @override
+  VerificationContext validateIntegrity(Insertable<UserTableData> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('local_id')) {
+      context.handle(_localIdMeta,
+          localId.isAcceptableOrUnknown(data['local_id']!, _localIdMeta));
+    }
+    if (data.containsKey('remote_id')) {
+      context.handle(_remoteIdMeta,
+          remoteId.isAcceptableOrUnknown(data['remote_id']!, _remoteIdMeta));
+    }
+    if (data.containsKey('email')) {
+      context.handle(
+          _emailMeta, email.isAcceptableOrUnknown(data['email']!, _emailMeta));
+    } else if (isInserting) {
+      context.missing(_emailMeta);
+    }
+    if (data.containsKey('name')) {
+      context.handle(
+          _nameMeta, name.isAcceptableOrUnknown(data['name']!, _nameMeta));
+    } else if (isInserting) {
+      context.missing(_nameMeta);
+    }
+    if (data.containsKey('avatar')) {
+      context.handle(_avatarMeta,
+          avatar.isAcceptableOrUnknown(data['avatar']!, _avatarMeta));
+    } else if (isInserting) {
+      context.missing(_avatarMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {localId};
+  @override
+  UserTableData map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return UserTableData(
+      localId: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}local_id'])!,
+      remoteId: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}remote_id'])!,
+      email: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}email'])!,
+      name: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}name'])!,
+      avatar: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}avatar'])!,
+    );
+  }
+
+  @override
+  $UserTableTable createAlias(String alias) {
+    return $UserTableTable(attachedDatabase, alias);
+  }
+}
+
+class UserTableData extends DataClass implements Insertable<UserTableData> {
+  final int localId;
+  final String remoteId;
+  final String email;
+  final String name;
+  final String avatar;
+  const UserTableData(
+      {required this.localId,
+      required this.remoteId,
+      required this.email,
+      required this.name,
+      required this.avatar});
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['local_id'] = Variable<int>(localId);
+    map['remote_id'] = Variable<String>(remoteId);
+    map['email'] = Variable<String>(email);
+    map['name'] = Variable<String>(name);
+    map['avatar'] = Variable<String>(avatar);
+    return map;
+  }
+
+  UserTableCompanion toCompanion(bool nullToAbsent) {
+    return UserTableCompanion(
+      localId: Value(localId),
+      remoteId: Value(remoteId),
+      email: Value(email),
+      name: Value(name),
+      avatar: Value(avatar),
+    );
+  }
+
+  factory UserTableData.fromJson(Map<String, dynamic> json,
+      {ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return UserTableData(
+      localId: serializer.fromJson<int>(json['localId']),
+      remoteId: serializer.fromJson<String>(json['remoteId']),
+      email: serializer.fromJson<String>(json['email']),
+      name: serializer.fromJson<String>(json['name']),
+      avatar: serializer.fromJson<String>(json['avatar']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'localId': serializer.toJson<int>(localId),
+      'remoteId': serializer.toJson<String>(remoteId),
+      'email': serializer.toJson<String>(email),
+      'name': serializer.toJson<String>(name),
+      'avatar': serializer.toJson<String>(avatar),
+    };
+  }
+
+  UserTableData copyWith(
+          {int? localId,
+          String? remoteId,
+          String? email,
+          String? name,
+          String? avatar}) =>
+      UserTableData(
+        localId: localId ?? this.localId,
+        remoteId: remoteId ?? this.remoteId,
+        email: email ?? this.email,
+        name: name ?? this.name,
+        avatar: avatar ?? this.avatar,
+      );
+  UserTableData copyWithCompanion(UserTableCompanion data) {
+    return UserTableData(
+      localId: data.localId.present ? data.localId.value : this.localId,
+      remoteId: data.remoteId.present ? data.remoteId.value : this.remoteId,
+      email: data.email.present ? data.email.value : this.email,
+      name: data.name.present ? data.name.value : this.name,
+      avatar: data.avatar.present ? data.avatar.value : this.avatar,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('UserTableData(')
+          ..write('localId: $localId, ')
+          ..write('remoteId: $remoteId, ')
+          ..write('email: $email, ')
+          ..write('name: $name, ')
+          ..write('avatar: $avatar')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(localId, remoteId, email, name, avatar);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is UserTableData &&
+          other.localId == this.localId &&
+          other.remoteId == this.remoteId &&
+          other.email == this.email &&
+          other.name == this.name &&
+          other.avatar == this.avatar);
+}
+
+class UserTableCompanion extends UpdateCompanion<UserTableData> {
+  final Value<int> localId;
+  final Value<String> remoteId;
+  final Value<String> email;
+  final Value<String> name;
+  final Value<String> avatar;
+  const UserTableCompanion({
+    this.localId = const Value.absent(),
+    this.remoteId = const Value.absent(),
+    this.email = const Value.absent(),
+    this.name = const Value.absent(),
+    this.avatar = const Value.absent(),
+  });
+  UserTableCompanion.insert({
+    this.localId = const Value.absent(),
+    this.remoteId = const Value.absent(),
+    required String email,
+    required String name,
+    required String avatar,
+  })  : email = Value(email),
+        name = Value(name),
+        avatar = Value(avatar);
+  static Insertable<UserTableData> custom({
+    Expression<int>? localId,
+    Expression<String>? remoteId,
+    Expression<String>? email,
+    Expression<String>? name,
+    Expression<String>? avatar,
+  }) {
+    return RawValuesInsertable({
+      if (localId != null) 'local_id': localId,
+      if (remoteId != null) 'remote_id': remoteId,
+      if (email != null) 'email': email,
+      if (name != null) 'name': name,
+      if (avatar != null) 'avatar': avatar,
+    });
+  }
+
+  UserTableCompanion copyWith(
+      {Value<int>? localId,
+      Value<String>? remoteId,
+      Value<String>? email,
+      Value<String>? name,
+      Value<String>? avatar}) {
+    return UserTableCompanion(
+      localId: localId ?? this.localId,
+      remoteId: remoteId ?? this.remoteId,
+      email: email ?? this.email,
+      name: name ?? this.name,
+      avatar: avatar ?? this.avatar,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (localId.present) {
+      map['local_id'] = Variable<int>(localId.value);
+    }
+    if (remoteId.present) {
+      map['remote_id'] = Variable<String>(remoteId.value);
+    }
+    if (email.present) {
+      map['email'] = Variable<String>(email.value);
+    }
+    if (name.present) {
+      map['name'] = Variable<String>(name.value);
+    }
+    if (avatar.present) {
+      map['avatar'] = Variable<String>(avatar.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('UserTableCompanion(')
+          ..write('localId: $localId, ')
+          ..write('remoteId: $remoteId, ')
+          ..write('email: $email, ')
+          ..write('name: $name, ')
+          ..write('avatar: $avatar')
+          ..write(')'))
+        .toString();
+  }
+}
+
 class $TaskTableTable extends TaskTable
     with TableInfo<$TaskTableTable, TaskTableData> {
   @override
@@ -66,7 +363,8 @@ class $TaskTableTable extends TaskTable
       'user_local_id', aliasedName, false,
       type: DriftSqlType.int,
       requiredDuringInsert: true,
-      $customConstraints: 'REFERENCES user(localId) ON DELETE CASCADE');
+      defaultConstraints: GeneratedColumn.constraintIsAlways(
+          'REFERENCES user (local_id) ON DELETE CASCADE'));
   static const VerificationMeta _statusMeta = const VerificationMeta('status');
   @override
   late final GeneratedColumn<String> status = GeneratedColumn<String>(
@@ -649,7 +947,8 @@ class $SubtaskTableTable extends SubtaskTable
       'task_local_id', aliasedName, false,
       type: DriftSqlType.int,
       requiredDuringInsert: true,
-      $customConstraints: 'REFERENCES task(localId) ON DELETE CASCADE');
+      defaultConstraints: GeneratedColumn.constraintIsAlways(
+          'REFERENCES task (local_id) ON DELETE CASCADE'));
   static const VerificationMeta _createdAtMeta =
       const VerificationMeta('createdAt');
   @override
@@ -1029,303 +1328,6 @@ class SubtaskTableCompanion extends UpdateCompanion<SubtaskTableData> {
   }
 }
 
-class $UserTableTable extends UserTable
-    with TableInfo<$UserTableTable, UserTableData> {
-  @override
-  final GeneratedDatabase attachedDatabase;
-  final String? _alias;
-  $UserTableTable(this.attachedDatabase, [this._alias]);
-  static const VerificationMeta _localIdMeta =
-      const VerificationMeta('localId');
-  @override
-  late final GeneratedColumn<int> localId = GeneratedColumn<int>(
-      'local_id', aliasedName, false,
-      hasAutoIncrement: true,
-      type: DriftSqlType.int,
-      requiredDuringInsert: false,
-      defaultConstraints:
-          GeneratedColumn.constraintIsAlways('PRIMARY KEY AUTOINCREMENT'));
-  static const VerificationMeta _remoteIdMeta =
-      const VerificationMeta('remoteId');
-  @override
-  late final GeneratedColumn<String> remoteId = GeneratedColumn<String>(
-      'remote_id', aliasedName, false,
-      type: DriftSqlType.string,
-      requiredDuringInsert: false,
-      defaultValue: const Constant(''));
-  static const VerificationMeta _emailMeta = const VerificationMeta('email');
-  @override
-  late final GeneratedColumn<String> email = GeneratedColumn<String>(
-      'email', aliasedName, false,
-      type: DriftSqlType.string, requiredDuringInsert: true);
-  static const VerificationMeta _nameMeta = const VerificationMeta('name');
-  @override
-  late final GeneratedColumn<String> name = GeneratedColumn<String>(
-      'name', aliasedName, false,
-      type: DriftSqlType.string, requiredDuringInsert: true);
-  static const VerificationMeta _avatarMeta = const VerificationMeta('avatar');
-  @override
-  late final GeneratedColumn<String> avatar = GeneratedColumn<String>(
-      'avatar', aliasedName, false,
-      type: DriftSqlType.string, requiredDuringInsert: true);
-  @override
-  List<GeneratedColumn> get $columns =>
-      [localId, remoteId, email, name, avatar];
-  @override
-  String get aliasedName => _alias ?? actualTableName;
-  @override
-  String get actualTableName => $name;
-  static const String $name = 'user';
-  @override
-  VerificationContext validateIntegrity(Insertable<UserTableData> instance,
-      {bool isInserting = false}) {
-    final context = VerificationContext();
-    final data = instance.toColumns(true);
-    if (data.containsKey('local_id')) {
-      context.handle(_localIdMeta,
-          localId.isAcceptableOrUnknown(data['local_id']!, _localIdMeta));
-    }
-    if (data.containsKey('remote_id')) {
-      context.handle(_remoteIdMeta,
-          remoteId.isAcceptableOrUnknown(data['remote_id']!, _remoteIdMeta));
-    }
-    if (data.containsKey('email')) {
-      context.handle(
-          _emailMeta, email.isAcceptableOrUnknown(data['email']!, _emailMeta));
-    } else if (isInserting) {
-      context.missing(_emailMeta);
-    }
-    if (data.containsKey('name')) {
-      context.handle(
-          _nameMeta, name.isAcceptableOrUnknown(data['name']!, _nameMeta));
-    } else if (isInserting) {
-      context.missing(_nameMeta);
-    }
-    if (data.containsKey('avatar')) {
-      context.handle(_avatarMeta,
-          avatar.isAcceptableOrUnknown(data['avatar']!, _avatarMeta));
-    } else if (isInserting) {
-      context.missing(_avatarMeta);
-    }
-    return context;
-  }
-
-  @override
-  Set<GeneratedColumn> get $primaryKey => {localId};
-  @override
-  UserTableData map(Map<String, dynamic> data, {String? tablePrefix}) {
-    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return UserTableData(
-      localId: attachedDatabase.typeMapping
-          .read(DriftSqlType.int, data['${effectivePrefix}local_id'])!,
-      remoteId: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}remote_id'])!,
-      email: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}email'])!,
-      name: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}name'])!,
-      avatar: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}avatar'])!,
-    );
-  }
-
-  @override
-  $UserTableTable createAlias(String alias) {
-    return $UserTableTable(attachedDatabase, alias);
-  }
-}
-
-class UserTableData extends DataClass implements Insertable<UserTableData> {
-  final int localId;
-  final String remoteId;
-  final String email;
-  final String name;
-  final String avatar;
-  const UserTableData(
-      {required this.localId,
-      required this.remoteId,
-      required this.email,
-      required this.name,
-      required this.avatar});
-  @override
-  Map<String, Expression> toColumns(bool nullToAbsent) {
-    final map = <String, Expression>{};
-    map['local_id'] = Variable<int>(localId);
-    map['remote_id'] = Variable<String>(remoteId);
-    map['email'] = Variable<String>(email);
-    map['name'] = Variable<String>(name);
-    map['avatar'] = Variable<String>(avatar);
-    return map;
-  }
-
-  UserTableCompanion toCompanion(bool nullToAbsent) {
-    return UserTableCompanion(
-      localId: Value(localId),
-      remoteId: Value(remoteId),
-      email: Value(email),
-      name: Value(name),
-      avatar: Value(avatar),
-    );
-  }
-
-  factory UserTableData.fromJson(Map<String, dynamic> json,
-      {ValueSerializer? serializer}) {
-    serializer ??= driftRuntimeOptions.defaultSerializer;
-    return UserTableData(
-      localId: serializer.fromJson<int>(json['localId']),
-      remoteId: serializer.fromJson<String>(json['remoteId']),
-      email: serializer.fromJson<String>(json['email']),
-      name: serializer.fromJson<String>(json['name']),
-      avatar: serializer.fromJson<String>(json['avatar']),
-    );
-  }
-  @override
-  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
-    serializer ??= driftRuntimeOptions.defaultSerializer;
-    return <String, dynamic>{
-      'localId': serializer.toJson<int>(localId),
-      'remoteId': serializer.toJson<String>(remoteId),
-      'email': serializer.toJson<String>(email),
-      'name': serializer.toJson<String>(name),
-      'avatar': serializer.toJson<String>(avatar),
-    };
-  }
-
-  UserTableData copyWith(
-          {int? localId,
-          String? remoteId,
-          String? email,
-          String? name,
-          String? avatar}) =>
-      UserTableData(
-        localId: localId ?? this.localId,
-        remoteId: remoteId ?? this.remoteId,
-        email: email ?? this.email,
-        name: name ?? this.name,
-        avatar: avatar ?? this.avatar,
-      );
-  UserTableData copyWithCompanion(UserTableCompanion data) {
-    return UserTableData(
-      localId: data.localId.present ? data.localId.value : this.localId,
-      remoteId: data.remoteId.present ? data.remoteId.value : this.remoteId,
-      email: data.email.present ? data.email.value : this.email,
-      name: data.name.present ? data.name.value : this.name,
-      avatar: data.avatar.present ? data.avatar.value : this.avatar,
-    );
-  }
-
-  @override
-  String toString() {
-    return (StringBuffer('UserTableData(')
-          ..write('localId: $localId, ')
-          ..write('remoteId: $remoteId, ')
-          ..write('email: $email, ')
-          ..write('name: $name, ')
-          ..write('avatar: $avatar')
-          ..write(')'))
-        .toString();
-  }
-
-  @override
-  int get hashCode => Object.hash(localId, remoteId, email, name, avatar);
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      (other is UserTableData &&
-          other.localId == this.localId &&
-          other.remoteId == this.remoteId &&
-          other.email == this.email &&
-          other.name == this.name &&
-          other.avatar == this.avatar);
-}
-
-class UserTableCompanion extends UpdateCompanion<UserTableData> {
-  final Value<int> localId;
-  final Value<String> remoteId;
-  final Value<String> email;
-  final Value<String> name;
-  final Value<String> avatar;
-  const UserTableCompanion({
-    this.localId = const Value.absent(),
-    this.remoteId = const Value.absent(),
-    this.email = const Value.absent(),
-    this.name = const Value.absent(),
-    this.avatar = const Value.absent(),
-  });
-  UserTableCompanion.insert({
-    this.localId = const Value.absent(),
-    this.remoteId = const Value.absent(),
-    required String email,
-    required String name,
-    required String avatar,
-  })  : email = Value(email),
-        name = Value(name),
-        avatar = Value(avatar);
-  static Insertable<UserTableData> custom({
-    Expression<int>? localId,
-    Expression<String>? remoteId,
-    Expression<String>? email,
-    Expression<String>? name,
-    Expression<String>? avatar,
-  }) {
-    return RawValuesInsertable({
-      if (localId != null) 'local_id': localId,
-      if (remoteId != null) 'remote_id': remoteId,
-      if (email != null) 'email': email,
-      if (name != null) 'name': name,
-      if (avatar != null) 'avatar': avatar,
-    });
-  }
-
-  UserTableCompanion copyWith(
-      {Value<int>? localId,
-      Value<String>? remoteId,
-      Value<String>? email,
-      Value<String>? name,
-      Value<String>? avatar}) {
-    return UserTableCompanion(
-      localId: localId ?? this.localId,
-      remoteId: remoteId ?? this.remoteId,
-      email: email ?? this.email,
-      name: name ?? this.name,
-      avatar: avatar ?? this.avatar,
-    );
-  }
-
-  @override
-  Map<String, Expression> toColumns(bool nullToAbsent) {
-    final map = <String, Expression>{};
-    if (localId.present) {
-      map['local_id'] = Variable<int>(localId.value);
-    }
-    if (remoteId.present) {
-      map['remote_id'] = Variable<String>(remoteId.value);
-    }
-    if (email.present) {
-      map['email'] = Variable<String>(email.value);
-    }
-    if (name.present) {
-      map['name'] = Variable<String>(name.value);
-    }
-    if (avatar.present) {
-      map['avatar'] = Variable<String>(avatar.value);
-    }
-    return map;
-  }
-
-  @override
-  String toString() {
-    return (StringBuffer('UserTableCompanion(')
-          ..write('localId: $localId, ')
-          ..write('remoteId: $remoteId, ')
-          ..write('email: $email, ')
-          ..write('name: $name, ')
-          ..write('avatar: $avatar')
-          ..write(')'))
-        .toString();
-  }
-}
-
 class $SettingTableTable extends SettingTable
     with TableInfo<$SettingTableTable, SettingTableData> {
   @override
@@ -1357,7 +1359,8 @@ class $SettingTableTable extends SettingTable
       'user_local_id', aliasedName, false,
       type: DriftSqlType.int,
       requiredDuringInsert: true,
-      $customConstraints: 'REFERENCES user(localId) ON DELETE CASCADE');
+      defaultConstraints: GeneratedColumn.constraintIsAlways(
+          'REFERENCES user (local_id) ON DELETE CASCADE'));
   static const VerificationMeta _isNotificationEnabledMeta =
       const VerificationMeta('isNotificationEnabled');
   @override
@@ -1813,10 +1816,11 @@ class $CategoryTableTable extends CategoryTable
       const VerificationMeta('userLocalId');
   @override
   late final GeneratedColumn<int> userLocalId = GeneratedColumn<int>(
-      'user_local_id', aliasedName, true,
+      'user_local_id', aliasedName, false,
       type: DriftSqlType.int,
-      requiredDuringInsert: false,
-      $customConstraints: 'REFERENCES user(localId) ON DELETE CASCADE');
+      requiredDuringInsert: true,
+      defaultConstraints: GeneratedColumn.constraintIsAlways(
+          'REFERENCES user (local_id) ON DELETE CASCADE'));
   static const VerificationMeta _createdAtMeta =
       const VerificationMeta('createdAt');
   @override
@@ -1867,6 +1871,8 @@ class $CategoryTableTable extends CategoryTable
           _userLocalIdMeta,
           userLocalId.isAcceptableOrUnknown(
               data['user_local_id']!, _userLocalIdMeta));
+    } else if (isInserting) {
+      context.missing(_userLocalIdMeta);
     }
     if (data.containsKey('created_at')) {
       context.handle(_createdAtMeta,
@@ -1898,7 +1904,7 @@ class $CategoryTableTable extends CategoryTable
       isSynced: attachedDatabase.typeMapping
           .read(DriftSqlType.bool, data['${effectivePrefix}is_synced'])!,
       userLocalId: attachedDatabase.typeMapping
-          .read(DriftSqlType.int, data['${effectivePrefix}user_local_id']),
+          .read(DriftSqlType.int, data['${effectivePrefix}user_local_id'])!,
       createdAt: attachedDatabase.typeMapping
           .read(DriftSqlType.dateTime, data['${effectivePrefix}created_at'])!,
       updatedAt: attachedDatabase.typeMapping
@@ -1918,7 +1924,7 @@ class CategoryTableData extends DataClass
   final String remoteId;
   final String name;
   final bool isSynced;
-  final int? userLocalId;
+  final int userLocalId;
   final DateTime createdAt;
   final DateTime updatedAt;
   const CategoryTableData(
@@ -1926,7 +1932,7 @@ class CategoryTableData extends DataClass
       required this.remoteId,
       required this.name,
       required this.isSynced,
-      this.userLocalId,
+      required this.userLocalId,
       required this.createdAt,
       required this.updatedAt});
   @override
@@ -1936,9 +1942,7 @@ class CategoryTableData extends DataClass
     map['remote_id'] = Variable<String>(remoteId);
     map['name'] = Variable<String>(name);
     map['is_synced'] = Variable<bool>(isSynced);
-    if (!nullToAbsent || userLocalId != null) {
-      map['user_local_id'] = Variable<int>(userLocalId);
-    }
+    map['user_local_id'] = Variable<int>(userLocalId);
     map['created_at'] = Variable<DateTime>(createdAt);
     map['updated_at'] = Variable<DateTime>(updatedAt);
     return map;
@@ -1950,9 +1954,7 @@ class CategoryTableData extends DataClass
       remoteId: Value(remoteId),
       name: Value(name),
       isSynced: Value(isSynced),
-      userLocalId: userLocalId == null && nullToAbsent
-          ? const Value.absent()
-          : Value(userLocalId),
+      userLocalId: Value(userLocalId),
       createdAt: Value(createdAt),
       updatedAt: Value(updatedAt),
     );
@@ -1966,7 +1968,7 @@ class CategoryTableData extends DataClass
       remoteId: serializer.fromJson<String>(json['remoteId']),
       name: serializer.fromJson<String>(json['name']),
       isSynced: serializer.fromJson<bool>(json['isSynced']),
-      userLocalId: serializer.fromJson<int?>(json['userLocalId']),
+      userLocalId: serializer.fromJson<int>(json['userLocalId']),
       createdAt: serializer.fromJson<DateTime>(json['createdAt']),
       updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
     );
@@ -1979,7 +1981,7 @@ class CategoryTableData extends DataClass
       'remoteId': serializer.toJson<String>(remoteId),
       'name': serializer.toJson<String>(name),
       'isSynced': serializer.toJson<bool>(isSynced),
-      'userLocalId': serializer.toJson<int?>(userLocalId),
+      'userLocalId': serializer.toJson<int>(userLocalId),
       'createdAt': serializer.toJson<DateTime>(createdAt),
       'updatedAt': serializer.toJson<DateTime>(updatedAt),
     };
@@ -1990,7 +1992,7 @@ class CategoryTableData extends DataClass
           String? remoteId,
           String? name,
           bool? isSynced,
-          Value<int?> userLocalId = const Value.absent(),
+          int? userLocalId,
           DateTime? createdAt,
           DateTime? updatedAt}) =>
       CategoryTableData(
@@ -1998,7 +2000,7 @@ class CategoryTableData extends DataClass
         remoteId: remoteId ?? this.remoteId,
         name: name ?? this.name,
         isSynced: isSynced ?? this.isSynced,
-        userLocalId: userLocalId.present ? userLocalId.value : this.userLocalId,
+        userLocalId: userLocalId ?? this.userLocalId,
         createdAt: createdAt ?? this.createdAt,
         updatedAt: updatedAt ?? this.updatedAt,
       );
@@ -2050,7 +2052,7 @@ class CategoryTableCompanion extends UpdateCompanion<CategoryTableData> {
   final Value<String> remoteId;
   final Value<String> name;
   final Value<bool> isSynced;
-  final Value<int?> userLocalId;
+  final Value<int> userLocalId;
   final Value<DateTime> createdAt;
   final Value<DateTime> updatedAt;
   const CategoryTableCompanion({
@@ -2067,11 +2069,12 @@ class CategoryTableCompanion extends UpdateCompanion<CategoryTableData> {
     this.remoteId = const Value.absent(),
     required String name,
     required bool isSynced,
-    this.userLocalId = const Value.absent(),
+    required int userLocalId,
     required DateTime createdAt,
     required DateTime updatedAt,
   })  : name = Value(name),
         isSynced = Value(isSynced),
+        userLocalId = Value(userLocalId),
         createdAt = Value(createdAt),
         updatedAt = Value(updatedAt);
   static Insertable<CategoryTableData> custom({
@@ -2099,7 +2102,7 @@ class CategoryTableCompanion extends UpdateCompanion<CategoryTableData> {
       Value<String>? remoteId,
       Value<String>? name,
       Value<bool>? isSynced,
-      Value<int?>? userLocalId,
+      Value<int>? userLocalId,
       Value<DateTime>? createdAt,
       Value<DateTime>? updatedAt}) {
     return CategoryTableCompanion(
@@ -2158,9 +2161,9 @@ class CategoryTableCompanion extends UpdateCompanion<CategoryTableData> {
 abstract class _$AppDatabase extends GeneratedDatabase {
   _$AppDatabase(QueryExecutor e) : super(e);
   $AppDatabaseManager get managers => $AppDatabaseManager(this);
+  late final $UserTableTable userTable = $UserTableTable(this);
   late final $TaskTableTable taskTable = $TaskTableTable(this);
   late final $SubtaskTableTable subtaskTable = $SubtaskTableTable(this);
-  late final $UserTableTable userTable = $UserTableTable(this);
   late final $SettingTableTable settingTable = $SettingTableTable(this);
   late final $CategoryTableTable categoryTable = $CategoryTableTable(this);
   late final TaskDao taskDao = TaskDao(this as AppDatabase);
@@ -2173,9 +2176,440 @@ abstract class _$AppDatabase extends GeneratedDatabase {
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
   @override
   List<DatabaseSchemaEntity> get allSchemaEntities =>
-      [taskTable, subtaskTable, userTable, settingTable, categoryTable];
+      [userTable, taskTable, subtaskTable, settingTable, categoryTable];
+  @override
+  StreamQueryUpdateRules get streamUpdateRules => const StreamQueryUpdateRules(
+        [
+          WritePropagation(
+            on: TableUpdateQuery.onTableName('user',
+                limitUpdateKind: UpdateKind.delete),
+            result: [
+              TableUpdate('task', kind: UpdateKind.delete),
+            ],
+          ),
+          WritePropagation(
+            on: TableUpdateQuery.onTableName('task',
+                limitUpdateKind: UpdateKind.delete),
+            result: [
+              TableUpdate('subtask', kind: UpdateKind.delete),
+            ],
+          ),
+          WritePropagation(
+            on: TableUpdateQuery.onTableName('user',
+                limitUpdateKind: UpdateKind.delete),
+            result: [
+              TableUpdate('setting', kind: UpdateKind.delete),
+            ],
+          ),
+          WritePropagation(
+            on: TableUpdateQuery.onTableName('user',
+                limitUpdateKind: UpdateKind.delete),
+            result: [
+              TableUpdate('category', kind: UpdateKind.delete),
+            ],
+          ),
+        ],
+      );
 }
 
+typedef $$UserTableTableCreateCompanionBuilder = UserTableCompanion Function({
+  Value<int> localId,
+  Value<String> remoteId,
+  required String email,
+  required String name,
+  required String avatar,
+});
+typedef $$UserTableTableUpdateCompanionBuilder = UserTableCompanion Function({
+  Value<int> localId,
+  Value<String> remoteId,
+  Value<String> email,
+  Value<String> name,
+  Value<String> avatar,
+});
+
+final class $$UserTableTableReferences
+    extends BaseReferences<_$AppDatabase, $UserTableTable, UserTableData> {
+  $$UserTableTableReferences(super.$_db, super.$_table, super.$_typedResult);
+
+  static MultiTypedResultKey<$TaskTableTable, List<TaskTableData>>
+      _taskTableRefsTable(_$AppDatabase db) =>
+          MultiTypedResultKey.fromTable(db.taskTable,
+              aliasName: $_aliasNameGenerator(
+                  db.userTable.localId, db.taskTable.userLocalId));
+
+  $$TaskTableTableProcessedTableManager get taskTableRefs {
+    final manager = $$TaskTableTableTableManager($_db, $_db.taskTable).filter(
+        (f) => f.userLocalId.localId.sqlEquals($_itemColumn<int>('local_id')!));
+
+    final cache = $_typedResult.readTableOrNull(_taskTableRefsTable($_db));
+    return ProcessedTableManager(
+        manager.$state.copyWith(prefetchedData: cache));
+  }
+
+  static MultiTypedResultKey<$SettingTableTable, List<SettingTableData>>
+      _settingTableRefsTable(_$AppDatabase db) =>
+          MultiTypedResultKey.fromTable(db.settingTable,
+              aliasName: $_aliasNameGenerator(
+                  db.userTable.localId, db.settingTable.userLocalId));
+
+  $$SettingTableTableProcessedTableManager get settingTableRefs {
+    final manager = $$SettingTableTableTableManager($_db, $_db.settingTable)
+        .filter((f) =>
+            f.userLocalId.localId.sqlEquals($_itemColumn<int>('local_id')!));
+
+    final cache = $_typedResult.readTableOrNull(_settingTableRefsTable($_db));
+    return ProcessedTableManager(
+        manager.$state.copyWith(prefetchedData: cache));
+  }
+
+  static MultiTypedResultKey<$CategoryTableTable, List<CategoryTableData>>
+      _categoryTableRefsTable(_$AppDatabase db) =>
+          MultiTypedResultKey.fromTable(db.categoryTable,
+              aliasName: $_aliasNameGenerator(
+                  db.userTable.localId, db.categoryTable.userLocalId));
+
+  $$CategoryTableTableProcessedTableManager get categoryTableRefs {
+    final manager = $$CategoryTableTableTableManager($_db, $_db.categoryTable)
+        .filter((f) =>
+            f.userLocalId.localId.sqlEquals($_itemColumn<int>('local_id')!));
+
+    final cache = $_typedResult.readTableOrNull(_categoryTableRefsTable($_db));
+    return ProcessedTableManager(
+        manager.$state.copyWith(prefetchedData: cache));
+  }
+}
+
+class $$UserTableTableFilterComposer
+    extends Composer<_$AppDatabase, $UserTableTable> {
+  $$UserTableTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<int> get localId => $composableBuilder(
+      column: $table.localId, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get remoteId => $composableBuilder(
+      column: $table.remoteId, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get email => $composableBuilder(
+      column: $table.email, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get name => $composableBuilder(
+      column: $table.name, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get avatar => $composableBuilder(
+      column: $table.avatar, builder: (column) => ColumnFilters(column));
+
+  Expression<bool> taskTableRefs(
+      Expression<bool> Function($$TaskTableTableFilterComposer f) f) {
+    final $$TaskTableTableFilterComposer composer = $composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.localId,
+        referencedTable: $db.taskTable,
+        getReferencedColumn: (t) => t.userLocalId,
+        builder: (joinBuilder,
+                {$addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer}) =>
+            $$TaskTableTableFilterComposer(
+              $db: $db,
+              $table: $db.taskTable,
+              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+              joinBuilder: joinBuilder,
+              $removeJoinBuilderFromRootComposer:
+                  $removeJoinBuilderFromRootComposer,
+            ));
+    return f(composer);
+  }
+
+  Expression<bool> settingTableRefs(
+      Expression<bool> Function($$SettingTableTableFilterComposer f) f) {
+    final $$SettingTableTableFilterComposer composer = $composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.localId,
+        referencedTable: $db.settingTable,
+        getReferencedColumn: (t) => t.userLocalId,
+        builder: (joinBuilder,
+                {$addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer}) =>
+            $$SettingTableTableFilterComposer(
+              $db: $db,
+              $table: $db.settingTable,
+              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+              joinBuilder: joinBuilder,
+              $removeJoinBuilderFromRootComposer:
+                  $removeJoinBuilderFromRootComposer,
+            ));
+    return f(composer);
+  }
+
+  Expression<bool> categoryTableRefs(
+      Expression<bool> Function($$CategoryTableTableFilterComposer f) f) {
+    final $$CategoryTableTableFilterComposer composer = $composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.localId,
+        referencedTable: $db.categoryTable,
+        getReferencedColumn: (t) => t.userLocalId,
+        builder: (joinBuilder,
+                {$addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer}) =>
+            $$CategoryTableTableFilterComposer(
+              $db: $db,
+              $table: $db.categoryTable,
+              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+              joinBuilder: joinBuilder,
+              $removeJoinBuilderFromRootComposer:
+                  $removeJoinBuilderFromRootComposer,
+            ));
+    return f(composer);
+  }
+}
+
+class $$UserTableTableOrderingComposer
+    extends Composer<_$AppDatabase, $UserTableTable> {
+  $$UserTableTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<int> get localId => $composableBuilder(
+      column: $table.localId, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get remoteId => $composableBuilder(
+      column: $table.remoteId, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get email => $composableBuilder(
+      column: $table.email, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get name => $composableBuilder(
+      column: $table.name, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get avatar => $composableBuilder(
+      column: $table.avatar, builder: (column) => ColumnOrderings(column));
+}
+
+class $$UserTableTableAnnotationComposer
+    extends Composer<_$AppDatabase, $UserTableTable> {
+  $$UserTableTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<int> get localId =>
+      $composableBuilder(column: $table.localId, builder: (column) => column);
+
+  GeneratedColumn<String> get remoteId =>
+      $composableBuilder(column: $table.remoteId, builder: (column) => column);
+
+  GeneratedColumn<String> get email =>
+      $composableBuilder(column: $table.email, builder: (column) => column);
+
+  GeneratedColumn<String> get name =>
+      $composableBuilder(column: $table.name, builder: (column) => column);
+
+  GeneratedColumn<String> get avatar =>
+      $composableBuilder(column: $table.avatar, builder: (column) => column);
+
+  Expression<T> taskTableRefs<T extends Object>(
+      Expression<T> Function($$TaskTableTableAnnotationComposer a) f) {
+    final $$TaskTableTableAnnotationComposer composer = $composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.localId,
+        referencedTable: $db.taskTable,
+        getReferencedColumn: (t) => t.userLocalId,
+        builder: (joinBuilder,
+                {$addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer}) =>
+            $$TaskTableTableAnnotationComposer(
+              $db: $db,
+              $table: $db.taskTable,
+              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+              joinBuilder: joinBuilder,
+              $removeJoinBuilderFromRootComposer:
+                  $removeJoinBuilderFromRootComposer,
+            ));
+    return f(composer);
+  }
+
+  Expression<T> settingTableRefs<T extends Object>(
+      Expression<T> Function($$SettingTableTableAnnotationComposer a) f) {
+    final $$SettingTableTableAnnotationComposer composer = $composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.localId,
+        referencedTable: $db.settingTable,
+        getReferencedColumn: (t) => t.userLocalId,
+        builder: (joinBuilder,
+                {$addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer}) =>
+            $$SettingTableTableAnnotationComposer(
+              $db: $db,
+              $table: $db.settingTable,
+              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+              joinBuilder: joinBuilder,
+              $removeJoinBuilderFromRootComposer:
+                  $removeJoinBuilderFromRootComposer,
+            ));
+    return f(composer);
+  }
+
+  Expression<T> categoryTableRefs<T extends Object>(
+      Expression<T> Function($$CategoryTableTableAnnotationComposer a) f) {
+    final $$CategoryTableTableAnnotationComposer composer = $composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.localId,
+        referencedTable: $db.categoryTable,
+        getReferencedColumn: (t) => t.userLocalId,
+        builder: (joinBuilder,
+                {$addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer}) =>
+            $$CategoryTableTableAnnotationComposer(
+              $db: $db,
+              $table: $db.categoryTable,
+              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+              joinBuilder: joinBuilder,
+              $removeJoinBuilderFromRootComposer:
+                  $removeJoinBuilderFromRootComposer,
+            ));
+    return f(composer);
+  }
+}
+
+class $$UserTableTableTableManager extends RootTableManager<
+    _$AppDatabase,
+    $UserTableTable,
+    UserTableData,
+    $$UserTableTableFilterComposer,
+    $$UserTableTableOrderingComposer,
+    $$UserTableTableAnnotationComposer,
+    $$UserTableTableCreateCompanionBuilder,
+    $$UserTableTableUpdateCompanionBuilder,
+    (UserTableData, $$UserTableTableReferences),
+    UserTableData,
+    PrefetchHooks Function(
+        {bool taskTableRefs, bool settingTableRefs, bool categoryTableRefs})> {
+  $$UserTableTableTableManager(_$AppDatabase db, $UserTableTable table)
+      : super(TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$UserTableTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$UserTableTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$UserTableTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback: ({
+            Value<int> localId = const Value.absent(),
+            Value<String> remoteId = const Value.absent(),
+            Value<String> email = const Value.absent(),
+            Value<String> name = const Value.absent(),
+            Value<String> avatar = const Value.absent(),
+          }) =>
+              UserTableCompanion(
+            localId: localId,
+            remoteId: remoteId,
+            email: email,
+            name: name,
+            avatar: avatar,
+          ),
+          createCompanionCallback: ({
+            Value<int> localId = const Value.absent(),
+            Value<String> remoteId = const Value.absent(),
+            required String email,
+            required String name,
+            required String avatar,
+          }) =>
+              UserTableCompanion.insert(
+            localId: localId,
+            remoteId: remoteId,
+            email: email,
+            name: name,
+            avatar: avatar,
+          ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (
+                    e.readTable(table),
+                    $$UserTableTableReferences(db, table, e)
+                  ))
+              .toList(),
+          prefetchHooksCallback: (
+              {taskTableRefs = false,
+              settingTableRefs = false,
+              categoryTableRefs = false}) {
+            return PrefetchHooks(
+              db: db,
+              explicitlyWatchedTables: [
+                if (taskTableRefs) db.taskTable,
+                if (settingTableRefs) db.settingTable,
+                if (categoryTableRefs) db.categoryTable
+              ],
+              addJoins: null,
+              getPrefetchedDataCallback: (items) async {
+                return [
+                  if (taskTableRefs)
+                    await $_getPrefetchedData<UserTableData, $UserTableTable,
+                            TaskTableData>(
+                        currentTable: table,
+                        referencedTable:
+                            $$UserTableTableReferences._taskTableRefsTable(db),
+                        managerFromTypedResult: (p0) =>
+                            $$UserTableTableReferences(db, table, p0)
+                                .taskTableRefs,
+                        referencedItemsForCurrentItem:
+                            (item, referencedItems) => referencedItems
+                                .where((e) => e.userLocalId == item.localId),
+                        typedResults: items),
+                  if (settingTableRefs)
+                    await $_getPrefetchedData<UserTableData, $UserTableTable,
+                            SettingTableData>(
+                        currentTable: table,
+                        referencedTable: $$UserTableTableReferences
+                            ._settingTableRefsTable(db),
+                        managerFromTypedResult: (p0) =>
+                            $$UserTableTableReferences(db, table, p0)
+                                .settingTableRefs,
+                        referencedItemsForCurrentItem:
+                            (item, referencedItems) => referencedItems
+                                .where((e) => e.userLocalId == item.localId),
+                        typedResults: items),
+                  if (categoryTableRefs)
+                    await $_getPrefetchedData<UserTableData, $UserTableTable,
+                            CategoryTableData>(
+                        currentTable: table,
+                        referencedTable: $$UserTableTableReferences
+                            ._categoryTableRefsTable(db),
+                        managerFromTypedResult: (p0) =>
+                            $$UserTableTableReferences(db, table, p0)
+                                .categoryTableRefs,
+                        referencedItemsForCurrentItem:
+                            (item, referencedItems) => referencedItems
+                                .where((e) => e.userLocalId == item.localId),
+                        typedResults: items)
+                ];
+              },
+            );
+          },
+        ));
+}
+
+typedef $$UserTableTableProcessedTableManager = ProcessedTableManager<
+    _$AppDatabase,
+    $UserTableTable,
+    UserTableData,
+    $$UserTableTableFilterComposer,
+    $$UserTableTableOrderingComposer,
+    $$UserTableTableAnnotationComposer,
+    $$UserTableTableCreateCompanionBuilder,
+    $$UserTableTableUpdateCompanionBuilder,
+    (UserTableData, $$UserTableTableReferences),
+    UserTableData,
+    PrefetchHooks Function(
+        {bool taskTableRefs, bool settingTableRefs, bool categoryTableRefs})>;
 typedef $$TaskTableTableCreateCompanionBuilder = TaskTableCompanion Function({
   Value<int> localId,
   Value<String> remoteId,
@@ -2204,6 +2638,42 @@ typedef $$TaskTableTableUpdateCompanionBuilder = TaskTableCompanion Function({
   Value<DateTime> createdAt,
   Value<DateTime> updatedAt,
 });
+
+final class $$TaskTableTableReferences
+    extends BaseReferences<_$AppDatabase, $TaskTableTable, TaskTableData> {
+  $$TaskTableTableReferences(super.$_db, super.$_table, super.$_typedResult);
+
+  static $UserTableTable _userLocalIdTable(_$AppDatabase db) =>
+      db.userTable.createAlias(
+          $_aliasNameGenerator(db.taskTable.userLocalId, db.userTable.localId));
+
+  $$UserTableTableProcessedTableManager get userLocalId {
+    final $_column = $_itemColumn<int>('user_local_id')!;
+
+    final manager = $$UserTableTableTableManager($_db, $_db.userTable)
+        .filter((f) => f.localId.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_userLocalIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+        manager.$state.copyWith(prefetchedData: [item]));
+  }
+
+  static MultiTypedResultKey<$SubtaskTableTable, List<SubtaskTableData>>
+      _subtaskTableRefsTable(_$AppDatabase db) =>
+          MultiTypedResultKey.fromTable(db.subtaskTable,
+              aliasName: $_aliasNameGenerator(
+                  db.taskTable.localId, db.subtaskTable.taskLocalId));
+
+  $$SubtaskTableTableProcessedTableManager get subtaskTableRefs {
+    final manager = $$SubtaskTableTableTableManager($_db, $_db.subtaskTable)
+        .filter((f) =>
+            f.taskLocalId.localId.sqlEquals($_itemColumn<int>('local_id')!));
+
+    final cache = $_typedResult.readTableOrNull(_subtaskTableRefsTable($_db));
+    return ProcessedTableManager(
+        manager.$state.copyWith(prefetchedData: cache));
+  }
+}
 
 class $$TaskTableTableFilterComposer
     extends Composer<_$AppDatabase, $TaskTableTable> {
@@ -2235,9 +2705,6 @@ class $$TaskTableTableFilterComposer
   ColumnFilters<String> get priority => $composableBuilder(
       column: $table.priority, builder: (column) => ColumnFilters(column));
 
-  ColumnFilters<int> get userLocalId => $composableBuilder(
-      column: $table.userLocalId, builder: (column) => ColumnFilters(column));
-
   ColumnFilters<String> get status => $composableBuilder(
       column: $table.status, builder: (column) => ColumnFilters(column));
 
@@ -2249,6 +2716,47 @@ class $$TaskTableTableFilterComposer
 
   ColumnFilters<DateTime> get updatedAt => $composableBuilder(
       column: $table.updatedAt, builder: (column) => ColumnFilters(column));
+
+  $$UserTableTableFilterComposer get userLocalId {
+    final $$UserTableTableFilterComposer composer = $composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.userLocalId,
+        referencedTable: $db.userTable,
+        getReferencedColumn: (t) => t.localId,
+        builder: (joinBuilder,
+                {$addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer}) =>
+            $$UserTableTableFilterComposer(
+              $db: $db,
+              $table: $db.userTable,
+              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+              joinBuilder: joinBuilder,
+              $removeJoinBuilderFromRootComposer:
+                  $removeJoinBuilderFromRootComposer,
+            ));
+    return composer;
+  }
+
+  Expression<bool> subtaskTableRefs(
+      Expression<bool> Function($$SubtaskTableTableFilterComposer f) f) {
+    final $$SubtaskTableTableFilterComposer composer = $composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.localId,
+        referencedTable: $db.subtaskTable,
+        getReferencedColumn: (t) => t.taskLocalId,
+        builder: (joinBuilder,
+                {$addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer}) =>
+            $$SubtaskTableTableFilterComposer(
+              $db: $db,
+              $table: $db.subtaskTable,
+              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+              joinBuilder: joinBuilder,
+              $removeJoinBuilderFromRootComposer:
+                  $removeJoinBuilderFromRootComposer,
+            ));
+    return f(composer);
+  }
 }
 
 class $$TaskTableTableOrderingComposer
@@ -2281,9 +2789,6 @@ class $$TaskTableTableOrderingComposer
   ColumnOrderings<String> get priority => $composableBuilder(
       column: $table.priority, builder: (column) => ColumnOrderings(column));
 
-  ColumnOrderings<int> get userLocalId => $composableBuilder(
-      column: $table.userLocalId, builder: (column) => ColumnOrderings(column));
-
   ColumnOrderings<String> get status => $composableBuilder(
       column: $table.status, builder: (column) => ColumnOrderings(column));
 
@@ -2295,6 +2800,26 @@ class $$TaskTableTableOrderingComposer
 
   ColumnOrderings<DateTime> get updatedAt => $composableBuilder(
       column: $table.updatedAt, builder: (column) => ColumnOrderings(column));
+
+  $$UserTableTableOrderingComposer get userLocalId {
+    final $$UserTableTableOrderingComposer composer = $composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.userLocalId,
+        referencedTable: $db.userTable,
+        getReferencedColumn: (t) => t.localId,
+        builder: (joinBuilder,
+                {$addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer}) =>
+            $$UserTableTableOrderingComposer(
+              $db: $db,
+              $table: $db.userTable,
+              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+              joinBuilder: joinBuilder,
+              $removeJoinBuilderFromRootComposer:
+                  $removeJoinBuilderFromRootComposer,
+            ));
+    return composer;
+  }
 }
 
 class $$TaskTableTableAnnotationComposer
@@ -2327,9 +2852,6 @@ class $$TaskTableTableAnnotationComposer
   GeneratedColumn<String> get priority =>
       $composableBuilder(column: $table.priority, builder: (column) => column);
 
-  GeneratedColumn<int> get userLocalId => $composableBuilder(
-      column: $table.userLocalId, builder: (column) => column);
-
   GeneratedColumn<String> get status =>
       $composableBuilder(column: $table.status, builder: (column) => column);
 
@@ -2341,6 +2863,47 @@ class $$TaskTableTableAnnotationComposer
 
   GeneratedColumn<DateTime> get updatedAt =>
       $composableBuilder(column: $table.updatedAt, builder: (column) => column);
+
+  $$UserTableTableAnnotationComposer get userLocalId {
+    final $$UserTableTableAnnotationComposer composer = $composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.userLocalId,
+        referencedTable: $db.userTable,
+        getReferencedColumn: (t) => t.localId,
+        builder: (joinBuilder,
+                {$addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer}) =>
+            $$UserTableTableAnnotationComposer(
+              $db: $db,
+              $table: $db.userTable,
+              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+              joinBuilder: joinBuilder,
+              $removeJoinBuilderFromRootComposer:
+                  $removeJoinBuilderFromRootComposer,
+            ));
+    return composer;
+  }
+
+  Expression<T> subtaskTableRefs<T extends Object>(
+      Expression<T> Function($$SubtaskTableTableAnnotationComposer a) f) {
+    final $$SubtaskTableTableAnnotationComposer composer = $composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.localId,
+        referencedTable: $db.subtaskTable,
+        getReferencedColumn: (t) => t.taskLocalId,
+        builder: (joinBuilder,
+                {$addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer}) =>
+            $$SubtaskTableTableAnnotationComposer(
+              $db: $db,
+              $table: $db.subtaskTable,
+              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+              joinBuilder: joinBuilder,
+              $removeJoinBuilderFromRootComposer:
+                  $removeJoinBuilderFromRootComposer,
+            ));
+    return f(composer);
+  }
 }
 
 class $$TaskTableTableTableManager extends RootTableManager<
@@ -2352,12 +2915,9 @@ class $$TaskTableTableTableManager extends RootTableManager<
     $$TaskTableTableAnnotationComposer,
     $$TaskTableTableCreateCompanionBuilder,
     $$TaskTableTableUpdateCompanionBuilder,
-    (
-      TaskTableData,
-      BaseReferences<_$AppDatabase, $TaskTableTable, TaskTableData>
-    ),
+    (TaskTableData, $$TaskTableTableReferences),
     TaskTableData,
-    PrefetchHooks Function()> {
+    PrefetchHooks Function({bool userLocalId, bool subtaskTableRefs})> {
   $$TaskTableTableTableManager(_$AppDatabase db, $TaskTableTable table)
       : super(TableManagerState(
           db: db,
@@ -2425,9 +2985,62 @@ class $$TaskTableTableTableManager extends RootTableManager<
             updatedAt: updatedAt,
           ),
           withReferenceMapper: (p0) => p0
-              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .map((e) => (
+                    e.readTable(table),
+                    $$TaskTableTableReferences(db, table, e)
+                  ))
               .toList(),
-          prefetchHooksCallback: null,
+          prefetchHooksCallback: (
+              {userLocalId = false, subtaskTableRefs = false}) {
+            return PrefetchHooks(
+              db: db,
+              explicitlyWatchedTables: [if (subtaskTableRefs) db.subtaskTable],
+              addJoins: <
+                  T extends TableManagerState<
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic>>(state) {
+                if (userLocalId) {
+                  state = state.withJoin(
+                    currentTable: table,
+                    currentColumn: table.userLocalId,
+                    referencedTable:
+                        $$TaskTableTableReferences._userLocalIdTable(db),
+                    referencedColumn: $$TaskTableTableReferences
+                        ._userLocalIdTable(db)
+                        .localId,
+                  ) as T;
+                }
+
+                return state;
+              },
+              getPrefetchedDataCallback: (items) async {
+                return [
+                  if (subtaskTableRefs)
+                    await $_getPrefetchedData<TaskTableData, $TaskTableTable,
+                            SubtaskTableData>(
+                        currentTable: table,
+                        referencedTable: $$TaskTableTableReferences
+                            ._subtaskTableRefsTable(db),
+                        managerFromTypedResult: (p0) =>
+                            $$TaskTableTableReferences(db, table, p0)
+                                .subtaskTableRefs,
+                        referencedItemsForCurrentItem:
+                            (item, referencedItems) => referencedItems
+                                .where((e) => e.taskLocalId == item.localId),
+                        typedResults: items)
+                ];
+              },
+            );
+          },
         ));
 }
 
@@ -2440,12 +3053,9 @@ typedef $$TaskTableTableProcessedTableManager = ProcessedTableManager<
     $$TaskTableTableAnnotationComposer,
     $$TaskTableTableCreateCompanionBuilder,
     $$TaskTableTableUpdateCompanionBuilder,
-    (
-      TaskTableData,
-      BaseReferences<_$AppDatabase, $TaskTableTable, TaskTableData>
-    ),
+    (TaskTableData, $$TaskTableTableReferences),
     TaskTableData,
-    PrefetchHooks Function()>;
+    PrefetchHooks Function({bool userLocalId, bool subtaskTableRefs})>;
 typedef $$SubtaskTableTableCreateCompanionBuilder = SubtaskTableCompanion
     Function({
   Value<int> localId,
@@ -2468,6 +3078,26 @@ typedef $$SubtaskTableTableUpdateCompanionBuilder = SubtaskTableCompanion
   Value<DateTime> createdAt,
   Value<DateTime> updatedAt,
 });
+
+final class $$SubtaskTableTableReferences extends BaseReferences<_$AppDatabase,
+    $SubtaskTableTable, SubtaskTableData> {
+  $$SubtaskTableTableReferences(super.$_db, super.$_table, super.$_typedResult);
+
+  static $TaskTableTable _taskLocalIdTable(_$AppDatabase db) =>
+      db.taskTable.createAlias($_aliasNameGenerator(
+          db.subtaskTable.taskLocalId, db.taskTable.localId));
+
+  $$TaskTableTableProcessedTableManager get taskLocalId {
+    final $_column = $_itemColumn<int>('task_local_id')!;
+
+    final manager = $$TaskTableTableTableManager($_db, $_db.taskTable)
+        .filter((f) => f.localId.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_taskLocalIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+        manager.$state.copyWith(prefetchedData: [item]));
+  }
+}
 
 class $$SubtaskTableTableFilterComposer
     extends Composer<_$AppDatabase, $SubtaskTableTable> {
@@ -2493,14 +3123,31 @@ class $$SubtaskTableTableFilterComposer
   ColumnFilters<bool> get isCompleted => $composableBuilder(
       column: $table.isCompleted, builder: (column) => ColumnFilters(column));
 
-  ColumnFilters<int> get taskLocalId => $composableBuilder(
-      column: $table.taskLocalId, builder: (column) => ColumnFilters(column));
-
   ColumnFilters<DateTime> get createdAt => $composableBuilder(
       column: $table.createdAt, builder: (column) => ColumnFilters(column));
 
   ColumnFilters<DateTime> get updatedAt => $composableBuilder(
       column: $table.updatedAt, builder: (column) => ColumnFilters(column));
+
+  $$TaskTableTableFilterComposer get taskLocalId {
+    final $$TaskTableTableFilterComposer composer = $composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.taskLocalId,
+        referencedTable: $db.taskTable,
+        getReferencedColumn: (t) => t.localId,
+        builder: (joinBuilder,
+                {$addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer}) =>
+            $$TaskTableTableFilterComposer(
+              $db: $db,
+              $table: $db.taskTable,
+              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+              joinBuilder: joinBuilder,
+              $removeJoinBuilderFromRootComposer:
+                  $removeJoinBuilderFromRootComposer,
+            ));
+    return composer;
+  }
 }
 
 class $$SubtaskTableTableOrderingComposer
@@ -2527,14 +3174,31 @@ class $$SubtaskTableTableOrderingComposer
   ColumnOrderings<bool> get isCompleted => $composableBuilder(
       column: $table.isCompleted, builder: (column) => ColumnOrderings(column));
 
-  ColumnOrderings<int> get taskLocalId => $composableBuilder(
-      column: $table.taskLocalId, builder: (column) => ColumnOrderings(column));
-
   ColumnOrderings<DateTime> get createdAt => $composableBuilder(
       column: $table.createdAt, builder: (column) => ColumnOrderings(column));
 
   ColumnOrderings<DateTime> get updatedAt => $composableBuilder(
       column: $table.updatedAt, builder: (column) => ColumnOrderings(column));
+
+  $$TaskTableTableOrderingComposer get taskLocalId {
+    final $$TaskTableTableOrderingComposer composer = $composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.taskLocalId,
+        referencedTable: $db.taskTable,
+        getReferencedColumn: (t) => t.localId,
+        builder: (joinBuilder,
+                {$addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer}) =>
+            $$TaskTableTableOrderingComposer(
+              $db: $db,
+              $table: $db.taskTable,
+              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+              joinBuilder: joinBuilder,
+              $removeJoinBuilderFromRootComposer:
+                  $removeJoinBuilderFromRootComposer,
+            ));
+    return composer;
+  }
 }
 
 class $$SubtaskTableTableAnnotationComposer
@@ -2561,14 +3225,31 @@ class $$SubtaskTableTableAnnotationComposer
   GeneratedColumn<bool> get isCompleted => $composableBuilder(
       column: $table.isCompleted, builder: (column) => column);
 
-  GeneratedColumn<int> get taskLocalId => $composableBuilder(
-      column: $table.taskLocalId, builder: (column) => column);
-
   GeneratedColumn<DateTime> get createdAt =>
       $composableBuilder(column: $table.createdAt, builder: (column) => column);
 
   GeneratedColumn<DateTime> get updatedAt =>
       $composableBuilder(column: $table.updatedAt, builder: (column) => column);
+
+  $$TaskTableTableAnnotationComposer get taskLocalId {
+    final $$TaskTableTableAnnotationComposer composer = $composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.taskLocalId,
+        referencedTable: $db.taskTable,
+        getReferencedColumn: (t) => t.localId,
+        builder: (joinBuilder,
+                {$addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer}) =>
+            $$TaskTableTableAnnotationComposer(
+              $db: $db,
+              $table: $db.taskTable,
+              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+              joinBuilder: joinBuilder,
+              $removeJoinBuilderFromRootComposer:
+                  $removeJoinBuilderFromRootComposer,
+            ));
+    return composer;
+  }
 }
 
 class $$SubtaskTableTableTableManager extends RootTableManager<
@@ -2580,12 +3261,9 @@ class $$SubtaskTableTableTableManager extends RootTableManager<
     $$SubtaskTableTableAnnotationComposer,
     $$SubtaskTableTableCreateCompanionBuilder,
     $$SubtaskTableTableUpdateCompanionBuilder,
-    (
-      SubtaskTableData,
-      BaseReferences<_$AppDatabase, $SubtaskTableTable, SubtaskTableData>
-    ),
+    (SubtaskTableData, $$SubtaskTableTableReferences),
     SubtaskTableData,
-    PrefetchHooks Function()> {
+    PrefetchHooks Function({bool taskLocalId})> {
   $$SubtaskTableTableTableManager(_$AppDatabase db, $SubtaskTableTable table)
       : super(TableManagerState(
           db: db,
@@ -2637,9 +3315,47 @@ class $$SubtaskTableTableTableManager extends RootTableManager<
             updatedAt: updatedAt,
           ),
           withReferenceMapper: (p0) => p0
-              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .map((e) => (
+                    e.readTable(table),
+                    $$SubtaskTableTableReferences(db, table, e)
+                  ))
               .toList(),
-          prefetchHooksCallback: null,
+          prefetchHooksCallback: ({taskLocalId = false}) {
+            return PrefetchHooks(
+              db: db,
+              explicitlyWatchedTables: [],
+              addJoins: <
+                  T extends TableManagerState<
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic>>(state) {
+                if (taskLocalId) {
+                  state = state.withJoin(
+                    currentTable: table,
+                    currentColumn: table.taskLocalId,
+                    referencedTable:
+                        $$SubtaskTableTableReferences._taskLocalIdTable(db),
+                    referencedColumn: $$SubtaskTableTableReferences
+                        ._taskLocalIdTable(db)
+                        .localId,
+                  ) as T;
+                }
+
+                return state;
+              },
+              getPrefetchedDataCallback: (items) async {
+                return [];
+              },
+            );
+          },
         ));
 }
 
@@ -2652,177 +3368,9 @@ typedef $$SubtaskTableTableProcessedTableManager = ProcessedTableManager<
     $$SubtaskTableTableAnnotationComposer,
     $$SubtaskTableTableCreateCompanionBuilder,
     $$SubtaskTableTableUpdateCompanionBuilder,
-    (
-      SubtaskTableData,
-      BaseReferences<_$AppDatabase, $SubtaskTableTable, SubtaskTableData>
-    ),
+    (SubtaskTableData, $$SubtaskTableTableReferences),
     SubtaskTableData,
-    PrefetchHooks Function()>;
-typedef $$UserTableTableCreateCompanionBuilder = UserTableCompanion Function({
-  Value<int> localId,
-  Value<String> remoteId,
-  required String email,
-  required String name,
-  required String avatar,
-});
-typedef $$UserTableTableUpdateCompanionBuilder = UserTableCompanion Function({
-  Value<int> localId,
-  Value<String> remoteId,
-  Value<String> email,
-  Value<String> name,
-  Value<String> avatar,
-});
-
-class $$UserTableTableFilterComposer
-    extends Composer<_$AppDatabase, $UserTableTable> {
-  $$UserTableTableFilterComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  ColumnFilters<int> get localId => $composableBuilder(
-      column: $table.localId, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<String> get remoteId => $composableBuilder(
-      column: $table.remoteId, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<String> get email => $composableBuilder(
-      column: $table.email, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<String> get name => $composableBuilder(
-      column: $table.name, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<String> get avatar => $composableBuilder(
-      column: $table.avatar, builder: (column) => ColumnFilters(column));
-}
-
-class $$UserTableTableOrderingComposer
-    extends Composer<_$AppDatabase, $UserTableTable> {
-  $$UserTableTableOrderingComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  ColumnOrderings<int> get localId => $composableBuilder(
-      column: $table.localId, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<String> get remoteId => $composableBuilder(
-      column: $table.remoteId, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<String> get email => $composableBuilder(
-      column: $table.email, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<String> get name => $composableBuilder(
-      column: $table.name, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<String> get avatar => $composableBuilder(
-      column: $table.avatar, builder: (column) => ColumnOrderings(column));
-}
-
-class $$UserTableTableAnnotationComposer
-    extends Composer<_$AppDatabase, $UserTableTable> {
-  $$UserTableTableAnnotationComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  GeneratedColumn<int> get localId =>
-      $composableBuilder(column: $table.localId, builder: (column) => column);
-
-  GeneratedColumn<String> get remoteId =>
-      $composableBuilder(column: $table.remoteId, builder: (column) => column);
-
-  GeneratedColumn<String> get email =>
-      $composableBuilder(column: $table.email, builder: (column) => column);
-
-  GeneratedColumn<String> get name =>
-      $composableBuilder(column: $table.name, builder: (column) => column);
-
-  GeneratedColumn<String> get avatar =>
-      $composableBuilder(column: $table.avatar, builder: (column) => column);
-}
-
-class $$UserTableTableTableManager extends RootTableManager<
-    _$AppDatabase,
-    $UserTableTable,
-    UserTableData,
-    $$UserTableTableFilterComposer,
-    $$UserTableTableOrderingComposer,
-    $$UserTableTableAnnotationComposer,
-    $$UserTableTableCreateCompanionBuilder,
-    $$UserTableTableUpdateCompanionBuilder,
-    (
-      UserTableData,
-      BaseReferences<_$AppDatabase, $UserTableTable, UserTableData>
-    ),
-    UserTableData,
-    PrefetchHooks Function()> {
-  $$UserTableTableTableManager(_$AppDatabase db, $UserTableTable table)
-      : super(TableManagerState(
-          db: db,
-          table: table,
-          createFilteringComposer: () =>
-              $$UserTableTableFilterComposer($db: db, $table: table),
-          createOrderingComposer: () =>
-              $$UserTableTableOrderingComposer($db: db, $table: table),
-          createComputedFieldComposer: () =>
-              $$UserTableTableAnnotationComposer($db: db, $table: table),
-          updateCompanionCallback: ({
-            Value<int> localId = const Value.absent(),
-            Value<String> remoteId = const Value.absent(),
-            Value<String> email = const Value.absent(),
-            Value<String> name = const Value.absent(),
-            Value<String> avatar = const Value.absent(),
-          }) =>
-              UserTableCompanion(
-            localId: localId,
-            remoteId: remoteId,
-            email: email,
-            name: name,
-            avatar: avatar,
-          ),
-          createCompanionCallback: ({
-            Value<int> localId = const Value.absent(),
-            Value<String> remoteId = const Value.absent(),
-            required String email,
-            required String name,
-            required String avatar,
-          }) =>
-              UserTableCompanion.insert(
-            localId: localId,
-            remoteId: remoteId,
-            email: email,
-            name: name,
-            avatar: avatar,
-          ),
-          withReferenceMapper: (p0) => p0
-              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
-              .toList(),
-          prefetchHooksCallback: null,
-        ));
-}
-
-typedef $$UserTableTableProcessedTableManager = ProcessedTableManager<
-    _$AppDatabase,
-    $UserTableTable,
-    UserTableData,
-    $$UserTableTableFilterComposer,
-    $$UserTableTableOrderingComposer,
-    $$UserTableTableAnnotationComposer,
-    $$UserTableTableCreateCompanionBuilder,
-    $$UserTableTableUpdateCompanionBuilder,
-    (
-      UserTableData,
-      BaseReferences<_$AppDatabase, $UserTableTable, UserTableData>
-    ),
-    UserTableData,
-    PrefetchHooks Function()>;
+    PrefetchHooks Function({bool taskLocalId})>;
 typedef $$SettingTableTableCreateCompanionBuilder = SettingTableCompanion
     Function({
   Value<int> localId,
@@ -2846,6 +3394,26 @@ typedef $$SettingTableTableUpdateCompanionBuilder = SettingTableCompanion
   Value<bool> isSynced,
 });
 
+final class $$SettingTableTableReferences extends BaseReferences<_$AppDatabase,
+    $SettingTableTable, SettingTableData> {
+  $$SettingTableTableReferences(super.$_db, super.$_table, super.$_typedResult);
+
+  static $UserTableTable _userLocalIdTable(_$AppDatabase db) =>
+      db.userTable.createAlias($_aliasNameGenerator(
+          db.settingTable.userLocalId, db.userTable.localId));
+
+  $$UserTableTableProcessedTableManager get userLocalId {
+    final $_column = $_itemColumn<int>('user_local_id')!;
+
+    final manager = $$UserTableTableTableManager($_db, $_db.userTable)
+        .filter((f) => f.localId.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_userLocalIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+        manager.$state.copyWith(prefetchedData: [item]));
+  }
+}
+
 class $$SettingTableTableFilterComposer
     extends Composer<_$AppDatabase, $SettingTableTable> {
   $$SettingTableTableFilterComposer({
@@ -2860,9 +3428,6 @@ class $$SettingTableTableFilterComposer
 
   ColumnFilters<String> get remoteId => $composableBuilder(
       column: $table.remoteId, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<int> get userLocalId => $composableBuilder(
-      column: $table.userLocalId, builder: (column) => ColumnFilters(column));
 
   ColumnFilters<bool> get isNotificationEnabled => $composableBuilder(
       column: $table.isNotificationEnabled,
@@ -2879,6 +3444,26 @@ class $$SettingTableTableFilterComposer
 
   ColumnFilters<bool> get isSynced => $composableBuilder(
       column: $table.isSynced, builder: (column) => ColumnFilters(column));
+
+  $$UserTableTableFilterComposer get userLocalId {
+    final $$UserTableTableFilterComposer composer = $composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.userLocalId,
+        referencedTable: $db.userTable,
+        getReferencedColumn: (t) => t.localId,
+        builder: (joinBuilder,
+                {$addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer}) =>
+            $$UserTableTableFilterComposer(
+              $db: $db,
+              $table: $db.userTable,
+              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+              joinBuilder: joinBuilder,
+              $removeJoinBuilderFromRootComposer:
+                  $removeJoinBuilderFromRootComposer,
+            ));
+    return composer;
+  }
 }
 
 class $$SettingTableTableOrderingComposer
@@ -2896,9 +3481,6 @@ class $$SettingTableTableOrderingComposer
   ColumnOrderings<String> get remoteId => $composableBuilder(
       column: $table.remoteId, builder: (column) => ColumnOrderings(column));
 
-  ColumnOrderings<int> get userLocalId => $composableBuilder(
-      column: $table.userLocalId, builder: (column) => ColumnOrderings(column));
-
   ColumnOrderings<bool> get isNotificationEnabled => $composableBuilder(
       column: $table.isNotificationEnabled,
       builder: (column) => ColumnOrderings(column));
@@ -2915,6 +3497,26 @@ class $$SettingTableTableOrderingComposer
 
   ColumnOrderings<bool> get isSynced => $composableBuilder(
       column: $table.isSynced, builder: (column) => ColumnOrderings(column));
+
+  $$UserTableTableOrderingComposer get userLocalId {
+    final $$UserTableTableOrderingComposer composer = $composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.userLocalId,
+        referencedTable: $db.userTable,
+        getReferencedColumn: (t) => t.localId,
+        builder: (joinBuilder,
+                {$addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer}) =>
+            $$UserTableTableOrderingComposer(
+              $db: $db,
+              $table: $db.userTable,
+              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+              joinBuilder: joinBuilder,
+              $removeJoinBuilderFromRootComposer:
+                  $removeJoinBuilderFromRootComposer,
+            ));
+    return composer;
+  }
 }
 
 class $$SettingTableTableAnnotationComposer
@@ -2932,9 +3534,6 @@ class $$SettingTableTableAnnotationComposer
   GeneratedColumn<String> get remoteId =>
       $composableBuilder(column: $table.remoteId, builder: (column) => column);
 
-  GeneratedColumn<int> get userLocalId => $composableBuilder(
-      column: $table.userLocalId, builder: (column) => column);
-
   GeneratedColumn<bool> get isNotificationEnabled => $composableBuilder(
       column: $table.isNotificationEnabled, builder: (column) => column);
 
@@ -2949,6 +3548,26 @@ class $$SettingTableTableAnnotationComposer
 
   GeneratedColumn<bool> get isSynced =>
       $composableBuilder(column: $table.isSynced, builder: (column) => column);
+
+  $$UserTableTableAnnotationComposer get userLocalId {
+    final $$UserTableTableAnnotationComposer composer = $composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.userLocalId,
+        referencedTable: $db.userTable,
+        getReferencedColumn: (t) => t.localId,
+        builder: (joinBuilder,
+                {$addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer}) =>
+            $$UserTableTableAnnotationComposer(
+              $db: $db,
+              $table: $db.userTable,
+              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+              joinBuilder: joinBuilder,
+              $removeJoinBuilderFromRootComposer:
+                  $removeJoinBuilderFromRootComposer,
+            ));
+    return composer;
+  }
 }
 
 class $$SettingTableTableTableManager extends RootTableManager<
@@ -2960,12 +3579,9 @@ class $$SettingTableTableTableManager extends RootTableManager<
     $$SettingTableTableAnnotationComposer,
     $$SettingTableTableCreateCompanionBuilder,
     $$SettingTableTableUpdateCompanionBuilder,
-    (
-      SettingTableData,
-      BaseReferences<_$AppDatabase, $SettingTableTable, SettingTableData>
-    ),
+    (SettingTableData, $$SettingTableTableReferences),
     SettingTableData,
-    PrefetchHooks Function()> {
+    PrefetchHooks Function({bool userLocalId})> {
   $$SettingTableTableTableManager(_$AppDatabase db, $SettingTableTable table)
       : super(TableManagerState(
           db: db,
@@ -3017,9 +3633,47 @@ class $$SettingTableTableTableManager extends RootTableManager<
             isSynced: isSynced,
           ),
           withReferenceMapper: (p0) => p0
-              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .map((e) => (
+                    e.readTable(table),
+                    $$SettingTableTableReferences(db, table, e)
+                  ))
               .toList(),
-          prefetchHooksCallback: null,
+          prefetchHooksCallback: ({userLocalId = false}) {
+            return PrefetchHooks(
+              db: db,
+              explicitlyWatchedTables: [],
+              addJoins: <
+                  T extends TableManagerState<
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic>>(state) {
+                if (userLocalId) {
+                  state = state.withJoin(
+                    currentTable: table,
+                    currentColumn: table.userLocalId,
+                    referencedTable:
+                        $$SettingTableTableReferences._userLocalIdTable(db),
+                    referencedColumn: $$SettingTableTableReferences
+                        ._userLocalIdTable(db)
+                        .localId,
+                  ) as T;
+                }
+
+                return state;
+              },
+              getPrefetchedDataCallback: (items) async {
+                return [];
+              },
+            );
+          },
         ));
 }
 
@@ -3032,19 +3686,16 @@ typedef $$SettingTableTableProcessedTableManager = ProcessedTableManager<
     $$SettingTableTableAnnotationComposer,
     $$SettingTableTableCreateCompanionBuilder,
     $$SettingTableTableUpdateCompanionBuilder,
-    (
-      SettingTableData,
-      BaseReferences<_$AppDatabase, $SettingTableTable, SettingTableData>
-    ),
+    (SettingTableData, $$SettingTableTableReferences),
     SettingTableData,
-    PrefetchHooks Function()>;
+    PrefetchHooks Function({bool userLocalId})>;
 typedef $$CategoryTableTableCreateCompanionBuilder = CategoryTableCompanion
     Function({
   Value<int> localId,
   Value<String> remoteId,
   required String name,
   required bool isSynced,
-  Value<int?> userLocalId,
+  required int userLocalId,
   required DateTime createdAt,
   required DateTime updatedAt,
 });
@@ -3054,10 +3705,31 @@ typedef $$CategoryTableTableUpdateCompanionBuilder = CategoryTableCompanion
   Value<String> remoteId,
   Value<String> name,
   Value<bool> isSynced,
-  Value<int?> userLocalId,
+  Value<int> userLocalId,
   Value<DateTime> createdAt,
   Value<DateTime> updatedAt,
 });
+
+final class $$CategoryTableTableReferences extends BaseReferences<_$AppDatabase,
+    $CategoryTableTable, CategoryTableData> {
+  $$CategoryTableTableReferences(
+      super.$_db, super.$_table, super.$_typedResult);
+
+  static $UserTableTable _userLocalIdTable(_$AppDatabase db) =>
+      db.userTable.createAlias($_aliasNameGenerator(
+          db.categoryTable.userLocalId, db.userTable.localId));
+
+  $$UserTableTableProcessedTableManager get userLocalId {
+    final $_column = $_itemColumn<int>('user_local_id')!;
+
+    final manager = $$UserTableTableTableManager($_db, $_db.userTable)
+        .filter((f) => f.localId.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_userLocalIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+        manager.$state.copyWith(prefetchedData: [item]));
+  }
+}
 
 class $$CategoryTableTableFilterComposer
     extends Composer<_$AppDatabase, $CategoryTableTable> {
@@ -3080,14 +3752,31 @@ class $$CategoryTableTableFilterComposer
   ColumnFilters<bool> get isSynced => $composableBuilder(
       column: $table.isSynced, builder: (column) => ColumnFilters(column));
 
-  ColumnFilters<int> get userLocalId => $composableBuilder(
-      column: $table.userLocalId, builder: (column) => ColumnFilters(column));
-
   ColumnFilters<DateTime> get createdAt => $composableBuilder(
       column: $table.createdAt, builder: (column) => ColumnFilters(column));
 
   ColumnFilters<DateTime> get updatedAt => $composableBuilder(
       column: $table.updatedAt, builder: (column) => ColumnFilters(column));
+
+  $$UserTableTableFilterComposer get userLocalId {
+    final $$UserTableTableFilterComposer composer = $composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.userLocalId,
+        referencedTable: $db.userTable,
+        getReferencedColumn: (t) => t.localId,
+        builder: (joinBuilder,
+                {$addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer}) =>
+            $$UserTableTableFilterComposer(
+              $db: $db,
+              $table: $db.userTable,
+              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+              joinBuilder: joinBuilder,
+              $removeJoinBuilderFromRootComposer:
+                  $removeJoinBuilderFromRootComposer,
+            ));
+    return composer;
+  }
 }
 
 class $$CategoryTableTableOrderingComposer
@@ -3111,14 +3800,31 @@ class $$CategoryTableTableOrderingComposer
   ColumnOrderings<bool> get isSynced => $composableBuilder(
       column: $table.isSynced, builder: (column) => ColumnOrderings(column));
 
-  ColumnOrderings<int> get userLocalId => $composableBuilder(
-      column: $table.userLocalId, builder: (column) => ColumnOrderings(column));
-
   ColumnOrderings<DateTime> get createdAt => $composableBuilder(
       column: $table.createdAt, builder: (column) => ColumnOrderings(column));
 
   ColumnOrderings<DateTime> get updatedAt => $composableBuilder(
       column: $table.updatedAt, builder: (column) => ColumnOrderings(column));
+
+  $$UserTableTableOrderingComposer get userLocalId {
+    final $$UserTableTableOrderingComposer composer = $composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.userLocalId,
+        referencedTable: $db.userTable,
+        getReferencedColumn: (t) => t.localId,
+        builder: (joinBuilder,
+                {$addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer}) =>
+            $$UserTableTableOrderingComposer(
+              $db: $db,
+              $table: $db.userTable,
+              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+              joinBuilder: joinBuilder,
+              $removeJoinBuilderFromRootComposer:
+                  $removeJoinBuilderFromRootComposer,
+            ));
+    return composer;
+  }
 }
 
 class $$CategoryTableTableAnnotationComposer
@@ -3142,14 +3848,31 @@ class $$CategoryTableTableAnnotationComposer
   GeneratedColumn<bool> get isSynced =>
       $composableBuilder(column: $table.isSynced, builder: (column) => column);
 
-  GeneratedColumn<int> get userLocalId => $composableBuilder(
-      column: $table.userLocalId, builder: (column) => column);
-
   GeneratedColumn<DateTime> get createdAt =>
       $composableBuilder(column: $table.createdAt, builder: (column) => column);
 
   GeneratedColumn<DateTime> get updatedAt =>
       $composableBuilder(column: $table.updatedAt, builder: (column) => column);
+
+  $$UserTableTableAnnotationComposer get userLocalId {
+    final $$UserTableTableAnnotationComposer composer = $composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.userLocalId,
+        referencedTable: $db.userTable,
+        getReferencedColumn: (t) => t.localId,
+        builder: (joinBuilder,
+                {$addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer}) =>
+            $$UserTableTableAnnotationComposer(
+              $db: $db,
+              $table: $db.userTable,
+              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+              joinBuilder: joinBuilder,
+              $removeJoinBuilderFromRootComposer:
+                  $removeJoinBuilderFromRootComposer,
+            ));
+    return composer;
+  }
 }
 
 class $$CategoryTableTableTableManager extends RootTableManager<
@@ -3161,12 +3884,9 @@ class $$CategoryTableTableTableManager extends RootTableManager<
     $$CategoryTableTableAnnotationComposer,
     $$CategoryTableTableCreateCompanionBuilder,
     $$CategoryTableTableUpdateCompanionBuilder,
-    (
-      CategoryTableData,
-      BaseReferences<_$AppDatabase, $CategoryTableTable, CategoryTableData>
-    ),
+    (CategoryTableData, $$CategoryTableTableReferences),
     CategoryTableData,
-    PrefetchHooks Function()> {
+    PrefetchHooks Function({bool userLocalId})> {
   $$CategoryTableTableTableManager(_$AppDatabase db, $CategoryTableTable table)
       : super(TableManagerState(
           db: db,
@@ -3182,7 +3902,7 @@ class $$CategoryTableTableTableManager extends RootTableManager<
             Value<String> remoteId = const Value.absent(),
             Value<String> name = const Value.absent(),
             Value<bool> isSynced = const Value.absent(),
-            Value<int?> userLocalId = const Value.absent(),
+            Value<int> userLocalId = const Value.absent(),
             Value<DateTime> createdAt = const Value.absent(),
             Value<DateTime> updatedAt = const Value.absent(),
           }) =>
@@ -3200,7 +3920,7 @@ class $$CategoryTableTableTableManager extends RootTableManager<
             Value<String> remoteId = const Value.absent(),
             required String name,
             required bool isSynced,
-            Value<int?> userLocalId = const Value.absent(),
+            required int userLocalId,
             required DateTime createdAt,
             required DateTime updatedAt,
           }) =>
@@ -3214,9 +3934,47 @@ class $$CategoryTableTableTableManager extends RootTableManager<
             updatedAt: updatedAt,
           ),
           withReferenceMapper: (p0) => p0
-              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .map((e) => (
+                    e.readTable(table),
+                    $$CategoryTableTableReferences(db, table, e)
+                  ))
               .toList(),
-          prefetchHooksCallback: null,
+          prefetchHooksCallback: ({userLocalId = false}) {
+            return PrefetchHooks(
+              db: db,
+              explicitlyWatchedTables: [],
+              addJoins: <
+                  T extends TableManagerState<
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic>>(state) {
+                if (userLocalId) {
+                  state = state.withJoin(
+                    currentTable: table,
+                    currentColumn: table.userLocalId,
+                    referencedTable:
+                        $$CategoryTableTableReferences._userLocalIdTable(db),
+                    referencedColumn: $$CategoryTableTableReferences
+                        ._userLocalIdTable(db)
+                        .localId,
+                  ) as T;
+                }
+
+                return state;
+              },
+              getPrefetchedDataCallback: (items) async {
+                return [];
+              },
+            );
+          },
         ));
 }
 
@@ -3229,22 +3987,19 @@ typedef $$CategoryTableTableProcessedTableManager = ProcessedTableManager<
     $$CategoryTableTableAnnotationComposer,
     $$CategoryTableTableCreateCompanionBuilder,
     $$CategoryTableTableUpdateCompanionBuilder,
-    (
-      CategoryTableData,
-      BaseReferences<_$AppDatabase, $CategoryTableTable, CategoryTableData>
-    ),
+    (CategoryTableData, $$CategoryTableTableReferences),
     CategoryTableData,
-    PrefetchHooks Function()>;
+    PrefetchHooks Function({bool userLocalId})>;
 
 class $AppDatabaseManager {
   final _$AppDatabase _db;
   $AppDatabaseManager(this._db);
+  $$UserTableTableTableManager get userTable =>
+      $$UserTableTableTableManager(_db, _db.userTable);
   $$TaskTableTableTableManager get taskTable =>
       $$TaskTableTableTableManager(_db, _db.taskTable);
   $$SubtaskTableTableTableManager get subtaskTable =>
       $$SubtaskTableTableTableManager(_db, _db.subtaskTable);
-  $$UserTableTableTableManager get userTable =>
-      $$UserTableTableTableManager(_db, _db.userTable);
   $$SettingTableTableTableManager get settingTable =>
       $$SettingTableTableTableManager(_db, _db.settingTable);
   $$CategoryTableTableTableManager get categoryTable =>

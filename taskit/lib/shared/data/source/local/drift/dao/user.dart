@@ -20,4 +20,11 @@ class UserDao extends DatabaseAccessor<AppDatabase> with _$UserDaoMixin {
   Future<bool> updateUser(UserTableCompanion user) =>
       update(userTable).replace(user);
   Future<int> deleteUser() => delete(userTable).go();
+  //delete user if exist
+  Future<void> deleteIfExist() async {
+    final user = await getUser();
+    if (user != null) {
+      await deleteUser();
+    }
+  }
 }

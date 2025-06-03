@@ -1,8 +1,9 @@
-const router=require('express').Router();
-const AIController=require('../controller/ai.controller');
-const AuthMiddleware=require('../middleware/auth.middleware');
+import express from 'express';
+import * as AIController from '../controller/ai.controller.js';
+import {jwtMiddleware} from '../middleware/jwt.middleware.js';
 
-router.get('/category',AuthMiddleware,AIController.suggestCategories);
+const router = express.Router();
 
+router.get('/category', jwtMiddleware, AIController.suggestCategories);
 
-module.exports=router;
+export default router;

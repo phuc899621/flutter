@@ -1,4 +1,5 @@
 import 'package:drift/drift.dart';
+import 'package:taskit/shared/data/source/local/drift/table/task.dart';
 
 class SubtaskTable extends Table {
   @override
@@ -8,8 +9,8 @@ class SubtaskTable extends Table {
   TextColumn get title => text()();
   BoolColumn get isSynced => boolean()();
   BoolColumn get isCompleted => boolean()();
-  IntColumn get taskLocalId => integer()
-      .customConstraint('REFERENCES task(localId) ON DELETE CASCADE')();
+  IntColumn get taskLocalId =>
+      integer().references(TaskTable, #localId, onDelete: KeyAction.cascade)();
   DateTimeColumn get createdAt => dateTime()();
   DateTimeColumn get updatedAt => dateTime()();
 }

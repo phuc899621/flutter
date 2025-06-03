@@ -1,13 +1,15 @@
-const router=require('express').Router();
-const SubtaskController=require('../controller/subtask.controller');
-const AuthMiddleware=require('../middleware/auth.middleware');
+import express from 'express';
+import * as SubtaskController from '../controller/subtask.controller.js';
+import {jwtMiddleware} from '../middleware/jwt.middleware.js';
 
-router.get('/',AuthMiddleware,SubtaskController.findAllSubtasks);
-router.post('/',AuthMiddleware,SubtaskController.addSubtask);
-router.post('/list',AuthMiddleware,SubtaskController.addListSubtasks);
-router.put('/',AuthMiddleware,SubtaskController.updateSubtask);
-router.delete('/',AuthMiddleware,SubtaskController.deleteSubtask);
-router.delete('/list',AuthMiddleware,SubtaskController.deleteListSubtasks);
-router.delete('/all',AuthMiddleware,SubtaskController.deleteAllSubtasks);
+const router = express.Router();
 
-module.exports=router;
+router.get('/', jwtMiddleware, SubtaskController.findAllSubtasks);
+router.post('/', jwtMiddleware, SubtaskController.addSubtask);
+router.post('/list', jwtMiddleware, SubtaskController.addListSubtasks);
+router.put('/', jwtMiddleware, SubtaskController.updateSubtask);
+router.delete('/', jwtMiddleware, SubtaskController.deleteSubtask);
+router.delete('/list', jwtMiddleware, SubtaskController.deleteListSubtasks);
+router.delete('/all', jwtMiddleware, SubtaskController.deleteAllSubtasks);
+
+export default router;

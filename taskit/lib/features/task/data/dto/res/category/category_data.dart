@@ -6,7 +6,7 @@ part 'category_data.g.dart';
 @freezed
 abstract class CategoryData with _$CategoryData {
   const factory CategoryData(
-      {required String id,
+      {@JsonKey(name: '_id') required String id,
       required String name,
       required String userId}) = _CategoryData;
   factory CategoryData.fromJson(Map<String, dynamic> json) =>

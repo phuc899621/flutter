@@ -46,7 +46,7 @@ class AuthRepo with DioExceptionMapper implements IAuthRepo {
   Future<BaseResponse<LoginData>> login(LoginRequest data) async {
     try {
       final response = await _authApi.login(data);
-      await _iAuthLocalDataSource.cacheLogin(response.data!);
+      await _iAuthLocalDataSource.cacheLogin(response.data);
       return response;
     } on DioException catch (e, s) {
       throw mapDioExceptionToFailure(e, s);

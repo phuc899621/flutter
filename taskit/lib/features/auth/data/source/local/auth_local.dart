@@ -48,6 +48,7 @@ class AuthLocalDataSource implements IAuthLocalDataSource {
   Future<void> cacheLogin(LoginData loginData) async {
     try {
       db.transaction(() async {
+        await userDao.deleteIfExist();
         final userLocalId = await userDao.insertUser(UserTableCompanion(
           remoteId: Value(loginData.user.id),
           name: Value(loginData.user.name),
@@ -91,7 +92,6 @@ class AuthLocalDataSource implements IAuthLocalDataSource {
                 ))
             .toList();
         await taskDao.insertAllTasks(taskCompanions);
-        final taskLocalId = await taskDao.getTasks();
         final subtaskCompanions = await Future.wait(
           loginData.tasks.map((task) async {
             final taskData = await taskDao.getTaskByRemoteId(task.id);
@@ -102,6 +102,7 @@ class AuthLocalDataSource implements IAuthLocalDataSource {
                 .map((e) => SubtaskTableCompanion(
                       remoteId: Value(e.id),
                       title: Value(e.title),
+                      isCompleted: Value(e.isCompleted),
                       taskLocalId: Value(taskData.localId),
                       isSynced: const Value(true),
                       createdAt: Value(DateTime.now()),

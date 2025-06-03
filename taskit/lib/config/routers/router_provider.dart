@@ -9,16 +9,16 @@ import '../../features/auth/presentation/forgot_password/ui/forgot_password_page
 import '../../features/auth/presentation/forgot_password/ui/forgot_password_verify_page.dart';
 import '../../features/auth/presentation/login/ui/login_page.dart';
 import '../../features/auth/presentation/signup/ui/signup_page.dart';
-import '../../features/main/presentation/home/ui/home_page.dart';
 import '../../features/main/presentation/main/ui/main_page.dart';
 import '../../features/main/presentation/setting/ui/setting_page.dart';
+import '../../features/main/presentation/task/ui/task_page.dart';
 import '../app/animation/router_anim.dart';
 
 // Provider GoRouter để quản lý việc điều hướng trong ứng dụng
 final goRouterProvider = Provider<GoRouter>((ref) {
   return GoRouter(
     //URL mặc định khi ứng dụng mở lần đầu
-    initialLocation: '/login',
+    initialLocation: '/task',
     // Định nghĩa các routes của ứng dụng
     routes: [
       GoRoute(
@@ -81,11 +81,11 @@ final goRouterProvider = Provider<GoRouter>((ref) {
           StatefulShellBranch(
             routes: [
               GoRoute(
-                path: '/home',
-                name: homeRoute,
+                path: '/task',
+                name: taskRoute,
                 pageBuilder: (context, state) =>
                     TaskitAnimation.slidePageTransition(
-                        context, state, const HomePage()),
+                        context, state, const TaskPage()),
               ),
             ],
           ),
@@ -96,7 +96,7 @@ final goRouterProvider = Provider<GoRouter>((ref) {
                 name: listRoute,
                 pageBuilder: (context, state) =>
                     TaskitAnimation.slidePageTransition(
-                        context, state, const HomePage()),
+                        context, state, const TaskPage()),
               ),
             ],
           ),

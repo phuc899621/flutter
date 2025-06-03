@@ -13,7 +13,7 @@ abstract class TaskData with _$TaskData {
     required String description,
     required String category,
     required String priority,
-    required UserData userId,
+    required String userId,
     required String status,
     required DateTime dueDate,
     required List<SubtaskData> subtasks,

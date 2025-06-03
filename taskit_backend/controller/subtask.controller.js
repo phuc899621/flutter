@@ -1,5 +1,6 @@
-const SubtaskServices = require('../services/subtask.services');
-exports.addSubtask = async (req, res) => {
+import SubtaskServices from '../services/subtask.services.js';
+
+export const addSubtask = async (req, res) => {
     try {
         const { taskId } = req.query;
         const subtask = req.body;
@@ -28,7 +29,8 @@ exports.addSubtask = async (req, res) => {
         });
     }
 }
-exports.addListSubtasks = async (req, res) => {
+
+export const addListSubtasks = async (req, res) => {
     try {
         const { taskId } = req.query;
         const { subtasks } = req.body;
@@ -59,7 +61,8 @@ exports.addListSubtasks = async (req, res) => {
         });
     }
 }
-exports.updateSubtask = async (req, res) => {
+
+export const updateSubtask = async (req, res) => {
     try {
         const { subtaskId } = req.query;
         const subtask = req.body;
@@ -88,7 +91,8 @@ exports.updateSubtask = async (req, res) => {
         });
     }
 }
-exports.deleteSubtask = async (req, res) => {
+
+export const deleteSubtask = async (req, res) => {
     try {
         const { subtaskId } = req.query;
         if (!subtaskId) {
@@ -110,7 +114,8 @@ exports.deleteSubtask = async (req, res) => {
         });
     }
 }
-exports.deleteListSubtasks = async (req, res) => {
+
+export const deleteListSubtasks = async (req, res) => {
     try {
         const { subtaskIds } = req.body;
         if (!subtaskIds) {
@@ -132,7 +137,8 @@ exports.deleteListSubtasks = async (req, res) => {
         });
     }
 }
-exports.deleteAllSubtasks = async (req, res) => {
+
+export const deleteAllSubtasks = async (req, res) => {
     try {
         const { taskId } = req.query;
         if (!taskId) {
@@ -154,9 +160,9 @@ exports.deleteAllSubtasks = async (req, res) => {
         });
     }
 }
-exports.findAllSubtasks = async (req, res) => {
+
+export const findAllSubtasks = async (req, res) => {
     try {
-        //if i have query
         const query = req.query;
         const { taskId } = req.query;
         if (!taskId) {

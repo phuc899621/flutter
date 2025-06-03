@@ -12,7 +12,7 @@ _TaskData _$TaskDataFromJson(Map<String, dynamic> json) => _TaskData(
       description: json['description'] as String,
       category: json['category'] as String,
       priority: json['priority'] as String,
-      userId: UserData.fromJson(json['userId'] as Map<String, dynamic>),
+      userId: json['userId'] as String,
       status: json['status'] as String,
       dueDate: DateTime.parse(json['dueDate'] as String),
       subtasks: (json['subtasks'] as List<dynamic>)

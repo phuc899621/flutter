@@ -15,6 +15,7 @@ T _$identity<T>(T value) => value;
 
 /// @nodoc
 mixin _$CategoryData {
+  @JsonKey(name: '_id')
   String get id;
   String get name;
   String get userId;
@@ -56,7 +57,7 @@ abstract mixin class $CategoryDataCopyWith<$Res> {
           CategoryData value, $Res Function(CategoryData) _then) =
       _$CategoryDataCopyWithImpl;
   @useResult
-  $Res call({String id, String name, String userId});
+  $Res call({@JsonKey(name: '_id') String id, String name, String userId});
 }
 
 /// @nodoc
@@ -96,11 +97,14 @@ class _$CategoryDataCopyWithImpl<$Res> implements $CategoryDataCopyWith<$Res> {
 @JsonSerializable()
 class _CategoryData implements CategoryData {
   const _CategoryData(
-      {required this.id, required this.name, required this.userId});
+      {@JsonKey(name: '_id') required this.id,
+      required this.name,
+      required this.userId});
   factory _CategoryData.fromJson(Map<String, dynamic> json) =>
       _$CategoryDataFromJson(json);
 
   @override
+  @JsonKey(name: '_id')
   final String id;
   @override
   final String name;
@@ -150,7 +154,7 @@ abstract mixin class _$CategoryDataCopyWith<$Res>
       __$CategoryDataCopyWithImpl;
   @override
   @useResult
-  $Res call({String id, String name, String userId});
+  $Res call({@JsonKey(name: '_id') String id, String name, String userId});
 }
 
 /// @nodoc

@@ -7,4 +7,4 @@ class HttpError extends Error {
       Error.captureStackTrace(this, this.constructor);
     }
   }
-  module.exports = HttpError;
+  export default HttpError;

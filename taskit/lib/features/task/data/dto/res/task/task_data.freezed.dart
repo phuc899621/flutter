@@ -21,7 +21,7 @@ mixin _$TaskData {
   String get description;
   String get category;
   String get priority;
-  UserData get userId;
+  String get userId;
   String get status;
   DateTime get dueDate;
   List<SubtaskData> get subtasks;
@@ -94,14 +94,12 @@ abstract mixin class $TaskDataCopyWith<$Res> {
       String description,
       String category,
       String priority,
-      UserData userId,
+      String userId,
       String status,
       DateTime dueDate,
       List<SubtaskData> subtasks,
       DateTime createdAt,
       DateTime updatedAt});
-
-  $UserDataCopyWith<$Res> get userId;
 }
 
 /// @nodoc
@@ -152,7 +150,7 @@ class _$TaskDataCopyWithImpl<$Res> implements $TaskDataCopyWith<$Res> {
       userId: null == userId
           ? _self.userId
           : userId // ignore: cast_nullable_to_non_nullable
-              as UserData,
+              as String,
       status: null == status
           ? _self.status
           : status // ignore: cast_nullable_to_non_nullable
@@ -174,16 +172,6 @@ class _$TaskDataCopyWithImpl<$Res> implements $TaskDataCopyWith<$Res> {
           : updatedAt // ignore: cast_nullable_to_non_nullable
               as DateTime,
     ));
-  }
-
-  /// Create a copy of TaskData
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $UserDataCopyWith<$Res> get userId {
-    return $UserDataCopyWith<$Res>(_self.userId, (value) {
-      return _then(_self.copyWith(userId: value));
-    });
   }
 }
 
@@ -218,7 +206,7 @@ class _TaskData implements TaskData {
   @override
   final String priority;
   @override
-  final UserData userId;
+  final String userId;
   @override
   final String status;
   @override
@@ -309,15 +297,12 @@ abstract mixin class _$TaskDataCopyWith<$Res>
       String description,
       String category,
       String priority,
-      UserData userId,
+      String userId,
       String status,
       DateTime dueDate,
       List<SubtaskData> subtasks,
       DateTime createdAt,
       DateTime updatedAt});
-
-  @override
-  $UserDataCopyWith<$Res> get userId;
 }
 
 /// @nodoc
@@ -368,7 +353,7 @@ class __$TaskDataCopyWithImpl<$Res> implements _$TaskDataCopyWith<$Res> {
       userId: null == userId
           ? _self.userId
           : userId // ignore: cast_nullable_to_non_nullable
-              as UserData,
+              as String,
       status: null == status
           ? _self.status
           : status // ignore: cast_nullable_to_non_nullable
@@ -390,16 +375,6 @@ class __$TaskDataCopyWithImpl<$Res> implements _$TaskDataCopyWith<$Res> {
           : updatedAt // ignore: cast_nullable_to_non_nullable
               as DateTime,
     ));
-  }
-
-  /// Create a copy of TaskData
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $UserDataCopyWith<$Res> get userId {
-    return $UserDataCopyWith<$Res>(_self.userId, (value) {
-      return _then(_self.copyWith(userId: value));
-    });
   }
 }
 

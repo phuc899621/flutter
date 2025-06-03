@@ -1,5 +1,5 @@
-require('dotenv').config();
-const mailjet = require('node-mailjet');
+import 'dotenv/config';
+import mailjet from 'node-mailjet';
 
 const client = mailjet.apiConnect(
   process.env.MAILJET_API_KEY,
@@ -46,4 +46,4 @@ const transporter = {
   },
 };
 
-module.exports = transporter;
+export default transporter;

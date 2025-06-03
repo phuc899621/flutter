@@ -1,12 +1,14 @@
-const router=require('express').Router();
-const TaskController=require('../controller/task.controller');
-const AuthMiddleware=require('../middleware/auth.middleware');
+import express from 'express';
+import * as TaskController from '../controller/task.controller.js';
+import {jwtMiddleware} from '../middleware/jwt.middleware.js';
 
-router.get('/',AuthMiddleware,TaskController.findAllTasks);
-router.post('/',AuthMiddleware,TaskController.addTaskWithSubtasks);
-router.put('/',AuthMiddleware,TaskController.updateTask);
-router.delete('/',AuthMiddleware,TaskController.deleteTask);
-router.delete('/list',AuthMiddleware,TaskController.deleteListTasks);
-router.delete('/all',AuthMiddleware,TaskController.deleteAllTasks);
+const router = express.Router();
 
-module.exports=router;
+router.get('/', jwtMiddleware, TaskController.findAllTasks);
+router.post('/', jwtMiddleware, TaskController.addTaskWithSubtasks);
+router.put('/', jwtMiddleware, TaskController.updateTask);
+router.delete('/', jwtMiddleware, TaskController.deleteTask);
+router.delete('/list', jwtMiddleware, TaskController.deleteListTasks);
+router.delete('/all', jwtMiddleware, TaskController.deleteAllTasks);
+
+export default router;

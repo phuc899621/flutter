@@ -1,11 +1,9 @@
-const mongoose = require("mongoose");
-const db = require("../config/db");
-const bcrypt = require("bcryptjs");
-const HTTPError = require("../utils/http.error");
-const SettingModel = require("./user.setting.model"); // Import the Setting model
-const { Schema } = mongoose;
+import mongoose from "mongoose";
+import db from "../config/db.js";
+import bcrypt from "bcryptjs";
+import SettingModel from "./setting.model.js"; 
 
-const userSchema = new Schema({
+const userSchema = new mongoose.Schema({
   email: {
     type: String,
     required: true,
@@ -25,11 +23,7 @@ const userSchema = new Schema({
   },
 });
 
-// Static method to find user by email
-userSchema.statics.findUserByEmail = async function (email) {
-  const user = await this.findOne({ email });
-  return user;
-};
+
 userSchema.statics.findUserById = async function (id) {
   const user = await this.findById(id);
   return user;
@@ -58,4 +52,4 @@ userSchema.post("save", async function (doc, next) {
 });
 
 const UserModel = db.model("user", userSchema);
-module.exports = UserModel;
+export default UserModel;

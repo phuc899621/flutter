@@ -1,59 +1,55 @@
-const SubtaskModel = require('../model/subtask.model');
+import SubtaskModel from '../model/subtask.model.js';
+
 class SubtaskServices {
-    static async addListSubtask(
-        taskId,subtasks){
-        try{
-            return await SubtaskModel.addListSubtask(taskId,subtasks);
-        }catch(e){
+    static async addListSubtask(taskId, subtasks) {
+        try {
+            return await SubtaskModel.addListSubtask(taskId, subtasks);
+        } catch (e) {
             throw e;
         }
     }
-    static async addSubtask(
-        taskId,subtask){
-        try{
-            return await SubtaskModel.addSubtask(taskId,subtask);
-        }catch(e){
+    static async addSubtask(taskId, subtask) {
+        try {
+            return await SubtaskModel.addSubtask(taskId, subtask);
+        } catch (e) {
             throw e;
         }
     }
-    static async updateSubtask(subtaskId,subtask){
-        try{
-            return await SubtaskModel.updateSubtask(subtaskId,subtask);
-        }catch(e){
+    static async updateSubtask(subtaskId, subtask) {
+        try {
+            return await SubtaskModel.updateSubtask(subtaskId, subtask);
+        } catch (e) {
             throw e;
         }
     }
-    static async deleteAllSubtasks(
-        taskId){
-        try{
+    static async deleteAllSubtasks(taskId) {
+        try {
             return await SubtaskModel.deleteAllSubtasks(taskId);
-        }catch(e){
+        } catch (e) {
             throw e;
         }
     }
-    static async deleteSubtask(
-        subtaskId){
-        try{
+    static async deleteSubtask(subtaskId) {
+        try {
             return await SubtaskModel.deleteSubtask(subtaskId);
-        }catch(e){
+        } catch (e) {
             throw e;
         }
     }
-    static async deleteListSubtask(
-        taskId,subtaskIds){
-        try{
-            return await SubtaskModel.deleteListSubtask(taskId,subtaskIds);
-        }catch(e){
+    static async deleteListSubtask(taskId, subtaskIds) {
+        try {
+            return await SubtaskModel.deleteListSubtask(taskId, subtaskIds);
+        } catch (e) {
             throw e;
         }
     }
-    static async findAllSubtasks(
-        taskId,query){
-        try{
-            return await SubtaskModel.findAllSubtasks(taskId,query);
-        }catch(e){
+    static async findAllSubtasks(taskId, query) {
+        try {
+            return await SubtaskModel.findAllSubtasks(taskId, query);
+        } catch (e) {
             throw e;
         }
     }
 }
-module.exports=SubtaskServices;
+
+export default SubtaskServices;

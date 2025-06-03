@@ -1,7 +1,7 @@
-const mongoose = require('mongoose');
-const HTTPError = require("../utils/http.error");
+import mongoose from 'mongoose';
+import HTTPError from "../utils/http.error.js";
+import db from "../config/db.js";
 const { Schema } = mongoose;
-const db = require("../config/db");
 const taskSchema = new Schema({
     title: {
         type: String,
@@ -66,7 +66,7 @@ taskSchema.statics.addListTask = async function (userId, tasks) {
             userId: userId,
         }));
         const inserted= await this.insertMany(newTasks);
-        result = inserted.map((doc, index) => ({
+        const result = inserted.map((doc, index) => ({
             localId: tasks[index].localId,
             remoteId: doc._id
         }));
@@ -153,4 +153,4 @@ taskSchema.statics.findAllTasks = async function (userId, query) {
     return tasks;
 }
 const TaskModel = db.model('task', taskSchema);
-module.exports = TaskModel;
+export default TaskModel;

@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:taskit/features/auth/presentation/login/state/login_state.dart';
 
@@ -39,6 +40,7 @@ class LoginController extends Notifier<LoginState> {
           error: null,
         );
       }, (failure) {
+        debugPrint('error when login $failure');
         state = state.copyWith(
           isLoading: false,
           isLoginSuccess: null,
@@ -46,6 +48,7 @@ class LoginController extends Notifier<LoginState> {
         );
       });
     } catch (e) {
+      debugPrint('error when login $e');
       state = state.copyWith(
         isLoading: false,
         isLoginSuccess: null,
