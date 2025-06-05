@@ -12,4 +12,5 @@ app.use('/task',taskRouter);
 app.use('/ai',aiRouter);
 app.use('/category',categoryRouter);
 app.use('/subtask',subtaskRouter);
+app.use('/uploads', express.static('uploads'));
 export default app;

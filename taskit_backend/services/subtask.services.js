@@ -1,4 +1,4 @@
-import SubtaskModel from '../model/subtask.model.js';
+import SubtaskModel from '../models/subtask.model.js';
 
 class SubtaskServices {
     static async addListSubtask(taskId, subtasks) {

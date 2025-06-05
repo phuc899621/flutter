@@ -1,40 +1,22 @@
 import EmailService from "../core/emailService.js";
-import OtpAuthModel from '../model/otp.auth.model.js';
+import OtpAuthModel from '../models/otp.auth.model.js';
 import bcrypt from "bcryptjs";
 
 class OtpAuthServices {
-    static async createOtpUser(name, email, otp, password) {
-        const otpUser = new OtpAuthModel({
-            email: email,
-            otp: otp,
-            password: password,
-            name: name
-        });
-        return await otpUser.save();
+    static async createOtpUser(request,session) {
+        return await OtpAuthModel.create([request], { session });
     }
     static async generateOTP() {
         return Math.floor(1000 + Math.random() * 9000).toString();
     }
-    static async isVerifySend(email) {
-        try {
-            return await OtpAuthModel.isVerifySend(email);
-        } catch (e) {
-            throw e;
-        }
+    static async isVerifySend(email,session) {
+        return await OtpAuthModel.findOne({ email }).session(session);
     }
-    static async deleteOtpByEmail(email) {
-        try {
-            return await OtpAuthModel.deleteOtpByEmail(email);
-        } catch (e) {
-            throw e;
-        }
+    static async deleteOtpByEmail(email,session) {
+        return await OtpAuthModel.deleteOne({ email }).session(session);
     }
-    static async findOtpByEmail(email) {
-        try {
-            return await OtpAuthModel.findOtpByEmail(email);
-        } catch (e) {
-            throw e;
-        }
+    static async findByEmail(email) {
+        return await OtpAuthModel.findOne({ email });
     }
     static async compareOtp(otp, hashOtp) {
         try {

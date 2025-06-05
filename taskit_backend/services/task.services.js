@@ -1,4 +1,4 @@
-import TaskModel from '../model/task.model.js';
+import TaskModel from '../models/task.model.js';
 import bcrypt from "bcryptjs";
 import UserServices from './user.services.js';
 import HttpError from '../utils/http.error.js';
@@ -10,7 +10,7 @@ class TaskServices {
         dueDate, priority, category, localId
     ) {
         try {
-            const user = await UserServices.findUserById(userId);
+            const user = await UserServices.findById(userId);
             if (!user) {
                 throw new HttpError("User not found", 404);
             }
@@ -32,7 +32,7 @@ class TaskServices {
         userId, tasks
     ) {
         try {
-            const user = await UserServices.findUserById(userId);
+            const user = await UserServices.findById(userId);
             if (!user) {
                 throw new HttpError("User not found", 404);
             }
@@ -65,7 +65,7 @@ class TaskServices {
         userId
     ) {
         try {
-            const user = await UserServices.findUserById(userId);
+            const user = await UserServices.findById(userId);
             if (!user) {
                 throw new HttpError("User not found", 404);
             }
