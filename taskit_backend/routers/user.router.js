@@ -1,6 +1,7 @@
 import express from 'express';
 import * as AuthController from '../controller/user.auth.controller.js';
 import * as AuthMiddleware from '../middleware/user.auth.middleware.js';
+import * as UserMiddleware from '../middleware/user.middleware.js';
 import {jwtMiddleware} from '../middleware/jwt.middleware.js';    
 import {upload} from '../middleware/upload.middleware.js';
 import * as UserController from '../controller/user.controller.js';
@@ -17,5 +18,9 @@ router.put('/forgot-password/reset', AuthMiddleware.forgot_password_reset,AuthCo
 router.get('/login/verify', AuthController.login_verify);
 
 router.put('/profile',jwtMiddleware, upload.single('avatar'), UserController.update_profile,multerErrorHandler);
+router.put('/profile/email', jwtMiddleware,UserMiddleware.update_email, UserController.update_email);
+router.put('/profile/email/verify', jwtMiddleware,UserMiddleware.update_email_verify, UserController.update_email_verify);
+router.put('/profile/password', jwtMiddleware, UserMiddleware.update_password, UserController.update_password);
+router.delete('/profile', jwtMiddleware, UserController.delete_account);
 
 export default router;

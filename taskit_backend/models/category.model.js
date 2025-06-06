@@ -1,12 +1,9 @@
 import mongoose from "mongoose";
 import db from "../config/db.js";
-const { Schema } = mongoose;
-
-const categorySchema = new Schema({
+const categorySchema = new mongoose.Schema({
     name: {
         type: String,
         required: true,
-        unique: true,
         trim: true,
     },
     userId: {

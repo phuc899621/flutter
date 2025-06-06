@@ -1,13 +1,9 @@
 import SettingModel from "../models/setting.model.js";
+import UserServices from "./user.services.js";
 import HttpError from "../utils/http.error.js";
 class SettingServices {
     static async findByUserId(userId){
-        try {
-            const setting = await SettingModel.findOne(userId);
-            return setting;
-        } catch (e) {
-            throw new Error(`Find setting by userId error: ${e.message}`);
-        }
+        return await SettingModel.findOne({userId});
     }
     static async findAll(){
         try {
@@ -41,6 +37,10 @@ class SettingServices {
     }
     static async deleteByUserId(userId) {
         try {
+            const user = await UserServices.findById(userId);
+            if (user) {
+                throw new HttpError('Unable delete setting because user still exists', 409);
+            }
             const setting = await SettingModel.findOneAndDelete({ userId: userId });
             if (!setting) {
                 throw new HttpError('Setting not found', 404);

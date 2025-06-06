@@ -3,25 +3,21 @@ import HttpError from "../utils/http.error.js";
 
 class CategoryServices {
     static async findAll() {
-        try {
-            return await CategoryModel.find();
-        } catch (e) {
-            throw new Error(`Find all categories error: ${e.message}`);
-        }
+        return await CategoryModel.find();
     }
-    static async findAllByUserId(userId) {
-        try {
-            return await CategoryModel.find({userId});
-            
-        } catch (e) {
-            throw new Error(`Find all categories by userId error: ${e.message}`);
-        }
+    static async findByUserId(userId) {
+        return await CategoryModel.find({userId});
     }
 
     static async create(userId, request) {
         try {
-            const categoryList=request.map(({localId,name})=>({name}));
-            const createdCategories = await CategoryModel.create(userId, categoryList);
+            const categoryList=request.map(({localId,name})=>({userId,name,localId}));
+
+            const existingName = await CategoryModel.find({userId,name: {$in: categoryList.map(c => c.name)}});
+            if( existingName.length > 0) {
+                throw new HttpError("Category name already exists", 400);
+            }
+            const createdCategories = await CategoryModel.create( categoryList);
             const result = createdCategories.map((category,index) => ({
                 localId: categoryList[index].localId,
                 remoteId: category._id,
@@ -33,6 +29,7 @@ class CategoryServices {
         }
 
     }
+    
     static async deleteOne(id) {
         try {
             const result= await CategoryModel.deleteOne({_id: id});
@@ -55,7 +52,7 @@ class CategoryServices {
     }
     static async deleteAll(userId) {
         try {
-            const result = await CategoryModel.deleteAll({userId});
+            const result = await CategoryModel.deleteMany({userId});
             if (result.deletedCount === 0) {
                 throw new HttpError("No categories found to delete", 404);
             }
@@ -65,7 +62,7 @@ class CategoryServices {
     }
     static async updateOne(id, request) {
         try {
-            const updatedCategory = await CategoryModel.findOneAndUpdate(id, request);
+            const updatedCategory = await CategoryModel.findOneAndUpdate({_id:id}, request);
             if (!updatedCategory) {
                 throw new HttpError("Category not found", 404);
             }

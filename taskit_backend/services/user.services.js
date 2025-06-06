@@ -5,6 +5,7 @@ import OtpResetServices from './otp.reset.services.js';
 import CategoryServices from './category.services.js';
 import jwt from "jsonwebtoken";
 import SettingServices from './setting.services.js';
+import SettingModel from '../models/setting.model.js';
 import bcrypt from "bcryptjs";
 import CategoryModel from '../models/category.model.js';
 import HttpError from '../utils/http.error.js';
@@ -69,6 +70,7 @@ class UserServices {
                         { name: 'Travel', userId },
                     ];  
                     await CategoryModel.insertMany(defaultCategories,{session});
+                    await SettingModel.create([{ userId }], { session });
                     await OtpAuthModel.deleteOne({ email }).session(session);
                 });
                 return { message: "Verify your account successfully!", data: {} };
@@ -95,7 +97,7 @@ class UserServices {
                 { expiresIn: process.env.JWT_EXPIRES_IN || "1d" }
             );
             const setting= await SettingServices.findByUserId(user._id);
-            const categories = await CategoryServices.findAllByUserId(user._id);
+            const categories = await CategoryServices.findByUserId(user._id);
             return {
                     token: token,
                     settings: setting,
@@ -184,22 +186,22 @@ class UserServices {
             throw new HttpError(`Login verification error: ${e.message}`, 500);
         }
     } 
-    static async update_email(userId,request) {
+    static async update_email(userId,email) {
         
         try {
             const user = await UserModel.findById(userId);
             if (!user) throw new HttpError("User not found", 404);
 
-            const existingUser = await UserModel.findOne({ email: request.email });
+            const existingUser = await UserModel.findOne({ email });
             if (existingUser) throw new HttpError("Email already exists", 409);
 
-            const existingOtp = await OtpEmailServices.findByEmail(request.email);
+            const existingOtp = await OtpEmailServices.findByEmail(email);
             if (existingOtp) {
-                await OtpEMailServices.deleteByEmail(request.email);
+                await OtpEMailServices.deleteByEmail(email);
             }
             const otp = await OtpEmailServices.generateOTP();
-            await OtpEmailServices.create(request.email, otp);
-            await OtpEmailServices.sendOTP(request.email, otp);
+            await OtpEmailServices.create(email, otp);
+            await OtpEmailServices.sendOTP(email, otp);
         } catch (e) {
             throw new HttpError(`Update email error: ${e.message}`, 500);
         } 
@@ -250,6 +252,40 @@ class UserServices {
             throw new HttpError(`Update profile error: ${e.message}`, 500);
         }
     }
+    static async update_password(userId, request) {
+        try{
+            const user = await UserModel.findById(userId);
+            if (!user) throw new HttpError("User not found", 404);
+            const {oldPassword, newPassword} = request;
+            const isPasswordMatch = await bcrypt.compare(oldPassword, user.password);
+            if (!isPasswordMatch) {
+                throw new HttpError("Old password is incorrect", 401);
+            }
+            const salt = await bcrypt.genSalt(10);
+            user.password = await bcrypt.hash(newPassword, salt);
+            await user.save();
+            
+        }catch (e) {
+            throw new HttpError(`Update password error: ${e.message}`, 500);
+        }
+    }
+    static async delete_account(userId) {
+        const session = await db.startSession();
+        try {
+            const user = await UserModel.findById(userId);
+            if (!user) throw new HttpError("User not found", 404);
+            await session.withTransaction(async () => {
+                await CategoryModel.deleteMany({ userId: user._id }).session(session);
+                await SettingModel.deleteOne({ userId: user._id }).session(session);
+                await UserModel.deleteOne({ _id: user._id }).session(session);
+            });
+        }catch (e) {
+            throw new HttpError(`Delete account error: ${e.message}`, 500);
+        }finally {
+            await session.endSession();
+        }
+    }
+            
 
 }
 
