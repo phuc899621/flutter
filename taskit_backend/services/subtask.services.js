@@ -1,54 +1,92 @@
 import SubtaskModel from '../models/subtask.model.js';
 
 class SubtaskServices {
-    static async addListSubtask(taskId, subtasks) {
+    static async create_subtasks(taskId, subtasks) {
         try {
-            return await SubtaskModel.addListSubtask(taskId, subtasks);
+            const createSubtask=subtasks.map(subtask => ({
+                ...subtask,
+                taskId
+            }));
+            const result= await SubtaskModel.create(createSubtask);
+            console.log(result);
+            return result.map((doc, index) => ({
+                localId: subtasks[index].localId,
+                _id: doc._id
+            }));
         } catch (e) {
             throw e;
         }
     }
-    static async addSubtask(taskId, subtask) {
+    static async update_subtasks(subtasks) {
         try {
-            return await SubtaskModel.addSubtask(taskId, subtask);
+            const updatedSubtasks = await Promise.all(
+                subtasks.map(async (subtask) => {
+                    if (!subtask._id || typeof subtask !== 'object') {
+                        return null;
+                    }
+
+                    const { _id, localId, ...updateData } = subtask;
+
+                    const result = await SubtaskModel.findOneAndUpdate(
+                        { _id },
+                        { $set: updateData },
+                        { new: true }
+                    );
+
+                    if (!result) return null;
+                    return {
+                        ...result._doc,
+                        localId, 
+                    };
+                })
+            );
         } catch (e) {
-            throw e;
+            throw new Error(`Update subtasks error: ${e.message}`);
         }
     }
-    static async updateSubtask(subtaskId, subtask) {
+    static async add_subtasks(taskId, subtasks) {
         try {
-            return await SubtaskModel.updateSubtask(subtaskId, subtask);
+            const request=subtasks.map(subtask=>({
+                taskId,
+                ...subtask
+            }))
+            const result = await SubtaskModel.create(request);
+            return result.map((doc, index) => ({
+                localId: subtasks[index].localId,
+                ...doc._doc
+            }));
         } catch (e) {
-            throw e;
+            throw new Error(`Add subtasks error: ${e.message}`);
         }
     }
-    static async deleteAllSubtasks(taskId) {
+    static async findByTaskId(taskId, query) {
         try {
-            return await SubtaskModel.deleteAllSubtasks(taskId);
+            const filter = { taskId };
+            if(query.title){
+                filter.title = { $regex: query.title, $options: 'i' };
+            }
+            if(query.isCompleted){
+                filter.isCompleted = query.isCompleted;
+            }
+            return await SubtaskModel.find(filter);
         } catch (e) {
-            throw e;
+            throw new Error(`Find subtasks error: ${e.message}`);
         }
     }
-    static async deleteSubtask(subtaskId) {
+    static async delete_all_subtasks(taskId) {
         try {
-            return await SubtaskModel.deleteSubtask(subtaskId);
+            return await SubtaskModel.deleteMany({ taskId });
         } catch (e) {
-            throw e;
+            throw new Error(`Delete all subtasks error: ${e.message}`);
         }
     }
-    static async deleteListSubtask(taskId, subtaskIds) {
-        try {
-            return await SubtaskModel.deleteListSubtask(taskId, subtaskIds);
-        } catch (e) {
-            throw e;
+    static async delete_subtask(subtaskId) {
+        try{
+            return await SubtaskModel.deleteOne({_id:subtaskId});
+        }catch(e){
+            throw new Error(`Delete subtask error: ${e.message}`);
         }
-    }
-    static async findAllSubtasks(taskId, query) {
-        try {
-            return await SubtaskModel.findAllSubtasks(taskId, query);
-        } catch (e) {
-            throw e;
-        }
+        
     }
 }
 

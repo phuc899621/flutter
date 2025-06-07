@@ -11,10 +11,12 @@ const taskSchema = new Schema({
     description: {
         type: String,
         trim: true,
+        default: '',
     },
     category: {
         type: String,
-        required: true,
+        trim: true,
+        default: null,
     },
     priority: {
         type: String,
@@ -33,6 +35,7 @@ const taskSchema = new Schema({
     },
     dueDate: {
         type: Date,
+        default: null,
     },
 },{ timestamps: true });
 

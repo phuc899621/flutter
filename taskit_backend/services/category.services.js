@@ -8,6 +8,9 @@ class CategoryServices {
     static async findByUserId(userId) {
         return await CategoryModel.find({userId});
     }
+    static async findByName(name){
+        return await CategoryModel.findOne({name});
+    }
 
     static async create(userId, request) {
         try {

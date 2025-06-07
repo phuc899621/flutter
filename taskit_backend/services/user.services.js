@@ -12,6 +12,8 @@ import HttpError from '../utils/http.error.js';
 import db from "../config/db.js";
 import OtpEmailModel from '../models/otp.email.model.js';
 import OtpEmailServices from './otp.email.services.js';
+import TaskModel from '../models/task.model.js';
+import SubtaskModel from '../models/subtask.model.js';
 import multer from 'multer';
 import path from 'path';
 
@@ -277,6 +279,12 @@ class UserServices {
             await session.withTransaction(async () => {
                 await CategoryModel.deleteMany({ userId: user._id }).session(session);
                 await SettingModel.deleteOne({ userId: user._id }).session(session);
+
+                const tasks = await TaskModel.find({ userId }, null,{ session });
+                const taskIds = tasks.map(task => task._id);
+
+                await SubtaskModel.deleteMany({taskId: { $in: taskIds }},{session});
+                await TaskModel.deleteMany({ userId }, { session });
                 await UserModel.deleteOne({ _id: user._id }).session(session);
             });
         }catch (e) {

@@ -1,51 +1,59 @@
 import TaskServices from '../services/task.services.js';
 import SubtaskServices from '../services/subtask.services.js';
 
-export const addTaskWithSubtasks = async (req, res) => {
+export const create_task = async (req, res) => {
     try {
-        const { title, description, dueDate, priority, category, subtasks, localId } = req.body;
-        const userId = req.user.id;
-        if (!userId || !title || !dueDate || !priority || !category) {
-            return res.status(400).json({
-                message: "Please enter all fields",
-                data: {}
-            });
+        const { title, description, dueDate, priority, category, subtasks, localId,status } = req.body;
+        const userId = req.user.id; 
+        const createBody={};
+        const createSubtask=[];
+        if(title) createBody.title = title;
+        if(description) createBody.description = description;
+        if(dueDate) createBody.dueDate = dueDate;
+        if(status) createBody.status = status;
+        if(priority) createBody.priority = priority;
+        if(category) createBody.category = category;
+        if(localId) createBody.localId = localId;
+        if (subtasks && subtasks.length > 0) {
+            createSubtask.push(...subtasks.map(subtask => ({
+                ...subtask,
+            })));
         }
-        const taskResult = await TaskServices.addTask(
-            userId, title, description, dueDate, priority, category, localId
-        );
-        let subtaskResult = [];
-        if (subtasks != [] && subtasks) {
-            subtaskResult = await SubtaskServices.addListSubtask(
-                taskResult.remoteId, subtasks
-            );
-        }
+        const result= await TaskServices.create(userId, createBody, createSubtask);
         return res.status(201).json({
             message: "Create task successfully",
-            data: {
-                task: taskResult,
-                subtasks: subtaskResult
-            }
+            data: result
         });
     } catch (e) {
         const statusCode = e.statusCode || 500;
         return res.status(statusCode).json({
-            message: "An error occurred when create task: " + e.message,
+            message: e.message,
+            data: {}
+        });
+    }
+}
+export const get_task = async (req, res) => {
+    try {
+        const userId = req.user.id;
+        const query= req.query || {};
+        const result = await TaskServices.findByUserId(userId,query);
+        return res.status(200).json({
+            message: "Get all tasks successfully",
+            data: result
+        });
+    } catch (e) {
+        const statusCode = e.statusCode || 500;
+        return res.status(statusCode).json({
+            message: e.message,
             data: {}
         });
     }
 }
 
-export const updateTask = async (req, res) => {
+export const update_task = async (req, res) => {
     try {
-        const { taskId } = req.query;
-        if (!taskId) {
-            return res.status(400).json({
-                message: "Please give task id",
-                data: {}
-            });
-        }
-        const result = await TaskServices.updateTask(
+        const { taskId } = req.params;
+        await TaskServices.update_task(
             taskId, req.body
         );
         return res.status(200).json({
@@ -55,22 +63,16 @@ export const updateTask = async (req, res) => {
     } catch (e) {
         const statusCode = e.statusCode || 500;
         return res.status(statusCode).json({
-            message: "An error occurred when update task: " + e.message,
+            message: e.message,
             data: {}
         });
     }
 }
 
-export const deleteTask = async (req, res) => {
+export const delete_task = async (req, res) => {
     try {
-        const { taskId } = req.query;
-        if (!taskId) {
-            return res.status(400).json({
-                message: "Please give task id",
-                data: {}
-            });
-        }
-        const result = await TaskServices.deleteTask(taskId);
+        const {taskId}=req.params;
+        await TaskServices.delete_task(taskId);
         return res.status(200).json({
             message: "Delete task successfully",
             data: {}
@@ -84,16 +86,10 @@ export const deleteTask = async (req, res) => {
     }
 }
 
-export const deleteAllTasks = async (req, res) => {
+export const delete_all_task = async (req, res) => {
     try {
         const userId = req.user.id;
-        if (!userId) {
-            return res.status(400).json({
-                message: "Please give user id",
-                data: {}
-            });
-        }
-        const result = await TaskServices.deleteAllTask(userId);
+         await TaskServices.delete_all_tasks(userId);
         return res.status(200).json({
             message: "Delete all task successfully",
             data: {}
@@ -101,7 +97,7 @@ export const deleteAllTasks = async (req, res) => {
     } catch (e) {
         const statusCode = e.statusCode || 500;
         return res.status(statusCode).json({
-            message: "An error occurred when delete all task: " + e.message,
+            message: e.message,
             data: {}
         });
     }
@@ -130,27 +126,5 @@ export const deleteListTasks = async (req, res) => {
     }
 }
 
-export const findAllTasks = async (req, res) => {
-    try {
-        const userId = req.user.id;
-        const query = req.query;
-        if (!userId) {
-            return res.status(400).json({
-                message: "Please give user id",
-                data: {}
-            });
-        }
-        const result = await TaskServices.findAllTasks(userId, query);
-        return res.status(200).json({
-            message: "Get all tasks successfully",
-            data: result
-        });
-    } catch (e) {
-        const statusCode = e.statusCode || 500;
-        return res.status(statusCode).json({
-            message: "An error occurred when get all tasks: " + e.message,
-            data: {}
-        });
-    }
-}
+
 
