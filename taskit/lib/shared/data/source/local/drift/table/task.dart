@@ -17,7 +17,7 @@ class TaskTable extends Table {
   DateTimeColumn get scheduledDate => dateTime().nullable()();
   BoolColumn get hasScheduledTime =>
       boolean().withDefault(const Constant(false))();
-  DateTimeColumn get scheduledTime => dateTime().nullable()();
+  DateTimeColumn get deadlineDate => dateTime().nullable()();
   TextColumn get type => text().withDefault(const Constant('toDo'))();
   DateTimeColumn get createdAt => dateTime()();
   DateTimeColumn get updatedAt => dateTime()();

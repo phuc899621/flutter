@@ -1,7 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-import '../../../../../auth/data/dto/res/user/user_data.dart';
-
 part 'task_data.freezed.dart';
 part 'task_data.g.dart';
 
@@ -15,7 +13,10 @@ abstract class TaskData with _$TaskData {
     required String priority,
     required String userId,
     required String status,
-    required DateTime dueDate,
+    DateTime? scheduledDate,
+    required bool hasScheduledTime,
+    DateTime? deadlineDate,
+    required String type,
     required List<SubtaskData> subtasks,
     required DateTime createdAt,
     required DateTime updatedAt,
@@ -30,6 +31,8 @@ abstract class SubtaskData with _$SubtaskData {
       {@JsonKey(name: '_id') required String id,
       required String title,
       required bool isCompleted,
+      required DateTime updatedAt,
+      required DateTime createdAt,
       required String taskId}) = _SubtaskData;
 
   factory SubtaskData.fromJson(Map<String, dynamic> json) =>

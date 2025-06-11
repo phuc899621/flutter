@@ -334,13 +334,17 @@ class $TaskTableTable extends TaskTable
   @override
   late final GeneratedColumn<String> description = GeneratedColumn<String>(
       'description', aliasedName, false,
-      type: DriftSqlType.string, requiredDuringInsert: true);
+      type: DriftSqlType.string,
+      requiredDuringInsert: false,
+      defaultValue: const Constant(''));
   static const VerificationMeta _categoryMeta =
       const VerificationMeta('category');
   @override
   late final GeneratedColumn<String> category = GeneratedColumn<String>(
       'category', aliasedName, false,
-      type: DriftSqlType.string, requiredDuringInsert: true);
+      type: DriftSqlType.string,
+      requiredDuringInsert: false,
+      defaultValue: const Constant('Any'));
   static const VerificationMeta _isSyncedMeta =
       const VerificationMeta('isSynced');
   @override
@@ -355,7 +359,9 @@ class $TaskTableTable extends TaskTable
   @override
   late final GeneratedColumn<String> priority = GeneratedColumn<String>(
       'priority', aliasedName, false,
-      type: DriftSqlType.string, requiredDuringInsert: true);
+      type: DriftSqlType.string,
+      requiredDuringInsert: false,
+      defaultValue: const Constant('none'));
   static const VerificationMeta _userLocalIdMeta =
       const VerificationMeta('userLocalId');
   @override
@@ -369,13 +375,38 @@ class $TaskTableTable extends TaskTable
   @override
   late final GeneratedColumn<String> status = GeneratedColumn<String>(
       'status', aliasedName, false,
-      type: DriftSqlType.string, requiredDuringInsert: true);
-  static const VerificationMeta _dueDateMeta =
-      const VerificationMeta('dueDate');
+      type: DriftSqlType.string,
+      requiredDuringInsert: false,
+      defaultValue: const Constant('todo'));
+  static const VerificationMeta _scheduledDateMeta =
+      const VerificationMeta('scheduledDate');
   @override
-  late final GeneratedColumn<DateTime> dueDate = GeneratedColumn<DateTime>(
-      'due_date', aliasedName, false,
-      type: DriftSqlType.dateTime, requiredDuringInsert: true);
+  late final GeneratedColumn<DateTime> scheduledDate =
+      GeneratedColumn<DateTime>('scheduled_date', aliasedName, true,
+          type: DriftSqlType.dateTime, requiredDuringInsert: false);
+  static const VerificationMeta _hasScheduledTimeMeta =
+      const VerificationMeta('hasScheduledTime');
+  @override
+  late final GeneratedColumn<bool> hasScheduledTime = GeneratedColumn<bool>(
+      'has_scheduled_time', aliasedName, false,
+      type: DriftSqlType.bool,
+      requiredDuringInsert: false,
+      defaultConstraints: GeneratedColumn.constraintIsAlways(
+          'CHECK ("has_scheduled_time" IN (0, 1))'),
+      defaultValue: const Constant(false));
+  static const VerificationMeta _deadlineDateMeta =
+      const VerificationMeta('deadlineDate');
+  @override
+  late final GeneratedColumn<DateTime> deadlineDate = GeneratedColumn<DateTime>(
+      'deadline_date', aliasedName, true,
+      type: DriftSqlType.dateTime, requiredDuringInsert: false);
+  static const VerificationMeta _typeMeta = const VerificationMeta('type');
+  @override
+  late final GeneratedColumn<String> type = GeneratedColumn<String>(
+      'type', aliasedName, false,
+      type: DriftSqlType.string,
+      requiredDuringInsert: false,
+      defaultValue: const Constant('toDo'));
   static const VerificationMeta _createdAtMeta =
       const VerificationMeta('createdAt');
   @override
@@ -399,7 +430,10 @@ class $TaskTableTable extends TaskTable
         priority,
         userLocalId,
         status,
-        dueDate,
+        scheduledDate,
+        hasScheduledTime,
+        deadlineDate,
+        type,
         createdAt,
         updatedAt
       ];
@@ -432,14 +466,10 @@ class $TaskTableTable extends TaskTable
           _descriptionMeta,
           description.isAcceptableOrUnknown(
               data['description']!, _descriptionMeta));
-    } else if (isInserting) {
-      context.missing(_descriptionMeta);
     }
     if (data.containsKey('category')) {
       context.handle(_categoryMeta,
           category.isAcceptableOrUnknown(data['category']!, _categoryMeta));
-    } else if (isInserting) {
-      context.missing(_categoryMeta);
     }
     if (data.containsKey('is_synced')) {
       context.handle(_isSyncedMeta,
@@ -450,8 +480,6 @@ class $TaskTableTable extends TaskTable
     if (data.containsKey('priority')) {
       context.handle(_priorityMeta,
           priority.isAcceptableOrUnknown(data['priority']!, _priorityMeta));
-    } else if (isInserting) {
-      context.missing(_priorityMeta);
     }
     if (data.containsKey('user_local_id')) {
       context.handle(
@@ -464,14 +492,28 @@ class $TaskTableTable extends TaskTable
     if (data.containsKey('status')) {
       context.handle(_statusMeta,
           status.isAcceptableOrUnknown(data['status']!, _statusMeta));
-    } else if (isInserting) {
-      context.missing(_statusMeta);
     }
-    if (data.containsKey('due_date')) {
-      context.handle(_dueDateMeta,
-          dueDate.isAcceptableOrUnknown(data['due_date']!, _dueDateMeta));
-    } else if (isInserting) {
-      context.missing(_dueDateMeta);
+    if (data.containsKey('scheduled_date')) {
+      context.handle(
+          _scheduledDateMeta,
+          scheduledDate.isAcceptableOrUnknown(
+              data['scheduled_date']!, _scheduledDateMeta));
+    }
+    if (data.containsKey('has_scheduled_time')) {
+      context.handle(
+          _hasScheduledTimeMeta,
+          hasScheduledTime.isAcceptableOrUnknown(
+              data['has_scheduled_time']!, _hasScheduledTimeMeta));
+    }
+    if (data.containsKey('deadline_date')) {
+      context.handle(
+          _deadlineDateMeta,
+          deadlineDate.isAcceptableOrUnknown(
+              data['deadline_date']!, _deadlineDateMeta));
+    }
+    if (data.containsKey('type')) {
+      context.handle(
+          _typeMeta, type.isAcceptableOrUnknown(data['type']!, _typeMeta));
     }
     if (data.containsKey('created_at')) {
       context.handle(_createdAtMeta,
@@ -512,8 +554,14 @@ class $TaskTableTable extends TaskTable
           .read(DriftSqlType.int, data['${effectivePrefix}user_local_id'])!,
       status: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}status'])!,
-      dueDate: attachedDatabase.typeMapping
-          .read(DriftSqlType.dateTime, data['${effectivePrefix}due_date'])!,
+      scheduledDate: attachedDatabase.typeMapping.read(
+          DriftSqlType.dateTime, data['${effectivePrefix}scheduled_date']),
+      hasScheduledTime: attachedDatabase.typeMapping.read(
+          DriftSqlType.bool, data['${effectivePrefix}has_scheduled_time'])!,
+      deadlineDate: attachedDatabase.typeMapping
+          .read(DriftSqlType.dateTime, data['${effectivePrefix}deadline_date']),
+      type: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}type'])!,
       createdAt: attachedDatabase.typeMapping
           .read(DriftSqlType.dateTime, data['${effectivePrefix}created_at'])!,
       updatedAt: attachedDatabase.typeMapping
@@ -537,7 +585,10 @@ class TaskTableData extends DataClass implements Insertable<TaskTableData> {
   final String priority;
   final int userLocalId;
   final String status;
-  final DateTime dueDate;
+  final DateTime? scheduledDate;
+  final bool hasScheduledTime;
+  final DateTime? deadlineDate;
+  final String type;
   final DateTime createdAt;
   final DateTime updatedAt;
   const TaskTableData(
@@ -550,7 +601,10 @@ class TaskTableData extends DataClass implements Insertable<TaskTableData> {
       required this.priority,
       required this.userLocalId,
       required this.status,
-      required this.dueDate,
+      this.scheduledDate,
+      required this.hasScheduledTime,
+      this.deadlineDate,
+      required this.type,
       required this.createdAt,
       required this.updatedAt});
   @override
@@ -565,7 +619,14 @@ class TaskTableData extends DataClass implements Insertable<TaskTableData> {
     map['priority'] = Variable<String>(priority);
     map['user_local_id'] = Variable<int>(userLocalId);
     map['status'] = Variable<String>(status);
-    map['due_date'] = Variable<DateTime>(dueDate);
+    if (!nullToAbsent || scheduledDate != null) {
+      map['scheduled_date'] = Variable<DateTime>(scheduledDate);
+    }
+    map['has_scheduled_time'] = Variable<bool>(hasScheduledTime);
+    if (!nullToAbsent || deadlineDate != null) {
+      map['deadline_date'] = Variable<DateTime>(deadlineDate);
+    }
+    map['type'] = Variable<String>(type);
     map['created_at'] = Variable<DateTime>(createdAt);
     map['updated_at'] = Variable<DateTime>(updatedAt);
     return map;
@@ -582,7 +643,14 @@ class TaskTableData extends DataClass implements Insertable<TaskTableData> {
       priority: Value(priority),
       userLocalId: Value(userLocalId),
       status: Value(status),
-      dueDate: Value(dueDate),
+      scheduledDate: scheduledDate == null && nullToAbsent
+          ? const Value.absent()
+          : Value(scheduledDate),
+      hasScheduledTime: Value(hasScheduledTime),
+      deadlineDate: deadlineDate == null && nullToAbsent
+          ? const Value.absent()
+          : Value(deadlineDate),
+      type: Value(type),
       createdAt: Value(createdAt),
       updatedAt: Value(updatedAt),
     );
@@ -601,7 +669,10 @@ class TaskTableData extends DataClass implements Insertable<TaskTableData> {
       priority: serializer.fromJson<String>(json['priority']),
       userLocalId: serializer.fromJson<int>(json['userLocalId']),
       status: serializer.fromJson<String>(json['status']),
-      dueDate: serializer.fromJson<DateTime>(json['dueDate']),
+      scheduledDate: serializer.fromJson<DateTime?>(json['scheduledDate']),
+      hasScheduledTime: serializer.fromJson<bool>(json['hasScheduledTime']),
+      deadlineDate: serializer.fromJson<DateTime?>(json['deadlineDate']),
+      type: serializer.fromJson<String>(json['type']),
       createdAt: serializer.fromJson<DateTime>(json['createdAt']),
       updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
     );
@@ -619,7 +690,10 @@ class TaskTableData extends DataClass implements Insertable<TaskTableData> {
       'priority': serializer.toJson<String>(priority),
       'userLocalId': serializer.toJson<int>(userLocalId),
       'status': serializer.toJson<String>(status),
-      'dueDate': serializer.toJson<DateTime>(dueDate),
+      'scheduledDate': serializer.toJson<DateTime?>(scheduledDate),
+      'hasScheduledTime': serializer.toJson<bool>(hasScheduledTime),
+      'deadlineDate': serializer.toJson<DateTime?>(deadlineDate),
+      'type': serializer.toJson<String>(type),
       'createdAt': serializer.toJson<DateTime>(createdAt),
       'updatedAt': serializer.toJson<DateTime>(updatedAt),
     };
@@ -635,7 +709,10 @@ class TaskTableData extends DataClass implements Insertable<TaskTableData> {
           String? priority,
           int? userLocalId,
           String? status,
-          DateTime? dueDate,
+          Value<DateTime?> scheduledDate = const Value.absent(),
+          bool? hasScheduledTime,
+          Value<DateTime?> deadlineDate = const Value.absent(),
+          String? type,
           DateTime? createdAt,
           DateTime? updatedAt}) =>
       TaskTableData(
@@ -648,7 +725,12 @@ class TaskTableData extends DataClass implements Insertable<TaskTableData> {
         priority: priority ?? this.priority,
         userLocalId: userLocalId ?? this.userLocalId,
         status: status ?? this.status,
-        dueDate: dueDate ?? this.dueDate,
+        scheduledDate:
+            scheduledDate.present ? scheduledDate.value : this.scheduledDate,
+        hasScheduledTime: hasScheduledTime ?? this.hasScheduledTime,
+        deadlineDate:
+            deadlineDate.present ? deadlineDate.value : this.deadlineDate,
+        type: type ?? this.type,
         createdAt: createdAt ?? this.createdAt,
         updatedAt: updatedAt ?? this.updatedAt,
       );
@@ -665,7 +747,16 @@ class TaskTableData extends DataClass implements Insertable<TaskTableData> {
       userLocalId:
           data.userLocalId.present ? data.userLocalId.value : this.userLocalId,
       status: data.status.present ? data.status.value : this.status,
-      dueDate: data.dueDate.present ? data.dueDate.value : this.dueDate,
+      scheduledDate: data.scheduledDate.present
+          ? data.scheduledDate.value
+          : this.scheduledDate,
+      hasScheduledTime: data.hasScheduledTime.present
+          ? data.hasScheduledTime.value
+          : this.hasScheduledTime,
+      deadlineDate: data.deadlineDate.present
+          ? data.deadlineDate.value
+          : this.deadlineDate,
+      type: data.type.present ? data.type.value : this.type,
       createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
       updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
     );
@@ -683,7 +774,10 @@ class TaskTableData extends DataClass implements Insertable<TaskTableData> {
           ..write('priority: $priority, ')
           ..write('userLocalId: $userLocalId, ')
           ..write('status: $status, ')
-          ..write('dueDate: $dueDate, ')
+          ..write('scheduledDate: $scheduledDate, ')
+          ..write('hasScheduledTime: $hasScheduledTime, ')
+          ..write('deadlineDate: $deadlineDate, ')
+          ..write('type: $type, ')
           ..write('createdAt: $createdAt, ')
           ..write('updatedAt: $updatedAt')
           ..write(')'))
@@ -701,7 +795,10 @@ class TaskTableData extends DataClass implements Insertable<TaskTableData> {
       priority,
       userLocalId,
       status,
-      dueDate,
+      scheduledDate,
+      hasScheduledTime,
+      deadlineDate,
+      type,
       createdAt,
       updatedAt);
   @override
@@ -717,7 +814,10 @@ class TaskTableData extends DataClass implements Insertable<TaskTableData> {
           other.priority == this.priority &&
           other.userLocalId == this.userLocalId &&
           other.status == this.status &&
-          other.dueDate == this.dueDate &&
+          other.scheduledDate == this.scheduledDate &&
+          other.hasScheduledTime == this.hasScheduledTime &&
+          other.deadlineDate == this.deadlineDate &&
+          other.type == this.type &&
           other.createdAt == this.createdAt &&
           other.updatedAt == this.updatedAt);
 }
@@ -732,7 +832,10 @@ class TaskTableCompanion extends UpdateCompanion<TaskTableData> {
   final Value<String> priority;
   final Value<int> userLocalId;
   final Value<String> status;
-  final Value<DateTime> dueDate;
+  final Value<DateTime?> scheduledDate;
+  final Value<bool> hasScheduledTime;
+  final Value<DateTime?> deadlineDate;
+  final Value<String> type;
   final Value<DateTime> createdAt;
   final Value<DateTime> updatedAt;
   const TaskTableCompanion({
@@ -745,7 +848,10 @@ class TaskTableCompanion extends UpdateCompanion<TaskTableData> {
     this.priority = const Value.absent(),
     this.userLocalId = const Value.absent(),
     this.status = const Value.absent(),
-    this.dueDate = const Value.absent(),
+    this.scheduledDate = const Value.absent(),
+    this.hasScheduledTime = const Value.absent(),
+    this.deadlineDate = const Value.absent(),
+    this.type = const Value.absent(),
     this.createdAt = const Value.absent(),
     this.updatedAt = const Value.absent(),
   });
@@ -753,23 +859,21 @@ class TaskTableCompanion extends UpdateCompanion<TaskTableData> {
     this.localId = const Value.absent(),
     this.remoteId = const Value.absent(),
     required String title,
-    required String description,
-    required String category,
+    this.description = const Value.absent(),
+    this.category = const Value.absent(),
     required bool isSynced,
-    required String priority,
+    this.priority = const Value.absent(),
     required int userLocalId,
-    required String status,
-    required DateTime dueDate,
+    this.status = const Value.absent(),
+    this.scheduledDate = const Value.absent(),
+    this.hasScheduledTime = const Value.absent(),
+    this.deadlineDate = const Value.absent(),
+    this.type = const Value.absent(),
     required DateTime createdAt,
     required DateTime updatedAt,
   })  : title = Value(title),
-        description = Value(description),
-        category = Value(category),
         isSynced = Value(isSynced),
-        priority = Value(priority),
         userLocalId = Value(userLocalId),
-        status = Value(status),
-        dueDate = Value(dueDate),
         createdAt = Value(createdAt),
         updatedAt = Value(updatedAt);
   static Insertable<TaskTableData> custom({
@@ -782,7 +886,10 @@ class TaskTableCompanion extends UpdateCompanion<TaskTableData> {
     Expression<String>? priority,
     Expression<int>? userLocalId,
     Expression<String>? status,
-    Expression<DateTime>? dueDate,
+    Expression<DateTime>? scheduledDate,
+    Expression<bool>? hasScheduledTime,
+    Expression<DateTime>? deadlineDate,
+    Expression<String>? type,
     Expression<DateTime>? createdAt,
     Expression<DateTime>? updatedAt,
   }) {
@@ -796,7 +903,10 @@ class TaskTableCompanion extends UpdateCompanion<TaskTableData> {
       if (priority != null) 'priority': priority,
       if (userLocalId != null) 'user_local_id': userLocalId,
       if (status != null) 'status': status,
-      if (dueDate != null) 'due_date': dueDate,
+      if (scheduledDate != null) 'scheduled_date': scheduledDate,
+      if (hasScheduledTime != null) 'has_scheduled_time': hasScheduledTime,
+      if (deadlineDate != null) 'deadline_date': deadlineDate,
+      if (type != null) 'type': type,
       if (createdAt != null) 'created_at': createdAt,
       if (updatedAt != null) 'updated_at': updatedAt,
     });
@@ -812,7 +922,10 @@ class TaskTableCompanion extends UpdateCompanion<TaskTableData> {
       Value<String>? priority,
       Value<int>? userLocalId,
       Value<String>? status,
-      Value<DateTime>? dueDate,
+      Value<DateTime?>? scheduledDate,
+      Value<bool>? hasScheduledTime,
+      Value<DateTime?>? deadlineDate,
+      Value<String>? type,
       Value<DateTime>? createdAt,
       Value<DateTime>? updatedAt}) {
     return TaskTableCompanion(
@@ -825,7 +938,10 @@ class TaskTableCompanion extends UpdateCompanion<TaskTableData> {
       priority: priority ?? this.priority,
       userLocalId: userLocalId ?? this.userLocalId,
       status: status ?? this.status,
-      dueDate: dueDate ?? this.dueDate,
+      scheduledDate: scheduledDate ?? this.scheduledDate,
+      hasScheduledTime: hasScheduledTime ?? this.hasScheduledTime,
+      deadlineDate: deadlineDate ?? this.deadlineDate,
+      type: type ?? this.type,
       createdAt: createdAt ?? this.createdAt,
       updatedAt: updatedAt ?? this.updatedAt,
     );
@@ -861,8 +977,17 @@ class TaskTableCompanion extends UpdateCompanion<TaskTableData> {
     if (status.present) {
       map['status'] = Variable<String>(status.value);
     }
-    if (dueDate.present) {
-      map['due_date'] = Variable<DateTime>(dueDate.value);
+    if (scheduledDate.present) {
+      map['scheduled_date'] = Variable<DateTime>(scheduledDate.value);
+    }
+    if (hasScheduledTime.present) {
+      map['has_scheduled_time'] = Variable<bool>(hasScheduledTime.value);
+    }
+    if (deadlineDate.present) {
+      map['deadline_date'] = Variable<DateTime>(deadlineDate.value);
+    }
+    if (type.present) {
+      map['type'] = Variable<String>(type.value);
     }
     if (createdAt.present) {
       map['created_at'] = Variable<DateTime>(createdAt.value);
@@ -885,7 +1010,10 @@ class TaskTableCompanion extends UpdateCompanion<TaskTableData> {
           ..write('priority: $priority, ')
           ..write('userLocalId: $userLocalId, ')
           ..write('status: $status, ')
-          ..write('dueDate: $dueDate, ')
+          ..write('scheduledDate: $scheduledDate, ')
+          ..write('hasScheduledTime: $hasScheduledTime, ')
+          ..write('deadlineDate: $deadlineDate, ')
+          ..write('type: $type, ')
           ..write('createdAt: $createdAt, ')
           ..write('updatedAt: $updatedAt')
           ..write(')'))
@@ -937,9 +1065,10 @@ class $SubtaskTableTable extends SubtaskTable
   late final GeneratedColumn<bool> isCompleted = GeneratedColumn<bool>(
       'is_completed', aliasedName, false,
       type: DriftSqlType.bool,
-      requiredDuringInsert: true,
+      requiredDuringInsert: false,
       defaultConstraints: GeneratedColumn.constraintIsAlways(
-          'CHECK ("is_completed" IN (0, 1))'));
+          'CHECK ("is_completed" IN (0, 1))'),
+      defaultValue: const Constant(false));
   static const VerificationMeta _taskLocalIdMeta =
       const VerificationMeta('taskLocalId');
   @override
@@ -1007,8 +1136,6 @@ class $SubtaskTableTable extends SubtaskTable
           _isCompletedMeta,
           isCompleted.isAcceptableOrUnknown(
               data['is_completed']!, _isCompletedMeta));
-    } else if (isInserting) {
-      context.missing(_isCompletedMeta);
     }
     if (data.containsKey('task_local_id')) {
       context.handle(
@@ -1229,13 +1356,12 @@ class SubtaskTableCompanion extends UpdateCompanion<SubtaskTableData> {
     this.remoteId = const Value.absent(),
     required String title,
     required bool isSynced,
-    required bool isCompleted,
+    this.isCompleted = const Value.absent(),
     required int taskLocalId,
     required DateTime createdAt,
     required DateTime updatedAt,
   })  : title = Value(title),
         isSynced = Value(isSynced),
-        isCompleted = Value(isCompleted),
         taskLocalId = Value(taskLocalId),
         createdAt = Value(createdAt),
         updatedAt = Value(updatedAt);
@@ -2614,13 +2740,16 @@ typedef $$TaskTableTableCreateCompanionBuilder = TaskTableCompanion Function({
   Value<int> localId,
   Value<String> remoteId,
   required String title,
-  required String description,
-  required String category,
+  Value<String> description,
+  Value<String> category,
   required bool isSynced,
-  required String priority,
+  Value<String> priority,
   required int userLocalId,
-  required String status,
-  required DateTime dueDate,
+  Value<String> status,
+  Value<DateTime?> scheduledDate,
+  Value<bool> hasScheduledTime,
+  Value<DateTime?> deadlineDate,
+  Value<String> type,
   required DateTime createdAt,
   required DateTime updatedAt,
 });
@@ -2634,7 +2763,10 @@ typedef $$TaskTableTableUpdateCompanionBuilder = TaskTableCompanion Function({
   Value<String> priority,
   Value<int> userLocalId,
   Value<String> status,
-  Value<DateTime> dueDate,
+  Value<DateTime?> scheduledDate,
+  Value<bool> hasScheduledTime,
+  Value<DateTime?> deadlineDate,
+  Value<String> type,
   Value<DateTime> createdAt,
   Value<DateTime> updatedAt,
 });
@@ -2708,8 +2840,18 @@ class $$TaskTableTableFilterComposer
   ColumnFilters<String> get status => $composableBuilder(
       column: $table.status, builder: (column) => ColumnFilters(column));
 
-  ColumnFilters<DateTime> get dueDate => $composableBuilder(
-      column: $table.dueDate, builder: (column) => ColumnFilters(column));
+  ColumnFilters<DateTime> get scheduledDate => $composableBuilder(
+      column: $table.scheduledDate, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<bool> get hasScheduledTime => $composableBuilder(
+      column: $table.hasScheduledTime,
+      builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<DateTime> get deadlineDate => $composableBuilder(
+      column: $table.deadlineDate, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get type => $composableBuilder(
+      column: $table.type, builder: (column) => ColumnFilters(column));
 
   ColumnFilters<DateTime> get createdAt => $composableBuilder(
       column: $table.createdAt, builder: (column) => ColumnFilters(column));
@@ -2792,8 +2934,20 @@ class $$TaskTableTableOrderingComposer
   ColumnOrderings<String> get status => $composableBuilder(
       column: $table.status, builder: (column) => ColumnOrderings(column));
 
-  ColumnOrderings<DateTime> get dueDate => $composableBuilder(
-      column: $table.dueDate, builder: (column) => ColumnOrderings(column));
+  ColumnOrderings<DateTime> get scheduledDate => $composableBuilder(
+      column: $table.scheduledDate,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<bool> get hasScheduledTime => $composableBuilder(
+      column: $table.hasScheduledTime,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<DateTime> get deadlineDate => $composableBuilder(
+      column: $table.deadlineDate,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get type => $composableBuilder(
+      column: $table.type, builder: (column) => ColumnOrderings(column));
 
   ColumnOrderings<DateTime> get createdAt => $composableBuilder(
       column: $table.createdAt, builder: (column) => ColumnOrderings(column));
@@ -2855,8 +3009,17 @@ class $$TaskTableTableAnnotationComposer
   GeneratedColumn<String> get status =>
       $composableBuilder(column: $table.status, builder: (column) => column);
 
-  GeneratedColumn<DateTime> get dueDate =>
-      $composableBuilder(column: $table.dueDate, builder: (column) => column);
+  GeneratedColumn<DateTime> get scheduledDate => $composableBuilder(
+      column: $table.scheduledDate, builder: (column) => column);
+
+  GeneratedColumn<bool> get hasScheduledTime => $composableBuilder(
+      column: $table.hasScheduledTime, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get deadlineDate => $composableBuilder(
+      column: $table.deadlineDate, builder: (column) => column);
+
+  GeneratedColumn<String> get type =>
+      $composableBuilder(column: $table.type, builder: (column) => column);
 
   GeneratedColumn<DateTime> get createdAt =>
       $composableBuilder(column: $table.createdAt, builder: (column) => column);
@@ -2938,7 +3101,10 @@ class $$TaskTableTableTableManager extends RootTableManager<
             Value<String> priority = const Value.absent(),
             Value<int> userLocalId = const Value.absent(),
             Value<String> status = const Value.absent(),
-            Value<DateTime> dueDate = const Value.absent(),
+            Value<DateTime?> scheduledDate = const Value.absent(),
+            Value<bool> hasScheduledTime = const Value.absent(),
+            Value<DateTime?> deadlineDate = const Value.absent(),
+            Value<String> type = const Value.absent(),
             Value<DateTime> createdAt = const Value.absent(),
             Value<DateTime> updatedAt = const Value.absent(),
           }) =>
@@ -2952,7 +3118,10 @@ class $$TaskTableTableTableManager extends RootTableManager<
             priority: priority,
             userLocalId: userLocalId,
             status: status,
-            dueDate: dueDate,
+            scheduledDate: scheduledDate,
+            hasScheduledTime: hasScheduledTime,
+            deadlineDate: deadlineDate,
+            type: type,
             createdAt: createdAt,
             updatedAt: updatedAt,
           ),
@@ -2960,13 +3129,16 @@ class $$TaskTableTableTableManager extends RootTableManager<
             Value<int> localId = const Value.absent(),
             Value<String> remoteId = const Value.absent(),
             required String title,
-            required String description,
-            required String category,
+            Value<String> description = const Value.absent(),
+            Value<String> category = const Value.absent(),
             required bool isSynced,
-            required String priority,
+            Value<String> priority = const Value.absent(),
             required int userLocalId,
-            required String status,
-            required DateTime dueDate,
+            Value<String> status = const Value.absent(),
+            Value<DateTime?> scheduledDate = const Value.absent(),
+            Value<bool> hasScheduledTime = const Value.absent(),
+            Value<DateTime?> deadlineDate = const Value.absent(),
+            Value<String> type = const Value.absent(),
             required DateTime createdAt,
             required DateTime updatedAt,
           }) =>
@@ -2980,7 +3152,10 @@ class $$TaskTableTableTableManager extends RootTableManager<
             priority: priority,
             userLocalId: userLocalId,
             status: status,
-            dueDate: dueDate,
+            scheduledDate: scheduledDate,
+            hasScheduledTime: hasScheduledTime,
+            deadlineDate: deadlineDate,
+            type: type,
             createdAt: createdAt,
             updatedAt: updatedAt,
           ),
@@ -3062,7 +3237,7 @@ typedef $$SubtaskTableTableCreateCompanionBuilder = SubtaskTableCompanion
   Value<String> remoteId,
   required String title,
   required bool isSynced,
-  required bool isCompleted,
+  Value<bool> isCompleted,
   required int taskLocalId,
   required DateTime createdAt,
   required DateTime updatedAt,
@@ -3299,7 +3474,7 @@ class $$SubtaskTableTableTableManager extends RootTableManager<
             Value<String> remoteId = const Value.absent(),
             required String title,
             required bool isSynced,
-            required bool isCompleted,
+            Value<bool> isCompleted = const Value.absent(),
             required int taskLocalId,
             required DateTime createdAt,
             required DateTime updatedAt,

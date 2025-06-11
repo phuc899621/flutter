@@ -15,7 +15,6 @@ import '../../dto/req/signup/signup_verify_request.dart';
 import '../../dto/res/forgot_pass/verify.dart';
 import '../../dto/res/login/login_data.dart';
 import '../../dto/res/login/login_verify_data.dart';
-import '../../dto/res/signup/signup_data.dart';
 
 part 'auth_api.g.dart';
 
@@ -31,27 +30,27 @@ sealed class AuthApi {
   /*
   * Login
   * */
-  @POST('/user/auth/login')
+  @POST('/user/login')
   Future<BaseResponse<LoginData>> login(@Body() LoginRequest data);
-  @GET('/user/auth/login/verify')
+  @GET('/user/login/verify')
   Future<BaseResponse<LoginVerifyData>> checkLogin(
       @Header('Authorization') String token);
-  @POST('/user/auth/signup')
+  @POST('/user/signup')
   /*
   * Signup
   * */
   Future<BaseResponse<BaseData>> signup(@Body() SignupRequest data);
-  @POST('/user/auth/signup-verify')
+  @POST('/user/signup/verify')
   Future<BaseResponse<BaseData>> signupVerify(@Body() SignupVerifyRequest data);
-  @POST('/user/auth/forgot-password')
+  @POST('/user/forgot-password')
   /*
   * Forgot Password
   * */
   Future<BaseResponse<BaseData>> forgotPass(@Body() ForgotPassRequest data);
-  @POST('/user/auth/forgot-password/verify')
+  @POST('/user/forgot-password/verify')
   Future<BaseResponse<ForgotPassData>> forgotPassVerify(
       @Body() ForgotPassVerifyRequest data);
-  @POST('/user/auth/forgot-password/reset')
+  @POST('/user/forgot-password/reset')
   Future<BaseResponse<BaseData>> resetPass(
       @Body() ResetPassRequest data, @Header('Reset-Token') String token);
 }

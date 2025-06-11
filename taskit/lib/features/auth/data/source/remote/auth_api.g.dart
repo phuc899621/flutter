@@ -27,7 +27,7 @@ class _AuthApi implements AuthApi {
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            '/user/auth/login',
+            '/user/login',
             queryParameters: queryParameters,
             data: _data,
           )
@@ -58,7 +58,7 @@ class _AuthApi implements AuthApi {
       Options(method: 'GET', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            '/user/auth/login/verify',
+            '/user/login/verify',
             queryParameters: queryParameters,
             data: _data,
           )
@@ -88,7 +88,7 @@ class _AuthApi implements AuthApi {
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            '/user/auth/signup',
+            '/user/signup',
             queryParameters: queryParameters,
             data: _data,
           )
@@ -118,7 +118,7 @@ class _AuthApi implements AuthApi {
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            '/user/auth/signup-verify',
+            '/user/signup/verify',
             queryParameters: queryParameters,
             data: _data,
           )
@@ -148,7 +148,7 @@ class _AuthApi implements AuthApi {
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            '/user/auth/forgot-password',
+            '/user/forgot-password',
             queryParameters: queryParameters,
             data: _data,
           )
@@ -180,7 +180,7 @@ class _AuthApi implements AuthApi {
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            '/user/auth/forgot-password/verify',
+            '/user/forgot-password/verify',
             queryParameters: queryParameters,
             data: _data,
           )
@@ -214,7 +214,7 @@ class _AuthApi implements AuthApi {
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            '/user/auth/forgot-password/reset',
+            '/user/forgot-password/reset',
             queryParameters: queryParameters,
             data: _data,
           )

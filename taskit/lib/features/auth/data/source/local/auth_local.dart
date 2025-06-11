@@ -71,8 +71,8 @@ class AuthLocalDataSource implements IAuthLocalDataSource {
                   name: Value(e.name),
                   userLocalId: Value(userLocalId),
                   isSynced: const Value(true),
-                  createdAt: Value(DateTime.now()),
-                  updatedAt: Value(DateTime.now()),
+                  createdAt: Value(e.createdAt),
+                  updatedAt: Value(e.updatedAt),
                 ))
             .toList();
         await categoryDao.insertAllCategories(categories);
@@ -85,9 +85,12 @@ class AuthLocalDataSource implements IAuthLocalDataSource {
                   priority: Value(e.priority),
                   userLocalId: Value(userLocalId),
                   status: Value(e.status),
-                  dueDate: Value(e.dueDate),
-                  createdAt: Value(DateTime.now()),
-                  updatedAt: Value(DateTime.now()),
+                  scheduledDate: Value(e.scheduledDate),
+                  hasScheduledTime: Value(e.hasScheduledTime),
+                  deadlineDate: Value(e.deadlineDate),
+                  type: Value(e.type),
+                  createdAt: Value(e.updatedAt),
+                  updatedAt: Value(e.createdAt),
                   isSynced: const Value(true),
                 ))
             .toList();
@@ -105,8 +108,8 @@ class AuthLocalDataSource implements IAuthLocalDataSource {
                       isCompleted: Value(e.isCompleted),
                       taskLocalId: Value(taskData.localId),
                       isSynced: const Value(true),
-                      createdAt: Value(DateTime.now()),
-                      updatedAt: Value(DateTime.now()),
+                      createdAt: Value(e.createdAt),
+                      updatedAt: Value(e.updatedAt),
                     ))
                 .toList();
           }),

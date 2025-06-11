@@ -14,7 +14,14 @@ _TaskData _$TaskDataFromJson(Map<String, dynamic> json) => _TaskData(
       priority: json['priority'] as String,
       userId: json['userId'] as String,
       status: json['status'] as String,
-      dueDate: DateTime.parse(json['dueDate'] as String),
+      scheduledDate: json['scheduledDate'] == null
+          ? null
+          : DateTime.parse(json['scheduledDate'] as String),
+      hasScheduledTime: json['hasScheduledTime'] as bool,
+      deadlineDate: json['deadlineDate'] == null
+          ? null
+          : DateTime.parse(json['deadlineDate'] as String),
+      type: json['type'] as String,
       subtasks: (json['subtasks'] as List<dynamic>)
           .map((e) => SubtaskData.fromJson(e as Map<String, dynamic>))
           .toList(),
@@ -30,7 +37,10 @@ Map<String, dynamic> _$TaskDataToJson(_TaskData instance) => <String, dynamic>{
       'priority': instance.priority,
       'userId': instance.userId,
       'status': instance.status,
-      'dueDate': instance.dueDate.toIso8601String(),
+      'scheduledDate': instance.scheduledDate?.toIso8601String(),
+      'hasScheduledTime': instance.hasScheduledTime,
+      'deadlineDate': instance.deadlineDate?.toIso8601String(),
+      'type': instance.type,
       'subtasks': instance.subtasks,
       'createdAt': instance.createdAt.toIso8601String(),
       'updatedAt': instance.updatedAt.toIso8601String(),
@@ -40,6 +50,8 @@ _SubtaskData _$SubtaskDataFromJson(Map<String, dynamic> json) => _SubtaskData(
       id: json['_id'] as String,
       title: json['title'] as String,
       isCompleted: json['isCompleted'] as bool,
+      updatedAt: DateTime.parse(json['updatedAt'] as String),
+      createdAt: DateTime.parse(json['createdAt'] as String),
       taskId: json['taskId'] as String,
     );
 
@@ -48,5 +60,7 @@ Map<String, dynamic> _$SubtaskDataToJson(_SubtaskData instance) =>
       '_id': instance.id,
       'title': instance.title,
       'isCompleted': instance.isCompleted,
+      'updatedAt': instance.updatedAt.toIso8601String(),
+      'createdAt': instance.createdAt.toIso8601String(),
       'taskId': instance.taskId,
     };

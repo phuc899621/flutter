@@ -1,8 +1,8 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:taskit/shared/data/source/local/itask_local_source.dart';
+import 'package:taskit/features/task/data/source/local/itask_local_source.dart';
 
-import 'drift/dao/task.dart';
-import 'drift/database/database.dart';
+import '../../../../../shared/data/source/local/drift/dao/task.dart';
+import '../../../../../shared/data/source/local/drift/database/database.dart';
 
 final taskLocalSourceProvider = Provider<ITaskLocalSource>((ref) {
   final taskDao = ref.watch(taskDaoProvider);

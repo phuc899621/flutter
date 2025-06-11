@@ -18,6 +18,8 @@ mixin _$CategoryData {
   @JsonKey(name: '_id')
   String get id;
   String get name;
+  DateTime get createdAt;
+  DateTime get updatedAt;
   String get userId;
 
   /// Create a copy of CategoryData
@@ -38,16 +40,21 @@ mixin _$CategoryData {
             other is CategoryData &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.name, name) || other.name == name) &&
+            (identical(other.createdAt, createdAt) ||
+                other.createdAt == createdAt) &&
+            (identical(other.updatedAt, updatedAt) ||
+                other.updatedAt == updatedAt) &&
             (identical(other.userId, userId) || other.userId == userId));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, id, name, userId);
+  int get hashCode =>
+      Object.hash(runtimeType, id, name, createdAt, updatedAt, userId);
 
   @override
   String toString() {
-    return 'CategoryData(id: $id, name: $name, userId: $userId)';
+    return 'CategoryData(id: $id, name: $name, createdAt: $createdAt, updatedAt: $updatedAt, userId: $userId)';
   }
 }
 
@@ -57,7 +64,12 @@ abstract mixin class $CategoryDataCopyWith<$Res> {
           CategoryData value, $Res Function(CategoryData) _then) =
       _$CategoryDataCopyWithImpl;
   @useResult
-  $Res call({@JsonKey(name: '_id') String id, String name, String userId});
+  $Res call(
+      {@JsonKey(name: '_id') String id,
+      String name,
+      DateTime createdAt,
+      DateTime updatedAt,
+      String userId});
 }
 
 /// @nodoc
@@ -74,6 +86,8 @@ class _$CategoryDataCopyWithImpl<$Res> implements $CategoryDataCopyWith<$Res> {
   $Res call({
     Object? id = null,
     Object? name = null,
+    Object? createdAt = null,
+    Object? updatedAt = null,
     Object? userId = null,
   }) {
     return _then(_self.copyWith(
@@ -85,6 +99,14 @@ class _$CategoryDataCopyWithImpl<$Res> implements $CategoryDataCopyWith<$Res> {
           ? _self.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
+      createdAt: null == createdAt
+          ? _self.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+      updatedAt: null == updatedAt
+          ? _self.updatedAt
+          : updatedAt // ignore: cast_nullable_to_non_nullable
+              as DateTime,
       userId: null == userId
           ? _self.userId
           : userId // ignore: cast_nullable_to_non_nullable
@@ -99,6 +121,8 @@ class _CategoryData implements CategoryData {
   const _CategoryData(
       {@JsonKey(name: '_id') required this.id,
       required this.name,
+      required this.createdAt,
+      required this.updatedAt,
       required this.userId});
   factory _CategoryData.fromJson(Map<String, dynamic> json) =>
       _$CategoryDataFromJson(json);
@@ -108,6 +132,10 @@ class _CategoryData implements CategoryData {
   final String id;
   @override
   final String name;
+  @override
+  final DateTime createdAt;
+  @override
+  final DateTime updatedAt;
   @override
   final String userId;
 
@@ -133,16 +161,21 @@ class _CategoryData implements CategoryData {
             other is _CategoryData &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.name, name) || other.name == name) &&
+            (identical(other.createdAt, createdAt) ||
+                other.createdAt == createdAt) &&
+            (identical(other.updatedAt, updatedAt) ||
+                other.updatedAt == updatedAt) &&
             (identical(other.userId, userId) || other.userId == userId));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, id, name, userId);
+  int get hashCode =>
+      Object.hash(runtimeType, id, name, createdAt, updatedAt, userId);
 
   @override
   String toString() {
-    return 'CategoryData(id: $id, name: $name, userId: $userId)';
+    return 'CategoryData(id: $id, name: $name, createdAt: $createdAt, updatedAt: $updatedAt, userId: $userId)';
   }
 }
 
@@ -154,7 +187,12 @@ abstract mixin class _$CategoryDataCopyWith<$Res>
       __$CategoryDataCopyWithImpl;
   @override
   @useResult
-  $Res call({@JsonKey(name: '_id') String id, String name, String userId});
+  $Res call(
+      {@JsonKey(name: '_id') String id,
+      String name,
+      DateTime createdAt,
+      DateTime updatedAt,
+      String userId});
 }
 
 /// @nodoc
@@ -172,6 +210,8 @@ class __$CategoryDataCopyWithImpl<$Res>
   $Res call({
     Object? id = null,
     Object? name = null,
+    Object? createdAt = null,
+    Object? updatedAt = null,
     Object? userId = null,
   }) {
     return _then(_CategoryData(
@@ -183,6 +223,14 @@ class __$CategoryDataCopyWithImpl<$Res>
           ? _self.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
+      createdAt: null == createdAt
+          ? _self.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+      updatedAt: null == updatedAt
+          ? _self.updatedAt
+          : updatedAt // ignore: cast_nullable_to_non_nullable
+              as DateTime,
       userId: null == userId
           ? _self.userId
           : userId // ignore: cast_nullable_to_non_nullable

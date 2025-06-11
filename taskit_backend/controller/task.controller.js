@@ -3,13 +3,18 @@ import SubtaskServices from '../services/subtask.services.js';
 
 export const create_task = async (req, res) => {
     try {
-        const { title, description, dueDate, priority, category, subtasks, localId,status } = req.body;
+        const { title, description, 
+         priority, 
+            category, subtasks, localId,
+            status,scheduledDate,hasScheduledTime,deadlineDate } = req.body;
         const userId = req.user.id; 
         const createBody={};
         const createSubtask=[];
         if(title) createBody.title = title;
         if(description) createBody.description = description;
-        if(dueDate) createBody.dueDate = dueDate;
+        if(scheduledDate) createBody.scheduledDate = scheduledDate;
+        if(hasScheduledTime) createBody.hasScheduledTime = hasScheduledTime;
+        if(deadlineDate) createBody.deadlineDate = deadlineDate;
         if(status) createBody.status = status;
         if(priority) createBody.priority = priority;
         if(category) createBody.category = category;

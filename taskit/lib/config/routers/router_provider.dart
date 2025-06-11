@@ -18,7 +18,7 @@ import '../app/animation/router_anim.dart';
 final goRouterProvider = Provider<GoRouter>((ref) {
   return GoRouter(
     //URL mặc định khi ứng dụng mở lần đầu
-    initialLocation: '/task',
+    initialLocation: '/login',
     // Định nghĩa các routes của ứng dụng
     routes: [
       GoRoute(
