@@ -46,8 +46,8 @@ export const create_task = [
     .withMessage('Status must be one of: pending, in-progress, completed'),
     body('type')
     .optional()
-    .isIn(['toDo', 'scheduled', 'deadline'])
-    .withMessage('Type must be one of: toDo, scheduled, deadline'),
+    .isIn(['toDo', 'schedule', 'deadline'])
+    .withMessage('Type must be one of: toDo, schedule, deadline'),
     body('subtasks')
     .optional()
     .isArray()
@@ -99,8 +99,8 @@ export const update_task = [
     .withMessage('Status must be one of: pending, in-progress, completed'),
     body('type')
     .optional()
-    .isIn(['toDo', 'scheduled', 'deadline'])
-    .withMessage('Type must be one of: toDo, scheduled, deadline'),
+    .isIn(['toDo', 'schedule', 'deadline'])
+    .withMessage('Type must be one of: toDo, schedule, deadline'),
 
   validateResult('Update task validation error')
 ];

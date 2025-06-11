@@ -35,7 +35,7 @@ const taskSchema = new Schema({
     },
     type: {
         type: String,
-        enum: ['toDo', 'scheduled', 'deadline'],
+        enum: ['toDo', 'schedule', 'deadline'],
         default: 'toDo',
     },
     scheduledDate:{

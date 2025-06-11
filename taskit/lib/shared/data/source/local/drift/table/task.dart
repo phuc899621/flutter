@@ -14,7 +14,10 @@ class TaskTable extends Table {
   IntColumn get userLocalId =>
       integer().references(UserTable, #localId, onDelete: KeyAction.cascade)();
   TextColumn get status => text()();
-  DateTimeColumn get dueDate => dateTime()();
+  DateTimeColumn get scheduledDate => dateTime()();
+  BoolColumn get hasScheduledTime => boolean()();
+  DateTimeColumn get scheduledTime => dateTime()();
+  TextColumn get type => text().();
   DateTimeColumn get createdAt => dateTime()();
   DateTimeColumn get updatedAt => dateTime()();
 }
