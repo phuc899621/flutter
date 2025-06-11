@@ -69,7 +69,7 @@ class UserServices {
                         { name: 'Personal', userId },
                         { name: 'Shopping', userId },
                         { name: 'Health', userId },
-                        { name: 'Travel', userId },
+                        { name: 'Any', userId },
                     ];  
                     await CategoryModel.insertMany(defaultCategories,{session});
                     await SettingModel.create([{ userId }], { session });

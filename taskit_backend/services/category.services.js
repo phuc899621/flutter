@@ -35,7 +35,7 @@ class CategoryServices {
     
     static async deleteOne(id) {
         try {
-            const result= await CategoryModel.deleteOne({_id: id});
+            const result= await CategoryModel.deleteOne({_id: id,name: {$nin: ["Any"]}});
             if(result.deletedCount === 0) {
                 throw new HttpError("Category not found",404);
             }
@@ -45,7 +45,7 @@ class CategoryServices {
     }
     static async deleteMany(ids) {
         try {
-            const result = await CategoryModel.deleteMany({ _id: { $in: ids } });
+            const result = await CategoryModel.deleteMany({ _id: { $in: ids },name: {$nin: ["Any"]} });
             if (result.deletedCount === 0) {
                 throw new HttpError("No categories found to delete", 404);
             }

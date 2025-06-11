@@ -8,7 +8,7 @@ class TaskTable extends Table {
   TextColumn get remoteId => text().withDefault(const Constant(''))();
   TextColumn get title => text()();
   TextColumn get description => text()();
-  TextColumn get category => text()();
+  TextColumn get category => text().withDefault();
   BoolColumn get isSynced => boolean()();
   TextColumn get priority => text()();
   IntColumn get userLocalId =>
