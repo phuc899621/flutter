@@ -1,30 +1,24 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:taskit/features/auth/data/dto/res/user/user_data.dart';
+import 'package:taskit/features/task/domain/entities/subtask_entity.dart';
 
-import '../../data/dto/res/task/task_data.dart';
-
-part 'task_model.freezed.dart';
+part 'task_entity.freezed.dart';
 
 @freezed
 abstract class TaskEntity with _$TaskEntity {
   const factory TaskEntity({
-    required String id,
+    required int localId,
     required String title,
     required String description,
     required String category,
     required String priority,
-    required UserData userId,
+    required int userLocalId,
+    required String type,
     required String status,
-    required DateTime dueDate,
-    required List<SubtaskData> subtasks,
+    DateTime? scheduledDate,
+    required bool hasScheduledTime,
+    DateTime? deadlineDate,
+    required List<SubtaskEntity> subtasks,
     required DateTime createdAt,
     required DateTime updatedAt,
   }) = _TaskEntity;
-}
-
-@freezed
-abstract class LstTaskEntity with _$LstTaskEntity {
-  const factory LstTaskEntity({
-    required List<TaskEntity> tasks,
-  }) = _LstTaskEntity;
 }

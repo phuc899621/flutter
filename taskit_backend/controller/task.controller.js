@@ -6,7 +6,7 @@ export const create_task = async (req, res) => {
         const { title, description, 
          priority, 
             category, subtasks, localId,
-            status,scheduledDate,hasScheduledTime,deadlineDate } = req.body;
+            status,scheduledDate,hasScheduledTime,deadlineDate,type } = req.body;
         const userId = req.user.id; 
         const createBody={};
         const createSubtask=[];
@@ -15,6 +15,7 @@ export const create_task = async (req, res) => {
         if(scheduledDate) createBody.scheduledDate = scheduledDate;
         if(hasScheduledTime) createBody.hasScheduledTime = hasScheduledTime;
         if(deadlineDate) createBody.deadlineDate = deadlineDate;
+        if(type) createBody.type = type;
         if(status) createBody.status = status;
         if(priority) createBody.priority = priority;
         if(category) createBody.category = category;

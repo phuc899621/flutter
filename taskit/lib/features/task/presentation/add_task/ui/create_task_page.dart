@@ -4,11 +4,11 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:taskit/config/app/app_color.dart';
-import 'package:taskit/features/task/presentation/add_task/ui/widget/add_subtask_widget.dart';
-import 'package:taskit/features/task/presentation/add_task/ui/widget/category_choice_chip.dart';
-import 'package:taskit/features/task/presentation/add_task/ui/widget/due_date_button.dart';
-import 'package:taskit/features/task/presentation/add_task/ui/widget/due_time_button.dart';
-import 'package:taskit/features/task/presentation/add_task/ui/widget/priority_choice_chip.dart';
+import 'package:taskit/features/home/presentation/add_task/ui/widget/add_subtask_widget.dart';
+import 'package:taskit/features/home/presentation/add_task/ui/widget/category_choice_chip.dart';
+import 'package:taskit/features/home/presentation/add_task/ui/widget/due_date_button.dart';
+import 'package:taskit/features/home/presentation/add_task/ui/widget/due_time_button.dart';
+import 'package:taskit/features/home/presentation/add_task/ui/widget/priority_choice_chip.dart';
 
 import '../controller/create_task_controller.dart';
 

@@ -14,9 +14,9 @@ final taskDaoProvider = Provider<TaskDao>((ref) {
 @DriftAccessor(tables: [TaskTable])
 class TaskDao extends DatabaseAccessor<AppDatabase> with _$TaskDaoMixin {
   TaskDao(super.db);
-  //get task
+  //get home
   Stream<List<TaskTableData>> watchAllTasks() => select(taskTable).watch();
-  //get task by remoteId
+  //get home by remoteId
   Future<TaskTableData?> getTaskByRemoteId(String remoteId) =>
       (select(taskTable)..where((tbl) => tbl.remoteId.equals(remoteId)))
           .getSingleOrNull();

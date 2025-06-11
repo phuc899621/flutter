@@ -4,7 +4,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'task_model.dart';
+part of 'task_entity.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -15,15 +15,18 @@ T _$identity<T>(T value) => value;
 
 /// @nodoc
 mixin _$TaskEntity {
-  String get id;
+  int get localId;
   String get title;
   String get description;
   String get category;
   String get priority;
-  UserData get userId;
+  int get userLocalId;
+  String get type;
   String get status;
-  DateTime get dueDate;
-  List<SubtaskData> get subtasks;
+  DateTime? get scheduledDate;
+  bool get hasScheduledTime;
+  DateTime? get deadlineDate;
+  List<SubtaskEntity> get subtasks;
   DateTime get createdAt;
   DateTime get updatedAt;
 
@@ -39,7 +42,7 @@ mixin _$TaskEntity {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is TaskEntity &&
-            (identical(other.id, id) || other.id == id) &&
+            (identical(other.localId, localId) || other.localId == localId) &&
             (identical(other.title, title) || other.title == title) &&
             (identical(other.description, description) ||
                 other.description == description) &&
@@ -47,9 +50,16 @@ mixin _$TaskEntity {
                 other.category == category) &&
             (identical(other.priority, priority) ||
                 other.priority == priority) &&
-            (identical(other.userId, userId) || other.userId == userId) &&
+            (identical(other.userLocalId, userLocalId) ||
+                other.userLocalId == userLocalId) &&
+            (identical(other.type, type) || other.type == type) &&
             (identical(other.status, status) || other.status == status) &&
-            (identical(other.dueDate, dueDate) || other.dueDate == dueDate) &&
+            (identical(other.scheduledDate, scheduledDate) ||
+                other.scheduledDate == scheduledDate) &&
+            (identical(other.hasScheduledTime, hasScheduledTime) ||
+                other.hasScheduledTime == hasScheduledTime) &&
+            (identical(other.deadlineDate, deadlineDate) ||
+                other.deadlineDate == deadlineDate) &&
             const DeepCollectionEquality().equals(other.subtasks, subtasks) &&
             (identical(other.createdAt, createdAt) ||
                 other.createdAt == createdAt) &&
@@ -60,21 +70,24 @@ mixin _$TaskEntity {
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      id,
+      localId,
       title,
       description,
       category,
       priority,
-      userId,
+      userLocalId,
+      type,
       status,
-      dueDate,
+      scheduledDate,
+      hasScheduledTime,
+      deadlineDate,
       const DeepCollectionEquality().hash(subtasks),
       createdAt,
       updatedAt);
 
   @override
   String toString() {
-    return 'TaskEntity(id: $id, title: $title, description: $description, category: $category, priority: $priority, userId: $userId, status: $status, dueDate: $dueDate, subtasks: $subtasks, createdAt: $createdAt, updatedAt: $updatedAt)';
+    return 'TaskEntity(localId: $localId, title: $title, description: $description, category: $category, priority: $priority, userLocalId: $userLocalId, type: $type, status: $status, scheduledDate: $scheduledDate, hasScheduledTime: $hasScheduledTime, deadlineDate: $deadlineDate, subtasks: $subtasks, createdAt: $createdAt, updatedAt: $updatedAt)';
   }
 }
 
@@ -85,19 +98,20 @@ abstract mixin class $TaskEntityCopyWith<$Res> {
       _$TaskEntityCopyWithImpl;
   @useResult
   $Res call(
-      {String id,
+      {int localId,
       String title,
       String description,
       String category,
       String priority,
-      UserData userId,
+      int userLocalId,
+      String type,
       String status,
-      DateTime dueDate,
-      List<SubtaskData> subtasks,
+      DateTime? scheduledDate,
+      bool hasScheduledTime,
+      DateTime? deadlineDate,
+      List<SubtaskEntity> subtasks,
       DateTime createdAt,
       DateTime updatedAt});
-
-  $UserDataCopyWith<$Res> get userId;
 }
 
 /// @nodoc
@@ -112,23 +126,26 @@ class _$TaskEntityCopyWithImpl<$Res> implements $TaskEntityCopyWith<$Res> {
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = null,
+    Object? localId = null,
     Object? title = null,
     Object? description = null,
     Object? category = null,
     Object? priority = null,
-    Object? userId = null,
+    Object? userLocalId = null,
+    Object? type = null,
     Object? status = null,
-    Object? dueDate = null,
+    Object? scheduledDate = freezed,
+    Object? hasScheduledTime = null,
+    Object? deadlineDate = freezed,
     Object? subtasks = null,
     Object? createdAt = null,
     Object? updatedAt = null,
   }) {
     return _then(_self.copyWith(
-      id: null == id
-          ? _self.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
+      localId: null == localId
+          ? _self.localId
+          : localId // ignore: cast_nullable_to_non_nullable
+              as int,
       title: null == title
           ? _self.title
           : title // ignore: cast_nullable_to_non_nullable
@@ -145,22 +162,34 @@ class _$TaskEntityCopyWithImpl<$Res> implements $TaskEntityCopyWith<$Res> {
           ? _self.priority
           : priority // ignore: cast_nullable_to_non_nullable
               as String,
-      userId: null == userId
-          ? _self.userId
-          : userId // ignore: cast_nullable_to_non_nullable
-              as UserData,
+      userLocalId: null == userLocalId
+          ? _self.userLocalId
+          : userLocalId // ignore: cast_nullable_to_non_nullable
+              as int,
+      type: null == type
+          ? _self.type
+          : type // ignore: cast_nullable_to_non_nullable
+              as String,
       status: null == status
           ? _self.status
           : status // ignore: cast_nullable_to_non_nullable
               as String,
-      dueDate: null == dueDate
-          ? _self.dueDate
-          : dueDate // ignore: cast_nullable_to_non_nullable
-              as DateTime,
+      scheduledDate: freezed == scheduledDate
+          ? _self.scheduledDate
+          : scheduledDate // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      hasScheduledTime: null == hasScheduledTime
+          ? _self.hasScheduledTime
+          : hasScheduledTime // ignore: cast_nullable_to_non_nullable
+              as bool,
+      deadlineDate: freezed == deadlineDate
+          ? _self.deadlineDate
+          : deadlineDate // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
       subtasks: null == subtasks
           ? _self.subtasks
           : subtasks // ignore: cast_nullable_to_non_nullable
-              as List<SubtaskData>,
+              as List<SubtaskEntity>,
       createdAt: null == createdAt
           ? _self.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
@@ -171,37 +200,30 @@ class _$TaskEntityCopyWithImpl<$Res> implements $TaskEntityCopyWith<$Res> {
               as DateTime,
     ));
   }
-
-  /// Create a copy of TaskEntity
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $UserDataCopyWith<$Res> get userId {
-    return $UserDataCopyWith<$Res>(_self.userId, (value) {
-      return _then(_self.copyWith(userId: value));
-    });
-  }
 }
 
 /// @nodoc
 
 class _TaskEntity implements TaskEntity {
   const _TaskEntity(
-      {required this.id,
+      {required this.localId,
       required this.title,
       required this.description,
       required this.category,
       required this.priority,
-      required this.userId,
+      required this.userLocalId,
+      required this.type,
       required this.status,
-      required this.dueDate,
-      required final List<SubtaskData> subtasks,
+      this.scheduledDate,
+      required this.hasScheduledTime,
+      this.deadlineDate,
+      required final List<SubtaskEntity> subtasks,
       required this.createdAt,
       required this.updatedAt})
       : _subtasks = subtasks;
 
   @override
-  final String id;
+  final int localId;
   @override
   final String title;
   @override
@@ -211,14 +233,20 @@ class _TaskEntity implements TaskEntity {
   @override
   final String priority;
   @override
-  final UserData userId;
+  final int userLocalId;
+  @override
+  final String type;
   @override
   final String status;
   @override
-  final DateTime dueDate;
-  final List<SubtaskData> _subtasks;
+  final DateTime? scheduledDate;
   @override
-  List<SubtaskData> get subtasks {
+  final bool hasScheduledTime;
+  @override
+  final DateTime? deadlineDate;
+  final List<SubtaskEntity> _subtasks;
+  @override
+  List<SubtaskEntity> get subtasks {
     if (_subtasks is EqualUnmodifiableListView) return _subtasks;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_subtasks);
@@ -242,7 +270,7 @@ class _TaskEntity implements TaskEntity {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _TaskEntity &&
-            (identical(other.id, id) || other.id == id) &&
+            (identical(other.localId, localId) || other.localId == localId) &&
             (identical(other.title, title) || other.title == title) &&
             (identical(other.description, description) ||
                 other.description == description) &&
@@ -250,9 +278,16 @@ class _TaskEntity implements TaskEntity {
                 other.category == category) &&
             (identical(other.priority, priority) ||
                 other.priority == priority) &&
-            (identical(other.userId, userId) || other.userId == userId) &&
+            (identical(other.userLocalId, userLocalId) ||
+                other.userLocalId == userLocalId) &&
+            (identical(other.type, type) || other.type == type) &&
             (identical(other.status, status) || other.status == status) &&
-            (identical(other.dueDate, dueDate) || other.dueDate == dueDate) &&
+            (identical(other.scheduledDate, scheduledDate) ||
+                other.scheduledDate == scheduledDate) &&
+            (identical(other.hasScheduledTime, hasScheduledTime) ||
+                other.hasScheduledTime == hasScheduledTime) &&
+            (identical(other.deadlineDate, deadlineDate) ||
+                other.deadlineDate == deadlineDate) &&
             const DeepCollectionEquality().equals(other._subtasks, _subtasks) &&
             (identical(other.createdAt, createdAt) ||
                 other.createdAt == createdAt) &&
@@ -263,21 +298,24 @@ class _TaskEntity implements TaskEntity {
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      id,
+      localId,
       title,
       description,
       category,
       priority,
-      userId,
+      userLocalId,
+      type,
       status,
-      dueDate,
+      scheduledDate,
+      hasScheduledTime,
+      deadlineDate,
       const DeepCollectionEquality().hash(_subtasks),
       createdAt,
       updatedAt);
 
   @override
   String toString() {
-    return 'TaskEntity(id: $id, title: $title, description: $description, category: $category, priority: $priority, userId: $userId, status: $status, dueDate: $dueDate, subtasks: $subtasks, createdAt: $createdAt, updatedAt: $updatedAt)';
+    return 'TaskEntity(localId: $localId, title: $title, description: $description, category: $category, priority: $priority, userLocalId: $userLocalId, type: $type, status: $status, scheduledDate: $scheduledDate, hasScheduledTime: $hasScheduledTime, deadlineDate: $deadlineDate, subtasks: $subtasks, createdAt: $createdAt, updatedAt: $updatedAt)';
   }
 }
 
@@ -290,20 +328,20 @@ abstract mixin class _$TaskEntityCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {String id,
+      {int localId,
       String title,
       String description,
       String category,
       String priority,
-      UserData userId,
+      int userLocalId,
+      String type,
       String status,
-      DateTime dueDate,
-      List<SubtaskData> subtasks,
+      DateTime? scheduledDate,
+      bool hasScheduledTime,
+      DateTime? deadlineDate,
+      List<SubtaskEntity> subtasks,
       DateTime createdAt,
       DateTime updatedAt});
-
-  @override
-  $UserDataCopyWith<$Res> get userId;
 }
 
 /// @nodoc
@@ -318,23 +356,26 @@ class __$TaskEntityCopyWithImpl<$Res> implements _$TaskEntityCopyWith<$Res> {
   @override
   @pragma('vm:prefer-inline')
   $Res call({
-    Object? id = null,
+    Object? localId = null,
     Object? title = null,
     Object? description = null,
     Object? category = null,
     Object? priority = null,
-    Object? userId = null,
+    Object? userLocalId = null,
+    Object? type = null,
     Object? status = null,
-    Object? dueDate = null,
+    Object? scheduledDate = freezed,
+    Object? hasScheduledTime = null,
+    Object? deadlineDate = freezed,
     Object? subtasks = null,
     Object? createdAt = null,
     Object? updatedAt = null,
   }) {
     return _then(_TaskEntity(
-      id: null == id
-          ? _self.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
+      localId: null == localId
+          ? _self.localId
+          : localId // ignore: cast_nullable_to_non_nullable
+              as int,
       title: null == title
           ? _self.title
           : title // ignore: cast_nullable_to_non_nullable
@@ -351,22 +392,34 @@ class __$TaskEntityCopyWithImpl<$Res> implements _$TaskEntityCopyWith<$Res> {
           ? _self.priority
           : priority // ignore: cast_nullable_to_non_nullable
               as String,
-      userId: null == userId
-          ? _self.userId
-          : userId // ignore: cast_nullable_to_non_nullable
-              as UserData,
+      userLocalId: null == userLocalId
+          ? _self.userLocalId
+          : userLocalId // ignore: cast_nullable_to_non_nullable
+              as int,
+      type: null == type
+          ? _self.type
+          : type // ignore: cast_nullable_to_non_nullable
+              as String,
       status: null == status
           ? _self.status
           : status // ignore: cast_nullable_to_non_nullable
               as String,
-      dueDate: null == dueDate
-          ? _self.dueDate
-          : dueDate // ignore: cast_nullable_to_non_nullable
-              as DateTime,
+      scheduledDate: freezed == scheduledDate
+          ? _self.scheduledDate
+          : scheduledDate // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      hasScheduledTime: null == hasScheduledTime
+          ? _self.hasScheduledTime
+          : hasScheduledTime // ignore: cast_nullable_to_non_nullable
+              as bool,
+      deadlineDate: freezed == deadlineDate
+          ? _self.deadlineDate
+          : deadlineDate // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
       subtasks: null == subtasks
           ? _self._subtasks
           : subtasks // ignore: cast_nullable_to_non_nullable
-              as List<SubtaskData>,
+              as List<SubtaskEntity>,
       createdAt: null == createdAt
           ? _self.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
@@ -375,154 +428,6 @@ class __$TaskEntityCopyWithImpl<$Res> implements _$TaskEntityCopyWith<$Res> {
           ? _self.updatedAt
           : updatedAt // ignore: cast_nullable_to_non_nullable
               as DateTime,
-    ));
-  }
-
-  /// Create a copy of TaskEntity
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $UserDataCopyWith<$Res> get userId {
-    return $UserDataCopyWith<$Res>(_self.userId, (value) {
-      return _then(_self.copyWith(userId: value));
-    });
-  }
-}
-
-/// @nodoc
-mixin _$LstTaskEntity {
-  List<TaskEntity> get tasks;
-
-  /// Create a copy of LstTaskEntity
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @pragma('vm:prefer-inline')
-  $LstTaskEntityCopyWith<LstTaskEntity> get copyWith =>
-      _$LstTaskEntityCopyWithImpl<LstTaskEntity>(
-          this as LstTaskEntity, _$identity);
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is LstTaskEntity &&
-            const DeepCollectionEquality().equals(other.tasks, tasks));
-  }
-
-  @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(tasks));
-
-  @override
-  String toString() {
-    return 'LstTaskEntity(tasks: $tasks)';
-  }
-}
-
-/// @nodoc
-abstract mixin class $LstTaskEntityCopyWith<$Res> {
-  factory $LstTaskEntityCopyWith(
-          LstTaskEntity value, $Res Function(LstTaskEntity) _then) =
-      _$LstTaskEntityCopyWithImpl;
-  @useResult
-  $Res call({List<TaskEntity> tasks});
-}
-
-/// @nodoc
-class _$LstTaskEntityCopyWithImpl<$Res>
-    implements $LstTaskEntityCopyWith<$Res> {
-  _$LstTaskEntityCopyWithImpl(this._self, this._then);
-
-  final LstTaskEntity _self;
-  final $Res Function(LstTaskEntity) _then;
-
-  /// Create a copy of LstTaskEntity
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? tasks = null,
-  }) {
-    return _then(_self.copyWith(
-      tasks: null == tasks
-          ? _self.tasks
-          : tasks // ignore: cast_nullable_to_non_nullable
-              as List<TaskEntity>,
-    ));
-  }
-}
-
-/// @nodoc
-
-class _LstTaskEntity implements LstTaskEntity {
-  const _LstTaskEntity({required final List<TaskEntity> tasks})
-      : _tasks = tasks;
-
-  final List<TaskEntity> _tasks;
-  @override
-  List<TaskEntity> get tasks {
-    if (_tasks is EqualUnmodifiableListView) return _tasks;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_tasks);
-  }
-
-  /// Create a copy of LstTaskEntity
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @pragma('vm:prefer-inline')
-  _$LstTaskEntityCopyWith<_LstTaskEntity> get copyWith =>
-      __$LstTaskEntityCopyWithImpl<_LstTaskEntity>(this, _$identity);
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _LstTaskEntity &&
-            const DeepCollectionEquality().equals(other._tasks, _tasks));
-  }
-
-  @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(_tasks));
-
-  @override
-  String toString() {
-    return 'LstTaskEntity(tasks: $tasks)';
-  }
-}
-
-/// @nodoc
-abstract mixin class _$LstTaskEntityCopyWith<$Res>
-    implements $LstTaskEntityCopyWith<$Res> {
-  factory _$LstTaskEntityCopyWith(
-          _LstTaskEntity value, $Res Function(_LstTaskEntity) _then) =
-      __$LstTaskEntityCopyWithImpl;
-  @override
-  @useResult
-  $Res call({List<TaskEntity> tasks});
-}
-
-/// @nodoc
-class __$LstTaskEntityCopyWithImpl<$Res>
-    implements _$LstTaskEntityCopyWith<$Res> {
-  __$LstTaskEntityCopyWithImpl(this._self, this._then);
-
-  final _LstTaskEntity _self;
-  final $Res Function(_LstTaskEntity) _then;
-
-  /// Create a copy of LstTaskEntity
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $Res call({
-    Object? tasks = null,
-  }) {
-    return _then(_LstTaskEntity(
-      tasks: null == tasks
-          ? _self._tasks
-          : tasks // ignore: cast_nullable_to_non_nullable
-              as List<TaskEntity>,
     ));
   }
 }

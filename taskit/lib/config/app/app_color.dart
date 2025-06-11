@@ -54,11 +54,15 @@ class AppColor {
   Color get onSurface => ConstColor.alternative;
   Color get onError => Theme.of(context).colorScheme.onError;
   Color get errorLight => ConstColor.errorLight;
-  Color get medium => ConstColor.medium;
   Color get primaryBackground => ConstColor.primaryBackground;
   Color get secondaryBackground => ConstColor.secondaryBackground;
   Color get tertiary => ConstColor.tertiary;
   Color get tertiaryLight => ConstColor.tertiaryLight;
   Color get tertiaryAccent => ConstColor.tertiaryAccent;
   Color get onTertiary => ConstColor.onTertiary;
+
+  Color get high => ConstColor.high;
+  Color get low => ConstColor.low;
+  Color get medium => ConstColor.medium;
+  Color get none => ConstColor.none;
 }

@@ -35,7 +35,7 @@ class _TaskApi implements TaskApi {
       Options(method: 'GET', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            '/task',
+            '/home',
             queryParameters: queryParameters,
             data: _data,
           )
@@ -77,7 +77,7 @@ class _TaskApi implements TaskApi {
       Options(method: 'PUT', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            '/task/update/${taskId}',
+            '/home/update/${taskId}',
             queryParameters: queryParameters,
             data: _data,
           )
@@ -111,7 +111,7 @@ class _TaskApi implements TaskApi {
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            '/task/add',
+            '/home/add',
             queryParameters: queryParameters,
             data: _data,
           )

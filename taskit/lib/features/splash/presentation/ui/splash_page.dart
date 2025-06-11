@@ -54,7 +54,7 @@ class _SplashPageState extends ConsumerState<SplashPage> {
     if (isExpired == true) {
       context.go('/login');
     } else {
-      context.go('/task');
+      context.go('/home');
     }
   }
 }

@@ -22,19 +22,19 @@ final taskApiProvider = Provider.autoDispose<TaskApi>((ref) {
 abstract class TaskApi {
   factory TaskApi(Dio dio) => _TaskApi(dio);
 
-  @GET('/task')
+  @GET('/home')
   Future<BaseResponse<List<TaskData>>> getListTask(
     @Header('Authorization') String token,
     @Query('status') String status,
     @Query('dueDate') String dueDate,
   );
-  @PUT('/task/update/{taskId}')
+  @PUT('/home/update/{taskId}')
   Future<BaseResponse<BaseData>> updateTaskStatus(
     @Header('Authorization') String token,
     @Path('taskId') String taskId,
     @Body() Map<String, dynamic> updateStatusReq,
   );
-  @POST('/task/add')
+  @POST('/home/add')
   Future<BaseResponse<BaseData>> addTask(
     @Header('Authorization') String token,
     @Body() CreateTaskReq createTaskReq,

@@ -1,24 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:taskit/features/main/presentation/home/controller/home_controller.dart';
+import 'package:taskit/features/main/presentation/home/ui/widget/scheduled_task.dart';
 
 import '../../../../../config/app/app_color.dart';
 
-class TaskPage extends ConsumerStatefulWidget {
-  const TaskPage({super.key});
+class HomePage extends ConsumerStatefulWidget {
+  const HomePage({super.key});
   @override
-  ConsumerState<ConsumerStatefulWidget> createState() => _TaskPageState();
+  ConsumerState<ConsumerStatefulWidget> createState() => _HomePageState();
 }
 
-class _TaskPageState extends ConsumerState<TaskPage> {
-  int selectedIndex = 0;
-  List<bool> checkedIndexs = List<bool>.generate(10, (i) => false);
-  final categories = List<String>.generate(10, (index) => "Cate $index");
-  final tasks = List<String>.generate(10, (index) => "Task $index");
-  final expandedIndexs = List<bool>.generate(10, (index) => false);
-
+class _HomePageState extends ConsumerState<HomePage> {
   @override
   Widget build(BuildContext context) {
+    final state = ref.watch(homeControllerProvider);
+    final controller = ref.watch(homeControllerProvider.notifier);
     return DefaultTabController(
       length: 3,
       child: Scaffold(
@@ -135,7 +132,7 @@ class _TaskPageState extends ConsumerState<TaskPage> {
                                               ),
                                             ),
                                             Text(
-                                              'Today\'s task',
+                                              'Today\'s home',
                                               style: Theme.of(context)
                                                   .textTheme
                                                   .titleSmall
@@ -297,183 +294,29 @@ class _TaskPageState extends ConsumerState<TaskPage> {
                       child: Padding(
                     padding:
                         const EdgeInsets.symmetric(vertical: 10, horizontal: 8),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Tasks',
-                          style: Theme.of(context)
-                              .textTheme
-                              .titleLarge
-                              ?.copyWith(
-                                  color: AppColor(context).primaryText,
-                                  fontWeight: FontWeight.bold),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 2),
-                          child: Card(
-                            clipBehavior: Clip.hardEdge,
-                            color: AppColor(context).secondaryBackground,
-                            child: Slidable(
-                              endActionPane: ActionPane(
-                                  extentRatio: 0.3,
-                                  motion: const StretchMotion(),
-                                  children: [
-                                    Expanded(
-                                      child: Container(
-                                        height: double.infinity,
-                                        decoration: BoxDecoration(
-                                          color: AppColor(context)
-                                              .errorLight
-                                              .withValues(alpha: 0.4),
-                                          borderRadius:
-                                              const BorderRadius.horizontal(
-                                                  right: Radius.circular(10)),
-                                        ),
-                                        child: Expanded(
-                                            child: Icon(
-                                                size: 30,
-                                                color:
-                                                    AppColor(context).onError,
-                                                Icons.delete_outline)),
-                                      ),
-                                    )
-                                  ]),
-                              child: Padding(
-                                padding: EdgeInsets.all(10.0),
-                                child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Column(
-                                        spacing: 10,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceEvenly,
-                                        children: [
-                                          Text(
-                                            'Do homework',
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .titleMedium
-                                                ?.copyWith(
-                                                    color: AppColor(context)
-                                                        .primaryText),
-                                          ),
-                                          Row(
-                                            spacing: 10,
-                                            children: [
-                                              Container(
-                                                decoration: BoxDecoration(
-                                                  borderRadius:
-                                                      BorderRadius.horizontal(
-                                                          right:
-                                                              Radius.circular(
-                                                                  10)),
-                                                  color: AppColor(context)
-                                                      .primary
-                                                      .withValues(alpha: 0.2),
-                                                ),
-                                                child: Padding(
-                                                  padding: const EdgeInsets
-                                                      .symmetric(
-                                                      vertical: 4,
-                                                      horizontal: 8),
-                                                  child: Row(
-                                                    spacing: 5,
-                                                    children: [
-                                                      const Icon(
-                                                        Icons.category_outlined,
-                                                        size: 15,
-                                                        color:
-                                                            ConstColor.primary,
-                                                      ),
-                                                      Text(
-                                                        'School',
-                                                        style: Theme.of(context)
-                                                            .textTheme
-                                                            .labelMedium
-                                                            ?.copyWith(
-                                                                color: AppColor(
-                                                                        context)
-                                                                    .primary,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .normal),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ),
-                                              ),
-                                              Icon(
-                                                size: 22,
-                                                Icons.flag_outlined,
-                                                color: Colors.red,
-                                              ),
-                                            ],
-                                          ),
-                                          Container(
-                                            decoration: BoxDecoration(
-                                                borderRadius:
-                                                    BorderRadius.horizontal(
-                                                        right: Radius.circular(
-                                                            10)),
-                                                color: AppColor(context)
-                                                    .secondaryText
-                                                    .withValues(alpha: 0.2)),
-                                            child: Padding(
-                                              padding:
-                                                  const EdgeInsets.symmetric(
-                                                      vertical: 4,
-                                                      horizontal: 8),
-                                              child: Row(
-                                                spacing: 5,
-                                                children: [
-                                                  const Icon(
-                                                    Icons.schedule_outlined,
-                                                    size: 15,
-                                                    color: ConstColor
-                                                        .secondaryText,
-                                                  ),
-                                                  Text(
-                                                    'Any time',
-                                                    style: Theme.of(context)
-                                                        .textTheme
-                                                        .labelMedium
-                                                        ?.copyWith(
-                                                            color: AppColor(
-                                                                    context)
-                                                                .secondaryText,
-                                                            fontWeight:
-                                                                FontWeight
-                                                                    .normal),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                      Checkbox(
-                                        value: true,
-                                        onChanged: (b) => {},
-                                        side: BorderSide(),
-                                      )
-                                    ]),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
+                    child: Text(
+                      'Tasks',
+                      style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                          color: AppColor(context).primaryText,
+                          fontWeight: FontWeight.bold),
                     ),
+                  )),
+                  SliverList(
+                      delegate: SliverChildBuilderDelegate(
+                    (context, index) => ScheduledTaskItem(
+                      task: state.scheduledTasks[index],
+                      onDelete: () => debugPrint('delete'),
+                      onCheck: () => debugPrint('check'),
+                      onClick: () => debugPrint('click'),
+                    ),
+                    childCount: state.scheduledTasks.length,
                   )),
                   SliverFillRemaining(
                     hasScrollBody: false,
                     child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          SizedBox(
+                          const SizedBox(
                             height: 200,
                           ),
                           const Icon(
@@ -496,14 +339,14 @@ class _TaskPageState extends ConsumerState<TaskPage> {
                             height: 10,
                           ),
                           Text(
-                            'Keep adding and managing your task',
+                            'Keep adding and managing your home',
                             style: Theme.of(context)
                                 .textTheme
                                 .titleMedium
                                 ?.copyWith(
                                     color: AppColor(context).secondaryText),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 200,
                           ),
                         ]),

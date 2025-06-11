@@ -26,4 +26,6 @@ class SubtaskDao extends DatabaseAccessor<AppDatabase> with _$SubtaskDaoMixin {
       batch((batch) {
         batch.insertAll(subtaskTable, subtasks);
       });
+  Stream<List<SubtaskTableData>> watchAllSubtasks() =>
+      select(subtaskTable).watch();
 }
