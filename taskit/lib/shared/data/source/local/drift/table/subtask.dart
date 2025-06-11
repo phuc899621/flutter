@@ -8,7 +8,7 @@ class SubtaskTable extends Table {
   TextColumn get remoteId => text().withDefault(const Constant(''))();
   TextColumn get title => text()();
   BoolColumn get isSynced => boolean()();
-  BoolColumn get isCompleted => boolean()();
+  BoolColumn get isCompleted => boolean().withDefault(const Constant(false))();
   IntColumn get taskLocalId =>
       integer().references(TaskTable, #localId, onDelete: KeyAction.cascade)();
   DateTimeColumn get createdAt => dateTime()();

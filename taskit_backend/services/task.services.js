@@ -38,7 +38,7 @@ class TaskServices {
             throw new HttpError(`Create task error: ${e.message} `, 500);
         }
     }
-    static async findByUserId(userId,query) {
+    static async findByUserId(userId,query={}) {
         try{
             const filter = { userId };
             if (query.title) {

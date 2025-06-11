@@ -13,6 +13,7 @@ import db from "../config/db.js";
 import OtpEmailModel from '../models/otp.email.model.js';
 import OtpEmailServices from './otp.email.services.js';
 import TaskModel from '../models/task.model.js';
+import TaskServices from './task.services.js';
 import SubtaskModel from '../models/subtask.model.js';
 import multer from 'multer';
 import path from 'path';
@@ -100,6 +101,7 @@ class UserServices {
             );
             const setting= await SettingServices.findByUserId(user._id);
             const categories = await CategoryServices.findByUserId(user._id);
+            const task=await TaskServices.findByUserId(user._id);
             return {
                     token: token,
                     settings: setting,
@@ -109,6 +111,7 @@ class UserServices {
                         email: user.email,
                         avatar: user.avatar,
                     },
+                    tasks: task,
                     categories: categories,
             };
             
