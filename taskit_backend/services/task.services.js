@@ -53,17 +53,29 @@ class TaskServices {
             if (query.category) {
                 filter.category = query.category;
             }
-            if (query.dueDate&& query.dueDate !== 'null') {
-                const date = new Date(query.dueDate); 
+            if (query.scheduledDate) {
+                const date = new Date(query.scheduledDate); 
                 const startOfDay = new Date(date.setHours(0, 0, 0, 0));  
                 const endOfDay = new Date(date.setHours(23, 59, 59, 999)); 
-                filter.dueDate = {
+                filter.scheduledDate = {
                     $gte: startOfDay,
                     $lte: endOfDay
                 };
             }
             if (query.priority) {
                 filter.priority = query.priority;
+            }
+            if(query.type){
+                filter.type=query.type
+            }
+            if(query.deadlineDate){
+                const date = new Date(query.deadlineDate); 
+                const startOfDay = new Date(date.setHours(0, 0, 0, 0));  
+                const endOfDay = new Date(date.setHours(23, 59, 59, 999)); 
+                filter.deadlineDate = {
+                    $gte: startOfDay,
+                    $lte: endOfDay
+                };
             }
             const tasks = await TaskModel.find(filter);
             const subtask=await SubtaskModel.find({taskId:{$in:tasks.map(task=>task._id)}})
@@ -97,6 +109,10 @@ class TaskServices {
             if (updateData.priority) query.priority = updateData.priority;
             if (updateData.category) query.category = updateData.category;
             if (updateData.localId) query.localId = updateData.localId;
+            if(updateData.type) query.type=updateData.type
+            if(updateData.deadlineDate) query.deadlineDate=updateData.deadlineDate
+            if(updateData.scheduledDate) query.scheduledDate=updateData.scheduledDate
+            if(updateData.hasScheduledTime) query.hasScheduledTime=updateData.hasScheduledTime
             let subtaskResult=[];
   
             if (updateData.subtasks) {

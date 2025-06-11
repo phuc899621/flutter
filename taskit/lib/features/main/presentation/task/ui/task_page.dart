@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:roundcheckbox/roundcheckbox.dart';
 
 import '../../../../../config/app/app_color.dart';
 
@@ -20,286 +19,497 @@ class _TaskPageState extends ConsumerState<TaskPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        backgroundColor: AppColor(context).secondaryContainer,
-        body: SafeArea(
-          top: true,
-          child: SingleChildScrollView(
-              child: Column(
-            mainAxisSize: MainAxisSize.max,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                children: [
-                  Container(
-                    padding: const EdgeInsetsDirectional.fromSTEB(
-                        16.0, 8.0, 0.0, 0.0),
-                    child: Text(
-                      'January 10',
-                      style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                            fontFamily: 'Inter Tight',
-                            color: AppColor(context).primaryText,
-                            letterSpacing: 0.0,
-                            fontWeight: FontWeight.w600,
-                          ),
-                    ),
-                  ),
-                  Expanded(child: Container()),
-                  IconButton(
-                    onPressed: () {},
-                    icon: Icon(
-                      Icons.search,
-                      color: AppColor(context).primaryText,
-                    ),
-                  )
-                ],
-              ),
-              Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Container(
-                    padding: const EdgeInsetsDirectional.fromSTEB(
-                        8.0, 8.0, 8.0, 8.0),
-                    width: double.infinity,
-                    height: 70.0,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(12.0),
-                        color: AppColor(context).secondaryContainer,
-                        shape: BoxShape.rectangle,
-                        boxShadow: const [
-                          BoxShadow(
-                            color: Colors.black12,
-                            blurRadius: 2.0,
-                            offset: Offset(4, 4),
-                            spreadRadius: 0.3,
-                          )
-                        ]),
-                    child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Container(
-                            width: 60.0,
-                            height: 60.0,
-                            decoration: const BoxDecoration(
-                              color: Colors.blueAccent,
-                              shape: BoxShape.circle,
+    return DefaultTabController(
+      length: 3,
+      child: Scaffold(
+          backgroundColor: AppColor(context).secondaryContainer,
+          body: SafeArea(
+              top: true,
+              child: CustomScrollView(
+                slivers: [
+                  SliverAppBar(
+                    collapsedHeight: 100,
+                    expandedHeight: 150,
+                    toolbarHeight: 100,
+                    backgroundColor: AppColor(context).primary,
+                    flexibleSpace: FlexibleSpaceBar(
+                        background: Padding(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 12, horizontal: 12),
+                      child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisSize: MainAxisSize.max,
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                RichText(
+                                  text: TextSpan(
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .headlineMedium
+                                          ?.copyWith(
+                                            color: AppColor(context).onPrimary,
+                                            letterSpacing: 0.0,
+                                          ),
+                                      children: const [
+                                        TextSpan(
+                                          text: 'Hello, ',
+                                        ),
+                                        TextSpan(text: 'Phuc')
+                                      ]),
+                                ),
+                                Text(
+                                  'Thursday 8th, 2025',
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .titleMedium
+                                      ?.copyWith(
+                                          color: AppColor(context).onPrimary),
+                                )
+                              ],
                             ),
-                          ),
-                          const SizedBox(
-                            width: 8,
+                            Row(
+                              spacing: 10,
+                              children: [
+                                IconButton(
+                                    onPressed: () => {},
+                                    color: AppColor(context).onPrimary,
+                                    icon: const Icon(
+                                      Icons.search_outlined,
+                                      size: 35,
+                                    )),
+                                IconButton(
+                                    color: AppColor(context).onPrimary,
+                                    onPressed: () => {},
+                                    icon: const Icon(
+                                      size: 35,
+                                      Icons.notifications_none,
+                                    )),
+                              ],
+                            )
+                          ]),
+                    )),
+                  ),
+                  SliverAppBar(
+                    collapsedHeight: 180,
+                    toolbarHeight: 180,
+                    backgroundColor: AppColor(context).primary,
+                    flexibleSpace: FlexibleSpaceBar(
+                      background: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 5, horizontal: 8),
+                            child: Material(
+                              elevation: 5,
+                              color: Colors.transparent,
+                              child: Container(
+                                  height: 150,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10),
+                                    color: AppColor(context).primaryContainer,
+                                  ),
+                                  child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Expanded(
+                                              child: Center(
+                                                child: Text(
+                                                  '8',
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .headlineLarge
+                                                      ?.copyWith(
+                                                        color: AppColor(context)
+                                                            .onPrimary,
+                                                      ),
+                                                ),
+                                              ),
+                                            ),
+                                            Text(
+                                              'Today\'s task',
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .titleSmall
+                                                  ?.copyWith(
+                                                    color: AppColor(context)
+                                                        .onPrimary,
+                                                  ),
+                                            )
+                                          ]))),
+                            ),
                           ),
                           Expanded(
                             child: Column(
                                 mainAxisSize: MainAxisSize.max,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
+                                mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
-                                  Row(
-                                    children: [
-                                      Text(
-                                        'Today task insights',
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .labelLarge
-                                            ?.copyWith(
-                                              fontFamily: 'Inter Tight',
-                                              color: AppColor(context)
-                                                  .secondaryText,
-                                              letterSpacing: 0.0,
-                                              fontWeight: FontWeight.w400,
-                                            ),
-                                      ),
-                                      Expanded(child: Container()),
-                                      Text(
-                                        '20%',
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .labelLarge
-                                            ?.copyWith(
-                                              fontFamily: 'Inter Tight',
-                                              color: AppColor(context)
-                                                  .secondaryText,
-                                              letterSpacing: 0.0,
-                                              fontWeight: FontWeight.w400,
-                                            ),
-                                      )
-                                    ],
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 5, horizontal: 8),
+                                    child: Material(
+                                      elevation: 5,
+                                      color: Colors.transparent,
+                                      child: Container(
+                                          decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                              color:
+                                                  AppColor(context).errorLight),
+                                          width: double.infinity,
+                                          height: 70,
+                                          child: Padding(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      horizontal: 10),
+                                              child: Row(
+                                                  spacing: 20,
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.start,
+                                                  children: [
+                                                    Text(
+                                                      '2',
+                                                      style: Theme.of(context)
+                                                          .textTheme
+                                                          .headlineLarge
+                                                          ?.copyWith(
+                                                            color: AppColor(
+                                                                    context)
+                                                                .onPrimary,
+                                                          ),
+                                                    ),
+                                                    Text(
+                                                      'Upcoming deadlines',
+                                                      style: Theme.of(context)
+                                                          .textTheme
+                                                          .titleSmall
+                                                          ?.copyWith(
+                                                            color: AppColor(
+                                                                    context)
+                                                                .onPrimary,
+                                                          ),
+                                                    )
+                                                  ]))),
+                                    ),
                                   ),
-                                  SizedBox(
-                                    width: double.infinity,
-                                    child: LinearProgressIndicator(
-                                      value: 0.4,
-                                      minHeight: 8.0,
-                                      borderRadius: BorderRadius.circular(12.0),
-                                      backgroundColor:
-                                          AppColor(context).primaryContainer,
-                                      color: AppColor(context).secondary,
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 5, horizontal: 8),
+                                    child: Material(
+                                      color: Colors.transparent,
+                                      elevation: 5,
+                                      child: Container(
+                                          width: double.infinity,
+                                          height: 70,
+                                          decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(10),
+                                            color: AppColor(context).medium,
+                                          ),
+                                          child: Padding(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      horizontal: 10),
+                                              child: Row(
+                                                  spacing: 20,
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.start,
+                                                  children: [
+                                                    Text(
+                                                      '8',
+                                                      style: Theme.of(context)
+                                                          .textTheme
+                                                          .headlineLarge
+                                                          ?.copyWith(
+                                                            color: AppColor(
+                                                                    context)
+                                                                .onPrimary,
+                                                          ),
+                                                    ),
+                                                    Text(
+                                                      'On going tasks',
+                                                      style: Theme.of(context)
+                                                          .textTheme
+                                                          .titleSmall
+                                                          ?.copyWith(
+                                                            color: AppColor(
+                                                                    context)
+                                                                .onPrimary,
+                                                          ),
+                                                    )
+                                                  ]))),
                                     ),
                                   ),
                                 ]),
                           )
-                        ])),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 12),
-                child: SizedBox(
-                    height: 50,
-                    child: ListView.builder(
-                        scrollDirection: Axis.horizontal,
-                        itemCount: categories.length,
-                        itemBuilder: (context, index) {
-                          return Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 4.0),
-                            child: ChoiceChip.elevated(
-                              label: Text(categories[index]),
-                              padding: EdgeInsets.zero,
-                              elevation: 1,
-                              labelStyle: Theme.of(context)
-                                  .textTheme
-                                  .labelSmall
-                                  ?.copyWith(
-                                    fontFamily: 'Inter Tight',
-                                    color: selectedIndex == index
-                                        ? AppColor(context).onPrimary
-                                        : AppColor(context).secondaryText,
-                                    letterSpacing: 0.0,
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                              selected: selectedIndex == index,
-                              backgroundColor:
-                                  AppColor(context).secondaryContainer,
-                              selectedColor: AppColor(context).primary,
-                              shape: RoundedRectangleBorder(
-                                side: BorderSide.none,
-                                borderRadius: BorderRadius.circular(20.0),
-                              ),
-                              onSelected: (value) {
-                                setState(() {
-                                  selectedIndex = index;
-                                });
-                              },
-                              showCheckmark: false,
-                            ),
-                          );
-                        })),
-              ),
-              Padding(
-                  padding: const EdgeInsets.fromLTRB(16, 8, 16, 0),
-                  child: Text(
-                    'Today',
-                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                          fontFamily: 'Inter Tight',
-                          color: AppColor(context).secondaryText,
-                          letterSpacing: 0.0,
-                          fontWeight: FontWeight.w700,
+                        ],
+                      ),
+                    ),
+                  ),
+                  SliverAppBar(
+                    collapsedHeight: 90,
+                    toolbarHeight: 90,
+                    pinned: true,
+                    backgroundColor: AppColor(context).primary,
+                    flexibleSpace: FlexibleSpaceBar(
+                      background: Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 8, vertical: 20),
+                        child: Container(
+                            decoration: BoxDecoration(
+                                color: AppColor(context).primaryBackground,
+                                borderRadius: BorderRadius.circular(10)),
+                            padding: const EdgeInsets.all(4.0),
+                            child: TabBar(
+                              dividerColor: Colors.transparent,
+                              indicatorColor: AppColor(context).primary,
+                              labelColor: AppColor(context).onPrimary,
+                              unselectedLabelColor:
+                                  AppColor(context).secondaryText,
+                              indicator: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
+                                  color: AppColor(context).primaryContainer),
+                              indicatorSize: TabBarIndicatorSize.tab,
+                              tabs: [
+                                Tab(
+                                  text: 'Today',
+                                ),
+                                Tab(
+                                  text: 'To Do',
+                                ),
+                                Tab(
+                                  text: 'Deadlines',
+                                )
+                              ],
+                            )),
+                      ),
+                    ),
+                  ),
+                  SliverToBoxAdapter(
+                      child: Padding(
+                    padding:
+                        const EdgeInsets.symmetric(vertical: 10, horizontal: 8),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Tasks',
+                          style: Theme.of(context)
+                              .textTheme
+                              .titleLarge
+                              ?.copyWith(
+                                  color: AppColor(context).primaryText,
+                                  fontWeight: FontWeight.bold),
                         ),
-                  )),
-              ListView.builder(
-                  itemCount: tasks.length,
-                  padding: const EdgeInsets.fromLTRB(12, 0, 12, 8),
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  itemBuilder: (context, index) {
-                    return Padding(
-                        padding: const EdgeInsets.fromLTRB(4, 0, 4, 8),
-                        child: Material(
-                          elevation: 1,
-                          clipBehavior: Clip.antiAlias,
-                          shape: const RoundedRectangleBorder(
-                            borderRadius: BorderRadius.horizontal(
-                                left: Radius.circular(12)),
-                          ),
-                          child: Slidable(
-                            endActionPane:
-                                ActionPane(motion: DrawerMotion(), children: [
-                              SlidableAction(
-                                onPressed: (context) {},
-                                backgroundColor: Colors.indigoAccent,
-                                foregroundColor: AppColor(context).onPrimary,
-                                icon: Icons.info_outline_rounded,
-                                label: 'Detail',
-                                borderRadius: const BorderRadius.horizontal(
-                                    right: Radius.circular(12)),
-                              ),
-                            ]),
-                            child: ExpansionTile(
-                                shape: const RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.horizontal(
-                                      left: Radius.circular(12)),
-                                ),
-                                backgroundColor:
-                                    AppColor(context).primaryContainer,
-                                onExpansionChanged: (value) {
-                                  setState(() {
-                                    expandedIndexs[index] = value;
-                                  });
-                                },
-                                title: Text(
-                                  tasks[index],
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .labelLarge
-                                      ?.copyWith(
-                                        fontFamily: 'Inter Tight',
-                                        color: AppColor(context).primaryText,
-                                        letterSpacing: 0.0,
-                                        fontWeight: FontWeight.w700,
-                                      ),
-                                ),
-                                subtitle: Text(tasks[index]),
-                                leading: RoundCheckBox(
-                                    checkedWidget: Icon(
-                                      Icons.check_outlined,
-                                      color: AppColor(context).onPrimary,
-                                      size: 20,
-                                    ),
-                                    checkedColor: Colors.grey,
-                                    uncheckedColor:
-                                        AppColor(context).primaryContainer,
-                                    isChecked: checkedIndexs[index],
-                                    size: 25,
-                                    borderColor: Colors.black12,
-                                    onTap: (value) {
-                                      setState(() {
-                                        checkedIndexs[index] = value!;
-                                      });
-                                    }),
-                                trailing: Padding(
-                                  padding:
-                                      const EdgeInsets.fromLTRB(0, 0, 8, 0),
-                                  child: SizedBox(
-                                    height: 50,
-                                    width: 40,
-                                    child: Column(
-                                      children: [
-                                        Icon(
-                                          Icons.flag_outlined,
-                                          color:
-                                              AppColor(context).secondaryText,
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 2),
+                          child: Card(
+                            clipBehavior: Clip.hardEdge,
+                            color: AppColor(context).secondaryBackground,
+                            child: Slidable(
+                              endActionPane: ActionPane(
+                                  extentRatio: 0.3,
+                                  motion: const StretchMotion(),
+                                  children: [
+                                    Expanded(
+                                      child: Container(
+                                        height: double.infinity,
+                                        decoration: BoxDecoration(
+                                          color: AppColor(context)
+                                              .errorLight
+                                              .withValues(alpha: 0.4),
+                                          borderRadius:
+                                              const BorderRadius.horizontal(
+                                                  right: Radius.circular(10)),
                                         ),
-                                        Icon(
-                                          expandedIndexs[index]
-                                              ? Icons.arrow_drop_up
-                                              : Icons.arrow_drop_down,
-                                          color:
-                                              AppColor(context).secondaryText,
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                                children: [
-                                  Icon(
-                                    Icons.abc,
-                                    color: Colors.red,
-                                  )
-                                ]),
+                                        child: Expanded(
+                                            child: Icon(
+                                                size: 30,
+                                                color:
+                                                    AppColor(context).onError,
+                                                Icons.delete_outline)),
+                                      ),
+                                    )
+                                  ]),
+                              child: Padding(
+                                padding: EdgeInsets.all(10.0),
+                                child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Column(
+                                        spacing: 10,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceEvenly,
+                                        children: [
+                                          Text(
+                                            'Do homework',
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .titleMedium
+                                                ?.copyWith(
+                                                    color: AppColor(context)
+                                                        .primaryText),
+                                          ),
+                                          Row(
+                                            spacing: 10,
+                                            children: [
+                                              Container(
+                                                decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.horizontal(
+                                                          right:
+                                                              Radius.circular(
+                                                                  10)),
+                                                  color: AppColor(context)
+                                                      .primary
+                                                      .withValues(alpha: 0.2),
+                                                ),
+                                                child: Padding(
+                                                  padding: const EdgeInsets
+                                                      .symmetric(
+                                                      vertical: 4,
+                                                      horizontal: 8),
+                                                  child: Row(
+                                                    spacing: 5,
+                                                    children: [
+                                                      const Icon(
+                                                        Icons.category_outlined,
+                                                        size: 15,
+                                                        color:
+                                                            ConstColor.primary,
+                                                      ),
+                                                      Text(
+                                                        'School',
+                                                        style: Theme.of(context)
+                                                            .textTheme
+                                                            .labelMedium
+                                                            ?.copyWith(
+                                                                color: AppColor(
+                                                                        context)
+                                                                    .primary,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .normal),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ),
+                                              Icon(
+                                                size: 22,
+                                                Icons.flag_outlined,
+                                                color: Colors.red,
+                                              ),
+                                            ],
+                                          ),
+                                          Container(
+                                            decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.horizontal(
+                                                        right: Radius.circular(
+                                                            10)),
+                                                color: AppColor(context)
+                                                    .secondaryText
+                                                    .withValues(alpha: 0.2)),
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      vertical: 4,
+                                                      horizontal: 8),
+                                              child: Row(
+                                                spacing: 5,
+                                                children: [
+                                                  const Icon(
+                                                    Icons.schedule_outlined,
+                                                    size: 15,
+                                                    color: ConstColor
+                                                        .secondaryText,
+                                                  ),
+                                                  Text(
+                                                    'Any time',
+                                                    style: Theme.of(context)
+                                                        .textTheme
+                                                        .labelMedium
+                                                        ?.copyWith(
+                                                            color: AppColor(
+                                                                    context)
+                                                                .secondaryText,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .normal),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      Checkbox(
+                                        value: true,
+                                        onChanged: (b) => {},
+                                        side: BorderSide(),
+                                      )
+                                    ]),
+                              ),
+                            ),
                           ),
-                        ));
-                  })
-            ],
-          )),
-        ));
+                        ),
+                      ],
+                    ),
+                  )),
+                  SliverFillRemaining(
+                    hasScrollBody: false,
+                    child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          SizedBox(
+                            height: 200,
+                          ),
+                          const Icon(
+                            Icons.lightbulb,
+                            size: 50,
+                            color: Colors.yellow,
+                          ),
+                          const SizedBox(
+                            height: 30,
+                          ),
+                          Text(
+                            'Taskit',
+                            style: Theme.of(context)
+                                .textTheme
+                                .headlineMedium
+                                ?.copyWith(
+                                    color: AppColor(context).primaryText),
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          Text(
+                            'Keep adding and managing your task',
+                            style: Theme.of(context)
+                                .textTheme
+                                .titleMedium
+                                ?.copyWith(
+                                    color: AppColor(context).secondaryText),
+                          ),
+                          SizedBox(
+                            height: 200,
+                          ),
+                        ]),
+                  ),
+                ],
+              ))),
+    );
   }
 }

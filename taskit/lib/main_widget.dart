@@ -55,7 +55,7 @@ class MainWidget extends ConsumerWidget {
             colorScheme: const ColorScheme.light(
               primary: ConstColor.primary,
               secondary: ConstColor.secondary,
-              primaryContainer: ConstColor.primaryBackground,
+              primaryContainer: ConstColor.primaryContainer,
               secondaryContainer: ConstColor.secondaryBackground,
               onPrimary: ConstColor.onPrimary,
               onSecondary: ConstColor.onSecondary,
