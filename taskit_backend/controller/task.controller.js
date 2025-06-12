@@ -5,7 +5,7 @@ export const create_task = async (req, res) => {
     try {
         const { title, description, 
          priority, 
-            category, subtasks, localId,
+            categoryId, subtasks, localId,
             status,hasTime,dueDate } = req.body;
         const userId = req.user.id; 
         const createBody={};
@@ -16,7 +16,7 @@ export const create_task = async (req, res) => {
         if(hasTime) createBody.hasTime = hasTime;
         if(status) createBody.status = status;
         if(priority) createBody.priority = priority;
-        if(category) createBody.category = category;
+        if(categoryId) createBody.categoryId = categoryId;
         if(localId) createBody.localId = localId;
         if (subtasks && subtasks.length > 0) {
             createSubtask.push(...subtasks.map(subtask => ({

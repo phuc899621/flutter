@@ -1,5 +1,7 @@
 import CategoryModel from "../models/category.model.js";
 import HttpError from "../utils/http.error.js";
+import TaskModel from "../models/task.model.js";
+import db from "../config/db.js";
 
 class CategoryServices {
     static async findAll() {
@@ -34,13 +36,26 @@ class CategoryServices {
     }
     
     static async deleteOne(id) {
+        const session = await db.startSession();
         try {
+            const category = await CategoryModel.findOne({_id:id});
+            const AnyCategory = await CategoryModel.findOne({name: "Any"});
+            session.startTransaction();
+            const tasks=await TaskModel.find({categoryId:category._id},null,{session});
+            if(tasks.length > 0) {
+                const taskIds = tasks.map(task => task._id);
+                await TaskModel.updateMany({ _id: { $in: taskIds } }, { $set: { categoryId: AnyCategory._id } }, { session });
+            }
             const result= await CategoryModel.deleteOne({_id: id,name: {$nin: ["Any"]}});
+            session.commitTransaction();
             if(result.deletedCount === 0) {
                 throw new HttpError("Category not found",404);
             }
         } catch (e) {
+            session.abortTransaction();
             throw new Error(`Delete one category by id error: ${e.message}`);
+        } finally {
+            session.endSession();
         }
     }
     static async deleteMany(ids) {

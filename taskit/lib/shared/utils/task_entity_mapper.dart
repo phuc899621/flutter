@@ -1,4 +1,5 @@
 import '../../features/task/domain/entities/task_priority_enum.dart';
+import '../../features/task/domain/entities/task_status_enum.dart';
 
 class TaskPriorityUtils {
   static const HIGH_PRIORITY = 'high';
@@ -35,6 +36,29 @@ class TaskPriorityUtils {
 
 class TaskStatusUtils {
   static const COMPLETED = 'completed';
-  static const NOT_COMPLETED = 'pending';
+  static const PENDING = 'pending';
   static const SCHEDULED = 'scheduled';
+  static TaskStatus toEnum(String status) {
+    switch (status) {
+      case COMPLETED:
+        return TaskStatus.completed;
+      case PENDING:
+        return TaskStatus.pending;
+      case SCHEDULED:
+        return TaskStatus.scheduled;
+      default:
+        return TaskStatus.pending;
+    }
+  }
+
+  static String toStatus(TaskStatus status) {
+    switch (status) {
+      case TaskStatus.completed:
+        return COMPLETED;
+      case TaskStatus.pending:
+        return PENDING;
+      case TaskStatus.scheduled:
+        return SCHEDULED;
+    }
+  }
 }

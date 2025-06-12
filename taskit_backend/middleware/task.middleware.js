@@ -20,6 +20,11 @@ export const create_task = [
     .optional()
     .isString()
     .withMessage('Description must be a string'),
+    body('categoryId')
+    .notEmpty()
+    .withMessage('Category ID is required')
+    .isMongoId()
+    .withMessage('Category ID must be a valid MongoDB ObjectId'),
     body('dueDate')
     .optional({ nullable: true })
     .isISO8601()

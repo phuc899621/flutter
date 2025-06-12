@@ -13,10 +13,10 @@ const taskSchema = new Schema({
         trim: true,
         default: '',
     },
-    category: {
-        type: String,
-        trim: true,
-        default: 'Any',
+    categoryId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'category',
+        required: true,
     },
     priority: {
         type: String,
