@@ -28,7 +28,7 @@ class ScheduledTaskItem extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     // TODO: implement build
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 3, horizontal: 8),
+      padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
       child: Material(
         clipBehavior: Clip.hardEdge,
         color: AppColor(context).secondaryBackground,
