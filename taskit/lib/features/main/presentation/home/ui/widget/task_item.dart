@@ -6,7 +6,7 @@ import 'package:taskit/shared/utils/date_format.dart';
 
 import '../../../../../../config/app/app_color.dart';
 
-class ScheduledTaskItem extends ConsumerWidget {
+class TaskItem extends ConsumerWidget {
   final TaskEntity task;
 
   final HIGH_PRIORITY = 'high';
@@ -17,7 +17,7 @@ class ScheduledTaskItem extends ConsumerWidget {
   final VoidCallback? onCheck;
   final VoidCallback? onClick;
 
-  const ScheduledTaskItem(
+  const TaskItem(
       {super.key,
       required this.task,
       this.onDelete,
@@ -26,7 +26,6 @@ class ScheduledTaskItem extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // TODO: implement build
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
       child: Material(
@@ -36,8 +35,8 @@ class ScheduledTaskItem extends ConsumerWidget {
         borderRadius: BorderRadius.circular(10),
         child: ListTile(
           leading: MSHCheckbox(
-            value: false,
-            onChanged: (value) => debugPrint('check'),
+            value: task.status == 'completed',
+            onChanged: (value) => onClick,
             size: 25,
             colorConfig: MSHColorConfig.fromCheckedUncheckedDisabled(
               checkedColor: AppColor(context).primary,

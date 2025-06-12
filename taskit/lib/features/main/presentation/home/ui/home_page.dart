@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:taskit/features/main/presentation/home/controller/home_controller.dart';
-import 'package:taskit/features/main/presentation/home/ui/widget/scheduled_task.dart';
+import 'package:taskit/features/main/presentation/home/ui/widget/task_item.dart';
 
 import '../../../../../config/app/app_color.dart';
 
@@ -139,7 +139,7 @@ class _HomePageState extends ConsumerState<HomePage>
                       slivers: [
                         SliverList(
                             delegate: SliverChildBuilderDelegate(
-                          (context, index) => ScheduledTaskItem(
+                          (context, index) => TaskItem(
                             task: state.scheduledTasks[index],
                             onDelete: () => debugPrint('delete'),
                             onCheck: () => debugPrint('check'),

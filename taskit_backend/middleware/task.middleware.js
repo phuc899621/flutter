@@ -38,8 +38,8 @@ export const create_task = [
     .withMessage('Category must be a string'),
     body('status')
     .optional()
-    .isIn(['pending', 'in-progress', 'completed'])
-    .withMessage('Status must be one of: pending, in-progress, completed'),
+    .isIn(['pending', 'scheduled', 'completed'])
+    .withMessage('Status must be one of: pending, scheduled, completed'),
     body('subtasks')
     .optional()
     .isArray()
@@ -83,8 +83,8 @@ export const update_task = [
     .withMessage('Category must be a string'),
     body('status')
     .optional()
-    .isIn(['pending', 'in-progress', 'completed'])
-    .withMessage('Status must be one of: pending, in-progress, completed'),
+    .isIn(['pending', 'scheduled', 'completed'])
+    .withMessage('Status must be one of: pending, scheduled, completed'),
 
   validateResult('Update task validation error')
 ];
