@@ -53,29 +53,17 @@ class TaskServices {
             if (query.category) {
                 filter.category = query.category;
             }
-            if (query.scheduledDate) {
-                const date = new Date(query.scheduledDate); 
+            if (query.dueDate) {
+                const date = new Date(query.dueDate); 
                 const startOfDay = new Date(date.setHours(0, 0, 0, 0));  
                 const endOfDay = new Date(date.setHours(23, 59, 59, 999)); 
-                filter.scheduledDate = {
+                filter.dueDate = {
                     $gte: startOfDay,
                     $lte: endOfDay
                 };
             }
             if (query.priority) {
                 filter.priority = query.priority;
-            }
-            if(query.type){
-                filter.type=query.type
-            }
-            if(query.deadlineDate){
-                const date = new Date(query.deadlineDate); 
-                const startOfDay = new Date(date.setHours(0, 0, 0, 0));  
-                const endOfDay = new Date(date.setHours(23, 59, 59, 999)); 
-                filter.deadlineDate = {
-                    $gte: startOfDay,
-                    $lte: endOfDay
-                };
             }
             const tasks = await TaskModel.find(filter);
             const subtask=await SubtaskModel.find({taskId:{$in:tasks.map(task=>task._id)}})

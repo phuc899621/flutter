@@ -11,19 +11,22 @@ class HomePage extends ConsumerStatefulWidget {
   ConsumerState<ConsumerStatefulWidget> createState() => _HomePageState();
 }
 
-class _HomePageState extends ConsumerState<HomePage> {
+class _HomePageState extends ConsumerState<HomePage>
+    with TickerProviderStateMixin {
+  List<String> categories = ['ds', 'dsa'];
   @override
   Widget build(BuildContext context) {
+    final tabController = TabController(length: categories.length, vsync: this);
     final state = ref.watch(homeControllerProvider);
     final controller = ref.watch(homeControllerProvider.notifier);
     return DefaultTabController(
-      length: 3,
+      length: 6,
       child: Scaffold(
           backgroundColor: AppColor(context).secondaryContainer,
           body: SafeArea(
               top: true,
-              child: CustomScrollView(
-                slivers: [
+              child: NestedScrollView(
+                headerSliverBuilder: (context, innerBoxIsScrolled) => [
                   SliverAppBar(
                     collapsedHeight: 100,
                     expandedHeight: 150,
@@ -91,180 +94,19 @@ class _HomePageState extends ConsumerState<HomePage> {
                     )),
                   ),
                   SliverAppBar(
-                    collapsedHeight: 180,
-                    toolbarHeight: 180,
-                    backgroundColor: AppColor(context).primary,
-                    flexibleSpace: FlexibleSpaceBar(
-                      background: Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.symmetric(
-                                vertical: 5, horizontal: 8),
-                            child: Material(
-                              elevation: 5,
-                              color: Colors.transparent,
-                              child: Container(
-                                  height: 150,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(10),
-                                    color: AppColor(context).primaryContainer,
-                                  ),
-                                  child: Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Expanded(
-                                              child: Center(
-                                                child: Text(
-                                                  '8',
-                                                  style: Theme.of(context)
-                                                      .textTheme
-                                                      .headlineLarge
-                                                      ?.copyWith(
-                                                        color: AppColor(context)
-                                                            .onPrimary,
-                                                      ),
-                                                ),
-                                              ),
-                                            ),
-                                            Text(
-                                              'Today\'s home',
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .titleSmall
-                                                  ?.copyWith(
-                                                    color: AppColor(context)
-                                                        .onPrimary,
-                                                  ),
-                                            )
-                                          ]))),
-                            ),
-                          ),
-                          Expanded(
-                            child: Column(
-                                mainAxisSize: MainAxisSize.max,
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        vertical: 5, horizontal: 8),
-                                    child: Material(
-                                      elevation: 5,
-                                      color: Colors.transparent,
-                                      child: Container(
-                                          decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(10),
-                                              color:
-                                                  AppColor(context).errorLight),
-                                          width: double.infinity,
-                                          height: 70,
-                                          child: Padding(
-                                              padding:
-                                                  const EdgeInsets.symmetric(
-                                                      horizontal: 10),
-                                              child: Row(
-                                                  spacing: 20,
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.start,
-                                                  children: [
-                                                    Text(
-                                                      '2',
-                                                      style: Theme.of(context)
-                                                          .textTheme
-                                                          .headlineLarge
-                                                          ?.copyWith(
-                                                            color: AppColor(
-                                                                    context)
-                                                                .onPrimary,
-                                                          ),
-                                                    ),
-                                                    Text(
-                                                      'Upcoming deadlines',
-                                                      style: Theme.of(context)
-                                                          .textTheme
-                                                          .titleSmall
-                                                          ?.copyWith(
-                                                            color: AppColor(
-                                                                    context)
-                                                                .onPrimary,
-                                                          ),
-                                                    )
-                                                  ]))),
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        vertical: 5, horizontal: 8),
-                                    child: Material(
-                                      color: Colors.transparent,
-                                      elevation: 5,
-                                      child: Container(
-                                          width: double.infinity,
-                                          height: 70,
-                                          decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(10),
-                                            color: AppColor(context).medium,
-                                          ),
-                                          child: Padding(
-                                              padding:
-                                                  const EdgeInsets.symmetric(
-                                                      horizontal: 10),
-                                              child: Row(
-                                                  spacing: 20,
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.start,
-                                                  children: [
-                                                    Text(
-                                                      '8',
-                                                      style: Theme.of(context)
-                                                          .textTheme
-                                                          .headlineLarge
-                                                          ?.copyWith(
-                                                            color: AppColor(
-                                                                    context)
-                                                                .onPrimary,
-                                                          ),
-                                                    ),
-                                                    Text(
-                                                      'On going tasks',
-                                                      style: Theme.of(context)
-                                                          .textTheme
-                                                          .titleSmall
-                                                          ?.copyWith(
-                                                            color: AppColor(
-                                                                    context)
-                                                                .onPrimary,
-                                                          ),
-                                                    )
-                                                  ]))),
-                                    ),
-                                  ),
-                                ]),
-                          )
-                        ],
-                      ),
-                    ),
-                  ),
-                  SliverAppBar(
                     collapsedHeight: 90,
                     toolbarHeight: 90,
                     pinned: true,
-                    backgroundColor: AppColor(context).primary,
+                    backgroundColor: AppColor(context).secondaryBackground,
                     flexibleSpace: FlexibleSpaceBar(
                       background: Padding(
                         padding: const EdgeInsets.symmetric(
                             horizontal: 8, vertical: 20),
                         child: Container(
                             decoration: BoxDecoration(
-                                color: AppColor(context).primaryBackground,
-                                borderRadius: BorderRadius.circular(10)),
-                            padding: const EdgeInsets.all(4.0),
+                                color: AppColor(context).secondaryBackground,
+                                borderRadius: BorderRadius.circular(20)),
+                            padding: const EdgeInsets.all(10.0),
                             child: TabBar(
                               dividerColor: Colors.transparent,
                               indicatorColor: AppColor(context).primary,
@@ -277,81 +119,79 @@ class _HomePageState extends ConsumerState<HomePage> {
                               indicatorSize: TabBarIndicatorSize.tab,
                               tabs: [
                                 Tab(
-                                  text: 'Today',
+                                  text: 'Pending',
                                 ),
                                 Tab(
-                                  text: 'To Do',
+                                  text: 'Scheduled',
                                 ),
                                 Tab(
-                                  text: 'Deadlines',
-                                )
+                                  text: 'Completed',
+                                ),
                               ],
                             )),
                       ),
                     ),
                   ),
-                  SliverToBoxAdapter(
-                      child: Padding(
-                    padding:
-                        const EdgeInsets.symmetric(vertical: 10, horizontal: 8),
-                    child: Text(
-                      'Tasks',
-                      style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                          color: AppColor(context).primaryText,
-                          fontWeight: FontWeight.bold),
-                    ),
-                  )),
-                  SliverList(
-                      delegate: SliverChildBuilderDelegate(
-                    (context, index) => ScheduledTaskItem(
-                      task: state.scheduledTasks[index],
-                      onDelete: () => debugPrint('delete'),
-                      onCheck: () => debugPrint('check'),
-                      onClick: () => debugPrint('click'),
-                    ),
-                    childCount: state.scheduledTasks.length,
-                  )),
-                  SliverFillRemaining(
-                    hasScrollBody: false,
-                    child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const SizedBox(
-                            height: 200,
-                          ),
-                          const Icon(
-                            Icons.lightbulb,
-                            size: 50,
-                            color: Colors.yellow,
-                          ),
-                          const SizedBox(
-                            height: 30,
-                          ),
-                          Text(
-                            'Taskit',
-                            style: Theme.of(context)
-                                .textTheme
-                                .headlineMedium
-                                ?.copyWith(
-                                    color: AppColor(context).primaryText),
-                          ),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          Text(
-                            'Keep adding and managing your home',
-                            style: Theme.of(context)
-                                .textTheme
-                                .titleMedium
-                                ?.copyWith(
-                                    color: AppColor(context).secondaryText),
-                          ),
-                          const SizedBox(
-                            height: 200,
-                          ),
-                        ]),
-                  ),
                 ],
+                body: TabBarView(
+                  children: [
+                    CustomScrollView(
+                      slivers: [
+                        SliverList(
+                            delegate: SliverChildBuilderDelegate(
+                          (context, index) => ScheduledTaskItem(
+                            task: state.scheduledTasks[index],
+                            onDelete: () => debugPrint('delete'),
+                            onCheck: () => debugPrint('check'),
+                            onClick: () => debugPrint('click'),
+                          ),
+                          childCount: state.scheduledTasks.length,
+                        )),
+                        SliverFillRemaining(
+                          hasScrollBody: false,
+                          child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                const SizedBox(
+                                  height: 200,
+                                ),
+                                const Icon(
+                                  Icons.lightbulb,
+                                  size: 50,
+                                  color: Colors.yellow,
+                                ),
+                                const SizedBox(
+                                  height: 30,
+                                ),
+                                Text(
+                                  'Taskit',
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .headlineMedium
+                                      ?.copyWith(
+                                          color: AppColor(context).primaryText),
+                                ),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                Text(
+                                  'Keep adding and managing your home',
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .titleMedium
+                                      ?.copyWith(
+                                          color:
+                                              AppColor(context).secondaryText),
+                                ),
+                                const SizedBox(
+                                  height: 200,
+                                ),
+                              ]),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ))),
     );
   }

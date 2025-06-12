@@ -20,18 +20,14 @@ export const create_task = [
     .optional()
     .isString()
     .withMessage('Description must be a string'),
-    body('scheduledDate')
+    body('dueDate')
     .optional({ nullable: true })
     .isISO8601()
     .withMessage('Due date must be a valid date in ISO 8601 format'),
-    body('hasScheduledTime')
+    body('hasTime')
     .optional()
     .isBoolean()
-    .withMessage('HasScheduledTime must be a boolean'),
-    body('deadlineDate')
-    .optional({ nullable: true })
-    .isISO8601()
-    .withMessage('Deadline date must be a valid date in ISO 8601 format'),
+    .withMessage('Has Time must be a boolean'),
     body('priority')
     .optional()
     .isIn(['low', 'medium', 'high', 'none'])
@@ -44,10 +40,6 @@ export const create_task = [
     .optional()
     .isIn(['pending', 'in-progress', 'completed'])
     .withMessage('Status must be one of: pending, in-progress, completed'),
-    body('type')
-    .optional()
-    .isIn(['toDo', 'schedule', 'deadline'])
-    .withMessage('Type must be one of: toDo, schedule, deadline'),
     body('subtasks')
     .optional()
     .isArray()
@@ -73,18 +65,14 @@ export const update_task = [
     .optional()
     .isString()
     .withMessage('Description must be a string'),
-    body('scheduledDate')
+    body('dueDate')
     .optional({ nullable: true })
     .isISO8601()
     .withMessage('Due date must be a valid date in ISO 8601 format'),
-    body('hasScheduledTime')
+    body('hasTime')
     .optional()
     .isBoolean()
-    .withMessage('HasScheduledTime must be a boolean'),
-    body('deadlineDate')
-    .optional({ nullable: true })
-    .isISO8601()
-    .withMessage('Deadline date must be a valid date in ISO 8601 format'),
+    .withMessage('Has Time must be a boolean'),
     body('priority')
     .optional()
     .isIn(['low', 'medium', 'high', 'none'])
@@ -97,10 +85,6 @@ export const update_task = [
     .optional()
     .isIn(['pending', 'in-progress', 'completed'])
     .withMessage('Status must be one of: pending, in-progress, completed'),
-    body('type')
-    .optional()
-    .isIn(['toDo', 'schedule', 'deadline'])
-    .withMessage('Type must be one of: toDo, schedule, deadline'),
 
   validateResult('Update task validation error')
 ];

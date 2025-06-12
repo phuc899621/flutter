@@ -33,23 +33,14 @@ const taskSchema = new Schema({
         enum: ['pending', 'in-progress', 'completed'],
         default: 'pending',
     },
-    type: {
-        type: String,
-        enum: ['toDo', 'schedule', 'deadline'],
-        default: 'toDo',
-    },
-    scheduledDate:{
+    dueDate:{
         type: Date,
         default: null,
     },
-    hasScheduledTime:{
+    hasTime: {
         type: Boolean,
-        default: false
-    },
-    deadlineDate:{
-        type: Date,
-        default: null
-    },
+        default: false,
+    }
 },{ timestamps: true });
 const TaskModel = db.model('task', taskSchema);
 export default TaskModel;
