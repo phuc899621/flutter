@@ -5,7 +5,7 @@ import 'package:taskit/shared/extension/color.dart';
 class ConstColor {
   static const primary = Color(0xff00809d);
   static const onPrimary = Colors.white;
-  static const primaryContainer = Color(0xFFB2EBF2);
+  static const primaryContainer = Color(0xFFB4E7EC);
   static const onPrimaryContainer = Color(0xFF00363A);
 
   static const secondary = Color(0xFFFF9800);

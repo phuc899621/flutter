@@ -7,6 +7,7 @@ part 'ai_category.g.dart';
 abstract class AiCategoryReq with _$AiCategoryReq {
   const factory AiCategoryReq({
     required String title,
+    required List<String> excludedCategories,
   }) = _AiCategoryReq;
 
   factory AiCategoryReq.fromJson(Map<String, dynamic> json) =>

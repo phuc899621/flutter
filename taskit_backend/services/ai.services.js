@@ -7,7 +7,7 @@ class AIServices {
             const response = await axios.post(
                 'https://openrouter.ai/api/v1/chat/completions',
                 {
-                    model: 'nousresearch/deephermes-3-mistral-24b-preview:free',
+                    model: 'mistralai/mistral-nemo:free',
                     messages: [
                         { role: 'system', content: 'You are a smart assistant. Please answer only in JSON format without any special characters or additional text' },
                         { role: 'user', content: `Give me a list of 5 suitable categories for the task with title: ${title}. Answer only in JSON format, where the response is in this format:["category1", "category2", "category3", "category4", "category5"] and each of responses only contain maximum two words. In addition, 4 of the categories must be one word only, other can be two words. Also, exclude the following categories: ${excludedCategories}. No special symbols, no extra text.` }

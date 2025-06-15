@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:taskit/features/task/domain/entities/subtask_entity.dart';
 import 'package:taskit/features/task/domain/entities/task_priority_enum.dart';
 import 'package:taskit/shared/log/logger_provider.dart';
 
@@ -27,7 +28,7 @@ class AddTaskController extends AutoDisposeNotifier<AddTaskState> {
   }
 
   void setDescription(String s) {
-    state = state.copyWith(description: s);
+    if (s != state.description) state = state.copyWith(description: s);
   }
 
   void setSelectedCategory(CategoryEntity category) {
@@ -45,6 +46,28 @@ class AddTaskController extends AutoDisposeNotifier<AddTaskState> {
 
   void removeSelectedDate() {
     state = state.copyWith(selectedDate: null, isTimeSelected: false);
+  }
+
+  void addSubtask() {
+    state = state.copyWith(subtasks: [
+      ...state.subtasks,
+      SubtaskEntity(localId: -1, title: '', isCompleted: false, taskLocalId: -1)
+    ]);
+  }
+
+  void onDeleteSubtask(int index) {
+    final updatedSubtasks = [...state.subtasks];
+    updatedSubtasks.removeAt(index);
+    state = state.copyWith(subtasks: updatedSubtasks);
+  }
+
+  void onSubtaskInputSubmit(int index, String title) {
+    logger.i('onSubtaskInputSubmit: $title');
+    if (title != state.subtasks[index].title) {
+      final updatedSubtasks = [...state.subtasks];
+      updatedSubtasks[index] = updatedSubtasks[index].copyWith(title: title);
+      state = state.copyWith(subtasks: updatedSubtasks);
+    }
   }
 
   void setSelectedTime(TimeOfDay? s) {

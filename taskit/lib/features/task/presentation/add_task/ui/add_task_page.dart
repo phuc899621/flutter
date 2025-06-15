@@ -5,8 +5,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:taskit/features/task/domain/entities/task_priority_enum.dart';
 import 'package:taskit/features/task/presentation/add_task/controller/add_task_controller.dart';
-import 'package:taskit/features/task/presentation/add_task/ui/widget/add_task_appbar.dart';
-import 'package:taskit/features/task/presentation/add_task/ui/widget/add_task_fab.dart';
 import 'package:taskit/shared/extension/color.dart';
 import 'package:taskit/shared/extension/date_time.dart';
 import 'package:taskit/shared/log/logger_provider.dart';
@@ -26,6 +24,8 @@ class _AddTaskPageState extends ConsumerState<AddTaskPage> {
   final _formState = GlobalKey<FormState>();
   final _focusTitleNode = FocusNode();
   final _focusDescriptionNode = FocusNode();
+  final List<TextEditingController> _subtaskControllers = [];
+  final _scrollController = ScrollController();
   Timer? _timer;
 
   @override
@@ -36,17 +36,16 @@ class _AddTaskPageState extends ConsumerState<AddTaskPage> {
         ref
             .read(addTaskControllerProvider.notifier)
             .setTitle(_titleController.text);
-        if (_timer?.isActive ?? false) {
-          _timer?.cancel();
-          logger.i('_titleController.text: ${_titleController.text}');
-          _timer = Timer(const Duration(seconds: 2), () {
-            final currentTitle = _titleController.text;
-            if (currentTitle.length < 5) return;
-            ref
-                .read(addTaskControllerProvider.notifier)
-                .updateAiCategory(currentTitle);
-          });
-        }
+
+        _timer?.cancel();
+        logger.i('_titleController.text: ${_titleController.text}');
+        _timer = Timer(const Duration(seconds: 2), () {
+          final currentTitle = _titleController.text;
+          if (currentTitle.length < 5) return;
+          ref
+              .read(addTaskControllerProvider.notifier)
+              .updateAiCategory(currentTitle);
+        });
       }
     });
   }
@@ -68,23 +67,56 @@ class _AddTaskPageState extends ConsumerState<AddTaskPage> {
         _dueTimeController.clear();
       }
     });
-    _descriptionController.addListener(() {
-      controller.setDescription(_descriptionController.text);
-    });
     return Stack(
       alignment: Alignment.center,
       children: [
         Scaffold(
-          floatingActionButton: AddTaskFab(
-            onPressed: () {
-              final result = _formState.currentState?.validate() ?? false;
-              if (!result) return;
-              controller.addTask();
-            },
-          ),
-          appBar: AddTaskAppBar(),
+          appBar: AppBar(
+              automaticallyImplyLeading: false,
+              centerTitle: true,
+              actionsPadding: EdgeInsets.all(8),
+              actions: [
+                Material(
+                  elevation: 2,
+                  borderRadius: BorderRadius.circular(10),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      shape: BoxShape.rectangle,
+                      borderRadius: BorderRadius.circular(10),
+                      color: color.primaryContainer,
+                    ),
+                    child: Center(
+                      child: IconButton(
+                        onPressed: () => controller.addTask(),
+                        icon: Icon(
+                          Icons.save_rounded,
+                          color: color.onPrimaryContainer,
+                        ),
+                        splashRadius: 20,
+                        splashColor: color.primaryContainer,
+                      ),
+                    ),
+                  ),
+                )
+              ],
+              leading: Navigator.canPop(context)
+                  ? IconButton(
+                      onPressed: () => Navigator.pop(context),
+                      icon: Icon(
+                        Icons.arrow_back,
+                        size: 25,
+                        color: color.onPrimary,
+                      ),
+                    )
+                  : null,
+              backgroundColor: color.primary,
+              title: Text(
+                'Add Task',
+                style: text.headlineMedium,
+              )),
           body: SafeArea(
               child: SingleChildScrollView(
+            controller: _scrollController,
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 10, vertical: 20),
               child: Form(
@@ -498,10 +530,13 @@ class _AddTaskPageState extends ConsumerState<AddTaskPage> {
                         controller: _descriptionController,
                         maxLines: 3,
                         maxLength: 60,
+                        onChanged: (_) => controller
+                            .setDescription(_descriptionController.text),
                         focusNode: _focusDescriptionNode,
                         autofocus: false,
-                        onTapOutside: (event) =>
-                            FocusScope.of(context).unfocus(),
+                        onTapOutside: (event) {
+                          FocusScope.of(context).unfocus();
+                        },
                         style: text.bodyMedium,
                         decoration: InputDecoration(
                           suffixIcon: _descriptionController.text.isNotEmpty
@@ -523,11 +558,168 @@ class _AddTaskPageState extends ConsumerState<AddTaskPage> {
                         ),
                       ),
                       const SizedBox(
+                        height: 5,
+                      ),
+                      if (state.subtasks.isNotEmpty)
+                        Text(
+                          'Subtask',
+                          style: text.titleMedium,
+                        ),
+                      ListView.builder(
+                        itemCount: state.subtasks.length,
+                        shrinkWrap: true,
+                        itemBuilder: (context, index) => Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 10),
+                          child: Theme(
+                            data: ThemeData(
+                              splashColor: color.error,
+                            ),
+                            child: Material(
+                                elevation: 2,
+                                borderRadius: BorderRadius.circular(10),
+                                color: color.surface,
+                                child: Container(
+                                  height: 55,
+                                  width: double.infinity,
+                                  padding: EdgeInsets.only(right: 5),
+                                  child: Row(spacing: 10, children: [
+                                    Container(
+                                      width: 10,
+                                      height: double.infinity,
+                                      decoration: BoxDecoration(
+                                          color: color.secondary,
+                                          borderRadius: BorderRadius.horizontal(
+                                              left: Radius.circular(10))),
+                                    ),
+                                    Expanded(
+                                      child: TextField(
+                                        controller: _subtaskControllers[index],
+                                        onChanged: (_) {
+                                          controller.onSubtaskInputSubmit(index,
+                                              _subtaskControllers[index].text);
+                                        },
+                                        autofocus: false,
+                                        onTapOutside: (event) {
+                                          FocusScope.of(context).unfocus();
+                                        },
+                                        style: text.bodyMedium?.copyWith(
+                                            color: color.onSurface,
+                                            fontWeight: FontWeight.w500),
+                                        decoration: InputDecoration(
+                                            hintText: 'Input subtask title',
+                                            hintStyle: text.bodyMedium
+                                                ?.copyWith(
+                                                    fontWeight:
+                                                        FontWeight.normal,
+                                                    color:
+                                                        color.onSurfaceVariant),
+                                            counterText: '',
+                                            border: InputBorder.none),
+                                      ),
+                                    ),
+                                    Container(
+                                        width: 35,
+                                        height: 35,
+                                        decoration: BoxDecoration(
+                                            color: color.error,
+                                            shape: BoxShape.circle),
+                                        child: Center(
+                                          child: IconButton(
+                                            padding: EdgeInsets.zero,
+                                            onPressed: () {
+                                              _subtaskControllers
+                                                  .removeAt(index);
+                                              controller.onDeleteSubtask(index);
+                                            },
+                                            icon: Icon(
+                                              Icons.delete_forever,
+                                              color: color.onError,
+                                              size: 25,
+                                            ),
+                                          ),
+                                        )),
+                                  ]),
+                                )),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
                         height: 10,
                       ),
-                      Text(
-                        'Subtask',
-                        style: text.titleMedium,
+                      SizedBox(
+                        height: 55,
+                        child: Stack(
+                          children: [
+                            Center(
+                              child: Container(
+                                color: color.outline.withAlpha(70),
+                                height: 3,
+                              ),
+                            ),
+                            Center(
+                              child: Container(
+                                width: 150,
+                                height: 45,
+                                color: color.surface,
+                                child: Center(
+                                  child: Theme(
+                                    data: ThemeData(
+                                        splashColor:
+                                            color.onSecondaryContainer),
+                                    child: Material(
+                                      elevation: 2,
+                                      borderRadius: BorderRadius.circular(10),
+                                      child: GestureDetector(
+                                          onTap: () {
+                                            _subtaskControllers
+                                                .add(TextEditingController());
+                                            controller.addSubtask();
+                                            _scrollController.animateTo(
+                                                _scrollController
+                                                    .position.maxScrollExtent,
+                                                duration:
+                                                    Duration(milliseconds: 400),
+                                                curve: Curves.easeOut);
+                                          },
+                                          child: Container(
+                                              height: 40,
+                                              width: 120,
+                                              decoration: BoxDecoration(
+                                                  color: color.secondary,
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          10)),
+                                              child: Center(
+                                                child: Row(
+                                                  spacing: 10,
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  children: [
+                                                    Icon(
+                                                      Icons.add_circle,
+                                                      color: color.onSecondary,
+                                                      size: 20,
+                                                    ),
+                                                    Text(
+                                                      'Subtask',
+                                                      style: text.titleSmall
+                                                          ?.copyWith(
+                                                              color: color
+                                                                  .onSecondary,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w600),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ))),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                       const SizedBox(
                         height: 200,

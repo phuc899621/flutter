@@ -16,6 +16,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$AiCategoryReq {
   String get title;
+  List<String> get excludedCategories;
 
   /// Create a copy of AiCategoryReq
   /// with the given fields replaced by the non-null parameter values.
@@ -33,16 +34,19 @@ mixin _$AiCategoryReq {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is AiCategoryReq &&
-            (identical(other.title, title) || other.title == title));
+            (identical(other.title, title) || other.title == title) &&
+            const DeepCollectionEquality()
+                .equals(other.excludedCategories, excludedCategories));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, title);
+  int get hashCode => Object.hash(runtimeType, title,
+      const DeepCollectionEquality().hash(excludedCategories));
 
   @override
   String toString() {
-    return 'AiCategoryReq(title: $title)';
+    return 'AiCategoryReq(title: $title, excludedCategories: $excludedCategories)';
   }
 }
 
@@ -52,7 +56,7 @@ abstract mixin class $AiCategoryReqCopyWith<$Res> {
           AiCategoryReq value, $Res Function(AiCategoryReq) _then) =
       _$AiCategoryReqCopyWithImpl;
   @useResult
-  $Res call({String title});
+  $Res call({String title, List<String> excludedCategories});
 }
 
 /// @nodoc
@@ -69,12 +73,17 @@ class _$AiCategoryReqCopyWithImpl<$Res>
   @override
   $Res call({
     Object? title = null,
+    Object? excludedCategories = null,
   }) {
     return _then(_self.copyWith(
       title: null == title
           ? _self.title
           : title // ignore: cast_nullable_to_non_nullable
               as String,
+      excludedCategories: null == excludedCategories
+          ? _self.excludedCategories
+          : excludedCategories // ignore: cast_nullable_to_non_nullable
+              as List<String>,
     ));
   }
 }
@@ -82,12 +91,22 @@ class _$AiCategoryReqCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _AiCategoryReq implements AiCategoryReq {
-  const _AiCategoryReq({required this.title});
+  const _AiCategoryReq(
+      {required this.title, required final List<String> excludedCategories})
+      : _excludedCategories = excludedCategories;
   factory _AiCategoryReq.fromJson(Map<String, dynamic> json) =>
       _$AiCategoryReqFromJson(json);
 
   @override
   final String title;
+  final List<String> _excludedCategories;
+  @override
+  List<String> get excludedCategories {
+    if (_excludedCategories is EqualUnmodifiableListView)
+      return _excludedCategories;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_excludedCategories);
+  }
 
   /// Create a copy of AiCategoryReq
   /// with the given fields replaced by the non-null parameter values.
@@ -109,16 +128,19 @@ class _AiCategoryReq implements AiCategoryReq {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _AiCategoryReq &&
-            (identical(other.title, title) || other.title == title));
+            (identical(other.title, title) || other.title == title) &&
+            const DeepCollectionEquality()
+                .equals(other._excludedCategories, _excludedCategories));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, title);
+  int get hashCode => Object.hash(runtimeType, title,
+      const DeepCollectionEquality().hash(_excludedCategories));
 
   @override
   String toString() {
-    return 'AiCategoryReq(title: $title)';
+    return 'AiCategoryReq(title: $title, excludedCategories: $excludedCategories)';
   }
 }
 
@@ -130,7 +152,7 @@ abstract mixin class _$AiCategoryReqCopyWith<$Res>
       __$AiCategoryReqCopyWithImpl;
   @override
   @useResult
-  $Res call({String title});
+  $Res call({String title, List<String> excludedCategories});
 }
 
 /// @nodoc
@@ -147,12 +169,17 @@ class __$AiCategoryReqCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   $Res call({
     Object? title = null,
+    Object? excludedCategories = null,
   }) {
     return _then(_AiCategoryReq(
       title: null == title
           ? _self.title
           : title // ignore: cast_nullable_to_non_nullable
               as String,
+      excludedCategories: null == excludedCategories
+          ? _self._excludedCategories
+          : excludedCategories // ignore: cast_nullable_to_non_nullable
+              as List<String>,
     ));
   }
 }

@@ -151,8 +151,15 @@ class TaskRepo with DioExceptionMapper implements ITaskRepo, ITaskMapper {
   }
 
   @override
-  AiCategoryReq mapToAiCategoryReq(String title) {
-    return AiCategoryReq(title: title);
+  AiCategoryReq mapToAiCategoryReq(
+      String title, List<String> excludedCategories) {
+    return AiCategoryReq(title: title, excludedCategories: excludedCategories);
+  }
+
+  @override
+  List<String> mapCategoriesTableDataToListString(
+      List<CategoryTableData> data) {
+    return data.map((e) => e.name).toList();
   }
 
   /*
@@ -219,7 +226,9 @@ class TaskRepo with DioExceptionMapper implements ITaskRepo, ITaskMapper {
   @override
   Future<List<CategoryEntity>> getAICategory(String title) async {
     try {
-      final categoryReq = mapToAiCategoryReq(title);
+      final excludedCategories = await _taskLocalSource.getCategories();
+      final categoryReq = mapToAiCategoryReq(
+          title, mapCategoriesTableDataToListString(excludedCategories));
       final token = await _tokenService.getToken();
       final categoryData =
           await _taskApi.getAiCategory('Bearer $token', categoryReq);

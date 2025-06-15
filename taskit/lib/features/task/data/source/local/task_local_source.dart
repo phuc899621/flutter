@@ -17,7 +17,9 @@ class TaskLocalSource implements ITaskLocalSource {
   final TaskDao _taskDao;
   final SubtaskDao _subtaskDao;
   final CategoryDao _categoryDao;
+
   TaskLocalSource(this._taskDao, this._subtaskDao, this._categoryDao);
+
   /*
   * Watch
   * */
@@ -67,6 +69,11 @@ class TaskLocalSource implements ITaskLocalSource {
   @override
   Future<CategoryTableData?> getCategoryByLocalId(int localId) async {
     return await _categoryDao.getCategoryByLocalId(localId);
+  }
+
+  @override
+  Future<List<CategoryTableData>> getCategories() async {
+    return await _categoryDao.getCategories();
   }
 
   @override

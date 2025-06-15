@@ -34,5 +34,8 @@ abstract interface class ITaskMapper {
   Future<CategoryTableCompanion> mapToCategoryTableCompanion(
       CategoryEntity data);
 
-  AiCategoryReq mapToAiCategoryReq(String title);
+  AiCategoryReq mapToAiCategoryReq(
+      String title, List<String> excludedCategories);
+
+  List<String> mapCategoriesTableDataToListString(List<CategoryTableData> data);
 }
