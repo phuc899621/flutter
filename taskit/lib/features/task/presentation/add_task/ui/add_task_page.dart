@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
@@ -7,12 +9,13 @@ import 'package:taskit/features/task/presentation/add_task/ui/widget/add_task_ap
 import 'package:taskit/features/task/presentation/add_task/ui/widget/add_task_fab.dart';
 import 'package:taskit/shared/extension/color.dart';
 import 'package:taskit/shared/extension/date_time.dart';
+import 'package:taskit/shared/log/logger_provider.dart';
 
 class AddTaskPage extends ConsumerStatefulWidget {
   const AddTaskPage({super.key});
 
   @override
-  ConsumerState<ConsumerStatefulWidget> createState() => _AddTaskPageState();
+  ConsumerState<AddTaskPage> createState() => _AddTaskPageState();
 }
 
 class _AddTaskPageState extends ConsumerState<AddTaskPage> {
@@ -23,6 +26,30 @@ class _AddTaskPageState extends ConsumerState<AddTaskPage> {
   final _formState = GlobalKey<FormState>();
   final _focusTitleNode = FocusNode();
   final _focusDescriptionNode = FocusNode();
+  Timer? _timer;
+
+  @override
+  void initState() {
+    super.initState();
+    _titleController.addListener(() {
+      if (_titleController.text != ref.read(addTaskControllerProvider).title) {
+        ref
+            .read(addTaskControllerProvider.notifier)
+            .setTitle(_titleController.text);
+        if (_timer?.isActive ?? false) {
+          _timer?.cancel();
+          logger.i('_titleController.text: ${_titleController.text}');
+          _timer = Timer(const Duration(seconds: 2), () {
+            final currentTitle = _titleController.text;
+            if (currentTitle.length < 5) return;
+            ref
+                .read(addTaskControllerProvider.notifier)
+                .updateAiCategory(currentTitle);
+          });
+        }
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -40,9 +67,6 @@ class _AddTaskPageState extends ConsumerState<AddTaskPage> {
         controller.removeSelectedDate();
         _dueTimeController.clear();
       }
-    });
-    _titleController.addListener(() {
-      controller.setTitle(_titleController.text);
     });
     _descriptionController.addListener(() {
       controller.setDescription(_descriptionController.text);
@@ -68,7 +92,6 @@ class _AddTaskPageState extends ConsumerState<AddTaskPage> {
                 child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    spacing: 5,
                     children: [
                       /*
                       * Title
@@ -116,107 +139,151 @@ class _AddTaskPageState extends ConsumerState<AddTaskPage> {
                         'Priority',
                         style: text.titleMedium,
                       ),
-                      SingleChildScrollView(
-                        scrollDirection: Axis.horizontal,
-                        child: Row(spacing: 15, children: [
-                          Theme(
-                            data: ThemeData(
-                              splashColor: TaskPriority.none.toColorContainer(),
+                      SizedBox(
+                        height: 50,
+                        child: ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: TaskPriority.values.length,
+                          itemBuilder: (context, index) => Padding(
+                            padding: const EdgeInsets.only(right: 10),
+                            child: Theme(
+                              data: ThemeData(
+                                splashColor: TaskPriority.values[index]
+                                    .toColorContainer(),
+                              ),
+                              child: ChoiceChip(
+                                  label: Text(TaskPriority.values[index].name),
+                                  elevation: 1,
+                                  showCheckmark: false,
+                                  checkmarkColor:
+                                      TaskPriority.values[index].toColor(),
+                                  selectedColor: TaskPriority.values[index]
+                                      .toColorContainer(),
+                                  labelStyle: text.labelMedium?.copyWith(
+                                      color: state.selectedPriority ==
+                                              TaskPriority.values[index]
+                                          ? TaskPriority.values[index].toColor()
+                                          : color.onSurfaceVariant,
+                                      fontWeight: state.selectedPriority ==
+                                              TaskPriority.values[index]
+                                          ? FontWeight.w600
+                                          : FontWeight.w500),
+                                  selected: state.selectedPriority ==
+                                      TaskPriority.values[index],
+                                  onSelected: (value) =>
+                                      controller.setSelectedPriority(
+                                          TaskPriority.values[index])),
                             ),
-                            child: ChoiceChip(
-                                label: const Text('None'),
-                                elevation: 1,
-                                checkmarkColor: TaskPriority.none.toColor(),
-                                selectedColor:
-                                    TaskPriority.none.toColorContainer(),
-                                labelStyle: text.titleSmall?.copyWith(
-                                    color: state.selectedPriority.name == 'none'
-                                        ? TaskPriority.none.toColor()
-                                        : color.onSurfaceVariant,
-                                    fontWeight:
-                                        state.selectedPriority.name == 'none'
-                                            ? FontWeight.w600
-                                            : FontWeight.w500),
-                                selected: state.selectedPriority.name == 'none',
-                                onSelected: (value) => controller
-                                    .setSelectedPriority(TaskPriority.none)),
                           ),
-                          Theme(
-                            data: ThemeData(
-                              splashColor: TaskPriority.low.toColorContainer(),
-                            ),
-                            child: ChoiceChip(
-                                label: const Text('Low'),
-                                checkmarkColor: TaskPriority.low.toColor(),
-                                elevation: 1,
-                                selectedColor:
-                                    TaskPriority.low.toColorContainer(),
-                                labelStyle: text.titleSmall?.copyWith(
-                                    color: state.selectedPriority.name == 'low'
-                                        ? TaskPriority.low.toColor()
-                                        : color.onSurfaceVariant,
-                                    fontWeight:
-                                        state.selectedPriority.name == 'low'
-                                            ? FontWeight.w600
-                                            : FontWeight.w500),
-                                selected: state.selectedPriority.name == 'low',
-                                onSelected: (value) => controller
-                                    .setSelectedPriority(TaskPriority.low)),
-                          ),
-                          Theme(
-                            data: ThemeData(
-                              splashColor:
-                                  TaskPriority.medium.toColorContainer(),
-                            ),
-                            child: ChoiceChip(
-                                label: const Text('Medium'),
-                                elevation: 1,
-                                checkmarkColor: TaskPriority.medium.toColor(),
-                                selectedColor:
-                                    TaskPriority.medium.toColorContainer(),
-                                labelStyle: text.titleSmall?.copyWith(
-                                    color:
-                                        state.selectedPriority.name == 'medium'
-                                            ? TaskPriority.medium.toColor()
-                                            : color.onSurfaceVariant,
-                                    fontWeight:
-                                        state.selectedPriority.name == 'medium'
-                                            ? FontWeight.w600
-                                            : FontWeight.w500),
-                                selected:
-                                    state.selectedPriority.name == 'medium',
-                                onSelected: (value) => controller
-                                    .setSelectedPriority(TaskPriority.medium)),
-                          ),
-                          Theme(
-                            data: ThemeData(
-                              splashColor: TaskPriority.high.toColorContainer(),
-                            ),
-                            child: ChoiceChip(
-                                surfaceTintColor:
-                                    TaskPriority.high.toColorContainer(),
-                                elevation: 1,
-                                label: const Text('High'),
-                                checkmarkColor: TaskPriority.high.toColor(),
-                                selectedColor:
-                                    TaskPriority.high.toColorContainer(),
-                                labelStyle: text.titleSmall?.copyWith(
-                                    color: state.selectedPriority.name == 'high'
-                                        ? TaskPriority.high.toColor()
-                                        : color.onSurfaceVariant,
-                                    fontWeight:
-                                        state.selectedPriority.name == 'high'
-                                            ? FontWeight.w600
-                                            : FontWeight.w500),
-                                selected: state.selectedPriority.name == 'high',
-                                onSelected: (value) => controller
-                                    .setSelectedPriority(TaskPriority.high)),
-                          ),
-                        ]),
+                        ),
                       ),
                       const SizedBox(
                         height: 10,
                       ),
+                      Text(
+                        'Category',
+                        style: text.titleMedium,
+                      ),
+                      SizedBox(
+                        height: 50,
+                        child: ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: state.categories.length,
+                          itemBuilder: (context, index) => Padding(
+                              padding: EdgeInsets.only(right: 10),
+                              child: Theme(
+                                data: ThemeData(
+                                  splashColor: color.secondaryContainer,
+                                ),
+                                child: ChoiceChip(
+                                  label: Text(state.categories[index].name),
+                                  elevation: 1,
+                                  showCheckmark: false,
+                                  selectedColor: color.secondaryContainer,
+                                  labelStyle: text.labelMedium?.copyWith(
+                                      color: state.categories[index] ==
+                                              state.selectedCategory
+                                          ? color.onSecondaryContainer
+                                          : color.onSurfaceVariant,
+                                      fontWeight: state.categories[index] ==
+                                              state.selectedCategory
+                                          ? FontWeight.w600
+                                          : FontWeight.w500),
+                                  selected: state.categories[index] ==
+                                      state.selectedCategory,
+                                  onSelected: (value) =>
+                                      controller.setSelectedCategory(
+                                          state.categories[index]),
+                                ),
+                              )),
+                        ),
+                      ),
+                      /*
+                      * Category AI
+                      * */
+                      if (state.isCategoriesLoading ||
+                          state.aiCategories.isNotEmpty)
+                        Stack(
+                          alignment: Alignment.center,
+                          children: [
+                            /*
+                          * Category AI suggest*/
+                            SizedBox(
+                              height: 50,
+                              child: ListView.builder(
+                                scrollDirection: Axis.horizontal,
+                                itemCount: state.aiCategories.length,
+                                itemBuilder: (context, index) => Padding(
+                                    padding: EdgeInsets.only(right: 10),
+                                    child: Theme(
+                                      data: ThemeData(
+                                        splashColor: color.secondaryContainer,
+                                      ),
+                                      child: ChoiceChip(
+                                        label: Row(spacing: 5, children: [
+                                          Icon(
+                                            Icons.auto_awesome_rounded,
+                                            color: color.onSecondaryContainer,
+                                          ),
+                                          Text(state.aiCategories[index].name)
+                                        ]),
+                                        elevation: 1,
+                                        showCheckmark: false,
+                                        selectedColor: color.secondaryContainer,
+                                        labelStyle: text.labelMedium?.copyWith(
+                                            color: state.aiCategories[index] ==
+                                                    state.selectedCategory
+                                                ? color.onSecondaryContainer
+                                                : color.onSurfaceVariant,
+                                            fontWeight:
+                                                state.aiCategories[index] ==
+                                                        state.selectedCategory
+                                                    ? FontWeight.w600
+                                                    : FontWeight.w500),
+                                        selected: state.aiCategories[index] ==
+                                            state.selectedCategory,
+                                        onSelected: (value) =>
+                                            controller.setSelectedCategory(
+                                                state.aiCategories[index]),
+                                      ),
+                                    )),
+                              ),
+                            ),
+                            if (state.isCategoriesLoading)
+                              Positioned.fill(
+                                  child: Center(
+                                      child: CircularProgressIndicator(
+                                strokeWidth: 2,
+                              )))
+                          ],
+                        ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      /*
+                      *
+                      * Date and time
+                      * */
                       Row(
                         spacing: 10,
                         children: [
@@ -420,50 +487,10 @@ class _AddTaskPageState extends ConsumerState<AddTaskPage> {
                           ])),
                         ],
                       ),
-                      const SizedBox(
-                        height: 5,
-                      ),
-                      Text(
-                        'Category',
-                        style: text.titleMedium,
-                      ),
                       SizedBox(
-                        height: 50,
-                        child: ListView.builder(
-                          scrollDirection: Axis.horizontal,
-                          itemCount: state.categories.length,
-                          itemBuilder: (context, index) => Padding(
-                              padding: EdgeInsets.only(right: 10),
-                              child: Theme(
-                                data: ThemeData(
-                                  splashColor: color.onSecondaryContainer,
-                                ),
-                                child: ChoiceChip(
-                                  label: Text(state.categories[index].name),
-                                  elevation: 1,
-                                  showCheckmark: false,
-                                  selectedColor: color.secondaryContainer,
-                                  labelStyle: text.labelMedium?.copyWith(
-                                      color: state.categories[index] ==
-                                              state.selectedCategory
-                                          ? color.onSecondaryContainer
-                                          : color.onSurfaceVariant,
-                                      fontWeight: state.categories[index] ==
-                                              state.selectedCategory
-                                          ? FontWeight.w600
-                                          : FontWeight.w500),
-                                  selected: state.categories[index] ==
-                                      state.selectedCategory,
-                                  onSelected: (value) =>
-                                      controller.setSelectedCategory(
-                                          state.categories[index]),
-                                ),
-                              )),
-                        ),
+                        height: 20,
                       ),
-                      SizedBox(
-                        height: 10,
-                      ),
+
                       /*
                       * Description
                       * */
@@ -495,7 +522,14 @@ class _AddTaskPageState extends ConsumerState<AddTaskPage> {
                                   BorderSide(color: color.outlineVariant)),
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      Text(
+                        'Subtask',
+                        style: text.titleMedium,
+                      ),
+                      const SizedBox(
                         height: 200,
                       )
                     ]),

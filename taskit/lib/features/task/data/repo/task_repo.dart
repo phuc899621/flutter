@@ -1,19 +1,25 @@
 import 'dart:async';
 
+import 'package:dio/dio.dart';
 import 'package:drift/drift.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:taskit/features/task/domain/entities/task_entity.dart';
 import 'package:taskit/features/task/domain/mapper/itask_mapper.dart';
+import 'package:taskit/shared/application/token_service.dart';
 import 'package:taskit/shared/data/source/local/drift/database/database.dart';
 import 'package:taskit/shared/utils/task_entity_mapper.dart';
 
+import '../../../../shared/application/itoken_service.dart';
+import '../../../../shared/exception/failure.dart';
 import '../../../../shared/mixin/dio_exception_mapper.dart';
 import '../../../user/data/source/local/iuser_local_source.dart';
 import '../../../user/data/source/local/user_local_source.dart';
 import '../../domain/entities/category_entity.dart';
 import '../../domain/entities/subtask_entity.dart';
 import '../../domain/entities/task_status_enum.dart';
+import '../dto/req/ai_category/ai_category.dart';
 import '../source/local/itask_local_source.dart';
 import '../source/local/task_local_source.dart';
 import '../source/remote/task_api.dart';
@@ -23,14 +29,18 @@ final taskRepoProvider = Provider<ITaskRepo>((ref) {
   final taskApi = ref.watch(taskApiProvider);
   final taskLocalSource = ref.watch(taskLocalSourceProvider);
   final userLocalSource = ref.watch(userLocalSourceProvider);
-  return TaskRepo(taskApi, taskLocalSource, userLocalSource);
+  final tokenService = ref.watch(tokenServiceProvider);
+  return TaskRepo(taskApi, taskLocalSource, userLocalSource, tokenService);
 });
 
 class TaskRepo with DioExceptionMapper implements ITaskRepo, ITaskMapper {
   final TaskApi _taskApi;
   final ITaskLocalSource _taskLocalSource;
   final IUserLocalSource _userLocalSource;
-  TaskRepo(this._taskApi, this._taskLocalSource, this._userLocalSource);
+  final ITokenService _tokenService;
+
+  TaskRepo(this._taskApi, this._taskLocalSource, this._userLocalSource,
+      this._tokenService);
 
   /*Mapper
   * */
@@ -115,14 +125,21 @@ class TaskRepo with DioExceptionMapper implements ITaskRepo, ITaskMapper {
       title: data.title,
       isCompleted: data.isCompleted,
       taskLocalId: data.taskLocalId);
+
   @override
   List<CategoryEntity> mapToListCategoryEntity(List<CategoryTableData> data) =>
       data.map(mapToCategoryEntity).toList();
+
   @override
   CategoryEntity mapToCategoryEntity(CategoryTableData data) => CategoryEntity(
         localId: data.localId,
         name: data.name,
       );
+
+  @override
+  List<CategoryEntity> mapToListCategoryEntityFromAi(List<String> data) =>
+      data.map((e) => CategoryEntity(name: e, localId: -1)).toList();
+
   @override
   Future<CategoryTableCompanion> mapToCategoryTableCompanion(
       CategoryEntity data) async {
@@ -131,6 +148,11 @@ class TaskRepo with DioExceptionMapper implements ITaskRepo, ITaskMapper {
       userLocalId: Value(userLocalId),
       name: Value(data.name),
     );
+  }
+
+  @override
+  AiCategoryReq mapToAiCategoryReq(String title) {
+    return AiCategoryReq(title: title);
   }
 
   /*
@@ -171,6 +193,7 @@ class TaskRepo with DioExceptionMapper implements ITaskRepo, ITaskMapper {
   Future<void> updateSubtaskStatus({required int localId}) {
     return _taskLocalSource.updateSubtaskStatus(localId: localId);
   }
+
   /*
   * Read
   * */
@@ -193,6 +216,35 @@ class TaskRepo with DioExceptionMapper implements ITaskRepo, ITaskMapper {
     return mapToListSubtaskEntity(subtaskData);
   }
 
+  @override
+  Future<List<CategoryEntity>> getAICategory(String title) async {
+    try {
+      final categoryReq = mapToAiCategoryReq(title);
+      final token = await _tokenService.getToken();
+      final categoryData =
+          await _taskApi.getAiCategory('Bearer $token', categoryReq);
+      return mapToListCategoryEntityFromAi(categoryData.data);
+    } on DioException catch (e, s) {
+      debugPrint(e.toString() + s.toString());
+      throw mapDioExceptionToFailure(e, s);
+    } catch (e, s) {
+      debugPrint(e.toString() + s.toString());
+      if (e is Exception) {
+        throw Failure(
+          message: "Get AI category error : ${e.toString()}",
+          exception: e,
+          stackTrace: s,
+        );
+      } else {
+        throw Failure(
+          message: "Get AI category error : ${e.toString()}",
+          exception: Exception(e.toString()),
+          stackTrace: s,
+        );
+      }
+    }
+  }
+
   /*
   * Insert
   * */
@@ -200,5 +252,11 @@ class TaskRepo with DioExceptionMapper implements ITaskRepo, ITaskMapper {
   Future<void> insertCategory(CategoryEntity category) async {
     final categoryCompanion = await mapToCategoryTableCompanion(category);
     await _taskLocalSource.insertCategory(categoryCompanion);
+  }
+
+  @override
+  Future<TaskEntity> insertTask(TaskEntity task) {
+    // TODO: implement insertTask
+    throw UnimplementedError();
   }
 }

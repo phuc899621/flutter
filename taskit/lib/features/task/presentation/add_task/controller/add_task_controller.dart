@@ -3,15 +3,17 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:taskit/features/task/domain/entities/task_priority_enum.dart';
+import 'package:taskit/shared/log/logger_provider.dart';
 
 import '../../../application/task_service.dart';
 import '../../../domain/entities/category_entity.dart';
 import '../state/add_task_state.dart';
 
 final addTaskControllerProvider =
-    NotifierProvider<AddTaskController, AddTaskState>(AddTaskController.new);
+    AutoDisposeNotifierProvider<AddTaskController, AddTaskState>(
+        AddTaskController.new);
 
-class AddTaskController extends Notifier<AddTaskState> {
+class AddTaskController extends AutoDisposeNotifier<AddTaskState> {
   late final StreamSubscription _categorySub;
 
   @override
@@ -56,18 +58,40 @@ class AddTaskController extends Notifier<AddTaskState> {
             state.selectedDate!.copyWith(hour: s.hour, minute: s.minute));
   }
 
+  Future<void> updateAiCategory(String title) async {
+    debugPrintStack(stackTrace: StackTrace.current, label: 'aiCategories');
+    state = state.copyWith(isCategoriesLoading: true);
+    final taskService = ref.read(taskServiceProvider);
+    final result = await taskService.getAICategory(title);
+    result.when((aiCategories) {
+      debugPrintStack(stackTrace: StackTrace.current, label: 'aiCategories');
+      state = state.copyWith(aiCategories: aiCategories);
+      if (aiCategories.contains(state.selectedCategory) ||
+          state.categories.contains(state.selectedCategory)) {
+        return;
+      }
+      state = state.copyWith(selectedCategory: state.categories.first);
+    }, (failure) {
+      debugPrintStack(stackTrace: StackTrace.current, label: 'aiCategories');
+      state = state.copyWith(aiCategories: []);
+    });
+    state = state.copyWith(isCategoriesLoading: false);
+  }
+
   void removeSelectedTime() {
     state = state.copyWith(isTimeSelected: false);
   }
 
   void _startListening() {
+    logger.i('Category._startListening');
     final taskService = ref.watch(taskServiceProvider);
     _categorySub = taskService.watchAllCategories().listen((categories) {
       state = state.copyWith(categories: categories);
       if (state.selectedCategory == null) {
         state = state.copyWith(
-            selectedCategory:
-                categories.where((element) => element.name == 'All').first);
+            selectedCategory: categories
+                .where((element) => element.name.toLowerCase() == 'any')
+                .first);
       }
     });
   }

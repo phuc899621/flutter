@@ -1,12 +1,14 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-part 'suggest_category.freezed.dart';
-part 'suggest_category.g.dart';
+part 'ai_category.freezed.dart';
+part 'ai_category.g.dart';
 
 @freezed
-abstract class SuggestCategoryReq with _$SuggestCategoryReq {
-  const factory SuggestCategoryReq({
+abstract class AiCategoryReq with _$AiCategoryReq {
+  const factory AiCategoryReq({
     required String title,
-  })=_SuggestCategoryReq;
-  factory SuggestCategoryReq.fromJson(Map<String, dynamic> json) => _$SuggestCategoryReqFromJson(json);
+  }) = _AiCategoryReq;
+
+  factory AiCategoryReq.fromJson(Map<String, dynamic> json) =>
+      _$AiCategoryReqFromJson(json);
 }

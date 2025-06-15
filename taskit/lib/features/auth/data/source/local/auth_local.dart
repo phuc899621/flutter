@@ -7,6 +7,7 @@ import 'package:taskit/shared/data/source/local/drift/dao/category.dart';
 import 'package:taskit/shared/data/source/local/drift/dao/task.dart';
 import 'package:taskit/shared/data/source/local/drift/dao/user.dart';
 import 'package:taskit/shared/data/source/local/drift/database/database.dart';
+import 'package:taskit/shared/data/source/local/token_source.dart';
 
 import '../../../../../shared/data/source/local/drift/dao/setting.dart';
 import '../../../../../shared/data/source/local/drift/dao/subtask.dart';
@@ -18,6 +19,7 @@ final authLocalDataSourceProvider = Provider<IAuthLocalDataSource>((ref) {
   final categoryDao = ref.watch(categoryDaoProvider);
   final subtaskDao = ref.watch(subtaskDaoProvider);
   final db = ref.watch(appDatabaseProvider);
+  final tokenSource = ref.watch(tokenSourceProvider);
   return AuthLocalDataSource(
     db: db,
     userDao: userDao,
@@ -25,6 +27,7 @@ final authLocalDataSourceProvider = Provider<IAuthLocalDataSource>((ref) {
     taskDao: taskDao,
     categoryDao: categoryDao,
     subtaskDao: subtaskDao,
+    tokenSource: tokenSource,
   );
 });
 
@@ -35,6 +38,8 @@ class AuthLocalDataSource implements IAuthLocalDataSource {
   final CategoryDao categoryDao;
   final SubtaskDao subtaskDao;
   final AppDatabase db;
+  final TokenSource tokenSource;
+
   AuthLocalDataSource({
     required this.db,
     required this.userDao,
@@ -42,11 +47,13 @@ class AuthLocalDataSource implements IAuthLocalDataSource {
     required this.categoryDao,
     required this.taskDao,
     required this.subtaskDao,
+    required this.tokenSource,
   });
 
   @override
   Future<void> cacheLogin(LoginData loginData) async {
     try {
+      tokenSource.saveToken(loginData.token);
       db.transaction(() async {
         await userDao.deleteIfExist();
         final userLocalId = await userDao.insertUser(UserTableCompanion(

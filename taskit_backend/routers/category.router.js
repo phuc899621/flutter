@@ -12,4 +12,5 @@ router.delete('/bulk', jwtMiddleware, CategoryMiddleware.delete_category_bulk,Ca
 router.delete('/all', jwtMiddleware, CategoryController.delete_all_categories);
 router.delete('/:categoryId',jwtMiddleware,CategoryMiddleware.delete_category,CategoryController.delete_category);
 
+
 export default router;

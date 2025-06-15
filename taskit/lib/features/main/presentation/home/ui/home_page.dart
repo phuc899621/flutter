@@ -9,6 +9,7 @@ import '../../../../../config/app/text_theme.dart';
 
 class HomePage extends ConsumerStatefulWidget {
   const HomePage({super.key});
+
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => _HomePageState();
 }
@@ -30,7 +31,7 @@ class _HomePageState extends ConsumerState<HomePage>
                   size: 35,
                   color: color.onSurface,
                 ),
-                onPressed: () => context.push('/add')),
+                onPressed: () => context.push('/add_task')),
             backgroundColor: color.onSurface,
             body: SafeArea(
               top: true,
