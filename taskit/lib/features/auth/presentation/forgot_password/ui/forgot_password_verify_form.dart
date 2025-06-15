@@ -54,7 +54,7 @@ class _ForgotPasswordVerifyFormState
               style: Theme.of(context).textTheme.headlineMedium?.copyWith(
                     fontFamily: 'Inter Tight',
                     letterSpacing: 0.0,
-                    color: AppColor(context).primaryText,
+                    color: AppColor(context).onSurface,
                   )),
           Padding(
             padding: const EdgeInsetsDirectional.fromSTEB(0.0, 12.0, 0.0, 26.0),

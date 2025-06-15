@@ -10,18 +10,14 @@ _TaskData _$TaskDataFromJson(Map<String, dynamic> json) => _TaskData(
       id: json['_id'] as String,
       title: json['title'] as String,
       description: json['description'] as String,
-      category: json['category'] as String,
+      categoryId: json['categoryId'] as String,
       priority: json['priority'] as String,
       userId: json['userId'] as String,
       status: json['status'] as String,
-      scheduledDate: json['scheduledDate'] == null
+      dueDate: json['dueDate'] == null
           ? null
-          : DateTime.parse(json['scheduledDate'] as String),
-      hasScheduledTime: json['hasScheduledTime'] as bool,
-      deadlineDate: json['deadlineDate'] == null
-          ? null
-          : DateTime.parse(json['deadlineDate'] as String),
-      type: json['type'] as String,
+          : DateTime.parse(json['dueDate'] as String),
+      hasTime: json['hasTime'] as bool,
       subtasks: (json['subtasks'] as List<dynamic>)
           .map((e) => SubtaskData.fromJson(e as Map<String, dynamic>))
           .toList(),
@@ -33,14 +29,12 @@ Map<String, dynamic> _$TaskDataToJson(_TaskData instance) => <String, dynamic>{
       '_id': instance.id,
       'title': instance.title,
       'description': instance.description,
-      'category': instance.category,
+      'categoryId': instance.categoryId,
       'priority': instance.priority,
       'userId': instance.userId,
       'status': instance.status,
-      'scheduledDate': instance.scheduledDate?.toIso8601String(),
-      'hasScheduledTime': instance.hasScheduledTime,
-      'deadlineDate': instance.deadlineDate?.toIso8601String(),
-      'type': instance.type,
+      'dueDate': instance.dueDate?.toIso8601String(),
+      'hasTime': instance.hasTime,
       'subtasks': instance.subtasks,
       'createdAt': instance.createdAt.toIso8601String(),
       'updatedAt': instance.updatedAt.toIso8601String(),

@@ -13,5 +13,6 @@ sealed class HomeState with _$HomeState {
     @Default(false) bool isToDoLoading,
     @Default([]) List<TaskEntity> scheduledTasks,
     @Default([]) List<TaskEntity> allTasks,
+    TaskEntity? selectedTask,
   }) = _HomeState;
 }

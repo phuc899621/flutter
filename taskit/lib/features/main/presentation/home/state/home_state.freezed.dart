@@ -21,6 +21,7 @@ mixin _$HomeState {
   bool get isToDoLoading;
   List<TaskEntity> get scheduledTasks;
   List<TaskEntity> get allTasks;
+  TaskEntity? get selectedTask;
 
   /// Create a copy of HomeState
   /// with the given fields replaced by the non-null parameter values.
@@ -43,7 +44,9 @@ mixin _$HomeState {
                 other.isToDoLoading == isToDoLoading) &&
             const DeepCollectionEquality()
                 .equals(other.scheduledTasks, scheduledTasks) &&
-            const DeepCollectionEquality().equals(other.allTasks, allTasks));
+            const DeepCollectionEquality().equals(other.allTasks, allTasks) &&
+            (identical(other.selectedTask, selectedTask) ||
+                other.selectedTask == selectedTask));
   }
 
   @override
@@ -54,11 +57,12 @@ mixin _$HomeState {
       isDeadLineLoading,
       isToDoLoading,
       const DeepCollectionEquality().hash(scheduledTasks),
-      const DeepCollectionEquality().hash(allTasks));
+      const DeepCollectionEquality().hash(allTasks),
+      selectedTask);
 
   @override
   String toString() {
-    return 'HomeState(error: $error, isScheduledLoading: $isScheduledLoading, isDeadLineLoading: $isDeadLineLoading, isToDoLoading: $isToDoLoading, scheduledTasks: $scheduledTasks, allTasks: $allTasks)';
+    return 'HomeState(error: $error, isScheduledLoading: $isScheduledLoading, isDeadLineLoading: $isDeadLineLoading, isToDoLoading: $isToDoLoading, scheduledTasks: $scheduledTasks, allTasks: $allTasks, selectedTask: $selectedTask)';
   }
 }
 
@@ -73,7 +77,10 @@ abstract mixin class $HomeStateCopyWith<$Res> {
       bool isDeadLineLoading,
       bool isToDoLoading,
       List<TaskEntity> scheduledTasks,
-      List<TaskEntity> allTasks});
+      List<TaskEntity> allTasks,
+      TaskEntity? selectedTask});
+
+  $TaskEntityCopyWith<$Res>? get selectedTask;
 }
 
 /// @nodoc
@@ -94,6 +101,7 @@ class _$HomeStateCopyWithImpl<$Res> implements $HomeStateCopyWith<$Res> {
     Object? isToDoLoading = null,
     Object? scheduledTasks = null,
     Object? allTasks = null,
+    Object? selectedTask = freezed,
   }) {
     return _then(_self.copyWith(
       error: freezed == error
@@ -120,7 +128,25 @@ class _$HomeStateCopyWithImpl<$Res> implements $HomeStateCopyWith<$Res> {
           ? _self.allTasks
           : allTasks // ignore: cast_nullable_to_non_nullable
               as List<TaskEntity>,
+      selectedTask: freezed == selectedTask
+          ? _self.selectedTask
+          : selectedTask // ignore: cast_nullable_to_non_nullable
+              as TaskEntity?,
     ));
+  }
+
+  /// Create a copy of HomeState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $TaskEntityCopyWith<$Res>? get selectedTask {
+    if (_self.selectedTask == null) {
+      return null;
+    }
+
+    return $TaskEntityCopyWith<$Res>(_self.selectedTask!, (value) {
+      return _then(_self.copyWith(selectedTask: value));
+    });
   }
 }
 
@@ -133,7 +159,8 @@ class _HomeState implements HomeState {
       this.isDeadLineLoading = false,
       this.isToDoLoading = false,
       final List<TaskEntity> scheduledTasks = const [],
-      final List<TaskEntity> allTasks = const []})
+      final List<TaskEntity> allTasks = const [],
+      this.selectedTask})
       : _scheduledTasks = scheduledTasks,
         _allTasks = allTasks;
 
@@ -166,6 +193,9 @@ class _HomeState implements HomeState {
     return EqualUnmodifiableListView(_allTasks);
   }
 
+  @override
+  final TaskEntity? selectedTask;
+
   /// Create a copy of HomeState
   /// with the given fields replaced by the non-null parameter values.
   @override
@@ -188,7 +218,9 @@ class _HomeState implements HomeState {
                 other.isToDoLoading == isToDoLoading) &&
             const DeepCollectionEquality()
                 .equals(other._scheduledTasks, _scheduledTasks) &&
-            const DeepCollectionEquality().equals(other._allTasks, _allTasks));
+            const DeepCollectionEquality().equals(other._allTasks, _allTasks) &&
+            (identical(other.selectedTask, selectedTask) ||
+                other.selectedTask == selectedTask));
   }
 
   @override
@@ -199,11 +231,12 @@ class _HomeState implements HomeState {
       isDeadLineLoading,
       isToDoLoading,
       const DeepCollectionEquality().hash(_scheduledTasks),
-      const DeepCollectionEquality().hash(_allTasks));
+      const DeepCollectionEquality().hash(_allTasks),
+      selectedTask);
 
   @override
   String toString() {
-    return 'HomeState(error: $error, isScheduledLoading: $isScheduledLoading, isDeadLineLoading: $isDeadLineLoading, isToDoLoading: $isToDoLoading, scheduledTasks: $scheduledTasks, allTasks: $allTasks)';
+    return 'HomeState(error: $error, isScheduledLoading: $isScheduledLoading, isDeadLineLoading: $isDeadLineLoading, isToDoLoading: $isToDoLoading, scheduledTasks: $scheduledTasks, allTasks: $allTasks, selectedTask: $selectedTask)';
   }
 }
 
@@ -221,7 +254,11 @@ abstract mixin class _$HomeStateCopyWith<$Res>
       bool isDeadLineLoading,
       bool isToDoLoading,
       List<TaskEntity> scheduledTasks,
-      List<TaskEntity> allTasks});
+      List<TaskEntity> allTasks,
+      TaskEntity? selectedTask});
+
+  @override
+  $TaskEntityCopyWith<$Res>? get selectedTask;
 }
 
 /// @nodoc
@@ -242,6 +279,7 @@ class __$HomeStateCopyWithImpl<$Res> implements _$HomeStateCopyWith<$Res> {
     Object? isToDoLoading = null,
     Object? scheduledTasks = null,
     Object? allTasks = null,
+    Object? selectedTask = freezed,
   }) {
     return _then(_HomeState(
       error: freezed == error
@@ -268,7 +306,25 @@ class __$HomeStateCopyWithImpl<$Res> implements _$HomeStateCopyWith<$Res> {
           ? _self._allTasks
           : allTasks // ignore: cast_nullable_to_non_nullable
               as List<TaskEntity>,
+      selectedTask: freezed == selectedTask
+          ? _self.selectedTask
+          : selectedTask // ignore: cast_nullable_to_non_nullable
+              as TaskEntity?,
     ));
+  }
+
+  /// Create a copy of HomeState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $TaskEntityCopyWith<$Res>? get selectedTask {
+    if (_self.selectedTask == null) {
+      return null;
+    }
+
+    return $TaskEntityCopyWith<$Res>(_self.selectedTask!, (value) {
+      return _then(_self.copyWith(selectedTask: value));
+    });
   }
 }
 

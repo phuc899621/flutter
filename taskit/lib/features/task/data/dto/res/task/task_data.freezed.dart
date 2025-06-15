@@ -19,14 +19,12 @@ mixin _$TaskData {
   String get id;
   String get title;
   String get description;
-  String get category;
+  String get categoryId;
   String get priority;
   String get userId;
   String get status;
-  DateTime? get scheduledDate;
-  bool get hasScheduledTime;
-  DateTime? get deadlineDate;
-  String get type;
+  DateTime? get dueDate;
+  bool get hasTime;
   List<SubtaskData> get subtasks;
   DateTime get createdAt;
   DateTime get updatedAt;
@@ -50,19 +48,14 @@ mixin _$TaskData {
             (identical(other.title, title) || other.title == title) &&
             (identical(other.description, description) ||
                 other.description == description) &&
-            (identical(other.category, category) ||
-                other.category == category) &&
+            (identical(other.categoryId, categoryId) ||
+                other.categoryId == categoryId) &&
             (identical(other.priority, priority) ||
                 other.priority == priority) &&
             (identical(other.userId, userId) || other.userId == userId) &&
             (identical(other.status, status) || other.status == status) &&
-            (identical(other.scheduledDate, scheduledDate) ||
-                other.scheduledDate == scheduledDate) &&
-            (identical(other.hasScheduledTime, hasScheduledTime) ||
-                other.hasScheduledTime == hasScheduledTime) &&
-            (identical(other.deadlineDate, deadlineDate) ||
-                other.deadlineDate == deadlineDate) &&
-            (identical(other.type, type) || other.type == type) &&
+            (identical(other.dueDate, dueDate) || other.dueDate == dueDate) &&
+            (identical(other.hasTime, hasTime) || other.hasTime == hasTime) &&
             const DeepCollectionEquality().equals(other.subtasks, subtasks) &&
             (identical(other.createdAt, createdAt) ||
                 other.createdAt == createdAt) &&
@@ -77,21 +70,19 @@ mixin _$TaskData {
       id,
       title,
       description,
-      category,
+      categoryId,
       priority,
       userId,
       status,
-      scheduledDate,
-      hasScheduledTime,
-      deadlineDate,
-      type,
+      dueDate,
+      hasTime,
       const DeepCollectionEquality().hash(subtasks),
       createdAt,
       updatedAt);
 
   @override
   String toString() {
-    return 'TaskData(id: $id, title: $title, description: $description, category: $category, priority: $priority, userId: $userId, status: $status, scheduledDate: $scheduledDate, hasScheduledTime: $hasScheduledTime, deadlineDate: $deadlineDate, type: $type, subtasks: $subtasks, createdAt: $createdAt, updatedAt: $updatedAt)';
+    return 'TaskData(id: $id, title: $title, description: $description, categoryId: $categoryId, priority: $priority, userId: $userId, status: $status, dueDate: $dueDate, hasTime: $hasTime, subtasks: $subtasks, createdAt: $createdAt, updatedAt: $updatedAt)';
   }
 }
 
@@ -104,14 +95,12 @@ abstract mixin class $TaskDataCopyWith<$Res> {
       {@JsonKey(name: '_id') String id,
       String title,
       String description,
-      String category,
+      String categoryId,
       String priority,
       String userId,
       String status,
-      DateTime? scheduledDate,
-      bool hasScheduledTime,
-      DateTime? deadlineDate,
-      String type,
+      DateTime? dueDate,
+      bool hasTime,
       List<SubtaskData> subtasks,
       DateTime createdAt,
       DateTime updatedAt});
@@ -132,14 +121,12 @@ class _$TaskDataCopyWithImpl<$Res> implements $TaskDataCopyWith<$Res> {
     Object? id = null,
     Object? title = null,
     Object? description = null,
-    Object? category = null,
+    Object? categoryId = null,
     Object? priority = null,
     Object? userId = null,
     Object? status = null,
-    Object? scheduledDate = freezed,
-    Object? hasScheduledTime = null,
-    Object? deadlineDate = freezed,
-    Object? type = null,
+    Object? dueDate = freezed,
+    Object? hasTime = null,
     Object? subtasks = null,
     Object? createdAt = null,
     Object? updatedAt = null,
@@ -157,9 +144,9 @@ class _$TaskDataCopyWithImpl<$Res> implements $TaskDataCopyWith<$Res> {
           ? _self.description
           : description // ignore: cast_nullable_to_non_nullable
               as String,
-      category: null == category
-          ? _self.category
-          : category // ignore: cast_nullable_to_non_nullable
+      categoryId: null == categoryId
+          ? _self.categoryId
+          : categoryId // ignore: cast_nullable_to_non_nullable
               as String,
       priority: null == priority
           ? _self.priority
@@ -173,22 +160,14 @@ class _$TaskDataCopyWithImpl<$Res> implements $TaskDataCopyWith<$Res> {
           ? _self.status
           : status // ignore: cast_nullable_to_non_nullable
               as String,
-      scheduledDate: freezed == scheduledDate
-          ? _self.scheduledDate
-          : scheduledDate // ignore: cast_nullable_to_non_nullable
+      dueDate: freezed == dueDate
+          ? _self.dueDate
+          : dueDate // ignore: cast_nullable_to_non_nullable
               as DateTime?,
-      hasScheduledTime: null == hasScheduledTime
-          ? _self.hasScheduledTime
-          : hasScheduledTime // ignore: cast_nullable_to_non_nullable
+      hasTime: null == hasTime
+          ? _self.hasTime
+          : hasTime // ignore: cast_nullable_to_non_nullable
               as bool,
-      deadlineDate: freezed == deadlineDate
-          ? _self.deadlineDate
-          : deadlineDate // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
-      type: null == type
-          ? _self.type
-          : type // ignore: cast_nullable_to_non_nullable
-              as String,
       subtasks: null == subtasks
           ? _self.subtasks
           : subtasks // ignore: cast_nullable_to_non_nullable
@@ -212,14 +191,12 @@ class _TaskData implements TaskData {
       {@JsonKey(name: '_id') required this.id,
       required this.title,
       required this.description,
-      required this.category,
+      required this.categoryId,
       required this.priority,
       required this.userId,
       required this.status,
-      this.scheduledDate,
-      required this.hasScheduledTime,
-      this.deadlineDate,
-      required this.type,
+      this.dueDate,
+      required this.hasTime,
       required final List<SubtaskData> subtasks,
       required this.createdAt,
       required this.updatedAt})
@@ -235,7 +212,7 @@ class _TaskData implements TaskData {
   @override
   final String description;
   @override
-  final String category;
+  final String categoryId;
   @override
   final String priority;
   @override
@@ -243,13 +220,9 @@ class _TaskData implements TaskData {
   @override
   final String status;
   @override
-  final DateTime? scheduledDate;
+  final DateTime? dueDate;
   @override
-  final bool hasScheduledTime;
-  @override
-  final DateTime? deadlineDate;
-  @override
-  final String type;
+  final bool hasTime;
   final List<SubtaskData> _subtasks;
   @override
   List<SubtaskData> get subtasks {
@@ -287,19 +260,14 @@ class _TaskData implements TaskData {
             (identical(other.title, title) || other.title == title) &&
             (identical(other.description, description) ||
                 other.description == description) &&
-            (identical(other.category, category) ||
-                other.category == category) &&
+            (identical(other.categoryId, categoryId) ||
+                other.categoryId == categoryId) &&
             (identical(other.priority, priority) ||
                 other.priority == priority) &&
             (identical(other.userId, userId) || other.userId == userId) &&
             (identical(other.status, status) || other.status == status) &&
-            (identical(other.scheduledDate, scheduledDate) ||
-                other.scheduledDate == scheduledDate) &&
-            (identical(other.hasScheduledTime, hasScheduledTime) ||
-                other.hasScheduledTime == hasScheduledTime) &&
-            (identical(other.deadlineDate, deadlineDate) ||
-                other.deadlineDate == deadlineDate) &&
-            (identical(other.type, type) || other.type == type) &&
+            (identical(other.dueDate, dueDate) || other.dueDate == dueDate) &&
+            (identical(other.hasTime, hasTime) || other.hasTime == hasTime) &&
             const DeepCollectionEquality().equals(other._subtasks, _subtasks) &&
             (identical(other.createdAt, createdAt) ||
                 other.createdAt == createdAt) &&
@@ -314,21 +282,19 @@ class _TaskData implements TaskData {
       id,
       title,
       description,
-      category,
+      categoryId,
       priority,
       userId,
       status,
-      scheduledDate,
-      hasScheduledTime,
-      deadlineDate,
-      type,
+      dueDate,
+      hasTime,
       const DeepCollectionEquality().hash(_subtasks),
       createdAt,
       updatedAt);
 
   @override
   String toString() {
-    return 'TaskData(id: $id, title: $title, description: $description, category: $category, priority: $priority, userId: $userId, status: $status, scheduledDate: $scheduledDate, hasScheduledTime: $hasScheduledTime, deadlineDate: $deadlineDate, type: $type, subtasks: $subtasks, createdAt: $createdAt, updatedAt: $updatedAt)';
+    return 'TaskData(id: $id, title: $title, description: $description, categoryId: $categoryId, priority: $priority, userId: $userId, status: $status, dueDate: $dueDate, hasTime: $hasTime, subtasks: $subtasks, createdAt: $createdAt, updatedAt: $updatedAt)';
   }
 }
 
@@ -343,14 +309,12 @@ abstract mixin class _$TaskDataCopyWith<$Res>
       {@JsonKey(name: '_id') String id,
       String title,
       String description,
-      String category,
+      String categoryId,
       String priority,
       String userId,
       String status,
-      DateTime? scheduledDate,
-      bool hasScheduledTime,
-      DateTime? deadlineDate,
-      String type,
+      DateTime? dueDate,
+      bool hasTime,
       List<SubtaskData> subtasks,
       DateTime createdAt,
       DateTime updatedAt});
@@ -371,14 +335,12 @@ class __$TaskDataCopyWithImpl<$Res> implements _$TaskDataCopyWith<$Res> {
     Object? id = null,
     Object? title = null,
     Object? description = null,
-    Object? category = null,
+    Object? categoryId = null,
     Object? priority = null,
     Object? userId = null,
     Object? status = null,
-    Object? scheduledDate = freezed,
-    Object? hasScheduledTime = null,
-    Object? deadlineDate = freezed,
-    Object? type = null,
+    Object? dueDate = freezed,
+    Object? hasTime = null,
     Object? subtasks = null,
     Object? createdAt = null,
     Object? updatedAt = null,
@@ -396,9 +358,9 @@ class __$TaskDataCopyWithImpl<$Res> implements _$TaskDataCopyWith<$Res> {
           ? _self.description
           : description // ignore: cast_nullable_to_non_nullable
               as String,
-      category: null == category
-          ? _self.category
-          : category // ignore: cast_nullable_to_non_nullable
+      categoryId: null == categoryId
+          ? _self.categoryId
+          : categoryId // ignore: cast_nullable_to_non_nullable
               as String,
       priority: null == priority
           ? _self.priority
@@ -412,22 +374,14 @@ class __$TaskDataCopyWithImpl<$Res> implements _$TaskDataCopyWith<$Res> {
           ? _self.status
           : status // ignore: cast_nullable_to_non_nullable
               as String,
-      scheduledDate: freezed == scheduledDate
-          ? _self.scheduledDate
-          : scheduledDate // ignore: cast_nullable_to_non_nullable
+      dueDate: freezed == dueDate
+          ? _self.dueDate
+          : dueDate // ignore: cast_nullable_to_non_nullable
               as DateTime?,
-      hasScheduledTime: null == hasScheduledTime
-          ? _self.hasScheduledTime
-          : hasScheduledTime // ignore: cast_nullable_to_non_nullable
+      hasTime: null == hasTime
+          ? _self.hasTime
+          : hasTime // ignore: cast_nullable_to_non_nullable
               as bool,
-      deadlineDate: freezed == deadlineDate
-          ? _self.deadlineDate
-          : deadlineDate // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
-      type: null == type
-          ? _self.type
-          : type // ignore: cast_nullable_to_non_nullable
-              as String,
       subtasks: null == subtasks
           ? _self._subtasks
           : subtasks // ignore: cast_nullable_to_non_nullable

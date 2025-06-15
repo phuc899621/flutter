@@ -66,7 +66,7 @@ class TaskitOutlineTextField extends ConsumerWidget {
       style: Theme.of(context).textTheme.bodySmall?.copyWith(
           fontFamily: 'Inter',
           letterSpacing: 0.0,
-          color: AppColor(context).primaryText),
+          color: AppColor(context).onSurface),
       keyboardType: keyboardType,
     );
   }
@@ -147,7 +147,7 @@ class _TaskitOutLineTextFieldWithPasswordState
             _obscureText
                 ? Icons.visibility_off_outlined
                 : Icons.visibility_outlined,
-            color: AppColor(context).secondaryText,
+            color: AppColor(context).onSurfaceVariant,
             size: 24.0,
           ),
         ),
@@ -155,7 +155,7 @@ class _TaskitOutLineTextFieldWithPasswordState
       style: Theme.of(context).textTheme.bodySmall?.copyWith(
             fontFamily: 'Inter',
             letterSpacing: 0.0,
-            color: AppColor(context).primaryText,
+            color: AppColor(context).onSurface,
           ),
     );
   }

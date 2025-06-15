@@ -16,10 +16,8 @@ class TaskTable extends Table {
   IntColumn get userLocalId =>
       integer().references(UserTable, #localId, onDelete: KeyAction.cascade)();
   TextColumn get status => text().withDefault(const Constant('pending'))();
-  DateTimeColumn get scheduledDate => dateTime().nullable()();
-  BoolColumn get hasScheduledTime =>
-      boolean().withDefault(const Constant(false))();
-  DateTimeColumn get deadlineDate => dateTime().nullable()();
+  DateTimeColumn get dueDate => dateTime().nullable()();
+  BoolColumn get hasTime => boolean().withDefault(const Constant(false))();
   DateTimeColumn get createdAt => dateTime()();
   DateTimeColumn get updatedAt => dateTime()();
 }

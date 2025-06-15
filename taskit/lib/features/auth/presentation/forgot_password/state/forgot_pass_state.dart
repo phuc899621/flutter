@@ -1,6 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-import '../../../domain/entites/forgot_pass/forgot_pass_verify.dart';
 
 part 'forgot_pass_state.freezed.dart';
 

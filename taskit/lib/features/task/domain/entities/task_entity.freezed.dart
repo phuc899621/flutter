@@ -18,14 +18,12 @@ mixin _$TaskEntity {
   int get localId;
   String get title;
   String get description;
-  String get category;
-  String get priority;
+  CategoryEntity get category;
+  TaskPriority get priority;
   int get userLocalId;
-  String get type;
-  String get status;
-  DateTime? get scheduledDate;
-  bool get hasScheduledTime;
-  DateTime? get deadlineDate;
+  TaskStatus get status;
+  DateTime? get dueDate;
+  bool get hasTime;
   List<SubtaskEntity> get subtasks;
   DateTime get createdAt;
   DateTime get updatedAt;
@@ -52,14 +50,9 @@ mixin _$TaskEntity {
                 other.priority == priority) &&
             (identical(other.userLocalId, userLocalId) ||
                 other.userLocalId == userLocalId) &&
-            (identical(other.type, type) || other.type == type) &&
             (identical(other.status, status) || other.status == status) &&
-            (identical(other.scheduledDate, scheduledDate) ||
-                other.scheduledDate == scheduledDate) &&
-            (identical(other.hasScheduledTime, hasScheduledTime) ||
-                other.hasScheduledTime == hasScheduledTime) &&
-            (identical(other.deadlineDate, deadlineDate) ||
-                other.deadlineDate == deadlineDate) &&
+            (identical(other.dueDate, dueDate) || other.dueDate == dueDate) &&
+            (identical(other.hasTime, hasTime) || other.hasTime == hasTime) &&
             const DeepCollectionEquality().equals(other.subtasks, subtasks) &&
             (identical(other.createdAt, createdAt) ||
                 other.createdAt == createdAt) &&
@@ -76,18 +69,16 @@ mixin _$TaskEntity {
       category,
       priority,
       userLocalId,
-      type,
       status,
-      scheduledDate,
-      hasScheduledTime,
-      deadlineDate,
+      dueDate,
+      hasTime,
       const DeepCollectionEquality().hash(subtasks),
       createdAt,
       updatedAt);
 
   @override
   String toString() {
-    return 'TaskEntity(localId: $localId, title: $title, description: $description, category: $category, priority: $priority, userLocalId: $userLocalId, type: $type, status: $status, scheduledDate: $scheduledDate, hasScheduledTime: $hasScheduledTime, deadlineDate: $deadlineDate, subtasks: $subtasks, createdAt: $createdAt, updatedAt: $updatedAt)';
+    return 'TaskEntity(localId: $localId, title: $title, description: $description, category: $category, priority: $priority, userLocalId: $userLocalId, status: $status, dueDate: $dueDate, hasTime: $hasTime, subtasks: $subtasks, createdAt: $createdAt, updatedAt: $updatedAt)';
   }
 }
 
@@ -101,17 +92,17 @@ abstract mixin class $TaskEntityCopyWith<$Res> {
       {int localId,
       String title,
       String description,
-      String category,
-      String priority,
+      CategoryEntity category,
+      TaskPriority priority,
       int userLocalId,
-      String type,
-      String status,
-      DateTime? scheduledDate,
-      bool hasScheduledTime,
-      DateTime? deadlineDate,
+      TaskStatus status,
+      DateTime? dueDate,
+      bool hasTime,
       List<SubtaskEntity> subtasks,
       DateTime createdAt,
       DateTime updatedAt});
+
+  $CategoryEntityCopyWith<$Res> get category;
 }
 
 /// @nodoc
@@ -132,11 +123,9 @@ class _$TaskEntityCopyWithImpl<$Res> implements $TaskEntityCopyWith<$Res> {
     Object? category = null,
     Object? priority = null,
     Object? userLocalId = null,
-    Object? type = null,
     Object? status = null,
-    Object? scheduledDate = freezed,
-    Object? hasScheduledTime = null,
-    Object? deadlineDate = freezed,
+    Object? dueDate = freezed,
+    Object? hasTime = null,
     Object? subtasks = null,
     Object? createdAt = null,
     Object? updatedAt = null,
@@ -157,35 +146,27 @@ class _$TaskEntityCopyWithImpl<$Res> implements $TaskEntityCopyWith<$Res> {
       category: null == category
           ? _self.category
           : category // ignore: cast_nullable_to_non_nullable
-              as String,
+              as CategoryEntity,
       priority: null == priority
           ? _self.priority
           : priority // ignore: cast_nullable_to_non_nullable
-              as String,
+              as TaskPriority,
       userLocalId: null == userLocalId
           ? _self.userLocalId
           : userLocalId // ignore: cast_nullable_to_non_nullable
               as int,
-      type: null == type
-          ? _self.type
-          : type // ignore: cast_nullable_to_non_nullable
-              as String,
       status: null == status
           ? _self.status
           : status // ignore: cast_nullable_to_non_nullable
-              as String,
-      scheduledDate: freezed == scheduledDate
-          ? _self.scheduledDate
-          : scheduledDate // ignore: cast_nullable_to_non_nullable
+              as TaskStatus,
+      dueDate: freezed == dueDate
+          ? _self.dueDate
+          : dueDate // ignore: cast_nullable_to_non_nullable
               as DateTime?,
-      hasScheduledTime: null == hasScheduledTime
-          ? _self.hasScheduledTime
-          : hasScheduledTime // ignore: cast_nullable_to_non_nullable
+      hasTime: null == hasTime
+          ? _self.hasTime
+          : hasTime // ignore: cast_nullable_to_non_nullable
               as bool,
-      deadlineDate: freezed == deadlineDate
-          ? _self.deadlineDate
-          : deadlineDate // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
       subtasks: null == subtasks
           ? _self.subtasks
           : subtasks // ignore: cast_nullable_to_non_nullable
@@ -200,6 +181,16 @@ class _$TaskEntityCopyWithImpl<$Res> implements $TaskEntityCopyWith<$Res> {
               as DateTime,
     ));
   }
+
+  /// Create a copy of TaskEntity
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $CategoryEntityCopyWith<$Res> get category {
+    return $CategoryEntityCopyWith<$Res>(_self.category, (value) {
+      return _then(_self.copyWith(category: value));
+    });
+  }
 }
 
 /// @nodoc
@@ -212,11 +203,9 @@ class _TaskEntity implements TaskEntity {
       required this.category,
       required this.priority,
       required this.userLocalId,
-      required this.type,
       required this.status,
-      this.scheduledDate,
-      required this.hasScheduledTime,
-      this.deadlineDate,
+      this.dueDate,
+      required this.hasTime,
       required final List<SubtaskEntity> subtasks,
       required this.createdAt,
       required this.updatedAt})
@@ -229,21 +218,17 @@ class _TaskEntity implements TaskEntity {
   @override
   final String description;
   @override
-  final String category;
+  final CategoryEntity category;
   @override
-  final String priority;
+  final TaskPriority priority;
   @override
   final int userLocalId;
   @override
-  final String type;
+  final TaskStatus status;
   @override
-  final String status;
+  final DateTime? dueDate;
   @override
-  final DateTime? scheduledDate;
-  @override
-  final bool hasScheduledTime;
-  @override
-  final DateTime? deadlineDate;
+  final bool hasTime;
   final List<SubtaskEntity> _subtasks;
   @override
   List<SubtaskEntity> get subtasks {
@@ -280,14 +265,9 @@ class _TaskEntity implements TaskEntity {
                 other.priority == priority) &&
             (identical(other.userLocalId, userLocalId) ||
                 other.userLocalId == userLocalId) &&
-            (identical(other.type, type) || other.type == type) &&
             (identical(other.status, status) || other.status == status) &&
-            (identical(other.scheduledDate, scheduledDate) ||
-                other.scheduledDate == scheduledDate) &&
-            (identical(other.hasScheduledTime, hasScheduledTime) ||
-                other.hasScheduledTime == hasScheduledTime) &&
-            (identical(other.deadlineDate, deadlineDate) ||
-                other.deadlineDate == deadlineDate) &&
+            (identical(other.dueDate, dueDate) || other.dueDate == dueDate) &&
+            (identical(other.hasTime, hasTime) || other.hasTime == hasTime) &&
             const DeepCollectionEquality().equals(other._subtasks, _subtasks) &&
             (identical(other.createdAt, createdAt) ||
                 other.createdAt == createdAt) &&
@@ -304,18 +284,16 @@ class _TaskEntity implements TaskEntity {
       category,
       priority,
       userLocalId,
-      type,
       status,
-      scheduledDate,
-      hasScheduledTime,
-      deadlineDate,
+      dueDate,
+      hasTime,
       const DeepCollectionEquality().hash(_subtasks),
       createdAt,
       updatedAt);
 
   @override
   String toString() {
-    return 'TaskEntity(localId: $localId, title: $title, description: $description, category: $category, priority: $priority, userLocalId: $userLocalId, type: $type, status: $status, scheduledDate: $scheduledDate, hasScheduledTime: $hasScheduledTime, deadlineDate: $deadlineDate, subtasks: $subtasks, createdAt: $createdAt, updatedAt: $updatedAt)';
+    return 'TaskEntity(localId: $localId, title: $title, description: $description, category: $category, priority: $priority, userLocalId: $userLocalId, status: $status, dueDate: $dueDate, hasTime: $hasTime, subtasks: $subtasks, createdAt: $createdAt, updatedAt: $updatedAt)';
   }
 }
 
@@ -331,17 +309,18 @@ abstract mixin class _$TaskEntityCopyWith<$Res>
       {int localId,
       String title,
       String description,
-      String category,
-      String priority,
+      CategoryEntity category,
+      TaskPriority priority,
       int userLocalId,
-      String type,
-      String status,
-      DateTime? scheduledDate,
-      bool hasScheduledTime,
-      DateTime? deadlineDate,
+      TaskStatus status,
+      DateTime? dueDate,
+      bool hasTime,
       List<SubtaskEntity> subtasks,
       DateTime createdAt,
       DateTime updatedAt});
+
+  @override
+  $CategoryEntityCopyWith<$Res> get category;
 }
 
 /// @nodoc
@@ -362,11 +341,9 @@ class __$TaskEntityCopyWithImpl<$Res> implements _$TaskEntityCopyWith<$Res> {
     Object? category = null,
     Object? priority = null,
     Object? userLocalId = null,
-    Object? type = null,
     Object? status = null,
-    Object? scheduledDate = freezed,
-    Object? hasScheduledTime = null,
-    Object? deadlineDate = freezed,
+    Object? dueDate = freezed,
+    Object? hasTime = null,
     Object? subtasks = null,
     Object? createdAt = null,
     Object? updatedAt = null,
@@ -387,35 +364,27 @@ class __$TaskEntityCopyWithImpl<$Res> implements _$TaskEntityCopyWith<$Res> {
       category: null == category
           ? _self.category
           : category // ignore: cast_nullable_to_non_nullable
-              as String,
+              as CategoryEntity,
       priority: null == priority
           ? _self.priority
           : priority // ignore: cast_nullable_to_non_nullable
-              as String,
+              as TaskPriority,
       userLocalId: null == userLocalId
           ? _self.userLocalId
           : userLocalId // ignore: cast_nullable_to_non_nullable
               as int,
-      type: null == type
-          ? _self.type
-          : type // ignore: cast_nullable_to_non_nullable
-              as String,
       status: null == status
           ? _self.status
           : status // ignore: cast_nullable_to_non_nullable
-              as String,
-      scheduledDate: freezed == scheduledDate
-          ? _self.scheduledDate
-          : scheduledDate // ignore: cast_nullable_to_non_nullable
+              as TaskStatus,
+      dueDate: freezed == dueDate
+          ? _self.dueDate
+          : dueDate // ignore: cast_nullable_to_non_nullable
               as DateTime?,
-      hasScheduledTime: null == hasScheduledTime
-          ? _self.hasScheduledTime
-          : hasScheduledTime // ignore: cast_nullable_to_non_nullable
+      hasTime: null == hasTime
+          ? _self.hasTime
+          : hasTime // ignore: cast_nullable_to_non_nullable
               as bool,
-      deadlineDate: freezed == deadlineDate
-          ? _self.deadlineDate
-          : deadlineDate // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
       subtasks: null == subtasks
           ? _self._subtasks
           : subtasks // ignore: cast_nullable_to_non_nullable
@@ -429,6 +398,16 @@ class __$TaskEntityCopyWithImpl<$Res> implements _$TaskEntityCopyWith<$Res> {
           : updatedAt // ignore: cast_nullable_to_non_nullable
               as DateTime,
     ));
+  }
+
+  /// Create a copy of TaskEntity
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $CategoryEntityCopyWith<$Res> get category {
+    return $CategoryEntityCopyWith<$Res>(_self.category, (value) {
+      return _then(_self.copyWith(category: value));
+    });
   }
 }
 

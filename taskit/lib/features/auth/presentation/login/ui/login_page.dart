@@ -114,7 +114,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                             ?.copyWith(
                                 fontFamily: 'Inter Tight',
                                 letterSpacing: 0.0,
-                                color: AppColor(context).primaryText,
+                                color: AppColor(context).onSurface,
                                 fontWeight: FontWeight.w700),
                       ),
                     ),
@@ -282,7 +282,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                                 .titleSmall
                                 ?.copyWith(
                                   fontFamily: 'Inter Tight',
-                                  color: AppColor(context).secondaryText,
+                                  color: AppColor(context).onSurfaceVariant,
                                   letterSpacing: 0.0,
                                 ),
                           ),
@@ -325,7 +325,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                                     .bodySmall
                                     ?.copyWith(
                                       fontFamily: 'Inter',
-                                      color: AppColor(context).secondaryText,
+                                      color: AppColor(context).onSurfaceVariant,
                                       letterSpacing: 0.0,
                                       fontWeight: FontWeight.w600,
                                     ),

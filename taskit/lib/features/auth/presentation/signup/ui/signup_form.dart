@@ -133,7 +133,7 @@ class _SignupFormState extends ConsumerState<SignupForm> {
                               fontFamily: 'Inter',
                               letterSpacing: 0.0,
                               fontWeight: FontWeight.w600,
-                              color: AppColor(context).secondaryText,
+                              color: AppColor(context).onSurfaceVariant,
                             ),
                       ),
                       TextSpan(

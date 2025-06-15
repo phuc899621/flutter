@@ -76,24 +76,27 @@ class AuthLocalDataSource implements IAuthLocalDataSource {
                 ))
             .toList();
         await categoryDao.insertAllCategories(categories);
-        final taskCompanions = loginData.tasks
-            .map((e) => TaskTableCompanion(
-                  remoteId: Value(e.id),
-                  title: Value(e.title),
-                  description: Value(e.description),
-                  category: Value(e.category),
-                  priority: Value(e.priority),
-                  userLocalId: Value(userLocalId),
-                  status: Value(e.status),
-                  scheduledDate: Value(e.scheduledDate),
-                  hasScheduledTime: Value(e.hasScheduledTime),
-                  deadlineDate: Value(e.deadlineDate),
-                  type: Value(e.type),
-                  createdAt: Value(e.updatedAt),
-                  updatedAt: Value(e.createdAt),
-                  isSynced: const Value(true),
-                ))
-            .toList();
+        final categoryTableDatas = await categoryDao.getCategories();
+        final taskCompanions = loginData.tasks.map((e) {
+          final category = categoryTableDatas.firstWhere(
+            (element) => element.remoteId == e.categoryId,
+          );
+          return TaskTableCompanion(
+            remoteId: Value(e.id),
+            title: Value(e.title),
+            description: Value(e.description),
+            categoryLocalId: Value(category.localId),
+            priority: Value(e.priority),
+            userLocalId: Value(userLocalId),
+            status: Value(e.status),
+            dueDate: Value(e.dueDate),
+            hasTime: Value(e.hasTime),
+            createdAt: Value(e.updatedAt),
+            updatedAt: Value(e.createdAt),
+            isSynced: const Value(true),
+          );
+        }).toList();
+
         await taskDao.insertAllTasks(taskCompanions);
         final subtaskCompanions = await Future.wait(
           loginData.tasks.map((task) async {
