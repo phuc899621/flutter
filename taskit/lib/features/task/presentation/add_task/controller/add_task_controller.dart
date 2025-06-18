@@ -81,6 +81,20 @@ class AddTaskController extends AutoDisposeNotifier<AddTaskState> {
             state.selectedDate!.copyWith(hour: s.hour, minute: s.minute));
   }
 
+  void setAddCategory(String s) {
+    if (s != state.addCategory) {
+      state = state.copyWith(addCategory: s);
+    }
+  }
+
+  void setAddTaskForm() {}
+
+  void onAddCategory() {
+    final category = CategoryEntity(localId: -1, name: state.addCategory);
+    ref.read(taskServiceProvider).insertCategory(category);
+    state = state.copyWith(addCategory: '');
+  }
+
   Future<void> updateAiCategory(String title) async {
     debugPrintStack(stackTrace: StackTrace.current, label: 'aiCategories');
     state = state.copyWith(isCategoriesLoading: true);
@@ -109,6 +123,7 @@ class AddTaskController extends AutoDisposeNotifier<AddTaskState> {
     logger.i('Category._startListening');
     final taskService = ref.watch(taskServiceProvider);
     _categorySub = taskService.watchAllCategories().listen((categories) {
+      state = state.copyWith(isCategoriesLoading: true);
       state = state.copyWith(categories: categories);
       if (state.selectedCategory == null) {
         state = state.copyWith(
@@ -116,6 +131,8 @@ class AddTaskController extends AutoDisposeNotifier<AddTaskState> {
                 .where((element) => element.name.toLowerCase() == 'any')
                 .first);
       }
+      Duration(seconds: 1);
+      state = state.copyWith(isCategoriesLoading: false);
     });
   }
 

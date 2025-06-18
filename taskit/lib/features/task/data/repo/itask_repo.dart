@@ -31,7 +31,7 @@ abstract interface class ITaskRepo {
   /*
   * Insert
   * */
-  Future<void> insertCategory(CategoryEntity category);
+  Future<int> insertCategory(CategoryEntity category);
 
   Future<TaskEntity> insertTask(TaskEntity task);
 }

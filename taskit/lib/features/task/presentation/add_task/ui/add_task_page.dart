@@ -21,7 +21,9 @@ class _AddTaskPageState extends ConsumerState<AddTaskPage> {
   final _descriptionController = TextEditingController();
   final _dueDateController = TextEditingController();
   final _dueTimeController = TextEditingController();
+  final _categoryController = TextEditingController();
   final _formState = GlobalKey<FormState>();
+  final _categoryFormState = GlobalKey<FormState>();
   final _focusTitleNode = FocusNode();
   final _focusDescriptionNode = FocusNode();
   final List<TextEditingController> _subtaskControllers = [];
@@ -212,9 +214,204 @@ class _AddTaskPageState extends ConsumerState<AddTaskPage> {
                       const SizedBox(
                         height: 10,
                       ),
-                      Text(
-                        'Category',
-                        style: text.titleMedium,
+                      SizedBox(
+                        height: 40,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              'Category',
+                              style: text.titleMedium,
+                            ),
+                            Theme(
+                              data: ThemeData(
+                                  splashColor: color.onSecondaryContainer),
+                              child: Material(
+                                elevation: 2,
+                                borderRadius: BorderRadius.circular(10),
+                                child: GestureDetector(
+                                    onTap: () {
+                                      showModalBottomSheet(
+                                          context: context,
+                                          useRootNavigator: true,
+                                          isScrollControlled: true,
+                                          backgroundColor: color.surface,
+                                          shape: RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.only(
+                                                  topLeft: Radius.circular(15),
+                                                  topRight:
+                                                      Radius.circular(15))),
+                                          builder: (context) => Padding(
+                                                padding: MediaQuery.of(context)
+                                                    .viewInsets,
+                                                child: Form(
+                                                  key: _categoryFormState,
+                                                  child: Container(
+                                                      width: double.infinity,
+                                                      height: 170,
+                                                      padding:
+                                                          EdgeInsets.all(10),
+                                                      child: Column(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .start,
+                                                          spacing: 10,
+                                                          children: [
+                                                            TextFormField(
+                                                              controller:
+                                                                  _categoryController,
+                                                              maxLines: 1,
+                                                              maxLength: 20,
+                                                              autofocus: false,
+                                                              onTapOutside: (event) =>
+                                                                  FocusScope.of(
+                                                                          context)
+                                                                      .unfocus(),
+                                                              style: text
+                                                                  .bodyMedium
+                                                                  ?.copyWith(
+                                                                      color: color
+                                                                          .onSurface),
+                                                              validator:
+                                                                  (value) {
+                                                                if (value ==
+                                                                        null ||
+                                                                    value
+                                                                        .isEmpty) {
+                                                                  return 'Please enter category';
+                                                                }
+                                                                if (value
+                                                                        .length <
+                                                                    3) {
+                                                                  return 'Category must be at least 3 characters';
+                                                                }
+                                                                if (state.categories.any((element) =>
+                                                                    element.name
+                                                                        .toLowerCase()
+                                                                        .trim() ==
+                                                                    value
+                                                                        .toLowerCase()
+                                                                        .trim())) {
+                                                                  return 'Category already exists';
+                                                                }
+                                                                return null;
+                                                              },
+                                                              onChanged: (_) =>
+                                                                  controller.setAddCategory(
+                                                                      _categoryController
+                                                                          .text),
+                                                              decoration:
+                                                                  InputDecoration(
+                                                                suffixIcon: state
+                                                                        .addCategory
+                                                                        .isNotEmpty
+                                                                    ? IconButton(
+                                                                        onPressed:
+                                                                            _categoryController
+                                                                                .clear,
+                                                                        icon: Icon(
+                                                                            Icons
+                                                                                .clear_rounded,
+                                                                            color:
+                                                                                color.onSurfaceVariant))
+                                                                    : null,
+                                                                hintText:
+                                                                    'Enter category:',
+                                                                hintStyle: text
+                                                                    .bodyMedium
+                                                                    ?.copyWith(
+                                                                        color: color
+                                                                            .onSurfaceVariant,
+                                                                        fontWeight:
+                                                                            FontWeight.w500),
+                                                                border:
+                                                                    OutlineInputBorder(
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .circular(
+                                                                              10),
+                                                                ),
+                                                              ),
+                                                            ),
+                                                            Theme(
+                                                              data: ThemeData(
+                                                                  splashColor: color
+                                                                      .onSecondaryContainer),
+                                                              child: Material(
+                                                                elevation: 2,
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            10),
+                                                                child: GestureDetector(
+                                                                    onTap: () {
+                                                                      if (_categoryFormState
+                                                                              .currentState
+                                                                              ?.validate() ??
+                                                                          false) {
+                                                                        controller
+                                                                            .onAddCategory();
+                                                                        _categoryController
+                                                                            .clear();
+                                                                        Navigator.pop(
+                                                                            context);
+                                                                      }
+                                                                    },
+                                                                    child: Container(
+                                                                        height: 45,
+                                                                        width: 150,
+                                                                        decoration: BoxDecoration(color: color.secondary, borderRadius: BorderRadius.circular(10)),
+                                                                        child: Center(
+                                                                          child:
+                                                                              Row(
+                                                                            spacing:
+                                                                                5,
+                                                                            mainAxisAlignment:
+                                                                                MainAxisAlignment.center,
+                                                                            children: [
+                                                                              Icon(
+                                                                                Icons.add_circle,
+                                                                                color: color.onSecondary,
+                                                                                size: 20,
+                                                                              ),
+                                                                              Text(
+                                                                                'Add',
+                                                                                style: text.titleMedium?.copyWith(color: color.onSecondary),
+                                                                              )
+                                                                            ],
+                                                                          ),
+                                                                        ))),
+                                                              ),
+                                                            ),
+                                                          ])),
+                                                ),
+                                              ));
+                                    },
+                                    child: Container(
+                                        height: 35,
+                                        width: 40,
+                                        decoration: BoxDecoration(
+                                            color: color.secondary,
+                                            borderRadius:
+                                                BorderRadius.circular(10)),
+                                        child: Center(
+                                          child: Row(
+                                            spacing: 5,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              Icon(
+                                                Icons.add_circle,
+                                                color: color.onSecondary,
+                                                size: 20,
+                                              ),
+                                            ],
+                                          ),
+                                        ))),
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                       SizedBox(
                         height: 50,

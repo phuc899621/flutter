@@ -335,9 +335,10 @@ class $CategoryTableTable extends CategoryTable
   late final GeneratedColumn<bool> isSynced = GeneratedColumn<bool>(
       'is_synced', aliasedName, false,
       type: DriftSqlType.bool,
-      requiredDuringInsert: true,
+      requiredDuringInsert: false,
       defaultConstraints:
-          GeneratedColumn.constraintIsAlways('CHECK ("is_synced" IN (0, 1))'));
+          GeneratedColumn.constraintIsAlways('CHECK ("is_synced" IN (0, 1))'),
+      defaultValue: const Constant(false));
   static const VerificationMeta _userLocalIdMeta =
       const VerificationMeta('userLocalId');
   @override
@@ -352,13 +353,17 @@ class $CategoryTableTable extends CategoryTable
   @override
   late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
       'created_at', aliasedName, false,
-      type: DriftSqlType.dateTime, requiredDuringInsert: true);
+      type: DriftSqlType.dateTime,
+      requiredDuringInsert: false,
+      defaultValue: currentDateAndTime);
   static const VerificationMeta _updatedAtMeta =
       const VerificationMeta('updatedAt');
   @override
   late final GeneratedColumn<DateTime> updatedAt = GeneratedColumn<DateTime>(
       'updated_at', aliasedName, false,
-      type: DriftSqlType.dateTime, requiredDuringInsert: true);
+      type: DriftSqlType.dateTime,
+      requiredDuringInsert: false,
+      defaultValue: currentDateAndTime);
   @override
   List<GeneratedColumn> get $columns =>
       [localId, remoteId, name, isSynced, userLocalId, createdAt, updatedAt];
@@ -389,8 +394,6 @@ class $CategoryTableTable extends CategoryTable
     if (data.containsKey('is_synced')) {
       context.handle(_isSyncedMeta,
           isSynced.isAcceptableOrUnknown(data['is_synced']!, _isSyncedMeta));
-    } else if (isInserting) {
-      context.missing(_isSyncedMeta);
     }
     if (data.containsKey('user_local_id')) {
       context.handle(
@@ -403,14 +406,10 @@ class $CategoryTableTable extends CategoryTable
     if (data.containsKey('created_at')) {
       context.handle(_createdAtMeta,
           createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta));
-    } else if (isInserting) {
-      context.missing(_createdAtMeta);
     }
     if (data.containsKey('updated_at')) {
       context.handle(_updatedAtMeta,
           updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta));
-    } else if (isInserting) {
-      context.missing(_updatedAtMeta);
     }
     return context;
   }
@@ -594,15 +593,12 @@ class CategoryTableCompanion extends UpdateCompanion<CategoryTableData> {
     this.localId = const Value.absent(),
     this.remoteId = const Value.absent(),
     required String name,
-    required bool isSynced,
+    this.isSynced = const Value.absent(),
     required int userLocalId,
-    required DateTime createdAt,
-    required DateTime updatedAt,
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
   })  : name = Value(name),
-        isSynced = Value(isSynced),
-        userLocalId = Value(userLocalId),
-        createdAt = Value(createdAt),
-        updatedAt = Value(updatedAt);
+        userLocalId = Value(userLocalId);
   static Insertable<CategoryTableData> custom({
     Expression<int>? localId,
     Expression<String>? remoteId,
@@ -736,9 +732,10 @@ class $TaskTableTable extends TaskTable
   late final GeneratedColumn<bool> isSynced = GeneratedColumn<bool>(
       'is_synced', aliasedName, false,
       type: DriftSqlType.bool,
-      requiredDuringInsert: true,
+      requiredDuringInsert: false,
       defaultConstraints:
-          GeneratedColumn.constraintIsAlways('CHECK ("is_synced" IN (0, 1))'));
+          GeneratedColumn.constraintIsAlways('CHECK ("is_synced" IN (0, 1))'),
+      defaultValue: const Constant(false));
   static const VerificationMeta _priorityMeta =
       const VerificationMeta('priority');
   @override
@@ -784,13 +781,17 @@ class $TaskTableTable extends TaskTable
   @override
   late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
       'created_at', aliasedName, false,
-      type: DriftSqlType.dateTime, requiredDuringInsert: true);
+      type: DriftSqlType.dateTime,
+      requiredDuringInsert: false,
+      defaultValue: currentDateAndTime);
   static const VerificationMeta _updatedAtMeta =
       const VerificationMeta('updatedAt');
   @override
   late final GeneratedColumn<DateTime> updatedAt = GeneratedColumn<DateTime>(
       'updated_at', aliasedName, false,
-      type: DriftSqlType.dateTime, requiredDuringInsert: true);
+      type: DriftSqlType.dateTime,
+      requiredDuringInsert: false,
+      defaultValue: currentDateAndTime);
   @override
   List<GeneratedColumn> get $columns => [
         localId,
@@ -848,8 +849,6 @@ class $TaskTableTable extends TaskTable
     if (data.containsKey('is_synced')) {
       context.handle(_isSyncedMeta,
           isSynced.isAcceptableOrUnknown(data['is_synced']!, _isSyncedMeta));
-    } else if (isInserting) {
-      context.missing(_isSyncedMeta);
     }
     if (data.containsKey('priority')) {
       context.handle(_priorityMeta,
@@ -878,14 +877,10 @@ class $TaskTableTable extends TaskTable
     if (data.containsKey('created_at')) {
       context.handle(_createdAtMeta,
           createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta));
-    } else if (isInserting) {
-      context.missing(_createdAtMeta);
     }
     if (data.containsKey('updated_at')) {
       context.handle(_updatedAtMeta,
           updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta));
-    } else if (isInserting) {
-      context.missing(_updatedAtMeta);
     }
     return context;
   }
@@ -1179,20 +1174,17 @@ class TaskTableCompanion extends UpdateCompanion<TaskTableData> {
     required String title,
     this.description = const Value.absent(),
     required int categoryLocalId,
-    required bool isSynced,
+    this.isSynced = const Value.absent(),
     this.priority = const Value.absent(),
     required int userLocalId,
     this.status = const Value.absent(),
     this.dueDate = const Value.absent(),
     this.hasTime = const Value.absent(),
-    required DateTime createdAt,
-    required DateTime updatedAt,
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
   })  : title = Value(title),
         categoryLocalId = Value(categoryLocalId),
-        isSynced = Value(isSynced),
-        userLocalId = Value(userLocalId),
-        createdAt = Value(createdAt),
-        updatedAt = Value(updatedAt);
+        userLocalId = Value(userLocalId);
   static Insertable<TaskTableData> custom({
     Expression<int>? localId,
     Expression<String>? remoteId,
@@ -1357,9 +1349,10 @@ class $SubtaskTableTable extends SubtaskTable
   late final GeneratedColumn<bool> isSynced = GeneratedColumn<bool>(
       'is_synced', aliasedName, false,
       type: DriftSqlType.bool,
-      requiredDuringInsert: true,
+      requiredDuringInsert: false,
       defaultConstraints:
-          GeneratedColumn.constraintIsAlways('CHECK ("is_synced" IN (0, 1))'));
+          GeneratedColumn.constraintIsAlways('CHECK ("is_synced" IN (0, 1))'),
+      defaultValue: const Constant(false));
   static const VerificationMeta _isCompletedMeta =
       const VerificationMeta('isCompleted');
   @override
@@ -1384,13 +1377,17 @@ class $SubtaskTableTable extends SubtaskTable
   @override
   late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
       'created_at', aliasedName, false,
-      type: DriftSqlType.dateTime, requiredDuringInsert: true);
+      type: DriftSqlType.dateTime,
+      requiredDuringInsert: false,
+      defaultValue: currentDateAndTime);
   static const VerificationMeta _updatedAtMeta =
       const VerificationMeta('updatedAt');
   @override
   late final GeneratedColumn<DateTime> updatedAt = GeneratedColumn<DateTime>(
       'updated_at', aliasedName, false,
-      type: DriftSqlType.dateTime, requiredDuringInsert: true);
+      type: DriftSqlType.dateTime,
+      requiredDuringInsert: false,
+      defaultValue: currentDateAndTime);
   @override
   List<GeneratedColumn> get $columns => [
         localId,
@@ -1429,8 +1426,6 @@ class $SubtaskTableTable extends SubtaskTable
     if (data.containsKey('is_synced')) {
       context.handle(_isSyncedMeta,
           isSynced.isAcceptableOrUnknown(data['is_synced']!, _isSyncedMeta));
-    } else if (isInserting) {
-      context.missing(_isSyncedMeta);
     }
     if (data.containsKey('is_completed')) {
       context.handle(
@@ -1449,14 +1444,10 @@ class $SubtaskTableTable extends SubtaskTable
     if (data.containsKey('created_at')) {
       context.handle(_createdAtMeta,
           createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta));
-    } else if (isInserting) {
-      context.missing(_createdAtMeta);
     }
     if (data.containsKey('updated_at')) {
       context.handle(_updatedAtMeta,
           updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta));
-    } else if (isInserting) {
-      context.missing(_updatedAtMeta);
     }
     return context;
   }
@@ -1656,16 +1647,13 @@ class SubtaskTableCompanion extends UpdateCompanion<SubtaskTableData> {
     this.localId = const Value.absent(),
     this.remoteId = const Value.absent(),
     required String title,
-    required bool isSynced,
+    this.isSynced = const Value.absent(),
     this.isCompleted = const Value.absent(),
     required int taskLocalId,
-    required DateTime createdAt,
-    required DateTime updatedAt,
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
   })  : title = Value(title),
-        isSynced = Value(isSynced),
-        taskLocalId = Value(taskLocalId),
-        createdAt = Value(createdAt),
-        updatedAt = Value(updatedAt);
+        taskLocalId = Value(taskLocalId);
   static Insertable<SubtaskTableData> custom({
     Expression<int>? localId,
     Expression<String>? remoteId,
@@ -1820,9 +1808,10 @@ class $SettingTableTable extends SettingTable
   late final GeneratedColumn<bool> isSynced = GeneratedColumn<bool>(
       'is_synced', aliasedName, false,
       type: DriftSqlType.bool,
-      requiredDuringInsert: true,
+      requiredDuringInsert: false,
       defaultConstraints:
-          GeneratedColumn.constraintIsAlways('CHECK ("is_synced" IN (0, 1))'));
+          GeneratedColumn.constraintIsAlways('CHECK ("is_synced" IN (0, 1))'),
+      defaultValue: const Constant(false));
   @override
   List<GeneratedColumn> get $columns => [
         localId,
@@ -1891,8 +1880,6 @@ class $SettingTableTable extends SettingTable
     if (data.containsKey('is_synced')) {
       context.handle(_isSyncedMeta,
           isSynced.isAcceptableOrUnknown(data['is_synced']!, _isSyncedMeta));
-    } else if (isInserting) {
-      context.missing(_isSyncedMeta);
     }
     return context;
   }
@@ -2102,13 +2089,12 @@ class SettingTableCompanion extends UpdateCompanion<SettingTableData> {
     required String language,
     required String theme,
     required int remindBefore,
-    required bool isSynced,
+    this.isSynced = const Value.absent(),
   })  : userLocalId = Value(userLocalId),
         isNotificationEnabled = Value(isNotificationEnabled),
         language = Value(language),
         theme = Value(theme),
-        remindBefore = Value(remindBefore),
-        isSynced = Value(isSynced);
+        remindBefore = Value(remindBefore);
   static Insertable<SettingTableData> custom({
     Expression<int>? localId,
     Expression<String>? remoteId,
@@ -2658,10 +2644,10 @@ typedef $$CategoryTableTableCreateCompanionBuilder = CategoryTableCompanion
   Value<int> localId,
   Value<String> remoteId,
   required String name,
-  required bool isSynced,
+  Value<bool> isSynced,
   required int userLocalId,
-  required DateTime createdAt,
-  required DateTime updatedAt,
+  Value<DateTime> createdAt,
+  Value<DateTime> updatedAt,
 });
 typedef $$CategoryTableTableUpdateCompanionBuilder = CategoryTableCompanion
     Function({
@@ -2941,10 +2927,10 @@ class $$CategoryTableTableTableManager extends RootTableManager<
             Value<int> localId = const Value.absent(),
             Value<String> remoteId = const Value.absent(),
             required String name,
-            required bool isSynced,
+            Value<bool> isSynced = const Value.absent(),
             required int userLocalId,
-            required DateTime createdAt,
-            required DateTime updatedAt,
+            Value<DateTime> createdAt = const Value.absent(),
+            Value<DateTime> updatedAt = const Value.absent(),
           }) =>
               CategoryTableCompanion.insert(
             localId: localId,
@@ -3033,14 +3019,14 @@ typedef $$TaskTableTableCreateCompanionBuilder = TaskTableCompanion Function({
   required String title,
   Value<String> description,
   required int categoryLocalId,
-  required bool isSynced,
+  Value<bool> isSynced,
   Value<String> priority,
   required int userLocalId,
   Value<String> status,
   Value<DateTime?> dueDate,
   Value<bool> hasTime,
-  required DateTime createdAt,
-  required DateTime updatedAt,
+  Value<DateTime> createdAt,
+  Value<DateTime> updatedAt,
 });
 typedef $$TaskTableTableUpdateCompanionBuilder = TaskTableCompanion Function({
   Value<int> localId,
@@ -3459,14 +3445,14 @@ class $$TaskTableTableTableManager extends RootTableManager<
             required String title,
             Value<String> description = const Value.absent(),
             required int categoryLocalId,
-            required bool isSynced,
+            Value<bool> isSynced = const Value.absent(),
             Value<String> priority = const Value.absent(),
             required int userLocalId,
             Value<String> status = const Value.absent(),
             Value<DateTime?> dueDate = const Value.absent(),
             Value<bool> hasTime = const Value.absent(),
-            required DateTime createdAt,
-            required DateTime updatedAt,
+            Value<DateTime> createdAt = const Value.absent(),
+            Value<DateTime> updatedAt = const Value.absent(),
           }) =>
               TaskTableCompanion.insert(
             localId: localId,
@@ -3574,11 +3560,11 @@ typedef $$SubtaskTableTableCreateCompanionBuilder = SubtaskTableCompanion
   Value<int> localId,
   Value<String> remoteId,
   required String title,
-  required bool isSynced,
+  Value<bool> isSynced,
   Value<bool> isCompleted,
   required int taskLocalId,
-  required DateTime createdAt,
-  required DateTime updatedAt,
+  Value<DateTime> createdAt,
+  Value<DateTime> updatedAt,
 });
 typedef $$SubtaskTableTableUpdateCompanionBuilder = SubtaskTableCompanion
     Function({
@@ -3811,11 +3797,11 @@ class $$SubtaskTableTableTableManager extends RootTableManager<
             Value<int> localId = const Value.absent(),
             Value<String> remoteId = const Value.absent(),
             required String title,
-            required bool isSynced,
+            Value<bool> isSynced = const Value.absent(),
             Value<bool> isCompleted = const Value.absent(),
             required int taskLocalId,
-            required DateTime createdAt,
-            required DateTime updatedAt,
+            Value<DateTime> createdAt = const Value.absent(),
+            Value<DateTime> updatedAt = const Value.absent(),
           }) =>
               SubtaskTableCompanion.insert(
             localId: localId,
@@ -3893,7 +3879,7 @@ typedef $$SettingTableTableCreateCompanionBuilder = SettingTableCompanion
   required String language,
   required String theme,
   required int remindBefore,
-  required bool isSynced,
+  Value<bool> isSynced,
 });
 typedef $$SettingTableTableUpdateCompanionBuilder = SettingTableCompanion
     Function({
@@ -4133,7 +4119,7 @@ class $$SettingTableTableTableManager extends RootTableManager<
             required String language,
             required String theme,
             required int remindBefore,
-            required bool isSynced,
+            Value<bool> isSynced = const Value.absent(),
           }) =>
               SettingTableCompanion.insert(
             localId: localId,

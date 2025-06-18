@@ -17,6 +17,7 @@ sealed class AddTaskState with _$AddTaskState {
       @Default([]) List<SubtaskEntity> subtasks,
       @Default(TaskPriority.none) TaskPriority selectedPriority,
       CategoryEntity? selectedCategory,
+      @Default('') String addCategory,
       DateTime? selectedDate,
       @Default({}) Map<String, dynamic> addTaskForm,
       @Default('') String title,

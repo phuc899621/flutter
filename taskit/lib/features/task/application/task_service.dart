@@ -1,7 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:multiple_result/multiple_result.dart';
-import 'package:taskit/shared/data/repository/itoken_repository.dart';
-import 'package:taskit/shared/data/repository/token_repository.dart';
 
 import '../../../shared/exception/failure.dart';
 import '../data/repo/itask_repo.dart';
@@ -12,15 +10,13 @@ import '../domain/entities/task_status_enum.dart';
 import 'itask_service.dart';
 
 final taskServiceProvider = Provider<ITaskService>((ref) {
-  return TaskService(
-      ref.watch(taskRepoProvider), ref.watch(tokenRepositoryProvider));
+  return TaskService(ref.watch(taskRepoProvider));
 });
 
 class TaskService implements ITaskService {
   final ITaskRepo _iTaskRepo;
-  final ITokenRepository _iTokenRepo;
 
-  TaskService(this._iTaskRepo, this._iTokenRepo);
+  TaskService(this._iTaskRepo);
 
   /*
   * Watch
@@ -104,7 +100,7 @@ class TaskService implements ITaskService {
   * Insert
   * */
   @override
-  Future<void> insertCategory(CategoryEntity category) {
-    return _iTaskRepo.insertCategory(category);
+  Future<int> insertCategory(CategoryEntity category) async {
+    return await _iTaskRepo.insertCategory(category);
   }
 }

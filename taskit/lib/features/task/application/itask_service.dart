@@ -29,5 +29,5 @@ abstract interface class ITaskService {
   /*
   * Insert
   * */
-  Future<void> insertCategory(CategoryEntity category);
+  Future<int> insertCategory(CategoryEntity category); //return localId
 }

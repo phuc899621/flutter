@@ -24,6 +24,7 @@ mixin _$AddTaskState {
   List<SubtaskEntity> get subtasks;
   TaskPriority get selectedPriority;
   CategoryEntity? get selectedCategory;
+  String get addCategory;
   DateTime? get selectedDate;
   Map<String, dynamic> get addTaskForm;
   String get title;
@@ -59,6 +60,8 @@ mixin _$AddTaskState {
                 other.selectedPriority == selectedPriority) &&
             (identical(other.selectedCategory, selectedCategory) ||
                 other.selectedCategory == selectedCategory) &&
+            (identical(other.addCategory, addCategory) ||
+                other.addCategory == addCategory) &&
             (identical(other.selectedDate, selectedDate) ||
                 other.selectedDate == selectedDate) &&
             const DeepCollectionEquality()
@@ -82,6 +85,7 @@ mixin _$AddTaskState {
       const DeepCollectionEquality().hash(subtasks),
       selectedPriority,
       selectedCategory,
+      addCategory,
       selectedDate,
       const DeepCollectionEquality().hash(addTaskForm),
       title,
@@ -90,7 +94,7 @@ mixin _$AddTaskState {
 
   @override
   String toString() {
-    return 'AddTaskState(isLoading: $isLoading, isCategoriesLoading: $isCategoriesLoading, isCreateTaskSuccess: $isCreateTaskSuccess, error: $error, categories: $categories, aiCategories: $aiCategories, subtasks: $subtasks, selectedPriority: $selectedPriority, selectedCategory: $selectedCategory, selectedDate: $selectedDate, addTaskForm: $addTaskForm, title: $title, description: $description, isTimeSelected: $isTimeSelected)';
+    return 'AddTaskState(isLoading: $isLoading, isCategoriesLoading: $isCategoriesLoading, isCreateTaskSuccess: $isCreateTaskSuccess, error: $error, categories: $categories, aiCategories: $aiCategories, subtasks: $subtasks, selectedPriority: $selectedPriority, selectedCategory: $selectedCategory, addCategory: $addCategory, selectedDate: $selectedDate, addTaskForm: $addTaskForm, title: $title, description: $description, isTimeSelected: $isTimeSelected)';
   }
 }
 
@@ -110,6 +114,7 @@ abstract mixin class $AddTaskStateCopyWith<$Res> {
       List<SubtaskEntity> subtasks,
       TaskPriority selectedPriority,
       CategoryEntity? selectedCategory,
+      String addCategory,
       DateTime? selectedDate,
       Map<String, dynamic> addTaskForm,
       String title,
@@ -140,6 +145,7 @@ class _$AddTaskStateCopyWithImpl<$Res> implements $AddTaskStateCopyWith<$Res> {
     Object? subtasks = null,
     Object? selectedPriority = null,
     Object? selectedCategory = freezed,
+    Object? addCategory = null,
     Object? selectedDate = freezed,
     Object? addTaskForm = null,
     Object? title = null,
@@ -183,6 +189,10 @@ class _$AddTaskStateCopyWithImpl<$Res> implements $AddTaskStateCopyWith<$Res> {
           ? _self.selectedCategory
           : selectedCategory // ignore: cast_nullable_to_non_nullable
               as CategoryEntity?,
+      addCategory: null == addCategory
+          ? _self.addCategory
+          : addCategory // ignore: cast_nullable_to_non_nullable
+              as String,
       selectedDate: freezed == selectedDate
           ? _self.selectedDate
           : selectedDate // ignore: cast_nullable_to_non_nullable
@@ -234,6 +244,7 @@ class _AddTaskState implements AddTaskState {
       final List<SubtaskEntity> subtasks = const [],
       this.selectedPriority = TaskPriority.none,
       this.selectedCategory,
+      this.addCategory = '',
       this.selectedDate,
       final Map<String, dynamic> addTaskForm = const {},
       this.title = '',
@@ -287,6 +298,9 @@ class _AddTaskState implements AddTaskState {
   @override
   final CategoryEntity? selectedCategory;
   @override
+  @JsonKey()
+  final String addCategory;
+  @override
   final DateTime? selectedDate;
   final Map<String, dynamic> _addTaskForm;
   @override
@@ -336,6 +350,8 @@ class _AddTaskState implements AddTaskState {
                 other.selectedPriority == selectedPriority) &&
             (identical(other.selectedCategory, selectedCategory) ||
                 other.selectedCategory == selectedCategory) &&
+            (identical(other.addCategory, addCategory) ||
+                other.addCategory == addCategory) &&
             (identical(other.selectedDate, selectedDate) ||
                 other.selectedDate == selectedDate) &&
             const DeepCollectionEquality()
@@ -359,6 +375,7 @@ class _AddTaskState implements AddTaskState {
       const DeepCollectionEquality().hash(_subtasks),
       selectedPriority,
       selectedCategory,
+      addCategory,
       selectedDate,
       const DeepCollectionEquality().hash(_addTaskForm),
       title,
@@ -367,7 +384,7 @@ class _AddTaskState implements AddTaskState {
 
   @override
   String toString() {
-    return 'AddTaskState(isLoading: $isLoading, isCategoriesLoading: $isCategoriesLoading, isCreateTaskSuccess: $isCreateTaskSuccess, error: $error, categories: $categories, aiCategories: $aiCategories, subtasks: $subtasks, selectedPriority: $selectedPriority, selectedCategory: $selectedCategory, selectedDate: $selectedDate, addTaskForm: $addTaskForm, title: $title, description: $description, isTimeSelected: $isTimeSelected)';
+    return 'AddTaskState(isLoading: $isLoading, isCategoriesLoading: $isCategoriesLoading, isCreateTaskSuccess: $isCreateTaskSuccess, error: $error, categories: $categories, aiCategories: $aiCategories, subtasks: $subtasks, selectedPriority: $selectedPriority, selectedCategory: $selectedCategory, addCategory: $addCategory, selectedDate: $selectedDate, addTaskForm: $addTaskForm, title: $title, description: $description, isTimeSelected: $isTimeSelected)';
   }
 }
 
@@ -389,6 +406,7 @@ abstract mixin class _$AddTaskStateCopyWith<$Res>
       List<SubtaskEntity> subtasks,
       TaskPriority selectedPriority,
       CategoryEntity? selectedCategory,
+      String addCategory,
       DateTime? selectedDate,
       Map<String, dynamic> addTaskForm,
       String title,
@@ -421,6 +439,7 @@ class __$AddTaskStateCopyWithImpl<$Res>
     Object? subtasks = null,
     Object? selectedPriority = null,
     Object? selectedCategory = freezed,
+    Object? addCategory = null,
     Object? selectedDate = freezed,
     Object? addTaskForm = null,
     Object? title = null,
@@ -464,6 +483,10 @@ class __$AddTaskStateCopyWithImpl<$Res>
           ? _self.selectedCategory
           : selectedCategory // ignore: cast_nullable_to_non_nullable
               as CategoryEntity?,
+      addCategory: null == addCategory
+          ? _self.addCategory
+          : addCategory // ignore: cast_nullable_to_non_nullable
+              as String,
       selectedDate: freezed == selectedDate
           ? _self.selectedDate
           : selectedDate // ignore: cast_nullable_to_non_nullable

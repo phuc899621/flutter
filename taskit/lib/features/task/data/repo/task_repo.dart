@@ -147,6 +147,7 @@ class TaskRepo with DioExceptionMapper implements ITaskRepo, ITaskMapper {
     return CategoryTableCompanion(
       userLocalId: Value(userLocalId),
       name: Value(data.name),
+      updatedAt: Value(DateTime.now()),
     );
   }
 
@@ -258,9 +259,9 @@ class TaskRepo with DioExceptionMapper implements ITaskRepo, ITaskMapper {
   * Insert
   * */
   @override
-  Future<void> insertCategory(CategoryEntity category) async {
+  Future<int> insertCategory(CategoryEntity category) async {
     final categoryCompanion = await mapToCategoryTableCompanion(category);
-    await _taskLocalSource.insertCategory(categoryCompanion);
+    return await _taskLocalSource.insertCategory(categoryCompanion);
   }
 
   @override
