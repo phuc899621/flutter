@@ -1,25 +1,23 @@
 import 'dart:async';
 
 import 'package:dio/dio.dart';
-import 'package:drift/drift.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rxdart/rxdart.dart';
+import 'package:taskit/features/task/data/mapper/itask_mapper.dart';
 import 'package:taskit/features/task/domain/entities/task_entity.dart';
-import 'package:taskit/features/task/domain/mapper/itask_mapper.dart';
-import 'package:taskit/shared/application/token_service.dart';
+import 'package:taskit/shared/data/repository/itoken_repository.dart';
+import 'package:taskit/shared/data/repository/token_repository.dart';
 import 'package:taskit/shared/data/source/local/drift/database/database.dart';
-import 'package:taskit/shared/utils/task_entity_mapper.dart';
 
-import '../../../../shared/application/itoken_service.dart';
 import '../../../../shared/exception/failure.dart';
+import '../../../../shared/log/logger_provider.dart';
 import '../../../../shared/mixin/dio_exception_mapper.dart';
-import '../../../user/data/source/local/iuser_local_source.dart';
 import '../../../user/data/source/local/user_local_source.dart';
 import '../../domain/entities/category_entity.dart';
 import '../../domain/entities/subtask_entity.dart';
 import '../../domain/entities/task_status_enum.dart';
-import '../dto/req/ai_category/ai_category.dart';
+import '../mapper/task_mapper.dart';
 import '../source/local/itask_local_source.dart';
 import '../source/local/task_local_source.dart';
 import '../source/remote/task_api.dart';
@@ -29,143 +27,24 @@ final taskRepoProvider = Provider<ITaskRepo>((ref) {
   final taskApi = ref.watch(taskApiProvider);
   final taskLocalSource = ref.watch(taskLocalSourceProvider);
   final userLocalSource = ref.watch(userLocalSourceProvider);
-  final tokenService = ref.watch(tokenServiceProvider);
-  return TaskRepo(taskApi, taskLocalSource, userLocalSource, tokenService);
+  final iTokenRepo = ref.watch(tokenRepositoryProvider);
+  final iTaskMapper = ref.watch(taskMapperProvider);
+  return TaskRepo(taskApi, taskLocalSource, iTokenRepo, iTaskMapper);
 });
 
-class TaskRepo with DioExceptionMapper implements ITaskRepo, ITaskMapper {
+class TaskRepo with DioExceptionMapper implements ITaskRepo {
   final TaskApi _taskApi;
   final ITaskLocalSource _taskLocalSource;
-  final IUserLocalSource _userLocalSource;
-  final ITokenService _tokenService;
+  final ITokenRepository _tokenService;
+  final ITaskMapper _iTaskMapper;
 
-  TaskRepo(this._taskApi, this._taskLocalSource, this._userLocalSource,
-      this._tokenService);
+  TaskRepo(this._taskApi, this._taskLocalSource, this._tokenService,
+      this._iTaskMapper);
 
-  /*Mapper
-  * */
-  @override
-  List<TaskEntity> mapToListTaskEntity(
-          List<TaskTableData> tasks,
-          List<SubtaskTableData> subtasks,
-          List<CategoryTableData> categories) =>
-      tasks.map((task) {
-        final joinSubtask = subtasks
-            .where((subtask) => subtask.taskLocalId == task.localId)
-            .toList();
-        final category = categories.firstWhere(
-            (category) => category.localId == task.categoryLocalId,
-            orElse: () => CategoryTableData(
-                localId: -1,
-                remoteId: '',
-                name: "Any",
-                isSynced: true,
-                userLocalId: task.userLocalId,
-                createdAt: DateTime.now(),
-                updatedAt: DateTime.now()));
-        final categoryEntity = CategoryEntity(
-          localId: category.localId,
-          name: category.name,
-        );
-        return TaskEntity(
-          localId: task.localId,
-          title: task.title,
-          description: task.description,
-          category: categoryEntity,
-          priority: TaskPriorityUtils.toEnum(task.priority),
-          userLocalId: task.userLocalId,
-          status: TaskStatusUtils.toEnum(task.status),
-          dueDate: task.dueDate,
-          hasTime: task.hasTime,
-          subtasks: joinSubtask
-              .map((subtask) => SubtaskEntity(
-                    localId: subtask.localId,
-                    title: subtask.title,
-                    isCompleted: subtask.isCompleted,
-                    taskLocalId: subtask.taskLocalId,
-                  ))
-              .toList(),
-          createdAt: task.createdAt,
-          updatedAt: task.updatedAt,
-        );
-      }).toList();
-
-  @override
-  TaskEntity mapToTaskEntity(TaskTableData task,
-          List<SubtaskTableData> subtasks, CategoryTableData category) =>
-      TaskEntity(
-          localId: task.localId,
-          title: task.title,
-          description: task.description,
-          category:
-              CategoryEntity(name: category.name, localId: category.localId),
-          priority: TaskPriorityUtils.toEnum(task.priority),
-          userLocalId: task.userLocalId,
-          status: TaskStatusUtils.toEnum(task.status),
-          hasTime: task.hasTime,
-          dueDate: task.dueDate,
-          subtasks: subtasks
-              .map((e) => SubtaskEntity(
-                    localId: e.localId,
-                    title: e.title,
-                    isCompleted: e.isCompleted,
-                    taskLocalId: e.taskLocalId,
-                  ))
-              .toList(),
-          createdAt: task.createdAt,
-          updatedAt: task.updatedAt);
-
-  @override
-  List<SubtaskEntity> mapToListSubtaskEntity(List<SubtaskTableData> data) =>
-      data.map(mapToSubtaskEntity).toList();
-
-  @override
-  SubtaskEntity mapToSubtaskEntity(SubtaskTableData data) => SubtaskEntity(
-      localId: data.localId,
-      title: data.title,
-      isCompleted: data.isCompleted,
-      taskLocalId: data.taskLocalId);
-
-  @override
-  List<CategoryEntity> mapToListCategoryEntity(List<CategoryTableData> data) =>
-      data.map(mapToCategoryEntity).toList();
-
-  @override
-  CategoryEntity mapToCategoryEntity(CategoryTableData data) => CategoryEntity(
-        localId: data.localId,
-        name: data.name,
-      );
-
-  @override
-  List<CategoryEntity> mapToListCategoryEntityFromAi(List<String> data) =>
-      data.map((e) => CategoryEntity(name: e, localId: -1)).toList();
-
-  @override
-  Future<CategoryTableCompanion> mapToCategoryTableCompanion(
-      CategoryEntity data) async {
-    final userLocalId = await _userLocalSource.getUserLocalId();
-    return CategoryTableCompanion(
-      userLocalId: Value(userLocalId),
-      name: Value(data.name),
-      updatedAt: Value(DateTime.now()),
-    );
-  }
-
-  @override
-  AiCategoryReq mapToAiCategoryReq(
-      String title, List<String> excludedCategories) {
-    return AiCategoryReq(title: title, excludedCategories: excludedCategories);
-  }
-
-  @override
-  List<String> mapCategoriesTableDataToListString(
-      List<CategoryTableData> data) {
-    return data.map((e) => e.name).toList();
-  }
-
-  /*
-  * Watch
-  * */
+  //=====================================
+  //============= WATCH =================
+  //=====================================
+  //region WATCH
   @override
   Stream<List<TaskEntity>> watchAllTasks() {
     final taskStream = _taskLocalSource.watchAllTasks();
@@ -178,7 +57,7 @@ class TaskRepo with DioExceptionMapper implements ITaskRepo, ITaskMapper {
       subtaskStream,
       categoryStream,
       (tasks, subtasks, categories) {
-        return mapToListTaskEntity(tasks, subtasks, categories);
+        return _iTaskMapper.toTaskEntityList(tasks, subtasks, categories);
       },
     );
   }
@@ -186,26 +65,29 @@ class TaskRepo with DioExceptionMapper implements ITaskRepo, ITaskMapper {
   @override
   Stream<List<CategoryEntity>> watchAllCategories() {
     final categoryStream = _taskLocalSource.watchAllCategories();
-    return categoryStream.map(mapToListCategoryEntity);
+    return categoryStream.map(_iTaskMapper.toCategoryEntityList);
   }
 
-  /*
-  * Update
-  * */
+  //endregion
+
+  //=====================================
+  //============= UPDATE =================
+  //=====================================
+  //region UPDATE
   @override
-  Future<void> updateTaskStatus({required int localId, TaskStatus? status}) {
-    return _taskLocalSource.updateTask(localId: localId, status: status?.name);
-  }
+  Future<void> updateTaskStatus(int localId, TaskStatus status) =>
+      _taskLocalSource.updateTaskStatus(localId, status.name);
 
   @override
-  Future<void> updateSubtaskStatus({required int localId}) {
-    return _taskLocalSource.updateSubtaskStatus(localId: localId);
-  }
+  Future<void> updateSubtaskStatus({required int localId}) =>
+      _taskLocalSource.updateSubtaskStatus(localId: localId);
 
-  /*
-  * Read
-  * */
+  //endregion
 
+  //=====================================
+  //============= READ =================
+  //=====================================
+  //region READ
   @override
   Future<TaskEntity> getTaskById(int localId) async {
     final taskData = await _taskLocalSource.getTaskByLocalId(localId);
@@ -214,26 +96,26 @@ class TaskRepo with DioExceptionMapper implements ITaskRepo, ITaskMapper {
     final categoryData =
         await _taskLocalSource.getCategoryByLocalId(taskData!.categoryLocalId);
 
-    return mapToTaskEntity(taskData, subtasksData, categoryData!);
+    return _iTaskMapper.toTaskEntity(taskData, subtasksData, categoryData!);
   }
 
   @override
   Future<List<SubtaskEntity>> getSubtaskByTaskLocalId(int taskLocalId) async {
     final subtaskData =
         await _taskLocalSource.getSubtaskByTaskLocalId(taskLocalId);
-    return mapToListSubtaskEntity(subtaskData);
+    return _iTaskMapper.toSubtaskEntityList(subtaskData);
   }
 
   @override
   Future<List<CategoryEntity>> getAICategory(String title) async {
     try {
       final excludedCategories = await _taskLocalSource.getCategories();
-      final categoryReq = mapToAiCategoryReq(
-          title, mapCategoriesTableDataToListString(excludedCategories));
+      final categoryReq = _iTaskMapper.toAiCategoryReq(title,
+          _iTaskMapper.categoryTableDataToStringList(excludedCategories));
       final token = await _tokenService.getToken();
       final categoryData =
           await _taskApi.getAiCategory('Bearer $token', categoryReq);
-      return mapToListCategoryEntityFromAi(categoryData.data);
+      return _iTaskMapper.stringListToCategoryEntity(categoryData.data);
     } on DioException catch (e, s) {
       debugPrint(e.toString() + s.toString());
       throw mapDioExceptionToFailure(e, s);
@@ -255,18 +137,38 @@ class TaskRepo with DioExceptionMapper implements ITaskRepo, ITaskMapper {
     }
   }
 
-  /*
-  * Insert
-  * */
   @override
-  Future<int> insertCategory(CategoryEntity category) async {
-    final categoryCompanion = await mapToCategoryTableCompanion(category);
-    return await _taskLocalSource.insertCategory(categoryCompanion);
+  Future<CategoryEntity?> getCategoryByName(String name) async {
+    final categoryData = await _taskLocalSource.getCategoryByName(name);
+    return categoryData == null
+        ? null
+        : _iTaskMapper.toCategoryEntity(categoryData);
   }
 
+  //endregion
+
+  //=====================================
+  //============= INSERT =================
+  //=====================================
+  //region INSERT
   @override
-  Future<TaskEntity> insertTask(TaskEntity task) {
-    // TODO: implement insertTask
-    throw UnimplementedError();
+  Future<int> insertCategory(CategoryEntity category) async =>
+      await _taskLocalSource
+          .insertCategory(_iTaskMapper.fromCategoryEntity(category));
+
+  @override
+  Future<int> insertTask(TaskEntity task) async {
+    final taskCompanion = _iTaskMapper.fromTaskEntity(task);
+    final subtaskCompanion = _iTaskMapper.fromSubtaskEntityList(task.subtasks);
+    final categoryCompanion = _iTaskMapper.fromCategoryEntity(task.category);
+    logger.i('TaskCompanion: $taskCompanion');
+    logger.i('SubtaskCompanion: $subtaskCompanion');
+    logger.i('CategoryCompanion: $categoryCompanion');
+    return await _taskLocalSource.insertTask(
+      taskCompanion,
+      subtaskCompanion,
+      categoryCompanion,
+    );
   }
+//endregion
 }

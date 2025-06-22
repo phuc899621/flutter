@@ -16,24 +16,36 @@ class CategoryDao extends DatabaseAccessor<AppDatabase>
     with _$CategoryDaoMixin {
   CategoryDao(super.db);
 
-  /*
-  * Watch
-  * */
+  //================================
+  //========== WATCH ===============
+  //================================
+  //region WATCH
   Stream<List<CategoryTableData>> watchAllCategories() =>
       select(categoryTable).watch();
 
-  /*
-  * Read
-  * */
+  //endregion
+
+  //================================
+  //========== READ ===============
+  //================================
+  //region READ
   Future<List<CategoryTableData>> getCategories() =>
       select(categoryTable).get();
+
   Future<CategoryTableData?> getCategoryByLocalId(int localId) =>
       (select(categoryTable)..where((tbl) => tbl.localId.equals(localId)))
           .getSingleOrNull();
 
-  /*
-  * Insert
-  * */
+  Future<CategoryTableData?> findByName(String name) => (select(categoryTable)
+        ..where((tbl) => tbl.name.lower().equals(name.toLowerCase())))
+      .getSingleOrNull();
+
+  //endregion
+
+  //================================
+  //========== INSERT ===============
+  //================================
+  //region INSERT
   Future<int> insertCategory(CategoryTableCompanion category) =>
       into(categoryTable).insert(category);
 
@@ -42,17 +54,25 @@ class CategoryDao extends DatabaseAccessor<AppDatabase>
         batch.insertAll(categoryTable, categories);
       });
 
-  /*
-  * Update
-  * */
+  //endregion
+
+  //================================
+  //========== UPDATE ===============
+  //================================
+  //region UPDATE
   Future<bool> updateCategory(CategoryTableCompanion category) =>
       update(categoryTable).replace(category);
 
-  /*
-  * Delete
-  * */
+  //endregion
+
+  //================================
+  //========== DELETE ===============
+  //================================
+  //region DELETE
   Future<int> deleteCategoryById(int id) =>
       (delete(categoryTable)..where((item) => item.localId.equals(id))).go();
+
   Future<int> deleteCategoryByName(String name) =>
       (delete(categoryTable)..where((item) => item.name.equals(name))).go();
+//endregion
 }

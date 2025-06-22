@@ -28,6 +28,8 @@ class TaskTable extends Table {
 
   DateTimeColumn get dueDate => dateTime().nullable()();
 
+  DateTimeColumn get completedAt => dateTime().nullable()();
+
   BoolColumn get hasTime => boolean().withDefault(const Constant(false))();
 
   DateTimeColumn get createdAt => dateTime().withDefault(currentDateAndTime)();

@@ -5,29 +5,46 @@ import '../../../shared/exception/failure.dart';
 import '../domain/entities/category_entity.dart';
 
 abstract interface class ITaskService {
-  /*
-  * Watch
-  * */
+  //================================
+  //========== WATCH ===============
+  //================================
   Stream<List<TaskEntity>> watchAllTasks();
 
-  Stream<List<TaskEntity>> watchScheduledTasks();
+  Stream<List<TaskEntity>> watchTodayTask();
+
+  Stream<List<TaskEntity>> watchTomorrowTask();
+
+  Stream<List<TaskEntity>> watchThisWeekTask();
+
+  Stream<List<TaskEntity>> watchPendingTask();
+
+  Stream<List<TaskEntity>> watchCompletedTodayTask();
+
+  Stream<List<TaskEntity>> watchCompletedThisWeekTask();
+
+  Stream<List<TaskEntity>> watchThisWeekOverDueTask();
+
+  Stream<List<TaskEntity>> watchTodayOverDueTask();
 
   Stream<List<CategoryEntity>> watchAllCategories();
 
-  /*
-  * Update
-  * */
+  //================================
+  //========== SUBTASK =============
+  //================================
   Future<void> updateTaskStatus(int localId);
 
   Future<void> updateSubtaskStatus(int localId);
 
-  /*
-  * Read
-  * */
+  //================================
+  //========== READ ==============
+  //================================
   Future<Result<List<CategoryEntity>, Failure>> getAICategory(String title);
 
-  /*
-  * Insert
-  * */
+  Future<CategoryEntity?> getCategoryByName(String name);
+
+  //================================
+  //========== INSERT ==============
+  //================================/*
   Future<int> insertCategory(CategoryEntity category); //return localId
+  Future<Result<int, Failure>> insertTask(TaskEntity task); //return localId
 }

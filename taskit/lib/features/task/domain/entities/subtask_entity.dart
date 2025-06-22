@@ -8,5 +8,6 @@ sealed class SubtaskEntity with _$SubtaskEntity {
       {required int localId,
       required String title,
       required bool isCompleted,
+      DateTime? completedAt,
       required int taskLocalId}) = _SubtaskEntity;
 }

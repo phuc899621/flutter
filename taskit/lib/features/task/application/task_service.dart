@@ -1,7 +1,11 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:multiple_result/multiple_result.dart';
+import 'package:taskit/shared/extension/date_time.dart';
 
 import '../../../shared/exception/failure.dart';
+import '../../../shared/log/logger_provider.dart';
 import '../data/repo/itask_repo.dart';
 import '../data/repo/task_repo.dart';
 import '../domain/entities/category_entity.dart';
@@ -10,7 +14,8 @@ import '../domain/entities/task_status_enum.dart';
 import 'itask_service.dart';
 
 final taskServiceProvider = Provider<ITaskService>((ref) {
-  return TaskService(ref.watch(taskRepoProvider));
+  final iTaskRepo = ref.watch(taskRepoProvider);
+  return TaskService(iTaskRepo);
 });
 
 class TaskService implements ITaskService {
@@ -18,17 +23,133 @@ class TaskService implements ITaskService {
 
   TaskService(this._iTaskRepo);
 
-  /*
-  * Watch
-  * */
+  //================================
+  //========== WATCH ==============
+  //================================
+  //region WATCH
   @override
   Stream<List<TaskEntity>> watchAllTasks() {
     return _iTaskRepo.watchAllTasks();
   }
 
   @override
-  Stream<List<TaskEntity>> watchScheduledTasks() {
-    return _iTaskRepo.watchAllTasks();
+  Stream<List<TaskEntity>> watchTodayTask() {
+    return watchAllTasks().map((tasks) {
+      return tasks.where((task) {
+        final due = task.dueDate;
+        final completed = task.completedAt;
+        final hasTime = task.hasTime;
+        if (due == null || !due.isToday() || completed != null) {
+          return false;
+        }
+        if (hasTime) return due.isAfter(DateTime.now());
+        return due.isDateAfter(DateTime.now());
+      }).toList();
+    });
+  }
+
+  @override
+  Stream<List<TaskEntity>> watchTomorrowTask() {
+    return watchAllTasks().map((tasks) {
+      return tasks.where((task) {
+        final due = task.dueDate;
+        final status = task.status;
+        if (due == null ||
+            !due.isTomorrow() ||
+            status == TaskStatus.completed) {
+          return false;
+        }
+        return true;
+      }).toList();
+    });
+  }
+
+  @override
+  Stream<List<TaskEntity>> watchThisWeekTask() {
+    return watchAllTasks().map((tasks) {
+      return tasks.where((task) {
+        final due = task.dueDate;
+        final status = task.status;
+        final completed = task.completedAt;
+        final hasTime = task.hasTime;
+        if (due == null || !due.isThisWeek() || completed != null) {
+          return false;
+        }
+        if (hasTime) return due.isAfter(DateTime.now());
+        return due.isDateAfter(DateTime.now());
+      }).toList();
+    });
+  }
+
+  @override
+  Stream<List<TaskEntity>> watchPendingTask() {
+    return watchAllTasks().map((tasks) {
+      return tasks.where((task) {
+        return task.status == TaskStatus.pending;
+      }).toList();
+    });
+  }
+
+  @override
+  Stream<List<TaskEntity>> watchCompletedTodayTask() {
+    return watchAllTasks().map((tasks) {
+      return tasks.where((task) {
+        final completed = task.completedAt;
+        final due = task.dueDate;
+        final hasTime = task.hasTime;
+        debugPrint("Completed: $task");
+        if (completed == null || !completed.isToday()) return false;
+        if (due == null) return true;
+        if (!hasTime) return true;
+        return !completed.isAfter(due);
+      }).toList();
+    });
+  }
+
+  @override
+  Stream<List<TaskEntity>> watchCompletedThisWeekTask() {
+    return watchAllTasks().map((tasks) {
+      return tasks.where((task) {
+        final completed = task.completedAt;
+        final status = task.status;
+        final due = task.dueDate;
+        final hasTime = task.hasTime;
+        if (completed == null || !completed.isThisWeek()) return false;
+        if (due == null) return true;
+        return !completed.isAfter(due);
+      }).toList();
+    });
+  }
+
+  @override
+  Stream<List<TaskEntity>> watchThisWeekOverDueTask() {
+    return watchAllTasks().map((tasks) {
+      return tasks.where((task) {
+        final due = task.dueDate;
+        final completed = task.completedAt;
+        if (due == null || !due.isThisWeek()) return false;
+        if (task.hasTime) {
+          return due.isBefore(DateTime.now()) &&
+              (completed == null || completed.isAfter(due));
+        }
+        return due.isDateBefore(DateTime.now()) &&
+            (completed == null || completed.isDateAfter(due));
+      }).toList();
+    });
+  }
+
+  @override
+  Stream<List<TaskEntity>> watchTodayOverDueTask() {
+    return watchAllTasks().map((tasks) {
+      return tasks.where((task) {
+        final due = task.dueDate;
+        final completed = task.completedAt;
+        if (due == null || !due.isToday()) return false;
+        return task.hasTime &&
+            due.isBefore(DateTime.now()) &&
+            (completed == null || completed.isAfter(due));
+      }).toList();
+    });
   }
 
   @override
@@ -36,7 +157,7 @@ class TaskService implements ITaskService {
     return _iTaskRepo.watchAllCategories().map((categories) {
       final callCategories = categories.firstWhere(
           (element) => element.name.toLowerCase() == "any", orElse: () {
-        return CategoryEntity(name: "Any", localId: -1);
+        return CategoryEntity(name: "Any", localId: -1, userLocalId: -1);
       });
       final restCategories = categories
           .where((element) => element.name.toLowerCase() != "any")
@@ -45,32 +166,34 @@ class TaskService implements ITaskService {
     });
   }
 
-  /*
-  * Update
-  * */
+  //endregion
+
+  //================================
+  //========== UPDATE ==============
+  //================================
+  //region UPDATE
   @override
   Future<void> updateTaskStatus(int localId) async {
     final task = await _iTaskRepo.getTaskById(localId);
     if (task.status != TaskStatus.completed) {
-      return _iTaskRepo.updateTaskStatus(
-          localId: localId, status: TaskStatus.completed);
+      return _iTaskRepo.updateTaskStatus(localId, TaskStatus.completed);
     }
     if (task.dueDate != null) {
-      return _iTaskRepo.updateTaskStatus(
-          localId: localId, status: TaskStatus.scheduled);
+      return _iTaskRepo.updateTaskStatus(localId, TaskStatus.scheduled);
     }
-    return _iTaskRepo.updateTaskStatus(
-        localId: localId, status: TaskStatus.pending);
+    return _iTaskRepo.updateTaskStatus(localId, TaskStatus.pending);
   }
 
   @override
-  Future<void> updateSubtaskStatus(int localId) {
-    return _iTaskRepo.updateSubtaskStatus(localId: localId);
-  }
+  Future<void> updateSubtaskStatus(int localId) =>
+      _iTaskRepo.updateSubtaskStatus(localId: localId);
 
-  /*
-  * Read
-  * */
+  //endregion
+
+  //================================
+  //========== READ ===============
+  //================================
+  //region READ
   @override
   Future<Result<List<CategoryEntity>, Failure>> getAICategory(
       String title) async {
@@ -96,11 +219,29 @@ class TaskService implements ITaskService {
     }
   }
 
-  /*
-  * Insert
-  * */
   @override
-  Future<int> insertCategory(CategoryEntity category) async {
-    return await _iTaskRepo.insertCategory(category);
+  Future<CategoryEntity?> getCategoryByName(String name) async =>
+      await _iTaskRepo.getCategoryByName(name);
+
+  //endregion
+
+  //================================
+  //========== INSERT ==============
+  //================================
+  //region INSERT
+  @override
+  Future<int> insertCategory(CategoryEntity category) async =>
+      await _iTaskRepo.insertCategory(category);
+
+  @override
+  Future<Result<int, Failure>> insertTask(TaskEntity task) async {
+    try {
+      logger.i('Task: $task');
+      final result = await _iTaskRepo.insertTask(task);
+      return Success(result);
+    } on Failure catch (e) {
+      return Error(e);
+    }
   }
+//endregion
 }

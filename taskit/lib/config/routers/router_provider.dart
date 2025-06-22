@@ -3,7 +3,9 @@ import 'package:go_router/go_router.dart';
 import 'package:taskit/config/routers/router_name.dart';
 import 'package:taskit/features/auth/presentation/forgot_password/ui/reset_password_page.dart';
 import 'package:taskit/features/auth/presentation/signup/ui/signup_veriry_page.dart';
+import 'package:taskit/features/main/presentation/calendar/ui/calendar_page.dart';
 import 'package:taskit/features/main/presentation/home/ui/home_page.dart';
+import 'package:taskit/features/main/presentation/list/ui/list_page.dart';
 import 'package:taskit/features/splash/presentation/ui/splash_page.dart';
 import 'package:taskit/features/task/presentation/add_task/ui/add_task_page.dart';
 
@@ -93,7 +95,18 @@ final goRouterProvider = Provider<GoRouter>((ref) {
                 name: listRoute,
                 pageBuilder: (context, state) =>
                     TaskitAnimation.slidePageTransition(
-                        context, state, const HomePage()),
+                        context, state, const ListPage()),
+              ),
+            ],
+          ),
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                path: '/calendar',
+                name: calendarRoute,
+                pageBuilder: (context, state) =>
+                    TaskitAnimation.slidePageTransition(
+                        context, state, const CalendarPage()),
               ),
             ],
           ),

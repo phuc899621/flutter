@@ -18,6 +18,7 @@ class LoginPage extends ConsumerStatefulWidget {
 class _LoginPageState extends ConsumerState<LoginPage> {
   late TextEditingController _emailController;
   late TextEditingController _passwordController;
+
   @override
   void initState() {
     super.initState();
@@ -50,7 +51,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
     ref.listen(loginControllerProvider.select((value) => value.isLoginSuccess),
         (_, next) {
       if (next != null && next) {
-        context.go('/list');
+        context.go('/home');
       }
     });
   }

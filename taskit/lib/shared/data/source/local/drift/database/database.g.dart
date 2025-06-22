@@ -766,6 +766,12 @@ class $TaskTableTable extends TaskTable
   late final GeneratedColumn<DateTime> dueDate = GeneratedColumn<DateTime>(
       'due_date', aliasedName, true,
       type: DriftSqlType.dateTime, requiredDuringInsert: false);
+  static const VerificationMeta _completedAtMeta =
+      const VerificationMeta('completedAt');
+  @override
+  late final GeneratedColumn<DateTime> completedAt = GeneratedColumn<DateTime>(
+      'completed_at', aliasedName, true,
+      type: DriftSqlType.dateTime, requiredDuringInsert: false);
   static const VerificationMeta _hasTimeMeta =
       const VerificationMeta('hasTime');
   @override
@@ -804,6 +810,7 @@ class $TaskTableTable extends TaskTable
         userLocalId,
         status,
         dueDate,
+        completedAt,
         hasTime,
         createdAt,
         updatedAt
@@ -870,6 +877,12 @@ class $TaskTableTable extends TaskTable
       context.handle(_dueDateMeta,
           dueDate.isAcceptableOrUnknown(data['due_date']!, _dueDateMeta));
     }
+    if (data.containsKey('completed_at')) {
+      context.handle(
+          _completedAtMeta,
+          completedAt.isAcceptableOrUnknown(
+              data['completed_at']!, _completedAtMeta));
+    }
     if (data.containsKey('has_time')) {
       context.handle(_hasTimeMeta,
           hasTime.isAcceptableOrUnknown(data['has_time']!, _hasTimeMeta));
@@ -911,6 +924,8 @@ class $TaskTableTable extends TaskTable
           .read(DriftSqlType.string, data['${effectivePrefix}status'])!,
       dueDate: attachedDatabase.typeMapping
           .read(DriftSqlType.dateTime, data['${effectivePrefix}due_date']),
+      completedAt: attachedDatabase.typeMapping
+          .read(DriftSqlType.dateTime, data['${effectivePrefix}completed_at']),
       hasTime: attachedDatabase.typeMapping
           .read(DriftSqlType.bool, data['${effectivePrefix}has_time'])!,
       createdAt: attachedDatabase.typeMapping
@@ -937,6 +952,7 @@ class TaskTableData extends DataClass implements Insertable<TaskTableData> {
   final int userLocalId;
   final String status;
   final DateTime? dueDate;
+  final DateTime? completedAt;
   final bool hasTime;
   final DateTime createdAt;
   final DateTime updatedAt;
@@ -951,6 +967,7 @@ class TaskTableData extends DataClass implements Insertable<TaskTableData> {
       required this.userLocalId,
       required this.status,
       this.dueDate,
+      this.completedAt,
       required this.hasTime,
       required this.createdAt,
       required this.updatedAt});
@@ -968,6 +985,9 @@ class TaskTableData extends DataClass implements Insertable<TaskTableData> {
     map['status'] = Variable<String>(status);
     if (!nullToAbsent || dueDate != null) {
       map['due_date'] = Variable<DateTime>(dueDate);
+    }
+    if (!nullToAbsent || completedAt != null) {
+      map['completed_at'] = Variable<DateTime>(completedAt);
     }
     map['has_time'] = Variable<bool>(hasTime);
     map['created_at'] = Variable<DateTime>(createdAt);
@@ -989,6 +1009,9 @@ class TaskTableData extends DataClass implements Insertable<TaskTableData> {
       dueDate: dueDate == null && nullToAbsent
           ? const Value.absent()
           : Value(dueDate),
+      completedAt: completedAt == null && nullToAbsent
+          ? const Value.absent()
+          : Value(completedAt),
       hasTime: Value(hasTime),
       createdAt: Value(createdAt),
       updatedAt: Value(updatedAt),
@@ -1009,6 +1032,7 @@ class TaskTableData extends DataClass implements Insertable<TaskTableData> {
       userLocalId: serializer.fromJson<int>(json['userLocalId']),
       status: serializer.fromJson<String>(json['status']),
       dueDate: serializer.fromJson<DateTime?>(json['dueDate']),
+      completedAt: serializer.fromJson<DateTime?>(json['completedAt']),
       hasTime: serializer.fromJson<bool>(json['hasTime']),
       createdAt: serializer.fromJson<DateTime>(json['createdAt']),
       updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
@@ -1028,6 +1052,7 @@ class TaskTableData extends DataClass implements Insertable<TaskTableData> {
       'userLocalId': serializer.toJson<int>(userLocalId),
       'status': serializer.toJson<String>(status),
       'dueDate': serializer.toJson<DateTime?>(dueDate),
+      'completedAt': serializer.toJson<DateTime?>(completedAt),
       'hasTime': serializer.toJson<bool>(hasTime),
       'createdAt': serializer.toJson<DateTime>(createdAt),
       'updatedAt': serializer.toJson<DateTime>(updatedAt),
@@ -1045,6 +1070,7 @@ class TaskTableData extends DataClass implements Insertable<TaskTableData> {
           int? userLocalId,
           String? status,
           Value<DateTime?> dueDate = const Value.absent(),
+          Value<DateTime?> completedAt = const Value.absent(),
           bool? hasTime,
           DateTime? createdAt,
           DateTime? updatedAt}) =>
@@ -1059,6 +1085,7 @@ class TaskTableData extends DataClass implements Insertable<TaskTableData> {
         userLocalId: userLocalId ?? this.userLocalId,
         status: status ?? this.status,
         dueDate: dueDate.present ? dueDate.value : this.dueDate,
+        completedAt: completedAt.present ? completedAt.value : this.completedAt,
         hasTime: hasTime ?? this.hasTime,
         createdAt: createdAt ?? this.createdAt,
         updatedAt: updatedAt ?? this.updatedAt,
@@ -1079,6 +1106,8 @@ class TaskTableData extends DataClass implements Insertable<TaskTableData> {
           data.userLocalId.present ? data.userLocalId.value : this.userLocalId,
       status: data.status.present ? data.status.value : this.status,
       dueDate: data.dueDate.present ? data.dueDate.value : this.dueDate,
+      completedAt:
+          data.completedAt.present ? data.completedAt.value : this.completedAt,
       hasTime: data.hasTime.present ? data.hasTime.value : this.hasTime,
       createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
       updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
@@ -1098,6 +1127,7 @@ class TaskTableData extends DataClass implements Insertable<TaskTableData> {
           ..write('userLocalId: $userLocalId, ')
           ..write('status: $status, ')
           ..write('dueDate: $dueDate, ')
+          ..write('completedAt: $completedAt, ')
           ..write('hasTime: $hasTime, ')
           ..write('createdAt: $createdAt, ')
           ..write('updatedAt: $updatedAt')
@@ -1117,6 +1147,7 @@ class TaskTableData extends DataClass implements Insertable<TaskTableData> {
       userLocalId,
       status,
       dueDate,
+      completedAt,
       hasTime,
       createdAt,
       updatedAt);
@@ -1134,6 +1165,7 @@ class TaskTableData extends DataClass implements Insertable<TaskTableData> {
           other.userLocalId == this.userLocalId &&
           other.status == this.status &&
           other.dueDate == this.dueDate &&
+          other.completedAt == this.completedAt &&
           other.hasTime == this.hasTime &&
           other.createdAt == this.createdAt &&
           other.updatedAt == this.updatedAt);
@@ -1150,6 +1182,7 @@ class TaskTableCompanion extends UpdateCompanion<TaskTableData> {
   final Value<int> userLocalId;
   final Value<String> status;
   final Value<DateTime?> dueDate;
+  final Value<DateTime?> completedAt;
   final Value<bool> hasTime;
   final Value<DateTime> createdAt;
   final Value<DateTime> updatedAt;
@@ -1164,6 +1197,7 @@ class TaskTableCompanion extends UpdateCompanion<TaskTableData> {
     this.userLocalId = const Value.absent(),
     this.status = const Value.absent(),
     this.dueDate = const Value.absent(),
+    this.completedAt = const Value.absent(),
     this.hasTime = const Value.absent(),
     this.createdAt = const Value.absent(),
     this.updatedAt = const Value.absent(),
@@ -1179,6 +1213,7 @@ class TaskTableCompanion extends UpdateCompanion<TaskTableData> {
     required int userLocalId,
     this.status = const Value.absent(),
     this.dueDate = const Value.absent(),
+    this.completedAt = const Value.absent(),
     this.hasTime = const Value.absent(),
     this.createdAt = const Value.absent(),
     this.updatedAt = const Value.absent(),
@@ -1196,6 +1231,7 @@ class TaskTableCompanion extends UpdateCompanion<TaskTableData> {
     Expression<int>? userLocalId,
     Expression<String>? status,
     Expression<DateTime>? dueDate,
+    Expression<DateTime>? completedAt,
     Expression<bool>? hasTime,
     Expression<DateTime>? createdAt,
     Expression<DateTime>? updatedAt,
@@ -1211,6 +1247,7 @@ class TaskTableCompanion extends UpdateCompanion<TaskTableData> {
       if (userLocalId != null) 'user_local_id': userLocalId,
       if (status != null) 'status': status,
       if (dueDate != null) 'due_date': dueDate,
+      if (completedAt != null) 'completed_at': completedAt,
       if (hasTime != null) 'has_time': hasTime,
       if (createdAt != null) 'created_at': createdAt,
       if (updatedAt != null) 'updated_at': updatedAt,
@@ -1228,6 +1265,7 @@ class TaskTableCompanion extends UpdateCompanion<TaskTableData> {
       Value<int>? userLocalId,
       Value<String>? status,
       Value<DateTime?>? dueDate,
+      Value<DateTime?>? completedAt,
       Value<bool>? hasTime,
       Value<DateTime>? createdAt,
       Value<DateTime>? updatedAt}) {
@@ -1242,6 +1280,7 @@ class TaskTableCompanion extends UpdateCompanion<TaskTableData> {
       userLocalId: userLocalId ?? this.userLocalId,
       status: status ?? this.status,
       dueDate: dueDate ?? this.dueDate,
+      completedAt: completedAt ?? this.completedAt,
       hasTime: hasTime ?? this.hasTime,
       createdAt: createdAt ?? this.createdAt,
       updatedAt: updatedAt ?? this.updatedAt,
@@ -1281,6 +1320,9 @@ class TaskTableCompanion extends UpdateCompanion<TaskTableData> {
     if (dueDate.present) {
       map['due_date'] = Variable<DateTime>(dueDate.value);
     }
+    if (completedAt.present) {
+      map['completed_at'] = Variable<DateTime>(completedAt.value);
+    }
     if (hasTime.present) {
       map['has_time'] = Variable<bool>(hasTime.value);
     }
@@ -1306,6 +1348,7 @@ class TaskTableCompanion extends UpdateCompanion<TaskTableData> {
           ..write('userLocalId: $userLocalId, ')
           ..write('status: $status, ')
           ..write('dueDate: $dueDate, ')
+          ..write('completedAt: $completedAt, ')
           ..write('hasTime: $hasTime, ')
           ..write('createdAt: $createdAt, ')
           ..write('updatedAt: $updatedAt')
@@ -1372,6 +1415,12 @@ class $SubtaskTableTable extends SubtaskTable
       requiredDuringInsert: true,
       defaultConstraints: GeneratedColumn.constraintIsAlways(
           'REFERENCES task (local_id) ON DELETE CASCADE'));
+  static const VerificationMeta _completedAtMeta =
+      const VerificationMeta('completedAt');
+  @override
+  late final GeneratedColumn<DateTime> completedAt = GeneratedColumn<DateTime>(
+      'completed_at', aliasedName, true,
+      type: DriftSqlType.dateTime, requiredDuringInsert: false);
   static const VerificationMeta _createdAtMeta =
       const VerificationMeta('createdAt');
   @override
@@ -1396,6 +1445,7 @@ class $SubtaskTableTable extends SubtaskTable
         isSynced,
         isCompleted,
         taskLocalId,
+        completedAt,
         createdAt,
         updatedAt
       ];
@@ -1441,6 +1491,12 @@ class $SubtaskTableTable extends SubtaskTable
     } else if (isInserting) {
       context.missing(_taskLocalIdMeta);
     }
+    if (data.containsKey('completed_at')) {
+      context.handle(
+          _completedAtMeta,
+          completedAt.isAcceptableOrUnknown(
+              data['completed_at']!, _completedAtMeta));
+    }
     if (data.containsKey('created_at')) {
       context.handle(_createdAtMeta,
           createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta));
@@ -1470,6 +1526,8 @@ class $SubtaskTableTable extends SubtaskTable
           .read(DriftSqlType.bool, data['${effectivePrefix}is_completed'])!,
       taskLocalId: attachedDatabase.typeMapping
           .read(DriftSqlType.int, data['${effectivePrefix}task_local_id'])!,
+      completedAt: attachedDatabase.typeMapping
+          .read(DriftSqlType.dateTime, data['${effectivePrefix}completed_at']),
       createdAt: attachedDatabase.typeMapping
           .read(DriftSqlType.dateTime, data['${effectivePrefix}created_at'])!,
       updatedAt: attachedDatabase.typeMapping
@@ -1491,6 +1549,7 @@ class SubtaskTableData extends DataClass
   final bool isSynced;
   final bool isCompleted;
   final int taskLocalId;
+  final DateTime? completedAt;
   final DateTime createdAt;
   final DateTime updatedAt;
   const SubtaskTableData(
@@ -1500,6 +1559,7 @@ class SubtaskTableData extends DataClass
       required this.isSynced,
       required this.isCompleted,
       required this.taskLocalId,
+      this.completedAt,
       required this.createdAt,
       required this.updatedAt});
   @override
@@ -1511,6 +1571,9 @@ class SubtaskTableData extends DataClass
     map['is_synced'] = Variable<bool>(isSynced);
     map['is_completed'] = Variable<bool>(isCompleted);
     map['task_local_id'] = Variable<int>(taskLocalId);
+    if (!nullToAbsent || completedAt != null) {
+      map['completed_at'] = Variable<DateTime>(completedAt);
+    }
     map['created_at'] = Variable<DateTime>(createdAt);
     map['updated_at'] = Variable<DateTime>(updatedAt);
     return map;
@@ -1524,6 +1587,9 @@ class SubtaskTableData extends DataClass
       isSynced: Value(isSynced),
       isCompleted: Value(isCompleted),
       taskLocalId: Value(taskLocalId),
+      completedAt: completedAt == null && nullToAbsent
+          ? const Value.absent()
+          : Value(completedAt),
       createdAt: Value(createdAt),
       updatedAt: Value(updatedAt),
     );
@@ -1539,6 +1605,7 @@ class SubtaskTableData extends DataClass
       isSynced: serializer.fromJson<bool>(json['isSynced']),
       isCompleted: serializer.fromJson<bool>(json['isCompleted']),
       taskLocalId: serializer.fromJson<int>(json['taskLocalId']),
+      completedAt: serializer.fromJson<DateTime?>(json['completedAt']),
       createdAt: serializer.fromJson<DateTime>(json['createdAt']),
       updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
     );
@@ -1553,6 +1620,7 @@ class SubtaskTableData extends DataClass
       'isSynced': serializer.toJson<bool>(isSynced),
       'isCompleted': serializer.toJson<bool>(isCompleted),
       'taskLocalId': serializer.toJson<int>(taskLocalId),
+      'completedAt': serializer.toJson<DateTime?>(completedAt),
       'createdAt': serializer.toJson<DateTime>(createdAt),
       'updatedAt': serializer.toJson<DateTime>(updatedAt),
     };
@@ -1565,6 +1633,7 @@ class SubtaskTableData extends DataClass
           bool? isSynced,
           bool? isCompleted,
           int? taskLocalId,
+          Value<DateTime?> completedAt = const Value.absent(),
           DateTime? createdAt,
           DateTime? updatedAt}) =>
       SubtaskTableData(
@@ -1574,6 +1643,7 @@ class SubtaskTableData extends DataClass
         isSynced: isSynced ?? this.isSynced,
         isCompleted: isCompleted ?? this.isCompleted,
         taskLocalId: taskLocalId ?? this.taskLocalId,
+        completedAt: completedAt.present ? completedAt.value : this.completedAt,
         createdAt: createdAt ?? this.createdAt,
         updatedAt: updatedAt ?? this.updatedAt,
       );
@@ -1587,6 +1657,8 @@ class SubtaskTableData extends DataClass
           data.isCompleted.present ? data.isCompleted.value : this.isCompleted,
       taskLocalId:
           data.taskLocalId.present ? data.taskLocalId.value : this.taskLocalId,
+      completedAt:
+          data.completedAt.present ? data.completedAt.value : this.completedAt,
       createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
       updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
     );
@@ -1601,6 +1673,7 @@ class SubtaskTableData extends DataClass
           ..write('isSynced: $isSynced, ')
           ..write('isCompleted: $isCompleted, ')
           ..write('taskLocalId: $taskLocalId, ')
+          ..write('completedAt: $completedAt, ')
           ..write('createdAt: $createdAt, ')
           ..write('updatedAt: $updatedAt')
           ..write(')'))
@@ -1609,7 +1682,7 @@ class SubtaskTableData extends DataClass
 
   @override
   int get hashCode => Object.hash(localId, remoteId, title, isSynced,
-      isCompleted, taskLocalId, createdAt, updatedAt);
+      isCompleted, taskLocalId, completedAt, createdAt, updatedAt);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -1620,6 +1693,7 @@ class SubtaskTableData extends DataClass
           other.isSynced == this.isSynced &&
           other.isCompleted == this.isCompleted &&
           other.taskLocalId == this.taskLocalId &&
+          other.completedAt == this.completedAt &&
           other.createdAt == this.createdAt &&
           other.updatedAt == this.updatedAt);
 }
@@ -1631,6 +1705,7 @@ class SubtaskTableCompanion extends UpdateCompanion<SubtaskTableData> {
   final Value<bool> isSynced;
   final Value<bool> isCompleted;
   final Value<int> taskLocalId;
+  final Value<DateTime?> completedAt;
   final Value<DateTime> createdAt;
   final Value<DateTime> updatedAt;
   const SubtaskTableCompanion({
@@ -1640,6 +1715,7 @@ class SubtaskTableCompanion extends UpdateCompanion<SubtaskTableData> {
     this.isSynced = const Value.absent(),
     this.isCompleted = const Value.absent(),
     this.taskLocalId = const Value.absent(),
+    this.completedAt = const Value.absent(),
     this.createdAt = const Value.absent(),
     this.updatedAt = const Value.absent(),
   });
@@ -1650,6 +1726,7 @@ class SubtaskTableCompanion extends UpdateCompanion<SubtaskTableData> {
     this.isSynced = const Value.absent(),
     this.isCompleted = const Value.absent(),
     required int taskLocalId,
+    this.completedAt = const Value.absent(),
     this.createdAt = const Value.absent(),
     this.updatedAt = const Value.absent(),
   })  : title = Value(title),
@@ -1661,6 +1738,7 @@ class SubtaskTableCompanion extends UpdateCompanion<SubtaskTableData> {
     Expression<bool>? isSynced,
     Expression<bool>? isCompleted,
     Expression<int>? taskLocalId,
+    Expression<DateTime>? completedAt,
     Expression<DateTime>? createdAt,
     Expression<DateTime>? updatedAt,
   }) {
@@ -1671,6 +1749,7 @@ class SubtaskTableCompanion extends UpdateCompanion<SubtaskTableData> {
       if (isSynced != null) 'is_synced': isSynced,
       if (isCompleted != null) 'is_completed': isCompleted,
       if (taskLocalId != null) 'task_local_id': taskLocalId,
+      if (completedAt != null) 'completed_at': completedAt,
       if (createdAt != null) 'created_at': createdAt,
       if (updatedAt != null) 'updated_at': updatedAt,
     });
@@ -1683,6 +1762,7 @@ class SubtaskTableCompanion extends UpdateCompanion<SubtaskTableData> {
       Value<bool>? isSynced,
       Value<bool>? isCompleted,
       Value<int>? taskLocalId,
+      Value<DateTime?>? completedAt,
       Value<DateTime>? createdAt,
       Value<DateTime>? updatedAt}) {
     return SubtaskTableCompanion(
@@ -1692,6 +1772,7 @@ class SubtaskTableCompanion extends UpdateCompanion<SubtaskTableData> {
       isSynced: isSynced ?? this.isSynced,
       isCompleted: isCompleted ?? this.isCompleted,
       taskLocalId: taskLocalId ?? this.taskLocalId,
+      completedAt: completedAt ?? this.completedAt,
       createdAt: createdAt ?? this.createdAt,
       updatedAt: updatedAt ?? this.updatedAt,
     );
@@ -1718,6 +1799,9 @@ class SubtaskTableCompanion extends UpdateCompanion<SubtaskTableData> {
     if (taskLocalId.present) {
       map['task_local_id'] = Variable<int>(taskLocalId.value);
     }
+    if (completedAt.present) {
+      map['completed_at'] = Variable<DateTime>(completedAt.value);
+    }
     if (createdAt.present) {
       map['created_at'] = Variable<DateTime>(createdAt.value);
     }
@@ -1736,6 +1820,7 @@ class SubtaskTableCompanion extends UpdateCompanion<SubtaskTableData> {
           ..write('isSynced: $isSynced, ')
           ..write('isCompleted: $isCompleted, ')
           ..write('taskLocalId: $taskLocalId, ')
+          ..write('completedAt: $completedAt, ')
           ..write('createdAt: $createdAt, ')
           ..write('updatedAt: $updatedAt')
           ..write(')'))
@@ -3024,6 +3109,7 @@ typedef $$TaskTableTableCreateCompanionBuilder = TaskTableCompanion Function({
   required int userLocalId,
   Value<String> status,
   Value<DateTime?> dueDate,
+  Value<DateTime?> completedAt,
   Value<bool> hasTime,
   Value<DateTime> createdAt,
   Value<DateTime> updatedAt,
@@ -3039,6 +3125,7 @@ typedef $$TaskTableTableUpdateCompanionBuilder = TaskTableCompanion Function({
   Value<int> userLocalId,
   Value<String> status,
   Value<DateTime?> dueDate,
+  Value<DateTime?> completedAt,
   Value<bool> hasTime,
   Value<DateTime> createdAt,
   Value<DateTime> updatedAt,
@@ -3127,6 +3214,9 @@ class $$TaskTableTableFilterComposer
 
   ColumnFilters<DateTime> get dueDate => $composableBuilder(
       column: $table.dueDate, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<DateTime> get completedAt => $composableBuilder(
+      column: $table.completedAt, builder: (column) => ColumnFilters(column));
 
   ColumnFilters<bool> get hasTime => $composableBuilder(
       column: $table.hasTime, builder: (column) => ColumnFilters(column));
@@ -3232,6 +3322,9 @@ class $$TaskTableTableOrderingComposer
   ColumnOrderings<DateTime> get dueDate => $composableBuilder(
       column: $table.dueDate, builder: (column) => ColumnOrderings(column));
 
+  ColumnOrderings<DateTime> get completedAt => $composableBuilder(
+      column: $table.completedAt, builder: (column) => ColumnOrderings(column));
+
   ColumnOrderings<bool> get hasTime => $composableBuilder(
       column: $table.hasTime, builder: (column) => ColumnOrderings(column));
 
@@ -3314,6 +3407,9 @@ class $$TaskTableTableAnnotationComposer
 
   GeneratedColumn<DateTime> get dueDate =>
       $composableBuilder(column: $table.dueDate, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get completedAt => $composableBuilder(
+      column: $table.completedAt, builder: (column) => column);
 
   GeneratedColumn<bool> get hasTime =>
       $composableBuilder(column: $table.hasTime, builder: (column) => column);
@@ -3420,6 +3516,7 @@ class $$TaskTableTableTableManager extends RootTableManager<
             Value<int> userLocalId = const Value.absent(),
             Value<String> status = const Value.absent(),
             Value<DateTime?> dueDate = const Value.absent(),
+            Value<DateTime?> completedAt = const Value.absent(),
             Value<bool> hasTime = const Value.absent(),
             Value<DateTime> createdAt = const Value.absent(),
             Value<DateTime> updatedAt = const Value.absent(),
@@ -3435,6 +3532,7 @@ class $$TaskTableTableTableManager extends RootTableManager<
             userLocalId: userLocalId,
             status: status,
             dueDate: dueDate,
+            completedAt: completedAt,
             hasTime: hasTime,
             createdAt: createdAt,
             updatedAt: updatedAt,
@@ -3450,6 +3548,7 @@ class $$TaskTableTableTableManager extends RootTableManager<
             required int userLocalId,
             Value<String> status = const Value.absent(),
             Value<DateTime?> dueDate = const Value.absent(),
+            Value<DateTime?> completedAt = const Value.absent(),
             Value<bool> hasTime = const Value.absent(),
             Value<DateTime> createdAt = const Value.absent(),
             Value<DateTime> updatedAt = const Value.absent(),
@@ -3465,6 +3564,7 @@ class $$TaskTableTableTableManager extends RootTableManager<
             userLocalId: userLocalId,
             status: status,
             dueDate: dueDate,
+            completedAt: completedAt,
             hasTime: hasTime,
             createdAt: createdAt,
             updatedAt: updatedAt,
@@ -3563,6 +3663,7 @@ typedef $$SubtaskTableTableCreateCompanionBuilder = SubtaskTableCompanion
   Value<bool> isSynced,
   Value<bool> isCompleted,
   required int taskLocalId,
+  Value<DateTime?> completedAt,
   Value<DateTime> createdAt,
   Value<DateTime> updatedAt,
 });
@@ -3574,6 +3675,7 @@ typedef $$SubtaskTableTableUpdateCompanionBuilder = SubtaskTableCompanion
   Value<bool> isSynced,
   Value<bool> isCompleted,
   Value<int> taskLocalId,
+  Value<DateTime?> completedAt,
   Value<DateTime> createdAt,
   Value<DateTime> updatedAt,
 });
@@ -3621,6 +3723,9 @@ class $$SubtaskTableTableFilterComposer
 
   ColumnFilters<bool> get isCompleted => $composableBuilder(
       column: $table.isCompleted, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<DateTime> get completedAt => $composableBuilder(
+      column: $table.completedAt, builder: (column) => ColumnFilters(column));
 
   ColumnFilters<DateTime> get createdAt => $composableBuilder(
       column: $table.createdAt, builder: (column) => ColumnFilters(column));
@@ -3673,6 +3778,9 @@ class $$SubtaskTableTableOrderingComposer
   ColumnOrderings<bool> get isCompleted => $composableBuilder(
       column: $table.isCompleted, builder: (column) => ColumnOrderings(column));
 
+  ColumnOrderings<DateTime> get completedAt => $composableBuilder(
+      column: $table.completedAt, builder: (column) => ColumnOrderings(column));
+
   ColumnOrderings<DateTime> get createdAt => $composableBuilder(
       column: $table.createdAt, builder: (column) => ColumnOrderings(column));
 
@@ -3723,6 +3831,9 @@ class $$SubtaskTableTableAnnotationComposer
 
   GeneratedColumn<bool> get isCompleted => $composableBuilder(
       column: $table.isCompleted, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get completedAt => $composableBuilder(
+      column: $table.completedAt, builder: (column) => column);
 
   GeneratedColumn<DateTime> get createdAt =>
       $composableBuilder(column: $table.createdAt, builder: (column) => column);
@@ -3780,6 +3891,7 @@ class $$SubtaskTableTableTableManager extends RootTableManager<
             Value<bool> isSynced = const Value.absent(),
             Value<bool> isCompleted = const Value.absent(),
             Value<int> taskLocalId = const Value.absent(),
+            Value<DateTime?> completedAt = const Value.absent(),
             Value<DateTime> createdAt = const Value.absent(),
             Value<DateTime> updatedAt = const Value.absent(),
           }) =>
@@ -3790,6 +3902,7 @@ class $$SubtaskTableTableTableManager extends RootTableManager<
             isSynced: isSynced,
             isCompleted: isCompleted,
             taskLocalId: taskLocalId,
+            completedAt: completedAt,
             createdAt: createdAt,
             updatedAt: updatedAt,
           ),
@@ -3800,6 +3913,7 @@ class $$SubtaskTableTableTableManager extends RootTableManager<
             Value<bool> isSynced = const Value.absent(),
             Value<bool> isCompleted = const Value.absent(),
             required int taskLocalId,
+            Value<DateTime?> completedAt = const Value.absent(),
             Value<DateTime> createdAt = const Value.absent(),
             Value<DateTime> updatedAt = const Value.absent(),
           }) =>
@@ -3810,6 +3924,7 @@ class $$SubtaskTableTableTableManager extends RootTableManager<
             isSynced: isSynced,
             isCompleted: isCompleted,
             taskLocalId: taskLocalId,
+            completedAt: completedAt,
             createdAt: createdAt,
             updatedAt: updatedAt,
           ),

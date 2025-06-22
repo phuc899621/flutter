@@ -13,19 +13,36 @@ final textThemeProvider =
 class AppTextTheme {
   TextTheme getTextThemeConfig() => const TextTheme(
       headlineMedium:
-          TextStyle(color: ConstColor.onPrimary, fontWeight: FontWeight.w600));
+          TextStyle(color: ConstColor.onPrimary, fontWeight: FontWeight.w600),
+      headlineSmall:
+          TextStyle(color: ConstColor.onPrimary, fontWeight: FontWeight.w600),
+
+      //label
+      labelLarge: TextStyle(fontWeight: FontWeight.w500));
 }
 
 class AppTextStyle {
   final BuildContext context;
+
   AppTextStyle(this.context);
+
   TextStyle? get headlineMedium => Theme.of(context).textTheme.headlineMedium;
+
   TextStyle? get titleMedium => Theme.of(context).textTheme.titleMedium;
+
   TextStyle? get titleLarge => Theme.of(context).textTheme.titleLarge;
+
   TextStyle? get bodyMedium => Theme.of(context).textTheme.bodyMedium;
+
   TextStyle? get bodyLarge => Theme.of(context).textTheme.bodyLarge;
+
   TextStyle? get labelMedium => Theme.of(context).textTheme.labelMedium;
+
+  TextStyle? get labelLarge => Theme.of(context).textTheme.labelLarge;
+
   TextStyle? get headlineSmall => Theme.of(context).textTheme.headlineSmall;
+
   TextStyle? get titleSmall => Theme.of(context).textTheme.titleSmall;
+
   TextStyle? get labelSmall => Theme.of(context).textTheme.labelSmall;
 }

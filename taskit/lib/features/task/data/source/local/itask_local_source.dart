@@ -1,28 +1,28 @@
 import 'package:taskit/shared/data/source/local/drift/database/database.dart';
 
 abstract interface class ITaskLocalSource {
-  /*
-  * Watch*/
+  // ================================
+  // ========== WATCH ==============
+  // ================================
   Stream<List<TaskTableData>> watchAllTasks();
 
   Stream<List<SubtaskTableData>> watchAllSubtasks();
 
   Stream<List<CategoryTableData>> watchAllCategories();
 
-  /*
-  * Update
-  * */
-  Future<void> updateTask(
-      {required int localId, String? title, String? status});
+  // ================================
+  // ========== UPDATE ==============
+  // ================================
+  Future<void> updateTaskStatus(int localId, String status);
 
   Future<void> updateSubtask(
       {required int localId, bool? isCompleted, String? title});
 
   Future<void> updateSubtaskStatus({required int localId});
 
-  /*
-  * Read
-  * */
+  // ================================
+  // ========== READ ==============
+  // ================================
   Future<List<CategoryTableData>> getCategories();
 
   Future<TaskTableData?> getTaskByLocalId(int localId);
@@ -31,8 +31,13 @@ abstract interface class ITaskLocalSource {
 
   Future<List<SubtaskTableData>> getSubtaskByTaskLocalId(int taskLocalId);
 
-  /*
-  * Insert
-  * */
+  Future<CategoryTableData?> getCategoryByName(String name);
+
+  // ================================
+  // ========== INSERT ==============
+  // ================================
   Future<int> insertCategory(CategoryTableCompanion category);
+
+  Future<int> insertTask(TaskTableCompanion task,
+      List<SubtaskTableCompanion> subtasks, CategoryTableCompanion category);
 }

@@ -31,7 +31,7 @@ class MainWidget extends ConsumerWidget {
       debugPrint("$tasks\n");
       final categories = await categoryDao.getCategories();
       debugPrint("$categories\n");
-      final subtasks = await subtaskDao.getSubtasks();
+      final subtasks = await subtaskDao.fetchSubtasks();
       debugPrint("$subtasks\n");
     });
     return MaterialApp.router(
@@ -42,8 +42,16 @@ class MainWidget extends ConsumerWidget {
         primaryColor: ConstColor.primary,
         scaffoldBackgroundColor: ConstColor.surface,
         textTheme: const TextTheme(
-            headlineMedium: TextStyle(
-                color: ConstColor.onPrimary, fontWeight: FontWeight.w600)),
+          headlineMedium: TextStyle(
+              color: ConstColor.onPrimary, fontWeight: FontWeight.w600),
+          headlineSmall: TextStyle(
+              color: ConstColor.onPrimary, fontWeight: FontWeight.w600),
+          titleLarge: TextStyle(fontWeight: FontWeight.w500),
+          titleMedium: TextStyle(fontWeight: FontWeight.w500),
+          labelMedium: TextStyle(fontWeight: FontWeight.w500),
+          labelSmall: TextStyle(fontWeight: FontWeight.w500),
+          labelLarge: TextStyle(fontWeight: FontWeight.w500),
+        ),
 
 //text
         colorScheme: const ColorScheme.light(

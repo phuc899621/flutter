@@ -17,6 +17,7 @@ T _$identity<T>(T value) => value;
 mixin _$CategoryEntity {
   String get name;
   int get localId;
+  int get userLocalId;
 
   /// Create a copy of CategoryEntity
   /// with the given fields replaced by the non-null parameter values.
@@ -32,15 +33,17 @@ mixin _$CategoryEntity {
         (other.runtimeType == runtimeType &&
             other is CategoryEntity &&
             (identical(other.name, name) || other.name == name) &&
-            (identical(other.localId, localId) || other.localId == localId));
+            (identical(other.localId, localId) || other.localId == localId) &&
+            (identical(other.userLocalId, userLocalId) ||
+                other.userLocalId == userLocalId));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, name, localId);
+  int get hashCode => Object.hash(runtimeType, name, localId, userLocalId);
 
   @override
   String toString() {
-    return 'CategoryEntity(name: $name, localId: $localId)';
+    return 'CategoryEntity(name: $name, localId: $localId, userLocalId: $userLocalId)';
   }
 }
 
@@ -50,7 +53,7 @@ abstract mixin class $CategoryEntityCopyWith<$Res> {
           CategoryEntity value, $Res Function(CategoryEntity) _then) =
       _$CategoryEntityCopyWithImpl;
   @useResult
-  $Res call({String name, int localId});
+  $Res call({String name, int localId, int userLocalId});
 }
 
 /// @nodoc
@@ -68,6 +71,7 @@ class _$CategoryEntityCopyWithImpl<$Res>
   $Res call({
     Object? name = null,
     Object? localId = null,
+    Object? userLocalId = null,
   }) {
     return _then(_self.copyWith(
       name: null == name
@@ -78,6 +82,10 @@ class _$CategoryEntityCopyWithImpl<$Res>
           ? _self.localId
           : localId // ignore: cast_nullable_to_non_nullable
               as int,
+      userLocalId: null == userLocalId
+          ? _self.userLocalId
+          : userLocalId // ignore: cast_nullable_to_non_nullable
+              as int,
     ));
   }
 }
@@ -85,12 +93,15 @@ class _$CategoryEntityCopyWithImpl<$Res>
 /// @nodoc
 
 class _CategoryEntity implements CategoryEntity {
-  const _CategoryEntity({required this.name, required this.localId});
+  const _CategoryEntity(
+      {required this.name, required this.localId, required this.userLocalId});
 
   @override
   final String name;
   @override
   final int localId;
+  @override
+  final int userLocalId;
 
   /// Create a copy of CategoryEntity
   /// with the given fields replaced by the non-null parameter values.
@@ -106,15 +117,17 @@ class _CategoryEntity implements CategoryEntity {
         (other.runtimeType == runtimeType &&
             other is _CategoryEntity &&
             (identical(other.name, name) || other.name == name) &&
-            (identical(other.localId, localId) || other.localId == localId));
+            (identical(other.localId, localId) || other.localId == localId) &&
+            (identical(other.userLocalId, userLocalId) ||
+                other.userLocalId == userLocalId));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, name, localId);
+  int get hashCode => Object.hash(runtimeType, name, localId, userLocalId);
 
   @override
   String toString() {
-    return 'CategoryEntity(name: $name, localId: $localId)';
+    return 'CategoryEntity(name: $name, localId: $localId, userLocalId: $userLocalId)';
   }
 }
 
@@ -126,7 +139,7 @@ abstract mixin class _$CategoryEntityCopyWith<$Res>
       __$CategoryEntityCopyWithImpl;
   @override
   @useResult
-  $Res call({String name, int localId});
+  $Res call({String name, int localId, int userLocalId});
 }
 
 /// @nodoc
@@ -144,6 +157,7 @@ class __$CategoryEntityCopyWithImpl<$Res>
   $Res call({
     Object? name = null,
     Object? localId = null,
+    Object? userLocalId = null,
   }) {
     return _then(_CategoryEntity(
       name: null == name
@@ -153,6 +167,10 @@ class __$CategoryEntityCopyWithImpl<$Res>
       localId: null == localId
           ? _self.localId
           : localId // ignore: cast_nullable_to_non_nullable
+              as int,
+      userLocalId: null == userLocalId
+          ? _self.userLocalId
+          : userLocalId // ignore: cast_nullable_to_non_nullable
               as int,
     ));
   }

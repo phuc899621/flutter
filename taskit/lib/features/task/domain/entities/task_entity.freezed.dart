@@ -21,6 +21,7 @@ mixin _$TaskEntity {
   CategoryEntity get category;
   TaskPriority get priority;
   int get userLocalId;
+  DateTime? get completedAt;
   TaskStatus get status;
   DateTime? get dueDate;
   bool get hasTime;
@@ -50,6 +51,8 @@ mixin _$TaskEntity {
                 other.priority == priority) &&
             (identical(other.userLocalId, userLocalId) ||
                 other.userLocalId == userLocalId) &&
+            (identical(other.completedAt, completedAt) ||
+                other.completedAt == completedAt) &&
             (identical(other.status, status) || other.status == status) &&
             (identical(other.dueDate, dueDate) || other.dueDate == dueDate) &&
             (identical(other.hasTime, hasTime) || other.hasTime == hasTime) &&
@@ -69,6 +72,7 @@ mixin _$TaskEntity {
       category,
       priority,
       userLocalId,
+      completedAt,
       status,
       dueDate,
       hasTime,
@@ -78,7 +82,7 @@ mixin _$TaskEntity {
 
   @override
   String toString() {
-    return 'TaskEntity(localId: $localId, title: $title, description: $description, category: $category, priority: $priority, userLocalId: $userLocalId, status: $status, dueDate: $dueDate, hasTime: $hasTime, subtasks: $subtasks, createdAt: $createdAt, updatedAt: $updatedAt)';
+    return 'TaskEntity(localId: $localId, title: $title, description: $description, category: $category, priority: $priority, userLocalId: $userLocalId, completedAt: $completedAt, status: $status, dueDate: $dueDate, hasTime: $hasTime, subtasks: $subtasks, createdAt: $createdAt, updatedAt: $updatedAt)';
   }
 }
 
@@ -95,6 +99,7 @@ abstract mixin class $TaskEntityCopyWith<$Res> {
       CategoryEntity category,
       TaskPriority priority,
       int userLocalId,
+      DateTime? completedAt,
       TaskStatus status,
       DateTime? dueDate,
       bool hasTime,
@@ -123,6 +128,7 @@ class _$TaskEntityCopyWithImpl<$Res> implements $TaskEntityCopyWith<$Res> {
     Object? category = null,
     Object? priority = null,
     Object? userLocalId = null,
+    Object? completedAt = freezed,
     Object? status = null,
     Object? dueDate = freezed,
     Object? hasTime = null,
@@ -155,6 +161,10 @@ class _$TaskEntityCopyWithImpl<$Res> implements $TaskEntityCopyWith<$Res> {
           ? _self.userLocalId
           : userLocalId // ignore: cast_nullable_to_non_nullable
               as int,
+      completedAt: freezed == completedAt
+          ? _self.completedAt
+          : completedAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
       status: null == status
           ? _self.status
           : status // ignore: cast_nullable_to_non_nullable
@@ -203,6 +213,7 @@ class _TaskEntity implements TaskEntity {
       required this.category,
       required this.priority,
       required this.userLocalId,
+      this.completedAt,
       required this.status,
       this.dueDate,
       required this.hasTime,
@@ -223,6 +234,8 @@ class _TaskEntity implements TaskEntity {
   final TaskPriority priority;
   @override
   final int userLocalId;
+  @override
+  final DateTime? completedAt;
   @override
   final TaskStatus status;
   @override
@@ -265,6 +278,8 @@ class _TaskEntity implements TaskEntity {
                 other.priority == priority) &&
             (identical(other.userLocalId, userLocalId) ||
                 other.userLocalId == userLocalId) &&
+            (identical(other.completedAt, completedAt) ||
+                other.completedAt == completedAt) &&
             (identical(other.status, status) || other.status == status) &&
             (identical(other.dueDate, dueDate) || other.dueDate == dueDate) &&
             (identical(other.hasTime, hasTime) || other.hasTime == hasTime) &&
@@ -284,6 +299,7 @@ class _TaskEntity implements TaskEntity {
       category,
       priority,
       userLocalId,
+      completedAt,
       status,
       dueDate,
       hasTime,
@@ -293,7 +309,7 @@ class _TaskEntity implements TaskEntity {
 
   @override
   String toString() {
-    return 'TaskEntity(localId: $localId, title: $title, description: $description, category: $category, priority: $priority, userLocalId: $userLocalId, status: $status, dueDate: $dueDate, hasTime: $hasTime, subtasks: $subtasks, createdAt: $createdAt, updatedAt: $updatedAt)';
+    return 'TaskEntity(localId: $localId, title: $title, description: $description, category: $category, priority: $priority, userLocalId: $userLocalId, completedAt: $completedAt, status: $status, dueDate: $dueDate, hasTime: $hasTime, subtasks: $subtasks, createdAt: $createdAt, updatedAt: $updatedAt)';
   }
 }
 
@@ -312,6 +328,7 @@ abstract mixin class _$TaskEntityCopyWith<$Res>
       CategoryEntity category,
       TaskPriority priority,
       int userLocalId,
+      DateTime? completedAt,
       TaskStatus status,
       DateTime? dueDate,
       bool hasTime,
@@ -341,6 +358,7 @@ class __$TaskEntityCopyWithImpl<$Res> implements _$TaskEntityCopyWith<$Res> {
     Object? category = null,
     Object? priority = null,
     Object? userLocalId = null,
+    Object? completedAt = freezed,
     Object? status = null,
     Object? dueDate = freezed,
     Object? hasTime = null,
@@ -373,6 +391,10 @@ class __$TaskEntityCopyWithImpl<$Res> implements _$TaskEntityCopyWith<$Res> {
           ? _self.userLocalId
           : userLocalId // ignore: cast_nullable_to_non_nullable
               as int,
+      completedAt: freezed == completedAt
+          ? _self.completedAt
+          : completedAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
       status: null == status
           ? _self.status
           : status // ignore: cast_nullable_to_non_nullable

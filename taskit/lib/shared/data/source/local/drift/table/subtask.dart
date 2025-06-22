@@ -18,6 +18,8 @@ class SubtaskTable extends Table {
   IntColumn get taskLocalId =>
       integer().references(TaskTable, #localId, onDelete: KeyAction.cascade)();
 
+  DateTimeColumn get completedAt => dateTime().nullable()();
+
   DateTimeColumn get createdAt => dateTime().withDefault(currentDateAndTime)();
 
   DateTimeColumn get updatedAt => dateTime().withDefault(currentDateAndTime)();

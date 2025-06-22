@@ -11,7 +11,7 @@ class ConstColor {
   static const secondary = Color(0xFFFF9800);
   static const onSecondary = Color(0xFFFFFFFF);
   static const secondaryContainer = Color(0xFFFFE0B2);
-  static const onSecondaryContainer = Color(0xFF4E2600);
+  static const onSecondaryContainer = Color(0xFFC57901);
 
   static const tertiary = Color(0xFF7CB342);
   static const onTertiary = Color(0xFFFFFFFF);
@@ -30,8 +30,8 @@ class ConstColor {
   static const highContainer = Color(0xFFEF9A9A);
   static const onHighContainer = Color(0xFFB71C1C);
 
-  static const mediumContainer = Color(0xFFFFCC80);
-  static const onMediumContainer = Color(0xFFEF6C00);
+  static const mediumContainer = Color(0xFFFADF8B);
+  static const onMediumContainer = Color(0xFF7C4811);
 
   static const lowContainer = Color(0xFFA5D6A7);
   static const onLowContainer = Color(0xFF2E7D32);
@@ -45,10 +45,12 @@ class ConstColor {
   //background
   static const surface = Color(0xFFFDF7FF);
   static const surfaceDim = Color(0xFFDED8E0);
+
   //card
   static const surfaceContainer = Color(0xFFF2ECF4);
   static const surfaceContainerHighest = Color(0xFFE6E1E9);
   static const surfaceContainerHigh = Color(0xFFECE6EE);
+
   //text
   static const onSurface = Color(0xFF1D1B20);
   static const onSurfaceVariant = Color(0xFF49454E);
@@ -74,70 +76,101 @@ class AppColor {
   final BuildContext context;
 
   AppColor(this.context);
+
   Color get primary => Theme.of(context).primaryColor;
+
   Color get onPrimary => Theme.of(context).colorScheme.onPrimary;
+
   Color get primaryContainer => Theme.of(context).colorScheme.primaryContainer;
+
   Color get onPrimaryContainer =>
       Theme.of(context).colorScheme.onPrimaryContainer;
 
   Color get secondary => Theme.of(context).colorScheme.secondary;
+
   Color get onSecondary => Theme.of(context).colorScheme.onSecondary;
+
   Color get secondaryContainer =>
       Theme.of(context).colorScheme.secondaryContainer;
+
   Color get onSecondaryContainer =>
       Theme.of(context).colorScheme.onSecondaryContainer;
 
   Color get tertiary => Theme.of(context).colorScheme.tertiary;
+
   Color get onTertiary => Theme.of(context).colorScheme.onTertiary;
+
   Color get tertiaryContainer =>
       Theme.of(context).colorScheme.tertiaryContainer;
+
   Color get onTertiaryContainer =>
       Theme.of(context).colorScheme.onTertiaryContainer;
 
   Color get scheduledContainer =>
       Theme.of(context).colorScheme.scheduledContainer;
+
   Color get onScheduledContainer =>
       Theme.of(context).colorScheme.onScheduledContainer;
 
   Color get pendingContainer => Theme.of(context).colorScheme.pendingContainer;
+
   Color get onPendingContainer =>
       Theme.of(context).colorScheme.onPendingContainer;
 
   Color get completedContainer =>
       Theme.of(context).colorScheme.completedContainer;
+
   Color get onCompletedContainer =>
       Theme.of(context).colorScheme.onCompletedContainer;
 
   Color get highContainer => Theme.of(context).colorScheme.highContainer;
+
   Color get onHighContainer => Theme.of(context).colorScheme.onHighContainer;
 
   Color get mediumContainer => Theme.of(context).colorScheme.mediumContainer;
+
   Color get onMediumContainer =>
       Theme.of(context).colorScheme.onMediumContainer;
 
   Color get lowContainer => Theme.of(context).colorScheme.lowContainer;
+
   Color get onLowContainer => Theme.of(context).colorScheme.onLowContainer;
 
   Color get noneContainer => Theme.of(context).colorScheme.noneContainer;
+
   Color get onNoneContainer => Theme.of(context).colorScheme.onNoneContainer;
 
   Color get surface => Theme.of(context).colorScheme.surface;
+
   Color get surfaceContainer => Theme.of(context).colorScheme.surfaceContainer;
+
   Color get surfaceContainerHighest =>
       Theme.of(context).colorScheme.surfaceContainerHighest;
+
   Color get surfaceContainerHigh =>
       Theme.of(context).colorScheme.surfaceContainerHigh;
+
   Color get surfaceDim => Theme.of(context).colorScheme.surfaceDim;
+
   Color get onSurface => Theme.of(context).colorScheme.onSurface;
+
   Color get onSurfaceVariant => Theme.of(context).colorScheme.onSurfaceVariant;
 
   Color get success => Theme.of(context).colorScheme.success;
+
   Color get onSuccess => Theme.of(context).colorScheme.onSuccess;
+
   Color get error => Theme.of(context).colorScheme.error;
+
   Color get onError => Theme.of(context).colorScheme.onError;
+
   Color get warning => Theme.of(context).colorScheme.warning;
+
   Color get onWarning => Theme.of(context).colorScheme.onWarning;
 
   Color get outline => Theme.of(context).colorScheme.outline;
+
   Color get outlineVariant => Theme.of(context).colorScheme.outlineVariant;
+
+  Color get transprent => Colors.transparent;
 }

@@ -1,7 +1,14 @@
+import 'dart:io';
+
 import 'package:drift/drift.dart';
-import 'package:drift_flutter/drift_flutter.dart';
+import 'package:drift/native.dart';
+import 'package:drift_local_storage_inspector/drift_local_storage_inspector.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
+import 'package:storage_inspector/storage_inspector.dart';
+import 'package:taskit/shared/log/logger_provider.dart';
 
 import '../dao/category.dart';
 import '../dao/setting.dart';
@@ -37,11 +44,45 @@ class AppDatabase extends _$AppDatabase {
       );
 
   static QueryExecutor _openConnection() {
+    return LazyDatabase(() async {
+      final dir = await getApplicationSupportDirectory();
+      final path = p.join(dir.path, 'taskit_db.sqlite');
+      final file = File(path);
+      final executor = NativeDatabase(file, logStatements: true);
+
+      if (kDebugMode) {
+        _startInspector(executor);
+      }
+
+      return executor;
+    });
+  }
+
+  static void _startInspector(QueryExecutor realDb) async {
+    final driver =
+        StorageServerDriver(bundleId: 'com.example.taskit_local', icon: '...');
+    final driftDb = AppDatabase.forInspector(realDb);
+
+    final sqlServer = DriftSQLDatabaseServer(
+      id: "1",
+      name: "Drift SQL Server",
+      database: driftDb, // Your drift database
+    );
+
+    driver.addSQLServer(sqlServer);
+
+    await driver.start();
+    logger.i("Inspector started");
+  }
+
+  AppDatabase.forInspector(super.executor);
+
+/*static QueryExecutor _openConnection() {
     return driftDatabase(
       name: 'db',
       native: const DriftNativeOptions(
         databaseDirectory: getApplicationSupportDirectory,
       ),
     );
-  }
+  }*/
 }

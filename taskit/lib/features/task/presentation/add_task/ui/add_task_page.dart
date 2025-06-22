@@ -52,8 +52,17 @@ class _AddTaskPageState extends ConsumerState<AddTaskPage> {
     });
   }
 
+  void _listener() {
+    ref.listen(
+        addTaskControllerProvider.select((value) => value.isCreateTaskSuccess),
+        (_, next) {
+      Navigator.of(context).pop();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    _listener();
     final state = ref.watch(addTaskControllerProvider);
     final controller = ref.watch(addTaskControllerProvider.notifier);
     final color = Theme.of(context).colorScheme;
@@ -89,12 +98,15 @@ class _AddTaskPageState extends ConsumerState<AddTaskPage> {
                     ),
                     child: Center(
                       child: IconButton(
-                        onPressed: () => controller.addTask(),
+                        onPressed: () => {
+                          if (_formState.currentState?.validate() ?? false)
+                            controller.addTask()
+                        },
                         icon: Icon(
                           Icons.save_rounded,
                           color: color.onPrimaryContainer,
                         ),
-                        splashRadius: 20,
+                        splashRadius: 15,
                         splashColor: color.primaryContainer,
                       ),
                     ),
@@ -131,39 +143,42 @@ class _AddTaskPageState extends ConsumerState<AddTaskPage> {
                       * Title
                       * */
                       TextFormField(
-                        controller: _titleController,
-                        maxLines: 1,
-                        maxLength: 35,
-                        focusNode: _focusTitleNode,
-                        autofocus: false,
-                        onTapOutside: (event) =>
-                            FocusScope.of(context).unfocus(),
-                        style: text.bodyLarge,
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please enter a title';
-                          }
-                          return null;
-                        },
-                        decoration: InputDecoration(
-                          suffixIcon: state.title.isNotEmpty
-                              ? IconButton(
-                                  onPressed: _titleController.clear,
-                                  icon: Icon(Icons.clear_rounded,
-                                      color: color.onSurfaceVariant))
-                              : null,
-                          labelStyle: text.titleMedium?.copyWith(
-                              fontWeight: FontWeight.w600,
-                              color: color.onSurface),
-                          label: Text('Title'),
-                          filled: true,
-                          fillColor: color.surfaceContainer,
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10),
-                              borderSide:
-                                  BorderSide(color: color.outlineVariant)),
-                        ),
-                      ),
+                          controller: _titleController,
+                          maxLines: 1,
+                          maxLength: 35,
+                          focusNode: _focusTitleNode,
+                          autofocus: false,
+                          onTapOutside: (event) =>
+                              FocusScope.of(context).unfocus(),
+                          style: text.bodyLarge,
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter a title';
+                            }
+                            return null;
+                          },
+                          decoration: InputDecoration(
+                              suffixIcon: state.title.isNotEmpty
+                                  ? IconButton(
+                                      onPressed: _titleController.clear,
+                                      icon: Icon(Icons.clear_rounded,
+                                          color: color.onSurfaceVariant))
+                                  : null,
+                              hintStyle: text.titleMedium?.copyWith(
+                                  fontWeight: FontWeight.w600,
+                                  color: color.onSurface),
+                              hintText: 'Title',
+                              filled: true,
+                              fillColor: color.surfaceContainer,
+                              border: OutlineInputBorder(
+                                borderSide: BorderSide.none,
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderSide:
+                                    BorderSide(color: color.primary, width: 2),
+                                borderRadius: BorderRadius.circular(10),
+                              ))),
                       /*
                       *
                       * Priority
@@ -736,23 +751,27 @@ class _AddTaskPageState extends ConsumerState<AddTaskPage> {
                         },
                         style: text.bodyMedium,
                         decoration: InputDecoration(
-                          suffixIcon: _descriptionController.text.isNotEmpty
-                              ? IconButton(
-                                  onPressed: _descriptionController.clear,
-                                  icon: Icon(Icons.clear_rounded,
-                                      color: color.onSurfaceVariant))
-                              : null,
-                          labelStyle: text.titleMedium?.copyWith(
-                              fontWeight: FontWeight.w600,
-                              color: color.onSurface),
-                          label: const Text('Description'),
-                          filled: true,
-                          fillColor: color.surfaceContainer,
-                          border: OutlineInputBorder(
+                            suffixIcon: _descriptionController.text.isNotEmpty
+                                ? IconButton(
+                                    onPressed: _descriptionController.clear,
+                                    icon: Icon(Icons.clear_rounded,
+                                        color: color.onSurfaceVariant))
+                                : null,
+                            hintStyle: text.titleMedium?.copyWith(
+                                fontWeight: FontWeight.w600,
+                                color: color.onSurface),
+                            hintText: 'Description',
+                            filled: true,
+                            fillColor: color.surfaceContainer,
+                            border: OutlineInputBorder(
+                              borderSide: BorderSide.none,
                               borderRadius: BorderRadius.circular(10),
+                            ),
+                            focusedBorder: OutlineInputBorder(
                               borderSide:
-                                  BorderSide(color: color.outlineVariant)),
-                        ),
+                                  BorderSide(color: color.primary, width: 2),
+                              borderRadius: BorderRadius.circular(10),
+                            )),
                       ),
                       const SizedBox(
                         height: 5,

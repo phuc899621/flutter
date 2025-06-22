@@ -15,6 +15,7 @@ abstract class TaskEntity with _$TaskEntity {
     required CategoryEntity category,
     required TaskPriority priority,
     required int userLocalId,
+    DateTime? completedAt,
     required TaskStatus status,
     DateTime? dueDate,
     required bool hasTime,

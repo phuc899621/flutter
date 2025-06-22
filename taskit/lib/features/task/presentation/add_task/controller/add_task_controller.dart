@@ -6,8 +6,11 @@ import 'package:taskit/features/task/domain/entities/subtask_entity.dart';
 import 'package:taskit/features/task/domain/entities/task_priority_enum.dart';
 import 'package:taskit/shared/log/logger_provider.dart';
 
+import '../../../../user/application/user_service.dart';
 import '../../../application/task_service.dart';
 import '../../../domain/entities/category_entity.dart';
+import '../../../domain/entities/task_entity.dart';
+import '../../../domain/entities/task_status_enum.dart';
 import '../state/add_task_state.dart';
 
 final addTaskControllerProvider =
@@ -77,6 +80,7 @@ class AddTaskController extends AutoDisposeNotifier<AddTaskState> {
       return;
     }
     state = state.copyWith(
+        isTimeSelected: true,
         selectedDate:
             state.selectedDate!.copyWith(hour: s.hour, minute: s.minute));
   }
@@ -89,8 +93,11 @@ class AddTaskController extends AutoDisposeNotifier<AddTaskState> {
 
   void setAddTaskForm() {}
 
-  void onAddCategory() {
-    final category = CategoryEntity(localId: -1, name: state.addCategory);
+  void onAddCategory() async {
+    final category = CategoryEntity(
+        localId: -1,
+        name: state.addCategory,
+        userLocalId: await ref.read(userServiceProvider).getUserLocalId());
     ref.read(taskServiceProvider).insertCategory(category);
     state = state.copyWith(addCategory: '');
   }
@@ -138,8 +145,31 @@ class AddTaskController extends AutoDisposeNotifier<AddTaskState> {
 
   Future<void> addTask() async {
     state = state.copyWith(isLoading: true);
+    final taskService = ref.read(taskServiceProvider);
+    final userLocalId = await ref.read(userServiceProvider).getUserLocalId();
 
-    await Future.delayed(const Duration(seconds: 4));
-    state = state.copyWith(isLoading: false);
+    final task = TaskEntity(
+      localId: -1,
+      title: state.title,
+      description: state.description,
+      category: state.selectedCategory ??
+          CategoryEntity(localId: -1, name: 'any', userLocalId: userLocalId),
+      priority: state.selectedPriority,
+      status: state.selectedDate == null
+          ? TaskStatus.pending
+          : TaskStatus.scheduled,
+      userLocalId: userLocalId,
+      dueDate: state.selectedDate,
+      hasTime: state.isTimeSelected,
+      subtasks: state.subtasks,
+      createdAt: DateTime.now(),
+      updatedAt: DateTime.now(),
+    );
+    final result = await taskService.insertTask(task);
+    result.when((task) {
+      state = state.copyWith(isLoading: false, isCreateTaskSuccess: true);
+    }, (error) {
+      state = state.copyWith(error: error.message, isLoading: false);
+    });
   }
 }

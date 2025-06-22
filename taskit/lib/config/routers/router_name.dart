@@ -6,5 +6,6 @@ const String forgotPasswordVerifyRoute = 'verifyPassword';
 const String forgotPasswordResetRoute = 'reset';
 const String homeRoute = 'home';
 const String listRoute = 'list';
+const String calendarRoute = 'calendar';
 const String settingRoute = 'setting';
 const String addTaskRoute = 'add_task';

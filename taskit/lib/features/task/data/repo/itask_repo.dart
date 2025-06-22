@@ -5,33 +5,35 @@ import '../../domain/entities/category_entity.dart';
 import '../../domain/entities/subtask_entity.dart';
 
 abstract interface class ITaskRepo {
-  /*
-  * Watch
-  * */
+  //================================
+  //========== WATCH ================
+  //================================
   Stream<List<TaskEntity>> watchAllTasks();
 
   Stream<List<CategoryEntity>> watchAllCategories();
 
-  /*
-  * Update
-  * */
-  Future<void> updateTaskStatus({required int localId, TaskStatus? status});
+  //================================
+  //========== UPDATE ================
+  //================================
+  Future<void> updateTaskStatus(int localId, TaskStatus status);
 
   Future<void> updateSubtaskStatus({required int localId});
 
-  /*
-  * Read
-  * */
+  //================================
+  //========== READ ================
+  //================================
   Future<TaskEntity> getTaskById(int localId);
 
   Future<List<SubtaskEntity>> getSubtaskByTaskLocalId(int taskLocalId);
 
   Future<List<CategoryEntity>> getAICategory(String title);
 
-  /*
-  * Insert
-  * */
+  Future<CategoryEntity?> getCategoryByName(String name);
+
+  //================================
+  //========== INSERT ================
+  //================================
   Future<int> insertCategory(CategoryEntity category);
 
-  Future<TaskEntity> insertTask(TaskEntity task);
+  Future<int> insertTask(TaskEntity task);
 }

@@ -14,26 +14,34 @@ final userDaoProvider = Provider<UserDao>((ref) {
 @DriftAccessor(tables: [UserTable])
 class UserDao extends DatabaseAccessor<AppDatabase> with _$UserDaoMixin {
   UserDao(super.db);
+
+  Stream<UserTableData> watchUser() => select(userTable).watchSingle();
+
   /*
   * Read
   * */
   Future<UserTableData?> getUser() => select(userTable).getSingleOrNull();
+
   Future<int> getUserLocalId() =>
       select(userTable).getSingle().then((value) => value.localId);
+
   /*
   * Insert
   * */
   Future<int> insertUser(UserTableCompanion user) =>
       into(userTable).insert(user);
+
   /*
   * Update
   * */
   Future<bool> updateUser(UserTableCompanion user) =>
       update(userTable).replace(user);
+
   /*
   * Delete
   * */
   Future<int> deleteUser() => delete(userTable).go();
+
   //delete user if exist
   Future<void> deleteIfExist() async {
     final user = await getUser();

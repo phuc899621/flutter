@@ -7,4 +7,5 @@ mixin _$TaskDaoMixin on DatabaseAccessor<AppDatabase> {
   $UserTableTable get userTable => attachedDatabase.userTable;
   $CategoryTableTable get categoryTable => attachedDatabase.categoryTable;
   $TaskTableTable get taskTable => attachedDatabase.taskTable;
+  $SubtaskTableTable get subtaskTable => attachedDatabase.subtaskTable;
 }

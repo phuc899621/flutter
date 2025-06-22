@@ -7,5 +7,6 @@ abstract class CategoryEntity with _$CategoryEntity {
   const factory CategoryEntity({
     required String name,
     required int localId,
+    required int userLocalId,
   }) = _CategoryEntity;
 }

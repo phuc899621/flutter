@@ -3,11 +3,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:msh_checkbox/msh_checkbox.dart';
 import 'package:taskit/features/task/domain/entities/task_entity.dart';
 import 'package:taskit/shared/extension/color.dart';
-import 'package:taskit/shared/utils/date_format.dart';
+import 'package:taskit/shared/extension/date_time.dart';
 import 'package:taskit/shared/utils/task_entity_mapper.dart';
 
 import '../../../../../../config/app/app_color.dart';
-import '../../../../../../config/app/text_theme.dart';
+import '../../../../../task/domain/entities/task_priority_enum.dart';
 import '../../../../../task/domain/entities/task_status_enum.dart';
 
 class TaskItem extends ConsumerWidget {
@@ -17,6 +17,7 @@ class TaskItem extends ConsumerWidget {
   final VoidCallback? onCheck;
   final void Function(int localId)? onEdit;
   final void Function(int subtaskLocalId)? onSubtaskCheck;
+  final void Function(int subtaskLocalId)? onSubtaskDelete;
 
   const TaskItem(
       {super.key,
@@ -24,95 +25,112 @@ class TaskItem extends ConsumerWidget {
       this.onDelete,
       this.onCheck,
       this.onSubtaskCheck,
-      this.onEdit});
+      this.onEdit,
+      this.onSubtaskDelete});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final text = ref.read(textStyleProvider(context));
+    final text = Theme.of(context).textTheme;
     final color = ref.read(colorProvider(context));
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
+    return Opacity(
+      opacity: task.status == TaskStatus.completed ? 0.7 : 1,
       child: Material(
         clipBehavior: Clip.hardEdge,
-        color: color.surface,
+        color: color.surfaceContainer,
         elevation: 2,
-        borderRadius: BorderRadius.circular(10),
+        borderRadius: BorderRadius.circular(15),
         child: ExpansionTile(
+          tilePadding: EdgeInsets.only(right: 10, left: 10),
           leading: MSHCheckbox(
             value: task.status == TaskStatus.completed,
             onChanged: (value) {
               debugPrint('check');
               onCheck?.call();
             },
-            size: 25,
+            size: 28,
             colorConfig: MSHColorConfig.fromCheckedUncheckedDisabled(
-              checkedColor: color.primary,
+              checkedColor: color.onSurfaceVariant,
               uncheckedColor: color.onSurfaceVariant,
             ),
             style: MSHCheckboxStyle.fillScaleColor,
           ),
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10),
+            borderRadius: BorderRadius.circular(15),
           ),
           title:
               Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
             Text(
               task.title,
-              style: Theme.of(context)
-                  .textTheme
-                  .titleMedium
-                  ?.copyWith(color: color.onSurface),
+              style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                  color: task.status == TaskStatus.completed
+                      ? color.onSurfaceVariant
+                      : color.onSurface,
+                  decoration: task.status == TaskStatus.completed
+                      ? TextDecoration.lineThrough
+                      : TextDecoration.none),
             ),
           ]),
           subtitle: Padding(
-            padding: const EdgeInsets.only(top: 5),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              spacing: 10,
+            padding: const EdgeInsets.only(top: 8),
+            child: Column(
+              spacing: 8,
               children: [
                 Row(
-                  spacing: 5,
+                  spacing: 8,
                   children: [
-                    const Icon(
-                      Icons.schedule_outlined,
-                      size: 16,
-                      color: ConstColor.onSurfaceVariant,
-                    ),
-                    Text(
-                      task.hasTime
-                          ? DateFormatUtils.formatTime(task.dueDate)
-                          : 'Today, 3:20',
-                      style: Theme.of(context).textTheme.labelMedium?.copyWith(
-                          color: color.onSurfaceVariant,
-                          fontWeight: FontWeight.normal),
-                    ),
+                    if (task.priority != TaskPriority.none)
+                      Container(
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              color: task.priority.toColorContainer()),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 10, vertical: 3),
+                          child: Text(
+                            TaskPriorityUtils.toPriority(task.priority),
+                            style: Theme.of(context)
+                                .textTheme
+                                .labelMedium
+                                ?.copyWith(
+                                    color: task.priority.toColor(),
+                                    fontWeight: FontWeight.w600),
+                          )),
+                    Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          color: color.secondaryContainer,
+                        ),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 10, vertical: 3),
+                        child: Text(
+                          task.category.name,
+                          style: Theme.of(context)
+                              .textTheme
+                              .labelMedium
+                              ?.copyWith(
+                                  color: color.onSecondaryContainer,
+                                  fontWeight: FontWeight.w600),
+                        )),
                   ],
                 ),
-                Container(
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: task.priority.toColorContainer()),
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                    child: Text(
-                      TaskPriorityUtils.toPriority(task.priority),
-                      style: Theme.of(context).textTheme.labelMedium?.copyWith(
-                          color: task.priority.toColor(),
-                          fontWeight: FontWeight.normal),
-                    )),
-                Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      color: color.secondary.withAlpha(20),
-                    ),
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                    child: Text(
-                      task.category.name,
-                      style: Theme.of(context).textTheme.labelMedium?.copyWith(
-                          color: color.secondary,
-                          fontWeight: FontWeight.normal),
-                    )),
+                if (task.dueDate != null)
+                  Row(
+                    spacing: 5,
+                    children: [
+                      const Icon(
+                        Icons.schedule_outlined,
+                        size: 16,
+                        color: ConstColor.onSurfaceVariant,
+                      ),
+                      Text(
+                        task.hasTime
+                            ? task.dueDate!.toFormatDateAndTime()
+                            : task.dueDate!.toFormatDate(),
+                        style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                            color: color.onSurfaceVariant,
+                            fontWeight: FontWeight.normal),
+                      ),
+                    ],
+                  ),
               ],
             ),
           ),
@@ -154,28 +172,50 @@ class TaskItem extends ConsumerWidget {
               ),
             ]),
             ...task.subtasks.map((e) => Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 5),
+                  padding: const EdgeInsets.symmetric(vertical: 8),
                   child: Container(
                     decoration: BoxDecoration(
-                      color: color.surface,
+                      color: color.transprent,
                       borderRadius: BorderRadius.circular(10),
                     ),
                     padding:
                         const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
                     child: Row(spacing: 20, children: [
                       MSHCheckbox(
+                        style: MSHCheckboxStyle.fillFade,
                         value: e.isCompleted,
                         onChanged: (s) {
                           if (onSubtaskCheck != null) {
                             onSubtaskCheck!(e.localId);
                           }
                         },
-                        size: 20,
+                        size: 24,
                       ),
-                      Text(
-                        e.title,
-                        style: text.titleSmall
-                            ?.copyWith(color: color.onSurfaceVariant),
+                      Expanded(
+                        child: Text(
+                          e.title,
+                          style: text.titleSmall
+                              ?.copyWith(color: color.onSurfaceVariant),
+                        ),
+                      ),
+                      Container(
+                        width: 40,
+                        height: 40,
+                        decoration: BoxDecoration(
+                            color: color.error, shape: BoxShape.circle),
+                        padding: EdgeInsets.zero,
+                        child: Center(
+                          child: IconButton(
+                              onPressed: () {
+                                if (onSubtaskDelete != null) {
+                                  onSubtaskDelete!(e.localId);
+                                }
+                              },
+                              icon: Icon(
+                                Icons.delete_outline,
+                                color: color.onError,
+                              )),
+                        ),
                       ),
                     ]),
                   ),

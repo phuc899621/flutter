@@ -18,6 +18,7 @@ mixin _$SubtaskEntity {
   int get localId;
   String get title;
   bool get isCompleted;
+  DateTime? get completedAt;
   int get taskLocalId;
 
   /// Create a copy of SubtaskEntity
@@ -37,17 +38,19 @@ mixin _$SubtaskEntity {
             (identical(other.title, title) || other.title == title) &&
             (identical(other.isCompleted, isCompleted) ||
                 other.isCompleted == isCompleted) &&
+            (identical(other.completedAt, completedAt) ||
+                other.completedAt == completedAt) &&
             (identical(other.taskLocalId, taskLocalId) ||
                 other.taskLocalId == taskLocalId));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, localId, title, isCompleted, taskLocalId);
+  int get hashCode => Object.hash(
+      runtimeType, localId, title, isCompleted, completedAt, taskLocalId);
 
   @override
   String toString() {
-    return 'SubtaskEntity(localId: $localId, title: $title, isCompleted: $isCompleted, taskLocalId: $taskLocalId)';
+    return 'SubtaskEntity(localId: $localId, title: $title, isCompleted: $isCompleted, completedAt: $completedAt, taskLocalId: $taskLocalId)';
   }
 }
 
@@ -57,7 +60,12 @@ abstract mixin class $SubtaskEntityCopyWith<$Res> {
           SubtaskEntity value, $Res Function(SubtaskEntity) _then) =
       _$SubtaskEntityCopyWithImpl;
   @useResult
-  $Res call({int localId, String title, bool isCompleted, int taskLocalId});
+  $Res call(
+      {int localId,
+      String title,
+      bool isCompleted,
+      DateTime? completedAt,
+      int taskLocalId});
 }
 
 /// @nodoc
@@ -76,6 +84,7 @@ class _$SubtaskEntityCopyWithImpl<$Res>
     Object? localId = null,
     Object? title = null,
     Object? isCompleted = null,
+    Object? completedAt = freezed,
     Object? taskLocalId = null,
   }) {
     return _then(_self.copyWith(
@@ -91,6 +100,10 @@ class _$SubtaskEntityCopyWithImpl<$Res>
           ? _self.isCompleted
           : isCompleted // ignore: cast_nullable_to_non_nullable
               as bool,
+      completedAt: freezed == completedAt
+          ? _self.completedAt
+          : completedAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
       taskLocalId: null == taskLocalId
           ? _self.taskLocalId
           : taskLocalId // ignore: cast_nullable_to_non_nullable
@@ -106,6 +119,7 @@ class _SubtaskEntity implements SubtaskEntity {
       {required this.localId,
       required this.title,
       required this.isCompleted,
+      this.completedAt,
       required this.taskLocalId});
 
   @override
@@ -114,6 +128,8 @@ class _SubtaskEntity implements SubtaskEntity {
   final String title;
   @override
   final bool isCompleted;
+  @override
+  final DateTime? completedAt;
   @override
   final int taskLocalId;
 
@@ -134,17 +150,19 @@ class _SubtaskEntity implements SubtaskEntity {
             (identical(other.title, title) || other.title == title) &&
             (identical(other.isCompleted, isCompleted) ||
                 other.isCompleted == isCompleted) &&
+            (identical(other.completedAt, completedAt) ||
+                other.completedAt == completedAt) &&
             (identical(other.taskLocalId, taskLocalId) ||
                 other.taskLocalId == taskLocalId));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, localId, title, isCompleted, taskLocalId);
+  int get hashCode => Object.hash(
+      runtimeType, localId, title, isCompleted, completedAt, taskLocalId);
 
   @override
   String toString() {
-    return 'SubtaskEntity(localId: $localId, title: $title, isCompleted: $isCompleted, taskLocalId: $taskLocalId)';
+    return 'SubtaskEntity(localId: $localId, title: $title, isCompleted: $isCompleted, completedAt: $completedAt, taskLocalId: $taskLocalId)';
   }
 }
 
@@ -156,7 +174,12 @@ abstract mixin class _$SubtaskEntityCopyWith<$Res>
       __$SubtaskEntityCopyWithImpl;
   @override
   @useResult
-  $Res call({int localId, String title, bool isCompleted, int taskLocalId});
+  $Res call(
+      {int localId,
+      String title,
+      bool isCompleted,
+      DateTime? completedAt,
+      int taskLocalId});
 }
 
 /// @nodoc
@@ -175,6 +198,7 @@ class __$SubtaskEntityCopyWithImpl<$Res>
     Object? localId = null,
     Object? title = null,
     Object? isCompleted = null,
+    Object? completedAt = freezed,
     Object? taskLocalId = null,
   }) {
     return _then(_SubtaskEntity(
@@ -190,6 +214,10 @@ class __$SubtaskEntityCopyWithImpl<$Res>
           ? _self.isCompleted
           : isCompleted // ignore: cast_nullable_to_non_nullable
               as bool,
+      completedAt: freezed == completedAt
+          ? _self.completedAt
+          : completedAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
       taskLocalId: null == taskLocalId
           ? _self.taskLocalId
           : taskLocalId // ignore: cast_nullable_to_non_nullable
