@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:taskit/features/main/presentation/home/controller/home_controller.dart';
 import 'package:taskit/features/main/presentation/home/ui/widget/task_item.dart';
+import 'package:taskit/shared/application/time_service.dart';
 import 'package:taskit/shared/extension/date_time.dart';
 
 import '../../../../../config/app/app_color.dart';
@@ -22,6 +23,8 @@ class _HomePageState extends ConsumerState<HomePage>
     final controller = ref.watch(homeControllerProvider.notifier);
     final color = ref.read(colorProvider(context));
     final text = Theme.of(context).textTheme;
+    ref.listen<AsyncValue<DateTime>>(
+        timeStreamProvider, (_, next) => controller.onTimeChecker());
     return DefaultTabController(
         length: 3,
         child: Scaffold(

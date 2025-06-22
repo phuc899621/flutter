@@ -2,18 +2,13 @@ import '../../features/task/domain/entities/task_priority_enum.dart';
 import '../../features/task/domain/entities/task_status_enum.dart';
 
 class TaskPriorityUtils {
-  static const HIGH_PRIORITY = 'high';
-  static const MEDIUM_PRIORITY = 'medium';
-  static const LOW_PRIORITY = 'low';
-  static const NONE_PRIORITY = 'none';
-
   static TaskPriority toEnum(String priority) {
-    switch (priority) {
-      case HIGH_PRIORITY:
+    switch (priority.toLowerCase()) {
+      case 'high':
         return TaskPriority.high;
-      case MEDIUM_PRIORITY:
+      case 'medium':
         return TaskPriority.medium;
-      case LOW_PRIORITY:
+      case 'low':
         return TaskPriority.low;
       default:
         return TaskPriority.none;
@@ -23,29 +18,24 @@ class TaskPriorityUtils {
   static String toPriority(TaskPriority priority) {
     switch (priority) {
       case TaskPriority.high:
-        return HIGH_PRIORITY;
+        return 'high';
       case TaskPriority.medium:
-        return MEDIUM_PRIORITY;
+        return 'medium';
       case TaskPriority.low:
-        return LOW_PRIORITY;
+        return 'low';
       default:
-        return NONE_PRIORITY;
+        return 'none';
     }
   }
 }
 
 class TaskStatusUtils {
-  static const COMPLETED = 'completed';
-  static const PENDING = 'pending';
-  static const SCHEDULED = 'scheduled';
   static TaskStatus toEnum(String status) {
     switch (status) {
-      case COMPLETED:
+      case 'completed':
         return TaskStatus.completed;
-      case PENDING:
+      case 'pending':
         return TaskStatus.pending;
-      case SCHEDULED:
-        return TaskStatus.scheduled;
       default:
         return TaskStatus.pending;
     }
@@ -54,11 +44,11 @@ class TaskStatusUtils {
   static String toStatus(TaskStatus status) {
     switch (status) {
       case TaskStatus.completed:
-        return COMPLETED;
+        return 'completed';
       case TaskStatus.pending:
-        return PENDING;
-      case TaskStatus.scheduled:
-        return SCHEDULED;
+        return 'pending';
+      default:
+        return 'scheduled';
     }
   }
 }

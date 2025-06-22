@@ -1,29 +1,29 @@
 import 'package:dio/dio.dart';
-
+import 'package:taskit/shared/log/logger_provider.dart';
 
 class LoggingInterceptor extends Interceptor {
   @override
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
     // Ghi lại thông tin yêu cầu
-    print('Request: ${options.method} ${options.uri}');
-    print('Headers: ${options.headers}');
-    print('Body: ${options.data}');
+    logger.i('Request: ${options.method} ${options.uri}');
+    logger.i('Headers: ${options.headers}');
+    logger.i('Body: ${options.data}');
     super.onRequest(options, handler);
   }
 
   @override
   void onResponse(Response response, ResponseInterceptorHandler handler) {
     // Ghi lại thông tin phản hồi
-    print('Response: ${response.statusCode} ${response.data}');
+    logger.i('Response: ${response.statusCode} ${response.data}');
     super.onResponse(response, handler);
   }
 
   @override
   void onError(DioException err, ErrorInterceptorHandler handler) {
     // Ghi lại thông tin lỗi
-    print('Error: ${err.response?.statusCode} ${err.message}');
+    logger.e('Error: ${err.response?.statusCode} ${err.message}');
     if (err.response != null) {
-      print('Response data: ${err.response?.data}');
+      logger.e('Response data: ${err.response?.data}');
     }
     super.onError(err, handler);
   }

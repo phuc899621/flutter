@@ -1,5 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:multiple_result/src/result.dart';
+import 'package:multiple_result/multiple_result.dart';
 import 'package:taskit/features/auth/data/dto/req/login/login_request.dart';
 import 'package:taskit/features/auth/data/dto/res/forgot_pass/verify.dart';
 import 'package:taskit/features/auth/data/repo/iauth_repo.dart';
@@ -26,6 +26,7 @@ final authServiceProvider = Provider<IAuthService>((ref) {
 
 class AuthService implements IAuthEntityMapper, IAuthService, IBaseModelMapper {
   final IAuthRepo _iAuthRepo;
+
   AuthService(this._iAuthRepo);
 
   /*

@@ -44,6 +44,14 @@ extension DateCheck on DateTime {
     return now.year == year && now.month == month && now.day == day;
   }
 
+  DateTime toStartOfDay() {
+    return DateTime(year, month, day);
+  }
+
+  DateTime toStartOfTomorrow() {
+    return DateTime(year, month, day + 1);
+  }
+
   bool isYesterday() {
     final yesterday = DateTime.now().subtract(const Duration(days: 1));
     return yesterday.year == year &&

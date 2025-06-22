@@ -4,10 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:taskit/features/main/presentation/home/state/home_state.dart';
 import 'package:taskit/features/task/application/task_service.dart';
-import 'package:taskit/features/task/domain/entities/task_entity.dart';
-import 'package:taskit/shared/application/time_service.dart';
+import 'package:taskit/shared/extension/date_time.dart';
 
 import '../../../../../shared/log/logger_provider.dart';
+import '../../../../task/domain/entities/task_entity.dart';
 import '../../../../user/application/user_service.dart';
 
 final homeControllerProvider =
@@ -22,6 +22,7 @@ class HomeController extends Notifier<HomeState> {
   late final StreamSubscription _pendingSub;
   late final StreamSubscription _completedTodaySub;
   late final StreamSubscription _completedThisWeekSub;
+
   late final StreamSubscription _userSub;
   late final StreamSubscription _timeSub;
 
@@ -29,10 +30,9 @@ class HomeController extends Notifier<HomeState> {
 
   @override
   HomeState build() {
-    _lastCheckTime = ref.watch(timeServiceProvider).startOfDay(DateTime.now());
+    _lastCheckTime = DateTime.now().toStartOfDay();
     _startUserListening();
     _startTaskListening();
-    _startTimeChecker();
     return HomeState();
   }
 
@@ -55,18 +55,15 @@ class HomeController extends Notifier<HomeState> {
     _startTaskListening();
   }
 
-  void _startTimeChecker() {
-    final timeService = ref.read(timeServiceProvider);
-    _timeSub = ref.watch(timeStreamProvider.stream).listen((now) {
-      if (!timeService.isTheSameDay(now, _lastCheckTime)) {
-        _lastCheckTime = timeService.startOfDay(now);
-        _restartListening();
-      }
-    });
+  void onTimeChecker() {
+    if (!_lastCheckTime.isToday()) {
+      _lastCheckTime = DateTime.now().toStartOfDay();
+      _restartListening();
+    }
   }
 
   void onCheck(int localId) {
-    logger.i("Check ${localId}");
+    logger.i("Check $localId");
     ref.read(taskServiceProvider).updateTaskStatus(localId);
   }
 
