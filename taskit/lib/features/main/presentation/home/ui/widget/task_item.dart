@@ -13,8 +13,8 @@ import '../../../../../task/domain/entities/task_status_enum.dart';
 class TaskItem extends ConsumerWidget {
   final TaskEntity task;
 
-  final VoidCallback? onDelete;
-  final VoidCallback? onCheck;
+  final void Function(int localId)? onDelete;
+  final void Function(int localId)? onCheck;
   final void Function(int localId)? onEdit;
   final void Function(int subtaskLocalId)? onSubtaskCheck;
   final void Function(int subtaskLocalId)? onSubtaskDelete;
@@ -44,8 +44,7 @@ class TaskItem extends ConsumerWidget {
           leading: MSHCheckbox(
             value: task.status == TaskStatus.completed,
             onChanged: (value) {
-              debugPrint('check');
-              onCheck?.call();
+              onCheck?.call(task.localId);
             },
             size: 28,
             colorConfig: MSHColorConfig.fromCheckedUncheckedDisabled(
@@ -138,13 +137,13 @@ class TaskItem extends ConsumerWidget {
             Row(children: [
               Expanded(
                 child: Padding(
-                  padding: const EdgeInsets.all(4.0),
+                  padding: const EdgeInsets.all(6.0),
                   child: Container(
                     decoration: BoxDecoration(
                         color: color.error,
                         borderRadius: BorderRadius.circular(10)),
                     child: IconButton(
-                        onPressed: onDelete,
+                        onPressed: () => onDelete?.call(task.localId),
                         icon: Icon(
                           Icons.delete_outline,
                           color: color.onError,
@@ -154,15 +153,13 @@ class TaskItem extends ConsumerWidget {
               ),
               Expanded(
                 child: Padding(
-                  padding: const EdgeInsets.all(4.0),
+                  padding: const EdgeInsets.all(6.0),
                   child: Container(
                     decoration: BoxDecoration(
                         color: color.secondaryContainer,
                         borderRadius: BorderRadius.circular(10)),
                     child: IconButton(
-                        onPressed: () {
-                          if (onEdit != null) onEdit!(task.localId);
-                        },
+                        onPressed: () => onEdit?.call(task.localId),
                         icon: Icon(
                           Icons.edit_rounded,
                           color: color.onSecondaryContainer,
@@ -184,11 +181,7 @@ class TaskItem extends ConsumerWidget {
                       MSHCheckbox(
                         style: MSHCheckboxStyle.fillFade,
                         value: e.isCompleted,
-                        onChanged: (s) {
-                          if (onSubtaskCheck != null) {
-                            onSubtaskCheck!(e.localId);
-                          }
-                        },
+                        onChanged: (s) => onSubtaskCheck?.call(e.localId),
                         size: 24,
                       ),
                       Expanded(
@@ -198,25 +191,13 @@ class TaskItem extends ConsumerWidget {
                               ?.copyWith(color: color.onSurfaceVariant),
                         ),
                       ),
-                      Container(
-                        width: 40,
-                        height: 40,
-                        decoration: BoxDecoration(
-                            color: color.error, shape: BoxShape.circle),
-                        padding: EdgeInsets.zero,
-                        child: Center(
-                          child: IconButton(
-                              onPressed: () {
-                                if (onSubtaskDelete != null) {
-                                  onSubtaskDelete!(e.localId);
-                                }
-                              },
-                              icon: Icon(
-                                Icons.delete_outline,
-                                color: color.onError,
-                              )),
-                        ),
-                      ),
+                      IconButton(
+                          onPressed: () => onSubtaskDelete?.call(e.localId),
+                          icon: Icon(
+                            Icons.delete_forever,
+                            color: color.onError,
+                            size: 30,
+                          )),
                     ]),
                   ),
                 ))

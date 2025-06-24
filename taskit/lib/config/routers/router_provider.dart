@@ -1,5 +1,7 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:smooth_sheets/smooth_sheets.dart';
 import 'package:taskit/config/routers/router_name.dart';
 import 'package:taskit/features/auth/presentation/forgot_password/ui/reset_password_page.dart';
 import 'package:taskit/features/auth/presentation/signup/ui/signup_veriry_page.dart';
@@ -8,6 +10,11 @@ import 'package:taskit/features/main/presentation/home/ui/home_page.dart';
 import 'package:taskit/features/main/presentation/list/ui/list_page.dart';
 import 'package:taskit/features/splash/presentation/ui/splash_page.dart';
 import 'package:taskit/features/task/presentation/add_task/ui/add_task_page.dart';
+import 'package:taskit/features/task/presentation/edit_task/ui/edit_due_date_bottom_sheet.dart';
+import 'package:taskit/features/task/presentation/edit_task/ui/edit_due_time_bottom_sheet.dart';
+import 'package:taskit/features/task/presentation/edit_task/ui/edit_subtasks_bottom_sheet.dart';
+import 'package:taskit/features/task/presentation/edit_task/ui/edit_task_bottom_sheet.dart';
+import 'package:taskit/features/task/presentation/edit_task/ui/sheet_shell.dart';
 
 import '../../features/auth/presentation/forgot_password/ui/forgot_password_page.dart';
 import '../../features/auth/presentation/forgot_password/ui/forgot_password_verify_page.dart';
@@ -16,6 +23,11 @@ import '../../features/auth/presentation/signup/ui/signup_page.dart';
 import '../../features/main/presentation/main/ui/main_page.dart';
 import '../../features/main/presentation/setting/ui/setting_page.dart';
 import '../app/animation/router_anim.dart';
+
+
+final nestedNavigatorKeyProvider = Provider.autoDispose((ref) {
+  return GlobalKey<NavigatorState>();
+});
 
 final goRouterProvider = Provider<GoRouter>((ref) {
   return GoRouter(
@@ -73,6 +85,51 @@ final goRouterProvider = Provider<GoRouter>((ref) {
         pageBuilder: (context, state) => TaskitAnimation.slidePageTransition(
             context, state, const AddTaskPage()),
       ),
+      ShellRoute(
+          navigatorKey: ref.watch(nestedNavigatorKeyProvider),
+          pageBuilder: (context, state, navigator) => ModalSheetPage(
+                swipeDismissible: true,
+                viewportPadding: EdgeInsets.only(
+                  // Add the top padding to avoid the status bar.
+                  top: MediaQuery.viewPaddingOf(context).top,
+                ),
+                child: SheetShell(
+                  navigator: navigator,
+                ),
+              ),
+          routes: [
+            GoRoute(
+                path: '/edit_task',
+                pageBuilder: (context, state) {
+                  final localId = state.extra as int;
+                  return PagedSheetPage(
+                      transitionsBuilder: _fadeAndSlideTransition,
+                      child: EditTaskBottomSheet(localId: localId));
+                },
+                routes: [
+                  GoRoute(
+                      path: 'due_date',
+                      pageBuilder: (context, state) {
+                        return PagedSheetPage(
+                            transitionsBuilder: _fadeAndSlideTransition,
+                            child: EditDueDateBottomSheet());
+                      }),
+                  GoRoute(
+                      path: 'due_time',
+                      pageBuilder: (context, state) {
+                        return PagedSheetPage(
+                            transitionsBuilder: _fadeAndSlideTransition,
+                            child: EditDueTimeBottomSheet());
+                      }),
+                  GoRoute(
+                      path: 'subtasks',
+                      pageBuilder: (context, state) {
+                        return PagedSheetPage(
+                            transitionsBuilder: _fadeAndSlideTransition,
+                            child: EditSubtasksBottomSheet());
+                      })
+                ]),
+          ]),
       StatefulShellRoute.indexedStack(
         builder: (context, state, navigationShell) =>
             MainPage(navigationShell: navigationShell),
@@ -80,12 +137,12 @@ final goRouterProvider = Provider<GoRouter>((ref) {
           StatefulShellBranch(
             routes: [
               GoRoute(
-                path: '/home',
-                name: homeRoute,
-                pageBuilder: (context, state) =>
-                    TaskitAnimation.slidePageTransition(
-                        context, state, const HomePage()),
-              ),
+                  path: '/home',
+                  name: homeRoute,
+                  pageBuilder: (context, state) =>
+                      TaskitAnimation.slidePageTransition(
+                          context, state, const HomePage()),
+                  routes: []),
             ],
           ),
           StatefulShellBranch(
@@ -125,3 +182,27 @@ final goRouterProvider = Provider<GoRouter>((ref) {
     ],
   );
 });
+
+Widget _fadeAndSlideTransition(
+  BuildContext context,
+  Animation<double> animation,
+  Animation<double> secondaryAnimation,
+  Widget child,
+) {
+  final PageTransitionsTheme theme = Theme.of(context).pageTransitionsTheme;
+  return FadeTransition(
+    opacity: CurveTween(curve: Curves.easeInExpo).animate(animation),
+    child: FadeTransition(
+      opacity: Tween(begin: 1.0, end: 0.0)
+          .chain(CurveTween(curve: Curves.easeOutExpo))
+          .animate(secondaryAnimation),
+      child: theme.buildTransitions(
+        ModalRoute.of(context) as PageRoute,
+        context,
+        animation,
+        secondaryAnimation,
+        child,
+      ),
+    ),
+  );
+}

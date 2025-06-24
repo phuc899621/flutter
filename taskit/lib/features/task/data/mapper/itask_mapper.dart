@@ -26,6 +26,8 @@ abstract interface class ITaskMapper {
 
   List<SubtaskTableCompanion> fromSubtaskEntityList(List<SubtaskEntity> data);
 
+  SubtaskTableCompanion fromSubtaskEntity(SubtaskEntity data);
+
   //================================
   //========== CATEGORY ==============
   //================================

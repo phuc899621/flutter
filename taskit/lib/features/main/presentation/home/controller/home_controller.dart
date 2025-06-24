@@ -55,9 +55,9 @@ class HomeController extends Notifier<HomeState> {
     _startTaskListening();
   }
 
-  void onTimeChecker() {
-    if (!_lastCheckTime.isToday()) {
-      _lastCheckTime = DateTime.now().toStartOfDay();
+  void onTimeChecker(DateTime now) {
+    if (!now.isSameDay(_lastCheckTime)) {
+      _lastCheckTime = now.toStartOfDay();
       _restartListening();
     }
   }
@@ -67,17 +67,19 @@ class HomeController extends Notifier<HomeState> {
     ref.read(taskServiceProvider).updateTaskStatus(localId);
   }
 
-  void onSubtaskCheck(int localId) {
-    ref.read(taskServiceProvider).updateSubtaskStatus(localId);
-  }
+  void onSubtaskCheck(int localId) =>
+      ref.read(taskServiceProvider).updateSubtaskStatus(localId);
 
-  void onDelete(int localId) {}
+  void onDelete(int localId) =>
+      ref.read(taskServiceProvider).deleteTask(localId);
+
+  void onSubtaskDelete(int localId) =>
+      ref.read(taskServiceProvider).deleteSubtask(localId);
 
   void onEdit(int localId) {}
 
-  void setSelectedTask(TaskEntity task) {
-    state = state.copyWith(selectedTask: task);
-  }
+  void setSelectedTask(TaskEntity task) =>
+      state = state.copyWith(selectedTask: task);
 
   void _startTaskListening() {
     final taskService = ref.watch(taskServiceProvider);

@@ -107,9 +107,16 @@ class AddTaskController extends AutoDisposeNotifier<AddTaskState> {
     state = state.copyWith(isCategoriesLoading: true);
     final taskService = ref.read(taskServiceProvider);
     final result = await taskService.getAICategory(title);
+    final userLocalId = await ref.read(userServiceProvider).getUserLocalId();
     result.when((aiCategories) {
       debugPrintStack(stackTrace: StackTrace.current, label: 'aiCategories');
-      state = state.copyWith(aiCategories: aiCategories);
+
+      state = state.copyWith(
+          aiCategories: aiCategories
+              .map((e) => e.copyWith(
+                    userLocalId: userLocalId,
+                  ))
+              .toList());
       if (aiCategories.contains(state.selectedCategory) ||
           state.categories.contains(state.selectedCategory)) {
         return;

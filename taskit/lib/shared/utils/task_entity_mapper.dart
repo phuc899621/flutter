@@ -37,7 +37,7 @@ class TaskStatusUtils {
       case 'pending':
         return TaskStatus.pending;
       default:
-        return TaskStatus.pending;
+        return TaskStatus.scheduled;
     }
   }
 

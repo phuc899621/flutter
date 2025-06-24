@@ -60,6 +60,81 @@ class _AddTaskPageState extends ConsumerState<AddTaskPage> {
     });
   }
 
+  void _showAddCategoryDialog() {
+    final text = Theme.of(context).textTheme;
+    final color = Theme.of(context).colorScheme;
+    final state = ref.read(addTaskControllerProvider);
+    final controller = ref.read(addTaskControllerProvider.notifier);
+    showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+              titleTextStyle: text.titleLarge?.copyWith(
+                  color: color.onSurface, fontWeight: FontWeight.bold),
+              title: Text('Add category'),
+              content: Form(
+                key: _categoryFormState,
+                child: TextFormField(
+                  controller: _categoryController,
+                  maxLines: 1,
+                  maxLength: 20,
+                  autofocus: false,
+                  onTapOutside: (event) => FocusScope.of(context).unfocus(),
+                  style: text.bodyMedium?.copyWith(color: color.onSurface),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter category';
+                    }
+                    if (value.length < 3) {
+                      return '3 characters at least';
+                    }
+                    if (state.categories.any((element) =>
+                        element.name.toLowerCase().trim() ==
+                        value.toLowerCase().trim())) {
+                      return 'Category already exists';
+                    }
+                    return null;
+                  },
+                  onChanged: (_) =>
+                      controller.setAddCategory(_categoryController.text),
+                  decoration: InputDecoration(
+                    errorStyle: TextStyle(
+                      color: color.onError,
+                      fontWeight: FontWeight.w600,
+                    ),
+                    suffixIcon: state.addCategory.isNotEmpty
+                        ? IconButton(
+                            onPressed: _categoryController.clear,
+                            icon: Icon(Icons.clear_rounded,
+                                color: color.onSurfaceVariant))
+                        : null,
+                    hintText: 'Enter category:',
+                    hintStyle: text.bodyMedium?.copyWith(
+                        color: color.onSurfaceVariant,
+                        fontWeight: FontWeight.w500),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                ),
+              ),
+              actions: [
+                TextButton(
+                    onPressed: () => Navigator.pop(context),
+                    child: Text('Cancel')),
+                TextButton(
+                    onPressed: () {
+                      if (_categoryFormState.currentState?.validate() ??
+                          false) {
+                        controller.onAddCategory();
+                        _categoryController.clear();
+                        Navigator.pop(context);
+                      }
+                    },
+                    child: Text('Add'))
+              ],
+            ));
+  }
+
   @override
   Widget build(BuildContext context) {
     _listener();
@@ -78,6 +153,7 @@ class _AddTaskPageState extends ConsumerState<AddTaskPage> {
         _dueTimeController.clear();
       }
     });
+
     return Stack(
       alignment: Alignment.center,
       children: [
@@ -87,29 +163,15 @@ class _AddTaskPageState extends ConsumerState<AddTaskPage> {
               centerTitle: true,
               actionsPadding: EdgeInsets.all(8),
               actions: [
-                Material(
-                  elevation: 2,
-                  borderRadius: BorderRadius.circular(10),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      shape: BoxShape.rectangle,
-                      borderRadius: BorderRadius.circular(10),
-                      color: color.primaryContainer,
-                    ),
-                    child: Center(
-                      child: IconButton(
-                        onPressed: () => {
-                          if (_formState.currentState?.validate() ?? false)
-                            controller.addTask()
-                        },
-                        icon: Icon(
-                          Icons.save_rounded,
-                          color: color.onPrimaryContainer,
-                        ),
-                        splashRadius: 15,
-                        splashColor: color.primaryContainer,
-                      ),
-                    ),
+                IconButton(
+                  onPressed: () {
+                    if (_formState.currentState?.validate() ?? false) {
+                      controller.addTask();
+                    }
+                  },
+                  icon: Icon(
+                    Icons.save,
+                    size: 30,
                   ),
                 )
               ],
@@ -132,7 +194,7 @@ class _AddTaskPageState extends ConsumerState<AddTaskPage> {
               child: SingleChildScrollView(
             controller: _scrollController,
             child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+              padding: EdgeInsets.symmetric(horizontal: 16, vertical: 20),
               child: Form(
                 key: _formState,
                 child: Column(
@@ -179,11 +241,9 @@ class _AddTaskPageState extends ConsumerState<AddTaskPage> {
                                     BorderSide(color: color.primary, width: 2),
                                 borderRadius: BorderRadius.circular(10),
                               ))),
-                      /*
-                      *
-                      * Priority
-                      *
-                      * */
+                      //=========================================
+                      //================= Priority ==============
+                      //=========================================
                       Text(
                         'Priority',
                         style: text.titleMedium,
@@ -238,193 +298,13 @@ class _AddTaskPageState extends ConsumerState<AddTaskPage> {
                               'Category',
                               style: text.titleMedium,
                             ),
-                            Theme(
-                              data: ThemeData(
-                                  splashColor: color.onSecondaryContainer),
-                              child: Material(
-                                elevation: 2,
-                                borderRadius: BorderRadius.circular(10),
-                                child: GestureDetector(
-                                    onTap: () {
-                                      showModalBottomSheet(
-                                          context: context,
-                                          useRootNavigator: true,
-                                          isScrollControlled: true,
-                                          backgroundColor: color.surface,
-                                          shape: RoundedRectangleBorder(
-                                              borderRadius: BorderRadius.only(
-                                                  topLeft: Radius.circular(15),
-                                                  topRight:
-                                                      Radius.circular(15))),
-                                          builder: (context) => Padding(
-                                                padding: MediaQuery.of(context)
-                                                    .viewInsets,
-                                                child: Form(
-                                                  key: _categoryFormState,
-                                                  child: Container(
-                                                      width: double.infinity,
-                                                      height: 170,
-                                                      padding:
-                                                          EdgeInsets.all(10),
-                                                      child: Column(
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .start,
-                                                          spacing: 10,
-                                                          children: [
-                                                            TextFormField(
-                                                              controller:
-                                                                  _categoryController,
-                                                              maxLines: 1,
-                                                              maxLength: 20,
-                                                              autofocus: false,
-                                                              onTapOutside: (event) =>
-                                                                  FocusScope.of(
-                                                                          context)
-                                                                      .unfocus(),
-                                                              style: text
-                                                                  .bodyMedium
-                                                                  ?.copyWith(
-                                                                      color: color
-                                                                          .onSurface),
-                                                              validator:
-                                                                  (value) {
-                                                                if (value ==
-                                                                        null ||
-                                                                    value
-                                                                        .isEmpty) {
-                                                                  return 'Please enter category';
-                                                                }
-                                                                if (value
-                                                                        .length <
-                                                                    3) {
-                                                                  return 'Category must be at least 3 characters';
-                                                                }
-                                                                if (state.categories.any((element) =>
-                                                                    element.name
-                                                                        .toLowerCase()
-                                                                        .trim() ==
-                                                                    value
-                                                                        .toLowerCase()
-                                                                        .trim())) {
-                                                                  return 'Category already exists';
-                                                                }
-                                                                return null;
-                                                              },
-                                                              onChanged: (_) =>
-                                                                  controller.setAddCategory(
-                                                                      _categoryController
-                                                                          .text),
-                                                              decoration:
-                                                                  InputDecoration(
-                                                                suffixIcon: state
-                                                                        .addCategory
-                                                                        .isNotEmpty
-                                                                    ? IconButton(
-                                                                        onPressed:
-                                                                            _categoryController
-                                                                                .clear,
-                                                                        icon: Icon(
-                                                                            Icons
-                                                                                .clear_rounded,
-                                                                            color:
-                                                                                color.onSurfaceVariant))
-                                                                    : null,
-                                                                hintText:
-                                                                    'Enter category:',
-                                                                hintStyle: text
-                                                                    .bodyMedium
-                                                                    ?.copyWith(
-                                                                        color: color
-                                                                            .onSurfaceVariant,
-                                                                        fontWeight:
-                                                                            FontWeight.w500),
-                                                                border:
-                                                                    OutlineInputBorder(
-                                                                  borderRadius:
-                                                                      BorderRadius
-                                                                          .circular(
-                                                                              10),
-                                                                ),
-                                                              ),
-                                                            ),
-                                                            Theme(
-                                                              data: ThemeData(
-                                                                  splashColor: color
-                                                                      .onSecondaryContainer),
-                                                              child: Material(
-                                                                elevation: 2,
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(
-                                                                            10),
-                                                                child: GestureDetector(
-                                                                    onTap: () {
-                                                                      if (_categoryFormState
-                                                                              .currentState
-                                                                              ?.validate() ??
-                                                                          false) {
-                                                                        controller
-                                                                            .onAddCategory();
-                                                                        _categoryController
-                                                                            .clear();
-                                                                        Navigator.pop(
-                                                                            context);
-                                                                      }
-                                                                    },
-                                                                    child: Container(
-                                                                        height: 45,
-                                                                        width: 150,
-                                                                        decoration: BoxDecoration(color: color.secondary, borderRadius: BorderRadius.circular(10)),
-                                                                        child: Center(
-                                                                          child:
-                                                                              Row(
-                                                                            spacing:
-                                                                                5,
-                                                                            mainAxisAlignment:
-                                                                                MainAxisAlignment.center,
-                                                                            children: [
-                                                                              Icon(
-                                                                                Icons.add_circle,
-                                                                                color: color.onSecondary,
-                                                                                size: 20,
-                                                                              ),
-                                                                              Text(
-                                                                                'Add',
-                                                                                style: text.titleMedium?.copyWith(color: color.onSecondary),
-                                                                              )
-                                                                            ],
-                                                                          ),
-                                                                        ))),
-                                                              ),
-                                                            ),
-                                                          ])),
-                                                ),
-                                              ));
-                                    },
-                                    child: Container(
-                                        height: 35,
-                                        width: 40,
-                                        decoration: BoxDecoration(
-                                            color: color.secondary,
-                                            borderRadius:
-                                                BorderRadius.circular(10)),
-                                        child: Center(
-                                          child: Row(
-                                            spacing: 5,
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: [
-                                              Icon(
-                                                Icons.add_circle,
-                                                color: color.onSecondary,
-                                                size: 20,
-                                              ),
-                                            ],
-                                          ),
-                                        ))),
-                              ),
-                            ),
+                            IconButton(
+                                onPressed: _showAddCategoryDialog,
+                                icon: Icon(
+                                  Icons.add_circle,
+                                  color: color.onSurfaceVariant,
+                                  size: 30,
+                                ))
                           ],
                         ),
                       ),

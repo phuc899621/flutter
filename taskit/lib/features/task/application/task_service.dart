@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:multiple_result/multiple_result.dart';
+import 'package:taskit/features/task/domain/entities/task_priority_enum.dart';
 import 'package:taskit/shared/extension/date_time.dart';
 
 import '../../../shared/exception/failure.dart';
@@ -9,6 +10,7 @@ import '../../../shared/log/logger_provider.dart';
 import '../data/repo/itask_repo.dart';
 import '../data/repo/task_repo.dart';
 import '../domain/entities/category_entity.dart';
+import '../domain/entities/subtask_entity.dart';
 import '../domain/entities/task_entity.dart';
 import '../domain/entities/task_status_enum.dart';
 import 'itask_service.dart';
@@ -43,7 +45,7 @@ class TaskService implements ITaskService {
           return false;
         }
         if (hasTime) return due.isAfter(DateTime.now());
-        return due.isDateAfter(DateTime.now());
+        return true;
       }).toList();
     });
   }
@@ -76,7 +78,7 @@ class TaskService implements ITaskService {
           return false;
         }
         if (hasTime) return due.isAfter(DateTime.now());
-        return due.isDateAfter(DateTime.now());
+        return true;
       }).toList();
     });
   }
@@ -166,6 +168,19 @@ class TaskService implements ITaskService {
     });
   }
 
+  @override
+  Stream<TaskEntity> watchTaskByLocalId(int localId) =>
+      _iTaskRepo.watchAllTasks().map(
+          (tasks) => tasks.firstWhere((element) => element.localId == localId));
+
+  @override
+  Stream<List<SubtaskEntity>> watchSubtasksByTaskLocalId(int localId) =>
+      _iTaskRepo.watchAllSubtasks().map((subtasks) {
+        return subtasks
+            .where((element) => element.taskLocalId == localId)
+            .toList();
+      });
+
   //endregion
 
   //================================
@@ -186,7 +201,35 @@ class TaskService implements ITaskService {
 
   @override
   Future<void> updateSubtaskStatus(int localId) =>
-      _iTaskRepo.updateSubtaskStatus(localId: localId);
+      _iTaskRepo.updateSubtaskStatus(localId);
+
+  @override
+  Future<void> updateTaskTitle(int localId, String title) =>
+      _iTaskRepo.updateTaskTitle(localId, title);
+
+  @override
+  Future<void> updateTaskDescription(int localId, String description) =>
+      _iTaskRepo.updateTaskDescription(localId, description);
+
+  @override
+  Future<void> updateTaskPriority(int localId, TaskPriority priority) =>
+      _iTaskRepo.updateTaskPriority(localId, priority);
+
+  @override
+  Future<void> updateTaskCategory(int localId, int categoryLocalId) =>
+      _iTaskRepo.updateTaskCategory(localId, categoryLocalId);
+
+  @override
+  Future<void> updateTaskDueDate(int localId, DateTime? dueDate) =>
+      _iTaskRepo.updateTaskDueDate(localId, dueDate);
+
+  @override
+  Future<void> updateTaskHasTime(int localId, bool hasTime) =>
+      _iTaskRepo.updateTaskHasTime(localId, hasTime);
+
+  @override
+  Future<void> updateSubtaskTitle(int localId, String title) =>
+      _iTaskRepo.updateSubtaskTitle(localId, title);
 
   //endregion
 
@@ -243,5 +286,20 @@ class TaskService implements ITaskService {
       return Error(e);
     }
   }
+
+  @override
+  Future<void> insertSubtask(int taskLocalId) =>
+      _iTaskRepo.insertSubtask(taskLocalId);
+
+  //endregion
+  //================================
+  //========== DELETE ==============
+  //================================
+  //region DELETE
+  @override
+  Future<void> deleteTask(int localId) => _iTaskRepo.deleteTask(localId);
+
+  @override
+  Future<void> deleteSubtask(int localId) => _iTaskRepo.deleteSubtask(localId);
 //endregion
 }

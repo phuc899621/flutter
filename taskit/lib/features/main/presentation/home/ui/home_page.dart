@@ -17,14 +17,60 @@ class HomePage extends ConsumerStatefulWidget {
 
 class _HomePageState extends ConsumerState<HomePage>
     with TickerProviderStateMixin {
+  void _showDialogDelete(int localId) {
+    final color = Theme.of(context).colorScheme;
+    final text = Theme.of(context).textTheme;
+    showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+              titleTextStyle: text.titleLarge?.copyWith(
+                color: color.onSurface,
+                fontWeight: FontWeight.bold,
+              ),
+              title: Text('Delete task'),
+              content: const Text('Are you sure you want to delete this task?'),
+              actions: [
+                TextButton(
+                    onPressed: () => Navigator.pop(context),
+                    child: Text(
+                      'Cancel',
+                      style: text.labelLarge?.copyWith(
+                        color: color.primary,
+                      ),
+                    )),
+                TextButton(
+                    onPressed: () {
+                      ref
+                          .read(homeControllerProvider.notifier)
+                          .onDelete(localId);
+                      Navigator.pop(context);
+                      context.pop();
+                    },
+                    child: Text(
+                      'Delete',
+                      style: text.labelLarge?.copyWith(
+                        color: color.onError,
+                      ),
+                    )),
+              ],
+            ));
+  }
+
+  void _showBottomSheetEditTask(int localId) {
+    context.push('/edit_task', extra: localId);
+  }
+
   @override
   Widget build(BuildContext context) {
     final state = ref.watch(homeControllerProvider);
     final controller = ref.watch(homeControllerProvider.notifier);
     final color = ref.read(colorProvider(context));
     final text = Theme.of(context).textTheme;
-    ref.listen<AsyncValue<DateTime>>(
-        timeStreamProvider, (_, next) => controller.onTimeChecker());
+    ref.listen<AsyncValue<DateTime>>(timeStreamProvider, (_, next) {
+      next.whenData((now) {
+        controller.onTimeChecker(now);
+      });
+    });
     return DefaultTabController(
         length: 3,
         child: Scaffold(
@@ -46,6 +92,8 @@ class _HomePageState extends ConsumerState<HomePage>
                     collapsedHeight: 90,
                     expandedHeight: 140,
                     toolbarHeight: 90,
+                    snap: true,
+                    floating: true,
                     backgroundColor: color.primary,
                     flexibleSpace: FlexibleSpaceBar(
                         background: Padding(
@@ -157,14 +205,13 @@ class _HomePageState extends ConsumerState<HomePage>
                                   padding: const EdgeInsets.symmetric(
                                       vertical: 6, horizontal: 14),
                                   child: TaskItem(
-                                      task: state.todayTasks[index],
-                                      onDelete: () => debugPrint('delete'),
-                                      onCheck: () => controller.onCheck(
-                                          state.todayTasks[index].localId),
-                                      onEdit: (localId) =>
-                                          controller.onEdit(localId),
-                                      onSubtaskCheck: (localId) =>
-                                          controller.onSubtaskCheck(localId)),
+                                    task: state.todayTasks[index],
+                                    onDelete: _showDialogDelete,
+                                    onCheck: controller.onCheck,
+                                    onEdit: _showBottomSheetEditTask,
+                                    onSubtaskCheck: controller.onSubtaskCheck,
+                                    onSubtaskDelete: controller.onSubtaskDelete,
+                                  ),
                                 )),
                       ),
                       if (state.pendingTasks.isNotEmpty)
@@ -181,14 +228,13 @@ class _HomePageState extends ConsumerState<HomePage>
                                   padding: const EdgeInsets.symmetric(
                                       vertical: 6, horizontal: 14),
                                   child: TaskItem(
-                                      task: state.pendingTasks[index],
-                                      onDelete: () => debugPrint('delete'),
-                                      onCheck: () => controller.onCheck(
-                                          state.pendingTasks[index].localId),
-                                      onEdit: (localId) =>
-                                          controller.onEdit(localId),
-                                      onSubtaskCheck: (localId) =>
-                                          controller.onSubtaskCheck(localId)),
+                                    task: state.pendingTasks[index],
+                                    onDelete: _showDialogDelete,
+                                    onCheck: controller.onCheck,
+                                    onEdit: _showBottomSheetEditTask,
+                                    onSubtaskCheck: controller.onSubtaskCheck,
+                                    onSubtaskDelete: controller.onSubtaskDelete,
+                                  ),
                                 )),
                       ),
                       if (state.todayCompletedTasks.isNotEmpty)
@@ -206,14 +252,13 @@ class _HomePageState extends ConsumerState<HomePage>
                                   padding: const EdgeInsets.symmetric(
                                       vertical: 6, horizontal: 14),
                                   child: TaskItem(
-                                      task: state.todayCompletedTasks[index],
-                                      onDelete: () => debugPrint('delete'),
-                                      onCheck: () => controller.onCheck(state
-                                          .todayCompletedTasks[index].localId),
-                                      onEdit: (localId) =>
-                                          controller.onEdit(localId),
-                                      onSubtaskCheck: (localId) =>
-                                          controller.onSubtaskCheck(localId)),
+                                    task: state.todayCompletedTasks[index],
+                                    onDelete: _showDialogDelete,
+                                    onCheck: controller.onCheck,
+                                    onEdit: _showBottomSheetEditTask,
+                                    onSubtaskCheck: controller.onSubtaskCheck,
+                                    onSubtaskDelete: controller.onSubtaskDelete,
+                                  ),
                                 )),
                       ),
                       if (state.todayOverDueTasks.isNotEmpty)
@@ -232,14 +277,13 @@ class _HomePageState extends ConsumerState<HomePage>
                                   padding: const EdgeInsets.symmetric(
                                       vertical: 6, horizontal: 14),
                                   child: TaskItem(
-                                      task: state.todayOverDueTasks[index],
-                                      onDelete: () => debugPrint('delete'),
-                                      onCheck: () => controller.onCheck(state
-                                          .todayOverDueTasks[index].localId),
-                                      onEdit: (localId) =>
-                                          controller.onEdit(localId),
-                                      onSubtaskCheck: (localId) =>
-                                          controller.onSubtaskCheck(localId)),
+                                    task: state.todayOverDueTasks[index],
+                                    onDelete: _showDialogDelete,
+                                    onCheck: controller.onCheck,
+                                    onEdit: _showBottomSheetEditTask,
+                                    onSubtaskCheck: controller.onSubtaskCheck,
+                                    onSubtaskDelete: controller.onSubtaskDelete,
+                                  ),
                                 )),
                       ),
                       SliverFillRemaining(
@@ -297,14 +341,13 @@ class _HomePageState extends ConsumerState<HomePage>
                                   padding: const EdgeInsets.symmetric(
                                       vertical: 6, horizontal: 14),
                                   child: TaskItem(
-                                      task: state.tomorrowTasks[index],
-                                      onDelete: () => debugPrint('delete'),
-                                      onCheck: () => controller.onCheck(
-                                          state.tomorrowTasks[index].localId),
-                                      onEdit: (localId) =>
-                                          controller.onEdit(localId),
-                                      onSubtaskCheck: (localId) =>
-                                          controller.onSubtaskCheck(localId)),
+                                    task: state.tomorrowTasks[index],
+                                    onDelete: _showDialogDelete,
+                                    onCheck: controller.onCheck,
+                                    onEdit: _showBottomSheetEditTask,
+                                    onSubtaskCheck: controller.onSubtaskCheck,
+                                    onSubtaskDelete: controller.onSubtaskDelete,
+                                  ),
                                 )),
                       ),
                       SliverFillRemaining(
@@ -362,14 +405,13 @@ class _HomePageState extends ConsumerState<HomePage>
                                   padding: const EdgeInsets.symmetric(
                                       vertical: 6, horizontal: 14),
                                   child: TaskItem(
-                                      task: state.thisWeekTasks[index],
-                                      onDelete: () => debugPrint('delete'),
-                                      onCheck: () => controller.onCheck(
-                                          state.thisWeekTasks[index].localId),
-                                      onEdit: (localId) =>
-                                          controller.onEdit(localId),
-                                      onSubtaskCheck: (localId) =>
-                                          controller.onSubtaskCheck(localId)),
+                                    task: state.thisWeekTasks[index],
+                                    onDelete: _showDialogDelete,
+                                    onCheck: controller.onCheck,
+                                    onEdit: _showBottomSheetEditTask,
+                                    onSubtaskCheck: controller.onSubtaskCheck,
+                                    onSubtaskDelete: controller.onSubtaskDelete,
+                                  ),
                                 )),
                       ),
                       if (state.pendingTasks.isNotEmpty)
@@ -386,14 +428,13 @@ class _HomePageState extends ConsumerState<HomePage>
                                   padding: const EdgeInsets.symmetric(
                                       vertical: 6, horizontal: 14),
                                   child: TaskItem(
-                                      task: state.pendingTasks[index],
-                                      onDelete: () => debugPrint('delete'),
-                                      onCheck: () => controller.onCheck(
-                                          state.pendingTasks[index].localId),
-                                      onEdit: (localId) =>
-                                          controller.onEdit(localId),
-                                      onSubtaskCheck: (localId) =>
-                                          controller.onSubtaskCheck(localId)),
+                                    task: state.pendingTasks[index],
+                                    onDelete: _showDialogDelete,
+                                    onCheck: controller.onCheck,
+                                    onEdit: _showBottomSheetEditTask,
+                                    onSubtaskCheck: controller.onSubtaskCheck,
+                                    onSubtaskDelete: controller.onSubtaskDelete,
+                                  ),
                                 )),
                       ),
                       if (state.thisWeekCompletedTasks.isNotEmpty)
@@ -411,15 +452,13 @@ class _HomePageState extends ConsumerState<HomePage>
                                   padding: const EdgeInsets.symmetric(
                                       vertical: 6, horizontal: 14),
                                   child: TaskItem(
-                                      task: state.thisWeekCompletedTasks[index],
-                                      onDelete: () => debugPrint('delete'),
-                                      onCheck: () => controller.onCheck(state
-                                          .thisWeekCompletedTasks[index]
-                                          .localId),
-                                      onEdit: (localId) =>
-                                          controller.onEdit(localId),
-                                      onSubtaskCheck: (localId) =>
-                                          controller.onSubtaskCheck(localId)),
+                                    task: state.thisWeekCompletedTasks[index],
+                                    onDelete: _showDialogDelete,
+                                    onCheck: controller.onCheck,
+                                    onEdit: _showBottomSheetEditTask,
+                                    onSubtaskCheck: controller.onSubtaskCheck,
+                                    onSubtaskDelete: controller.onSubtaskDelete,
+                                  ),
                                 )),
                       ),
                       if (state.thisWeekOverDueTasks.isNotEmpty)
@@ -438,14 +477,13 @@ class _HomePageState extends ConsumerState<HomePage>
                                   padding: const EdgeInsets.symmetric(
                                       vertical: 6, horizontal: 14),
                                   child: TaskItem(
-                                      task: state.thisWeekOverDueTasks[index],
-                                      onDelete: () => debugPrint('delete'),
-                                      onCheck: () => controller.onCheck(state
-                                          .thisWeekOverDueTasks[index].localId),
-                                      onEdit: (localId) =>
-                                          controller.onEdit(localId),
-                                      onSubtaskCheck: (localId) =>
-                                          controller.onSubtaskCheck(localId)),
+                                    task: state.thisWeekOverDueTasks[index],
+                                    onDelete: _showDialogDelete,
+                                    onCheck: controller.onCheck,
+                                    onEdit: _showBottomSheetEditTask,
+                                    onSubtaskCheck: controller.onSubtaskCheck,
+                                    onSubtaskDelete: controller.onSubtaskDelete,
+                                  ),
                                 )),
                       ),
                       SliverFillRemaining(

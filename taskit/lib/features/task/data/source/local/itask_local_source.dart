@@ -10,15 +10,28 @@ abstract interface class ITaskLocalSource {
 
   Stream<List<CategoryTableData>> watchAllCategories();
 
+  Stream<TaskTableData?> watchTaskByLocalId(int localId);
+
   // ================================
   // ========== UPDATE ==============
   // ================================
   Future<void> updateTaskStatus(int localId, String status);
 
-  Future<void> updateSubtask(
-      {required int localId, bool? isCompleted, String? title});
+  Future<void> updateSubtaskStatus(int localId);
 
-  Future<void> updateSubtaskStatus({required int localId});
+  Future<void> updateTaskTitle(int localId, String title);
+
+  Future<void> updateTaskDescription(int localId, String description);
+
+  Future<void> updateTaskCategory(int localId, int categoryLocalId);
+
+  Future<void> updateTaskPriority(int localId, String priority);
+
+  Future<void> updateTaskDueDate(int localId, DateTime? dueDate);
+
+  Future<void> updateTaskHasTime(int localId, bool hasTime);
+
+  Future<void> updateSubtaskTitle(int localId, String title);
 
   // ================================
   // ========== READ ==============
@@ -40,4 +53,13 @@ abstract interface class ITaskLocalSource {
 
   Future<int> insertTask(TaskTableCompanion task,
       List<SubtaskTableCompanion> subtasks, CategoryTableCompanion category);
+
+  Future<void> insertSubtask(SubtaskTableCompanion subtask);
+
+  //================================
+  //========== DELETE ==============
+  //================================
+  Future<void> deleteTaskByLocalId(int id);
+
+  Future<void> deleteSubtaskByLocalId(int id);
 }

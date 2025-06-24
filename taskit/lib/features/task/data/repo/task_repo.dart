@@ -6,6 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:taskit/features/task/data/mapper/itask_mapper.dart';
 import 'package:taskit/features/task/domain/entities/task_entity.dart';
+import 'package:taskit/features/task/domain/entities/task_priority_enum.dart';
 import 'package:taskit/shared/data/repository/itoken_repository.dart';
 import 'package:taskit/shared/data/repository/token_repository.dart';
 import 'package:taskit/shared/data/source/local/drift/database/database.dart';
@@ -68,6 +69,12 @@ class TaskRepo with DioExceptionMapper implements ITaskRepo {
     return categoryStream.map(_iTaskMapper.toCategoryEntityList);
   }
 
+  @override
+  Stream<List<SubtaskEntity>> watchAllSubtasks() {
+    final subtaskStream = _taskLocalSource.watchAllSubtasks();
+    return subtaskStream.map(_iTaskMapper.toSubtaskEntityList);
+  }
+
   //endregion
 
   //=====================================
@@ -79,8 +86,36 @@ class TaskRepo with DioExceptionMapper implements ITaskRepo {
       _taskLocalSource.updateTaskStatus(localId, status.name);
 
   @override
-  Future<void> updateSubtaskStatus({required int localId}) =>
-      _taskLocalSource.updateSubtaskStatus(localId: localId);
+  Future<void> updateSubtaskStatus(int localId) =>
+      _taskLocalSource.updateSubtaskStatus(localId);
+
+  @override
+  Future<void> updateTaskTitle(int localId, String title) =>
+      _taskLocalSource.updateTaskTitle(localId, title);
+
+  @override
+  Future<void> updateTaskDescription(int localId, String description) =>
+      _taskLocalSource.updateTaskDescription(localId, description);
+
+  @override
+  Future<void> updateTaskPriority(int localId, TaskPriority priority) =>
+      _taskLocalSource.updateTaskPriority(localId, priority.name);
+
+  @override
+  Future<void> updateTaskCategory(int localId, int categoryLocalId) =>
+      _taskLocalSource.updateTaskCategory(localId, categoryLocalId);
+
+  @override
+  Future<void> updateTaskDueDate(int localId, DateTime? dueDate) =>
+      _taskLocalSource.updateTaskDueDate(localId, dueDate);
+
+  @override
+  Future<void> updateTaskHasTime(int localId, bool hasTime) =>
+      _taskLocalSource.updateTaskHasTime(localId, hasTime);
+
+  @override
+  Future<void> updateSubtaskTitle(int localId, String title) =>
+      _taskLocalSource.updateSubtaskTitle(localId, title);
 
   //endregion
 
@@ -170,5 +205,29 @@ class TaskRepo with DioExceptionMapper implements ITaskRepo {
       categoryCompanion,
     );
   }
-//endregion
+
+  @override
+  Future<void> insertSubtask(int taskLocalId) {
+    final subtaskEntity = SubtaskEntity(
+      localId: -1,
+      title: "",
+      taskLocalId: taskLocalId,
+      isCompleted: false,
+    );
+    return _taskLocalSource
+        .insertSubtask(_iTaskMapper.fromSubtaskEntity(subtaskEntity));
+  }
+
+  //endregion
+  //=====================================
+  //============= DELETE =================
+  //=====================================
+  //region DELETE
+  @override
+  Future<void> deleteTask(int localId) =>
+      _taskLocalSource.deleteTaskByLocalId(localId);
+
+  @override
+  Future<void> deleteSubtask(int localId) =>
+      _taskLocalSource.deleteSubtaskByLocalId(localId);
 }

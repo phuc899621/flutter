@@ -22,6 +22,10 @@ class TaskDao extends DatabaseAccessor<AppDatabase> with _$TaskDaoMixin {
   //region WATCH
   Stream<List<TaskTableData>> watchAllTasks() => select(taskTable).watch();
 
+  Stream<TaskTableData?> watchTaskByLocalId(int localId) =>
+      (select(taskTable)..where((tbl) => tbl.localId.equals(localId)))
+          .watchSingleOrNull();
+
   //endregion
 
   // ================================
@@ -57,7 +61,9 @@ class TaskDao extends DatabaseAccessor<AppDatabase> with _$TaskDaoMixin {
   // ========== DELETE ==============
   // ================================
   //region DELETE
-  Future<int> deleteTask() => delete(taskTable).go();
+
+  Future<int> deleteTaskByLocalId(int localId) =>
+      (delete(taskTable)..where((tbl) => tbl.localId.equals(localId))).go();
 
   //endregion
 
@@ -65,48 +71,55 @@ class TaskDao extends DatabaseAccessor<AppDatabase> with _$TaskDaoMixin {
   // ========== UPDATE ==============
   // ================================
   //region UPDATE
-  Future<int> updateTaskStatus(int localId, String status) async {
-    final task = await (select(taskTable)
-          ..where((tbl) => tbl.localId.equals(localId)))
-        .getSingleOrNull();
-    if (task == null) return 0;
+  Future<int> updateTaskStatus(int localId, String status) =>
+      (update(taskTable)..where((tbl) => tbl.localId.equals(localId))).write(
+        TaskTableCompanion(
+            status: Value(status),
+            updatedAt: Value(DateTime.now()),
+            completedAt: Value(status == 'completed' ? DateTime.now() : null)),
+      );
 
-    final String statusUpdate;
-    if (status != 'completed' && task.dueDate != null) {
-      statusUpdate = 'scheduled';
-    } else if (status != 'completed' && task.dueDate == null) {
-      statusUpdate = 'pending';
-    } else {
-      statusUpdate = 'completed';
-    }
-    if (statusUpdate == 'completed') {
-      await (update(subtaskTable)
-            ..where((tbl) =>
-                tbl.taskLocalId.equals(localId) &
-                tbl.isCompleted.equals(false)))
-          .write(SubtaskTableCompanion(
-        isCompleted: Value(true),
+  Future<void> updateTaskTitle(int localId, String title) =>
+      (update(taskTable)..where((tbl) => tbl.localId.equals(localId)))
+          .write(TaskTableCompanion(
+        title: Value(title),
         updatedAt: Value(DateTime.now()),
-        completedAt: Value(DateTime.now()),
       ));
-    } else {
-      await (update(subtaskTable)
-            ..where((tbl) =>
-                tbl.taskLocalId.equals(localId) & tbl.isCompleted.equals(true)))
-          .write(SubtaskTableCompanion(
-        isCompleted: Value(false),
+
+  Future<void> updateTaskDescription(int localId, String description) =>
+      (update(taskTable)..where((tbl) => tbl.localId.equals(localId))).write(
+          TaskTableCompanion(
+              description: Value(description),
+              updatedAt: Value(DateTime.now())));
+
+  Future<void> updateTaskPriority(int localId, String priority) =>
+      (update(taskTable)..where((tbl) => tbl.localId.equals(localId)))
+          .write(TaskTableCompanion(
+        priority: Value(priority),
         updatedAt: Value(DateTime.now()),
-        completedAt: Value(DateTime.now()),
       ));
-    }
-    return (update(taskTable)..where((tbl) => tbl.localId.equals(localId)))
-        .write(
-      TaskTableCompanion(
-          status: Value(statusUpdate),
-          updatedAt: Value(DateTime.now()),
-          completedAt:
-              Value(statusUpdate == 'completed' ? DateTime.now() : null)),
-    );
-  }
+
+  Future<void> updateTaskCategory(int localId, int categoryLocalId) =>
+      (update(taskTable)..where((tbl) => tbl.localId.equals(localId)))
+          .write(TaskTableCompanion(
+        categoryLocalId: Value(categoryLocalId),
+        updatedAt: Value(DateTime.now()),
+      ));
+
+  Future<void> updateTaskDueDate(int localId, DateTime? dueDate) =>
+      (update(taskTable)..where((tbl) => tbl.localId.equals(localId)))
+          .write(TaskTableCompanion(
+        dueDate: Value(dueDate),
+        hasTime: dueDate == null ? Value(false) : Value.absent(),
+        updatedAt: Value(DateTime.now()),
+      ));
+
+  Future<void> updateTaskHasTime(int localId, bool hasTime) =>
+      (update(taskTable)..where((tbl) => tbl.localId.equals(localId)))
+          .write(TaskTableCompanion(
+        hasTime: Value(hasTime),
+        updatedAt: Value(DateTime.now()),
+      ));
+
 //endregion
 }

@@ -5,7 +5,7 @@ import '../../features/task/domain/entities/task_priority_enum.dart';
 import '../../features/task/domain/entities/task_status_enum.dart';
 
 extension TaskPriorityColor on TaskPriority {
-  toColor() {
+  Color toColor() {
     switch (this) {
       case TaskPriority.high:
         return ConstColor.onHighContainer;
@@ -18,7 +18,7 @@ extension TaskPriorityColor on TaskPriority {
     }
   }
 
-  toColorContainer() {
+  Color toColorContainer() {
     switch (this) {
       case TaskPriority.high:
         return ConstColor.highContainer;
@@ -33,7 +33,7 @@ extension TaskPriorityColor on TaskPriority {
 }
 
 extension TaskStatusColor on TaskStatus {
-  toColor() {
+  Color toColor() {
     switch (this) {
       case TaskStatus.completed:
         return ConstColor.onCompletedContainer;
@@ -44,7 +44,7 @@ extension TaskStatusColor on TaskStatus {
     }
   }
 
-  toColorContainer() {
+  Color toColorContainer() {
     switch (this) {
       case TaskStatus.completed:
         return ConstColor.completedContainer;
@@ -58,23 +58,38 @@ extension TaskStatusColor on TaskStatus {
 
 extension ThemeColor on ColorScheme {
   Color get highContainer => ConstColor.highContainer;
+
   Color get onHighContainer => ConstColor.onHighContainer;
+
   Color get mediumContainer => ConstColor.mediumContainer;
+
   Color get onMediumContainer => ConstColor.onMediumContainer;
+
   Color get lowContainer => ConstColor.lowContainer;
+
   Color get onLowContainer => ConstColor.onLowContainer;
+
   Color get noneContainer => ConstColor.noneContainer;
+
   Color get onNoneContainer => ConstColor.onNoneContainer;
 
   Color get scheduledContainer => ConstColor.scheduledContainer;
+
   Color get onScheduledContainer => ConstColor.onScheduledContainer;
+
   Color get pendingContainer => ConstColor.pendingContainer;
+
   Color get onPendingContainer => ConstColor.onPendingContainer;
+
   Color get completedContainer => ConstColor.completedContainer;
+
   Color get onCompletedContainer => ConstColor.onCompletedContainer;
 
   Color get success => ConstColor.success;
+
   Color get onSuccess => ConstColor.onSuccess;
+
   Color get warning => ConstColor.warning;
+
   Color get onWarning => ConstColor.onWarning;
 }

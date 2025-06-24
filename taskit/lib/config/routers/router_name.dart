@@ -9,3 +9,4 @@ const String listRoute = 'list';
 const String calendarRoute = 'calendar';
 const String settingRoute = 'setting';
 const String addTaskRoute = 'add_task';
+const String editTaskRoute = 'edit_task';

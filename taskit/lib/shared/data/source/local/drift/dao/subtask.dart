@@ -35,6 +35,18 @@ class SubtaskDao extends DatabaseAccessor<AppDatabase> with _$SubtaskDaoMixin {
             ..where((tbl) => tbl.taskLocalId.equals(taskLocalId)))
           .get();
 
+  Future<SubtaskTableData?> getSubtasksByLocalId(int localId) =>
+      (select(subtaskTable)..where((tbl) => tbl.localId.equals(localId)))
+          .getSingleOrNull();
+
+  Future<List<SubtaskTableData>> findUncompletedSubtaskByTaskLocalId(
+          int taskLocalId) =>
+      (select(subtaskTable)
+            ..where((tbl) =>
+                tbl.taskLocalId.equals(taskLocalId) &
+                tbl.isCompleted.equals(false)))
+          .get();
+
   //endregion
 
   // ================================
@@ -55,44 +67,40 @@ class SubtaskDao extends DatabaseAccessor<AppDatabase> with _$SubtaskDaoMixin {
   // ========== UPDATE ==============
   // ================================
   //region UPDATE
-  Future<int> updateSubtask(
-      {required localId, bool? isCompleted, String? title}) async {
-    final subtask = await (select(subtaskTable)
-          ..where((tbl) => tbl.localId.equals(localId)))
-        .getSingleOrNull();
 
-    if (subtask == null) return 0;
-    final returnInt = await (update(subtaskTable)
-          ..where((tbl) => tbl.localId.equals(localId)))
-        .write(SubtaskTableCompanion(
-      isCompleted:
-          isCompleted != null ? Value(isCompleted) : const Value.absent(),
-      title:
-          title != null && title.isEmpty ? Value(title) : const Value.absent(),
-      updatedAt: Value(DateTime.now()),
-      completedAt: isCompleted != null && isCompleted
-          ? Value(DateTime.now())
-          : const Value.absent(),
-    ));
-    if (isCompleted != null) _checkAndUpdateTaskStatus(subtask.taskLocalId);
-    return returnInt;
-  }
+  Future<int> updateSubtaskStatus(int localId, bool isCompleted) =>
+      (update(subtaskTable)..where((tbl) => tbl.localId.equals(localId))).write(
+        SubtaskTableCompanion(
+          isCompleted: Value(isCompleted),
+          updatedAt: Value(DateTime.now()),
+        ),
+      );
 
-  Future<int> updateSubtaskStatus({required localId}) async {
-    final subtask = await (select(subtaskTable)
-          ..where((tbl) => tbl.localId.equals(localId)))
-        .getSingleOrNull();
-    if (subtask == null) return 0;
+  Future<void> updateToCompletedSubtasks(int localId) => (update(subtaskTable)
+            ..where((tbl) =>
+                tbl.taskLocalId.equals(localId) &
+                tbl.isCompleted.equals(false)))
+          .write(SubtaskTableCompanion(
+        isCompleted: Value(true),
+        completedAt: Value(DateTime.now()),
+        updatedAt: Value(DateTime.now()),
+      ));
 
-    final returnInt = await (update(subtaskTable)
-          ..where((tbl) => tbl.localId.equals(localId)))
-        .write(SubtaskTableCompanion(
-      isCompleted: Value(!subtask.isCompleted),
-    ));
+  Future<void> updateToUncompletedSubtasks(int localId) => (update(subtaskTable)
+            ..where((tbl) =>
+                tbl.taskLocalId.equals(localId) & tbl.isCompleted.equals(true)))
+          .write(SubtaskTableCompanion(
+        isCompleted: Value(false),
+        completedAt: Value(DateTime.now()),
+        updatedAt: Value(DateTime.now()),
+      ));
 
-    _checkAndUpdateTaskStatus(subtask.taskLocalId);
-    return returnInt;
-  }
+  Future<void> updateSubtaskTitle(int localId, String title) =>
+      (update(subtaskTable)..where((tbl) => tbl.localId.equals(localId)))
+          .write(SubtaskTableCompanion(
+        title: Value(title),
+        updatedAt: Value(DateTime.now()),
+      ));
 
   //endregion
 
@@ -103,34 +111,9 @@ class SubtaskDao extends DatabaseAccessor<AppDatabase> with _$SubtaskDaoMixin {
   Future<int> deleteSubtaskById(int id) =>
       (delete(subtaskTable)..where((item) => item.localId.equals(id))).go();
 
-  //endregion
-  /*
-  * Check
-  * */
-  Future<void> _checkAndUpdateTaskStatus(int taskLocalId) async {
-    final inCompleted = await (select(subtaskTable)
-          ..where((tbl) =>
-              tbl.taskLocalId.equals(taskLocalId) &
-              tbl.isCompleted.equals(false)))
-        .get();
-
-    //get task by taskLocalId
-    final task = await (select(taskTable)
-          ..where((tbl) => tbl.localId.equals(taskLocalId)))
-        .getSingleOrNull();
-    if (task == null) return;
-
-    final newStatus = inCompleted.isEmpty
-        ? 'completed'
-        : (task.dueDate != null ? 'scheduled' : 'pending');
-    //call update task status
-    await (update(taskTable)..where((tbl) => tbl.localId.equals(taskLocalId)))
-        .write(
-      TaskTableCompanion(
-        status: Value(newStatus),
-        updatedAt: Value(DateTime.now()),
-        completedAt: Value(newStatus == 'completed' ? DateTime.now() : null),
-      ),
-    );
-  }
+  Future<int> deleteSubtasksByTaskLocalId(int taskLocalId) =>
+      (delete(subtaskTable)
+            ..where((item) => item.taskLocalId.equals(taskLocalId)))
+          .go();
+//endregion
 }

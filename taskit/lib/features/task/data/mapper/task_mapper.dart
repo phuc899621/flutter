@@ -100,6 +100,14 @@ class TaskMapper implements ITaskMapper {
               ))
           .toList();
 
+  @override
+  SubtaskTableCompanion fromSubtaskEntity(SubtaskEntity data) =>
+      SubtaskTableCompanion(
+        title: Value(data.title),
+        isCompleted: Value(data.isCompleted),
+        taskLocalId: Value(data.taskLocalId),
+      );
+
   //endregion
 
   //================================

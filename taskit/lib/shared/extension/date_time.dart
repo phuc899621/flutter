@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 extension FormatDateTime on DateTime {
-  toFormatDate() {
+  String toFormatDate() {
     if (isToday()) return 'Today';
     if (isYesterday()) return 'Yesterday';
     if (isTomorrow()) return 'Tomorrow';
@@ -11,12 +11,12 @@ extension FormatDateTime on DateTime {
     return dateFormat.format(this);
   }
 
-  toFormatTime() {
+  String toFormatTime() {
     final timeFormat = DateFormat('HH:mm');
     return timeFormat.format(this);
   }
 
-  toFormatDateAndTime() {
+  String toFormatDateAndTime() {
     if (isToday()) return 'Today, ${toFormatTime()}';
     if (isYesterday()) return 'Yesterday, ${toFormatTime()}';
     if (isTomorrow()) return 'Tomorrow, ${toFormatTime()}';
@@ -25,14 +25,16 @@ extension FormatDateTime on DateTime {
     return dateFormat.format(this);
   }
 
-  toDisplayFormatDate() {
+  String toDisplayFormatDate() {
     final dateFormat = DateFormat('EEEE, MMM d,yyyy');
     return dateFormat.format(this);
   }
+
+  TimeOfDay toTimeOfDay() => TimeOfDay.fromDateTime(this);
 }
 
 extension FormatTime on TimeOfDay {
-  toTimeFormat() {
+  String toTimeFormat() {
     final timeFormat = DateFormat('HH:mm');
     return timeFormat.format(DateTime(0, 0, 0, hour, minute));
   }
