@@ -37,6 +37,7 @@ class MainWidget extends ConsumerWidget {
     return MaterialApp.router(
       routerConfig: router,
       theme: ThemeData(
+        useMaterial3: true,
         fontFamily: 'Quicksand',
 //primary
         primaryColor: ConstColor.primary,
@@ -72,6 +73,8 @@ class MainWidget extends ConsumerWidget {
           surfaceContainer: ConstColor.surfaceContainer,
           surfaceContainerHighest: ConstColor.surfaceContainerHighest,
           surfaceContainerHigh: ConstColor.surfaceContainerHigh,
+          surfaceContainerLow: ConstColor.surfaceContainerLow,
+          surfaceContainerLowest: ConstColor.surfaceContainerLowest,
           onSurface: ConstColor.primaryText,
           onSurfaceVariant: ConstColor.secondaryText,
           outline: ConstColor.outline,
@@ -82,6 +85,15 @@ class MainWidget extends ConsumerWidget {
         appBarTheme: const AppBarTheme(
           backgroundColor: ConstColor.primary,
           foregroundColor: ConstColor.onPrimary,
+        ),
+        navigationBarTheme: NavigationBarThemeData(
+          backgroundColor: ConstColor.surfaceContainerLow,
+          elevation: 10,
+          labelBehavior: NavigationDestinationLabelBehavior.alwaysHide,
+          indicatorColor: ConstColor.primaryContainer,
+          indicatorShape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
+          ),
         ),
         bottomNavigationBarTheme: const BottomNavigationBarThemeData(
             backgroundColor: ConstColor.surfaceContainer,

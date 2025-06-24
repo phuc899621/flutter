@@ -6,8 +6,6 @@ import 'package:taskit/features/main/presentation/home/ui/widget/task_item.dart'
 import 'package:taskit/shared/application/time_service.dart';
 import 'package:taskit/shared/extension/date_time.dart';
 
-import '../../../../../config/app/app_color.dart';
-
 class HomePage extends ConsumerStatefulWidget {
   const HomePage({super.key});
 
@@ -64,7 +62,7 @@ class _HomePageState extends ConsumerState<HomePage>
   Widget build(BuildContext context) {
     final state = ref.watch(homeControllerProvider);
     final controller = ref.watch(homeControllerProvider.notifier);
-    final color = ref.read(colorProvider(context));
+    final color = Theme.of(context).colorScheme;
     final text = Theme.of(context).textTheme;
     ref.listen<AsyncValue<DateTime>>(timeStreamProvider, (_, next) {
       next.whenData((now) {
@@ -75,9 +73,9 @@ class _HomePageState extends ConsumerState<HomePage>
         length: 3,
         child: Scaffold(
             floatingActionButton: FloatingActionButton(
-                foregroundColor: color.onSecondary,
-                splashColor: color.secondary,
-                backgroundColor: color.secondary,
+                foregroundColor: color.onPrimaryContainer,
+                splashColor: color.primary,
+                backgroundColor: color.primaryContainer,
                 child: Icon(
                   Icons.add_sharp,
                   size: 30,
@@ -120,22 +118,40 @@ class _HomePageState extends ConsumerState<HomePage>
                               ],
                             ),
                             Row(
-                              spacing: 5,
+                              spacing: 10,
                               children: [
-                                IconButton(
-                                    onPressed: () => {},
-                                    color: color.onPrimary,
-                                    icon: const Icon(
-                                      Icons.search_outlined,
-                                      size: 30,
-                                    )),
-                                IconButton(
-                                    color: color.onPrimary,
-                                    onPressed: () => {},
-                                    icon: const Icon(
-                                      size: 30,
-                                      Icons.notifications_none,
-                                    )),
+                                Material(
+                                  color: Colors.transparent,
+                                  elevation: 2,
+                                  shape: const CircleBorder(),
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                        color: color.primaryContainer,
+                                        shape: BoxShape.circle),
+                                    child: IconButton(
+                                        onPressed: () => {},
+                                        color: color.onPrimaryContainer,
+                                        icon: const Icon(
+                                          Icons.search_outlined,
+                                        )),
+                                  ),
+                                ),
+                                Material(
+                                  color: Colors.transparent,
+                                  elevation: 2,
+                                  shape: const CircleBorder(),
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                        color: color.primaryContainer,
+                                        shape: BoxShape.circle),
+                                    child: IconButton(
+                                        color: color.onPrimaryContainer,
+                                        onPressed: () => {},
+                                        icon: const Icon(
+                                          Icons.notifications_none,
+                                        )),
+                                  ),
+                                ),
                               ],
                             )
                           ]),
@@ -148,41 +164,45 @@ class _HomePageState extends ConsumerState<HomePage>
                     shape: RoundedRectangleBorder(
                         borderRadius:
                             BorderRadius.vertical(bottom: Radius.circular(15))),
-                    backgroundColor: color.primary,
+                    backgroundColor: color.surface,
                     flexibleSpace: FlexibleSpaceBar(
                       background: Padding(
                         padding: const EdgeInsets.symmetric(
                             horizontal: 8, vertical: 8),
-                        child: Container(
-                            decoration: BoxDecoration(
-                                color: color.primaryContainer,
-                                borderRadius: BorderRadius.circular(15)),
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 8, vertical: 8),
-                            child: TabBar(
-                              dividerColor: Colors.transparent,
-                              indicatorColor: color.primary,
-                              labelColor: color.onPrimary,
-                              labelStyle: text.labelLarge
-                                  ?.copyWith(fontWeight: FontWeight.w600),
-                              unselectedLabelColor: color.onSurfaceVariant,
-                              unselectedLabelStyle: text.labelLarge,
-                              indicator: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(15),
-                                  color: color.primary),
-                              indicatorSize: TabBarIndicatorSize.tab,
-                              tabs: [
-                                Tab(
-                                  text: 'Today',
-                                ),
-                                Tab(
-                                  text: 'Tomorrow',
-                                ),
-                                Tab(
-                                  text: 'This week',
-                                ),
-                              ],
-                            )),
+                        child: Material(
+                          elevation: 2,
+                          borderRadius: BorderRadius.circular(15),
+                          child: Container(
+                              decoration: BoxDecoration(
+                                  color: color.primary.withAlpha(17),
+                                  borderRadius: BorderRadius.circular(15)),
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 8, vertical: 8),
+                              child: TabBar(
+                                dividerColor: Colors.transparent,
+                                indicatorColor: color.primary,
+                                labelColor: color.onPrimary,
+                                labelStyle: text.labelLarge
+                                    ?.copyWith(fontWeight: FontWeight.w600),
+                                unselectedLabelColor: color.onSurfaceVariant,
+                                unselectedLabelStyle: text.labelLarge,
+                                indicator: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(15),
+                                    color: color.primary),
+                                indicatorSize: TabBarIndicatorSize.tab,
+                                tabs: [
+                                  Tab(
+                                    text: 'Today',
+                                  ),
+                                  Tab(
+                                    text: 'Tomorrow',
+                                  ),
+                                  Tab(
+                                    text: 'This week',
+                                  ),
+                                ],
+                              )),
+                        ),
                       ),
                     ),
                   ),

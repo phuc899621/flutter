@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 import 'package:smooth_sheets/smooth_sheets.dart';
 import 'package:taskit/shared/log/logger_provider.dart';
 
@@ -19,7 +18,7 @@ class SheetShell extends ConsumerWidget {
       onPopInvokedWithResult: (didPop, data) {
         logger.i('pop message: $didPop');
         if (!didPop) {
-          context.go('/home');
+          Navigator.of(context).popUntil((route) => route.isFirst);
           return;
         }
       },

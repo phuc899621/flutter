@@ -2,11 +2,14 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
+import 'package:taskit/config/app/app_color.dart';
 import 'package:taskit/features/task/domain/entities/task_priority_enum.dart';
 import 'package:taskit/features/task/presentation/add_task/controller/add_task_controller.dart';
 import 'package:taskit/shared/extension/color.dart';
 import 'package:taskit/shared/extension/date_time.dart';
+import 'package:taskit/shared/extension/string.dart';
 import 'package:taskit/shared/log/logger_provider.dart';
 
 class AddTaskPage extends ConsumerStatefulWidget {
@@ -68,18 +71,21 @@ class _AddTaskPageState extends ConsumerState<AddTaskPage> {
     showDialog(
         context: context,
         builder: (context) => AlertDialog(
+              backgroundColor: color.surface,
               titleTextStyle: text.titleLarge?.copyWith(
-                  color: color.onSurface, fontWeight: FontWeight.bold),
+                  color: color.onSurface, fontWeight: FontWeight.w600),
               title: Text('Add category'),
               content: Form(
                 key: _categoryFormState,
                 child: TextFormField(
+                  textCapitalization: TextCapitalization.sentences,
                   controller: _categoryController,
                   maxLines: 1,
                   maxLength: 20,
                   autofocus: false,
                   onTapOutside: (event) => FocusScope.of(context).unfocus(),
-                  style: text.bodyMedium?.copyWith(color: color.onSurface),
+                  style: text.bodyMedium?.copyWith(
+                      color: color.onSurface, fontWeight: FontWeight.w500),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Please enter category';
@@ -97,6 +103,7 @@ class _AddTaskPageState extends ConsumerState<AddTaskPage> {
                   onChanged: (_) =>
                       controller.setAddCategory(_categoryController.text),
                   decoration: InputDecoration(
+                    counterText: '',
                     errorStyle: TextStyle(
                       color: color.onError,
                       fontWeight: FontWeight.w600,
@@ -117,11 +124,26 @@ class _AddTaskPageState extends ConsumerState<AddTaskPage> {
                   ),
                 ),
               ),
+              actionsPadding:
+                  EdgeInsets.symmetric(horizontal: 25, vertical: 10),
               actions: [
-                TextButton(
+                FilledButton.tonal(
                     onPressed: () => Navigator.pop(context),
-                    child: Text('Cancel')),
-                TextButton(
+                    style: ButtonStyle(
+                      backgroundColor: WidgetStateProperty.all(
+                          color.outlineVariant.withAlpha(50)),
+                    ),
+                    child: Text(
+                      'Cancel',
+                      style: text.titleSmall?.copyWith(
+                          color: ConstColor.onSurfaceVariant,
+                          fontWeight: FontWeight.w600),
+                    )),
+                FilledButton.tonal(
+                    style: ButtonStyle(
+                      backgroundColor:
+                          WidgetStateProperty.all(color.primaryContainer),
+                    ),
                     onPressed: () {
                       if (_categoryFormState.currentState?.validate() ??
                           false) {
@@ -130,7 +152,12 @@ class _AddTaskPageState extends ConsumerState<AddTaskPage> {
                         Navigator.pop(context);
                       }
                     },
-                    child: Text('Add'))
+                    child: Text(
+                      'Add',
+                      style: text.titleSmall?.copyWith(
+                          color: ConstColor.onPrimaryContainer,
+                          fontWeight: FontWeight.w600),
+                    ))
               ],
             ));
   }
@@ -158,34 +185,27 @@ class _AddTaskPageState extends ConsumerState<AddTaskPage> {
       alignment: Alignment.center,
       children: [
         Scaffold(
+          backgroundColor: color.surface,
           appBar: AppBar(
               automaticallyImplyLeading: false,
               centerTitle: true,
               actionsPadding: EdgeInsets.all(8),
-              actions: [
-                IconButton(
-                  onPressed: () {
-                    if (_formState.currentState?.validate() ?? false) {
-                      controller.addTask();
-                    }
-                  },
-                  icon: Icon(
-                    Icons.save,
-                    size: 30,
-                  ),
-                )
-              ],
-              leading: Navigator.canPop(context)
+              leading: context.canPop()
                   ? IconButton(
                       onPressed: () => Navigator.pop(context),
                       icon: Icon(
                         Icons.arrow_back,
-                        size: 25,
                         color: color.onPrimary,
                       ),
                     )
                   : null,
               backgroundColor: color.primary,
+              elevation: 3,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.vertical(
+                  bottom: Radius.circular(10),
+                ),
+              ),
               title: Text(
                 'Add Task',
                 style: text.headlineMedium,
@@ -193,18 +213,26 @@ class _AddTaskPageState extends ConsumerState<AddTaskPage> {
           body: SafeArea(
               child: SingleChildScrollView(
             controller: _scrollController,
-            child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16, vertical: 20),
-              child: Form(
-                key: _formState,
-                child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      /*
-                      * Title
-                      * */
-                      TextFormField(
+            padding: EdgeInsets.symmetric(horizontal: 12),
+            child: Form(
+              key: _formState,
+              child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(
+                      height: 30,
+                    ),
+                    //===========================================
+                    //============== Title ======================
+                    //===========================================
+                    //region TITLE
+                    //endregion
+                    Material(
+                      elevation: 1,
+                      borderRadius: BorderRadius.circular(10),
+                      child: TextFormField(
+                          textCapitalization: TextCapitalization.sentences,
                           controller: _titleController,
                           maxLines: 1,
                           maxLength: 35,
@@ -212,7 +240,8 @@ class _AddTaskPageState extends ConsumerState<AddTaskPage> {
                           autofocus: false,
                           onTapOutside: (event) =>
                               FocusScope.of(context).unfocus(),
-                          style: text.bodyLarge,
+                          style: text.bodyLarge
+                              ?.copyWith(fontWeight: FontWeight.w500),
                           validator: (value) {
                             if (value == null || value.isEmpty) {
                               return 'Please enter a title';
@@ -227,9 +256,10 @@ class _AddTaskPageState extends ConsumerState<AddTaskPage> {
                                           color: color.onSurfaceVariant))
                                   : null,
                               hintStyle: text.titleMedium?.copyWith(
-                                  fontWeight: FontWeight.w600,
-                                  color: color.onSurface),
+                                  fontWeight: FontWeight.w500,
+                                  color: color.onSurfaceVariant),
                               hintText: 'Title',
+                              counterText: '',
                               filled: true,
                               fillColor: color.surfaceContainer,
                               border: OutlineInputBorder(
@@ -241,384 +271,405 @@ class _AddTaskPageState extends ConsumerState<AddTaskPage> {
                                     BorderSide(color: color.primary, width: 2),
                                 borderRadius: BorderRadius.circular(10),
                               ))),
-                      //=========================================
-                      //================= Priority ==============
-                      //=========================================
-                      Text(
-                        'Priority',
-                        style: text.titleMedium,
-                      ),
-                      SizedBox(
-                        height: 50,
-                        child: ListView.builder(
-                          scrollDirection: Axis.horizontal,
-                          itemCount: TaskPriority.values.length,
-                          itemBuilder: (context, index) => Padding(
-                            padding: const EdgeInsets.only(right: 10),
-                            child: Theme(
-                              data: ThemeData(
-                                splashColor: TaskPriority.values[index]
-                                    .toColorContainer(),
+                    ),
+                    //=========================================
+                    //================= Priority ==============
+                    //=========================================
+                    //region PRIORITY
+                    //endregion
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Text(
+                      'Priority',
+                      style: text.titleMedium,
+                    ),
+                    SizedBox(
+                      height: 5,
+                    ),
+                    SizedBox(
+                      height: 45,
+                      child: Row(
+                        children: [
+                          ...TaskPriority.values.map(
+                            (priority) => Padding(
+                              padding: const EdgeInsets.only(right: 15),
+                              child: Theme(
+                                data: ThemeData(
+                                  splashColor: priority.toColorContainer(),
+                                ),
+                                child: ChoiceChip(
+                                    label: Text(
+                                        priority.name.toUpperFirstLetter()),
+                                    elevation: 1,
+                                    showCheckmark: false,
+                                    side: BorderSide.none,
+                                    backgroundColor: color.surfaceContainer,
+                                    selectedColor: priority.toColorContainer(),
+                                    labelStyle: text.labelMedium?.copyWith(
+                                        color:
+                                            state.selectedPriority == priority
+                                                ? priority.toColor()
+                                                : color.onSurfaceVariant,
+                                        fontWeight:
+                                            state.selectedPriority == priority
+                                                ? FontWeight.w600
+                                                : FontWeight.w500),
+                                    selected:
+                                        state.selectedPriority == priority,
+                                    onSelected: (value) => controller
+                                        .setSelectedPriority(priority)),
                               ),
-                              child: ChoiceChip(
-                                  label: Text(TaskPriority.values[index].name),
-                                  elevation: 1,
-                                  showCheckmark: false,
-                                  checkmarkColor:
-                                      TaskPriority.values[index].toColor(),
-                                  selectedColor: TaskPriority.values[index]
-                                      .toColorContainer(),
-                                  labelStyle: text.labelMedium?.copyWith(
-                                      color: state.selectedPriority ==
-                                              TaskPriority.values[index]
-                                          ? TaskPriority.values[index].toColor()
-                                          : color.onSurfaceVariant,
-                                      fontWeight: state.selectedPriority ==
-                                              TaskPriority.values[index]
-                                          ? FontWeight.w600
-                                          : FontWeight.w500),
-                                  selected: state.selectedPriority ==
-                                      TaskPriority.values[index],
-                                  onSelected: (value) =>
-                                      controller.setSelectedPriority(
-                                          TaskPriority.values[index])),
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    //===========================================
+                    //============== Category ===================
+                    //===========================================
+                    //region CATEGORY
+                    //endregion
+                    SizedBox(
+                      height: 35,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            'Category',
+                            style: text.titleMedium,
+                          ),
+                          FilledButton.tonalIcon(
+                            style: ButtonStyle(
+                              elevation: WidgetStateProperty.all(1),
+                            ),
+                            onPressed: () => _showAddCategoryDialog(),
+                            label: Text(
+                              'Add',
+                              style: text.labelMedium?.copyWith(
+                                color: color.onSecondaryContainer,
+                              ),
+                            ),
+                            icon: Icon(
+                              Icons.add,
+                              color: color.onSecondaryContainer,
                             ),
                           ),
-                        ),
+                        ],
                       ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      SizedBox(
-                        height: 40,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              'Category',
-                              style: text.titleMedium,
-                            ),
-                            IconButton(
-                                onPressed: _showAddCategoryDialog,
-                                icon: Icon(
-                                  Icons.add_circle,
-                                  color: color.onSurfaceVariant,
-                                  size: 30,
-                                ))
-                          ],
-                        ),
-                      ),
-                      SizedBox(
-                        height: 50,
-                        child: ListView.builder(
-                          scrollDirection: Axis.horizontal,
-                          itemCount: state.categories.length,
-                          itemBuilder: (context, index) => Padding(
+                    ),
+                    const SizedBox(
+                      height: 5,
+                    ),
+                    Wrap(
+                      children: [
+                        ...state.categories.map(
+                          (category) => Padding(
                               padding: EdgeInsets.only(right: 10),
                               child: Theme(
                                 data: ThemeData(
                                   splashColor: color.secondaryContainer,
                                 ),
                                 child: ChoiceChip(
-                                  label: Text(state.categories[index].name),
+                                  label: Text(category.name),
                                   elevation: 1,
                                   showCheckmark: false,
                                   selectedColor: color.secondaryContainer,
                                   labelStyle: text.labelMedium?.copyWith(
-                                      color: state.categories[index] ==
-                                              state.selectedCategory
+                                      color: category == state.selectedCategory
                                           ? color.onSecondaryContainer
                                           : color.onSurfaceVariant,
-                                      fontWeight: state.categories[index] ==
-                                              state.selectedCategory
-                                          ? FontWeight.w600
-                                          : FontWeight.w500),
-                                  selected: state.categories[index] ==
-                                      state.selectedCategory,
+                                      fontWeight:
+                                          category == state.selectedCategory
+                                              ? FontWeight.w600
+                                              : FontWeight.w500),
+                                  selected: category == state.selectedCategory,
                                   onSelected: (value) =>
-                                      controller.setSelectedCategory(
-                                          state.categories[index]),
+                                      controller.setSelectedCategory(category),
                                 ),
                               )),
                         ),
-                      ),
-                      /*
-                      * Category AI
-                      * */
-                      if (state.isCategoriesLoading ||
-                          state.aiCategories.isNotEmpty)
-                        Stack(
-                          alignment: Alignment.center,
-                          children: [
-                            /*
-                          * Category AI suggest*/
-                            SizedBox(
-                              height: 50,
-                              child: ListView.builder(
-                                scrollDirection: Axis.horizontal,
-                                itemCount: state.aiCategories.length,
-                                itemBuilder: (context, index) => Padding(
+                      ],
+                    ),
+                    SizedBox(
+                      height: 5,
+                    ),
+                    //===========================================
+                    //=============== CATEGORY AI ===============
+                    //===========================================
+                    //region CATEGORY AI
+                    //endregion
+                    if (state.isCategoriesLoading ||
+                        state.aiCategories.isNotEmpty)
+                      Stack(
+                        alignment: Alignment.center,
+                        children: [
+                          /*
+                        * Category AI suggest*/
+                          Wrap(
+                            children: [
+                              ...state.aiCategories.map(
+                                (category) => Padding(
                                     padding: EdgeInsets.only(right: 10),
                                     child: Theme(
                                       data: ThemeData(
                                         splashColor: color.secondaryContainer,
                                       ),
                                       child: ChoiceChip(
-                                        label: Row(spacing: 5, children: [
-                                          Icon(
-                                            Icons.auto_awesome_rounded,
-                                            color: color.onSecondaryContainer,
-                                          ),
-                                          Text(state.aiCategories[index].name)
-                                        ]),
+                                        label: Row(
+                                            mainAxisSize: MainAxisSize.min,
+                                            spacing: 5,
+                                            children: [
+                                              Icon(
+                                                Icons.auto_awesome_rounded,
+                                                color:
+                                                    color.onSecondaryContainer,
+                                              ),
+                                              Text(category.name)
+                                            ]),
                                         elevation: 1,
                                         showCheckmark: false,
                                         selectedColor: color.secondaryContainer,
                                         labelStyle: text.labelMedium?.copyWith(
-                                            color: state.aiCategories[index] ==
+                                            color: category ==
                                                     state.selectedCategory
                                                 ? color.onSecondaryContainer
                                                 : color.onSurfaceVariant,
-                                            fontWeight:
-                                                state.aiCategories[index] ==
-                                                        state.selectedCategory
-                                                    ? FontWeight.w600
-                                                    : FontWeight.w500),
-                                        selected: state.aiCategories[index] ==
-                                            state.selectedCategory,
-                                        onSelected: (value) =>
-                                            controller.setSelectedCategory(
-                                                state.aiCategories[index]),
+                                            fontWeight: category ==
+                                                    state.selectedCategory
+                                                ? FontWeight.w600
+                                                : FontWeight.w500),
+                                        selected:
+                                            category == state.selectedCategory,
+                                        onSelected: (value) => controller
+                                            .setSelectedCategory(category),
                                       ),
                                     )),
                               ),
-                            ),
-                            if (state.isCategoriesLoading)
-                              Positioned.fill(
-                                  child: Center(
-                                      child: CircularProgressIndicator(
-                                strokeWidth: 2,
-                              )))
-                          ],
-                        ),
-                      const SizedBox(
-                        height: 20,
+                            ],
+                          ),
+                          if (state.isCategoriesLoading)
+                            Positioned.fill(
+                                child: Center(
+                                    child: CircularProgressIndicator(
+                              strokeWidth: 2,
+                            )))
+                        ],
                       ),
-                      /*
-                      *
-                      * Date and time
-                      * */
-                      Row(
-                        spacing: 10,
-                        children: [
-                          /*
-                          * Due Date
-                          * */
-                          Expanded(
-                              child: Column(children: [
-                            Material(
-                              elevation: 2,
-                              borderRadius: BorderRadius.circular(15),
-                              color: color.secondaryContainer,
-                              child: GestureDetector(
-                                onTap: () {
-                                  _focusTitleNode.unfocus();
-                                  _focusDescriptionNode.unfocus();
-                                  FocusScope.of(context).unfocus();
-                                  showDatePicker(
-                                    context: context,
-                                    firstDate: DateTime.now(),
-                                    lastDate: DateTime.now()
-                                        .add(const Duration(days: 365)),
-                                  ).then((value) {
-                                    controller.setSelectedDate(value);
-                                    _dueDateController.text =
-                                        value?.toFormatDate() ?? '';
-                                  });
-                                },
-                                child: Container(
-                                    width: double.infinity,
-                                    height: 60,
-                                    padding: EdgeInsets.fromLTRB(10, 3, 3, 6),
-                                    decoration: BoxDecoration(
-                                        color: color.secondaryContainer,
-                                        borderRadius: BorderRadius.circular(15),
-                                        border: Border(
-                                            bottom: BorderSide(
-                                                width: 3,
-                                                color: color.secondary))),
-                                    child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        mainAxisSize: MainAxisSize.max,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Column(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Text(
-                                                'Due date',
-                                                style: text.titleSmall?.copyWith(
-                                                    fontSize: 11,
-                                                    fontWeight: FontWeight.w500,
-                                                    color: color
-                                                        .onSecondaryContainer),
-                                              ),
-                                              _dueDateController.text.isEmpty
-                                                  ? Text(
-                                                      'Not set',
-                                                      style: text.bodyMedium
-                                                          ?.copyWith(
-                                                        fontWeight:
-                                                            FontWeight.w600,
-                                                        color: color
-                                                            .onSecondaryContainer,
-                                                      ),
-                                                    )
-                                                  : Text(
-                                                      _dueDateController.text,
-                                                      style: text.bodyMedium
-                                                          ?.copyWith(
-                                                        fontWeight:
-                                                            FontWeight.w600,
-                                                        color: color
-                                                            .onSecondaryContainer,
-                                                      ),
-                                                    ),
-                                            ],
-                                          ),
-                                          if (_dueDateController
-                                              .text.isNotEmpty)
-                                            IconButton(
-                                                onPressed:
-                                                    _dueDateController.clear,
-                                                icon: Icon(Icons.clear_rounded,
-                                                    color: color
-                                                        .onSecondaryContainer))
-                                        ])),
-                              ),
-                            ),
-                          ])),
-                          /*
-                        * Due time
-                        *
-                        * */
-                          Expanded(
-                              child: Column(children: [
-                            Material(
-                              elevation: 2,
-                              borderRadius: BorderRadius.circular(15),
-                              color: color.tertiaryContainer,
-                              child: Opacity(
-                                opacity: state.selectedDate == null ? 0.5 : 1,
-                                child: AbsorbPointer(
-                                  absorbing: state.selectedDate == null,
-                                  child: GestureDetector(
-                                    onTap: () {
-                                      _focusTitleNode.unfocus();
-                                      _focusDescriptionNode.unfocus();
-                                      FocusScope.of(context).unfocus();
-                                      showTimePicker(
-                                        context: context,
-                                        initialTime: TimeOfDay.now(),
-                                      ).then((value) {
-                                        controller.setSelectedTime(value);
-                                        _dueTimeController.text =
-                                            value?.toTimeFormat() ?? '';
-                                      });
-                                    },
-                                    child: Container(
-                                        width: double.infinity,
-                                        height: 60,
-                                        padding:
-                                            EdgeInsets.fromLTRB(10, 3, 3, 6),
-                                        decoration: BoxDecoration(
-                                            color: color.tertiaryContainer,
-                                            borderRadius:
-                                                BorderRadius.circular(15),
-                                            border: Border(
-                                                bottom: BorderSide(
-                                                    width: 3,
-                                                    color: color.tertiary))),
-                                        child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            mainAxisSize: MainAxisSize.max,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Column(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  Text(
-                                                    'Due time',
-                                                    style: text.titleSmall
+                    const SizedBox(
+                      height: 25,
+                    ),
+                    //=======================================
+                    //============= Due Date ================
+                    //=======================================
+                    //region DUEDATE
+                    //endregion
+                    Row(
+                      spacing: 10,
+                      children: [
+                        Expanded(
+                            child: Column(children: [
+                          Material(
+                            elevation: 2,
+                            borderRadius: BorderRadius.circular(15),
+                            color: color.secondaryContainer,
+                            child: GestureDetector(
+                              onTap: () {
+                                _focusTitleNode.unfocus();
+                                _focusDescriptionNode.unfocus();
+                                FocusScope.of(context).unfocus();
+                                showDatePicker(
+                                  context: context,
+                                  firstDate: DateTime.now(),
+                                  lastDate: DateTime.now()
+                                      .add(const Duration(days: 365)),
+                                ).then((value) {
+                                  controller.setSelectedDate(value);
+                                  _dueDateController.text =
+                                      value?.toFormatDate() ?? '';
+                                });
+                              },
+                              child: Container(
+                                  width: double.infinity,
+                                  height: 60,
+                                  padding: EdgeInsets.fromLTRB(10, 3, 3, 6),
+                                  decoration: BoxDecoration(
+                                      color: color.secondaryContainer,
+                                      borderRadius: BorderRadius.circular(15),
+                                      border: Border(
+                                          bottom: BorderSide(
+                                              width: 3,
+                                              color: color.secondary))),
+                                  child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      mainAxisSize: MainAxisSize.max,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              'Due date',
+                                              style: text.titleSmall?.copyWith(
+                                                  fontSize: 11,
+                                                  fontWeight: FontWeight.w500,
+                                                  color: color
+                                                      .onSecondaryContainer),
+                                            ),
+                                            _dueDateController.text.isEmpty
+                                                ? Text(
+                                                    'Not set',
+                                                    style: text.bodyMedium
                                                         ?.copyWith(
-                                                            fontSize: 11,
-                                                            fontWeight:
-                                                                FontWeight.w500,
-                                                            color: color
-                                                                .onTertiaryContainer),
+                                                      fontWeight:
+                                                          FontWeight.w600,
+                                                      color: color
+                                                          .onSecondaryContainer,
+                                                    ),
+                                                  )
+                                                : Text(
+                                                    _dueDateController.text,
+                                                    style: text.bodyMedium
+                                                        ?.copyWith(
+                                                      fontWeight:
+                                                          FontWeight.w600,
+                                                      color: color
+                                                          .onSecondaryContainer,
+                                                    ),
                                                   ),
-                                                  _dueTimeController
-                                                          .text.isEmpty
-                                                      ? Text(
-                                                          'Not set',
-                                                          style: text.bodyMedium
-                                                              ?.copyWith(
-                                                            fontWeight:
-                                                                FontWeight.w600,
-                                                            color: color
-                                                                .onTertiaryContainer,
-                                                          ),
-                                                        )
-                                                      : Text(
-                                                          _dueTimeController
-                                                              .text,
-                                                          style: text.bodyMedium
-                                                              ?.copyWith(
-                                                            fontWeight:
-                                                                FontWeight.w600,
-                                                            color: color
-                                                                .onTertiaryContainer,
-                                                          ),
+                                          ],
+                                        ),
+                                        if (_dueDateController.text.isNotEmpty)
+                                          IconButton(
+                                              onPressed:
+                                                  _dueDateController.clear,
+                                              icon: Icon(Icons.clear_rounded,
+                                                  color: color
+                                                      .onSecondaryContainer))
+                                      ])),
+                            ),
+                          ),
+                        ])),
+                        Expanded(
+                            child: Column(children: [
+                          Material(
+                            elevation: 2,
+                            borderRadius: BorderRadius.circular(15),
+                            color: color.tertiaryContainer,
+                            child: Opacity(
+                              opacity: state.selectedDate == null ? 0.5 : 1,
+                              child: AbsorbPointer(
+                                absorbing: state.selectedDate == null,
+                                child: GestureDetector(
+                                  onTap: () {
+                                    _focusTitleNode.unfocus();
+                                    _focusDescriptionNode.unfocus();
+                                    FocusScope.of(context).unfocus();
+                                    showTimePicker(
+                                      context: context,
+                                      initialTime: TimeOfDay.now(),
+                                    ).then((value) {
+                                      controller.setSelectedTime(value);
+                                      _dueTimeController.text =
+                                          value?.toTimeFormat() ?? '';
+                                    });
+                                  },
+                                  child: Container(
+                                      width: double.infinity,
+                                      height: 60,
+                                      padding: EdgeInsets.fromLTRB(10, 3, 3, 6),
+                                      decoration: BoxDecoration(
+                                          color: color.tertiaryContainer,
+                                          borderRadius:
+                                              BorderRadius.circular(15),
+                                          border: Border(
+                                              bottom: BorderSide(
+                                                  width: 3,
+                                                  color: color.tertiary))),
+                                      child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          mainAxisSize: MainAxisSize.max,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Column(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Text(
+                                                  'Due time',
+                                                  style: text.titleSmall?.copyWith(
+                                                      fontSize: 11,
+                                                      fontWeight:
+                                                          FontWeight.w500,
+                                                      color: color
+                                                          .onTertiaryContainer),
+                                                ),
+                                                _dueTimeController.text.isEmpty
+                                                    ? Text(
+                                                        'Not set',
+                                                        style: text.bodyMedium
+                                                            ?.copyWith(
+                                                          fontWeight:
+                                                              FontWeight.w600,
+                                                          color: color
+                                                              .onTertiaryContainer,
                                                         ),
-                                                ],
-                                              ),
-                                              if (_dueTimeController
-                                                  .text.isNotEmpty)
-                                                IconButton(
-                                                    onPressed:
-                                                        _dueTimeController
-                                                            .clear,
-                                                    icon: Icon(
-                                                        Icons.clear_rounded,
-                                                        color: color
-                                                            .onSecondaryContainer))
-                                            ])),
-                                  ),
+                                                      )
+                                                    : Text(
+                                                        _dueTimeController.text,
+                                                        style: text.bodyMedium
+                                                            ?.copyWith(
+                                                          fontWeight:
+                                                              FontWeight.w600,
+                                                          color: color
+                                                              .onTertiaryContainer,
+                                                        ),
+                                                      ),
+                                              ],
+                                            ),
+                                            if (_dueTimeController
+                                                .text.isNotEmpty)
+                                              IconButton(
+                                                  onPressed:
+                                                      _dueTimeController.clear,
+                                                  icon: Icon(
+                                                      Icons.clear_rounded,
+                                                      color: color
+                                                          .onSecondaryContainer))
+                                          ])),
                                 ),
                               ),
                             ),
-                          ])),
-                        ],
-                      ),
-                      SizedBox(
-                        height: 20,
-                      ),
+                          ),
+                        ])),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 25,
+                    ),
 
-                      /*
-                      * Description
-                      * */
-                      TextFormField(
+                    //============================================
+                    //================ DESCRIPTION ===============
+                    //============================================
+                    //region DESCRIPTION
+                    //endregion
+                    Material(
+                      elevation: 1,
+                      borderRadius: BorderRadius.circular(10),
+                      child: TextFormField(
                         controller: _descriptionController,
                         maxLines: 3,
                         maxLength: 60,
@@ -629,7 +680,8 @@ class _AddTaskPageState extends ConsumerState<AddTaskPage> {
                         onTapOutside: (event) {
                           FocusScope.of(context).unfocus();
                         },
-                        style: text.bodyMedium,
+                        style:
+                            text.bodyMedium?.copyWith(color: color.onSurface),
                         decoration: InputDecoration(
                             suffixIcon: _descriptionController.text.isNotEmpty
                                 ? IconButton(
@@ -637,11 +689,12 @@ class _AddTaskPageState extends ConsumerState<AddTaskPage> {
                                     icon: Icon(Icons.clear_rounded,
                                         color: color.onSurfaceVariant))
                                 : null,
-                            hintStyle: text.titleMedium?.copyWith(
-                                fontWeight: FontWeight.w600,
-                                color: color.onSurface),
+                            hintStyle: text.bodyMedium?.copyWith(
+                                fontWeight: FontWeight.w500,
+                                color: color.onSurfaceVariant),
                             hintText: 'Description',
                             filled: true,
+                            counterText: '',
                             fillColor: color.surfaceContainer,
                             border: OutlineInputBorder(
                               borderSide: BorderSide.none,
@@ -653,177 +706,140 @@ class _AddTaskPageState extends ConsumerState<AddTaskPage> {
                               borderRadius: BorderRadius.circular(10),
                             )),
                       ),
-                      const SizedBox(
-                        height: 5,
-                      ),
-                      if (state.subtasks.isNotEmpty)
-                        Text(
-                          'Subtask',
-                          style: text.titleMedium,
-                        ),
-                      ListView.builder(
-                        itemCount: state.subtasks.length,
-                        shrinkWrap: true,
-                        itemBuilder: (context, index) => Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 10),
-                          child: Theme(
-                            data: ThemeData(
-                              splashColor: color.error,
-                            ),
-                            child: Material(
-                                elevation: 2,
-                                borderRadius: BorderRadius.circular(10),
-                                color: color.surface,
-                                child: Container(
-                                  height: 55,
-                                  width: double.infinity,
-                                  padding: EdgeInsets.only(right: 5),
-                                  child: Row(spacing: 10, children: [
-                                    Container(
-                                      width: 10,
-                                      height: double.infinity,
-                                      decoration: BoxDecoration(
-                                          color: color.secondary,
-                                          borderRadius: BorderRadius.horizontal(
-                                              left: Radius.circular(10))),
-                                    ),
-                                    Expanded(
-                                      child: TextField(
-                                        controller: _subtaskControllers[index],
-                                        onChanged: (_) {
-                                          controller.onSubtaskInputSubmit(index,
-                                              _subtaskControllers[index].text);
-                                        },
-                                        autofocus: false,
-                                        onTapOutside: (event) {
-                                          FocusScope.of(context).unfocus();
-                                        },
-                                        style: text.bodyMedium?.copyWith(
-                                            color: color.onSurface,
-                                            fontWeight: FontWeight.w500),
-                                        decoration: InputDecoration(
-                                            hintText: 'Input subtask title',
-                                            hintStyle: text.bodyMedium
-                                                ?.copyWith(
-                                                    fontWeight:
-                                                        FontWeight.normal,
-                                                    color:
-                                                        color.onSurfaceVariant),
-                                            counterText: '',
-                                            border: InputBorder.none),
-                                      ),
-                                    ),
-                                    Container(
-                                        width: 35,
-                                        height: 35,
-                                        decoration: BoxDecoration(
-                                            color: color.error,
-                                            shape: BoxShape.circle),
-                                        child: Center(
-                                          child: IconButton(
-                                            padding: EdgeInsets.zero,
-                                            onPressed: () {
-                                              _subtaskControllers
-                                                  .removeAt(index);
-                                              controller.onDeleteSubtask(index);
-                                            },
-                                            icon: Icon(
-                                              Icons.delete_forever,
-                                              color: color.onError,
-                                              size: 25,
-                                            ),
-                                          ),
-                                        )),
-                                  ]),
-                                )),
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    SizedBox(
+                      height: 35,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            'Subtasks',
+                            style: text.titleMedium,
                           ),
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      SizedBox(
-                        height: 55,
-                        child: Stack(
-                          children: [
-                            Center(
-                              child: Container(
-                                color: color.outline.withAlpha(70),
-                                height: 3,
+                          FilledButton.tonalIcon(
+                            style: ButtonStyle(
+                              elevation: WidgetStateProperty.all(1),
+                            ),
+                            onPressed: () {
+                              _subtaskControllers.add(TextEditingController());
+                              controller.addSubtask();
+                              _scrollController.animateTo(
+                                  _scrollController.position.maxScrollExtent,
+                                  duration: Duration(milliseconds: 700),
+                                  curve: Curves.easeOut);
+                            },
+                            label: Text(
+                              'Add',
+                              style: text.labelMedium?.copyWith(
+                                color: color.onSecondaryContainer,
                               ),
                             ),
-                            Center(
+                            icon: Icon(
+                              Icons.add,
+                              color: color.onSecondaryContainer,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    SizedBox(
+                      height: 5,
+                    ),
+                    ListView.builder(
+                      itemCount: state.subtasks.length,
+                      shrinkWrap: true,
+                      itemBuilder: (context, index) => Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 6),
+                        child: Theme(
+                          data: ThemeData(
+                            splashColor: color.error,
+                          ),
+                          child: Material(
+                              elevation: 2,
+                              borderRadius: BorderRadius.circular(10),
+                              color: color.surface,
                               child: Container(
-                                width: 150,
-                                height: 45,
-                                color: color.surface,
-                                child: Center(
-                                  child: Theme(
-                                    data: ThemeData(
-                                        splashColor:
-                                            color.onSecondaryContainer),
-                                    child: Material(
-                                      elevation: 2,
-                                      borderRadius: BorderRadius.circular(10),
-                                      child: GestureDetector(
-                                          onTap: () {
-                                            _subtaskControllers
-                                                .add(TextEditingController());
-                                            controller.addSubtask();
-                                            _scrollController.animateTo(
-                                                _scrollController
-                                                    .position.maxScrollExtent,
-                                                duration:
-                                                    Duration(milliseconds: 400),
-                                                curve: Curves.easeOut);
-                                          },
-                                          child: Container(
-                                              height: 40,
-                                              width: 120,
-                                              decoration: BoxDecoration(
-                                                  color: color.secondary,
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          10)),
-                                              child: Center(
-                                                child: Row(
-                                                  spacing: 10,
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.center,
-                                                  children: [
-                                                    Icon(
-                                                      Icons.add_circle,
-                                                      color: color.onSecondary,
-                                                      size: 20,
-                                                    ),
-                                                    Text(
-                                                      'Subtask',
-                                                      style: text.titleSmall
-                                                          ?.copyWith(
-                                                              color: color
-                                                                  .onSecondary,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w600),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ))),
+                                height: 55,
+                                width: double.infinity,
+                                padding: EdgeInsets.only(right: 5),
+                                child: Row(spacing: 10, children: [
+                                  Container(
+                                    width: 10,
+                                    height: double.infinity,
+                                    decoration: BoxDecoration(
+                                        color: color.secondary,
+                                        borderRadius: BorderRadius.horizontal(
+                                            left: Radius.circular(10))),
+                                  ),
+                                  Expanded(
+                                    child: TextField(
+                                      controller: _subtaskControllers[index],
+                                      onChanged: (_) {
+                                        controller.onSubtaskInputSubmit(index,
+                                            _subtaskControllers[index].text);
+                                      },
+                                      autofocus: false,
+                                      onTapOutside: (event) {
+                                        FocusScope.of(context).unfocus();
+                                      },
+                                      style: text.bodyMedium?.copyWith(
+                                          color: color.onSurface,
+                                          fontWeight: FontWeight.w500),
+                                      decoration: InputDecoration(
+                                          hintText: 'Input subtask title',
+                                          hintStyle: text.bodyMedium?.copyWith(
+                                              fontWeight: FontWeight.normal,
+                                              color: color.onSurfaceVariant),
+                                          counterText: '',
+                                          border: InputBorder.none),
                                     ),
                                   ),
-                                ),
-                              ),
-                            ),
-                          ],
+                                  IconButton(
+                                    padding: EdgeInsets.zero,
+                                    onPressed: () {
+                                      _subtaskControllers.removeAt(index);
+                                      controller.onDeleteSubtask(index);
+                                    },
+                                    icon: Icon(
+                                      Icons.delete_forever,
+                                      color: color.onError,
+                                      size: 25,
+                                    ),
+                                  ),
+                                ]),
+                              )),
                         ),
                       ),
-                      const SizedBox(
-                        height: 200,
-                      )
-                    ]),
-              ),
+                    ),
+                    const SizedBox(
+                      height: 200,
+                    )
+                  ]),
             ),
           )),
+        ),
+        Positioned(
+          bottom: 5,
+          left: 20,
+          right: 20,
+          child: ElevatedButton(
+              onPressed: () {
+                if (_formState.currentState?.validate() ?? false) {
+                  controller.addTask();
+                }
+              },
+              style: ButtonStyle(
+                backgroundColor:
+                    WidgetStateProperty.all(color.primaryContainer),
+                textStyle: WidgetStateProperty.all(text.titleMedium?.copyWith(
+                    color: color.onPrimaryContainer,
+                    fontWeight: FontWeight.w600)),
+                elevation: WidgetStateProperty.all(2),
+              ),
+              child: Text('Add Task')),
         ),
         if (state.isLoading)
           Positioned.fill(

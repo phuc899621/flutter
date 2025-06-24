@@ -19,7 +19,20 @@ class _ListPageState extends ConsumerState<ListPage> {
         appBar: AppBar(
           title: const Text('List Page'),
           titleTextStyle: text.headlineSmall,
+          actions: [
+            IconButton(
+              onPressed: () {},
+              icon: Icon(Icons.search_rounded, color: color.onPrimary),
+            ),
+          ],
         ),
-        body: SafeArea(child: SingleChildScrollView(child: Column())));
+        body: SafeArea(
+            child: SingleChildScrollView(
+                child: Column(
+          mainAxisSize: MainAxisSize.max,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [],
+        ))));
   }
 }

@@ -31,13 +31,13 @@ class TaskItem extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final text = Theme.of(context).textTheme;
-    final color = ref.read(colorProvider(context));
+    final color = Theme.of(context).colorScheme;
     return Opacity(
       opacity: task.status == TaskStatus.completed ? 0.7 : 1,
       child: Material(
         clipBehavior: Clip.hardEdge,
-        color: color.surfaceContainer,
-        elevation: 2,
+        color: color.surface,
+        elevation: 1,
         borderRadius: BorderRadius.circular(15),
         child: ExpansionTile(
           tilePadding: EdgeInsets.only(right: 10, left: 10),
@@ -172,7 +172,7 @@ class TaskItem extends ConsumerWidget {
                   padding: const EdgeInsets.symmetric(vertical: 8),
                   child: Container(
                     decoration: BoxDecoration(
-                      color: color.transprent,
+                      color: Colors.transparent,
                       borderRadius: BorderRadius.circular(10),
                     ),
                     padding:
