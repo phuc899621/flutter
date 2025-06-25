@@ -4,7 +4,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:taskit/shared/presentation/widget/custom_taskit_button.dart';
 
-import '../../../../../config/app/app_color.dart';
 import '../../../../../shared/presentation/widget/custom_taskit_textfield.dart';
 import '../controller/signup_controller.dart';
 
@@ -45,6 +44,8 @@ class _SignupVerifyFormState extends ConsumerState<SignupVerifyForm> {
   Widget build(BuildContext context) {
     _listener();
     final state = ref.watch(signUpControllerProvider);
+    final text = Theme.of(context).textTheme;
+    final color = Theme.of(context).colorScheme;
     return SingleChildScrollView(
       child: Column(
         mainAxisSize: MainAxisSize.max,
@@ -70,7 +71,7 @@ class _SignupVerifyFormState extends ConsumerState<SignupVerifyForm> {
                   width: 32.0,
                   height: 100.0,
                   decoration: BoxDecoration(
-                    color: AppColor(context).primaryContainer,
+                    color: color.surfaceContainer,
                   ),
                 ),
                 Align(
@@ -91,10 +92,10 @@ class _SignupVerifyFormState extends ConsumerState<SignupVerifyForm> {
                 children: [
                   Text(
                     'Verification Code',
-                    style: Theme.of(context).textTheme.displaySmall?.copyWith(
-                          fontFamily: 'Inter Tight',
-                          letterSpacing: 0.0,
-                        ),
+                    style: text.displaySmall?.copyWith(
+                      fontFamily: 'Inter Tight',
+                      letterSpacing: 0.0,
+                    ),
                   ),
                   Padding(
                     padding: const EdgeInsetsDirectional.fromSTEB(
@@ -105,24 +106,13 @@ class _SignupVerifyFormState extends ConsumerState<SignupVerifyForm> {
                         children: [
                           TextSpan(
                             text: 'We sent a code to ',
-                            style: Theme.of(context)
-                                .textTheme
-                                .labelMedium
-                                ?.copyWith(
-                                  fontFamily: 'Inter',
-                                  letterSpacing: 0.0,
-                                ),
+                            style: text.labelMedium,
                           ),
                           TextSpan(
                             text: state.signupForm['email'],
-                            style: Theme.of(context)
-                                .textTheme
-                                .labelMedium
-                                ?.copyWith(
-                                  fontFamily: 'Inter',
-                                  color: AppColor(context).primary,
-                                  letterSpacing: 0.0,
-                                ),
+                            style: text.labelMedium?.copyWith(
+                              color: color.onSurfaceVariant,
+                            ),
                           ),
                           const TextSpan(
                             text:
@@ -130,19 +120,13 @@ class _SignupVerifyFormState extends ConsumerState<SignupVerifyForm> {
                             style: TextStyle(),
                           )
                         ],
-                        style:
-                            Theme.of(context).textTheme.labelMedium?.copyWith(
-                                  fontFamily: 'Inter',
-                                  letterSpacing: 0.0,
-                                ),
+                        style: text.labelMedium,
                       ),
                     ),
                   ),
                   Align(
-                    alignment: const AlignmentDirectional(0.0, 0.0),
                     child: Padding(
-                      padding: const EdgeInsetsDirectional.fromSTEB(
-                          0.0, 0.0, 0.0, 26.0),
+                      padding: const EdgeInsets.only(bottom: 26.0),
                       child: Row(
                         mainAxisSize: MainAxisSize.max,
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -183,8 +167,7 @@ class _SignupVerifyFormState extends ConsumerState<SignupVerifyForm> {
                     ),
                   ),
                   Padding(
-                      padding: const EdgeInsetsDirectional.fromSTEB(
-                          0.0, 0.0, 0.0, 16.0),
+                      padding: const EdgeInsets.only(bottom: 16.0),
                       child: TaskitElevationButton(
                           text: "Verify", onPressed: () => {_onVerify()})),
                 ],
@@ -192,36 +175,26 @@ class _SignupVerifyFormState extends ConsumerState<SignupVerifyForm> {
             ),
           ),
           Align(
-            alignment: const AlignmentDirectional(0.0, 0.0),
             child: Padding(
-              padding:
-                  const EdgeInsetsDirectional.fromSTEB(0.0, 30.0, 0.0, 0.0),
+              padding: const EdgeInsets.only(top: 30),
               child: RichText(
                 textScaler: MediaQuery.of(context).textScaler,
                 text: TextSpan(
                   children: [
                     TextSpan(
                       text: 'Haven’t got the email yet?',
-                      style: Theme.of(context).textTheme.labelMedium?.copyWith(
-                            fontFamily: 'Inter',
-                            letterSpacing: 0.0,
-                          ),
+                      style: text.labelMedium,
                     ),
                     TextSpan(
                       text: ' Resend code!',
-                      style: Theme.of(context).textTheme.labelMedium?.copyWith(
-                            fontFamily: 'Inter',
-                            color: AppColor(context).primary,
-                            letterSpacing: 0.0,
-                          ),
+                      style: text.labelMedium?.copyWith(
+                        color: color.primary,
+                      ),
                       recognizer: TapGestureRecognizer()
                         ..onTap = () => _onVerify(),
                     )
                   ],
-                  style: Theme.of(context).textTheme.labelMedium?.copyWith(
-                        fontFamily: 'Inter',
-                        letterSpacing: 0.0,
-                      ),
+                  style: text.labelMedium,
                 ),
               ),
             ),
@@ -232,14 +205,14 @@ class _SignupVerifyFormState extends ConsumerState<SignupVerifyForm> {
   }
 
   void _listener() {
-    // listen for error
+    final color = Theme.of(context).colorScheme;
     ref.listen(signUpControllerProvider.select((value) => value.error),
         (_, next) {
       if (next != null) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             duration: const Duration(seconds: 5),
-            backgroundColor: AppColor(context).error,
+            backgroundColor: color.error,
             content: Text(next),
           ),
         );

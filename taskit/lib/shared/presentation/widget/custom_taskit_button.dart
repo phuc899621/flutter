@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:taskit/config/app/app_color.dart';
 
 class TaskitElevationButton extends ConsumerWidget {
   final String text;
@@ -8,40 +7,44 @@ class TaskitElevationButton extends ConsumerWidget {
 
   const TaskitElevationButton(
       {super.key, this.text = "", required this.onPressed});
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final textStyle = Theme.of(context).textTheme;
+    final color = Theme.of(context).colorScheme;
     return ElevatedButton(
       onPressed: onPressed,
       style: ElevatedButton.styleFrom(
         minimumSize: const Size(double.infinity, 40),
-        backgroundColor: AppColor(context).primary,
+        backgroundColor: color.primary,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12.0),
         ),
       ),
       child: Text(text,
-          style: Theme.of(context).textTheme.titleMedium?.copyWith(
-              fontFamily: 'Inter Tight', color: AppColor(context).onPrimary)),
+          style: textStyle.titleMedium?.copyWith(color: color.onPrimary)),
     );
   }
 }
 
 class TaskitBackButton extends ConsumerWidget {
   final VoidCallback onPressed;
+
   const TaskitBackButton({super.key, required this.onPressed});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final color = Theme.of(context).colorScheme;
     return Container(
       decoration: BoxDecoration(
-        color: AppColor(context).primary,
+        color: color.primary,
         borderRadius: BorderRadius.circular(8.0),
       ),
       child: IconButton(
         iconSize: 50,
         icon: Icon(
           Icons.arrow_back,
-          color: AppColor(context).onPrimary,
+          color: color.onPrimary,
           size: 24.0,
         ),
         onPressed: onPressed,

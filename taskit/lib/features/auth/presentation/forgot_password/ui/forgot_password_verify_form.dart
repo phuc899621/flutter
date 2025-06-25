@@ -4,7 +4,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:taskit/features/auth/presentation/forgot_password/controller/forgot_pass_controller.dart';
 
-import '../../../../../config/app/app_color.dart';
 import '../../../../../shared/presentation/widget/custom_taskit_button.dart';
 import '../../../../../shared/presentation/widget/custom_taskit_textfield.dart';
 
@@ -43,6 +42,8 @@ class _ForgotPasswordVerifyFormState
   @override
   Widget build(BuildContext context) {
     _listener();
+    final text = Theme.of(context).textTheme;
+    final color = Theme.of(context).colorScheme;
     final controller = ref.watch(forgotPassControllerProvider);
     return Padding(
       padding: const EdgeInsetsDirectional.fromSTEB(32.0, 32.0, 32.0, 32.0),
@@ -54,7 +55,7 @@ class _ForgotPasswordVerifyFormState
               style: Theme.of(context).textTheme.headlineMedium?.copyWith(
                     fontFamily: 'Inter Tight',
                     letterSpacing: 0.0,
-                    color: AppColor(context).onSurface,
+                    color: color.onSurface,
                   )),
           Padding(
             padding: const EdgeInsetsDirectional.fromSTEB(0.0, 12.0, 0.0, 26.0),
@@ -75,7 +76,7 @@ class _ForgotPasswordVerifyFormState
                             Theme.of(context).textTheme.labelMedium?.copyWith(
                                   fontFamily: 'Inter',
                                   letterSpacing: 0.0,
-                                  color: AppColor(context).primary,
+                                  color: color.primary,
                                 )),
                     TextSpan(
                         text:
@@ -89,7 +90,7 @@ class _ForgotPasswordVerifyFormState
                   style: Theme.of(context).textTheme.labelMedium?.copyWith(
                         fontFamily: 'Inter',
                         letterSpacing: 0.0,
-                        color: AppColor(context).primary,
+                        color: color.primary,
                       )),
             ),
           ),
@@ -170,7 +171,7 @@ class _ForgotPasswordVerifyFormState
                               ?.copyWith(
                                   fontFamily: 'Inter',
                                   letterSpacing: 0.0,
-                                  color: AppColor(context).primary),
+                                  color: color.primary),
                           recognizer: TapGestureRecognizer()
                             ..onTap = () => _onSummit())
                     ],
@@ -187,6 +188,7 @@ class _ForgotPasswordVerifyFormState
   }
 
   void _listener() {
+    final color = Theme.of(context).colorScheme;
     ref.listen(
         forgotPassControllerProvider.select((value) => value.errorVerify),
         (_, next) {
@@ -194,7 +196,7 @@ class _ForgotPasswordVerifyFormState
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             duration: const Duration(seconds: 5),
-            backgroundColor: AppColor(context).error,
+            backgroundColor: color.error,
             content: Text(next),
           ),
         );

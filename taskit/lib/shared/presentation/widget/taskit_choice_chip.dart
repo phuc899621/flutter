@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:taskit/config/app/app_color.dart';
-
-import '../../../config/app/text_theme.dart';
 
 class TaskitChoiceChip extends ConsumerStatefulWidget {
   final List<String> options;
@@ -34,8 +31,8 @@ class _TaskitChoiceChip extends ConsumerState<TaskitChoiceChip> {
 
   @override
   Widget build(BuildContext context) {
-    final color = ref.read(colorProvider(context));
-    final text = ref.read(textStyleProvider(context));
+    final color = Theme.of(context).colorScheme;
+    final text = Theme.of(context).textTheme;
     // TODO: implement build
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,

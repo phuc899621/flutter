@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -166,42 +167,40 @@ class _HomePageState extends ConsumerState<HomePage>
                             BorderRadius.vertical(bottom: Radius.circular(15))),
                     backgroundColor: color.surface,
                     flexibleSpace: FlexibleSpaceBar(
-                      background: Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 8, vertical: 8),
-                        child: Material(
-                          elevation: 2,
-                          borderRadius: BorderRadius.circular(15),
-                          child: Container(
-                              decoration: BoxDecoration(
-                                  color: color.primary.withAlpha(17),
-                                  borderRadius: BorderRadius.circular(15)),
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 8, vertical: 8),
-                              child: TabBar(
-                                dividerColor: Colors.transparent,
-                                indicatorColor: color.primary,
-                                labelColor: color.onPrimary,
-                                labelStyle: text.labelLarge
-                                    ?.copyWith(fontWeight: FontWeight.w600),
-                                unselectedLabelColor: color.onSurfaceVariant,
-                                unselectedLabelStyle: text.labelLarge,
-                                indicator: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(15),
-                                    color: color.primary),
-                                indicatorSize: TabBarIndicatorSize.tab,
-                                tabs: [
-                                  Tab(
-                                    text: 'Today',
-                                  ),
-                                  Tab(
-                                    text: 'Tomorrow',
-                                  ),
-                                  Tab(
-                                    text: 'This week',
-                                  ),
-                                ],
-                              )),
+                      background: Container(
+                        color: color.surfaceContainerLow,
+                        width: double.infinity,
+                        child: TabBar(
+                          dragStartBehavior: DragStartBehavior.down,
+                          tabAlignment: TabAlignment.center,
+                          isScrollable: true,
+                          dividerColor: Colors.transparent,
+                          physics: const BouncingScrollPhysics(),
+                          labelColor: color.onPrimaryContainer,
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 20, vertical: 10),
+                          labelPadding:
+                              const EdgeInsets.symmetric(horizontal: 15),
+                          splashBorderRadius: BorderRadius.circular(15),
+                          labelStyle: text.labelLarge
+                              ?.copyWith(fontWeight: FontWeight.w600),
+                          unselectedLabelColor: color.onSurfaceVariant,
+                          unselectedLabelStyle: text.labelLarge,
+                          indicator: BoxDecoration(
+                              borderRadius: BorderRadius.circular(15),
+                              color: color.primaryContainer),
+                          indicatorSize: TabBarIndicatorSize.tab,
+                          tabs: [
+                            Tab(
+                              text: 'Today',
+                            ),
+                            Tab(
+                              text: 'Tomorrow',
+                            ),
+                            Tab(
+                              text: 'This week',
+                            ),
+                          ],
                         ),
                       ),
                     ),

@@ -57,8 +57,8 @@ class _EditTaskBottomSheetState extends ConsumerState<EditTaskBottomSheet> {
               onTapOutside: (event) {
                 FocusScope.of(context).unfocus();
               },
-              controller:
-                  titleController.getOrCreateController(task?.title ?? ''),
+              controller: titleController.getOrCreateController(
+                  initial: task?.title ?? ''),
               decoration: InputDecoration(
                   hint: Text(
                     'Title',

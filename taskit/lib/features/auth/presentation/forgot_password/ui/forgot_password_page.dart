@@ -4,8 +4,6 @@ import 'package:go_router/go_router.dart';
 import 'package:taskit/features/auth/presentation/forgot_password/ui/forgot_password_form.dart';
 import 'package:taskit/shared/presentation/widget/custom_taskit_button.dart';
 
-import '../../../../../config/app/app_color.dart';
-
 class ForgotPasswordPage extends ConsumerStatefulWidget {
   const ForgotPasswordPage({super.key});
   @override
@@ -16,8 +14,10 @@ class ForgotPasswordPage extends ConsumerStatefulWidget {
 class _ForgotPasswordPageState extends ConsumerState<ForgotPasswordPage> {
   @override
   Widget build(BuildContext context) {
+    final text = Theme.of(context).textTheme;
+    final color = Theme.of(context).colorScheme;
     return Scaffold(
-      backgroundColor: AppColor(context).primaryContainer,
+      backgroundColor: color.surface,
       body: SafeArea(
         top: true,
         child: Row(
@@ -46,7 +46,7 @@ class _ForgotPasswordPageState extends ConsumerState<ForgotPasswordPage> {
                               width: 32.0,
                               height: 50.0,
                               decoration: BoxDecoration(
-                                color: AppColor(context).primaryContainer,
+                                color: color.surface,
                               ),
                             ),
                             TaskitBackButton(onPressed: () => context.pop())

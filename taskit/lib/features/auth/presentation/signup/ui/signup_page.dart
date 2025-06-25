@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:taskit/features/auth/presentation/signup/ui/signup_form.dart';
 
-import '../../../../../config/app/app_color.dart';
-
 class SignupPage extends ConsumerStatefulWidget {
   const SignupPage({super.key});
 
@@ -14,8 +12,10 @@ class SignupPage extends ConsumerStatefulWidget {
 class _SignupPageState extends ConsumerState<SignupPage> {
   @override
   Widget build(BuildContext context) {
+    final color = Theme.of(context).colorScheme;
+    final text = Theme.of(context).textTheme;
     return Scaffold(
-      backgroundColor: AppColor(context).primaryContainer,
+      backgroundColor: color.surface,
       body: SafeArea(
         top: true,
         child: Row(
@@ -27,7 +27,7 @@ class _SignupPageState extends ConsumerState<SignupPage> {
                 width: 100.0,
                 height: double.infinity,
                 decoration: BoxDecoration(
-                  color: AppColor(context).primaryContainer,
+                  color: color.surfaceContainer,
                 ),
                 alignment: const AlignmentDirectional(0.0, -1.0),
                 child: SingleChildScrollView(
@@ -41,7 +41,7 @@ class _SignupPageState extends ConsumerState<SignupPage> {
                           maxWidth: 430.0,
                         ),
                         decoration: BoxDecoration(
-                          color: AppColor(context).primaryContainer,
+                          color: color.surfaceContainer,
                         ),
                         child: const SignupForm(),
                       )

@@ -3,7 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:taskit/features/auth/presentation/forgot_password/ui/forgot_password_verify_form.dart';
 
-import '../../../../../config/app/app_color.dart';
 import '../../../../../shared/presentation/widget/custom_taskit_button.dart';
 
 class ForgotPasswordVerifyPage extends ConsumerStatefulWidget {
@@ -17,8 +16,10 @@ class _ForgotPasswordVerifyPageState
     extends ConsumerState<ForgotPasswordVerifyPage> {
   @override
   Widget build(BuildContext context) {
+    final text = Theme.of(context).textTheme;
+    final color = Theme.of(context).colorScheme;
     return Scaffold(
-      backgroundColor: AppColor(context).primaryContainer,
+      backgroundColor: color.primaryContainer,
       body: SafeArea(
         top: true,
         child: SingleChildScrollView(
@@ -30,7 +31,7 @@ class _ForgotPasswordVerifyPageState
                 width: double.infinity,
                 height: 50,
                 decoration: BoxDecoration(
-                  color: AppColor(context).primaryContainer,
+                  color: color.primaryContainer,
                   borderRadius: const BorderRadius.only(
                     bottomLeft: Radius.circular(16.0),
                     bottomRight: Radius.circular(16.0),
@@ -46,7 +47,7 @@ class _ForgotPasswordVerifyPageState
                       width: 32.0,
                       height: 100.0,
                       decoration: BoxDecoration(
-                        color: AppColor(context).primaryContainer,
+                        color: color.primaryContainer,
                       ),
                     ),
                     TaskitBackButton(onPressed: () => context.pop()),

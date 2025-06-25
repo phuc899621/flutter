@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../../../config/app/app_color.dart';
-
 class CalendarPage extends ConsumerStatefulWidget {
   const CalendarPage({super.key});
 
@@ -14,7 +12,7 @@ class CalendarPageState extends ConsumerState<CalendarPage> {
   @override
   Widget build(BuildContext context) {
     final text = Theme.of(context).textTheme;
-    final color = ref.read(colorProvider(context));
+    final color = Theme.of(context).colorScheme;
     return Scaffold(
       appBar: AppBar(
         title: const Text('Calendar'),

@@ -51,7 +51,7 @@ final themeProvider = Provider<ThemeData>((ref) => ThemeData(
             color: ConstColor.onSurfaceVariant,
           )),
       floatingActionButtonTheme: const FloatingActionButtonThemeData(
-        backgroundColor: ConstColor.primary,
-        foregroundColor: ConstColor.onPrimary,
+        backgroundColor: ConstColor.primaryContainer,
+        foregroundColor: ConstColor.onPrimaryContainer,
       ),
     ));

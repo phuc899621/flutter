@@ -27,21 +27,21 @@ class SubtaskControllerManager {
 }
 
 final titleControllerProvider =
-    Provider.autoDispose<TitleControllerManager>((ref) {
-  return TitleControllerManager();
+    Provider.autoDispose<TextControllerManager>((ref) {
+  return TextControllerManager();
 });
 
-class TitleControllerManager {
+class TextControllerManager {
   final TextEditingController _controller = TextEditingController();
 
-  TextEditingController getOrCreateController(String initial) {
-    if (_controller.text != initial) {
+  TextEditingController getOrCreateController({String? initial}) {
+    if (initial != null && _controller.text != initial) {
       _controller.text = initial;
     }
     return _controller;
   }
 
   void clear() {
-    _controller.clear();
+    _controller.text = '';
   }
 }

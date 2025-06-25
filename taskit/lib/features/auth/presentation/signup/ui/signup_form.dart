@@ -4,7 +4,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:taskit/shared/presentation/widget/custom_taskit_button.dart';
 
-import '../../../../../config/app/app_color.dart';
 import '../../../../../shared/presentation/widget/custom_taskit_textfield.dart';
 import '../controller/signup_controller.dart';
 
@@ -48,33 +47,26 @@ class _SignupFormState extends ConsumerState<SignupForm> {
     _listener();
     final signupController = ref.watch(signUpControllerProvider.notifier);
     final state = ref.watch(signUpControllerProvider);
+    final text = Theme.of(context).textTheme;
+    final color = Theme.of(context).colorScheme;
     return Align(
-      alignment: const AlignmentDirectional(0.0, 0.0),
       child: Padding(
-        padding: const EdgeInsetsDirectional.fromSTEB(32.0, 32.0, 32.0, 32.0),
+        padding: const EdgeInsets.all(32),
         child: Column(
           mainAxisSize: MainAxisSize.max,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
               'Sign up',
-              style: Theme.of(context).textTheme.displaySmall?.copyWith(
-                    fontFamily: 'Inter Tight',
-                    letterSpacing: 0.0,
-                  ),
+              style: text.displaySmall,
             ),
             Padding(
-              padding:
-                  const EdgeInsetsDirectional.fromSTEB(0.0, 12.0, 0.0, 24.0),
+              padding: const EdgeInsets.only(top: 12.0, bottom: 24.0),
               child: Text('Create your account to continue!',
-                  style: Theme.of(context).textTheme.labelMedium?.copyWith(
-                        fontFamily: 'Inter',
-                        letterSpacing: 0.0,
-                      )),
+                  style: text.labelMedium),
             ),
             Padding(
-              padding:
-                  const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 16.0),
+              padding: const EdgeInsets.only(bottom: 16.0),
               child: SizedBox(
                 width: 370.0,
                 child: TaskitOutlineTextField(
@@ -86,8 +78,7 @@ class _SignupFormState extends ConsumerState<SignupForm> {
               ),
             ),
             Padding(
-              padding:
-                  const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 16.0),
+              padding: const EdgeInsets.only(bottom: 16.0),
               child: SizedBox(
                   width: 370.0,
                   child: TaskitOutlineTextField(
@@ -97,16 +88,14 @@ class _SignupFormState extends ConsumerState<SignupForm> {
                       keyboardType: TextInputType.text)),
             ),
             Padding(
-              padding:
-                  const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 16.0),
+              padding: const EdgeInsets.only(bottom: 16.0),
               child: SizedBox(
                   width: 370.0,
                   child: TaskitOutLineTextFieldWithPassword(
                       labelText: 'Password', controller: _passwordController)),
             ),
             Padding(
-              padding:
-                  const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 16.0),
+              padding: const EdgeInsets.only(bottom: 16.0),
               child: SizedBox(
                   width: 370.0,
                   child: TaskitOutLineTextFieldWithPassword(
@@ -114,44 +103,32 @@ class _SignupFormState extends ConsumerState<SignupForm> {
                       controller: _passwordConfirm)),
             ),
             Padding(
-              padding:
-                  const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 16.0),
+              padding: const EdgeInsets.only(bottom: 16.0),
               child: TaskitElevationButton(
                   onPressed: () => _onSubmit(), text: "Sign Up"),
             ),
             // You will have to add an action on this rich text to go to your login page.
             Padding(
-              padding:
-                  const EdgeInsetsDirectional.fromSTEB(0.0, 12.0, 0.0, 12.0),
+              padding: const EdgeInsets.symmetric(vertical: 16),
               child: RichText(
                 textScaler: MediaQuery.of(context).textScaler,
-                text: TextSpan(
-                    children: [
-                      TextSpan(
-                        text: 'Already have an account?',
-                        style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                              fontFamily: 'Inter',
-                              letterSpacing: 0.0,
-                              fontWeight: FontWeight.w600,
-                              color: AppColor(context).onSurfaceVariant,
-                            ),
+                text: TextSpan(children: [
+                  TextSpan(
+                    text: 'Already have an account?',
+                    style: text.bodySmall?.copyWith(
+                      fontWeight: FontWeight.w600,
+                      color: color.onSurfaceVariant,
+                    ),
+                  ),
+                  TextSpan(
+                      text: ' Log in here',
+                      style: text.bodySmall?.copyWith(
+                        fontWeight: FontWeight.w600,
+                        color: color.primary,
                       ),
-                      TextSpan(
-                          text: ' Log in here',
-                          style:
-                              Theme.of(context).textTheme.bodySmall?.copyWith(
-                                    fontFamily: 'Inter',
-                                    letterSpacing: 0.0,
-                                    fontWeight: FontWeight.w600,
-                                    color: AppColor(context).primary,
-                                  ),
-                          recognizer: TapGestureRecognizer()
-                            ..onTap = () => context.pop())
-                    ],
-                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                          fontFamily: 'Inter',
-                          letterSpacing: 0.0,
-                        )),
+                      recognizer: TapGestureRecognizer()
+                        ..onTap = () => context.pop())
+                ], style: text.bodyMedium),
               ),
             ),
           ],
@@ -161,14 +138,14 @@ class _SignupFormState extends ConsumerState<SignupForm> {
   }
 
   void _listener() {
-    // listen for error
+    final color = Theme.of(context).colorScheme;
     ref.listen(signUpControllerProvider.select((value) => value.error),
         (_, next) {
       if (next != null) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             duration: const Duration(seconds: 5),
-            backgroundColor: AppColor(context).error,
+            backgroundColor: color.error,
             content: Text(next),
           ),
         );

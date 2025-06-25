@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
-import 'package:taskit/config/app/app_color.dart';
-import 'package:taskit/config/app/text_theme.dart';
 
 class TaskitWeekCalendar extends ConsumerStatefulWidget {
   final Function(DateTime) onDateSelected;
@@ -58,8 +56,8 @@ class _TaskitWeekCalendar extends ConsumerState<TaskitWeekCalendar> {
   Widget build(BuildContext context) {
     final weekDates = getListDaysOfWeek(_currentDate);
     final currentMonth = DateFormat('MMMM yyyy').format(_currentDate);
-    final color = ref.read(colorProvider(context));
-    final text = ref.read(textStyleProvider(context));
+    final color = Theme.of(context).colorScheme;
+    final text = Theme.of(context).textTheme;
     return Container(
       width: double.infinity,
       height: 150,
@@ -80,10 +78,7 @@ class _TaskitWeekCalendar extends ConsumerState<TaskitWeekCalendar> {
                   Expanded(
                     child: Text(
                       currentMonth,
-                      style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                          fontFamily: 'Inter Tight',
-                          letterSpacing: 0.0,
-                          color: color.onSurface),
+                      style: text.titleLarge?.copyWith(color: color.onSurface),
                     ),
                   ),
                   const SizedBox(width: 10.0),
@@ -165,13 +160,10 @@ class _TaskitWeekCalendar extends ConsumerState<TaskitWeekCalendar> {
                       child: Center(
                           child: Text(
                         dayName,
-                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                              fontFamily: 'Inter',
-                              color: color.onSurfaceVariant,
-                              fontSize: 11.0,
-                              letterSpacing: 0.0,
-                              fontWeight: FontWeight.w500,
-                            ),
+                        style: text.bodyMedium?.copyWith(
+                          color: color.onSurfaceVariant,
+                          fontWeight: FontWeight.w500,
+                        ),
                       )),
                     ),
                   ),
@@ -180,57 +172,45 @@ class _TaskitWeekCalendar extends ConsumerState<TaskitWeekCalendar> {
             ),
           ),
           Expanded(
-            child: Padding(
-              padding: const EdgeInsetsDirectional.fromSTEB(0, 0.0, 0, 0.0),
-              child: Container(
-                width: double.infinity,
-                height: 60,
-                decoration: const BoxDecoration(),
-                child: GridView(
-                  padding: const EdgeInsets.fromLTRB(0, 5, 0, 0),
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 7,
-                    crossAxisSpacing: 0.0,
-                    mainAxisSpacing: 0.0,
-                    childAspectRatio: 1.5,
-                  ),
-                  scrollDirection: Axis.vertical,
-                  children: weekDates.map((date) {
-                    return GestureDetector(
-                      onTap: () => _onSelectedDate(date),
-                      child: Container(
-                          decoration: BoxDecoration(
+            child: Container(
+              width: double.infinity,
+              height: 60,
+              decoration: const BoxDecoration(),
+              child: GridView(
+                padding: const EdgeInsets.only(top: 5),
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 7,
+                  crossAxisSpacing: 0.0,
+                  mainAxisSpacing: 0.0,
+                  childAspectRatio: 1.5,
+                ),
+                scrollDirection: Axis.vertical,
+                children: weekDates.map((date) {
+                  return GestureDetector(
+                    onTap: () => _onSelectedDate(date),
+                    child: Container(
+                        decoration: BoxDecoration(
+                          color: _selectedDate?.day == date.day &&
+                                  _selectedDate?.month == date.month &&
+                                  _selectedDate?.year == date.year
+                              ? color.primary
+                              : color.secondaryContainer,
+                          shape: BoxShape.circle,
+                        ),
+                        child: Text(
+                          date.day.toString(),
+                          style: text.labelLarge?.copyWith(
                             color: _selectedDate?.day == date.day &&
                                     _selectedDate?.month == date.month &&
                                     _selectedDate?.year == date.year
-                                ? color.primary
-                                : color.secondaryContainer,
-                            shape: BoxShape.circle,
+                                ? color.onPrimary
+                                : color.onSurface,
+                            fontSize: 14.0,
+                            fontWeight: FontWeight.w500,
                           ),
-                          child: Align(
-                            alignment: const AlignmentDirectional(0, 0),
-                            child: Text(
-                              date.day.toString(),
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .labelLarge
-                                  ?.copyWith(
-                                    fontFamily: 'Inter',
-                                    color: _selectedDate?.day == date.day &&
-                                            _selectedDate?.month ==
-                                                date.month &&
-                                            _selectedDate?.year == date.year
-                                        ? color.onPrimary
-                                        : color.onSurface,
-                                    fontSize: 14.0,
-                                    letterSpacing: 0.0,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                            ),
-                          )),
-                    );
-                  }).toList(),
-                ),
+                        )),
+                  );
+                }).toList(),
               ),
             ),
           ),

@@ -24,8 +24,10 @@ import '../../features/main/presentation/main/ui/main_page.dart';
 import '../../features/main/presentation/setting/ui/setting_page.dart';
 import '../app/animation/router_anim.dart';
 
-
-final nestedNavigatorKeyProvider = Provider.autoDispose((ref) {
+final editTaskNavigatorKeyProvider = Provider.autoDispose((ref) {
+  return GlobalKey<NavigatorState>();
+});
+final filteringTaskNavigatorKeyProvider = Provider.autoDispose((ref) {
   return GlobalKey<NavigatorState>();
 });
 
@@ -86,7 +88,7 @@ final goRouterProvider = Provider<GoRouter>((ref) {
             context, state, const AddTaskPage()),
       ),
       ShellRoute(
-          navigatorKey: ref.watch(nestedNavigatorKeyProvider),
+          navigatorKey: ref.watch(editTaskNavigatorKeyProvider),
           pageBuilder: (context, state, navigator) => ModalSheetPage(
                 swipeDismissible: true,
                 viewportPadding: EdgeInsets.only(
@@ -128,6 +130,58 @@ final goRouterProvider = Provider<GoRouter>((ref) {
                             transitionsBuilder: _fadeAndSlideTransition,
                             child: EditSubtasksBottomSheet());
                       })
+                ]),
+          ]),
+      ShellRoute(
+          navigatorKey: ref.watch(filteringTaskNavigatorKeyProvider),
+          pageBuilder: (context, state, navigator) => ModalSheetPage(
+                swipeDismissible: true,
+                viewportPadding: EdgeInsets.only(
+                  // Add the top padding to avoid the status bar.
+                  top: MediaQuery.viewPaddingOf(context).top,
+                ),
+                child: SheetShell(
+                  navigator: navigator,
+                ),
+              ),
+          routes: [
+            GoRoute(
+                path: '/filter',
+                pageBuilder: (context, state) {
+                  final localId = state.extra as int;
+                  return PagedSheetPage(
+                      transitionsBuilder: _fadeAndSlideTransition,
+                      child: EditTaskBottomSheet(localId: localId));
+                },
+                routes: [
+                  GoRoute(
+                      path: 'category',
+                      pageBuilder: (context, state) {
+                        return PagedSheetPage(
+                            transitionsBuilder: _fadeAndSlideTransition,
+                            child: EditDueDateBottomSheet());
+                      }),
+                  GoRoute(
+                      path: 'priority',
+                      pageBuilder: (context, state) {
+                        return PagedSheetPage(
+                            transitionsBuilder: _fadeAndSlideTransition,
+                            child: EditDueDateBottomSheet());
+                      }),
+                  GoRoute(
+                      path: 'start-due-date',
+                      pageBuilder: (context, state) {
+                        return PagedSheetPage(
+                            transitionsBuilder: _fadeAndSlideTransition,
+                            child: EditDueDateBottomSheet());
+                      }),
+                  GoRoute(
+                      path: 'end-due-date',
+                      pageBuilder: (context, state) {
+                        return PagedSheetPage(
+                            transitionsBuilder: _fadeAndSlideTransition,
+                            child: EditDueDateBottomSheet());
+                      }),
                 ]),
           ]),
       StatefulShellRoute.indexedStack(

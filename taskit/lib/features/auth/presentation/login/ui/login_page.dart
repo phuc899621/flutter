@@ -4,7 +4,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../../../config/app/app_color.dart';
 import '../../../../../shared/presentation/widget/custom_taskit_textfield.dart';
 import '../controller/login_controller.dart';
 
@@ -34,6 +33,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
   }
 
   void _listener() {
+    final color = Theme.of(context).colorScheme;
     ref.listen(loginControllerProvider.select((value) => value.error),
         (_, next) {
       if (next != null) {
@@ -42,7 +42,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
         message.showSnackBar(
           SnackBar(
             duration: const Duration(seconds: 5),
-            backgroundColor: AppColor(context).error,
+            backgroundColor: color.error,
             content: Text(next),
           ),
         );
@@ -68,8 +68,12 @@ class _LoginPageState extends ConsumerState<LoginPage> {
   @override
   Widget build(BuildContext context) {
     _listener();
+    final state = ref.watch(loginControllerProvider);
+    final text = Theme.of(context).textTheme;
+    final color = Theme.of(context).colorScheme;
+
     return Scaffold(
-      backgroundColor: AppColor(context).primaryContainer,
+      backgroundColor: color.surface,
       body: SafeArea(
         top: true,
         child: SingleChildScrollView(
@@ -81,7 +85,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                   width: double.infinity,
                   height: 100.0,
                   decoration: BoxDecoration(
-                      color: AppColor(context).secondaryContainer,
+                      color: color.surfaceContainer,
                       shape: BoxShape.circle,
                       boxShadow: const [
                         BoxShadow(
@@ -109,33 +113,21 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                       child: Text(
                         'Login',
                         textAlign: TextAlign.center,
-                        style: Theme.of(context)
-                            .textTheme
-                            .headlineMedium
-                            ?.copyWith(
-                                fontFamily: 'Inter Tight',
-                                letterSpacing: 0.0,
-                                color: AppColor(context).onSurface,
-                                fontWeight: FontWeight.w700),
+                        style: text.headlineMedium?.copyWith(
+                            color: color.onSurface,
+                            fontWeight: FontWeight.w600),
                       ),
                     ),
                     Padding(
                       padding: const EdgeInsetsDirectional.fromSTEB(
                           0.0, 12.0, 0.0, 24.0),
                       child: Center(
-                        child: Text(
-                          'Filling out the form below to continue',
-                          style:
-                              Theme.of(context).textTheme.labelMedium?.copyWith(
-                                    fontFamily: 'Inter',
-                                    letterSpacing: 0.0,
-                                  ),
-                        ),
+                        child: Text('Filling out the form below to continue',
+                            style: Theme.of(context).textTheme.labelMedium),
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsetsDirectional.fromSTEB(
-                          0.0, 0.0, 0.0, 16.0),
+                      padding: const EdgeInsets.only(bottom: 16.0),
                       child: SizedBox(
                           width: double.infinity,
                           child: TaskitOutlineTextField(
@@ -145,8 +137,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                               keyboardType: TextInputType.emailAddress)),
                     ),
                     Padding(
-                      padding: const EdgeInsetsDirectional.fromSTEB(
-                          0.0, 0.0, 0.0, 16.0),
+                      padding: const EdgeInsets.only(bottom: 16.0),
                       child: SizedBox(
                           width: double.infinity,
                           child: TaskitOutLineTextFieldWithPassword(
@@ -156,81 +147,60 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                     Align(
                       alignment: const AlignmentDirectional(1.0, 0.0),
                       child: Padding(
-                        padding: const EdgeInsetsDirectional.fromSTEB(
-                            0.0, 12.0, 0.0, 20.0),
+                        padding: const EdgeInsets.only(top: 12.0, bottom: 20.0),
                         child: RichText(
                           textScaler: MediaQuery.of(context).textScaler,
                           text: TextSpan(
                             children: [
                               TextSpan(
                                   text: 'Forgot your password',
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .bodySmall
-                                      ?.copyWith(
-                                        fontFamily: 'Inter',
-                                        color: AppColor(context).primary,
-                                        letterSpacing: 0.0,
-                                        fontWeight: FontWeight.w600,
-                                      ),
+                                  style: text.bodySmall?.copyWith(
+                                    color: color.primary,
+                                    fontWeight: FontWeight.w600,
+                                  ),
                                   recognizer: TapGestureRecognizer()
                                     ..onTap =
                                         () => context.push('/forgot_password'))
                             ],
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodyMedium
-                                ?.copyWith(
-                                  fontFamily: 'Inter',
-                                  letterSpacing: 0.0,
-                                ),
+                            style: text.bodyMedium,
                           ),
                         ),
                       ),
                     ),
                     Padding(
-                        padding: const EdgeInsetsDirectional.fromSTEB(
-                            0.0, 0.0, 0.0, 16.0),
+                        padding: const EdgeInsets.only(bottom: 16.0),
                         child: ElevatedButton(
                           onPressed: _onSummit,
                           style: ElevatedButton.styleFrom(
                             minimumSize: const Size(double.infinity, 40),
-                            backgroundColor: AppColor(context).primary,
+                            backgroundColor: color.primary,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(12.0),
                             ),
                           ),
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
-                            child: ref.watch(loginControllerProvider).isLoading
+                            child: state.isLoading
                                 ? Center(
                                     child: CircularProgressIndicator(
-                                      color: AppColor(context).onPrimary,
+                                      color: color.onPrimary,
                                     ),
                                   )
                                 : Text('Login',
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .titleMedium
-                                        ?.copyWith(
-                                            fontFamily: 'Inter Tight',
-                                            color:
-                                                AppColor(context).onPrimary)),
+                                    style: text.titleMedium
+                                        ?.copyWith(color: color.onPrimary)),
                           ),
                         )),
                     Padding(
-                      padding: const EdgeInsetsDirectional.fromSTEB(
-                          0.0, 0.0, 0.0, 24.0),
+                      padding: const EdgeInsets.only(bottom: 24.0),
                       child: SizedBox(
                         width: 370.0,
                         child: Stack(
-                          alignment: const AlignmentDirectional(0.0, 0.0),
                           children: [
                             Align(
-                              alignment: const AlignmentDirectional(0.0, 0.0),
                               child: Padding(
-                                padding: const EdgeInsetsDirectional.fromSTEB(
-                                    0.0, 12.0, 0.0, 12.0),
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 12),
                                 child: Container(
                                   width: double.infinity,
                                   height: 2.0,
@@ -239,23 +209,15 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                               ),
                             ),
                             Align(
-                              alignment: const AlignmentDirectional(0.0, 0.0),
                               child: Container(
                                 width: 70.0,
                                 height: 32.0,
                                 decoration: BoxDecoration(
-                                  color: AppColor(context).primaryContainer,
+                                  color: color.surfaceContainerLow,
                                 ),
-                                alignment: const AlignmentDirectional(0.0, 0.0),
                                 child: Text(
                                   'OR',
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .labelMedium
-                                      ?.copyWith(
-                                        fontFamily: 'Inter',
-                                        letterSpacing: 0.0,
-                                      ),
+                                  style: text.labelMedium,
                                 ),
                               ),
                             ),
@@ -264,8 +226,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsetsDirectional.fromSTEB(
-                          0.0, 0.0, 0.0, 16.0),
+                      padding: const EdgeInsets.only(bottom: 16.0),
                       child: SizedBox(
                         width: double.infinity,
                         child: OutlinedButton.icon(
@@ -278,23 +239,17 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                           onPressed: () {},
                           label: Text(
                             'Login with Google',
-                            style: Theme.of(context)
-                                .textTheme
-                                .titleSmall
-                                ?.copyWith(
-                                  fontFamily: 'Inter Tight',
-                                  color: AppColor(context).onSurfaceVariant,
-                                  letterSpacing: 0.0,
-                                ),
+                            style: text.titleSmall?.copyWith(
+                              color: color.onSurfaceVariant,
+                            ),
                           ),
                           style: OutlinedButton.styleFrom(
                             minimumSize: const Size.fromHeight(44),
                             padding: EdgeInsets.zero,
-                            overlayColor: AppColor(context).primary,
-                            backgroundColor:
-                                AppColor(context).secondaryContainer,
+                            overlayColor: color.primary,
+                            backgroundColor: color.secondaryContainer,
                             side: BorderSide(
-                              color: AppColor(context).secondaryContainer,
+                              color: color.secondaryContainer,
                               width: 2.0,
                             ),
                             shape: RoundedRectangleBorder(
@@ -302,57 +257,37 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                             ),
                           ).copyWith(
                             overlayColor: WidgetStatePropertyAll(
-                              AppColor(context)
-                                  .primary
-                                  .withOpacity(0.2), // hoverColor
+                              color.primary.withAlpha(30), // hoverColor
                             ),
                           ),
                         ),
                       ),
                     ),
                     Align(
-                      alignment: const AlignmentDirectional(0.0, 0.0),
                       child: Padding(
-                        padding: const EdgeInsetsDirectional.fromSTEB(
-                            0.0, 12.0, 0.0, 12.0),
+                        padding: const EdgeInsets.symmetric(vertical: 12),
                         child: RichText(
                           textScaler: MediaQuery.of(context).textScaler,
                           text: TextSpan(
                             children: [
                               TextSpan(
                                 text: 'Don\'t have an account? ',
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodySmall
-                                    ?.copyWith(
-                                      fontFamily: 'Inter',
-                                      color: AppColor(context).onSurfaceVariant,
-                                      letterSpacing: 0.0,
-                                      fontWeight: FontWeight.w600,
-                                    ),
+                                style: text.bodySmall?.copyWith(
+                                  color: color.onSurfaceVariant,
+                                  fontWeight: FontWeight.w600,
+                                ),
                               ),
                               TextSpan(
                                 text: 'Sign up here',
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodySmall
-                                    ?.copyWith(
-                                      fontFamily: 'Inter',
-                                      color: AppColor(context).primary,
-                                      letterSpacing: 0.0,
-                                      fontWeight: FontWeight.w600,
-                                    ),
+                                style: text.bodySmall?.copyWith(
+                                  color: color.primary,
+                                  fontWeight: FontWeight.w600,
+                                ),
                                 recognizer: TapGestureRecognizer()
                                   ..onTap = () => context.push('/signup'),
                               )
                             ],
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodyMedium
-                                ?.copyWith(
-                                  fontFamily: 'Inter',
-                                  letterSpacing: 0.0,
-                                ),
+                            style: text.bodyMedium,
                           ),
                         ),
                       ),
