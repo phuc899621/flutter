@@ -30,7 +30,7 @@ class SheetShell extends ConsumerWidget {
           shrinkChildToAvoidDynamicOverlap: true,
           decoration: MaterialSheetDecoration(
             size: SheetSize.stretch,
-            borderRadius: BorderRadius.circular(16),
+            borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
             clipBehavior: Clip.antiAlias,
             color: Theme.of(context).colorScheme.surface,
           ),

@@ -50,8 +50,20 @@ extension DateCheck on DateTime {
     return DateTime(year, month, day);
   }
 
+  DateTime toStartOfYear() {
+    return DateTime(year, 1, 1);
+  }
+
+  DateTime toEndOfYear() {
+    return DateTime(year, 12, 31);
+  }
+
   DateTime toStartOfTomorrow() {
     return DateTime(year, month, day + 1);
+  }
+
+  DateTime toStartOfYesterday() {
+    return DateTime(year, month, day - 1);
   }
 
   bool isYesterday() {
@@ -106,5 +118,13 @@ extension DateCheck on DateTime {
     return year < date.year ||
         (year == date.year && month < date.month) ||
         (year == date.year && month == date.month && day < date.day);
+  }
+
+  bool isSameDayOrAfter(DateTime date) {
+    return isSameDay(date) || isDateAfter(date);
+  }
+
+  bool isSameDayOrBefore(DateTime date) {
+    return isSameDay(date) || isDateBefore(date);
   }
 }

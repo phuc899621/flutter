@@ -2,6 +2,9 @@ import 'dart:async';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:taskit/features/main/presentation/list/state/list_state.dart';
+import 'package:taskit/features/task/domain/entities/category_entity.dart';
+import 'package:taskit/features/task/domain/entities/filter_date_option_enum.dart';
+import 'package:taskit/features/task/domain/entities/task_priority_enum.dart';
 import 'package:taskit/shared/extension/string.dart';
 import 'package:taskit/shared/log/logger_provider.dart';
 
@@ -46,10 +49,33 @@ class ListController extends Notifier<ListState> {
 
   void onEdit(int localId) {}
 
+  void setFilteringCategories(List<CategoryEntity> categories) {
+    state = state.copyWith(filteringCategories: categories);
+  }
+
+  void setFilteringPriorities(List<TaskPriority> priorities) {
+    state = state.copyWith(filteringPriorities: priorities);
+  }
+
+  void setFilteringDateOption(FilterDateOption option) {
+    state = state.copyWith(filteringDateOption: option);
+  }
+
+  void setFilteringStartDate(DateTime? date) {
+    state = state.copyWith(filteringStartDate: date);
+  }
+
+  void setFilteringEndDate(DateTime? date) {
+    state = state.copyWith(filteringEndDate: date);
+  }
+
   void setSearchText(String text) {
     logger.i('Search text: $text');
     state = state.copyWith(searchText: text);
   }
+
+  void setIsFiltering(bool isFiltering) =>
+      state = state.copyWith(isFiltering: isFiltering);
 
   void callUpdateFilteringTask() {
     state = state.copyWith(

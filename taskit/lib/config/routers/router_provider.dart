@@ -15,6 +15,9 @@ import 'package:taskit/features/task/presentation/edit_task/ui/edit_due_time_bot
 import 'package:taskit/features/task/presentation/edit_task/ui/edit_subtasks_bottom_sheet.dart';
 import 'package:taskit/features/task/presentation/edit_task/ui/edit_task_bottom_sheet.dart';
 import 'package:taskit/features/task/presentation/edit_task/ui/sheet_shell.dart';
+import 'package:taskit/features/task/presentation/filter_task/ui/category_filter_bottom_sheet.dart';
+import 'package:taskit/features/task/presentation/filter_task/ui/end_date_filter_bottom_sheet.dart';
+import 'package:taskit/features/task/presentation/filter_task/ui/filter_bottom_sheet.dart';
 
 import '../../features/auth/presentation/forgot_password/ui/forgot_password_page.dart';
 import '../../features/auth/presentation/forgot_password/ui/forgot_password_verify_page.dart';
@@ -22,6 +25,9 @@ import '../../features/auth/presentation/login/ui/login_page.dart';
 import '../../features/auth/presentation/signup/ui/signup_page.dart';
 import '../../features/main/presentation/main/ui/main_page.dart';
 import '../../features/main/presentation/setting/ui/setting_page.dart';
+import '../../features/task/presentation/filter_task/ui/date_filter_bottom_sheet.dart';
+import '../../features/task/presentation/filter_task/ui/priority_filter_bottom_sheet.dart';
+import '../../features/task/presentation/filter_task/ui/start_date_filter_bottom_sheet.dart';
 import '../app/animation/router_anim.dart';
 
 final editTaskNavigatorKeyProvider = Provider.autoDispose((ref) {
@@ -148,10 +154,9 @@ final goRouterProvider = Provider<GoRouter>((ref) {
             GoRoute(
                 path: '/filter',
                 pageBuilder: (context, state) {
-                  final localId = state.extra as int;
                   return PagedSheetPage(
                       transitionsBuilder: _fadeAndSlideTransition,
-                      child: EditTaskBottomSheet(localId: localId));
+                      child: FilterBottomSheet());
                 },
                 routes: [
                   GoRoute(
@@ -159,29 +164,38 @@ final goRouterProvider = Provider<GoRouter>((ref) {
                       pageBuilder: (context, state) {
                         return PagedSheetPage(
                             transitionsBuilder: _fadeAndSlideTransition,
-                            child: EditDueDateBottomSheet());
+                            child: CategoryFilterBottomSheet());
                       }),
                   GoRoute(
                       path: 'priority',
                       pageBuilder: (context, state) {
                         return PagedSheetPage(
                             transitionsBuilder: _fadeAndSlideTransition,
-                            child: EditDueDateBottomSheet());
+                            child: PriorityFilterBottomSheet());
                       }),
                   GoRoute(
-                      path: 'start-due-date',
+                      path: 'date',
                       pageBuilder: (context, state) {
                         return PagedSheetPage(
                             transitionsBuilder: _fadeAndSlideTransition,
-                            child: EditDueDateBottomSheet());
-                      }),
-                  GoRoute(
-                      path: 'end-due-date',
-                      pageBuilder: (context, state) {
-                        return PagedSheetPage(
-                            transitionsBuilder: _fadeAndSlideTransition,
-                            child: EditDueDateBottomSheet());
-                      }),
+                            child: DateFilterBottomSheet());
+                      },
+                      routes: [
+                        GoRoute(
+                            path: 'start',
+                            pageBuilder: (context, state) {
+                              return PagedSheetPage(
+                                  transitionsBuilder: _fadeAndSlideTransition,
+                                  child: StartDateFilterBottomSheet());
+                            }),
+                        GoRoute(
+                            path: 'end',
+                            pageBuilder: (context, state) {
+                              return PagedSheetPage(
+                                  transitionsBuilder: _fadeAndSlideTransition,
+                                  child: EndDateFilterBottomSheet());
+                            }),
+                      ]),
                 ]),
           ]),
       StatefulShellRoute.indexedStack(

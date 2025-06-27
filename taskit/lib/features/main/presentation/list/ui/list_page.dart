@@ -35,19 +35,27 @@ class _ListPageState extends ConsumerState<ListPage> {
             actionsPadding: EdgeInsets.only(right: 10),
             actions: [
               FilledButton.tonalIcon(
-                onPressed: () {},
+                onPressed: () {
+                  context.push('/filter');
+                },
                 label: Text(
                   'Filter',
                   style: text.titleSmall?.copyWith(
                       fontWeight: FontWeight.w500,
-                      color: color.onPrimaryContainer),
+                      color: state.isFiltering
+                          ? color.primary
+                          : color.onPrimaryContainer),
                 ),
                 style: ButtonStyle(
-                    backgroundColor:
-                        WidgetStatePropertyAll(color.primaryContainer)),
+                    elevation: WidgetStatePropertyAll(2),
+                    backgroundColor: WidgetStatePropertyAll(state.isFiltering
+                        ? color.surfaceContainerLow
+                        : color.primaryContainer)),
                 icon: Icon(
                   Icons.tune_rounded,
-                  color: color.onPrimaryContainer,
+                  color: state.isFiltering
+                      ? color.primary
+                      : color.onPrimaryContainer,
                 ),
               ),
             ],

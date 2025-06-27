@@ -21,7 +21,13 @@ mixin _$ListState {
   List<TaskEntity> get filteringPendingTask;
   List<TaskEntity> get filteringCompletedTask;
   List<TaskEntity> get filteringScheduledTask;
+  List<CategoryEntity> get filteringCategories;
+  List<TaskPriority> get filteringPriorities;
+  FilterDateOption get filteringDateOption;
+  DateTime? get filteringStartDate;
+  DateTime? get filteringEndDate;
   String get searchText;
+  bool get isFiltering;
 
   /// Create a copy of ListState
   /// with the given fields replaced by the non-null parameter values.
@@ -46,8 +52,20 @@ mixin _$ListState {
                 .equals(other.filteringCompletedTask, filteringCompletedTask) &&
             const DeepCollectionEquality()
                 .equals(other.filteringScheduledTask, filteringScheduledTask) &&
+            const DeepCollectionEquality()
+                .equals(other.filteringCategories, filteringCategories) &&
+            const DeepCollectionEquality()
+                .equals(other.filteringPriorities, filteringPriorities) &&
+            (identical(other.filteringDateOption, filteringDateOption) ||
+                other.filteringDateOption == filteringDateOption) &&
+            (identical(other.filteringStartDate, filteringStartDate) ||
+                other.filteringStartDate == filteringStartDate) &&
+            (identical(other.filteringEndDate, filteringEndDate) ||
+                other.filteringEndDate == filteringEndDate) &&
             (identical(other.searchText, searchText) ||
-                other.searchText == searchText));
+                other.searchText == searchText) &&
+            (identical(other.isFiltering, isFiltering) ||
+                other.isFiltering == isFiltering));
   }
 
   @override
@@ -59,11 +77,17 @@ mixin _$ListState {
       const DeepCollectionEquality().hash(filteringPendingTask),
       const DeepCollectionEquality().hash(filteringCompletedTask),
       const DeepCollectionEquality().hash(filteringScheduledTask),
-      searchText);
+      const DeepCollectionEquality().hash(filteringCategories),
+      const DeepCollectionEquality().hash(filteringPriorities),
+      filteringDateOption,
+      filteringStartDate,
+      filteringEndDate,
+      searchText,
+      isFiltering);
 
   @override
   String toString() {
-    return 'ListState(isLoading: $isLoading, allTask: $allTask, filteringTask: $filteringTask, filteringPendingTask: $filteringPendingTask, filteringCompletedTask: $filteringCompletedTask, filteringScheduledTask: $filteringScheduledTask, searchText: $searchText)';
+    return 'ListState(isLoading: $isLoading, allTask: $allTask, filteringTask: $filteringTask, filteringPendingTask: $filteringPendingTask, filteringCompletedTask: $filteringCompletedTask, filteringScheduledTask: $filteringScheduledTask, filteringCategories: $filteringCategories, filteringPriorities: $filteringPriorities, filteringDateOption: $filteringDateOption, filteringStartDate: $filteringStartDate, filteringEndDate: $filteringEndDate, searchText: $searchText, isFiltering: $isFiltering)';
   }
 }
 
@@ -79,7 +103,13 @@ abstract mixin class $ListStateCopyWith<$Res> {
       List<TaskEntity> filteringPendingTask,
       List<TaskEntity> filteringCompletedTask,
       List<TaskEntity> filteringScheduledTask,
-      String searchText});
+      List<CategoryEntity> filteringCategories,
+      List<TaskPriority> filteringPriorities,
+      FilterDateOption filteringDateOption,
+      DateTime? filteringStartDate,
+      DateTime? filteringEndDate,
+      String searchText,
+      bool isFiltering});
 }
 
 /// @nodoc
@@ -100,7 +130,13 @@ class _$ListStateCopyWithImpl<$Res> implements $ListStateCopyWith<$Res> {
     Object? filteringPendingTask = null,
     Object? filteringCompletedTask = null,
     Object? filteringScheduledTask = null,
+    Object? filteringCategories = null,
+    Object? filteringPriorities = null,
+    Object? filteringDateOption = null,
+    Object? filteringStartDate = freezed,
+    Object? filteringEndDate = freezed,
     Object? searchText = null,
+    Object? isFiltering = null,
   }) {
     return _then(_self.copyWith(
       isLoading: null == isLoading
@@ -127,10 +163,34 @@ class _$ListStateCopyWithImpl<$Res> implements $ListStateCopyWith<$Res> {
           ? _self.filteringScheduledTask
           : filteringScheduledTask // ignore: cast_nullable_to_non_nullable
               as List<TaskEntity>,
+      filteringCategories: null == filteringCategories
+          ? _self.filteringCategories
+          : filteringCategories // ignore: cast_nullable_to_non_nullable
+              as List<CategoryEntity>,
+      filteringPriorities: null == filteringPriorities
+          ? _self.filteringPriorities
+          : filteringPriorities // ignore: cast_nullable_to_non_nullable
+              as List<TaskPriority>,
+      filteringDateOption: null == filteringDateOption
+          ? _self.filteringDateOption
+          : filteringDateOption // ignore: cast_nullable_to_non_nullable
+              as FilterDateOption,
+      filteringStartDate: freezed == filteringStartDate
+          ? _self.filteringStartDate
+          : filteringStartDate // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      filteringEndDate: freezed == filteringEndDate
+          ? _self.filteringEndDate
+          : filteringEndDate // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
       searchText: null == searchText
           ? _self.searchText
           : searchText // ignore: cast_nullable_to_non_nullable
               as String,
+      isFiltering: null == isFiltering
+          ? _self.isFiltering
+          : isFiltering // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -145,12 +205,20 @@ class _ListState implements ListState {
       final List<TaskEntity> filteringPendingTask = const [],
       final List<TaskEntity> filteringCompletedTask = const [],
       final List<TaskEntity> filteringScheduledTask = const [],
-      this.searchText = ''})
+      final List<CategoryEntity> filteringCategories = const [],
+      final List<TaskPriority> filteringPriorities = const [],
+      this.filteringDateOption = FilterDateOption.noDateFilter,
+      this.filteringStartDate,
+      this.filteringEndDate,
+      this.searchText = '',
+      this.isFiltering = false})
       : _allTask = allTask,
         _filteringTask = filteringTask,
         _filteringPendingTask = filteringPendingTask,
         _filteringCompletedTask = filteringCompletedTask,
-        _filteringScheduledTask = filteringScheduledTask;
+        _filteringScheduledTask = filteringScheduledTask,
+        _filteringCategories = filteringCategories,
+        _filteringPriorities = filteringPriorities;
 
   @override
   @JsonKey()
@@ -203,9 +271,39 @@ class _ListState implements ListState {
     return EqualUnmodifiableListView(_filteringScheduledTask);
   }
 
+  final List<CategoryEntity> _filteringCategories;
+  @override
+  @JsonKey()
+  List<CategoryEntity> get filteringCategories {
+    if (_filteringCategories is EqualUnmodifiableListView)
+      return _filteringCategories;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_filteringCategories);
+  }
+
+  final List<TaskPriority> _filteringPriorities;
+  @override
+  @JsonKey()
+  List<TaskPriority> get filteringPriorities {
+    if (_filteringPriorities is EqualUnmodifiableListView)
+      return _filteringPriorities;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_filteringPriorities);
+  }
+
+  @override
+  @JsonKey()
+  final FilterDateOption filteringDateOption;
+  @override
+  final DateTime? filteringStartDate;
+  @override
+  final DateTime? filteringEndDate;
   @override
   @JsonKey()
   final String searchText;
+  @override
+  @JsonKey()
+  final bool isFiltering;
 
   /// Create a copy of ListState
   /// with the given fields replaced by the non-null parameter values.
@@ -231,8 +329,20 @@ class _ListState implements ListState {
                 other._filteringCompletedTask, _filteringCompletedTask) &&
             const DeepCollectionEquality().equals(
                 other._filteringScheduledTask, _filteringScheduledTask) &&
+            const DeepCollectionEquality()
+                .equals(other._filteringCategories, _filteringCategories) &&
+            const DeepCollectionEquality()
+                .equals(other._filteringPriorities, _filteringPriorities) &&
+            (identical(other.filteringDateOption, filteringDateOption) ||
+                other.filteringDateOption == filteringDateOption) &&
+            (identical(other.filteringStartDate, filteringStartDate) ||
+                other.filteringStartDate == filteringStartDate) &&
+            (identical(other.filteringEndDate, filteringEndDate) ||
+                other.filteringEndDate == filteringEndDate) &&
             (identical(other.searchText, searchText) ||
-                other.searchText == searchText));
+                other.searchText == searchText) &&
+            (identical(other.isFiltering, isFiltering) ||
+                other.isFiltering == isFiltering));
   }
 
   @override
@@ -244,11 +354,17 @@ class _ListState implements ListState {
       const DeepCollectionEquality().hash(_filteringPendingTask),
       const DeepCollectionEquality().hash(_filteringCompletedTask),
       const DeepCollectionEquality().hash(_filteringScheduledTask),
-      searchText);
+      const DeepCollectionEquality().hash(_filteringCategories),
+      const DeepCollectionEquality().hash(_filteringPriorities),
+      filteringDateOption,
+      filteringStartDate,
+      filteringEndDate,
+      searchText,
+      isFiltering);
 
   @override
   String toString() {
-    return 'ListState(isLoading: $isLoading, allTask: $allTask, filteringTask: $filteringTask, filteringPendingTask: $filteringPendingTask, filteringCompletedTask: $filteringCompletedTask, filteringScheduledTask: $filteringScheduledTask, searchText: $searchText)';
+    return 'ListState(isLoading: $isLoading, allTask: $allTask, filteringTask: $filteringTask, filteringPendingTask: $filteringPendingTask, filteringCompletedTask: $filteringCompletedTask, filteringScheduledTask: $filteringScheduledTask, filteringCategories: $filteringCategories, filteringPriorities: $filteringPriorities, filteringDateOption: $filteringDateOption, filteringStartDate: $filteringStartDate, filteringEndDate: $filteringEndDate, searchText: $searchText, isFiltering: $isFiltering)';
   }
 }
 
@@ -267,7 +383,13 @@ abstract mixin class _$ListStateCopyWith<$Res>
       List<TaskEntity> filteringPendingTask,
       List<TaskEntity> filteringCompletedTask,
       List<TaskEntity> filteringScheduledTask,
-      String searchText});
+      List<CategoryEntity> filteringCategories,
+      List<TaskPriority> filteringPriorities,
+      FilterDateOption filteringDateOption,
+      DateTime? filteringStartDate,
+      DateTime? filteringEndDate,
+      String searchText,
+      bool isFiltering});
 }
 
 /// @nodoc
@@ -288,7 +410,13 @@ class __$ListStateCopyWithImpl<$Res> implements _$ListStateCopyWith<$Res> {
     Object? filteringPendingTask = null,
     Object? filteringCompletedTask = null,
     Object? filteringScheduledTask = null,
+    Object? filteringCategories = null,
+    Object? filteringPriorities = null,
+    Object? filteringDateOption = null,
+    Object? filteringStartDate = freezed,
+    Object? filteringEndDate = freezed,
     Object? searchText = null,
+    Object? isFiltering = null,
   }) {
     return _then(_ListState(
       isLoading: null == isLoading
@@ -315,10 +443,34 @@ class __$ListStateCopyWithImpl<$Res> implements _$ListStateCopyWith<$Res> {
           ? _self._filteringScheduledTask
           : filteringScheduledTask // ignore: cast_nullable_to_non_nullable
               as List<TaskEntity>,
+      filteringCategories: null == filteringCategories
+          ? _self._filteringCategories
+          : filteringCategories // ignore: cast_nullable_to_non_nullable
+              as List<CategoryEntity>,
+      filteringPriorities: null == filteringPriorities
+          ? _self._filteringPriorities
+          : filteringPriorities // ignore: cast_nullable_to_non_nullable
+              as List<TaskPriority>,
+      filteringDateOption: null == filteringDateOption
+          ? _self.filteringDateOption
+          : filteringDateOption // ignore: cast_nullable_to_non_nullable
+              as FilterDateOption,
+      filteringStartDate: freezed == filteringStartDate
+          ? _self.filteringStartDate
+          : filteringStartDate // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      filteringEndDate: freezed == filteringEndDate
+          ? _self.filteringEndDate
+          : filteringEndDate // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
       searchText: null == searchText
           ? _self.searchText
           : searchText // ignore: cast_nullable_to_non_nullable
               as String,
+      isFiltering: null == isFiltering
+          ? _self.isFiltering
+          : isFiltering // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
