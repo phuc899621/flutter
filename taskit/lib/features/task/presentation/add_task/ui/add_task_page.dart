@@ -489,7 +489,7 @@ class _AddTaskPageState extends ConsumerState<AddTaskPage> {
                                 ).then((value) {
                                   controller.setSelectedDate(value);
                                   _dueDateController.text =
-                                      value?.toFormatDate() ?? '';
+                                      value?.formatToRelativeDateString() ?? '';
                                 });
                               },
                               child: Container(

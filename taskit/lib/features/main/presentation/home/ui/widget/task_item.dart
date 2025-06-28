@@ -123,7 +123,7 @@ class TaskItem extends ConsumerWidget {
                       Text(
                         task.hasTime
                             ? task.dueDate!.toFormatDateAndTime()
-                            : task.dueDate!.toFormatDate(),
+                            : task.dueDate!.formatToRelativeDateString(),
                         style: Theme.of(context).textTheme.bodySmall?.copyWith(
                             color: color.onSurfaceVariant,
                             fontWeight: FontWeight.normal),

@@ -29,8 +29,10 @@ class _DateFilterBottomSheetState extends ConsumerState<DateFilterBottomSheet> {
     final filteringEndDate = state.filteringEndDate;
     final selectedStartDate = state.selectedStartDate;
     final selectedEndDate = state.selectedEndDate;
-    _startDateController.text = filteringStartDate?.toFormatDate() ?? '';
-    _endDateController.text = filteringEndDate?.toFormatDate() ?? '';
+    _startDateController.text =
+        filteringStartDate?.formatToRelativeDateString() ?? '';
+    _endDateController.text =
+        filteringEndDate?.formatToRelativeDateString() ?? '';
     return SingleChildScrollView(
       child: Column(
         children: [
@@ -150,7 +152,8 @@ class _DateFilterBottomSheetState extends ConsumerState<DateFilterBottomSheet> {
                                           if (selectedStartDate != null)
                                             Expanded(
                                                 child: Text(
-                                              selectedStartDate.toFormatDate(),
+                                              selectedStartDate
+                                                  .formatToRelativeDateString(),
                                               style: text.titleMedium?.copyWith(
                                                   color: color.onSurface),
                                             ))
@@ -226,7 +229,8 @@ class _DateFilterBottomSheetState extends ConsumerState<DateFilterBottomSheet> {
                                           if (selectedEndDate != null)
                                             Expanded(
                                                 child: Text(
-                                              selectedEndDate.toFormatDate(),
+                                              selectedEndDate
+                                                  .formatToRelativeDateString(),
                                               style: text.titleMedium?.copyWith(
                                                   color: color.onSurface),
                                             ))

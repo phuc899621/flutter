@@ -1,6 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:taskit/features/task/domain/entities/category_entity.dart';
 import 'package:taskit/features/task/domain/entities/filter_date_option_enum.dart';
+import 'package:taskit/features/task/domain/entities/order_option_enum.dart';
 import 'package:taskit/features/task/domain/entities/task_priority_enum.dart';
 
 import '../../../../task/domain/entities/task_entity.dart';
@@ -21,6 +22,7 @@ sealed class ListState with _$ListState {
     @Default(FilterDateOption.noDateFilter)
     FilterDateOption filteringDateOption,
     DateTime? filteringStartDate,
+    @Default(OrderByOption.defaultOption) OrderByOption orderByOption,
     DateTime? filteringEndDate,
     @Default('') String searchText,
     @Default(false) bool isFiltering,

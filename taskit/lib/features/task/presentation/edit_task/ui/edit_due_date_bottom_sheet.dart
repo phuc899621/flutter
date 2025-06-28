@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:taskit/shared/extension/date_time.dart';
 
+import '../../../../../shared/log/logger_provider.dart';
 import '../controller/edit_task_controller.dart';
 
 class EditDueDateBottomSheet extends ConsumerStatefulWidget {
@@ -14,7 +16,7 @@ class EditDueDateBottomSheet extends ConsumerStatefulWidget {
 
 class _EditDueDateBottomSheetState
     extends ConsumerState<EditDueDateBottomSheet> {
-  DateTime selectedDate = DateTime.now();
+  DateTime _selectedDate = DateTime.now();
 
   @override
   Widget build(BuildContext context) {
@@ -64,7 +66,8 @@ class _EditDueDateBottomSheetState
                   firstDate: DateTime.now(),
                   lastDate: DateTime.now().add(Duration(days: 365)),
                   onDateChanged: (date) {
-                    selectedDate = date;
+                    _selectedDate = date;
+                    logger.i(_selectedDate.formatToDateString);
                   }),
           SizedBox(
             height: 10,
@@ -97,7 +100,8 @@ class _EditDueDateBottomSheetState
                           )),
                         ),
                         onPressed: () {
-                          controller.updateDueDate(selectedDate);
+                          logger.i(_selectedDate.formatToDateString);
+                          controller.updateDueDate(_selectedDate);
                           context.pop();
                         },
                         child: Text('Save',

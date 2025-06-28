@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 class CalendarPage extends ConsumerStatefulWidget {
   const CalendarPage({super.key});
@@ -14,6 +15,15 @@ class CalendarPageState extends ConsumerState<CalendarPage> {
     final text = Theme.of(context).textTheme;
     final color = Theme.of(context).colorScheme;
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+          foregroundColor: color.onPrimaryContainer,
+          splashColor: color.primary,
+          backgroundColor: color.primaryContainer,
+          child: Icon(
+            Icons.add_sharp,
+            size: 30,
+          ),
+          onPressed: () => context.push('/add_task')),
       appBar: AppBar(
         title: const Text('Calendar'),
         titleTextStyle: text.headlineSmall,

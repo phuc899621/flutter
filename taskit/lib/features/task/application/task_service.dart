@@ -134,8 +134,8 @@ class TaskService implements ITaskService {
           return due.isBefore(DateTime.now()) &&
               (completed == null || completed.isAfter(due));
         }
-        return due.isDateBefore(DateTime.now()) &&
-            (completed == null || completed.isDateAfter(due));
+        return due.isDayBefore(DateTime.now()) &&
+            (completed == null || completed.isDayAfter(due));
       }).toList();
     });
   }

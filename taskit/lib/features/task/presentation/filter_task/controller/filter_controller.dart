@@ -202,12 +202,13 @@ class FilterController extends AutoDisposeNotifier<FilterState> {
   void onSaveFiltering() {
     checkIsFiltering();
     final listController = ref.read(listControllerProvider.notifier);
-    listController.setIsFiltering(state.isFiltering);
+
     listController.setFilteringCategories(state.filteringCategories);
     listController.setFilteringPriorities(state.filteringPriorities);
     listController.setFilteringDateOption(state.filteringDateOption);
     listController.setFilteringStartDate(state.filteringStartDate);
     listController.setFilteringEndDate(state.filteringEndDate);
+    listController.setIsFiltering(state.isFiltering);
     logger.i(
         'onSaveFiltering ${state.isFiltering} ${state.filteringDateOption} ${state.filteringStartDate} ${state.filteringEndDate} ${state.filteringCategories} ${state.filteringPriorities}');
   }

@@ -25,6 +25,7 @@ mixin _$ListState {
   List<TaskPriority> get filteringPriorities;
   FilterDateOption get filteringDateOption;
   DateTime? get filteringStartDate;
+  OrderByOption get orderByOption;
   DateTime? get filteringEndDate;
   String get searchText;
   bool get isFiltering;
@@ -60,6 +61,8 @@ mixin _$ListState {
                 other.filteringDateOption == filteringDateOption) &&
             (identical(other.filteringStartDate, filteringStartDate) ||
                 other.filteringStartDate == filteringStartDate) &&
+            (identical(other.orderByOption, orderByOption) ||
+                other.orderByOption == orderByOption) &&
             (identical(other.filteringEndDate, filteringEndDate) ||
                 other.filteringEndDate == filteringEndDate) &&
             (identical(other.searchText, searchText) ||
@@ -81,13 +84,14 @@ mixin _$ListState {
       const DeepCollectionEquality().hash(filteringPriorities),
       filteringDateOption,
       filteringStartDate,
+      orderByOption,
       filteringEndDate,
       searchText,
       isFiltering);
 
   @override
   String toString() {
-    return 'ListState(isLoading: $isLoading, allTask: $allTask, filteringTask: $filteringTask, filteringPendingTask: $filteringPendingTask, filteringCompletedTask: $filteringCompletedTask, filteringScheduledTask: $filteringScheduledTask, filteringCategories: $filteringCategories, filteringPriorities: $filteringPriorities, filteringDateOption: $filteringDateOption, filteringStartDate: $filteringStartDate, filteringEndDate: $filteringEndDate, searchText: $searchText, isFiltering: $isFiltering)';
+    return 'ListState(isLoading: $isLoading, allTask: $allTask, filteringTask: $filteringTask, filteringPendingTask: $filteringPendingTask, filteringCompletedTask: $filteringCompletedTask, filteringScheduledTask: $filteringScheduledTask, filteringCategories: $filteringCategories, filteringPriorities: $filteringPriorities, filteringDateOption: $filteringDateOption, filteringStartDate: $filteringStartDate, orderByOption: $orderByOption, filteringEndDate: $filteringEndDate, searchText: $searchText, isFiltering: $isFiltering)';
   }
 }
 
@@ -107,6 +111,7 @@ abstract mixin class $ListStateCopyWith<$Res> {
       List<TaskPriority> filteringPriorities,
       FilterDateOption filteringDateOption,
       DateTime? filteringStartDate,
+      OrderByOption orderByOption,
       DateTime? filteringEndDate,
       String searchText,
       bool isFiltering});
@@ -134,6 +139,7 @@ class _$ListStateCopyWithImpl<$Res> implements $ListStateCopyWith<$Res> {
     Object? filteringPriorities = null,
     Object? filteringDateOption = null,
     Object? filteringStartDate = freezed,
+    Object? orderByOption = null,
     Object? filteringEndDate = freezed,
     Object? searchText = null,
     Object? isFiltering = null,
@@ -179,6 +185,10 @@ class _$ListStateCopyWithImpl<$Res> implements $ListStateCopyWith<$Res> {
           ? _self.filteringStartDate
           : filteringStartDate // ignore: cast_nullable_to_non_nullable
               as DateTime?,
+      orderByOption: null == orderByOption
+          ? _self.orderByOption
+          : orderByOption // ignore: cast_nullable_to_non_nullable
+              as OrderByOption,
       filteringEndDate: freezed == filteringEndDate
           ? _self.filteringEndDate
           : filteringEndDate // ignore: cast_nullable_to_non_nullable
@@ -209,6 +219,7 @@ class _ListState implements ListState {
       final List<TaskPriority> filteringPriorities = const [],
       this.filteringDateOption = FilterDateOption.noDateFilter,
       this.filteringStartDate,
+      this.orderByOption = OrderByOption.defaultOption,
       this.filteringEndDate,
       this.searchText = '',
       this.isFiltering = false})
@@ -297,6 +308,9 @@ class _ListState implements ListState {
   @override
   final DateTime? filteringStartDate;
   @override
+  @JsonKey()
+  final OrderByOption orderByOption;
+  @override
   final DateTime? filteringEndDate;
   @override
   @JsonKey()
@@ -337,6 +351,8 @@ class _ListState implements ListState {
                 other.filteringDateOption == filteringDateOption) &&
             (identical(other.filteringStartDate, filteringStartDate) ||
                 other.filteringStartDate == filteringStartDate) &&
+            (identical(other.orderByOption, orderByOption) ||
+                other.orderByOption == orderByOption) &&
             (identical(other.filteringEndDate, filteringEndDate) ||
                 other.filteringEndDate == filteringEndDate) &&
             (identical(other.searchText, searchText) ||
@@ -358,13 +374,14 @@ class _ListState implements ListState {
       const DeepCollectionEquality().hash(_filteringPriorities),
       filteringDateOption,
       filteringStartDate,
+      orderByOption,
       filteringEndDate,
       searchText,
       isFiltering);
 
   @override
   String toString() {
-    return 'ListState(isLoading: $isLoading, allTask: $allTask, filteringTask: $filteringTask, filteringPendingTask: $filteringPendingTask, filteringCompletedTask: $filteringCompletedTask, filteringScheduledTask: $filteringScheduledTask, filteringCategories: $filteringCategories, filteringPriorities: $filteringPriorities, filteringDateOption: $filteringDateOption, filteringStartDate: $filteringStartDate, filteringEndDate: $filteringEndDate, searchText: $searchText, isFiltering: $isFiltering)';
+    return 'ListState(isLoading: $isLoading, allTask: $allTask, filteringTask: $filteringTask, filteringPendingTask: $filteringPendingTask, filteringCompletedTask: $filteringCompletedTask, filteringScheduledTask: $filteringScheduledTask, filteringCategories: $filteringCategories, filteringPriorities: $filteringPriorities, filteringDateOption: $filteringDateOption, filteringStartDate: $filteringStartDate, orderByOption: $orderByOption, filteringEndDate: $filteringEndDate, searchText: $searchText, isFiltering: $isFiltering)';
   }
 }
 
@@ -387,6 +404,7 @@ abstract mixin class _$ListStateCopyWith<$Res>
       List<TaskPriority> filteringPriorities,
       FilterDateOption filteringDateOption,
       DateTime? filteringStartDate,
+      OrderByOption orderByOption,
       DateTime? filteringEndDate,
       String searchText,
       bool isFiltering});
@@ -414,6 +432,7 @@ class __$ListStateCopyWithImpl<$Res> implements _$ListStateCopyWith<$Res> {
     Object? filteringPriorities = null,
     Object? filteringDateOption = null,
     Object? filteringStartDate = freezed,
+    Object? orderByOption = null,
     Object? filteringEndDate = freezed,
     Object? searchText = null,
     Object? isFiltering = null,
@@ -459,6 +478,10 @@ class __$ListStateCopyWithImpl<$Res> implements _$ListStateCopyWith<$Res> {
           ? _self.filteringStartDate
           : filteringStartDate // ignore: cast_nullable_to_non_nullable
               as DateTime?,
+      orderByOption: null == orderByOption
+          ? _self.orderByOption
+          : orderByOption // ignore: cast_nullable_to_non_nullable
+              as OrderByOption,
       filteringEndDate: freezed == filteringEndDate
           ? _self.filteringEndDate
           : filteringEndDate // ignore: cast_nullable_to_non_nullable

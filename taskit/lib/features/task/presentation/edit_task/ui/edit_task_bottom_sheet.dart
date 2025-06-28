@@ -143,7 +143,9 @@ class _EditTaskBottomSheetState extends ConsumerState<EditTaskBottomSheet> {
                                   ? color.onSurfaceVariant
                                   : color.primary,
                             ),
-                            Text(task?.dueDate?.toFormatDate() ?? 'No date',
+                            Text(
+                                task?.dueDate?.formatToRelativeDateString() ??
+                                    'No date',
                                 style: text.labelMedium),
                             if (task?.dueDate != null)
                               GestureDetector(

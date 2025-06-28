@@ -43,10 +43,12 @@ class _FilterBottomSheetState extends ConsumerState<FilterBottomSheet> {
     final text = Theme.of(context).textTheme;
     final filteringStartDate = state.filteringStartDate;
     final filteringEndDate = state.filteringEndDate;
-    _startDateController.text =
-        filteringStartDate == null ? '' : filteringStartDate.toFormatDate();
-    _endDateController.text =
-        filteringEndDate == null ? '' : filteringEndDate.toFormatDate();
+    _startDateController.text = filteringStartDate == null
+        ? ''
+        : filteringStartDate.formatToRelativeDateString();
+    _endDateController.text = filteringEndDate == null
+        ? ''
+        : filteringEndDate.formatToRelativeDateString();
     return SingleChildScrollView(
       child: Column(
         children: [
@@ -318,7 +320,7 @@ class _FilterBottomSheetState extends ConsumerState<FilterBottomSheet> {
                                               alignment: Alignment.centerLeft,
                                               child: Text(
                                                 filteringStartDate
-                                                    .toFormatDate(),
+                                                    .formatToRelativeDateString(),
                                                 style: text.titleSmall
                                                     ?.copyWith(
                                                         color: color.onSurface),
@@ -382,7 +384,8 @@ class _FilterBottomSheetState extends ConsumerState<FilterBottomSheet> {
                                                 child: Align(
                                               alignment: Alignment.centerLeft,
                                               child: Text(
-                                                filteringEndDate.toFormatDate(),
+                                                filteringEndDate
+                                                    .formatToRelativeDateString(),
                                                 style: text.titleSmall
                                                     ?.copyWith(
                                                         color: color.onSurface),
