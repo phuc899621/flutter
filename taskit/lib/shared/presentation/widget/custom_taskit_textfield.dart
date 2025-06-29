@@ -27,29 +27,25 @@ class TaskitOutlineTextField extends ConsumerWidget {
       autofillHints: [autofillHints],
       obscureText: false,
       decoration: InputDecoration(
+        border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(20.0),
+            borderSide: BorderSide.none),
         labelText: labelText,
-        labelStyle: text.labelSmall,
+        labelStyle: text.bodySmall?.copyWith(color: color.onSurfaceVariant),
         alignLabelWithHint: false,
-        enabledBorder: OutlineInputBorder(
-          borderSide: BorderSide(
-            color: color.primaryContainer,
-            width: 2.0,
-          ),
-          borderRadius: BorderRadius.circular(12.0),
-        ),
         focusedBorder: OutlineInputBorder(
           borderSide: BorderSide(
             color: color.primary,
             width: 2.0,
           ),
-          borderRadius: BorderRadius.circular(12.0),
+          borderRadius: BorderRadius.circular(20.0),
         ),
         errorBorder: OutlineInputBorder(
           borderSide: BorderSide(
             color: color.error,
             width: 2.0,
           ),
-          borderRadius: BorderRadius.circular(12.0),
+          borderRadius: BorderRadius.circular(20.0),
         ),
         focusedErrorBorder: OutlineInputBorder(
           borderSide: BorderSide(
@@ -59,7 +55,7 @@ class TaskitOutlineTextField extends ConsumerWidget {
           borderRadius: BorderRadius.circular(12.0),
         ),
         filled: true,
-        fillColor: color.secondaryContainer,
+        fillColor: color.surfaceContainer,
       ),
       style: text.bodySmall?.copyWith(color: color.onSurface),
       keyboardType: keyboardType,
@@ -103,38 +99,35 @@ class _TaskitOutLineTextFieldWithPasswordState
       autofillHints: const [AutofillHints.password],
       obscureText: _obscureText,
       decoration: InputDecoration(
-        labelText: widget.labelText,
-        labelStyle: text.labelSmall,
-        enabledBorder: OutlineInputBorder(
-          borderSide: BorderSide(
-            color: color.secondaryContainer,
-            width: 2.0,
-          ),
-          borderRadius: BorderRadius.circular(12.0),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(20.0),
+          borderSide: BorderSide.none,
         ),
+        labelText: widget.labelText,
+        labelStyle: text.bodySmall?.copyWith(color: color.onSurfaceVariant),
         focusedBorder: OutlineInputBorder(
           borderSide: BorderSide(
             color: color.primary,
             width: 2.0,
           ),
-          borderRadius: BorderRadius.circular(12.0),
+          borderRadius: BorderRadius.circular(20),
         ),
         errorBorder: OutlineInputBorder(
           borderSide: BorderSide(
             color: color.error,
             width: 2.0,
           ),
-          borderRadius: BorderRadius.circular(12.0),
+          borderRadius: BorderRadius.circular(20),
         ),
         focusedErrorBorder: OutlineInputBorder(
           borderSide: BorderSide(
             color: color.primary,
             width: 2.0,
           ),
-          borderRadius: BorderRadius.circular(12.0),
+          borderRadius: BorderRadius.circular(20),
         ),
         filled: true,
-        fillColor: color.secondaryContainer,
+        fillColor: color.surfaceContainer,
         suffixIcon: InkWell(
           onTap: () => _toggleObscureText(),
           focusNode: FocusNode(skipTraversal: true),
@@ -148,8 +141,6 @@ class _TaskitOutLineTextFieldWithPasswordState
         ),
       ),
       style: text.bodySmall?.copyWith(
-        fontFamily: 'Inter',
-        letterSpacing: 0.0,
         color: color.onSurface,
       ),
     );

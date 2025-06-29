@@ -47,6 +47,8 @@ class MainWidget extends ConsumerWidget {
               color: ConstColor.onPrimary, fontWeight: FontWeight.w600),
           headlineSmall: TextStyle(
               color: ConstColor.onPrimary, fontWeight: FontWeight.w600),
+          headlineLarge: TextStyle(
+              color: ConstColor.onPrimary, fontWeight: FontWeight.w600),
           titleLarge: TextStyle(fontWeight: FontWeight.w500),
           titleMedium: TextStyle(fontWeight: FontWeight.w500),
           labelMedium: TextStyle(fontWeight: FontWeight.w500),
@@ -55,9 +57,12 @@ class MainWidget extends ConsumerWidget {
           bodyLarge: TextStyle(fontWeight: FontWeight.w500),
           bodyMedium: TextStyle(fontWeight: FontWeight.w500),
           bodySmall: TextStyle(fontWeight: FontWeight.w500),
-          displayLarge: TextStyle(fontWeight: FontWeight.w500),
-          displayMedium: TextStyle(fontWeight: FontWeight.w500),
-          displaySmall: TextStyle(fontWeight: FontWeight.w500),
+          displayLarge: TextStyle(
+              fontWeight: FontWeight.w600, color: ConstColor.onPrimary),
+          displayMedium: TextStyle(
+              fontWeight: FontWeight.w600, color: ConstColor.onPrimary),
+          displaySmall: TextStyle(
+              fontWeight: FontWeight.w600, color: ConstColor.onPrimary),
         ),
 
 //text

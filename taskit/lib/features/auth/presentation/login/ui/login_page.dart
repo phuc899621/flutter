@@ -65,13 +65,276 @@ class _LoginPageState extends ConsumerState<LoginPage> {
     ref.read(loginControllerProvider.notifier).login();
   }
 
+  //region MAIN
   @override
   Widget build(BuildContext context) {
     _listener();
     final state = ref.watch(loginControllerProvider);
     final text = Theme.of(context).textTheme;
     final color = Theme.of(context).colorScheme;
+    return SafeArea(
+        top: true,
+        child: Scaffold(
+            backgroundColor: color.primary,
+            body: NestedScrollView(
+                headerSliverBuilder: (context, innerBoxIsScrolled) => [
+                      _topAppBar(),
+                    ],
+                body: _loginBody())));
+  }
 
+  //endregion
+
+  //region TopAppBar
+  Widget _topAppBar() {
+    final text = Theme.of(context).textTheme;
+    final color = Theme.of(context).colorScheme;
+    return SliverAppBar(
+        pinned: true,
+        toolbarHeight: 200,
+        backgroundColor: color.primary,
+        flexibleSpace: FlexibleSpaceBar(
+          background: Stack(
+            children: [
+              Expanded(
+                  child: Padding(
+                padding: const EdgeInsets.only(bottom: 15, left: 30),
+                child: Column(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Hello!',
+                        style: text.displayMedium,
+                      ),
+                      Text(
+                        'Welcome to Taskit app',
+                        style: text.headlineSmall?.copyWith(
+                            fontWeight: FontWeight.w500, fontSize: 20),
+                      ),
+                    ]),
+              )),
+              Padding(
+                padding: const EdgeInsets.only(top: 20.0, right: 20),
+                child: Align(
+                  alignment: Alignment.topRight,
+                  child: Material(
+                    elevation: 2,
+                    color: Colors.transparent,
+                    shape: CircleBorder(),
+                    child: Container(
+                      width: 100,
+                      height: 100,
+                      decoration: BoxDecoration(
+                        color: color.primaryContainer,
+                        shape: BoxShape.circle,
+                      ),
+                      child: Center(
+                        child: SvgPicture.asset(
+                          'assets/svg/taskit_icon.svg',
+                          width: 60,
+                          height: 60,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ));
+  }
+
+  //endregion
+  //region Login Body
+  Widget _loginBody() {
+    final state = ref.watch(loginControllerProvider);
+    final text = Theme.of(context).textTheme;
+    final color = Theme.of(context).colorScheme;
+    return Container(
+      padding: EdgeInsets.symmetric(vertical: 20, horizontal: 30),
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.vertical(top: Radius.circular(30)),
+          color: color.surface),
+      child: Column(
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text('Login',
+                style: text.headlineMedium?.copyWith(
+                    color: color.primary, fontWeight: FontWeight.w800)),
+            SizedBox(
+              height: 25,
+            ),
+            SizedBox(
+                width: double.infinity,
+                child: TaskitOutlineTextField(
+                    labelText: 'Email',
+                    controller: _emailController,
+                    autofillHints: AutofillHints.email,
+                    keyboardType: TextInputType.emailAddress)),
+            SizedBox(
+              height: 15,
+            ),
+            TaskitOutLineTextFieldWithPassword(
+                labelText: 'Password', controller: _passwordController),
+            SizedBox(
+              height: 10,
+            ),
+            Align(
+              alignment: Alignment.centerRight,
+              child: RichText(
+                textScaler: MediaQuery.of(context).textScaler,
+                text: TextSpan(
+                  children: [
+                    TextSpan(
+                        text: 'Forgot your password',
+                        style: text.bodySmall?.copyWith(
+                          color: color.primary,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        recognizer: TapGestureRecognizer()
+                          ..onTap = () => context.push('/forgot_password'))
+                  ],
+                  style: text.bodyMedium,
+                ),
+              ),
+            ),
+            SizedBox(
+              height: 15,
+            ),
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton(
+                onPressed: _onSummit,
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: color.primary,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20.0),
+                  ),
+                ),
+                child: state.isLoading
+                    ? Center(
+                        child: CircularProgressIndicator(
+                          color: color.onPrimary,
+                        ),
+                      )
+                    : Text('Login',
+                        style: text.titleMedium?.copyWith(
+                          color: color.onPrimary,
+                        )),
+              ),
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            SizedBox(
+              width: double.infinity,
+              height: 40,
+              child: Stack(
+                children: [
+                  Center(
+                      child: Container(
+                          height: 4,
+                          decoration: BoxDecoration(
+                            color: color.surfaceContainerHighest,
+                            borderRadius: BorderRadius.circular(40),
+                          ))),
+                  Center(
+                      child: Container(
+                    width: 60.0,
+                    decoration: BoxDecoration(
+                      color: color.surface,
+                      borderRadius: BorderRadius.circular(40),
+                    ),
+                    child: Center(
+                      child: Text(
+                        'OR',
+                        style: text.labelMedium?.copyWith(
+                            color: color.onSurfaceVariant,
+                            fontWeight: FontWeight.w600),
+                      ),
+                    ),
+                  ))
+                ],
+              ),
+            ),
+            SizedBox(height: 10),
+            SizedBox(
+              width: double.infinity,
+              child: OutlinedButton.icon(
+                icon: SvgPicture.asset(
+                  'assets/svg/google.svg',
+                  width: 24.0,
+                  height: 24.0,
+                  fit: BoxFit.cover,
+                ),
+                onPressed: () {},
+                label: Text(
+                  'Login with Google',
+                  style: text.titleSmall?.copyWith(
+                    color: color.onSurfaceVariant,
+                  ),
+                ),
+                style: OutlinedButton.styleFrom(
+                  minimumSize: const Size.fromHeight(44),
+                  padding: EdgeInsets.zero,
+                  overlayColor: color.primary,
+                  backgroundColor: color.surfaceContainerLow,
+                  side: BorderSide(
+                    color: color.surfaceContainerHighest,
+                    width: 2.0,
+                  ),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12.0),
+                  ),
+                ).copyWith(
+                  overlayColor: WidgetStatePropertyAll(
+                    color.primary.withAlpha(30), // hoverColor
+                  ),
+                ),
+              ),
+            ),
+            SizedBox(
+              height: 15,
+            ),
+            Align(
+              alignment: Alignment.center,
+              child: RichText(
+                textScaler: MediaQuery.of(context).textScaler,
+                text: TextSpan(
+                  children: [
+                    TextSpan(
+                      text: 'Don\'t have an account? ',
+                      style: text.bodySmall?.copyWith(
+                        color: color.onSurfaceVariant,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    TextSpan(
+                      text: 'Sign up here',
+                      style: text.bodySmall?.copyWith(
+                        color: color.primary,
+                        fontWeight: FontWeight.w600,
+                      ),
+                      recognizer: TapGestureRecognizer()
+                        ..onTap = () => context.push('/signup'),
+                    )
+                  ],
+                  style: text.bodyMedium,
+                ),
+              ),
+            )
+          ]),
+    );
+  }
+
+  //endregion
+  Widget _body() {
+    final state = ref.watch(loginControllerProvider);
+    final text = Theme.of(context).textTheme;
+    final color = Theme.of(context).colorScheme;
     return Scaffold(
       backgroundColor: color.surface,
       body: SafeArea(
@@ -81,27 +344,6 @@ class _LoginPageState extends ConsumerState<LoginPage> {
             mainAxisSize: MainAxisSize.max,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Container(
-                  width: double.infinity,
-                  height: 100.0,
-                  decoration: BoxDecoration(
-                      color: color.surfaceContainer,
-                      shape: BoxShape.circle,
-                      boxShadow: const [
-                        BoxShadow(
-                          color: Colors.black12,
-                          blurRadius: 10.0,
-                          offset: Offset(4, 4),
-                          spreadRadius: 1.0,
-                        )
-                      ]),
-                  child: Center(
-                    child: SvgPicture.asset(
-                      'assets/svg/taskit_icon.svg',
-                      width: 60,
-                      height: 60,
-                    ),
-                  )),
               Padding(
                 padding: const EdgeInsetsDirectional.fromSTEB(
                     32.0, 16.0, 32.0, 32.0),
@@ -124,47 +366,6 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                       child: Center(
                         child: Text('Filling out the form below to continue',
                             style: Theme.of(context).textTheme.labelMedium),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 16.0),
-                      child: SizedBox(
-                          width: double.infinity,
-                          child: TaskitOutlineTextField(
-                              labelText: 'Email',
-                              controller: _emailController,
-                              autofillHints: AutofillHints.email,
-                              keyboardType: TextInputType.emailAddress)),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 16.0),
-                      child: SizedBox(
-                          width: double.infinity,
-                          child: TaskitOutLineTextFieldWithPassword(
-                              labelText: 'Password',
-                              controller: _passwordController)),
-                    ),
-                    Align(
-                      alignment: const AlignmentDirectional(1.0, 0.0),
-                      child: Padding(
-                        padding: const EdgeInsets.only(top: 12.0, bottom: 20.0),
-                        child: RichText(
-                          textScaler: MediaQuery.of(context).textScaler,
-                          text: TextSpan(
-                            children: [
-                              TextSpan(
-                                  text: 'Forgot your password',
-                                  style: text.bodySmall?.copyWith(
-                                    color: color.primary,
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                  recognizer: TapGestureRecognizer()
-                                    ..onTap =
-                                        () => context.push('/forgot_password'))
-                            ],
-                            style: text.bodyMedium,
-                          ),
-                        ),
                       ),
                     ),
                     Padding(
@@ -191,40 +392,6 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                                         ?.copyWith(color: color.onPrimary)),
                           ),
                         )),
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 24.0),
-                      child: SizedBox(
-                        width: 370.0,
-                        child: Stack(
-                          children: [
-                            Align(
-                              child: Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(vertical: 12),
-                                child: Container(
-                                  width: double.infinity,
-                                  height: 2.0,
-                                  color: Colors.grey,
-                                ),
-                              ),
-                            ),
-                            Align(
-                              child: Container(
-                                width: 70.0,
-                                height: 32.0,
-                                decoration: BoxDecoration(
-                                  color: color.surfaceContainerLow,
-                                ),
-                                child: Text(
-                                  'OR',
-                                  style: text.labelMedium,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
                     Padding(
                       padding: const EdgeInsets.only(bottom: 16.0),
                       child: SizedBox(
