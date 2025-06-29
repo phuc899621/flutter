@@ -75,6 +75,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
     return SafeArea(
         top: true,
         child: Scaffold(
+            resizeToAvoidBottomInset: false,
             backgroundColor: color.primary,
             body: NestedScrollView(
                 headerSliverBuilder: (context, innerBoxIsScrolled) => [
