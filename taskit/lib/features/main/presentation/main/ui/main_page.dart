@@ -28,6 +28,7 @@ class _MainPageState extends ConsumerState<MainPage> {
         statusBarColor: Theme.of(context).colorScheme.primary, // iOS
       ),
     );
+
     return ProviderScope(
       overrides: [
         navigationShellProvider.overrideWithValue(widget.navigationShell)

@@ -8,7 +8,6 @@ import 'package:taskit/features/main/presentation/home/ui/widget/task_item.dart'
 import 'package:taskit/features/main/presentation/list/controller/list_controller.dart';
 import 'package:taskit/shared/application/time_service.dart';
 import 'package:taskit/shared/extension/date_time.dart';
-import 'package:taskit/shared/log/logger_provider.dart';
 
 class HomePage extends ConsumerStatefulWidget {
   const HomePage({super.key});
@@ -19,9 +18,10 @@ class HomePage extends ConsumerStatefulWidget {
 
 class _HomePageState extends ConsumerState<HomePage>
     with TickerProviderStateMixin {
-  void _showDialogDelete(int localId) {
+  void _showDialogConfirmDeleteTask(int localId) {
     final color = Theme.of(context).colorScheme;
     final text = Theme.of(context).textTheme;
+    final controller = ref.read(homeControllerProvider.notifier);
     showDialog(
         context: context,
         builder: (context) => AlertDialog(
@@ -33,7 +33,7 @@ class _HomePageState extends ConsumerState<HomePage>
               content: const Text('Are you sure you want to delete this task?'),
               actions: [
                 TextButton(
-                    onPressed: () => Navigator.pop(context),
+                    onPressed: context.pop,
                     child: Text(
                       'Cancel',
                       style: text.labelLarge?.copyWith(
@@ -42,10 +42,7 @@ class _HomePageState extends ConsumerState<HomePage>
                     )),
                 TextButton(
                     onPressed: () {
-                      ref
-                          .read(homeControllerProvider.notifier)
-                          .onDelete(localId);
-                      Navigator.pop(context);
+                      controller.onDelete(localId);
                       context.pop();
                     },
                     child: Text(
@@ -62,12 +59,11 @@ class _HomePageState extends ConsumerState<HomePage>
     context.push('/edit_task', extra: localId);
   }
 
+  //region MAIN
   @override
   Widget build(BuildContext context) {
-    final state = ref.watch(homeControllerProvider);
     final controller = ref.watch(homeControllerProvider.notifier);
     final color = Theme.of(context).colorScheme;
-    final text = Theme.of(context).textTheme;
     ref.listen<AsyncValue<DateTime>>(timeStreamProvider, (_, next) {
       next.whenData((now) {
         controller.onTimeChecker(now);
@@ -76,491 +72,513 @@ class _HomePageState extends ConsumerState<HomePage>
     return DefaultTabController(
         length: 3,
         child: Scaffold(
-            floatingActionButton: FloatingActionButton(
-                foregroundColor: color.onPrimaryContainer,
-                splashColor: color.primary,
-                backgroundColor: color.primaryContainer,
-                child: Icon(
-                  Icons.add_sharp,
-                  size: 30,
-                ),
-                onPressed: () => context.push('/add_task')),
+            floatingActionButton: _fabAddTask(),
             backgroundColor: color.surface,
             body: SafeArea(
               top: true,
               child: NestedScrollView(
                 headerSliverBuilder: (context, innerBoxIsScrolled) => [
-                  SliverAppBar(
-                    collapsedHeight: 90,
-                    expandedHeight: 140,
-                    toolbarHeight: 90,
-                    snap: true,
-                    floating: true,
-                    backgroundColor: color.primary,
-                    flexibleSpace: FlexibleSpaceBar(
-                        background: Padding(
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 12, horizontal: 14),
-                      child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisSize: MainAxisSize.max,
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                Text(
-                                  'Hello, ${state.userName} ',
-                                  style: text.headlineMedium,
-                                ),
-                                Text(
-                                  DateTime.now().toDisplayFullFormatDate(),
-                                  style: text.titleMedium
-                                      ?.copyWith(color: color.onPrimary),
-                                )
-                              ],
-                            ),
-                            Row(
-                              spacing: 10,
-                              children: [
-                                Material(
-                                  color: Colors.transparent,
-                                  elevation: 2,
-                                  shape: const CircleBorder(),
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                        color: color.primaryContainer,
-                                        shape: BoxShape.circle),
-                                    child: IconButton(
-                                        onPressed: () {
-                                          logger.i(
-                                              'isFocusSearchTextFieldProvider true');
-                                          ref
-                                              .read(
-                                                  shouldFocusSearchTextFieldProvider
-                                                      .notifier)
-                                              .state = true;
-                                          ref
-                                              .read(navigationShellProvider)
-                                              .goBranch(1);
-                                        },
-                                        color: color.onPrimaryContainer,
-                                        icon: const Icon(
-                                          Icons.search_outlined,
-                                        )),
-                                  ),
-                                ),
-                                Material(
-                                  color: Colors.transparent,
-                                  elevation: 2,
-                                  shape: const CircleBorder(),
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                        color: color.primaryContainer,
-                                        shape: BoxShape.circle),
-                                    child: IconButton(
-                                        color: color.onPrimaryContainer,
-                                        onPressed: () => {},
-                                        icon: const Icon(
-                                          Icons.notifications_none,
-                                        )),
-                                  ),
-                                ),
-                              ],
-                            )
-                          ]),
-                    )),
-                  ),
-                  SliverAppBar(
-                    collapsedHeight: 70,
-                    toolbarHeight: 70,
-                    pinned: true,
-                    shape: RoundedRectangleBorder(
-                        borderRadius:
-                            BorderRadius.vertical(bottom: Radius.circular(15))),
-                    backgroundColor: color.surface,
-                    flexibleSpace: FlexibleSpaceBar(
-                      background: Container(
-                        color: color.surfaceContainerLow,
-                        width: double.infinity,
-                        child: TabBar(
-                          dragStartBehavior: DragStartBehavior.down,
-                          tabAlignment: TabAlignment.center,
-                          isScrollable: true,
-                          dividerColor: Colors.transparent,
-                          physics: const BouncingScrollPhysics(),
-                          labelColor: color.onPrimaryContainer,
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 20, vertical: 10),
-                          labelPadding:
-                              const EdgeInsets.symmetric(horizontal: 15),
-                          splashBorderRadius: BorderRadius.circular(15),
-                          labelStyle: text.labelLarge
-                              ?.copyWith(fontWeight: FontWeight.w600),
-                          unselectedLabelColor: color.onSurfaceVariant,
-                          unselectedLabelStyle: text.labelLarge,
-                          indicator: BoxDecoration(
-                              borderRadius: BorderRadius.circular(15),
-                              color: color.primaryContainer),
-                          indicatorSize: TabBarIndicatorSize.tab,
-                          tabs: [
-                            Tab(
-                              text: 'Today',
-                            ),
-                            Tab(
-                              text: 'Tomorrow',
-                            ),
-                            Tab(
-                              text: 'This week',
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
+                  _topAppBar(),
+                  _tabBar(),
                 ],
-                body: TabBarView(
-                  children: [
-                    CustomScrollView(slivers: [
-                      if (state.todayTasks.isNotEmpty)
-                        SliverToBoxAdapter(
-                            child: Padding(
-                          padding: const EdgeInsets.only(
-                              left: 16, right: 16, top: 14, bottom: 6),
-                          child:
-                              Text('Today\'s tasks', style: text.titleMedium),
-                        )),
-                      SliverList(
-                        delegate: SliverChildBuilderDelegate(
-                            childCount: state.todayTasks.length,
-                            (context, index) => Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      vertical: 6, horizontal: 14),
-                                  child: TaskItem(
-                                    task: state.todayTasks[index],
-                                    onDelete: _showDialogDelete,
-                                    onCheck: controller.onCheck,
-                                    onEdit: _showBottomSheetEditTask,
-                                    onSubtaskCheck: controller.onSubtaskCheck,
-                                    onSubtaskDelete: controller.onSubtaskDelete,
-                                  ),
-                                )),
-                      ),
-                      if (state.pendingTasks.isNotEmpty)
-                        SliverToBoxAdapter(
-                            child: Padding(
-                          padding: const EdgeInsets.only(
-                              left: 16, right: 16, top: 14, bottom: 6),
-                          child: Text('Pending tasks', style: text.titleMedium),
-                        )),
-                      SliverList(
-                        delegate: SliverChildBuilderDelegate(
-                            childCount: state.pendingTasks.length,
-                            (context, index) => Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      vertical: 6, horizontal: 14),
-                                  child: TaskItem(
-                                    task: state.pendingTasks[index],
-                                    onDelete: _showDialogDelete,
-                                    onCheck: controller.onCheck,
-                                    onEdit: _showBottomSheetEditTask,
-                                    onSubtaskCheck: controller.onSubtaskCheck,
-                                    onSubtaskDelete: controller.onSubtaskDelete,
-                                  ),
-                                )),
-                      ),
-                      if (state.todayCompletedTasks.isNotEmpty)
-                        SliverToBoxAdapter(
-                            child: Padding(
-                          padding: const EdgeInsets.only(
-                              left: 16, right: 16, top: 14, bottom: 6),
-                          child:
-                              Text('Completed tasks', style: text.titleMedium),
-                        )),
-                      SliverList(
-                        delegate: SliverChildBuilderDelegate(
-                            childCount: state.todayCompletedTasks.length,
-                            (context, index) => Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      vertical: 6, horizontal: 14),
-                                  child: TaskItem(
-                                    task: state.todayCompletedTasks[index],
-                                    onDelete: _showDialogDelete,
-                                    onCheck: controller.onCheck,
-                                    onEdit: _showBottomSheetEditTask,
-                                    onSubtaskCheck: controller.onSubtaskCheck,
-                                    onSubtaskDelete: controller.onSubtaskDelete,
-                                  ),
-                                )),
-                      ),
-                      if (state.todayOverDueTasks.isNotEmpty)
-                        SliverToBoxAdapter(
-                            child: Padding(
-                          padding: const EdgeInsets.only(
-                              left: 16, right: 16, top: 14, bottom: 6),
-                          child: Text('Overdue tasks',
-                              style: text.titleMedium
-                                  ?.copyWith(color: color.onError)),
-                        )),
-                      SliverList(
-                        delegate: SliverChildBuilderDelegate(
-                            childCount: state.todayOverDueTasks.length,
-                            (context, index) => Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      vertical: 6, horizontal: 14),
-                                  child: TaskItem(
-                                    task: state.todayOverDueTasks[index],
-                                    onDelete: _showDialogDelete,
-                                    onCheck: controller.onCheck,
-                                    onEdit: _showBottomSheetEditTask,
-                                    onSubtaskCheck: controller.onSubtaskCheck,
-                                    onSubtaskDelete: controller.onSubtaskDelete,
-                                  ),
-                                )),
-                      ),
-                      SliverFillRemaining(
-                        hasScrollBody: false,
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 16),
-                          child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                const SizedBox(
-                                  height: 200,
-                                ),
-                                const Icon(
-                                  Icons.lightbulb,
-                                  size: 50,
-                                  color: Colors.yellow,
-                                ),
-                                const SizedBox(
-                                  height: 30,
-                                ),
-                                Text(
-                                  'Taskit',
-                                  style: text.headlineMedium
-                                      ?.copyWith(color: color.onSurface),
-                                ),
-                                const SizedBox(
-                                  height: 10,
-                                ),
-                                Text(
-                                  'Keep adding and managing your tasks',
-                                  textAlign: TextAlign.center,
-                                  style: text.titleMedium
-                                      ?.copyWith(color: color.onSurfaceVariant),
-                                ),
-                                const SizedBox(
-                                  height: 200,
-                                ),
-                              ]),
-                        ),
-                      ),
-                    ]),
-                    CustomScrollView(slivers: [
-                      if (state.tomorrowTasks.isNotEmpty)
-                        SliverToBoxAdapter(
-                            child: Padding(
-                          padding: const EdgeInsets.only(
-                              left: 16, right: 16, top: 14, bottom: 6),
-                          child: Text('Tomorrow\'s tasks',
-                              style: text.titleMedium),
-                        )),
-                      SliverList(
-                        delegate: SliverChildBuilderDelegate(
-                            childCount: state.tomorrowTasks.length,
-                            (context, index) => Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      vertical: 6, horizontal: 14),
-                                  child: TaskItem(
-                                    task: state.tomorrowTasks[index],
-                                    onDelete: _showDialogDelete,
-                                    onCheck: controller.onCheck,
-                                    onEdit: _showBottomSheetEditTask,
-                                    onSubtaskCheck: controller.onSubtaskCheck,
-                                    onSubtaskDelete: controller.onSubtaskDelete,
-                                  ),
-                                )),
-                      ),
-                      SliverFillRemaining(
-                        hasScrollBody: false,
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 16),
-                          child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                const SizedBox(
-                                  height: 200,
-                                ),
-                                const Icon(
-                                  Icons.lightbulb,
-                                  size: 50,
-                                  color: Colors.yellow,
-                                ),
-                                const SizedBox(
-                                  height: 30,
-                                ),
-                                Text(
-                                  'Taskit',
-                                  style: text.headlineMedium
-                                      ?.copyWith(color: color.onSurface),
-                                ),
-                                const SizedBox(
-                                  height: 10,
-                                ),
-                                Text(
-                                  'Keep adding and managing your tasks',
-                                  textAlign: TextAlign.center,
-                                  style: text.titleMedium
-                                      ?.copyWith(color: color.onSurfaceVariant),
-                                ),
-                                const SizedBox(
-                                  height: 200,
-                                ),
-                              ]),
-                        ),
-                      ),
-                    ]),
-                    CustomScrollView(slivers: [
-                      if (state.thisWeekTasks.isNotEmpty)
-                        SliverToBoxAdapter(
-                            child: Padding(
-                          padding: const EdgeInsets.only(
-                              left: 16, right: 16, top: 14, bottom: 6),
-                          child: Text('This week\'s tasks',
-                              style: text.titleMedium),
-                        )),
-                      SliverList(
-                        delegate: SliverChildBuilderDelegate(
-                            childCount: state.thisWeekTasks.length,
-                            (context, index) => Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      vertical: 6, horizontal: 14),
-                                  child: TaskItem(
-                                    task: state.thisWeekTasks[index],
-                                    onDelete: _showDialogDelete,
-                                    onCheck: controller.onCheck,
-                                    onEdit: _showBottomSheetEditTask,
-                                    onSubtaskCheck: controller.onSubtaskCheck,
-                                    onSubtaskDelete: controller.onSubtaskDelete,
-                                  ),
-                                )),
-                      ),
-                      if (state.pendingTasks.isNotEmpty)
-                        SliverToBoxAdapter(
-                            child: Padding(
-                          padding: const EdgeInsets.only(
-                              left: 16, right: 16, top: 14, bottom: 6),
-                          child: Text('Pending tasks', style: text.titleMedium),
-                        )),
-                      SliverList(
-                        delegate: SliverChildBuilderDelegate(
-                            childCount: state.pendingTasks.length,
-                            (context, index) => Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      vertical: 6, horizontal: 14),
-                                  child: TaskItem(
-                                    task: state.pendingTasks[index],
-                                    onDelete: _showDialogDelete,
-                                    onCheck: controller.onCheck,
-                                    onEdit: _showBottomSheetEditTask,
-                                    onSubtaskCheck: controller.onSubtaskCheck,
-                                    onSubtaskDelete: controller.onSubtaskDelete,
-                                  ),
-                                )),
-                      ),
-                      if (state.thisWeekCompletedTasks.isNotEmpty)
-                        SliverToBoxAdapter(
-                            child: Padding(
-                          padding: const EdgeInsets.only(
-                              left: 16, right: 16, top: 14, bottom: 6),
-                          child:
-                              Text('Completed tasks', style: text.titleMedium),
-                        )),
-                      SliverList(
-                        delegate: SliverChildBuilderDelegate(
-                            childCount: state.thisWeekCompletedTasks.length,
-                            (context, index) => Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      vertical: 6, horizontal: 14),
-                                  child: TaskItem(
-                                    task: state.thisWeekCompletedTasks[index],
-                                    onDelete: _showDialogDelete,
-                                    onCheck: controller.onCheck,
-                                    onEdit: _showBottomSheetEditTask,
-                                    onSubtaskCheck: controller.onSubtaskCheck,
-                                    onSubtaskDelete: controller.onSubtaskDelete,
-                                  ),
-                                )),
-                      ),
-                      if (state.thisWeekOverDueTasks.isNotEmpty)
-                        SliverToBoxAdapter(
-                            child: Padding(
-                          padding: const EdgeInsets.only(
-                              left: 16, right: 16, top: 14, bottom: 6),
-                          child: Text('Overdue tasks',
-                              style: text.titleMedium
-                                  ?.copyWith(color: color.onError)),
-                        )),
-                      SliverList(
-                        delegate: SliverChildBuilderDelegate(
-                            childCount: state.thisWeekOverDueTasks.length,
-                            (context, index) => Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      vertical: 6, horizontal: 14),
-                                  child: TaskItem(
-                                    task: state.thisWeekOverDueTasks[index],
-                                    onDelete: _showDialogDelete,
-                                    onCheck: controller.onCheck,
-                                    onEdit: _showBottomSheetEditTask,
-                                    onSubtaskCheck: controller.onSubtaskCheck,
-                                    onSubtaskDelete: controller.onSubtaskDelete,
-                                  ),
-                                )),
-                      ),
-                      SliverFillRemaining(
-                        hasScrollBody: false,
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 16),
-                          child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                const SizedBox(
-                                  height: 200,
-                                ),
-                                const Icon(
-                                  Icons.lightbulb,
-                                  size: 50,
-                                  color: Colors.yellow,
-                                ),
-                                const SizedBox(
-                                  height: 30,
-                                ),
-                                Text(
-                                  'Taskit',
-                                  style: text.headlineMedium
-                                      ?.copyWith(color: color.onSurface),
-                                ),
-                                const SizedBox(
-                                  height: 10,
-                                ),
-                                Text(
-                                  'Keep adding and managing your tasks',
-                                  textAlign: TextAlign.center,
-                                  style: text.titleMedium
-                                      ?.copyWith(color: color.onSurfaceVariant),
-                                ),
-                                const SizedBox(
-                                  height: 200,
-                                ),
-                              ]),
-                        ),
-                      ),
-                    ]),
-                  ],
-                ),
+                body: _tabBarView(),
               ),
             )));
+  }
+
+  //endregion
+
+  //region FAB
+  Widget _fabAddTask() {
+    final color = Theme.of(context).colorScheme;
+    return FloatingActionButton(
+        foregroundColor: color.onPrimaryContainer,
+        splashColor: color.primary,
+        backgroundColor: color.primaryContainer,
+        child: Icon(
+          Icons.add_sharp,
+          size: 30,
+        ),
+        onPressed: () => context.push('/add_task'));
+  }
+
+//endregion
+//region TOP APPBAR
+  Widget _topAppBar() {
+    final color = Theme.of(context).colorScheme;
+    final text = Theme.of(context).textTheme;
+    final state = ref.watch(homeControllerProvider);
+    return SliverAppBar(
+      expandedHeight: 180,
+      snap: true,
+      pinned: true,
+      floating: true,
+      toolbarHeight: 80,
+      centerTitle: false,
+      backgroundColor: color.primary,
+      flexibleSpace: LayoutBuilder(builder: (context, constraints) {
+        final double top = constraints.biggest.height;
+        final bool isCollapsed = top <= 90;
+        return AnimatedSwitcher(
+          duration: Duration(milliseconds: 800),
+          child: isCollapsed ? _collapseAppBar() : _expandTopAppBar(),
+        );
+      }),
+      titleSpacing: 15,
+      actions: [
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 5),
+          child: _searchIconButton(),
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 5),
+          child: _notificationIconButton(),
+        ),
+      ],
+    );
+  }
+
+//endregion
+  //region Expand TopAppBar Widget
+  Widget _expandTopAppBar() {
+    final text = Theme.of(context).textTheme;
+    final color = Theme.of(context).colorScheme;
+    final state = ref.watch(homeControllerProvider);
+    return FlexibleSpaceBar(
+        background: Padding(
+      padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 14),
+      child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Text(
+                  'Hello, ${state.userName} ',
+                  style: text.headlineMedium,
+                ),
+                Text(
+                  DateTime.now().toDisplayFullFormatDate(),
+                  style: text.titleMedium?.copyWith(color: color.onPrimary),
+                )
+              ],
+            ),
+          ]),
+    ));
+  }
+
+  //endregion
+  //region Collapsed TopAppBar Widget
+  Widget _collapseAppBar() {
+    final text = Theme.of(context).textTheme;
+    final color = Theme.of(context).colorScheme;
+    final state = ref.watch(homeControllerProvider);
+
+    return FlexibleSpaceBar(
+      titlePadding: EdgeInsets.symmetric(vertical: 12, horizontal: 14),
+      centerTitle: false,
+      title: Text(
+        'Home',
+        style: text.headlineMedium,
+      ),
+    );
+  }
+
+  //endregion
+//region Search And Notification Icon
+
+  Widget _searchIconButton() {
+    final color = Theme.of(context).colorScheme;
+    final shouldFocus = ref.read(shouldFocusSearchTextFieldProvider.notifier);
+    final navigationShell = ref.read(navigationShellProvider);
+    return Material(
+      color: Colors.transparent,
+      clipBehavior: Clip.hardEdge,
+      shape: CircleBorder(),
+      elevation: 2,
+      child: IconButton.filledTonal(
+          iconSize: 30,
+          style: ButtonStyle(
+              backgroundColor: WidgetStatePropertyAll(color.primaryContainer)),
+          onPressed: () {
+            shouldFocus.state = true;
+            navigationShell.goBranch(1);
+          },
+          color: color.onPrimaryContainer,
+          icon: Icon(Icons.search_rounded)),
+    );
+  }
+
+  Widget _notificationIconButton() {
+    final color = Theme.of(context).colorScheme;
+    return Material(
+      color: Colors.transparent,
+      clipBehavior: Clip.hardEdge,
+      shape: CircleBorder(),
+      elevation: 2,
+      child: IconButton.filledTonal(
+          iconSize: 30,
+          style: ButtonStyle(
+              backgroundColor: WidgetStatePropertyAll(color.primaryContainer)),
+          onPressed: () {},
+          color: color.onPrimaryContainer,
+          icon: Icon(Icons.notifications_none)),
+    );
+  }
+
+//endregion
+//region TAB BAR
+  Widget _tabBar() {
+    final color = Theme.of(context).colorScheme;
+    final text = Theme.of(context).textTheme;
+    return SliverAppBar(
+      collapsedHeight: 80,
+      toolbarHeight: 80,
+      pinned: true,
+      shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(bottom: Radius.circular(15))),
+      backgroundColor: color.primary,
+      flexibleSpace: FlexibleSpaceBar(
+        background: Container(
+          decoration: BoxDecoration(
+              color: color.surface,
+              borderRadius: BorderRadius.vertical(top: Radius.circular(30))),
+          width: double.infinity,
+          child: TabBar(
+            dragStartBehavior: DragStartBehavior.down,
+            tabAlignment: TabAlignment.center,
+            isScrollable: true,
+            dividerColor: Colors.transparent,
+            physics: const BouncingScrollPhysics(),
+            labelColor: color.onPrimary,
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+            labelPadding: const EdgeInsets.symmetric(horizontal: 15),
+            splashBorderRadius: BorderRadius.circular(15),
+            labelStyle: text.labelLarge?.copyWith(fontWeight: FontWeight.w600),
+            unselectedLabelColor: color.onSurfaceVariant,
+            unselectedLabelStyle:
+                text.labelLarge?.copyWith(fontWeight: FontWeight.w500),
+            indicator: BoxDecoration(
+                borderRadius: BorderRadius.circular(15), color: color.primary),
+            indicatorSize: TabBarIndicatorSize.tab,
+            tabs: [
+              Tab(
+                text: 'Today',
+              ),
+              Tab(
+                text: 'Tomorrow',
+              ),
+              Tab(
+                text: 'This week',
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+//endregion
+
+//region TabBarView
+  Widget _tabBarView() {
+    return TabBarView(
+      children: [
+        _todayBarView(),
+        _tomorrowBarView(),
+        _thisWeekBarView(),
+      ],
+    );
+  }
+
+//endregion
+
+//region Today BarView
+  Widget _todayBarView() {
+    final color = Theme.of(context).colorScheme;
+    final text = Theme.of(context).textTheme;
+    final state = ref.watch(homeControllerProvider);
+    final controller = ref.watch(homeControllerProvider.notifier);
+    return CustomScrollView(slivers: [
+      if (state.todayTasks.isNotEmpty)
+        SliverToBoxAdapter(
+            child: Padding(
+          padding:
+              const EdgeInsets.only(left: 16, right: 16, top: 14, bottom: 6),
+          child: Text('Today\'s tasks', style: text.titleMedium),
+        )),
+      SliverList(
+        delegate: SliverChildBuilderDelegate(
+            childCount: state.todayTasks.length,
+            (context, index) => Padding(
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 6, horizontal: 12),
+                  child: TaskItem(
+                    task: state.todayTasks[index],
+                    onDelete: _showDialogConfirmDeleteTask,
+                    onCheck: controller.onCheck,
+                    onEdit: _showBottomSheetEditTask,
+                    onSubtaskCheck: controller.onSubtaskCheck,
+                    onSubtaskDelete: controller.onSubtaskDelete,
+                  ),
+                )),
+      ),
+      if (state.pendingTasks.isNotEmpty)
+        SliverToBoxAdapter(
+            child: Padding(
+          padding:
+              const EdgeInsets.only(left: 16, right: 16, top: 14, bottom: 6),
+          child: Text('Pending tasks', style: text.titleMedium),
+        )),
+      SliverList(
+        delegate: SliverChildBuilderDelegate(
+            childCount: state.pendingTasks.length,
+            (context, index) => Padding(
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 6, horizontal: 12),
+                  child: TaskItem(
+                    task: state.pendingTasks[index],
+                    onDelete: _showDialogConfirmDeleteTask,
+                    onCheck: controller.onCheck,
+                    onEdit: _showBottomSheetEditTask,
+                    onSubtaskCheck: controller.onSubtaskCheck,
+                    onSubtaskDelete: controller.onSubtaskDelete,
+                  ),
+                )),
+      ),
+      if (state.todayCompletedTasks.isNotEmpty)
+        SliverToBoxAdapter(
+            child: Padding(
+          padding:
+              const EdgeInsets.only(left: 16, right: 16, top: 14, bottom: 6),
+          child: Text('Completed tasks', style: text.titleMedium),
+        )),
+      SliverList(
+        delegate: SliverChildBuilderDelegate(
+            childCount: state.todayCompletedTasks.length,
+            (context, index) => Padding(
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 6, horizontal: 12),
+                  child: TaskItem(
+                    task: state.todayCompletedTasks[index],
+                    onDelete: _showDialogConfirmDeleteTask,
+                    onCheck: controller.onCheck,
+                    onEdit: _showBottomSheetEditTask,
+                    onSubtaskCheck: controller.onSubtaskCheck,
+                    onSubtaskDelete: controller.onSubtaskDelete,
+                  ),
+                )),
+      ),
+      if (state.todayOverDueTasks.isNotEmpty)
+        SliverToBoxAdapter(
+            child: Padding(
+          padding:
+              const EdgeInsets.only(left: 16, right: 16, top: 14, bottom: 6),
+          child: Text('Overdue tasks',
+              style: text.titleMedium?.copyWith(color: color.onError)),
+        )),
+      SliverList(
+        delegate: SliverChildBuilderDelegate(
+            childCount: state.todayOverDueTasks.length,
+            (context, index) => Padding(
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 6, horizontal: 12),
+                  child: TaskItem(
+                    task: state.todayOverDueTasks[index],
+                    onDelete: _showDialogConfirmDeleteTask,
+                    onCheck: controller.onCheck,
+                    onEdit: _showBottomSheetEditTask,
+                    onSubtaskCheck: controller.onSubtaskCheck,
+                    onSubtaskDelete: controller.onSubtaskDelete,
+                  ),
+                )),
+      ),
+      _fillRemaining()
+    ]);
+  }
+
+//endregion
+//region Tomorrow BarView
+  Widget _tomorrowBarView() {
+    final color = Theme.of(context).colorScheme;
+    final text = Theme.of(context).textTheme;
+    final state = ref.watch(homeControllerProvider);
+    final controller = ref.watch(homeControllerProvider.notifier);
+    return CustomScrollView(slivers: [
+      if (state.tomorrowTasks.isNotEmpty)
+        SliverToBoxAdapter(
+            child: Padding(
+          padding:
+              const EdgeInsets.only(left: 16, right: 16, top: 14, bottom: 6),
+          child: Text('Tomorrow\'s tasks', style: text.titleMedium),
+        )),
+      SliverList(
+        delegate: SliverChildBuilderDelegate(
+            childCount: state.tomorrowTasks.length,
+            (context, index) => Padding(
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 6, horizontal: 12),
+                  child: TaskItem(
+                    task: state.tomorrowTasks[index],
+                    onDelete: _showDialogConfirmDeleteTask,
+                    onCheck: controller.onCheck,
+                    onEdit: _showBottomSheetEditTask,
+                    onSubtaskCheck: controller.onSubtaskCheck,
+                    onSubtaskDelete: controller.onSubtaskDelete,
+                  ),
+                )),
+      ),
+      _fillRemaining()
+    ]);
+  }
+
+//endregion
+//region ThisWeek BarView
+  Widget _thisWeekBarView() {
+    final color = Theme.of(context).colorScheme;
+    final text = Theme.of(context).textTheme;
+    final state = ref.watch(homeControllerProvider);
+    final controller = ref.watch(homeControllerProvider.notifier);
+    return CustomScrollView(slivers: [
+      if (state.thisWeekTasks.isNotEmpty)
+        SliverToBoxAdapter(
+            child: Padding(
+          padding:
+              const EdgeInsets.only(left: 16, right: 16, top: 14, bottom: 6),
+          child: Text('This week\'s tasks', style: text.titleMedium),
+        )),
+      SliverList(
+        delegate: SliverChildBuilderDelegate(
+            childCount: state.thisWeekTasks.length,
+            (context, index) => Padding(
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 6, horizontal: 12),
+                  child: TaskItem(
+                    task: state.thisWeekTasks[index],
+                    onDelete: _showDialogConfirmDeleteTask,
+                    onCheck: controller.onCheck,
+                    onEdit: _showBottomSheetEditTask,
+                    onSubtaskCheck: controller.onSubtaskCheck,
+                    onSubtaskDelete: controller.onSubtaskDelete,
+                  ),
+                )),
+      ),
+      if (state.pendingTasks.isNotEmpty)
+        SliverToBoxAdapter(
+            child: Padding(
+          padding:
+              const EdgeInsets.only(left: 16, right: 16, top: 14, bottom: 6),
+          child: Text('Pending tasks', style: text.titleMedium),
+        )),
+      SliverList(
+        delegate: SliverChildBuilderDelegate(
+            childCount: state.pendingTasks.length,
+            (context, index) => Padding(
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 6, horizontal: 12),
+                  child: TaskItem(
+                    task: state.pendingTasks[index],
+                    onDelete: _showDialogConfirmDeleteTask,
+                    onCheck: controller.onCheck,
+                    onEdit: _showBottomSheetEditTask,
+                    onSubtaskCheck: controller.onSubtaskCheck,
+                    onSubtaskDelete: controller.onSubtaskDelete,
+                  ),
+                )),
+      ),
+      if (state.thisWeekCompletedTasks.isNotEmpty)
+        SliverToBoxAdapter(
+            child: Padding(
+          padding:
+              const EdgeInsets.only(left: 16, right: 16, top: 14, bottom: 6),
+          child: Text('Completed tasks', style: text.titleMedium),
+        )),
+      SliverList(
+        delegate: SliverChildBuilderDelegate(
+            childCount: state.thisWeekCompletedTasks.length,
+            (context, index) => Padding(
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 6, horizontal: 12),
+                  child: TaskItem(
+                    task: state.thisWeekCompletedTasks[index],
+                    onDelete: _showDialogConfirmDeleteTask,
+                    onCheck: controller.onCheck,
+                    onEdit: _showBottomSheetEditTask,
+                    onSubtaskCheck: controller.onSubtaskCheck,
+                    onSubtaskDelete: controller.onSubtaskDelete,
+                  ),
+                )),
+      ),
+      if (state.thisWeekOverDueTasks.isNotEmpty)
+        SliverToBoxAdapter(
+            child: Padding(
+          padding:
+              const EdgeInsets.only(left: 16, right: 16, top: 14, bottom: 6),
+          child: Text('Overdue tasks',
+              style: text.titleMedium?.copyWith(color: color.onError)),
+        )),
+      SliverList(
+        delegate: SliverChildBuilderDelegate(
+            childCount: state.thisWeekOverDueTasks.length,
+            (context, index) => Padding(
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 6, horizontal: 12),
+                  child: TaskItem(
+                    task: state.thisWeekOverDueTasks[index],
+                    onDelete: _showDialogConfirmDeleteTask,
+                    onCheck: controller.onCheck,
+                    onEdit: _showBottomSheetEditTask,
+                    onSubtaskCheck: controller.onSubtaskCheck,
+                    onSubtaskDelete: controller.onSubtaskDelete,
+                  ),
+                )),
+      ),
+      _fillRemaining()
+    ]);
+  }
+
+//endregion
+
+//region FillRemaining
+  Widget _fillRemaining() {
+    final color = Theme.of(context).colorScheme;
+    final text = Theme.of(context).textTheme;
+    return SliverFillRemaining(
+      hasScrollBody: false,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16),
+        child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+          const SizedBox(
+            height: 200,
+          ),
+          const Icon(
+            Icons.lightbulb,
+            size: 50,
+            color: Colors.yellow,
+          ),
+          const SizedBox(
+            height: 30,
+          ),
+          Text(
+            'Taskit',
+            style: text.headlineMedium?.copyWith(color: color.onSurface),
+          ),
+          const SizedBox(
+            height: 10,
+          ),
+          Text(
+            'Keep adding and managing your tasks',
+            textAlign: TextAlign.center,
+            style: text.titleMedium?.copyWith(color: color.onSurfaceVariant),
+          ),
+          const SizedBox(
+            height: 200,
+          ),
+        ]),
+      ),
+    );
   }
 }
