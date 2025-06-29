@@ -52,6 +52,12 @@ class MainWidget extends ConsumerWidget {
           labelMedium: TextStyle(fontWeight: FontWeight.w500),
           labelSmall: TextStyle(fontWeight: FontWeight.w500),
           labelLarge: TextStyle(fontWeight: FontWeight.w500),
+          bodyLarge: TextStyle(fontWeight: FontWeight.w500),
+          bodyMedium: TextStyle(fontWeight: FontWeight.w500),
+          bodySmall: TextStyle(fontWeight: FontWeight.w500),
+          displayLarge: TextStyle(fontWeight: FontWeight.w500),
+          displayMedium: TextStyle(fontWeight: FontWeight.w500),
+          displaySmall: TextStyle(fontWeight: FontWeight.w500),
         ),
 
 //text

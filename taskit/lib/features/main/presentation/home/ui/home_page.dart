@@ -2,10 +2,13 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:taskit/config/routers/router_provider.dart';
 import 'package:taskit/features/main/presentation/home/controller/home_controller.dart';
 import 'package:taskit/features/main/presentation/home/ui/widget/task_item.dart';
+import 'package:taskit/features/main/presentation/list/controller/list_controller.dart';
 import 'package:taskit/shared/application/time_service.dart';
 import 'package:taskit/shared/extension/date_time.dart';
+import 'package:taskit/shared/log/logger_provider.dart';
 
 class HomePage extends ConsumerStatefulWidget {
   const HomePage({super.key});
@@ -112,7 +115,7 @@ class _HomePageState extends ConsumerState<HomePage>
                                   style: text.headlineMedium,
                                 ),
                                 Text(
-                                  DateTime.now().toDisplayFormatDate(),
+                                  DateTime.now().toDisplayFullFormatDate(),
                                   style: text.titleMedium
                                       ?.copyWith(color: color.onPrimary),
                                 )
@@ -130,7 +133,18 @@ class _HomePageState extends ConsumerState<HomePage>
                                         color: color.primaryContainer,
                                         shape: BoxShape.circle),
                                     child: IconButton(
-                                        onPressed: () => {},
+                                        onPressed: () {
+                                          logger.i(
+                                              'isFocusSearchTextFieldProvider true');
+                                          ref
+                                              .read(
+                                                  shouldFocusSearchTextFieldProvider
+                                                      .notifier)
+                                              .state = true;
+                                          ref
+                                              .read(navigationShellProvider)
+                                              .goBranch(1);
+                                        },
                                         color: color.onPrimaryContainer,
                                         icon: const Icon(
                                           Icons.search_outlined,

@@ -76,8 +76,6 @@ class HomeController extends Notifier<HomeState> {
   void onSubtaskDelete(int localId) =>
       ref.read(taskServiceProvider).deleteSubtask(localId);
 
-  void onEdit(int localId) {}
-
   void setSelectedTask(TaskEntity task) =>
       state = state.copyWith(selectedTask: task);
 

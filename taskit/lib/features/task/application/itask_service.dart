@@ -34,6 +34,8 @@ abstract interface class ITaskService {
 
   Stream<List<SubtaskEntity>> watchSubtasksByTaskLocalId(int localId);
 
+  Stream<List<TaskEntity>> watchTaskByDueDate(DateTime dueDate);
+
   //================================
   //========== UPDATE =============
   //================================

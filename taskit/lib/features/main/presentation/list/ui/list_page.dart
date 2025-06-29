@@ -17,8 +17,49 @@ class ListPage extends ConsumerStatefulWidget {
 }
 
 class _ListPageState extends ConsumerState<ListPage> {
+  final _searchFocusNode = FocusNode();
+
   void _showBottomSheetEditTask(int localId) {
     context.push('/edit_task', extra: localId);
+  }
+
+  void _showDialogDelete(int localId) {
+    final color = Theme.of(context).colorScheme;
+    final text = Theme.of(context).textTheme;
+    showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+              titleTextStyle: text.titleLarge?.copyWith(
+                color: color.onSurface,
+                fontWeight: FontWeight.bold,
+              ),
+              title: Text('Delete task'),
+              content: const Text('Are you sure you want to delete this task?'),
+              actions: [
+                TextButton(
+                    onPressed: () => Navigator.pop(context),
+                    child: Text(
+                      'Cancel',
+                      style: text.labelLarge?.copyWith(
+                        color: color.primary,
+                      ),
+                    )),
+                TextButton(
+                    onPressed: () {
+                      ref
+                          .read(listControllerProvider.notifier)
+                          .onDelete(localId);
+                      Navigator.pop(context);
+                      context.pop();
+                    },
+                    child: Text(
+                      'Delete',
+                      style: text.labelLarge?.copyWith(
+                        color: color.onError,
+                      ),
+                    )),
+              ],
+            ));
   }
 
   @override
@@ -28,6 +69,13 @@ class _ListPageState extends ConsumerState<ListPage> {
     final controller = ref.watch(listControllerProvider.notifier);
     final state = ref.watch(listControllerProvider);
     final textController = ref.watch(searchControllerProvider);
+    final refs = ref.watch(shouldFocusSearchTextFieldProvider);
+    if (refs) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        _searchFocusNode.requestFocus();
+        ref.read(shouldFocusSearchTextFieldProvider.notifier).state = false;
+      });
+    }
     return DefaultTabController(
       length: 4,
       child: Scaffold(
@@ -92,6 +140,7 @@ class _ListPageState extends ConsumerState<ListPage> {
                         child: TextField(
                             autofocus: false,
                             maxLines: 1,
+                            focusNode: _searchFocusNode,
                             controller: textController.getOrCreateController(),
                             onTapOutside: (result) =>
                                 FocusScope.of(context).unfocus(),
@@ -333,7 +382,7 @@ class _ListPageState extends ConsumerState<ListPage> {
                                         left: 16, right: 16, bottom: 12),
                                     child: TaskItem(
                                       task: state.filteringTask[index],
-                                      onDelete: controller.onDelete,
+                                      onDelete: _showDialogDelete,
                                       onCheck: controller.onCheck,
                                       onEdit: _showBottomSheetEditTask,
                                       onSubtaskCheck: controller.onSubtaskCheck,
@@ -373,7 +422,7 @@ class _ListPageState extends ConsumerState<ListPage> {
                           padding: const EdgeInsets.symmetric(horizontal: 16),
                           child: TaskItem(
                             task: state.filteringPendingTask[index],
-                            onDelete: controller.onDelete,
+                            onDelete: _showDialogDelete,
                             onCheck: controller.onCheck,
                             onEdit: _showBottomSheetEditTask,
                             onSubtaskCheck: controller.onSubtaskCheck,
@@ -413,7 +462,7 @@ class _ListPageState extends ConsumerState<ListPage> {
                           padding: const EdgeInsets.symmetric(horizontal: 16),
                           child: TaskItem(
                             task: state.filteringScheduledTask[index],
-                            onDelete: controller.onDelete,
+                            onDelete: _showDialogDelete,
                             onCheck: controller.onCheck,
                             onEdit: _showBottomSheetEditTask,
                             onSubtaskCheck: controller.onSubtaskCheck,
@@ -453,7 +502,7 @@ class _ListPageState extends ConsumerState<ListPage> {
                           padding: const EdgeInsets.symmetric(horizontal: 16),
                           child: TaskItem(
                             task: state.filteringCompletedTask[index],
-                            onDelete: controller.onDelete,
+                            onDelete: _showDialogDelete,
                             onCheck: controller.onCheck,
                             onEdit: _showBottomSheetEditTask,
                             onSubtaskCheck: controller.onSubtaskCheck,

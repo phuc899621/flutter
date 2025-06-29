@@ -2,6 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 extension FormatDateTime on DateTime {
+  String get threeCharMonth {
+    final dateFormat = DateFormat('MMM');
+    return dateFormat.format(this);
+  }
+
+  String get threeCharDayOfWeek {
+    final dateFormat = DateFormat('EEE');
+    return dateFormat.format(this);
+  }
+
   String formatToRelativeDateString() {
     if (isToday()) return 'Today';
     if (isYesterday()) return 'Yesterday';
@@ -30,8 +40,13 @@ extension FormatDateTime on DateTime {
     return dateFormat.format(this);
   }
 
+  String toDisplayFullFormatDate() {
+    final dateFormat = DateFormat('EEEE, MMM d, yyyy');
+    return dateFormat.format(this);
+  }
+
   String toDisplayFormatDate() {
-    final dateFormat = DateFormat('EEEE, MMM d,yyyy');
+    final dateFormat = DateFormat('MMM yyyy');
     return dateFormat.format(this);
   }
 

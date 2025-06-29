@@ -181,6 +181,14 @@ class TaskService implements ITaskService {
             .toList();
       });
 
+  @override
+  Stream<List<TaskEntity>> watchTaskByDueDate(DateTime dueDate) =>
+      watchAllTasks().map((tasks) {
+        return tasks
+            .where((element) => element.dueDate?.isSameDay(dueDate) ?? false)
+            .toList();
+      });
+
   //endregion
 
   //================================

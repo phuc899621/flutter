@@ -17,6 +17,7 @@ import '../../../../task/domain/entities/task_status_enum.dart';
 
 final listControllerProvider =
     NotifierProvider<ListController, ListState>(ListController.new);
+final shouldFocusSearchTextFieldProvider = StateProvider<bool>((ref) => false);
 
 class ListController extends Notifier<ListState> {
   late StreamSubscription _taskSub;

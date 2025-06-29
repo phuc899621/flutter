@@ -5,7 +5,6 @@ import 'package:smooth_sheets/smooth_sheets.dart';
 import 'package:taskit/config/routers/router_name.dart';
 import 'package:taskit/features/auth/presentation/forgot_password/ui/reset_password_page.dart';
 import 'package:taskit/features/auth/presentation/signup/ui/signup_veriry_page.dart';
-import 'package:taskit/features/main/presentation/calendar/ui/calendar_page.dart';
 import 'package:taskit/features/main/presentation/home/ui/home_page.dart';
 import 'package:taskit/features/main/presentation/list/ui/list_page.dart';
 import 'package:taskit/features/splash/presentation/ui/splash_page.dart';
@@ -25,6 +24,7 @@ import '../../features/auth/presentation/login/ui/login_page.dart';
 import '../../features/auth/presentation/signup/ui/signup_page.dart';
 import '../../features/main/presentation/main/ui/main_page.dart';
 import '../../features/main/presentation/setting/ui/setting_page.dart';
+import '../../features/main/presentation/timeline/ui/timeline_page.dart';
 import '../../features/task/presentation/filter_task/ui/date_filter_bottom_sheet.dart';
 import '../../features/task/presentation/filter_task/ui/priority_filter_bottom_sheet.dart';
 import '../../features/task/presentation/filter_task/ui/start_date_filter_bottom_sheet.dart';
@@ -36,6 +36,8 @@ final editTaskNavigatorKeyProvider = Provider.autoDispose((ref) {
 final filteringTaskNavigatorKeyProvider = Provider.autoDispose((ref) {
   return GlobalKey<NavigatorState>();
 });
+final navigationShellProvider =
+    Provider<StatefulNavigationShell>((ref) => throw UnimplementedError());
 
 final goRouterProvider = Provider<GoRouter>((ref) {
   return GoRouter(
@@ -227,11 +229,11 @@ final goRouterProvider = Provider<GoRouter>((ref) {
           StatefulShellBranch(
             routes: [
               GoRoute(
-                path: '/calendar',
-                name: calendarRoute,
+                path: '/timeline',
+                name: timelineRoute,
                 pageBuilder: (context, state) =>
                     TaskitAnimation.slidePageTransition(
-                        context, state, const CalendarPage()),
+                        context, state, const TimelinePage()),
               ),
             ],
           ),
