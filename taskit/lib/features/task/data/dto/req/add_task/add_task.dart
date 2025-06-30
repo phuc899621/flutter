@@ -5,15 +5,19 @@ part 'create_task.freezed.dart';
 part 'create_task.g.dart';
 
 @freezed
-abstract class CreateTaskReq with _$CreateTaskReq {
-  const factory CreateTaskReq({
+abstract class AddTaskReq with _$AddTaskReq {
+  const factory AddTaskReq({
     required String title,
+    required int localId,
     required String description,
-    required String category,
+    required String categoryId,
     required String priority,
-    required DateTime dueDate,
+    DateTime? dueDate,
+    required bool hasTime,
+    required String status,
     required List<SubtaskReq> subtasks,
-  }) = _CreateTaskReq;
-  factory CreateTaskReq.fromJson(Map<String, dynamic> json) =>
-      _$CreateTaskReqFromJson(json);
+  }) = _AddTaskReq;
+
+  factory AddTaskReq.fromJson(Map<String, dynamic> json) =>
+      _$AddTaskReqFromJson(json);
 }
