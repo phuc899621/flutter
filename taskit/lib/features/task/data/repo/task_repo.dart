@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:taskit/features/task/data/mapper/itask_mapper.dart';
+import 'package:taskit/features/task/data/source/remote/itask_remote_source.dart';
 import 'package:taskit/features/task/domain/entities/task_entity.dart';
 import 'package:taskit/features/task/domain/entities/task_priority_enum.dart';
 import 'package:taskit/shared/data/repository/itoken_repository.dart';
@@ -22,6 +23,7 @@ import '../mapper/task_mapper.dart';
 import '../source/local/itask_local_source.dart';
 import '../source/local/task_local_source.dart';
 import '../source/remote/task_api.dart';
+import '../source/remote/task_remote_source.dart';
 import 'itask_repo.dart';
 
 final taskRepoProvider = Provider<ITaskRepo>((ref) {
@@ -30,17 +32,20 @@ final taskRepoProvider = Provider<ITaskRepo>((ref) {
   final userLocalSource = ref.watch(userLocalSourceProvider);
   final iTokenRepo = ref.watch(tokenRepositoryProvider);
   final iTaskMapper = ref.watch(taskMapperProvider);
-  return TaskRepo(taskApi, taskLocalSource, iTokenRepo, iTaskMapper);
+  final iTaskRemoteSource = ref.watch(taskRemoteSourceProvider);
+  return TaskRepo(
+      taskApi, taskLocalSource, iTokenRepo, iTaskMapper, iTaskRemoteSource);
 });
 
 class TaskRepo with DioExceptionMapper implements ITaskRepo {
   final TaskApi _taskApi;
   final ITaskLocalSource _taskLocalSource;
+  final ITaskRemoteSource _taskRemoteSource;
   final ITokenRepository _tokenService;
   final ITaskMapper _iTaskMapper;
 
   TaskRepo(this._taskApi, this._taskLocalSource, this._tokenService,
-      this._iTaskMapper);
+      this._iTaskMapper, this._taskRemoteSource);
 
   //=====================================
   //============= WATCH =================
@@ -199,11 +204,14 @@ class TaskRepo with DioExceptionMapper implements ITaskRepo {
     logger.i('TaskCompanion: $taskCompanion');
     logger.i('SubtaskCompanion: $subtaskCompanion');
     logger.i('CategoryCompanion: $categoryCompanion');
-    return await _taskLocalSource.insertTask(
+    int taskLocalId = await _taskLocalSource.insertTask(
       taskCompanion,
       subtaskCompanion,
       categoryCompanion,
     );
+    insertRemoteTask(taskLocalId);
+
+    return taskLocalId;
   }
 
   @override
@@ -230,4 +238,35 @@ class TaskRepo with DioExceptionMapper implements ITaskRepo {
   @override
   Future<void> deleteSubtask(int localId) =>
       _taskLocalSource.deleteSubtaskByLocalId(localId);
+
+  //endregion
+  //=====================================
+  //============= INSERT REMOTE =========
+  //=====================================
+  //region INSERT REMOTE
+  @override
+  Future<void> insertRemoteTask(int taskLocalId) async {
+    try {
+      final token = await _tokenService.getToken();
+      if (token == null) return;
+      final taskTblData = await _taskLocalSource.getTaskByLocalId(taskLocalId);
+      if (taskTblData == null) return;
+      final categoryTblData = await _taskLocalSource
+          .getCategoryByLocalId(taskTblData.categoryLocalId);
+      final subtasksTblData =
+          await _taskLocalSource.getSubtaskByTaskLocalId(taskLocalId);
+      if (categoryTblData == null) return;
+      final response = await _taskRemoteSource.addTask(
+          token,
+          _iTaskMapper.toAddTaskReq(
+              taskTblData, categoryTblData, subtasksTblData));
+      logger.i('add task response: \n $response');
+
+      _taskLocalSource.updateSyncTask(
+          _iTaskMapper.toSyncTaskTableCompanion(response.data),
+          _iTaskMapper.toSyncListSubtaskTblCompanion(response.data.subtasks));
+    } catch (e, s) {
+      logger.e('add task error: \n $e \n $s');
+    }
+  }
 }

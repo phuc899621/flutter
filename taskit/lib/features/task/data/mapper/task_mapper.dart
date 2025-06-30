@@ -6,7 +6,11 @@ import '../../../../shared/utils/task_entity_mapper.dart';
 import '../../domain/entities/category_entity.dart';
 import '../../domain/entities/subtask_entity.dart';
 import '../../domain/entities/task_entity.dart';
+import '../dto/req/add_task/add_task.dart';
 import '../dto/req/ai_category/ai_category.dart';
+import '../dto/req/subtask/add_subtask.dart';
+import '../dto/res/subtask/add_subtask_data.dart';
+import '../dto/res/task/add_task_data.dart';
 import 'itask_mapper.dart';
 
 final taskMapperProvider = Provider<ITaskMapper>((ref) {
@@ -71,6 +75,7 @@ class TaskMapper implements ITaskMapper {
         status: Value(data.status.name),
         dueDate: Value(data.dueDate),
         hasTime: Value(data.hasTime),
+        isSynced: Value(false),
       );
 
   //endregion
@@ -97,6 +102,7 @@ class TaskMapper implements ITaskMapper {
                 title: Value(e.title),
                 isCompleted: Value(e.isCompleted),
                 taskLocalId: Value(e.taskLocalId),
+                isSynced: Value(false),
               ))
           .toList();
 
@@ -106,6 +112,7 @@ class TaskMapper implements ITaskMapper {
         title: Value(data.title),
         isCompleted: Value(data.isCompleted),
         taskLocalId: Value(data.taskLocalId),
+        isSynced: Value(false),
       );
 
   //endregion
@@ -133,6 +140,7 @@ class TaskMapper implements ITaskMapper {
         userLocalId: Value(data.userLocalId),
         name: Value(data.name),
         updatedAt: Value(DateTime.now()),
+        isSynced: Value(false),
       );
 
   @override
@@ -143,5 +151,48 @@ class TaskMapper implements ITaskMapper {
   @override
   List<String> categoryTableDataToStringList(List<CategoryTableData> data) =>
       data.map((e) => e.name).toList();
+
+//endregion
+//================================
+//========== TASK REMOTE ========
+//================================
+  //region TaskRemote
+  @override
+  AddTaskReq toAddTaskReq(TaskTableData task, CategoryTableData category,
+      List<SubtaskTableData> subtasks) {
+    return AddTaskReq(
+      title: task.title,
+      description: task.description,
+      categoryId: category.remoteId,
+      priority: task.priority,
+      dueDate: task.dueDate?.toUtc(),
+      hasTime: task.hasTime,
+      subtasks: subtasks
+          .map((subtask) =>
+              AddSubtaskReq(title: subtask.title, localId: subtask.localId))
+          .toList(),
+      status: task.status,
+      localId: task.localId,
+    );
+  }
+
+  @override
+  List<SubtaskTableCompanion> toSyncListSubtaskTblCompanion(
+          List<AddSubtaskData> data) =>
+      data
+          .map((e) => SubtaskTableCompanion(
+                localId: Value(e.localId),
+                remoteId: Value(e.id),
+                isSynced: Value(true),
+              ))
+          .toList();
+
+  @override
+  TaskTableCompanion toSyncTaskTableCompanion(AddTaskData data) =>
+      TaskTableCompanion(
+        localId: Value(data.localId),
+        remoteId: Value(data.id),
+        isSynced: Value(true),
+      );
 //endregion
 }

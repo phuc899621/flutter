@@ -96,7 +96,7 @@ class AuthLocalDataSource implements IAuthLocalDataSource {
             priority: Value(e.priority),
             userLocalId: Value(userLocalId),
             status: Value(e.status),
-            dueDate: Value(e.dueDate),
+            dueDate: Value(e.dueDate?.toLocal()),
             hasTime: Value(e.hasTime),
             createdAt: Value(e.updatedAt),
             updatedAt: Value(e.createdAt),

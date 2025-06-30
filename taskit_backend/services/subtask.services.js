@@ -21,25 +21,22 @@ class SubtaskServices {
         try {
             const updatedSubtasks = await Promise.all(
                 subtasks.map(async (subtask) => {
-                    if (!subtask._id || typeof subtask !== 'object') {
+                    if (!subtask.id || typeof subtask !== 'object') {
                         return null;
                     }
-
-                    const { _id, localId, ...updateData } = subtask;
-
+                    const { id, localId, ...updateData } = subtask;
                     const result = await SubtaskModel.findOneAndUpdate(
-                        { _id },
+                        { _id:id },
                         { $set: updateData },
                         { new: true }
                     );
 
                     if (!result) return null;
-                    return {
-                        ...result._doc,
-                        localId, 
-                    };
+                    return localId;
                 })
             );
+            return updatedSubtasks.filter(subtask => subtask !== null);
+        
         } catch (e) {
             throw new Error(`Update subtasks error: ${e.message}`);
         }

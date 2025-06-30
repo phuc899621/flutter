@@ -121,5 +121,9 @@ class TaskDao extends DatabaseAccessor<AppDatabase> with _$TaskDaoMixin {
         updatedAt: Value(DateTime.now()),
       ));
 
+  Future<void> updateTask(TaskTableCompanion task) => (update(taskTable)
+        ..where((tbl) => tbl.localId.equals(task.localId.value)))
+      .write(task);
+
 //endregion
 }

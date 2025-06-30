@@ -1,8 +1,9 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:taskit/features/task/data/dto/req/subtask/add_subtask.dart';
 import 'package:taskit/features/task/data/dto/req/subtask/subtask.dart';
 
-part 'create_task.freezed.dart';
-part 'create_task.g.dart';
+part 'add_task.freezed.dart';
+part 'add_task.g.dart';
 
 @freezed
 abstract class AddTaskReq with _$AddTaskReq {
@@ -15,7 +16,7 @@ abstract class AddTaskReq with _$AddTaskReq {
     DateTime? dueDate,
     required bool hasTime,
     required String status,
-    required List<SubtaskReq> subtasks,
+    required List<AddSubtaskReq> subtasks,
   }) = _AddTaskReq;
 
   factory AddTaskReq.fromJson(Map<String, dynamic> json) =>

@@ -95,23 +95,30 @@ class TaskServices {
             if (updateData.dueDate) query.dueDate = updateData.dueDate;
             if (updateData.status) query.status = updateData.status;
             if (updateData.priority) query.priority = updateData.priority;
-            if (updateData.category) query.category = updateData.category;
-            if (updateData.localId) query.localId = updateData.localId;
-            if(updateData.type) query.type=updateData.type
-            if(updateData.deadlineDate) query.deadlineDate=updateData.deadlineDate
-            if(updateData.scheduledDate) query.scheduledDate=updateData.scheduledDate
-            if(updateData.hasScheduledTime) query.hasScheduledTime=updateData.hasScheduledTime
+            if (updateData.categoryId){
+                const category = await CategoryServices.findById(updateData.categoryId);
+                if (!category) {
+                    throw new HttpError("Category not found", 404);
+                }
+                query.categoryId = updateData.categoryId;
+            }
+            if (updateData.hasTime !== undefined) query.hasTime = updateData.hasTime;
             let subtaskResult=[];
   
             if (updateData.subtasks) {
                 subtaskResult=await SubtaskServices.update_subtasks(updateData.subtasks);
-                
+    
             }
-            const taskResult = await TaskModel.findByIdAndUpdate(
+            
+            await TaskModel.findByIdAndUpdate(
                 taskId,
                 { $set: query },
                 { new: true }
             );
+            return {
+                localId: updateData.localId,
+                subtasks: subtaskResult,
+            }
         } catch (e) {
             throw new HttpError(`Update task error: ${e.message}`, 500);
         }

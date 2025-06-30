@@ -57,12 +57,12 @@ export const get_task = async (req, res) => {
 export const update_task = async (req, res) => {
     try {
         const { taskId } = req.params;
-        await TaskServices.update_task(
+        const result= await TaskServices.update_task(
             taskId, req.body
         );
         return res.status(200).json({
             message: "Update task successfully",
-            data: {}
+            data: result
         });
     } catch (e) {
         const statusCode = e.statusCode || 500;

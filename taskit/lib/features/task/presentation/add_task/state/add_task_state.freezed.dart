@@ -29,7 +29,7 @@ mixin _$AddTaskState {
   Map<String, dynamic> get addTaskForm;
   String get title;
   String get description;
-  dynamic get isTimeSelected;
+  bool get isTimeSelected;
 
   /// Create a copy of AddTaskState
   /// with the given fields replaced by the non-null parameter values.
@@ -69,8 +69,8 @@ mixin _$AddTaskState {
             (identical(other.title, title) || other.title == title) &&
             (identical(other.description, description) ||
                 other.description == description) &&
-            const DeepCollectionEquality()
-                .equals(other.isTimeSelected, isTimeSelected));
+            (identical(other.isTimeSelected, isTimeSelected) ||
+                other.isTimeSelected == isTimeSelected));
   }
 
   @override
@@ -90,7 +90,7 @@ mixin _$AddTaskState {
       const DeepCollectionEquality().hash(addTaskForm),
       title,
       description,
-      const DeepCollectionEquality().hash(isTimeSelected));
+      isTimeSelected);
 
   @override
   String toString() {
@@ -119,7 +119,7 @@ abstract mixin class $AddTaskStateCopyWith<$Res> {
       Map<String, dynamic> addTaskForm,
       String title,
       String description,
-      dynamic isTimeSelected});
+      bool isTimeSelected});
 
   $CategoryEntityCopyWith<$Res>? get selectedCategory;
 }
@@ -150,7 +150,7 @@ class _$AddTaskStateCopyWithImpl<$Res> implements $AddTaskStateCopyWith<$Res> {
     Object? addTaskForm = null,
     Object? title = null,
     Object? description = null,
-    Object? isTimeSelected = freezed,
+    Object? isTimeSelected = null,
   }) {
     return _then(_self.copyWith(
       isLoading: null == isLoading
@@ -209,10 +209,10 @@ class _$AddTaskStateCopyWithImpl<$Res> implements $AddTaskStateCopyWith<$Res> {
           ? _self.description
           : description // ignore: cast_nullable_to_non_nullable
               as String,
-      isTimeSelected: freezed == isTimeSelected
+      isTimeSelected: null == isTimeSelected
           ? _self.isTimeSelected
           : isTimeSelected // ignore: cast_nullable_to_non_nullable
-              as dynamic,
+              as bool,
     ));
   }
 
@@ -319,7 +319,7 @@ class _AddTaskState implements AddTaskState {
   final String description;
   @override
   @JsonKey()
-  final dynamic isTimeSelected;
+  final bool isTimeSelected;
 
   /// Create a copy of AddTaskState
   /// with the given fields replaced by the non-null parameter values.
@@ -359,8 +359,8 @@ class _AddTaskState implements AddTaskState {
             (identical(other.title, title) || other.title == title) &&
             (identical(other.description, description) ||
                 other.description == description) &&
-            const DeepCollectionEquality()
-                .equals(other.isTimeSelected, isTimeSelected));
+            (identical(other.isTimeSelected, isTimeSelected) ||
+                other.isTimeSelected == isTimeSelected));
   }
 
   @override
@@ -380,7 +380,7 @@ class _AddTaskState implements AddTaskState {
       const DeepCollectionEquality().hash(_addTaskForm),
       title,
       description,
-      const DeepCollectionEquality().hash(isTimeSelected));
+      isTimeSelected);
 
   @override
   String toString() {
@@ -411,7 +411,7 @@ abstract mixin class _$AddTaskStateCopyWith<$Res>
       Map<String, dynamic> addTaskForm,
       String title,
       String description,
-      dynamic isTimeSelected});
+      bool isTimeSelected});
 
   @override
   $CategoryEntityCopyWith<$Res>? get selectedCategory;
@@ -444,7 +444,7 @@ class __$AddTaskStateCopyWithImpl<$Res>
     Object? addTaskForm = null,
     Object? title = null,
     Object? description = null,
-    Object? isTimeSelected = freezed,
+    Object? isTimeSelected = null,
   }) {
     return _then(_AddTaskState(
       isLoading: null == isLoading
@@ -503,10 +503,10 @@ class __$AddTaskStateCopyWithImpl<$Res>
           ? _self.description
           : description // ignore: cast_nullable_to_non_nullable
               as String,
-      isTimeSelected: freezed == isTimeSelected
+      isTimeSelected: null == isTimeSelected
           ? _self.isTimeSelected
           : isTimeSelected // ignore: cast_nullable_to_non_nullable
-              as dynamic,
+              as bool,
     ));
   }
 

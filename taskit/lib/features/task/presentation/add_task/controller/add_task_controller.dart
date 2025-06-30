@@ -44,7 +44,7 @@ class AddTaskController extends AutoDisposeNotifier<AddTaskState> {
 
   void setSelectedDate(DateTime? s) {
     state = state.copyWith(selectedDate: s);
-    if (s == null) state = state.copyWith(isTimeSelected: null);
+    if (s == null) state = state.copyWith(isTimeSelected: false);
   }
 
   void removeSelectedDate() {

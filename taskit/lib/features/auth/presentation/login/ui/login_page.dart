@@ -91,15 +91,14 @@ class _LoginPageState extends ConsumerState<LoginPage> {
     final text = Theme.of(context).textTheme;
     final color = Theme.of(context).colorScheme;
     return SliverAppBar(
-        toolbarHeight: 20,
+        toolbarHeight: 200,
         pinned: true,
         expandedHeight: 200,
         backgroundColor: color.primary,
         flexibleSpace: FlexibleSpaceBar(
           background: Stack(
             children: [
-              Expanded(
-                  child: Padding(
+              Padding(
                 padding: const EdgeInsets.only(bottom: 15, left: 30),
                 child: Column(
                     mainAxisAlignment: MainAxisAlignment.end,
@@ -115,7 +114,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                             fontWeight: FontWeight.w500, fontSize: 20),
                       ),
                     ]),
-              )),
+              ),
               Padding(
                 padding: const EdgeInsets.only(top: 20.0, right: 20),
                 child: Align(

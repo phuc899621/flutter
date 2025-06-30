@@ -24,11 +24,11 @@ import '../source/remote/auth_api.dart';
 final authRepoProvider = Provider<IAuthRepo>((ref) {
   final authApi = ref.watch(authApiProvider);
   final iTokenService = ref.watch(tokenServiceProvider);
-  final iAuthLocalDataSouce = ref.watch(authLocalDataSourceProvider);
+  final iAuthLocalDataSource = ref.watch(authLocalDataSourceProvider);
   return AuthRepo(
     authApi,
     iTokenService,
-    iAuthLocalDataSouce,
+    iAuthLocalDataSource,
   );
 });
 
@@ -36,12 +36,13 @@ class AuthRepo with DioExceptionMapper implements IAuthRepo {
   final AuthApi _authApi;
   final ITokenService _iTokenService;
   final IAuthLocalDataSource _iAuthLocalDataSource;
+
   AuthRepo(this._authApi, this._iTokenService, this._iAuthLocalDataSource);
 
-  /*
-  *
-  * Login
-  * */
+  //====================================
+  //============ Login =================
+  //====================================
+  //region LOGIN
   @override
   Future<BaseResponse<LoginData>> login(LoginRequest data) async {
     try {
@@ -93,6 +94,8 @@ class AuthRepo with DioExceptionMapper implements IAuthRepo {
       }
     }
   }
+
+  //endregion
 
   /*
   * Sign Up
@@ -187,7 +190,7 @@ class AuthRepo with DioExceptionMapper implements IAuthRepo {
     }
   }
 
-  /*
+/*
   * Mapper
   * */
 }

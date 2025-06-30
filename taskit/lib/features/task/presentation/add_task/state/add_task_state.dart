@@ -22,5 +22,5 @@ sealed class AddTaskState with _$AddTaskState {
       @Default({}) Map<String, dynamic> addTaskForm,
       @Default('') String title,
       @Default('') String description,
-      @Default(false) isTimeSelected}) = _AddTaskState;
+      @Default(false) bool isTimeSelected}) = _AddTaskState;
 }

@@ -102,6 +102,17 @@ class SubtaskDao extends DatabaseAccessor<AppDatabase> with _$SubtaskDaoMixin {
         updatedAt: Value(DateTime.now()),
       ));
 
+  Future<void> updateListSubtask(List<SubtaskTableCompanion> subtasks) =>
+      batch((batch) {
+        for (var subtask in subtasks) {
+          batch.update(
+            subtaskTable,
+            subtask,
+            where: (tbl) => tbl.localId.equals(subtask.localId.value),
+          );
+        }
+      });
+
   //endregion
 
   // ================================

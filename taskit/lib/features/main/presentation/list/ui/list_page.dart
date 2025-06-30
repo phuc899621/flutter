@@ -246,63 +246,60 @@ class _ListPageState extends ConsumerState<ListPage>
         toolbarHeight: 120,
         backgroundColor: color.primary,
         flexibleSpace: FlexibleSpaceBar(
-          background: Expanded(
-            child: Container(
-              decoration: BoxDecoration(
-                color: color.surface,
-                borderRadius: BorderRadius.vertical(
-                  top: Radius.circular(30),
-                ),
+          background: Container(
+            decoration: BoxDecoration(
+              color: color.surface,
+              borderRadius: BorderRadius.vertical(
+                top: Radius.circular(30),
               ),
-              width: double.infinity,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                mainAxisSize: MainAxisSize.max,
-                children: [
-                  Expanded(
-                    child: TabBar(
-                      controller: _tabController,
-                      dragStartBehavior: DragStartBehavior.down,
-                      tabAlignment: TabAlignment.start,
-                      isScrollable: true,
-                      dividerColor: Colors.transparent,
-                      physics: const BouncingScrollPhysics(),
-                      labelStyle: text.labelLarge
-                          ?.copyWith(fontWeight: FontWeight.w600),
-                      labelColor: color.onPrimary,
-                      unselectedLabelStyle: text.labelLarge
-                          ?.copyWith(fontWeight: FontWeight.w600),
-                      unselectedLabelColor: color.onSurfaceVariant,
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 15, vertical: 10),
-                      labelPadding: const EdgeInsets.symmetric(horizontal: 15),
-                      splashBorderRadius: BorderRadius.circular(15),
-                      indicator: BoxDecoration(
-                          borderRadius: BorderRadius.circular(15),
-                          color: color.primary),
-                      indicatorSize: TabBarIndicatorSize.tab,
-                      tabs: [
-                        Tab(
-                          text: 'All (${state.filteringTask.length})',
-                        ),
-                        Tab(
-                          text:
-                              'Pending (${state.filteringPendingTask.length})',
-                        ),
-                        Tab(
-                          text:
-                              'Scheduled (${state.filteringScheduledTask.length})',
-                        ),
-                        Tab(
-                          text:
-                              'Completed (${state.filteringCompletedTask.length})',
-                        ),
-                      ],
-                    ),
+            ),
+            width: double.infinity,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                Expanded(
+                  child: TabBar(
+                    controller: _tabController,
+                    dragStartBehavior: DragStartBehavior.down,
+                    tabAlignment: TabAlignment.start,
+                    isScrollable: true,
+                    dividerColor: Colors.transparent,
+                    physics: const BouncingScrollPhysics(),
+                    labelStyle:
+                        text.labelLarge?.copyWith(fontWeight: FontWeight.w600),
+                    labelColor: color.onPrimary,
+                    unselectedLabelStyle:
+                        text.labelLarge?.copyWith(fontWeight: FontWeight.w600),
+                    unselectedLabelColor: color.onSurfaceVariant,
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 15, vertical: 10),
+                    labelPadding: const EdgeInsets.symmetric(horizontal: 15),
+                    splashBorderRadius: BorderRadius.circular(15),
+                    indicator: BoxDecoration(
+                        borderRadius: BorderRadius.circular(15),
+                        color: color.primary),
+                    indicatorSize: TabBarIndicatorSize.tab,
+                    tabs: [
+                      Tab(
+                        text: 'All (${state.filteringTask.length})',
+                      ),
+                      Tab(
+                        text: 'Pending (${state.filteringPendingTask.length})',
+                      ),
+                      Tab(
+                        text:
+                            'Scheduled (${state.filteringScheduledTask.length})',
+                      ),
+                      Tab(
+                        text:
+                            'Completed (${state.filteringCompletedTask.length})',
+                      ),
+                    ],
                   ),
-                  _dropDownOrdering()
-                ],
-              ),
+                ),
+                _dropDownOrdering()
+              ],
             ),
           ),
         ));

@@ -232,4 +232,22 @@ class TaskLocalSource implements ITaskLocalSource {
       _subtaskDao.deleteSubtaskById(id);
 
 //endregion
+
+// ================================
+// ========== DELETE ==============
+// ================================
+//region SYNC Task
+  @override
+  Future<void> updateSyncTask(
+      TaskTableCompanion task, List<SubtaskTableCompanion> subtask) async {
+    try {
+      return await _db.transaction(() async {
+        await _taskDao.updateTask(task);
+        await _subtaskDao.updateListSubtask(subtask);
+      });
+    } catch (e) {
+      logger.e('Insert task error: $e');
+    }
+  }
+//endregion
 }

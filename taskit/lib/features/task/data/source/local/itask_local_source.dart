@@ -33,6 +33,9 @@ abstract interface class ITaskLocalSource {
 
   Future<void> updateSubtaskTitle(int localId, String title);
 
+  Future<void> updateSyncTask(
+      TaskTableCompanion task, List<SubtaskTableCompanion> subtask);
+
   // ================================
   // ========== READ ==============
   // ================================

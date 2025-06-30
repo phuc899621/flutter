@@ -82,10 +82,12 @@ export const update_task = [
     .optional()
     .isIn(['low', 'medium', 'high', 'none'])
     .withMessage('Priority must be one of: low, medium, high, none'),
-    body('category')
+    body('categoryId')
     .optional()
     .isString()
-    .withMessage('Category must be a string'),
+    .withMessage('Category must be a string')
+    .isMongoId()
+    .withMessage('Category ID must be a valid MongoDB ObjectId'),
     body('status')
     .optional()
     .isIn(['pending', 'scheduled', 'completed'])

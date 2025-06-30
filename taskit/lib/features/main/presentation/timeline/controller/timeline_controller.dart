@@ -22,7 +22,10 @@ class TimelineController extends Notifier<TimelineState> {
   void startListener() {
     _taskSubscription =
         ref.watch(taskServiceProvider).watchAllTasks().listen((tasks) {
-      state = state.copyWith(allTasks: tasks);
+      state = state.copyWith(
+        allTasks: tasks,
+        tasks: _getTaskByDate(state.focusDate ?? DateTime.now(), tasks),
+      );
       logger.i('dates $tasks');
     });
   }
@@ -44,12 +47,13 @@ class TimelineController extends Notifier<TimelineState> {
   void setFocusDate(DateTime focusDate) {
     state = state.copyWith(
       focusDate: focusDate,
-      tasks: _getTaskByDate(focusDate),
+      tasks: _getTaskByDate(focusDate, state.allTasks),
     );
   }
 
-  List<TaskEntity> _getTaskByDate(DateTime focusDate) {
-    final tasks = state.allTasks.where((task) {
+  List<TaskEntity> _getTaskByDate(
+      DateTime focusDate, List<TaskEntity> allTasks) {
+    final tasks = allTasks.where((task) {
       final dueDate = task.dueDate;
       logger.i('date $dueDate');
       return dueDate != null && dueDate.isSameDay(focusDate);

@@ -62,4 +62,10 @@ abstract interface class ITaskRepo {
   Future<void> deleteTask(int localId);
 
   Future<void> deleteSubtask(int localId);
+
+  //================================
+  //========== INSERT REMOTE =======
+  //================================
+
+  Future<void> insertRemoteTask(int taskLocalId);
 }
