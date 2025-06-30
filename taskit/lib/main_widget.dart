@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:taskit/config/routers/router_provider.dart';
 import 'package:taskit/shared/data/source/local/drift/dao/category.dart';
@@ -22,6 +23,11 @@ class MainWidget extends ConsumerWidget {
     final taskDao = ref.watch(taskDaoProvider);
     final categoryDao = ref.watch(categoryDaoProvider);
     final subtaskDao = ref.watch(subtaskDaoProvider);
+    SystemChrome.setSystemUIOverlayStyle(
+      SystemUiOverlayStyle(
+        statusBarColor: ConstColor.primary, // iOS
+      ),
+    );
     db.transaction(() async {
       final user = await userDao.getUser();
       debugPrint("$user\n");

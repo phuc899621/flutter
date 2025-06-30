@@ -6,9 +6,10 @@ import '../../../application/auth_service.dart';
 import '../../../data/dto/req/login/login_request.dart';
 
 final loginControllerProvider =
-    NotifierProvider<LoginController, LoginState>(LoginController.new);
+    AutoDisposeNotifierProvider<LoginController, LoginState>(
+        LoginController.new);
 
-class LoginController extends Notifier<LoginState> {
+class LoginController extends AutoDisposeNotifier<LoginState> {
   @override
   LoginState build() {
     return const LoginState();

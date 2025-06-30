@@ -41,7 +41,7 @@ final navigationShellProvider =
 
 final goRouterProvider = Provider<GoRouter>((ref) {
   return GoRouter(
-    initialLocation: '/login',
+    initialLocation: '/',
     routes: [
       GoRoute(
         path: '/',
@@ -74,19 +74,20 @@ final goRouterProvider = Provider<GoRouter>((ref) {
             context, state, const ForgotPasswordPage()),
         routes: [
           GoRoute(
-            path: 'verify',
-            name: forgotPasswordVerifyRoute,
-            pageBuilder: (context, state) =>
-                TaskitAnimation.slidePageTransition(
-                    context, state, const ForgotPasswordVerifyPage()),
-          ),
-          GoRoute(
-            path: 'reset',
-            name: forgotPasswordResetRoute,
-            pageBuilder: (context, state) =>
-                TaskitAnimation.slidePageTransition(
-                    context, state, const ResetPasswordPage()),
-          ),
+              path: 'verify',
+              name: forgotPasswordVerifyRoute,
+              pageBuilder: (context, state) =>
+                  TaskitAnimation.slidePageTransition(
+                      context, state, const ForgotPasswordVerifyPage()),
+              routes: [
+                GoRoute(
+                  path: 'reset',
+                  name: forgotPasswordResetRoute,
+                  pageBuilder: (context, state) =>
+                      TaskitAnimation.slidePageTransition(
+                          context, state, const ResetPasswordPage()),
+                ),
+              ]),
         ],
       ),
       GoRoute(

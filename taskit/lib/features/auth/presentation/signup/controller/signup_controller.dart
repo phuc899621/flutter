@@ -6,9 +6,10 @@ import '../../../data/dto/req/signup/signup_request.dart';
 import '../state/signup_state.dart';
 
 final signUpControllerProvider =
-    NotifierProvider<SignUpController, SignupState>(SignUpController.new);
+    AutoDisposeNotifierProvider<SignUpController, SignupState>(
+        SignUpController.new);
 
-class SignUpController extends Notifier<SignupState> {
+class SignUpController extends AutoDisposeNotifier<SignupState> {
   @override
   SignupState build() {
     return SignupState();

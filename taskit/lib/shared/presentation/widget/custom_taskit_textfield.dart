@@ -178,34 +178,34 @@ class TaskitCodeTextField extends ConsumerWidget {
           hintStyle: text.labelMedium,
           enabledBorder: OutlineInputBorder(
             borderSide: BorderSide(
-              color: Theme.of(context).colorScheme.surface,
-              width: 2.0,
+              color: color.surfaceContainerHighest,
+              width: 1.0,
             ),
-            borderRadius: BorderRadius.circular(12.0),
+            borderRadius: BorderRadius.circular(10),
           ),
           focusedBorder: OutlineInputBorder(
             borderSide: BorderSide(
               color: color.primary,
               width: 2.0,
             ),
-            borderRadius: BorderRadius.circular(12.0),
+            borderRadius: BorderRadius.circular(10),
           ),
           errorBorder: OutlineInputBorder(
             borderSide: BorderSide(
-              color: color.error,
+              color: color.onError,
               width: 2.0,
             ),
-            borderRadius: BorderRadius.circular(12.0),
+            borderRadius: BorderRadius.circular(10),
           ),
           focusedErrorBorder: OutlineInputBorder(
             borderSide: BorderSide(
               color: color.primary,
               width: 2.0,
             ),
-            borderRadius: BorderRadius.circular(12.0),
+            borderRadius: BorderRadius.circular(10),
           ),
           filled: true,
-          fillColor: color.secondaryContainer,
+          fillColor: color.surfaceContainer,
         ),
         style: text.labelLarge,
         maxLengthEnforcement: MaxLengthEnforcement.enforced,

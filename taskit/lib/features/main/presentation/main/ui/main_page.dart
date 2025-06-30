@@ -25,7 +25,7 @@ class _MainPageState extends ConsumerState<MainPage> {
     final text = Theme.of(context).textTheme;
     SystemChrome.setSystemUIOverlayStyle(
       SystemUiOverlayStyle(
-        statusBarColor: Theme.of(context).colorScheme.primary, // iOS
+        statusBarColor: color.primary, // iOS
       ),
     );
 

@@ -7,10 +7,10 @@ import '../../../data/dto/req/forgot_pass/forgot_pass_verify.dart';
 import '../../../data/dto/req/forgot_pass/reset_pass.dart';
 
 final forgotPassControllerProvider =
-    NotifierProvider<ForgotPassController, ForgotPassState>(
+    AutoDisposeNotifierProvider<ForgotPassController, ForgotPassState>(
         ForgotPassController.new);
 
-class ForgotPassController extends Notifier<ForgotPassState> {
+class ForgotPassController extends AutoDisposeNotifier<ForgotPassState> {
   @override
   ForgotPassState build() {
     return const ForgotPassState();

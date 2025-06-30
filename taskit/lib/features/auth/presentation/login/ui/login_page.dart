@@ -91,8 +91,9 @@ class _LoginPageState extends ConsumerState<LoginPage> {
     final text = Theme.of(context).textTheme;
     final color = Theme.of(context).colorScheme;
     return SliverAppBar(
+        toolbarHeight: 20,
         pinned: true,
-        toolbarHeight: 200,
+        expandedHeight: 200,
         backgroundColor: color.primary,
         flexibleSpace: FlexibleSpaceBar(
           background: Stack(
@@ -157,316 +158,181 @@ class _LoginPageState extends ConsumerState<LoginPage> {
       decoration: BoxDecoration(
           borderRadius: BorderRadius.vertical(top: Radius.circular(30)),
           color: color.surface),
-      child: Column(
-          mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text('Login',
-                style: text.headlineMedium?.copyWith(
-                    color: color.primary, fontWeight: FontWeight.w800)),
-            SizedBox(
-              height: 25,
-            ),
-            SizedBox(
-                width: double.infinity,
-                child: TaskitOutlineTextField(
-                    labelText: 'Email',
-                    controller: _emailController,
-                    autofillHints: AutofillHints.email,
-                    keyboardType: TextInputType.emailAddress)),
-            SizedBox(
-              height: 15,
-            ),
-            TaskitOutLineTextFieldWithPassword(
-                labelText: 'Password', controller: _passwordController),
-            SizedBox(
-              height: 10,
-            ),
-            Align(
-              alignment: Alignment.centerRight,
-              child: RichText(
-                textScaler: MediaQuery.of(context).textScaler,
-                text: TextSpan(
-                  children: [
-                    TextSpan(
-                        text: 'Forgot your password',
-                        style: text.bodySmall?.copyWith(
-                          color: color.primary,
-                          fontWeight: FontWeight.bold,
-                        ),
-                        recognizer: TapGestureRecognizer()
-                          ..onTap = () => context.push('/forgot_password'))
-                  ],
-                  style: text.bodyMedium,
-                ),
-              ),
-            ),
-            SizedBox(
-              height: 15,
-            ),
-            SizedBox(
-              width: double.infinity,
-              child: ElevatedButton(
-                onPressed: _onSummit,
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: color.primary,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20.0),
-                  ),
-                ),
-                child: state.isLoading
-                    ? Center(
-                        child: CircularProgressIndicator(
-                          color: color.onPrimary,
-                        ),
-                      )
-                    : Text('Login',
-                        style: text.titleMedium?.copyWith(
-                          color: color.onPrimary,
-                        )),
-              ),
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            SizedBox(
-              width: double.infinity,
-              height: 40,
-              child: Stack(
-                children: [
-                  Center(
-                      child: Container(
-                          height: 4,
-                          decoration: BoxDecoration(
-                            color: color.surfaceContainerHighest,
-                            borderRadius: BorderRadius.circular(40),
-                          ))),
-                  Center(
-                      child: Container(
-                    width: 60.0,
-                    decoration: BoxDecoration(
-                      color: color.surface,
-                      borderRadius: BorderRadius.circular(40),
-                    ),
-                    child: Center(
-                      child: Text(
-                        'OR',
-                        style: text.labelMedium?.copyWith(
-                            color: color.onSurfaceVariant,
-                            fontWeight: FontWeight.w600),
-                      ),
-                    ),
-                  ))
-                ],
-              ),
-            ),
-            SizedBox(height: 10),
-            SizedBox(
-              width: double.infinity,
-              child: OutlinedButton.icon(
-                icon: SvgPicture.asset(
-                  'assets/svg/google.svg',
-                  width: 24.0,
-                  height: 24.0,
-                  fit: BoxFit.cover,
-                ),
-                onPressed: () {},
-                label: Text(
-                  'Login with Google',
-                  style: text.titleSmall?.copyWith(
-                    color: color.onSurfaceVariant,
-                  ),
-                ),
-                style: OutlinedButton.styleFrom(
-                  minimumSize: const Size.fromHeight(44),
-                  padding: EdgeInsets.zero,
-                  overlayColor: color.primary,
-                  backgroundColor: color.surfaceContainerLow,
-                  side: BorderSide(
-                    color: color.surfaceContainerHighest,
-                    width: 2.0,
-                  ),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12.0),
-                  ),
-                ).copyWith(
-                  overlayColor: WidgetStatePropertyAll(
-                    color.primary.withAlpha(30), // hoverColor
-                  ),
-                ),
-              ),
-            ),
-            SizedBox(
-              height: 15,
-            ),
-            Align(
-              alignment: Alignment.center,
-              child: RichText(
-                textScaler: MediaQuery.of(context).textScaler,
-                text: TextSpan(
-                  children: [
-                    TextSpan(
-                      text: 'Don\'t have an account? ',
-                      style: text.bodySmall?.copyWith(
-                        color: color.onSurfaceVariant,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                    TextSpan(
-                      text: 'Sign up here',
-                      style: text.bodySmall?.copyWith(
-                        color: color.primary,
-                        fontWeight: FontWeight.w600,
-                      ),
-                      recognizer: TapGestureRecognizer()
-                        ..onTap = () => context.push('/signup'),
-                    )
-                  ],
-                  style: text.bodyMedium,
-                ),
-              ),
-            )
-          ]),
-    );
-  }
-
-  //endregion
-  Widget _body() {
-    final state = ref.watch(loginControllerProvider);
-    final text = Theme.of(context).textTheme;
-    final color = Theme.of(context).colorScheme;
-    return Scaffold(
-      backgroundColor: color.surface,
-      body: SafeArea(
-        top: true,
-        child: SingleChildScrollView(
-          child: Column(
+      child: SingleChildScrollView(
+        child: Column(
             mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Padding(
-                padding: const EdgeInsetsDirectional.fromSTEB(
-                    32.0, 16.0, 32.0, 32.0),
-                child: Column(
-                  mainAxisSize: MainAxisSize.max,
-                  crossAxisAlignment: CrossAxisAlignment.start,
+              Text('Login',
+                  style: text.headlineMedium?.copyWith(
+                      color: color.primary, fontWeight: FontWeight.w800)),
+              SizedBox(
+                height: 25,
+              ),
+              SizedBox(
+                  width: double.infinity,
+                  child: TaskitOutlineTextField(
+                      labelText: 'Email',
+                      controller: _emailController,
+                      autofillHints: AutofillHints.email,
+                      keyboardType: TextInputType.emailAddress)),
+              SizedBox(
+                height: 15,
+              ),
+              TaskitOutLineTextFieldWithPassword(
+                  labelText: 'Password', controller: _passwordController),
+              SizedBox(
+                height: 10,
+              ),
+              Align(
+                alignment: Alignment.centerRight,
+                child: RichText(
+                  textScaler: MediaQuery.of(context).textScaler,
+                  text: TextSpan(
+                    children: [
+                      TextSpan(
+                          text: 'Forgot your password',
+                          style: text.bodySmall?.copyWith(
+                            color: color.primary,
+                            fontWeight: FontWeight.bold,
+                          ),
+                          recognizer: TapGestureRecognizer()
+                            ..onTap = () => context.push('/forgot_password'))
+                    ],
+                    style: text.bodyMedium,
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 15,
+              ),
+              SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                  onPressed: _onSummit,
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: color.primary,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20.0),
+                    ),
+                  ),
+                  child: state.isLoading
+                      ? Center(
+                          child: CircularProgressIndicator(
+                            color: color.onPrimary,
+                          ),
+                        )
+                      : Text('Login',
+                          style: text.titleMedium?.copyWith(
+                            color: color.onPrimary,
+                          )),
+                ),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              SizedBox(
+                width: double.infinity,
+                height: 40,
+                child: Stack(
                   children: [
                     Center(
-                      child: Text(
-                        'Login',
-                        textAlign: TextAlign.center,
-                        style: text.headlineMedium?.copyWith(
-                            color: color.onSurface,
-                            fontWeight: FontWeight.w600),
+                        child: Container(
+                            height: 4,
+                            decoration: BoxDecoration(
+                              color: color.surfaceContainerHighest,
+                              borderRadius: BorderRadius.circular(40),
+                            ))),
+                    Center(
+                        child: Container(
+                      width: 60.0,
+                      decoration: BoxDecoration(
+                        color: color.surface,
+                        borderRadius: BorderRadius.circular(40),
                       ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsetsDirectional.fromSTEB(
-                          0.0, 12.0, 0.0, 24.0),
                       child: Center(
-                        child: Text('Filling out the form below to continue',
-                            style: Theme.of(context).textTheme.labelMedium),
-                      ),
-                    ),
-                    Padding(
-                        padding: const EdgeInsets.only(bottom: 16.0),
-                        child: ElevatedButton(
-                          onPressed: _onSummit,
-                          style: ElevatedButton.styleFrom(
-                            minimumSize: const Size(double.infinity, 40),
-                            backgroundColor: color.primary,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(12.0),
-                            ),
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: state.isLoading
-                                ? Center(
-                                    child: CircularProgressIndicator(
-                                      color: color.onPrimary,
-                                    ),
-                                  )
-                                : Text('Login',
-                                    style: text.titleMedium
-                                        ?.copyWith(color: color.onPrimary)),
-                          ),
-                        )),
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 16.0),
-                      child: SizedBox(
-                        width: double.infinity,
-                        child: OutlinedButton.icon(
-                          icon: SvgPicture.asset(
-                            'assets/svg/google.svg',
-                            width: 24.0,
-                            height: 24.0,
-                            fit: BoxFit.cover,
-                          ),
-                          onPressed: () {},
-                          label: Text(
-                            'Login with Google',
-                            style: text.titleSmall?.copyWith(
+                        child: Text(
+                          'OR',
+                          style: text.labelMedium?.copyWith(
                               color: color.onSurfaceVariant,
-                            ),
-                          ),
-                          style: OutlinedButton.styleFrom(
-                            minimumSize: const Size.fromHeight(44),
-                            padding: EdgeInsets.zero,
-                            overlayColor: color.primary,
-                            backgroundColor: color.secondaryContainer,
-                            side: BorderSide(
-                              color: color.secondaryContainer,
-                              width: 2.0,
-                            ),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(12.0),
-                            ),
-                          ).copyWith(
-                            overlayColor: WidgetStatePropertyAll(
-                              color.primary.withAlpha(30), // hoverColor
-                            ),
-                          ),
+                              fontWeight: FontWeight.w600),
                         ),
                       ),
-                    ),
-                    Align(
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 12),
-                        child: RichText(
-                          textScaler: MediaQuery.of(context).textScaler,
-                          text: TextSpan(
-                            children: [
-                              TextSpan(
-                                text: 'Don\'t have an account? ',
-                                style: text.bodySmall?.copyWith(
-                                  color: color.onSurfaceVariant,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                              ),
-                              TextSpan(
-                                text: 'Sign up here',
-                                style: text.bodySmall?.copyWith(
-                                  color: color.primary,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                                recognizer: TapGestureRecognizer()
-                                  ..onTap = () => context.push('/signup'),
-                              )
-                            ],
-                            style: text.bodyMedium,
-                          ),
-                        ),
-                      ),
-                    )
+                    ))
                   ],
                 ),
+              ),
+              SizedBox(height: 10),
+              SizedBox(
+                width: double.infinity,
+                child: OutlinedButton.icon(
+                  icon: SvgPicture.asset(
+                    'assets/svg/google.svg',
+                    width: 24.0,
+                    height: 24.0,
+                    fit: BoxFit.cover,
+                  ),
+                  onPressed: () {},
+                  label: Text(
+                    'Login with Google',
+                    style: text.titleSmall?.copyWith(
+                      color: color.onSurfaceVariant,
+                    ),
+                  ),
+                  style: OutlinedButton.styleFrom(
+                    minimumSize: const Size.fromHeight(44),
+                    padding: EdgeInsets.zero,
+                    overlayColor: color.primary,
+                    backgroundColor: color.surfaceContainerLow,
+                    side: BorderSide(
+                      color: color.surfaceContainerHighest,
+                      width: 2.0,
+                    ),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12.0),
+                    ),
+                  ).copyWith(
+                    overlayColor: WidgetStatePropertyAll(
+                      color.primary.withAlpha(30), // hoverColor
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 15,
+              ),
+              Align(
+                alignment: Alignment.center,
+                child: RichText(
+                  textScaler: MediaQuery.of(context).textScaler,
+                  text: TextSpan(
+                    children: [
+                      TextSpan(
+                        text: 'Don\'t have an account? ',
+                        style: text.bodySmall?.copyWith(
+                          color: color.onSurfaceVariant,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      TextSpan(
+                        text: 'Sign up here',
+                        style: text.bodySmall?.copyWith(
+                          color: color.primary,
+                          fontWeight: FontWeight.w600,
+                        ),
+                        recognizer: TapGestureRecognizer()
+                          ..onTap = () => context.push('/signup'),
+                      )
+                    ],
+                    style: text.bodyMedium,
+                  ),
+                ),
               )
-            ],
-          ),
-        ),
+            ]),
       ),
     );
   }
+
+//endregion
 }
