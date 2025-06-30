@@ -3,7 +3,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:retrofit/error_logger.dart';
 import 'package:retrofit/http.dart';
 import 'package:taskit/features/task/data/dto/req/add_task/add_task.dart';
+import 'package:taskit/features/task/data/dto/req/update_task/update_task_req.dart';
 import 'package:taskit/features/task/data/dto/res/task/add_task_data.dart';
+import 'package:taskit/features/task/data/dto/res/task/update_task_data.dart';
 import 'package:taskit/shared/data/source/remote/network/network_service.dart';
 
 import '../../../../../shared/data/dto/response/base_response.dart';
@@ -30,5 +32,12 @@ abstract class TaskApi {
   Future<BaseResponse<AddTaskData>> createTask(
     @Header('Authorization') String token,
     @Body() AddTaskReq addTaskReq,
+  );
+
+  @PATCH('/task/{id}')
+  Future<BaseResponse<UpdateTaskData>> updateTask(
+    @Header('Authorization') String token,
+    @Path('id') String taskId,
+    @Body() UpdateTaskReq updateTaskReq,
   );
 }

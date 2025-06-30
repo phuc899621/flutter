@@ -234,11 +234,11 @@ class TaskLocalSource implements ITaskLocalSource {
 //endregion
 
 // ================================
-// ========== DELETE ==============
+// ========== SYNC ==============
 // ================================
 //region SYNC Task
   @override
-  Future<void> updateSyncTask(
+  Future<void> updateSyncAddTaskAndSubtask(
       TaskTableCompanion task, List<SubtaskTableCompanion> subtask) async {
     try {
       return await _db.transaction(() async {
@@ -247,6 +247,16 @@ class TaskLocalSource implements ITaskLocalSource {
       });
     } catch (e) {
       logger.e('Insert task error: $e');
+    }
+  }
+
+  @override
+  Future<void> updateSyncTask(int localId) async {
+    try {
+      logger.i('updateSyncTask $localId');
+      return await updateSyncTask(localId);
+    } catch (e) {
+      logger.e('Sync task error: $e');
     }
   }
 //endregion

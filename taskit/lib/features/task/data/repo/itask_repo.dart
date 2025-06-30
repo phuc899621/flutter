@@ -68,4 +68,10 @@ abstract interface class ITaskRepo {
   //================================
 
   Future<void> insertRemoteTask(int taskLocalId);
+
+  //================================
+  //========== Update REMOTE =======
+  //================================
+
+  Future<void> updateRemoteTaskTitle(int taskLocalId);
 }

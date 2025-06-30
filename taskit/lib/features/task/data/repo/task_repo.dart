@@ -19,6 +19,7 @@ import '../../../user/data/source/local/user_local_source.dart';
 import '../../domain/entities/category_entity.dart';
 import '../../domain/entities/subtask_entity.dart';
 import '../../domain/entities/task_status_enum.dart';
+import '../dto/req/update_task/update_task_req.dart';
 import '../mapper/task_mapper.dart';
 import '../source/local/itask_local_source.dart';
 import '../source/local/task_local_source.dart';
@@ -43,6 +44,7 @@ class TaskRepo with DioExceptionMapper implements ITaskRepo {
   final ITaskRemoteSource _taskRemoteSource;
   final ITokenRepository _tokenService;
   final ITaskMapper _iTaskMapper;
+  final Map<int, Timer> _syncTaskTimers = {};
 
   TaskRepo(this._taskApi, this._taskLocalSource, this._tokenService,
       this._iTaskMapper, this._taskRemoteSource);
@@ -95,8 +97,13 @@ class TaskRepo with DioExceptionMapper implements ITaskRepo {
       _taskLocalSource.updateSubtaskStatus(localId);
 
   @override
-  Future<void> updateTaskTitle(int localId, String title) =>
-      _taskLocalSource.updateTaskTitle(localId, title);
+  Future<void> updateTaskTitle(int localId, String title) async {
+    _taskLocalSource.updateTaskTitle(localId, title);
+    _syncTaskTimers[localId]?.cancel();
+    _syncTaskTimers[localId] = Timer(const Duration(seconds: 10), () {
+      updateRemoteTaskTitle(localId);
+    });
+  }
 
   @override
   Future<void> updateTaskDescription(int localId, String description) =>
@@ -262,11 +269,37 @@ class TaskRepo with DioExceptionMapper implements ITaskRepo {
               taskTblData, categoryTblData, subtasksTblData));
       logger.i('add task response: \n $response');
 
-      _taskLocalSource.updateSyncTask(
+      _taskLocalSource.updateSyncAddTaskAndSubtask(
           _iTaskMapper.toSyncTaskTableCompanion(response.data),
           _iTaskMapper.toSyncListSubtaskTblCompanion(response.data.subtasks));
     } catch (e, s) {
       logger.e('add task error: \n $e \n $s');
     }
   }
+
+  //endregion
+  //=====================================
+//============= Update REMOTE =========
+//=====================================
+//region Update REmote
+  @override
+  Future<void> updateRemoteTaskTitle(int taskLocalId) async {
+    try {
+      final token = await _tokenService.getToken();
+      if (token == null) return;
+      final taskTblData = await _taskLocalSource.getTaskByLocalId(taskLocalId);
+      if (taskTblData == null) return;
+      if (taskTblData.remoteId.isEmpty) return;
+      final request = UpdateTaskReq.titleOnly(
+        localId: taskLocalId,
+        title: taskTblData.title,
+      );
+      final response = await _taskRemoteSource.updateTask(
+          token, taskTblData.remoteId, request);
+      await _taskLocalSource.updateSyncTask(response.data.localId);
+    } catch (e, s) {
+      logger.e('update task error: \n $e \n $s');
+    }
+  }
+//endregion
 }

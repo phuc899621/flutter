@@ -87,6 +87,41 @@ class _TaskApi implements TaskApi {
     return _value;
   }
 
+  @override
+  Future<BaseResponse<UpdateTaskData>> updateTask(
+    String token,
+    String taskId,
+    UpdateTaskReq updateTaskReq,
+  ) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{r'Authorization': token};
+    _headers.removeWhere((k, v) => v == null);
+    final _data = updateTaskReq;
+    final _options = _setStreamType<BaseResponse<UpdateTaskData>>(
+      Options(method: 'PATCH', headers: _headers, extra: _extra)
+          .compose(
+            _dio.options,
+            '/task/${taskId}',
+            queryParameters: queryParameters,
+            data: _data,
+          )
+          .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
+    );
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    late BaseResponse<UpdateTaskData> _value;
+    try {
+      _value = BaseResponse<UpdateTaskData>.fromJson(
+        _result.data!,
+        (json) => UpdateTaskData.fromJson(json as Map<String, dynamic>),
+      );
+    } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options);
+      rethrow;
+    }
+    return _value;
+  }
+
   RequestOptions _setStreamType<T>(RequestOptions requestOptions) {
     if (T != dynamic &&
         !(requestOptions.responseType == ResponseType.bytes ||
