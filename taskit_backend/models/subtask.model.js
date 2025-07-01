@@ -7,7 +7,7 @@ const subtaskSchema = new Schema({
     title: {
         type: String,
         required: true,
-        trim: true,
+        default: ''
     },
     isCompleted: {
         type: Boolean,
