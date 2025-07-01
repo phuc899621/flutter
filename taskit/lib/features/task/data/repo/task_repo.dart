@@ -6,6 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:taskit/features/task/data/dto/req/subtask/add_subtask.dart';
 import 'package:taskit/features/task/data/dto/req/subtask/update_subtask.dart';
+import 'package:taskit/features/task/data/dto/req/subtask/update_subtask_list_req.dart';
 import 'package:taskit/features/task/data/mapper/itask_mapper.dart';
 import 'package:taskit/features/task/data/source/remote/itask_remote_source.dart';
 import 'package:taskit/features/task/domain/entities/task_entity.dart';
@@ -578,12 +579,12 @@ class TaskRepo with DioExceptionMapper implements ITaskRepo {
       if (subtask == null || subtask.remoteId.isEmpty) return;
       final token = await _tokenService.getToken();
       if (token == null) return;
-      final request = [
+      final request = UpdateSubtaskListReq(subtasks: [
         UpdateSubtaskReq.statusOnly(
             id: subtask.remoteId,
             isCompleted: subtask.isCompleted,
             localId: subtask.localId)
-      ];
+      ]);
       logger.i('update subtask request: \n $request');
       final response = await _taskRemoteSource.updateSubtask(token, request);
       await _taskLocalSource.updateSyncSubtasks(response.data.subtasks);
@@ -600,10 +601,13 @@ class TaskRepo with DioExceptionMapper implements ITaskRepo {
       if (subtasks.isEmpty) return;
       final token = await _tokenService.getToken();
       if (token == null) return;
-      final request = subtasks
-          .map((s) => UpdateSubtaskReq.statusOnly(
-              id: s.remoteId, isCompleted: s.isCompleted, localId: s.localId))
-          .toList();
+      final request = UpdateSubtaskListReq(
+          subtasks: subtasks
+              .map((s) => UpdateSubtaskReq.statusOnly(
+                  id: s.remoteId,
+                  isCompleted: s.isCompleted,
+                  localId: s.localId))
+              .toList());
       logger.i('update subtask request: \n $request');
       final response = await _taskRemoteSource.updateSubtask(token, request);
       await _taskLocalSource.updateSyncSubtasks(response.data.subtasks);
@@ -620,12 +624,12 @@ class TaskRepo with DioExceptionMapper implements ITaskRepo {
       if (subtask == null || subtask.remoteId.isEmpty) return;
       final token = await _tokenService.getToken();
       if (token == null) return;
-      final request = [
+      final request = UpdateSubtaskListReq(subtasks: [
         UpdateSubtaskReq.titleOnly(
             id: subtask.remoteId,
             title: subtask.title,
             localId: subtask.localId)
-      ];
+      ]);
       logger.i('update subtask request: \n $request');
       final response = await _taskRemoteSource.updateSubtask(token, request);
       await _taskLocalSource.updateSyncSubtasks(response.data.subtasks);

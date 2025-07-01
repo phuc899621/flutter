@@ -93,7 +93,7 @@ class TaskServices {
             if (updateData.title) query.title = updateData.title;
             if (updateData.description) query.description = updateData.description;
             if ('dueDate' in updateData) {
-                query.dueDate = updateData.dueDate; // chấp nhận cả null
+                query.dueDate = updateData.dueDate; 
             }
             if (updateData.status) query.status = updateData.status;
             if (updateData.priority) query.priority = updateData.priority;

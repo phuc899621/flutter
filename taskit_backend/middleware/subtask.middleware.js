@@ -55,8 +55,7 @@ export const update_subtasks=[
     .withMessage('Subtask ID must be a valid MongoDB ObjectId'),
 
     body('subtasks.*.title')
-    .notEmpty()
-    .withMessage('Title is required')
+    .optional()
     .isString()
     .withMessage('Title must be a string'),
     body('subtasks.*.isCompleted')

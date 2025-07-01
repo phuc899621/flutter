@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:taskit/features/task/data/dto/req/add_task/add_task.dart';
 import 'package:taskit/features/task/data/dto/req/subtask/add_subtask.dart';
+import 'package:taskit/features/task/data/dto/req/subtask/update_subtask_list_req.dart';
 import 'package:taskit/features/task/data/source/remote/itask_remote_source.dart';
 import 'package:taskit/features/task/data/source/remote/subtask_api.dart';
 import 'package:taskit/features/task/data/source/remote/task_api.dart';
@@ -11,7 +12,6 @@ import '../../../../../shared/data/dto/response/base_response_data.dart';
 import '../../../../../shared/exception/failure.dart';
 import '../../../../../shared/mixin/dio_exception_mapper.dart';
 import '../../dto/req/category/add_category_req.dart';
-import '../../dto/req/subtask/update_subtask.dart';
 import '../../dto/req/update_task/update_task_req.dart';
 import '../../dto/res/category/add_category_data.dart';
 import '../../dto/res/subtask/add_subtask_data.dart';
@@ -100,7 +100,7 @@ class TaskRemoteSource with DioExceptionMapper implements ITaskRemoteSource {
 
   @override
   Future<BaseResponse<UpdateSubtaskData>> updateSubtask(
-      String token, List<UpdateSubtaskReq> updateList) {
+      String token, UpdateSubtaskListReq updateList) {
     try {
       final response = _subtaskApi.update('Bearer $token', updateList);
       return response;

@@ -4,6 +4,7 @@ import 'package:retrofit/error_logger.dart';
 import 'package:retrofit/http.dart';
 import 'package:taskit/features/task/data/dto/req/subtask/add_subtask.dart';
 import 'package:taskit/features/task/data/dto/req/subtask/update_subtask.dart';
+import 'package:taskit/features/task/data/dto/req/subtask/update_subtask_list_req.dart';
 import 'package:taskit/features/task/data/dto/res/subtask/add_subtask_data.dart';
 import 'package:taskit/features/task/data/dto/res/subtask/update_subtask_data.dart';
 import 'package:taskit/shared/data/source/remote/network/network_service.dart';
@@ -24,16 +25,20 @@ abstract class SubtaskApi {
 
   @PUT('/subtask')
   Future<BaseResponse<UpdateSubtaskData>> update(
-      @Header('Authorization') String token,
-      @Body() List<UpdateSubtaskReq> updateList,);
+    @Header('Authorization') String token,
+    @Body() UpdateSubtaskListReq updateList,
+  );
 
   @PUT('/task/{taskId}/subtask')
   Future<BaseResponse<List<AddSubtaskData>>> add(
-      @Header('Authorization') String token,
-      @Path('taskId') String taskId,
-      @Body() List<AddSubtaskReq> addList,);
+    @Header('Authorization') String token,
+    @Path('taskId') String taskId,
+    @Body() List<AddSubtaskReq> addList,
+  );
 
   @DELETE('/subtask/{id}')
-  Future<BaseResponse<BaseData>> delete(@Header('Authorization') String token,
-      @Path('id') String subtaskId,);
+  Future<BaseResponse<BaseData>> delete(
+    @Header('Authorization') String token,
+    @Path('id') String subtaskId,
+  );
 }
