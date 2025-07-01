@@ -283,6 +283,7 @@ class TaskLocalSource implements ITaskLocalSource {
       final categoryWithSameName =
           await _categoryDao.findByName(category.name.value);
       if (categoryWithSameName != null) return -1;
+      logger.i('Insert category 2, not null: $category');
       return _categoryDao.insertCategory(category);
     } catch (e) {
       logger.e('Insert category error: $e');

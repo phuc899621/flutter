@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:taskit/features/task/data/dto/req/add_task/add_task.dart';
-import 'package:taskit/features/task/data/dto/req/subtask/add_subtask.dart';
+import 'package:taskit/features/task/data/dto/req/subtask/add_subtask_list_req.dart';
 import 'package:taskit/features/task/data/dto/req/subtask/update_subtask_list_req.dart';
 import 'package:taskit/features/task/data/source/remote/itask_remote_source.dart';
 import 'package:taskit/features/task/data/source/remote/subtask_api.dart';
@@ -10,6 +10,7 @@ import 'package:taskit/features/task/data/source/remote/task_api.dart';
 import '../../../../../shared/data/dto/response/base_response.dart';
 import '../../../../../shared/data/dto/response/base_response_data.dart';
 import '../../../../../shared/exception/failure.dart';
+import '../../../../../shared/log/logger_provider.dart';
 import '../../../../../shared/mixin/dio_exception_mapper.dart';
 import '../../dto/req/category/add_category_req.dart';
 import '../../dto/req/update_task/update_task_req.dart';
@@ -53,7 +54,7 @@ class TaskRemoteSource with DioExceptionMapper implements ITaskRemoteSource {
 
   @override
   Future<BaseResponse<List<AddSubtaskData>>> addSubTask(
-      String token, String taskId, List<AddSubtaskReq> subtask) async {
+      String token, String taskId, AddSubtaskListReq subtask) async {
     try {
       final response = await _subtaskApi.add('Bearer $token', taskId, subtask);
       return response;
@@ -69,6 +70,7 @@ class TaskRemoteSource with DioExceptionMapper implements ITaskRemoteSource {
       String token, AddCategoryReq category) async {
     // TODO: implement addCategory
     try {
+      logger.i('add category $token $category');
       final response = await _categoryApi.add('Bearer $token', category);
       return response;
     } on DioException catch (e, s) {

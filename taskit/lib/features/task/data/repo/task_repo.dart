@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:taskit/features/task/data/dto/req/subtask/add_subtask.dart';
+import 'package:taskit/features/task/data/dto/req/subtask/add_subtask_list_req.dart';
 import 'package:taskit/features/task/data/dto/req/subtask/update_subtask.dart';
 import 'package:taskit/features/task/data/dto/req/subtask/update_subtask_list_req.dart';
 import 'package:taskit/features/task/data/mapper/itask_mapper.dart';
@@ -283,6 +284,7 @@ class TaskRepo with DioExceptionMapper implements ITaskRepo {
     final categoryLocalId = await _taskLocalSource
         .insertCategory(_iTaskMapper.fromCategoryEntity(category));
     if (categoryLocalId == -1) return -1;
+    logger.i('insert category with localId $categoryLocalId');
     insertRemoteCategory(categoryLocalId);
     return categoryLocalId;
   }
@@ -343,10 +345,10 @@ class TaskRepo with DioExceptionMapper implements ITaskRepo {
   Future<void> deleteSubtask(int localId) async {
     final subtask = await _taskLocalSource.getSubtaskByLocalId(localId);
     final token = await _tokenService.getToken();
+    await _taskLocalSource.deleteSubtaskByLocalId(localId);
     logger.i('delete subtask with localId $localId');
     if (subtask == null || token == null || subtask.remoteId.isEmpty) return;
-    logger.i('delete subtask with remoteId ${subtask.remoteId}');
-    await _taskLocalSource.deleteSubtaskByLocalId(localId);
+
     deleteRemoteSubtask(subtask.remoteId);
   }
 
@@ -391,12 +393,12 @@ class TaskRepo with DioExceptionMapper implements ITaskRepo {
       final subtaskTblData =
           await _taskLocalSource.getSubtaskByLocalId(subtaskLocalId);
       if (subtaskTblData == null) return;
-      final request = [
+      final request = AddSubtaskListReq(subtasks: [
         AddSubtaskReq(
           localId: subtaskTblData.localId,
           title: subtaskTblData.title,
         )
-      ];
+      ]);
       logger.i('add subtask request: \n $request');
       final response = await _taskRemoteSource.addSubTask(
           token, taskTblData.remoteId, request);
@@ -412,12 +414,12 @@ class TaskRepo with DioExceptionMapper implements ITaskRepo {
     try {
       final token = await _tokenService.getToken();
       if (token == null) return;
-      final category = await _taskLocalSource.getTaskByLocalId(categoryLocalId);
+      final category =
+          await _taskLocalSource.getCategoryByLocalId(categoryLocalId);
       if (category == null) return;
-
       final request = AddCategoryReq(
         localId: category.localId,
-        name: category.title,
+        name: category.name,
       );
       logger.i('add category request: \n $request');
 

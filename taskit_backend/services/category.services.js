@@ -21,7 +21,7 @@ class CategoryServices {
         try {
             const {localId,name}= request;
             const existing = await CategoryModel.findOne({ userId, name });
-            if(existing.length > 0) {
+            if( existing) {
                 throw new HttpError("Category name already exists", 400);
             }
             const created = await CategoryModel.create({ userId, name, localId });

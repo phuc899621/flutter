@@ -1,5 +1,6 @@
 import 'package:taskit/features/task/data/dto/req/category/add_category_req.dart';
 import 'package:taskit/features/task/data/dto/req/subtask/add_subtask.dart';
+import 'package:taskit/features/task/data/dto/req/subtask/add_subtask_list_req.dart';
 import 'package:taskit/features/task/data/dto/req/subtask/update_subtask_list_req.dart';
 import 'package:taskit/features/task/data/dto/req/update_task/update_task_req.dart';
 import 'package:taskit/features/task/data/dto/res/category/add_category_data.dart';
@@ -18,20 +19,20 @@ abstract interface class ITaskRemoteSource {
   //========================================
   Future<BaseResponse<AddTaskData>> addTask(String token, AddTaskReq task);
 
-  Future<BaseResponse<List<AddSubtaskData>>> addSubTask(
-      String token, String taskId, List<AddSubtaskReq> task);
+  Future<BaseResponse<List<AddSubtaskData>>> addSubTask(String token,
+      String taskId, AddSubtaskListReq task);
 
-  Future<BaseResponse<AddCategoryData>> addCategory(
-      String token, AddCategoryReq category);
+  Future<BaseResponse<AddCategoryData>> addCategory(String token,
+      AddCategoryReq category);
 
   //=======================================
   //============= Update Task ================
   //========================================
-  Future<BaseResponse<UpdateTaskData>> updateTask(
-      String token, String taskId, UpdateTaskReq updateTaskReq);
+  Future<BaseResponse<UpdateTaskData>> updateTask(String token, String taskId,
+      UpdateTaskReq updateTaskReq);
 
-  Future<BaseResponse<UpdateSubtaskData>> updateSubtask(
-      String token, UpdateSubtaskListReq updateList);
+  Future<BaseResponse<UpdateSubtaskData>> updateSubtask(String token,
+      UpdateSubtaskListReq updateList);
 
 //=======================================
 //============= Delete Task ==============

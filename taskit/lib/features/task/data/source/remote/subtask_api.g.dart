@@ -55,15 +55,15 @@ class _SubtaskApi implements SubtaskApi {
   Future<BaseResponse<List<AddSubtaskData>>> add(
     String token,
     String taskId,
-    List<AddSubtaskReq> addList,
+    AddSubtaskListReq addList,
   ) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{r'Authorization': token};
     _headers.removeWhere((k, v) => v == null);
-    final _data = addList.map((e) => e.toJson()).toList();
+    final _data = addList;
     final _options = _setStreamType<BaseResponse<List<AddSubtaskData>>>(
-      Options(method: 'PUT', headers: _headers, extra: _extra)
+      Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
             '/task/${taskId}/subtask',

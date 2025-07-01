@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -169,9 +170,10 @@ class TaskService implements ITaskService {
   }
 
   @override
-  Stream<TaskEntity> watchTaskByLocalId(int localId) =>
-      _iTaskRepo.watchAllTasks().map(
-          (tasks) => tasks.firstWhere((element) => element.localId == localId));
+  Stream<TaskEntity?> watchTaskByLocalId(int localId) =>
+      _iTaskRepo.watchAllTasks().map((tasks) => tasks.firstWhereOrNull(
+            (element) => element.localId == localId,
+          ));
 
   @override
   Stream<List<SubtaskEntity>> watchSubtasksByTaskLocalId(int localId) =>

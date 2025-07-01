@@ -30,7 +30,7 @@ abstract interface class ITaskService {
 
   Stream<List<CategoryEntity>> watchAllCategories();
 
-  Stream<TaskEntity> watchTaskByLocalId(int localId);
+  Stream<TaskEntity?> watchTaskByLocalId(int localId);
 
   Stream<List<SubtaskEntity>> watchSubtasksByTaskLocalId(int localId);
 
