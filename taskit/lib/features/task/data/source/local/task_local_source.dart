@@ -331,21 +331,30 @@ class TaskLocalSource implements ITaskLocalSource {
   Future<int> insertSubtask(SubtaskTableCompanion subtask) async {
     try {
       return await _db.transaction(() async {
-        await _subtaskDao.insertSubtask(subtask);
-        final task = await _taskDao.getTaskByLocalId(subtask.taskLocalId.value);
+        logger.e('Insert subtask: $subtask');
+        final subtaskLocalId = await _subtaskDao.insertSubtask(subtask);
+        final subtaskTbl =
+            await _subtaskDao.getSubtasksByLocalId(subtaskLocalId);
+        logger.i('subtask table $subtaskTbl');
+        if (subtaskTbl == null) throw Exception('Subtask not found');
+        logger.i('subtask inserted');
+        final task = await _taskDao.getTaskByLocalId(subtaskTbl.taskLocalId);
+        logger.i('task: $task');
         if (task == null) {
           throw Exception('Task not found, cannot insert subtask');
         }
-        final uncompletedSubtaskList = await _subtaskDao
-            .findUncompletedSubtaskByTaskLocalId(subtask.taskLocalId.value);
+        final uncompletedSubtaskList =
+            await _subtaskDao.findUncompletedSubtaskByTaskLocalId(task.localId);
+        logger.i('uncompletedSubtaskList: $uncompletedSubtaskList');
         final newTaskStatus = uncompletedSubtaskList.isEmpty
             ? 'completed'
             : (task.dueDate != null ? 'scheduled' : 'pending');
         if (task.status != newTaskStatus) {
-          await _taskDao.updateTaskStatus(
-              subtask.taskLocalId.value, newTaskStatus);
+          logger.i('update task status');
+          await _taskDao.updateTaskStatus(task.localId, newTaskStatus);
         }
-        return subtask.localId.value;
+        logger.i('subtask inserted');
+        return subtaskTbl.localId;
       });
     } catch (e) {
       logger.e('Insert subtask error: $e');

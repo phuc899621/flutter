@@ -109,10 +109,7 @@ class TaskRepo with DioExceptionMapper implements ITaskRepo {
       logger.i('update task status timer');
       updateRemoteTaskStatus(localId);
     });
-    if (status == TaskStatus.completed) {
-      logger.i('update subtask status timer');
-      updateRemoteSubtaskStatusByTaskId(localId);
-    }
+    updateRemoteSubtaskStatusByTaskId(localId);
   }
 
   @override
@@ -208,7 +205,7 @@ class TaskRepo with DioExceptionMapper implements ITaskRepo {
     _syncSubtaskTitleTimer[localId]?.cancel();
     _syncSubtaskTitleTimer[localId] = Timer(const Duration(seconds: 10), () {
       logger.i('update subtask title timer');
-      updateRemoteSubtaskStatus(localId);
+      updateRemoteSubtaskTitle(localId);
     });
   }
 
@@ -316,6 +313,7 @@ class TaskRepo with DioExceptionMapper implements ITaskRepo {
       taskLocalId: taskLocalId,
       isCompleted: false,
     );
+    logger.i('insert subtask: $subtaskEntity');
     int subtaskId = await _taskLocalSource
         .insertSubtask(_iTaskMapper.fromSubtaskEntity(subtaskEntity));
     if (subtaskId == -1) return;
@@ -556,11 +554,15 @@ class TaskRepo with DioExceptionMapper implements ITaskRepo {
   @override
   Future<void> updateRemoteTaskStatus(int taskLocalId) async {
     try {
+      logger.i('update task status starting');
       final token = await _tokenService.getToken();
       if (token == null) return;
+      logger.i('update task status has token');
       final taskTblData = await _taskLocalSource.getTaskByLocalId(taskLocalId);
       if (taskTblData == null) return;
+      logger.i('update task status not null');
       if (taskTblData.remoteId.isEmpty) return;
+      logger.i('update task status has remoteId');
       final request = UpdateTaskReq.statusOnly(
           localId: taskLocalId, status: taskTblData.status);
       final response = await _taskRemoteSource.updateTask(

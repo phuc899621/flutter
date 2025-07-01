@@ -21,7 +21,7 @@ export const add_subtasks=[
     .isArray()
     .withMessage('Subtasks must be an array'),
     body('subtasks.*.title')
-    .notEmpty()
+    .exists({ checkNull: true }) 
     .withMessage('Title is required')
     .isString()
     .withMessage('Title must be a string'),
