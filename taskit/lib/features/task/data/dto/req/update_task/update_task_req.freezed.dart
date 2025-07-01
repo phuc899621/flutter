@@ -13,17 +13,27 @@ part of 'update_task_req.dart';
 // dart format off
 T _$identity<T>(T value) => value;
 UpdateTaskReq _$UpdateTaskReqFromJson(Map<String, dynamic> json) {
-  switch (json['type']) {
+  switch (json['runtimeType']) {
     case 'full':
       return _UpdateTaskFullReq.fromJson(json);
     case 'titleOnly':
       return _UpdateTaskTitleOnlyReq.fromJson(json);
     case 'statusOnly':
       return _UpdateTaskStatusOnlyReq.fromJson(json);
+    case 'priorityOnly':
+      return _UpdateTaskPriorityOnlyReq.fromJson(json);
+    case 'dueDateOnly':
+      return _UpdateTaskDueDateOnlyReq.fromJson(json);
+    case 'hasTimeOnly':
+      return _UpdateTaskHasTimeOnlyReq.fromJson(json);
+    case 'descriptionOnly':
+      return _UpdateTaskDescriptionOnlyReq.fromJson(json);
+    case 'categoryIdOnly':
+      return _UpdateTaskCategoryIdOnlyReq.fromJson(json);
 
     default:
-      throw CheckedFromJsonException(json, 'type', 'UpdateTaskReq',
-          'Invalid union type "${json['type']}"!');
+      throw CheckedFromJsonException(json, 'runtimeType', 'UpdateTaskReq',
+          'Invalid union type "${json['runtimeType']}"!');
   }
 }
 
@@ -104,7 +114,7 @@ class _UpdateTaskFullReq implements UpdateTaskReq {
       this.priority,
       this.status,
       required this.localId,
-      final List<UpdateSubtaskWithTaskReq>? subtasks,
+      final List<UpdateSubtaskReq>? subtasks,
       this.categoryId,
       final String? $type})
       : _subtasks = subtasks,
@@ -120,8 +130,8 @@ class _UpdateTaskFullReq implements UpdateTaskReq {
   final String? status;
   @override
   final int localId;
-  final List<UpdateSubtaskWithTaskReq>? _subtasks;
-  List<UpdateSubtaskWithTaskReq>? get subtasks {
+  final List<UpdateSubtaskReq>? _subtasks;
+  List<UpdateSubtaskReq>? get subtasks {
     final value = _subtasks;
     if (value == null) return null;
     if (_subtasks is EqualUnmodifiableListView) return _subtasks;
@@ -131,7 +141,7 @@ class _UpdateTaskFullReq implements UpdateTaskReq {
 
   final String? categoryId;
 
-  @JsonKey(name: 'type')
+  @JsonKey(name: 'runtimeType')
   final String $type;
 
   /// Create a copy of UpdateTaskReq
@@ -204,7 +214,7 @@ abstract mixin class _$UpdateTaskFullReqCopyWith<$Res>
       String? priority,
       String? status,
       int localId,
-      List<UpdateSubtaskWithTaskReq>? subtasks,
+      List<UpdateSubtaskReq>? subtasks,
       String? categoryId});
 }
 
@@ -263,7 +273,7 @@ class __$UpdateTaskFullReqCopyWithImpl<$Res>
       subtasks: freezed == subtasks
           ? _self._subtasks
           : subtasks // ignore: cast_nullable_to_non_nullable
-              as List<UpdateSubtaskWithTaskReq>?,
+              as List<UpdateSubtaskReq>?,
       categoryId: freezed == categoryId
           ? _self.categoryId
           : categoryId // ignore: cast_nullable_to_non_nullable
@@ -285,7 +295,7 @@ class _UpdateTaskTitleOnlyReq implements UpdateTaskReq {
   final int localId;
   final String title;
 
-  @JsonKey(name: 'type')
+  @JsonKey(name: 'runtimeType')
   final String $type;
 
   /// Create a copy of UpdateTaskReq
@@ -376,7 +386,7 @@ class _UpdateTaskStatusOnlyReq implements UpdateTaskReq {
   final int localId;
   final String status;
 
-  @JsonKey(name: 'type')
+  @JsonKey(name: 'runtimeType')
   final String $type;
 
   /// Create a copy of UpdateTaskReq
@@ -449,6 +459,467 @@ class __$UpdateTaskStatusOnlyReqCopyWithImpl<$Res>
       status: null == status
           ? _self.status
           : status // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _UpdateTaskPriorityOnlyReq implements UpdateTaskReq {
+  const _UpdateTaskPriorityOnlyReq(
+      {required this.localId, required this.priority, final String? $type})
+      : $type = $type ?? 'priorityOnly';
+  factory _UpdateTaskPriorityOnlyReq.fromJson(Map<String, dynamic> json) =>
+      _$UpdateTaskPriorityOnlyReqFromJson(json);
+
+  @override
+  final int localId;
+  final String priority;
+
+  @JsonKey(name: 'runtimeType')
+  final String $type;
+
+  /// Create a copy of UpdateTaskReq
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$UpdateTaskPriorityOnlyReqCopyWith<_UpdateTaskPriorityOnlyReq>
+      get copyWith =>
+          __$UpdateTaskPriorityOnlyReqCopyWithImpl<_UpdateTaskPriorityOnlyReq>(
+              this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$UpdateTaskPriorityOnlyReqToJson(
+      this,
+    );
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _UpdateTaskPriorityOnlyReq &&
+            (identical(other.localId, localId) || other.localId == localId) &&
+            (identical(other.priority, priority) ||
+                other.priority == priority));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hash(runtimeType, localId, priority);
+
+  @override
+  String toString() {
+    return 'UpdateTaskReq.priorityOnly(localId: $localId, priority: $priority)';
+  }
+}
+
+/// @nodoc
+abstract mixin class _$UpdateTaskPriorityOnlyReqCopyWith<$Res>
+    implements $UpdateTaskReqCopyWith<$Res> {
+  factory _$UpdateTaskPriorityOnlyReqCopyWith(_UpdateTaskPriorityOnlyReq value,
+          $Res Function(_UpdateTaskPriorityOnlyReq) _then) =
+      __$UpdateTaskPriorityOnlyReqCopyWithImpl;
+  @override
+  @useResult
+  $Res call({int localId, String priority});
+}
+
+/// @nodoc
+class __$UpdateTaskPriorityOnlyReqCopyWithImpl<$Res>
+    implements _$UpdateTaskPriorityOnlyReqCopyWith<$Res> {
+  __$UpdateTaskPriorityOnlyReqCopyWithImpl(this._self, this._then);
+
+  final _UpdateTaskPriorityOnlyReq _self;
+  final $Res Function(_UpdateTaskPriorityOnlyReq) _then;
+
+  /// Create a copy of UpdateTaskReq
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $Res call({
+    Object? localId = null,
+    Object? priority = null,
+  }) {
+    return _then(_UpdateTaskPriorityOnlyReq(
+      localId: null == localId
+          ? _self.localId
+          : localId // ignore: cast_nullable_to_non_nullable
+              as int,
+      priority: null == priority
+          ? _self.priority
+          : priority // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _UpdateTaskDueDateOnlyReq implements UpdateTaskReq {
+  const _UpdateTaskDueDateOnlyReq(
+      {required this.localId, this.dueDate, final String? $type})
+      : $type = $type ?? 'dueDateOnly';
+  factory _UpdateTaskDueDateOnlyReq.fromJson(Map<String, dynamic> json) =>
+      _$UpdateTaskDueDateOnlyReqFromJson(json);
+
+  @override
+  final int localId;
+  final DateTime? dueDate;
+
+  @JsonKey(name: 'runtimeType')
+  final String $type;
+
+  /// Create a copy of UpdateTaskReq
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$UpdateTaskDueDateOnlyReqCopyWith<_UpdateTaskDueDateOnlyReq> get copyWith =>
+      __$UpdateTaskDueDateOnlyReqCopyWithImpl<_UpdateTaskDueDateOnlyReq>(
+          this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$UpdateTaskDueDateOnlyReqToJson(
+      this,
+    );
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _UpdateTaskDueDateOnlyReq &&
+            (identical(other.localId, localId) || other.localId == localId) &&
+            (identical(other.dueDate, dueDate) || other.dueDate == dueDate));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hash(runtimeType, localId, dueDate);
+
+  @override
+  String toString() {
+    return 'UpdateTaskReq.dueDateOnly(localId: $localId, dueDate: $dueDate)';
+  }
+}
+
+/// @nodoc
+abstract mixin class _$UpdateTaskDueDateOnlyReqCopyWith<$Res>
+    implements $UpdateTaskReqCopyWith<$Res> {
+  factory _$UpdateTaskDueDateOnlyReqCopyWith(_UpdateTaskDueDateOnlyReq value,
+          $Res Function(_UpdateTaskDueDateOnlyReq) _then) =
+      __$UpdateTaskDueDateOnlyReqCopyWithImpl;
+  @override
+  @useResult
+  $Res call({int localId, DateTime? dueDate});
+}
+
+/// @nodoc
+class __$UpdateTaskDueDateOnlyReqCopyWithImpl<$Res>
+    implements _$UpdateTaskDueDateOnlyReqCopyWith<$Res> {
+  __$UpdateTaskDueDateOnlyReqCopyWithImpl(this._self, this._then);
+
+  final _UpdateTaskDueDateOnlyReq _self;
+  final $Res Function(_UpdateTaskDueDateOnlyReq) _then;
+
+  /// Create a copy of UpdateTaskReq
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $Res call({
+    Object? localId = null,
+    Object? dueDate = freezed,
+  }) {
+    return _then(_UpdateTaskDueDateOnlyReq(
+      localId: null == localId
+          ? _self.localId
+          : localId // ignore: cast_nullable_to_non_nullable
+              as int,
+      dueDate: freezed == dueDate
+          ? _self.dueDate
+          : dueDate // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _UpdateTaskHasTimeOnlyReq implements UpdateTaskReq {
+  const _UpdateTaskHasTimeOnlyReq(
+      {required this.localId, required this.hasTime, final String? $type})
+      : $type = $type ?? 'hasTimeOnly';
+  factory _UpdateTaskHasTimeOnlyReq.fromJson(Map<String, dynamic> json) =>
+      _$UpdateTaskHasTimeOnlyReqFromJson(json);
+
+  @override
+  final int localId;
+  final bool hasTime;
+
+  @JsonKey(name: 'runtimeType')
+  final String $type;
+
+  /// Create a copy of UpdateTaskReq
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$UpdateTaskHasTimeOnlyReqCopyWith<_UpdateTaskHasTimeOnlyReq> get copyWith =>
+      __$UpdateTaskHasTimeOnlyReqCopyWithImpl<_UpdateTaskHasTimeOnlyReq>(
+          this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$UpdateTaskHasTimeOnlyReqToJson(
+      this,
+    );
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _UpdateTaskHasTimeOnlyReq &&
+            (identical(other.localId, localId) || other.localId == localId) &&
+            (identical(other.hasTime, hasTime) || other.hasTime == hasTime));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hash(runtimeType, localId, hasTime);
+
+  @override
+  String toString() {
+    return 'UpdateTaskReq.hasTimeOnly(localId: $localId, hasTime: $hasTime)';
+  }
+}
+
+/// @nodoc
+abstract mixin class _$UpdateTaskHasTimeOnlyReqCopyWith<$Res>
+    implements $UpdateTaskReqCopyWith<$Res> {
+  factory _$UpdateTaskHasTimeOnlyReqCopyWith(_UpdateTaskHasTimeOnlyReq value,
+          $Res Function(_UpdateTaskHasTimeOnlyReq) _then) =
+      __$UpdateTaskHasTimeOnlyReqCopyWithImpl;
+  @override
+  @useResult
+  $Res call({int localId, bool hasTime});
+}
+
+/// @nodoc
+class __$UpdateTaskHasTimeOnlyReqCopyWithImpl<$Res>
+    implements _$UpdateTaskHasTimeOnlyReqCopyWith<$Res> {
+  __$UpdateTaskHasTimeOnlyReqCopyWithImpl(this._self, this._then);
+
+  final _UpdateTaskHasTimeOnlyReq _self;
+  final $Res Function(_UpdateTaskHasTimeOnlyReq) _then;
+
+  /// Create a copy of UpdateTaskReq
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $Res call({
+    Object? localId = null,
+    Object? hasTime = null,
+  }) {
+    return _then(_UpdateTaskHasTimeOnlyReq(
+      localId: null == localId
+          ? _self.localId
+          : localId // ignore: cast_nullable_to_non_nullable
+              as int,
+      hasTime: null == hasTime
+          ? _self.hasTime
+          : hasTime // ignore: cast_nullable_to_non_nullable
+              as bool,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _UpdateTaskDescriptionOnlyReq implements UpdateTaskReq {
+  const _UpdateTaskDescriptionOnlyReq(
+      {required this.localId, required this.description, final String? $type})
+      : $type = $type ?? 'descriptionOnly';
+  factory _UpdateTaskDescriptionOnlyReq.fromJson(Map<String, dynamic> json) =>
+      _$UpdateTaskDescriptionOnlyReqFromJson(json);
+
+  @override
+  final int localId;
+  final String description;
+
+  @JsonKey(name: 'runtimeType')
+  final String $type;
+
+  /// Create a copy of UpdateTaskReq
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$UpdateTaskDescriptionOnlyReqCopyWith<_UpdateTaskDescriptionOnlyReq>
+      get copyWith => __$UpdateTaskDescriptionOnlyReqCopyWithImpl<
+          _UpdateTaskDescriptionOnlyReq>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$UpdateTaskDescriptionOnlyReqToJson(
+      this,
+    );
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _UpdateTaskDescriptionOnlyReq &&
+            (identical(other.localId, localId) || other.localId == localId) &&
+            (identical(other.description, description) ||
+                other.description == description));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hash(runtimeType, localId, description);
+
+  @override
+  String toString() {
+    return 'UpdateTaskReq.descriptionOnly(localId: $localId, description: $description)';
+  }
+}
+
+/// @nodoc
+abstract mixin class _$UpdateTaskDescriptionOnlyReqCopyWith<$Res>
+    implements $UpdateTaskReqCopyWith<$Res> {
+  factory _$UpdateTaskDescriptionOnlyReqCopyWith(
+          _UpdateTaskDescriptionOnlyReq value,
+          $Res Function(_UpdateTaskDescriptionOnlyReq) _then) =
+      __$UpdateTaskDescriptionOnlyReqCopyWithImpl;
+  @override
+  @useResult
+  $Res call({int localId, String description});
+}
+
+/// @nodoc
+class __$UpdateTaskDescriptionOnlyReqCopyWithImpl<$Res>
+    implements _$UpdateTaskDescriptionOnlyReqCopyWith<$Res> {
+  __$UpdateTaskDescriptionOnlyReqCopyWithImpl(this._self, this._then);
+
+  final _UpdateTaskDescriptionOnlyReq _self;
+  final $Res Function(_UpdateTaskDescriptionOnlyReq) _then;
+
+  /// Create a copy of UpdateTaskReq
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $Res call({
+    Object? localId = null,
+    Object? description = null,
+  }) {
+    return _then(_UpdateTaskDescriptionOnlyReq(
+      localId: null == localId
+          ? _self.localId
+          : localId // ignore: cast_nullable_to_non_nullable
+              as int,
+      description: null == description
+          ? _self.description
+          : description // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _UpdateTaskCategoryIdOnlyReq implements UpdateTaskReq {
+  const _UpdateTaskCategoryIdOnlyReq(
+      {required this.localId, required this.categoryId, final String? $type})
+      : $type = $type ?? 'categoryIdOnly';
+  factory _UpdateTaskCategoryIdOnlyReq.fromJson(Map<String, dynamic> json) =>
+      _$UpdateTaskCategoryIdOnlyReqFromJson(json);
+
+  @override
+  final int localId;
+  final String categoryId;
+
+  @JsonKey(name: 'runtimeType')
+  final String $type;
+
+  /// Create a copy of UpdateTaskReq
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$UpdateTaskCategoryIdOnlyReqCopyWith<_UpdateTaskCategoryIdOnlyReq>
+      get copyWith => __$UpdateTaskCategoryIdOnlyReqCopyWithImpl<
+          _UpdateTaskCategoryIdOnlyReq>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$UpdateTaskCategoryIdOnlyReqToJson(
+      this,
+    );
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _UpdateTaskCategoryIdOnlyReq &&
+            (identical(other.localId, localId) || other.localId == localId) &&
+            (identical(other.categoryId, categoryId) ||
+                other.categoryId == categoryId));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hash(runtimeType, localId, categoryId);
+
+  @override
+  String toString() {
+    return 'UpdateTaskReq.categoryIdOnly(localId: $localId, categoryId: $categoryId)';
+  }
+}
+
+/// @nodoc
+abstract mixin class _$UpdateTaskCategoryIdOnlyReqCopyWith<$Res>
+    implements $UpdateTaskReqCopyWith<$Res> {
+  factory _$UpdateTaskCategoryIdOnlyReqCopyWith(
+          _UpdateTaskCategoryIdOnlyReq value,
+          $Res Function(_UpdateTaskCategoryIdOnlyReq) _then) =
+      __$UpdateTaskCategoryIdOnlyReqCopyWithImpl;
+  @override
+  @useResult
+  $Res call({int localId, String categoryId});
+}
+
+/// @nodoc
+class __$UpdateTaskCategoryIdOnlyReqCopyWithImpl<$Res>
+    implements _$UpdateTaskCategoryIdOnlyReqCopyWith<$Res> {
+  __$UpdateTaskCategoryIdOnlyReqCopyWithImpl(this._self, this._then);
+
+  final _UpdateTaskCategoryIdOnlyReq _self;
+  final $Res Function(_UpdateTaskCategoryIdOnlyReq) _then;
+
+  /// Create a copy of UpdateTaskReq
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $Res call({
+    Object? localId = null,
+    Object? categoryId = null,
+  }) {
+    return _then(_UpdateTaskCategoryIdOnlyReq(
+      localId: null == localId
+          ? _self.localId
+          : localId // ignore: cast_nullable_to_non_nullable
+              as int,
+      categoryId: null == categoryId
+          ? _self.categoryId
+          : categoryId // ignore: cast_nullable_to_non_nullable
               as String,
     ));
   }

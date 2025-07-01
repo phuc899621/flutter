@@ -44,7 +44,11 @@ export const update_subtasks=[
     body('subtasks')
     .isArray()
     .withMessage('Subtasks must be an array'),
-    body('subtasks.*._id')
+    body('subtasks.*.localId')
+    .optional()
+    .isInt()
+    .withMessage('Local ID must be an integer'),
+    body('subtasks.*.id')
     .notEmpty()
     .withMessage('Subtask ID is required')
     .isMongoId()

@@ -63,6 +63,15 @@ class CategoryDao extends DatabaseAccessor<AppDatabase>
   Future<bool> updateCategory(CategoryTableCompanion category) =>
       update(categoryTable).replace(category);
 
+  Future<void> updateSyncCategory(int localId) =>
+      (update(categoryTable)..where((item) => item.localId.equals(localId)))
+          .write(CategoryTableCompanion(isSynced: Value(true)));
+
+  Future<void> updateSyncAddCategory(int localId, String remoteId) =>
+      (update(categoryTable)..where((item) => item.localId.equals(localId)))
+          .write(CategoryTableCompanion(
+              isSynced: Value(true), remoteId: Value(remoteId)));
+
   //endregion
 
   //================================

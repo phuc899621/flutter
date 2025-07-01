@@ -13,13 +13,13 @@ const validateResult = (prefix = 'Validation') => (req, res, next) => {
 };
 
 export const create_category = [
-  body('*.name')
+  body('name')
     .trim()
     .notEmpty()
     .withMessage('Category name is required')
     .isLength({min: 3})
     .withMessage('Name must be at least 3 characters long'),
-   body('*localId')
+   body('localId')
    .optional()
    .trim(),
   validateResult('Create Category')

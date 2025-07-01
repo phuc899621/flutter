@@ -151,7 +151,11 @@ class AddTaskController extends AutoDisposeNotifier<AddTaskState> {
   }
 
   Future<void> addTask() async {
-    state = state.copyWith(isLoading: true);
+    state = state.copyWith(
+        isLoading: true,
+        subtasks: state.subtasks
+            .where((element) => element.title.isNotEmpty)
+            .toList());
     final taskService = ref.read(taskServiceProvider);
     final userLocalId = await ref.read(userServiceProvider).getUserLocalId();
 

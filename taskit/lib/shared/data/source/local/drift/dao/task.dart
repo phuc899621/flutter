@@ -42,6 +42,11 @@ class TaskDao extends DatabaseAccessor<AppDatabase> with _$TaskDaoMixin {
 
   Future<List<TaskTableData>> getAllTasks() => select(taskTable).get();
 
+  Future<List<TaskTableData>> getTasksByCategoryLocalId(int categoryLocalId) =>
+      (select(taskTable)
+            ..where((tbl) => tbl.categoryLocalId.equals(categoryLocalId)))
+          .get();
+
   //endregion
 
   // ================================

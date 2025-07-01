@@ -4,6 +4,8 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rxdart/rxdart.dart';
+import 'package:taskit/features/task/data/dto/req/subtask/add_subtask.dart';
+import 'package:taskit/features/task/data/dto/req/subtask/update_subtask.dart';
 import 'package:taskit/features/task/data/mapper/itask_mapper.dart';
 import 'package:taskit/features/task/data/source/remote/itask_remote_source.dart';
 import 'package:taskit/features/task/domain/entities/task_entity.dart';
@@ -19,6 +21,7 @@ import '../../../user/data/source/local/user_local_source.dart';
 import '../../domain/entities/category_entity.dart';
 import '../../domain/entities/subtask_entity.dart';
 import '../../domain/entities/task_status_enum.dart';
+import '../dto/req/category/add_category_req.dart';
 import '../dto/req/update_task/update_task_req.dart';
 import '../mapper/task_mapper.dart';
 import '../source/local/itask_local_source.dart';
@@ -44,7 +47,16 @@ class TaskRepo with DioExceptionMapper implements ITaskRepo {
   final ITaskRemoteSource _taskRemoteSource;
   final ITokenRepository _tokenService;
   final ITaskMapper _iTaskMapper;
-  final Map<int, Timer> _syncTaskTimers = {};
+  final Map<int, Timer> _syncTaskTitleTimers = {};
+
+  final Map<int, Timer> _syncSubtaskStatusTimer = {};
+  final Map<int, Timer> _syncTaskStatusTimer = {};
+  final Map<int, Timer> _syncTaskDueDateTimer = {};
+  final Map<int, Timer> _syncTaskHasTimeTimer = {};
+  final Map<int, Timer> _syncTaskPriorityTimer = {};
+  final Map<int, Timer> _syncTaskCategoryTimer = {};
+  final Map<int, Timer> _syncTaskDescriptionTimer = {};
+  final Map<int, Timer> _syncSubtaskTitleTimer = {};
 
   TaskRepo(this._taskApi, this._taskLocalSource, this._tokenService,
       this._iTaskMapper, this._taskRemoteSource);
@@ -89,51 +101,121 @@ class TaskRepo with DioExceptionMapper implements ITaskRepo {
   //=====================================
   //region UPDATE
   @override
-  Future<void> updateTaskStatus(int localId, TaskStatus status) =>
-      _taskLocalSource.updateTaskStatus(localId, status.name);
+  Future<void> updateTaskStatus(int localId, TaskStatus status) async {
+    _taskLocalSource.updateTaskStatus(localId, status.name);
+    _syncTaskStatusTimer[localId]?.cancel();
+    _syncTaskStatusTimer[localId] = Timer(const Duration(seconds: 10), () {
+      logger.i('update task status timer');
+      updateRemoteTaskStatus(localId);
+    });
+    if (status == TaskStatus.completed) {
+      logger.i('update subtask status timer');
+      updateRemoteSubtaskStatusByTaskId(localId);
+    }
+  }
 
   @override
-  Future<void> updateSubtaskStatus(int localId) =>
-      _taskLocalSource.updateSubtaskStatus(localId);
+  Future<void> updateSubtaskStatus(int localId) async {
+    _taskLocalSource.updateSubtaskStatus(localId);
+    _syncSubtaskStatusTimer[localId]?.cancel();
+    _syncSubtaskStatusTimer[localId] = Timer(const Duration(seconds: 10), () {
+      logger.i('update subtask status timer');
+      updateRemoteSubtaskStatus(localId);
+    });
+    _syncTaskStatusTimer[localId]?.cancel();
+    _syncTaskStatusTimer[localId] = Timer(const Duration(seconds: 10), () {
+      logger.i('update task status timer');
+      updateRemoteTaskStatus(localId);
+    });
+  }
 
   @override
   Future<void> updateTaskTitle(int localId, String title) async {
     _taskLocalSource.updateTaskTitle(localId, title);
-    _syncTaskTimers[localId]?.cancel();
-    _syncTaskTimers[localId] = Timer(const Duration(seconds: 10), () {
+    _syncTaskTitleTimers[localId]?.cancel();
+    _syncTaskTitleTimers[localId] = Timer(const Duration(seconds: 10), () {
       updateRemoteTaskTitle(localId);
     });
   }
 
   @override
-  Future<void> updateTaskDescription(int localId, String description) =>
-      _taskLocalSource.updateTaskDescription(localId, description);
+  Future<void> updateTaskDescription(int localId, String description) async {
+    _taskLocalSource.updateTaskDescription(localId, description);
+    _syncTaskDescriptionTimer[localId]?.cancel();
+    _syncTaskDescriptionTimer[localId] = Timer(const Duration(seconds: 10), () {
+      logger.i('update task description timer');
+      updateRemoteTaskDescription(localId);
+    });
+  }
 
   @override
-  Future<void> updateTaskPriority(int localId, TaskPriority priority) =>
-      _taskLocalSource.updateTaskPriority(localId, priority.name);
+  Future<void> updateTaskPriority(int localId, TaskPriority priority) async {
+    _taskLocalSource.updateTaskPriority(localId, priority.name);
+    _syncTaskPriorityTimer[localId]?.cancel();
+    _syncTaskPriorityTimer[localId] = Timer(const Duration(seconds: 10), () {
+      logger.i('update task priority timer');
+      updateRemoteTaskPriority(localId);
+    });
+  }
 
   @override
-  Future<void> updateTaskCategory(int localId, int categoryLocalId) =>
-      _taskLocalSource.updateTaskCategory(localId, categoryLocalId);
+  Future<void> updateTaskCategory(int localId, int categoryLocalId) async {
+    _taskLocalSource.updateTaskCategory(localId, categoryLocalId);
+    _syncTaskCategoryTimer[localId]?.cancel();
+    _syncTaskCategoryTimer[localId] = Timer(const Duration(seconds: 10), () {
+      logger.i('update task category timer');
+      updateRemoteTaskCategory(localId, categoryLocalId);
+    });
+  }
 
   @override
-  Future<void> updateTaskDueDate(int localId, DateTime? dueDate) =>
-      _taskLocalSource.updateTaskDueDate(localId, dueDate);
+  Future<void> updateTaskDueDate(int localId, DateTime? dueDate) async {
+    _taskLocalSource.updateTaskDueDate(localId, dueDate);
+    _syncTaskDueDateTimer[localId]?.cancel();
+    _syncTaskDueDateTimer[localId] = Timer(const Duration(seconds: 10), () {
+      logger.i('update task due date timer');
+      updateRemoteTaskDueDate(localId);
+    });
+    _syncTaskStatusTimer[localId] = Timer(const Duration(seconds: 10), () {
+      logger.i('update task status timer');
+      updateRemoteTaskStatus(localId);
+    });
+    final subtasks = await _taskLocalSource.getSubtaskByTaskLocalId(localId);
+    if (subtasks.isEmpty) return;
+    final subtaskUncompletedList =
+        subtasks.where((s) => s.isCompleted == false).toList();
+    if (subtaskUncompletedList.isNotEmpty) return;
+    _syncSubtaskStatusTimer[localId] = Timer(const Duration(seconds: 10), () {
+      logger.i('update subtask status timer');
+      updateRemoteSubtaskStatusByTaskId(localId);
+    });
+  }
 
   @override
-  Future<void> updateTaskHasTime(int localId, bool hasTime) =>
-      _taskLocalSource.updateTaskHasTime(localId, hasTime);
+  Future<void> updateTaskHasTime(int localId, bool hasTime) async {
+    _taskLocalSource.updateTaskHasTime(localId, hasTime);
+    _syncTaskHasTimeTimer[localId]?.cancel();
+    _syncTaskHasTimeTimer[localId] = Timer(const Duration(seconds: 10), () {
+      logger.i('update task has time timer');
+      updateRemoteTaskHasTime(localId);
+    });
+  }
 
   @override
-  Future<void> updateSubtaskTitle(int localId, String title) =>
-      _taskLocalSource.updateSubtaskTitle(localId, title);
+  Future<void> updateSubtaskTitle(int localId, String title) async {
+    _taskLocalSource.updateSubtaskTitle(localId, title);
+    _syncSubtaskTitleTimer[localId]?.cancel();
+    _syncSubtaskTitleTimer[localId] = Timer(const Duration(seconds: 10), () {
+      logger.i('update subtask title timer');
+      updateRemoteSubtaskStatus(localId);
+    });
+  }
 
   //endregion
 
-  //=====================================
+  //====================================
   //============= READ =================
-  //=====================================
+  //====================================
   //region READ
   @override
   Future<TaskEntity> getTaskById(int localId) async {
@@ -199,9 +281,13 @@ class TaskRepo with DioExceptionMapper implements ITaskRepo {
   //=====================================
   //region INSERT
   @override
-  Future<int> insertCategory(CategoryEntity category) async =>
-      await _taskLocalSource
-          .insertCategory(_iTaskMapper.fromCategoryEntity(category));
+  Future<int> insertCategory(CategoryEntity category) async {
+    final categoryLocalId = await _taskLocalSource
+        .insertCategory(_iTaskMapper.fromCategoryEntity(category));
+    if (categoryLocalId == -1) return -1;
+    insertRemoteCategory(categoryLocalId);
+    return categoryLocalId;
+  }
 
   @override
   Future<int> insertTask(TaskEntity task) async {
@@ -222,15 +308,18 @@ class TaskRepo with DioExceptionMapper implements ITaskRepo {
   }
 
   @override
-  Future<void> insertSubtask(int taskLocalId) {
+  Future<void> insertSubtask(int taskLocalId) async {
     final subtaskEntity = SubtaskEntity(
       localId: -1,
       title: "",
       taskLocalId: taskLocalId,
       isCompleted: false,
     );
-    return _taskLocalSource
+    int subtaskId = await _taskLocalSource
         .insertSubtask(_iTaskMapper.fromSubtaskEntity(subtaskEntity));
+    if (subtaskId == -1) return;
+    insertRemoteSubtask(taskLocalId, subtaskId);
+    updateRemoteTaskStatus(taskLocalId);
   }
 
   //endregion
@@ -239,12 +328,28 @@ class TaskRepo with DioExceptionMapper implements ITaskRepo {
   //=====================================
   //region DELETE
   @override
-  Future<void> deleteTask(int localId) =>
-      _taskLocalSource.deleteTaskByLocalId(localId);
+  Future<void> deleteTask(int localId) async {
+    final task = await _taskLocalSource.getTaskByLocalId(localId);
+    final token = await _tokenService.getToken();
+    logger.i('delete task with localId $localId');
+    if (task == null || task.remoteId.isEmpty || token == null || token.isEmpty)
+      return;
+    logger.i('delete task with remoteId ${task.remoteId}');
+    final taskRemoteId = task.remoteId;
+    await _taskLocalSource.deleteTaskByLocalId(localId);
+    deleteRemoteTask(taskRemoteId);
+  }
 
   @override
-  Future<void> deleteSubtask(int localId) =>
-      _taskLocalSource.deleteSubtaskByLocalId(localId);
+  Future<void> deleteSubtask(int localId) async {
+    final subtask = await _taskLocalSource.getSubtaskByLocalId(localId);
+    final token = await _tokenService.getToken();
+    logger.i('delete subtask with localId $localId');
+    if (subtask == null || token == null || subtask.remoteId.isEmpty) return;
+    logger.i('delete subtask with remoteId ${subtask.remoteId}');
+    await _taskLocalSource.deleteSubtaskByLocalId(localId);
+    deleteRemoteSubtask(subtask.remoteId);
+  }
 
   //endregion
   //=====================================
@@ -277,6 +382,55 @@ class TaskRepo with DioExceptionMapper implements ITaskRepo {
     }
   }
 
+  @override
+  Future<void> insertRemoteSubtask(int taskLocalId, int subtaskLocalId) async {
+    try {
+      final token = await _tokenService.getToken();
+      if (token == null) return;
+      final taskTblData = await _taskLocalSource.getTaskByLocalId(taskLocalId);
+      if (taskTblData == null) return;
+      final subtaskTblData =
+          await _taskLocalSource.getSubtaskByLocalId(subtaskLocalId);
+      if (subtaskTblData == null) return;
+      final request = [
+        AddSubtaskReq(
+          localId: subtaskTblData.localId,
+          title: subtaskTblData.title,
+        )
+      ];
+      logger.i('add subtask request: \n $request');
+      final response = await _taskRemoteSource.addSubTask(
+          token, taskTblData.remoteId, request);
+      await _taskLocalSource.updateSyncSubtasksFromSubtasksTblCompanion(
+          _iTaskMapper.toSyncListSubtaskTblCompanion(response.data));
+    } catch (e, s) {
+      logger.e('add subtasks error: \n $e \n $s');
+    }
+  }
+
+  @override
+  Future<void> insertRemoteCategory(int categoryLocalId) async {
+    try {
+      final token = await _tokenService.getToken();
+      if (token == null) return;
+      final category = await _taskLocalSource.getTaskByLocalId(categoryLocalId);
+      if (category == null) return;
+
+      final request = AddCategoryReq(
+        localId: category.localId,
+        name: category.title,
+      );
+      logger.i('add category request: \n $request');
+
+      final categoryRes = await _taskRemoteSource.addCategory(token, request);
+      logger.i('add category response: \n $categoryRes');
+      await _taskLocalSource.updateSyncAddCategory(
+          categoryRes.data.localId, categoryRes.data.id);
+    } catch (e, s) {
+      logger.e('add subtasks error: \n $e \n $s');
+    }
+  }
+
   //endregion
   //=====================================
 //============= Update REMOTE =========
@@ -301,5 +455,211 @@ class TaskRepo with DioExceptionMapper implements ITaskRepo {
       logger.e('update task error: \n $e \n $s');
     }
   }
+
+  @override
+  Future<void> updateRemoteTaskDescription(int taskLocalId) async {
+    try {
+      final token = await _tokenService.getToken();
+      if (token == null) return;
+      final taskTblData = await _taskLocalSource.getTaskByLocalId(taskLocalId);
+      if (taskTblData == null) return;
+      if (taskTblData.remoteId.isEmpty) return;
+      final request = UpdateTaskReq.descriptionOnly(
+        localId: taskLocalId,
+        description: taskTblData.description,
+      );
+      final response = await _taskRemoteSource.updateTask(
+          token, taskTblData.remoteId, request);
+      await _taskLocalSource.updateSyncTask(response.data.localId);
+    } catch (e, s) {
+      logger.e('update task error: \n $e \n $s');
+    }
+  }
+
+  @override
+  Future<void> updateRemoteTaskDueDate(int taskLocalId) async {
+    try {
+      final token = await _tokenService.getToken();
+      if (token == null) return;
+      final taskTblData = await _taskLocalSource.getTaskByLocalId(taskLocalId);
+      if (taskTblData == null) return;
+      if (taskTblData.remoteId.isEmpty) return;
+      final request = UpdateTaskReq.dueDateOnly(
+          localId: taskLocalId, dueDate: taskTblData.dueDate);
+      final response = await _taskRemoteSource.updateTask(
+          token, taskTblData.remoteId, request);
+      await _taskLocalSource.updateSyncTask(response.data.localId);
+    } catch (e, s) {
+      logger.e('update task error: \n $e \n $s');
+    }
+  }
+
+  @override
+  Future<void> updateRemoteTaskCategory(
+      int taskLocalId, int categoryLocalId) async {
+    try {
+      final token = await _tokenService.getToken();
+      if (token == null) return;
+      final taskTblData = await _taskLocalSource.getTaskByLocalId(taskLocalId);
+      if (taskTblData == null || taskTblData.remoteId.isEmpty) return;
+      if (taskTblData.remoteId.isEmpty) return;
+      final categoryTblData =
+          await _taskLocalSource.getCategoryByLocalId(categoryLocalId);
+      if (categoryTblData == null || categoryTblData.remoteId.isEmpty) return;
+      final request = UpdateTaskReq.categoryIdOnly(
+          localId: taskLocalId, categoryId: categoryTblData.remoteId);
+      final response = await _taskRemoteSource.updateTask(
+          token, taskTblData.remoteId, request);
+      await _taskLocalSource.updateSyncTask(response.data.localId);
+    } catch (e, s) {
+      logger.e('update task error: \n $e \n $s');
+    }
+  }
+
+  @override
+  Future<void> updateRemoteTaskHasTime(int taskLocalId) async {
+    try {
+      final token = await _tokenService.getToken();
+      if (token == null) return;
+      final taskTblData = await _taskLocalSource.getTaskByLocalId(taskLocalId);
+      if (taskTblData == null) return;
+      if (taskTblData.remoteId.isEmpty) return;
+      final request = UpdateTaskReq.hasTimeOnly(
+          localId: taskLocalId, hasTime: taskTblData.hasTime);
+      final response = await _taskRemoteSource.updateTask(
+          token, taskTblData.remoteId, request);
+      await _taskLocalSource.updateSyncTask(response.data.localId);
+    } catch (e, s) {
+      logger.e('update task error: \n $e \n $s');
+    }
+  }
+
+  @override
+  Future<void> updateRemoteTaskPriority(int taskLocalId) async {
+    try {
+      final token = await _tokenService.getToken();
+      if (token == null) return;
+      final taskTblData = await _taskLocalSource.getTaskByLocalId(taskLocalId);
+      if (taskTblData == null) return;
+      if (taskTblData.remoteId.isEmpty) return;
+      final request = UpdateTaskReq.priorityOnly(
+          localId: taskLocalId, priority: taskTblData.priority);
+      final response = await _taskRemoteSource.updateTask(
+          token, taskTblData.remoteId, request);
+      await _taskLocalSource.updateSyncTask(response.data.localId);
+    } catch (e, s) {
+      logger.e('update task error: \n $e \n $s');
+    }
+  }
+
+  @override
+  Future<void> updateRemoteTaskStatus(int taskLocalId) async {
+    try {
+      final token = await _tokenService.getToken();
+      if (token == null) return;
+      final taskTblData = await _taskLocalSource.getTaskByLocalId(taskLocalId);
+      if (taskTblData == null) return;
+      if (taskTblData.remoteId.isEmpty) return;
+      final request = UpdateTaskReq.statusOnly(
+          localId: taskLocalId, status: taskTblData.status);
+      final response = await _taskRemoteSource.updateTask(
+          token, taskTblData.remoteId, request);
+      await _taskLocalSource.updateSyncTask(response.data.localId);
+    } catch (e, s) {
+      logger.e('update task error: \n $e \n $s');
+    }
+  }
+
+  @override
+  Future<void> updateRemoteSubtaskStatus(int subtaskLocalId) async {
+    try {
+      final subtask =
+          await _taskLocalSource.getSubtaskByLocalId(subtaskLocalId);
+      if (subtask == null || subtask.remoteId.isEmpty) return;
+      final token = await _tokenService.getToken();
+      if (token == null) return;
+      final request = [
+        UpdateSubtaskReq.statusOnly(
+            id: subtask.remoteId,
+            isCompleted: subtask.isCompleted,
+            localId: subtask.localId)
+      ];
+      logger.i('update subtask request: \n $request');
+      final response = await _taskRemoteSource.updateSubtask(token, request);
+      await _taskLocalSource.updateSyncSubtasks(response.data.subtasks);
+    } catch (e, s) {
+      logger.e('update subtask error: \n $e \n $s');
+    }
+  }
+
+  @override
+  Future<void> updateRemoteSubtaskStatusByTaskId(int taskLocalId) async {
+    try {
+      final subtasks =
+          await _taskLocalSource.getSubtaskByTaskLocalId(taskLocalId);
+      if (subtasks.isEmpty) return;
+      final token = await _tokenService.getToken();
+      if (token == null) return;
+      final request = subtasks
+          .map((s) => UpdateSubtaskReq.statusOnly(
+              id: s.remoteId, isCompleted: s.isCompleted, localId: s.localId))
+          .toList();
+      logger.i('update subtask request: \n $request');
+      final response = await _taskRemoteSource.updateSubtask(token, request);
+      await _taskLocalSource.updateSyncSubtasks(response.data.subtasks);
+    } catch (e, s) {
+      logger.e('update subtask error: \n $e \n $s');
+    }
+  }
+
+  @override
+  Future<void> updateRemoteSubtaskTitle(int subtaskLocalId) async {
+    try {
+      final subtask =
+          await _taskLocalSource.getSubtaskByLocalId(subtaskLocalId);
+      if (subtask == null || subtask.remoteId.isEmpty) return;
+      final token = await _tokenService.getToken();
+      if (token == null) return;
+      final request = [
+        UpdateSubtaskReq.titleOnly(
+            id: subtask.remoteId,
+            title: subtask.title,
+            localId: subtask.localId)
+      ];
+      logger.i('update subtask request: \n $request');
+      final response = await _taskRemoteSource.updateSubtask(token, request);
+      await _taskLocalSource.updateSyncSubtasks(response.data.subtasks);
+    } catch (e, s) {
+      logger.e('update subtask error: \n $e \n $s');
+    }
+  }
+
+//endregion
+//================================
+//========== DELETE REMOTE================
+//================================
+//region DELETE REMOTE
+  @override
+  Future<void> deleteRemoteTask(String taskRemoteId) async {
+    try {
+      final token = await _tokenService.getToken();
+      if (token == null) return;
+      await _taskRemoteSource.deleteTask(token, taskRemoteId);
+    } catch (e, s) {
+      logger.e('delete task error: \n $e \n $s');
+    }
+  }
+
+  @override
+  Future<void> deleteRemoteSubtask(String subtaskRemoteId) async {
+    try {
+      final token = await _tokenService.getToken();
+      if (token == null) return;
+      await _taskRemoteSource.deleteSubTask(token, subtaskRemoteId);
+    } catch (e, s) {
+      logger.e('delete task error: \n $e \n $s');
+    }
+  }
+
 //endregion
 }

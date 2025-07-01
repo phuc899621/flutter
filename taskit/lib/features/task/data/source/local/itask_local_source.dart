@@ -38,6 +38,13 @@ abstract interface class ITaskLocalSource {
 
   Future<void> updateSyncTask(int localId);
 
+  Future<void> updateSyncSubtasks(List<int> localIds);
+
+  Future<void> updateSyncSubtasksFromSubtasksTblCompanion(
+      List<SubtaskTableCompanion> subtask);
+
+  Future<void> updateSyncAddCategory(int localId, String remoteId);
+
   // ================================
   // ========== READ ==============
   // ================================
@@ -51,6 +58,8 @@ abstract interface class ITaskLocalSource {
 
   Future<CategoryTableData?> getCategoryByName(String name);
 
+  Future<SubtaskTableData?> getSubtaskByLocalId(int localId);
+
   // ================================
   // ========== INSERT ==============
   // ================================
@@ -59,7 +68,7 @@ abstract interface class ITaskLocalSource {
   Future<int> insertTask(TaskTableCompanion task,
       List<SubtaskTableCompanion> subtasks, CategoryTableCompanion category);
 
-  Future<void> insertSubtask(SubtaskTableCompanion subtask);
+  Future<int> insertSubtask(SubtaskTableCompanion subtask);
 
   //================================
   //========== DELETE ==============

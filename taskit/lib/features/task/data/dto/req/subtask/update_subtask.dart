@@ -4,13 +4,24 @@ part 'update_subtask.freezed.dart';
 part 'update_subtask.g.dart';
 
 @freezed
-sealed class UpdateSubtaskWithTaskReq with _$UpdateSubtaskWithTaskReq {
-  const factory UpdateSubtaskWithTaskReq(
+sealed class UpdateSubtaskReq with _$UpdateSubtaskReq {
+  const factory UpdateSubtaskReq.all(
       {required String id,
-      bool? isCompleted,
+      required bool isCompleted,
       required int localId,
-      String? title}) = _UpdateSubtaskWithTaskReq;
+      required String title}) = _UpdateSubtaskAllReq;
 
-  factory UpdateSubtaskWithTaskReq.fromJson(Map<String, dynamic> json) =>
-      _$UpdateSubtaskWithTaskReqFromJson(json);
+  const factory UpdateSubtaskReq.statusOnly({
+    required String id,
+    required bool isCompleted,
+    required int localId,
+  }) = _UpdateSubtaskStatusReq;
+
+  const factory UpdateSubtaskReq.titleOnly(
+      {required String id,
+      required int localId,
+      required String title}) = _UpdateSubtaskTitleReq;
+
+  factory UpdateSubtaskReq.fromJson(Map<String, dynamic> json) =>
+      _$UpdateSubtaskReqFromJson(json);
 }

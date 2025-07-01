@@ -36,10 +36,12 @@ export const get_subtasks = async (req, res) => {
 }
 export const update_subtasks = async (req, res) => {
     try {
-        await SubtaskServices.update_subtasks(req.body.subtasks);
+        const result= await SubtaskServices.update_subtasks(req.body.subtasks);
         return res.status(200).json({
             message: "Update subtask successfully",
-            data: {}
+            data: {
+                subtasks: result
+            }
         });
     } catch (e) {
         const statusCode = e.statusCode || 500;

@@ -8,6 +8,7 @@ import 'package:taskit/shared/data/source/local/drift/dao/task.dart';
 import 'package:taskit/shared/data/source/local/drift/dao/user.dart';
 import 'package:taskit/shared/data/source/local/drift/database/database.dart';
 import 'package:taskit/shared/data/source/local/token_source.dart';
+import 'package:taskit/shared/log/logger_provider.dart';
 
 import '../../../../../shared/data/source/local/drift/dao/setting.dart';
 import '../../../../../shared/data/source/local/drift/dao/subtask.dart';
@@ -84,9 +85,13 @@ class AuthLocalDataSource implements IAuthLocalDataSource {
             .toList();
         await categoryDao.insertAllCategories(categories);
         final categoryTableDatas = await categoryDao.getCategories();
+        logger.i('categoryTableDatas:$categoryTableDatas');
         final taskCompanions = loginData.tasks.map((e) {
           final category = categoryTableDatas.firstWhere(
             (element) => element.remoteId == e.categoryId,
+            orElse: () => categoryTableDatas.firstWhere(
+              (element) => element.name.toLowerCase() == 'any',
+            ),
           );
           return TaskTableCompanion(
             remoteId: Value(e.id),

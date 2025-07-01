@@ -346,7 +346,7 @@ class _AddTaskPageState extends ConsumerState<AddTaskPage> {
                             style: ButtonStyle(
                               elevation: WidgetStateProperty.all(1),
                             ),
-                            onPressed: () => _showAddCategoryDialog(),
+                            onPressed: _showAddCategoryDialog,
                             label: Text(
                               'Add',
                               style: text.labelMedium?.copyWith(

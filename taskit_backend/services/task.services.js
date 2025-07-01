@@ -126,15 +126,15 @@ class TaskServices {
     static async delete_task(taskId) {
         const session=await db.startSession();
         try {
-            session.startTransaction();
+             session.startTransaction();
             await TaskModel.deleteOne({_id:taskId},{session});
             await SubtaskModel.deleteMany({taskId},{session});
-            session.commitTransaction();
+            await session.commitTransaction();
         } catch (e) {
-            session.abortTransaction();
+            await session.abortTransaction();
             throw new HttpError(`Delete task error: ${e.message}`,500);
         }finally{
-            session.endSession();
+            await session.endSession();
         }
     }
     static async delete_all_tasks(userId) {
@@ -149,12 +149,12 @@ class TaskServices {
             session.startTransaction();
             await SubtaskModel.deleteMany({taskId: { $in: taskIds }},{session});
             await TaskModel.deleteMany({ userId }, { session });
-            session.commitTransaction();
-            session.endSession();
+            await session.commitTransaction();
+            await session.endSession();
         } catch (e) {
             throw new HttpError(`Delete task error: ${e.message}`,500);
         }finally{
-            session.endSession();
+            await session.endSession();
         }
     }
     

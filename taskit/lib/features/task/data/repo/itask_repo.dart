@@ -69,9 +69,39 @@ abstract interface class ITaskRepo {
 
   Future<void> insertRemoteTask(int taskLocalId);
 
+  Future<void> insertRemoteSubtask(int taskLocalId, int subtaskLocalId);
+
+  Future<void> insertRemoteCategory(int categoryLocalId);
+
   //================================
   //========== Update REMOTE =======
   //================================
 
   Future<void> updateRemoteTaskTitle(int taskLocalId);
+
+  Future<void> updateRemoteTaskDescription(int taskLocalId);
+
+  Future<void> updateRemoteSubtaskStatus(int subtaskLocalId);
+
+  Future<void> updateRemoteSubtaskStatusByTaskId(int taskLocalId);
+
+  Future<void> updateRemoteTaskStatus(int taskLocalId);
+
+  Future<void> updateRemoteTaskPriority(int taskLocalId);
+
+  Future<void> updateRemoteTaskCategory(int taskLocalId, int categoryLocalId);
+
+  Future<void> updateRemoteTaskDueDate(int taskLocalId);
+
+  Future<void> updateRemoteTaskHasTime(int taskLocalId);
+
+  Future<void> updateRemoteSubtaskTitle(int subtaskLocalId);
+
+//================================
+//========== DELETE REMOTE================
+//================================
+
+  Future<void> deleteRemoteTask(String taskRemoteId);
+
+  Future<void> deleteRemoteSubtask(String subtaskRemoteId);
 }

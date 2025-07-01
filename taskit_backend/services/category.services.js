@@ -19,18 +19,16 @@ class CategoryServices {
 
     static async create(userId, request) {
         try {
-            const categoryList=request.map(({localId,name})=>({userId,name,localId}));
-
-            const existingName = await CategoryModel.find({userId,name: {$in: categoryList.map(c => c.name)}});
-            if( existingName.length > 0) {
+            const {localId,name}= request;
+            const existing = await CategoryModel.findOne({ userId, name });
+            if(existing.length > 0) {
                 throw new HttpError("Category name already exists", 400);
             }
-            const createdCategories = await CategoryModel.create( categoryList);
-            const result = createdCategories.map((category,index) => ({
-                localId: categoryList[index].localId,
-                remoteId: category._id,
-                name: category.name
-            }));
+            const created = await CategoryModel.create({ userId, name, localId });
+            const result = {
+                localId: localId,
+                id: created._id,
+            };
             return result;
         } catch (e) {
             throw new Error(`Create category error: ${e.message}`);

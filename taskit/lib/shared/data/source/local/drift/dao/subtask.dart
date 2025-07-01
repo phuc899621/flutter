@@ -113,6 +113,19 @@ class SubtaskDao extends DatabaseAccessor<AppDatabase> with _$SubtaskDaoMixin {
         }
       });
 
+  Future<void> updateSyncSubtasks(List<int> localIds) => batch((batch) {
+        for (var localId in localIds) {
+          batch.update(
+            subtaskTable,
+            SubtaskTableCompanion(
+              isSynced: Value(true),
+              updatedAt: Value(DateTime.now()),
+            ),
+            where: (tbl) => tbl.localId.equals(localId),
+          );
+        }
+      });
+
   //endregion
 
   // ================================
