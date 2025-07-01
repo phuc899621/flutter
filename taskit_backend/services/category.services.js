@@ -26,7 +26,7 @@ class CategoryServices {
             }
             const created = await CategoryModel.create({ userId, name, localId });
             const result = {
-                localId: localId,
+                localId: parseInt(localId, 10),
                 id: created._id,
             };
             return result;

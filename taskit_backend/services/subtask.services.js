@@ -32,7 +32,7 @@ class SubtaskServices {
                     );
 
                     if (!result) return null;
-                    return localId;
+                    return parseInt(localId, 10);
                 })
             );
             return updatedSubtasks.filter(subtask => subtask !== null);

@@ -27,7 +27,7 @@ class TaskServices {
             
             const tasks={
                 ...taskResult._doc,
-                localId: createTask.localId,
+                localId:parseInt(createTask.localId, 10),
                 subtasks: subtasksResult.map(subtask => ({
                     ...subtask,
                     taskId: taskResult._id
