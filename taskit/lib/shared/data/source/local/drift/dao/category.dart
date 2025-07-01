@@ -49,6 +49,9 @@ class CategoryDao extends DatabaseAccessor<AppDatabase>
   Future<int> insertCategory(CategoryTableCompanion category) =>
       into(categoryTable).insert(category);
 
+  Future<int> insertCategoryWithoutSync(CategoryTableCompanion category) =>
+      into(categoryTable).insert(category.copyWith(isSynced: Value(false)));
+
   Future<void> insertAllCategories(List<CategoryTableCompanion> categories) =>
       batch((batch) {
         batch.insertAll(categoryTable, categories);
@@ -61,6 +64,9 @@ class CategoryDao extends DatabaseAccessor<AppDatabase>
   //================================
   //region UPDATE
   Future<bool> updateCategory(CategoryTableCompanion category) =>
+      update(categoryTable).replace(category);
+
+  Future<bool> updateCategoryWithoutSync(CategoryTableCompanion category) =>
       update(categoryTable).replace(category);
 
   Future<void> updateSyncCategory(int localId) =>

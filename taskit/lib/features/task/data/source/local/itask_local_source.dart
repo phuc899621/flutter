@@ -17,21 +17,40 @@ abstract interface class ITaskLocalSource {
   // ================================
   Future<void> updateTaskStatus(int localId, String status);
 
+  Future<void> updateTaskStatusWithoutSync(int localId, String status);
+
   Future<void> updateSubtaskStatus(int localId);
+
+  Future<void> updateSubtaskStatusWithoutSync(int localId);
 
   Future<void> updateTaskTitle(int localId, String title);
 
+  Future<void> updateTaskTitleWithoutSync(int localId, String title);
+
   Future<void> updateTaskDescription(int localId, String description);
+
+  Future<void> updateTaskDescriptionWithoutSync(
+      int localId, String description);
 
   Future<void> updateTaskCategory(int localId, int categoryLocalId);
 
+  Future<void> updateTaskCategoryWithoutSync(int localId, int categoryLocalId);
+
   Future<void> updateTaskPriority(int localId, String priority);
+
+  Future<void> updateTaskPriorityWithoutSync(int localId, String priority);
 
   Future<void> updateTaskDueDate(int localId, DateTime? dueDate);
 
+  Future<void> updateTaskDueDateWithoutSync(int localId, DateTime? dueDate);
+
   Future<void> updateTaskHasTime(int localId, bool hasTime);
 
+  Future<void> updateTaskHasTimeWithoutSync(int localId, bool hasTime);
+
   Future<void> updateSubtaskTitle(int localId, String title);
+
+  Future<void> updateSubtaskTitleWithoutSync(int localId, String title);
 
   Future<void> updateSyncAddTaskAndSubtask(
       TaskTableCompanion task, List<SubtaskTableCompanion> subtask);

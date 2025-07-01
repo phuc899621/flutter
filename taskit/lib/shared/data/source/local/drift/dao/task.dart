@@ -84,10 +84,27 @@ class TaskDao extends DatabaseAccessor<AppDatabase> with _$TaskDaoMixin {
             completedAt: Value(status == 'completed' ? DateTime.now() : null)),
       );
 
+  Future<int> updateTaskStatusWithoutSync(int localId, String status) =>
+      (update(taskTable)..where((tbl) => tbl.localId.equals(localId))).write(
+        TaskTableCompanion(
+            status: Value(status),
+            updatedAt: Value(DateTime.now()),
+            isSynced: Value(false),
+            completedAt: Value(status == 'completed' ? DateTime.now() : null)),
+      );
+
   Future<void> updateTaskTitle(int localId, String title) =>
       (update(taskTable)..where((tbl) => tbl.localId.equals(localId)))
           .write(TaskTableCompanion(
         title: Value(title),
+        updatedAt: Value(DateTime.now()),
+      ));
+
+  Future<void> updateTaskTitleWithoutSync(int localId, String title) =>
+      (update(taskTable)..where((tbl) => tbl.localId.equals(localId)))
+          .write(TaskTableCompanion(
+        title: Value(title),
+        isSynced: Value(false),
         updatedAt: Value(DateTime.now()),
       ));
 
@@ -97,6 +114,14 @@ class TaskDao extends DatabaseAccessor<AppDatabase> with _$TaskDaoMixin {
               description: Value(description),
               updatedAt: Value(DateTime.now())));
 
+  Future<void> updateTaskDescriptionWithoutSync(
+          int localId, String description) =>
+      (update(taskTable)..where((tbl) => tbl.localId.equals(localId))).write(
+          TaskTableCompanion(
+              description: Value(description),
+              isSynced: Value(false),
+              updatedAt: Value(DateTime.now())));
+
   Future<void> updateTaskPriority(int localId, String priority) =>
       (update(taskTable)..where((tbl) => tbl.localId.equals(localId)))
           .write(TaskTableCompanion(
@@ -104,10 +129,27 @@ class TaskDao extends DatabaseAccessor<AppDatabase> with _$TaskDaoMixin {
         updatedAt: Value(DateTime.now()),
       ));
 
+  Future<void> updateTaskPriorityWithoutSync(int localId, String priority) =>
+      (update(taskTable)..where((tbl) => tbl.localId.equals(localId)))
+          .write(TaskTableCompanion(
+        priority: Value(priority),
+        isSynced: Value(false),
+        updatedAt: Value(DateTime.now()),
+      ));
+
   Future<void> updateTaskCategory(int localId, int categoryLocalId) =>
       (update(taskTable)..where((tbl) => tbl.localId.equals(localId)))
           .write(TaskTableCompanion(
         categoryLocalId: Value(categoryLocalId),
+        updatedAt: Value(DateTime.now()),
+      ));
+
+  Future<void> updateTaskCategoryWithoutSync(
+          int localId, int categoryLocalId) =>
+      (update(taskTable)..where((tbl) => tbl.localId.equals(localId)))
+          .write(TaskTableCompanion(
+        categoryLocalId: Value(categoryLocalId),
+        isSynced: Value(false),
         updatedAt: Value(DateTime.now()),
       ));
 
@@ -119,10 +161,27 @@ class TaskDao extends DatabaseAccessor<AppDatabase> with _$TaskDaoMixin {
         updatedAt: Value(DateTime.now()),
       ));
 
+  Future<void> updateTaskDueDateWithoutSync(int localId, DateTime? dueDate) =>
+      (update(taskTable)..where((tbl) => tbl.localId.equals(localId)))
+          .write(TaskTableCompanion(
+        dueDate: Value(dueDate),
+        isSynced: Value(false),
+        hasTime: dueDate == null ? Value(false) : Value.absent(),
+        updatedAt: Value(DateTime.now()),
+      ));
+
   Future<void> updateTaskHasTime(int localId, bool hasTime) =>
       (update(taskTable)..where((tbl) => tbl.localId.equals(localId)))
           .write(TaskTableCompanion(
         hasTime: Value(hasTime),
+        updatedAt: Value(DateTime.now()),
+      ));
+
+  Future<void> updateTaskHasTimeWithoutSync(int localId, bool hasTime) =>
+      (update(taskTable)..where((tbl) => tbl.localId.equals(localId)))
+          .write(TaskTableCompanion(
+        hasTime: Value(hasTime),
+        isSynced: Value(false),
         updatedAt: Value(DateTime.now()),
       ));
 

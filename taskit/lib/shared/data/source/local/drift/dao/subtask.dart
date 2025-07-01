@@ -76,12 +76,22 @@ class SubtaskDao extends DatabaseAccessor<AppDatabase> with _$SubtaskDaoMixin {
         ),
       );
 
+  Future<int> updateSubtaskStatusWithoutSync(int localId, bool isCompleted) =>
+      (update(subtaskTable)..where((tbl) => tbl.localId.equals(localId))).write(
+        SubtaskTableCompanion(
+          isCompleted: Value(isCompleted),
+          isSynced: Value(false),
+          updatedAt: Value(DateTime.now()),
+        ),
+      );
+
   Future<void> updateToCompletedSubtasks(int localId) => (update(subtaskTable)
             ..where((tbl) =>
                 tbl.taskLocalId.equals(localId) &
                 tbl.isCompleted.equals(false)))
           .write(SubtaskTableCompanion(
         isCompleted: Value(true),
+        isSynced: Value(false),
         completedAt: Value(DateTime.now()),
         updatedAt: Value(DateTime.now()),
       ));
@@ -92,6 +102,7 @@ class SubtaskDao extends DatabaseAccessor<AppDatabase> with _$SubtaskDaoMixin {
           .write(SubtaskTableCompanion(
         isCompleted: Value(false),
         completedAt: Value(DateTime.now()),
+        isSynced: Value(false),
         updatedAt: Value(DateTime.now()),
       ));
 
@@ -99,6 +110,14 @@ class SubtaskDao extends DatabaseAccessor<AppDatabase> with _$SubtaskDaoMixin {
       (update(subtaskTable)..where((tbl) => tbl.localId.equals(localId)))
           .write(SubtaskTableCompanion(
         title: Value(title),
+        updatedAt: Value(DateTime.now()),
+      ));
+
+  Future<void> updateSubtaskTitleWithoutSync(int localId, String title) =>
+      (update(subtaskTable)..where((tbl) => tbl.localId.equals(localId)))
+          .write(SubtaskTableCompanion(
+        title: Value(title),
+        isSynced: Value(false),
         updatedAt: Value(DateTime.now()),
       ));
 

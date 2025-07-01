@@ -102,7 +102,7 @@ class TaskRepo with DioExceptionMapper implements ITaskRepo {
   //region UPDATE
   @override
   Future<void> updateTaskStatus(int localId, TaskStatus status) async {
-    _taskLocalSource.updateTaskStatus(localId, status.name);
+    _taskLocalSource.updateTaskStatusWithoutSync(localId, status.name);
     _syncTaskStatusTimer[localId]?.cancel();
     _syncTaskStatusTimer[localId] = Timer(const Duration(seconds: 10), () {
       logger.i('update task status timer');
@@ -116,7 +116,7 @@ class TaskRepo with DioExceptionMapper implements ITaskRepo {
 
   @override
   Future<void> updateSubtaskStatus(int localId) async {
-    _taskLocalSource.updateSubtaskStatus(localId);
+    _taskLocalSource.updateSubtaskStatusWithoutSync(localId);
     _syncSubtaskStatusTimer[localId]?.cancel();
     _syncSubtaskStatusTimer[localId] = Timer(const Duration(seconds: 10), () {
       logger.i('update subtask status timer');
@@ -131,7 +131,7 @@ class TaskRepo with DioExceptionMapper implements ITaskRepo {
 
   @override
   Future<void> updateTaskTitle(int localId, String title) async {
-    _taskLocalSource.updateTaskTitle(localId, title);
+    _taskLocalSource.updateTaskTitleWithoutSync(localId, title);
     _syncTaskTitleTimers[localId]?.cancel();
     _syncTaskTitleTimers[localId] = Timer(const Duration(seconds: 10), () {
       updateRemoteTaskTitle(localId);
@@ -140,7 +140,7 @@ class TaskRepo with DioExceptionMapper implements ITaskRepo {
 
   @override
   Future<void> updateTaskDescription(int localId, String description) async {
-    _taskLocalSource.updateTaskDescription(localId, description);
+    _taskLocalSource.updateTaskDescriptionWithoutSync(localId, description);
     _syncTaskDescriptionTimer[localId]?.cancel();
     _syncTaskDescriptionTimer[localId] = Timer(const Duration(seconds: 10), () {
       logger.i('update task description timer');
@@ -150,7 +150,7 @@ class TaskRepo with DioExceptionMapper implements ITaskRepo {
 
   @override
   Future<void> updateTaskPriority(int localId, TaskPriority priority) async {
-    _taskLocalSource.updateTaskPriority(localId, priority.name);
+    _taskLocalSource.updateTaskPriorityWithoutSync(localId, priority.name);
     _syncTaskPriorityTimer[localId]?.cancel();
     _syncTaskPriorityTimer[localId] = Timer(const Duration(seconds: 10), () {
       logger.i('update task priority timer');
@@ -160,7 +160,7 @@ class TaskRepo with DioExceptionMapper implements ITaskRepo {
 
   @override
   Future<void> updateTaskCategory(int localId, int categoryLocalId) async {
-    _taskLocalSource.updateTaskCategory(localId, categoryLocalId);
+    _taskLocalSource.updateTaskCategoryWithoutSync(localId, categoryLocalId);
     _syncTaskCategoryTimer[localId]?.cancel();
     _syncTaskCategoryTimer[localId] = Timer(const Duration(seconds: 10), () {
       logger.i('update task category timer');
@@ -170,7 +170,7 @@ class TaskRepo with DioExceptionMapper implements ITaskRepo {
 
   @override
   Future<void> updateTaskDueDate(int localId, DateTime? dueDate) async {
-    _taskLocalSource.updateTaskDueDate(localId, dueDate);
+    _taskLocalSource.updateTaskDueDateWithoutSync(localId, dueDate);
     _syncTaskDueDateTimer[localId]?.cancel();
     _syncTaskDueDateTimer[localId] = Timer(const Duration(seconds: 10), () {
       logger.i('update task due date timer');
@@ -193,7 +193,7 @@ class TaskRepo with DioExceptionMapper implements ITaskRepo {
 
   @override
   Future<void> updateTaskHasTime(int localId, bool hasTime) async {
-    _taskLocalSource.updateTaskHasTime(localId, hasTime);
+    _taskLocalSource.updateTaskHasTimeWithoutSync(localId, hasTime);
     _syncTaskHasTimeTimer[localId]?.cancel();
     _syncTaskHasTimeTimer[localId] = Timer(const Duration(seconds: 10), () {
       logger.i('update task has time timer');
@@ -203,7 +203,7 @@ class TaskRepo with DioExceptionMapper implements ITaskRepo {
 
   @override
   Future<void> updateSubtaskTitle(int localId, String title) async {
-    _taskLocalSource.updateSubtaskTitle(localId, title);
+    _taskLocalSource.updateSubtaskTitleWithoutSync(localId, title);
     _syncSubtaskTitleTimer[localId]?.cancel();
     _syncSubtaskTitleTimer[localId] = Timer(const Duration(seconds: 10), () {
       logger.i('update subtask title timer');

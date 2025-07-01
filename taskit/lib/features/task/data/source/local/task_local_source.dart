@@ -78,6 +78,36 @@ class TaskLocalSource implements ITaskLocalSource {
   }
 
   @override
+  Future<void> updateTaskStatusWithoutSync(int localId, String status) async {
+    try {
+      await _db.transaction(() async {
+        final task = await _taskDao.getTaskByLocalId(localId);
+        if (task == null) return 0;
+
+        final String statusUpdate;
+        if (status != 'completed' && task.dueDate != null) {
+          statusUpdate = 'scheduled';
+        } else if (status != 'completed' && task.dueDate == null) {
+          statusUpdate = 'pending';
+        } else {
+          statusUpdate = 'completed';
+        }
+
+        logger.i('task update status $statusUpdate');
+        if (statusUpdate == 'completed') {
+          await _subtaskDao.updateToCompletedSubtasks(localId);
+        } else {
+          await _subtaskDao.updateToUncompletedSubtasks(localId);
+        }
+        return await _taskDao.updateTaskStatusWithoutSync(
+            localId, statusUpdate);
+      });
+    } catch (e, s) {
+      logger.e('Update task error: $e, $s');
+    }
+  }
+
+  @override
   Future<void> updateSubtaskStatus(int localId) async {
     try {
       return await _db.transaction(() async {
@@ -105,20 +135,66 @@ class TaskLocalSource implements ITaskLocalSource {
   }
 
   @override
+  Future<void> updateSubtaskStatusWithoutSync(int localId) async {
+    try {
+      return await _db.transaction(() async {
+        final subtask = await _subtaskDao.getSubtasksByLocalId(localId);
+        if (subtask == null) return;
+
+        await _subtaskDao.updateSubtaskStatus(localId, !subtask.isCompleted);
+
+        final uncompletedSubtaskList = await _subtaskDao
+            .findUncompletedSubtaskByTaskLocalId(subtask.taskLocalId);
+
+        final task = await _taskDao.getTaskByLocalId(subtask.taskLocalId);
+        if (task == null) return;
+
+        final newTaskStatus = uncompletedSubtaskList.isEmpty
+            ? 'completed'
+            : (task.dueDate != null ? 'scheduled' : 'pending');
+        if (task.status != newTaskStatus) {
+          await _taskDao.updateTaskStatusWithoutSync(
+              subtask.taskLocalId, newTaskStatus);
+        }
+      });
+    } catch (e, s) {
+      logger.e('Update subtask status error: $e, $s');
+    }
+  }
+
+  @override
   Future<void> updateTaskTitle(int localId, String title) =>
       _taskDao.updateTaskTitle(localId, title);
+
+  @override
+  Future<void> updateTaskTitleWithoutSync(int localId, String title) =>
+      _taskDao.updateTaskTitleWithoutSync(localId, title);
 
   @override
   Future<void> updateTaskDescription(int localId, String description) =>
       _taskDao.updateTaskDescription(localId, description);
 
   @override
+  Future<void> updateTaskDescriptionWithoutSync(
+          int localId, String description) =>
+      _taskDao.updateTaskDescriptionWithoutSync(localId, description);
+
+  @override
   Future<void> updateTaskPriority(int localId, String priority) =>
       _taskDao.updateTaskPriority(localId, priority);
 
   @override
+  Future<void> updateTaskPriorityWithoutSync(int localId, String priority) =>
+      _taskDao.updateTaskPriorityWithoutSync(localId, priority);
+
+  @override
   Future<void> updateTaskCategory(int localId, int categoryLocalId) =>
       _taskDao.updateTaskCategory(localId, categoryLocalId);
+
+  @override
+  Future<void> updateTaskCategoryWithoutSync(
+          int localId, int categoryLocalId) =>
+      _taskDao.updateTaskCategoryWithoutSync(localId, categoryLocalId);
 
   @override
   Future<void> updateTaskDueDate(int localId, DateTime? dueDate) async {
@@ -133,14 +209,37 @@ class TaskLocalSource implements ITaskLocalSource {
   }
 
   @override
+  Future<void> updateTaskDueDateWithoutSync(
+      int localId, DateTime? dueDate) async {
+    final task = await _taskDao.getTaskByLocalId(localId);
+    logger.i('task status: $task');
+    if (task == null) return;
+    if (task.status == 'completed') {
+      return _taskDao.updateTaskDueDateWithoutSync(localId, dueDate);
+    }
+    await _taskDao.updateTaskDueDateWithoutSync(localId, dueDate);
+    return updateTaskStatusWithoutSync(localId, 'pending');
+  }
+
+  @override
   Future<void> updateTaskHasTime(int localId, bool hasTime) async {
     if ((await _taskDao.getTaskByLocalId(localId))?.dueDate == null) return;
     await _taskDao.updateTaskHasTime(localId, hasTime);
   }
 
   @override
+  Future<void> updateTaskHasTimeWithoutSync(int localId, bool hasTime) async {
+    if ((await _taskDao.getTaskByLocalId(localId))?.dueDate == null) return;
+    await _taskDao.updateTaskHasTimeWithoutSync(localId, hasTime);
+  }
+
+  @override
   Future<void> updateSubtaskTitle(int localId, String title) =>
       _subtaskDao.updateSubtaskTitle(localId, title);
+
+  @override
+  Future<void> updateSubtaskTitleWithoutSync(int localId, String title) =>
+      _subtaskDao.updateSubtaskTitleWithoutSync(localId, title);
 
   //endregion
   // ================================

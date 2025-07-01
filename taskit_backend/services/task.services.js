@@ -92,7 +92,9 @@ class TaskServices {
             const query = {};
             if (updateData.title) query.title = updateData.title;
             if (updateData.description) query.description = updateData.description;
-            if (updateData.dueDate) query.dueDate = updateData.dueDate;
+            if ('dueDate' in updateData) {
+                query.dueDate = updateData.dueDate; // chấp nhận cả null
+            }
             if (updateData.status) query.status = updateData.status;
             if (updateData.priority) query.priority = updateData.priority;
             if (updateData.categoryId){
