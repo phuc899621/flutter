@@ -1,5 +1,6 @@
 import 'package:easy_date_timeline/easy_date_timeline.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_expandable_fab/flutter_expandable_fab.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:taskit/config/app/app_color.dart';
@@ -88,7 +89,6 @@ class _TimeLinePageState extends ConsumerState<TimelinePage> {
       });
     }
     return Scaffold(
-      floatingActionButton: _fabAddTask(),
       body: SafeArea(
         top: true,
         child: NestedScrollView(
@@ -104,15 +104,46 @@ class _TimeLinePageState extends ConsumerState<TimelinePage> {
   //region FAB
   Widget _fabAddTask() {
     final color = Theme.of(context).colorScheme;
-    return FloatingActionButton(
+    return ExpandableFab(
+      distance: 70,
+      type: ExpandableFabType.up,
+      openButtonBuilder: RotateFloatingActionButtonBuilder(
+        child: const Icon(Icons.add),
+        fabSize: ExpandableFabSize.regular,
         foregroundColor: color.onPrimaryContainer,
-        splashColor: color.primary,
         backgroundColor: color.primaryContainer,
-        child: Icon(
-          Icons.add_sharp,
-          size: 30,
-        ),
-        onPressed: () => context.push('/add_task'));
+        shape: const CircleBorder(),
+      ),
+      closeButtonBuilder: DefaultFloatingActionButtonBuilder(
+        child: const Icon(Icons.close),
+        fabSize: ExpandableFabSize.regular,
+        foregroundColor: color.surface,
+        backgroundColor: color.onSurface,
+        shape: const CircleBorder(),
+      ),
+      children: [
+        FloatingActionButton(
+            shape: CircleBorder(),
+            foregroundColor: color.onPrimaryContainer,
+            splashColor: color.primary,
+            backgroundColor: color.primaryContainer,
+            child: Icon(
+              Icons.note_alt_outlined,
+              size: 30,
+            ),
+            onPressed: () => context.push('/add_task')),
+        FloatingActionButton(
+            shape: CircleBorder(),
+            foregroundColor: color.onPrimaryContainer,
+            splashColor: color.primary,
+            backgroundColor: color.primaryContainer,
+            child: Icon(
+              Icons.keyboard_voice,
+              size: 30,
+            ),
+            onPressed: () {})
+      ],
+    );
   }
 
 //endregion

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_expandable_fab/flutter_expandable_fab.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:taskit/config/routers/router_provider.dart';
@@ -35,6 +36,8 @@ class _MainPageState extends ConsumerState<MainPage> {
       ],
       child: Scaffold(
           key: _scaffoldKey,
+          floatingActionButtonLocation: ExpandableFab.location,
+          floatingActionButton: _fabAddTask(),
           body: widget.navigationShell,
           bottomNavigationBar: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
@@ -88,6 +91,52 @@ class _MainPageState extends ConsumerState<MainPage> {
               ),
             ),
           )),
+    );
+  }
+
+  Widget _fabAddTask() {
+    final color = Theme.of(context).colorScheme;
+    return ExpandableFab(
+      distance: 70,
+      type: ExpandableFabType.up,
+      openButtonBuilder: RotateFloatingActionButtonBuilder(
+        child: const Icon(Icons.add),
+        fabSize: ExpandableFabSize.regular,
+        foregroundColor: color.onPrimaryContainer,
+        backgroundColor: color.primaryContainer,
+        shape: const CircleBorder(),
+      ),
+      closeButtonBuilder: DefaultFloatingActionButtonBuilder(
+        child: const Icon(Icons.close),
+        fabSize: ExpandableFabSize.regular,
+        foregroundColor: color.surface,
+        backgroundColor: color.onSurface,
+        shape: const CircleBorder(),
+      ),
+      children: [
+        FloatingActionButton(
+            heroTag: 'Add Task',
+            shape: CircleBorder(),
+            foregroundColor: color.onPrimaryContainer,
+            splashColor: color.primary,
+            backgroundColor: color.primaryContainer,
+            child: Icon(
+              Icons.note_alt_outlined,
+              size: 30,
+            ),
+            onPressed: () => context.push('/add_task')),
+        FloatingActionButton(
+            heroTag: 'Add Task Using Voice',
+            shape: CircleBorder(),
+            foregroundColor: color.onPrimaryContainer,
+            splashColor: color.primary,
+            backgroundColor: color.primaryContainer,
+            onPressed: () => context.push('/voice'),
+            child: Icon(
+              Icons.mic,
+              size: 30,
+            ))
+      ],
     );
   }
 }

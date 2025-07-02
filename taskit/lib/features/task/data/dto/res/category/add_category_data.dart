@@ -10,6 +10,6 @@ sealed class AddCategoryData with _$AddCategoryData {
     required String id,
   }) = _AddCategoryData;
 
-  factory AddCategoryData.fromJson(Map<String, Object?> json) =>
+  factory AddCategoryData.fromJson(Map<String, dynamic> json) =>
       _$AddCategoryDataFromJson(json);
 }

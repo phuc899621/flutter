@@ -45,6 +45,8 @@
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+    <key>NSSpeechRecognitionUsageDescription</key>
+    <string>Need voice to create task</string>
 	<key>NSMicrophoneUsageDescription</key>
     <string>We need access to your microphone to capture speech</string>
 </dict>

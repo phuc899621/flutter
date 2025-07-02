@@ -7,6 +7,7 @@ import 'package:taskit/features/auth/presentation/forgot_password/ui/reset_passw
 import 'package:taskit/features/auth/presentation/signup/ui/signup_veriry_page.dart';
 import 'package:taskit/features/main/presentation/home/ui/home_page.dart';
 import 'package:taskit/features/main/presentation/list/ui/list_page.dart';
+import 'package:taskit/features/main/presentation/main/ui/bottom_sheet/task_generated_bottom_sheet.dart';
 import 'package:taskit/features/splash/presentation/ui/splash_page.dart';
 import 'package:taskit/features/task/presentation/add_task/ui/add_task_page.dart';
 import 'package:taskit/features/task/presentation/edit_task/ui/edit_due_date_bottom_sheet.dart';
@@ -36,12 +37,15 @@ final editTaskNavigatorKeyProvider = Provider.autoDispose((ref) {
 final filteringTaskNavigatorKeyProvider = Provider.autoDispose((ref) {
   return GlobalKey<NavigatorState>();
 });
+final taskGenerateNavigatorKeyProvider = Provider.autoDispose((ref) {
+  return GlobalKey<NavigatorState>();
+});
 final navigationShellProvider =
     Provider<StatefulNavigationShell>((ref) => throw UnimplementedError());
 
 final goRouterProvider = Provider<GoRouter>((ref) {
   return GoRouter(
-    initialLocation: '/login',
+    initialLocation: '/',
     routes: [
       GoRoute(
         path: '/',
@@ -200,6 +204,28 @@ final goRouterProvider = Provider<GoRouter>((ref) {
                             }),
                       ]),
                 ]),
+          ]),
+      ShellRoute(
+          navigatorKey: ref.watch(taskGenerateNavigatorKeyProvider),
+          pageBuilder: (context, state, navigator) => ModalSheetPage(
+                swipeDismissible: true,
+                viewportPadding: EdgeInsets.only(
+                  // Add the top padding to avoid the status bar.
+                  top: MediaQuery.viewPaddingOf(context).top,
+                ),
+                child: SheetShell(
+                  navigator: navigator,
+                ),
+              ),
+          routes: [
+            GoRoute(
+              path: '/voice',
+              pageBuilder: (context, state) {
+                return PagedSheetPage(
+                    transitionsBuilder: _fadeAndSlideTransition,
+                    child: TaskGenerateBottomSheet());
+              },
+            ),
           ]),
       StatefulShellRoute.indexedStack(
         builder: (context, state, navigationShell) =>
