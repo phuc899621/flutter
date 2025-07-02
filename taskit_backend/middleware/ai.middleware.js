@@ -40,3 +40,20 @@ export const ai_create_task=[
   .withMessage('user-utc-offset must be a string'),
   validateResult('AI Create Task')
 ]
+
+export const ai_answer_task_question=[
+  body('text')
+  .exists()
+  .withMessage('text is required')
+  .isString()
+  .withMessage('text must be a string'),
+  header('utcOffset')
+  .optional()
+  .isString()
+  .withMessage('user-utc-offset must be a string'),
+  body('language')
+  .optional()
+  .isIn(['en', 'vi'])
+  .withMessage('language must be one of: en, vi'),
+  validateResult('AI Answer Task Question')
+]

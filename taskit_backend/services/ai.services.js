@@ -131,6 +131,101 @@ Respond with valid pure JSON only. No explanation, no notes.`;
             console.error('Call API AI Error:', error?.response?.data || error.message);
         }
     }
+    static async answerTaskQuestion(userInput, categories = [],tasks=[],subtasks=[],userLanguage='en', userUtcOffset = '+00:00') {
+        try {
+            const nowUtc = DateTime.utc();
+            console.log('UTC sytem:', nowUtc.toISO());
+            console.log('User UTC:', userUtcOffset);
+            const userLocalTime = nowUtc.setZone('UTC' + userUtcOffset); // = UTC + offset
+            console.log('User local time:', userLocalTime.toISO());
+            
+            const systemPrompt = `
+                You are a smart Taskit Assistant. You are helping a user understand their current tasks, subtasks, and categories. You can respond in Vietnamese or English, based on the user language.(vi mean Vietnamese, en mean English)
+                You will be provided with 3 data sources and some information about time, user:
+                - A list of tasks: each task includes title, description, status, priority, dueDate (UTC),  _id mean taskId, categoryId, hasTime.
+                - A list of subtasks: each has taskId, title, isCompleted.
+                - A list of categories: each has name and _id.
+                - userLanguage: the language the user prefers to communicate in (vi or en).
+                - userLocalOffset: the user's local time zone offset from UTC (e.g., +07:00, -05:00).
+                - nowUtc: the current UTC time.
+                - userLocalTime: the user's local time calculated from nowUtc and userLocalOffset.
+
+                Your job is to analyze the user's question and respond with a relevant answer based on these task data.
+
+                Examples of possible user questions:
+                - Tôi còn bao nhiêu task đang pending?
+                - What tasks are due tomorrow?
+                - Liệt kê các subtasks chưa hoàn thành của task "Dọn nhà".
+                - What's the priority of the task named "Buy groceries"?
+
+                You should know:
+                - "pending" means tasks that are not completed and have no due date.
+                - "scheduled" means tasks that are not completed but have a due date.
+                - "dueDate" in task is alway UTC date, not local. 
+                - You must convert dueDate to user's local date using userLocalDateOffset ${userUtcOffset}. to answer questions about due dates.
+                - Task, Job, quest has another name is tác vụ or công việc, nhiệm vụ.
+                - Subtask, subjob, subquest has another name is công việc con, nhiệm vụ con, công việc phụ, nhiệm vụ phụ.
+    
+               You must respond in a single line of plain text.
+                    Formatting Rules:
+                    - DO NOT include any markdown formatting or styling.
+                    - DO NOT use quotation marks (") around task names or any part of the message.
+                    - DO NOT use escape characters such as \n, \t, \\, \", or any other special symbols.
+                    - DO NOT use bullets (-, *, •) or any list formatting.
+                    - DO NOT break the line. Keep the entire response on a single line, even if listing multiple tasks.
+                    - DO NOT hallucinate or invent data.
+                    - Use simple Vietnamese or English natural language depending on the question.
+
+                Here is the data you should use:
+                - Tasks: ${JSON.stringify(tasks)}
+                - Subtasks: ${JSON.stringify(subtasks)}
+                - Categories: ${JSON.stringify(categories)}
+                - userLanguage is: ${userLanguage}
+                - user local offset is: ${userUtcOffset} 
+                - now UTC time is: ${nowUtc.toISO()}
+                - user local time is: ${userLocalTime.toISO()}
+                `;
+
+                const userPrompt = `${userInput}`;
+
+                const response = await axios.post(
+                    'https://openrouter.ai/api/v1/chat/completions',
+                    {
+                        model: 'mistralai/mistral-small-3.2-24b-instruct:free',
+                        messages: [
+                            { role: 'system', content: systemPrompt },
+                            { role: 'user', content: userPrompt }
+                        ],
+                    },
+                    {
+                        headers: {
+                            'Authorization': `Bearer ${process.env.OPEN_AI_KEY}`,
+                            'Content-Type': 'application/json',
+                        },
+                    }
+                );
+
+                const choices = response?.data?.choices;
+                console.log('[AI RAW]:', choices);
+        if (!choices || choices.length === 0) {
+            throw new HttpError('AI did not return any choices, please  resend your request.',503);
+        }
+
+        const answer = response.data?.choices?.[0]?.message?.content;
+        if (!answer) {
+            throw new Error('No response from AI. Try again.');
+        }
+
+        return {
+            answer: answer,
+        }
+
+        
+        
+        } catch (error) {
+            console.error('Call API AI Error:', error?.response?.data || error.message);
+        }
+    }
 }
 
 export default AIServices;

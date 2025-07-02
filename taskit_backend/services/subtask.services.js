@@ -70,6 +70,13 @@ class SubtaskServices {
             throw new Error(`Find subtasks error: ${e.message}`);
         }
     }
+    static async findByTaskIds(taskIds) {
+        try {
+            return await SubtaskModel.find({ taskId: { $in: taskIds } });
+        } catch (e) {
+            throw new Error(`Find subtasks by taskIds error: ${e.message}`);
+        }
+    }
     static async delete_all_subtasks(taskId) {
         try {
             return await SubtaskModel.deleteMany({ taskId });

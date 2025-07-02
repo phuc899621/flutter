@@ -7,5 +7,6 @@ const router = express.Router();
 
 router.get('/category', jwtMiddleware,AIMiddleware.ai_category, AIController.suggestCategories);
 router.get('/task', jwtMiddleware,AIMiddleware.ai_create_task, AIController.createTaskUsingAi);
+router.get('/question', jwtMiddleware,AIMiddleware.ai_answer_task_question, AIController.answerTaskQuestion);
 
 export default router;
