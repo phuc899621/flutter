@@ -27,3 +27,16 @@ export const ai_category=[
   .withMessage('excludedCategories must be a string array'),
   validateResult('AI Category')
 ]
+
+export const ai_create_task=[
+  body('text')
+  .exists()
+  .withMessage('text is required')
+  .isString()
+  .withMessage('text must be a string'),
+  header('utcOffset')
+  .optional()
+  .isString()
+  .withMessage('user-utc-offset must be a string'),
+  validateResult('AI Create Task')
+]

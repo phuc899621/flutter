@@ -31,9 +31,7 @@ class _TaskGenerateBottomSheetState
   @override
   Widget build(BuildContext context) {
     final state = ref.watch(taskGenerateControllerProvider);
-    final controller = ref.read(taskGenerateControllerProvider.notifier);
     final color = Theme.of(context).colorScheme;
-    final text = Theme.of(context).textTheme;
     return SingleChildScrollView(
         padding:
             const EdgeInsets.only(top: 20, bottom: 30, left: 12, right: 12),
@@ -60,7 +58,27 @@ class _TaskGenerateBottomSheetState
                 ],
               ),
             ),
-            Align(alignment: Alignment.center, child: _fabVoice()),
+            Align(
+                alignment: Alignment.center,
+                child: AvatarGlow(
+                    key: ValueKey<bool>(state.isListening),
+                    animate: state.isListening,
+                    glowColor: color.primary,
+                    repeat: true,
+                    glowRadiusFactor: 1.25,
+                    duration: const Duration(seconds: 2),
+                    curve: Curves.easeInOut,
+                    child: FloatingActionButton(
+                        heroTag: 'FAB Voice',
+                        shape: CircleBorder(),
+                        foregroundColor: color.onPrimaryContainer,
+                        splashColor: color.primary,
+                        backgroundColor: color.primaryContainer,
+                        onPressed: _listen,
+                        child: Icon(
+                          state.isListening ? Icons.mic : Icons.mic_none,
+                          size: 30,
+                        )))),
           ],
         ));
   }
@@ -182,62 +200,65 @@ class _TaskGenerateBottomSheetState
 //endregion
 //region FAB VOICE
   Widget _fabVoice() {
-    final state = ref.watch(taskGenerateControllerProvider);
-    final controller = ref.read(taskGenerateControllerProvider.notifier);
-    final color = Theme.of(context).colorScheme;
-    return AvatarGlow(
-        animate: state.isListening,
-        glowColor: color.primary,
-        repeat: true,
-        glowRadiusFactor: 1.25,
-        duration: const Duration(seconds: 2),
-        curve: Curves.easeInOut,
-        child: FloatingActionButton(
-            heroTag: 'FAB Voice',
-            shape: CircleBorder(),
-            foregroundColor: color.onPrimaryContainer,
-            splashColor: color.primary,
-            backgroundColor: color.primaryContainer,
-            onPressed: _listen,
-            child: Icon(
-              state.isListening ? Icons.mic : Icons.mic_none,
-              size: 30,
-            )));
+    return Consumer(builder: (context, ref, child) {
+      final state = ref.watch(taskGenerateControllerProvider);
+      final color = Theme.of(context).colorScheme;
+      logger.i('reload FAB Voice ${state.isListening}');
+      return AvatarGlow(
+          animate: _speech.isListening,
+          glowColor: color.primary,
+          repeat: true,
+          glowRadiusFactor: 1.25,
+          duration: const Duration(seconds: 2),
+          curve: Curves.easeInOut,
+          child: FloatingActionButton(
+              heroTag: 'FAB Voice',
+              shape: CircleBorder(),
+              foregroundColor: color.onPrimaryContainer,
+              splashColor: color.primary,
+              backgroundColor: color.primaryContainer,
+              onPressed: _listen,
+              child: Icon(
+                state.isListening ? Icons.mic : Icons.mic_none,
+                size: 30,
+              )));
+    });
   }
 
 //endregion
 //region START VOICE LISTEN
   void _listen() async {
     final controller = ref.read(taskGenerateControllerProvider.notifier);
-    if (!_speech.isAvailable) {
-      bool available = await _speech.initialize(
-        onStatus: (status) {
-          if (status == 'done' || status == 'notListening') {
-            controller.setIsListening(false);
-          }
-        },
-        onError: (error) {
-          logger.i('onError $error');
+
+    final available = await _speech.initialize(
+      onStatus: (status) {
+        logger.i('🎙 onStatus: $status');
+        if (status == 'done' || status == 'notListening') {
           controller.setIsListening(false);
-        },
-      );
-      if (!available) return;
-    }
+        }
+      },
+      onError: (error) {
+        logger.e('onError: $error');
+        controller.setIsListening(false);
+      },
+    );
+    if (!available) return;
     if (_speech.isListening) {
       await _speech.stop();
       controller.setIsListening(false);
-    } else {
-      controller.setIsListening(true);
-      _speech.listen(onResult: (result) {
-        logger.i(result.recognizedWords);
-        setState(() {
-          controller.setText(result.recognizedWords);
-          if (result.hasConfidenceRating && result.confidence > 0) {
-            _confidence = result.confidence;
-          }
-        });
-      });
+      return;
     }
+
+    controller.setIsListening(true);
+    _speech.listen(
+      onResult: (result) {
+        logger.i('Result: ${result.recognizedWords}');
+        controller.setText(result.recognizedWords);
+        if (result.hasConfidenceRating && result.confidence > 0) {
+          _confidence = result.confidence;
+        }
+      },
+    );
   }
 
 //endregion

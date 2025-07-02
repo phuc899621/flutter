@@ -6,6 +6,6 @@ import * as AIMiddleware from '../middleware/ai.middleware.js';
 const router = express.Router();
 
 router.get('/category', jwtMiddleware,AIMiddleware.ai_category, AIController.suggestCategories);
-router.get('/task', jwtMiddleware,AIMiddleware.ai_category, AIController.getTaskAi);
+router.get('/task', jwtMiddleware,AIMiddleware.ai_create_task, AIController.createTaskUsingAi);
 
 export default router;

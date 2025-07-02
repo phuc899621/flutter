@@ -1,6 +1,8 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:taskit/features/main/presentation/main/state/task_generate_state.dart';
 
+import '../../../../../shared/log/logger_provider.dart';
+
 final taskGenerateControllerProvider =
     AutoDisposeNotifierProvider<TaskGenerateController, TaskGenerateState>(
         TaskGenerateController.new);
@@ -11,8 +13,12 @@ class TaskGenerateController extends AutoDisposeNotifier<TaskGenerateState> {
     return TaskGenerateState();
   }
 
-  void setIsListening(bool isListening) =>
+  void setIsListening(bool isListening) {
+    logger.i('setIsListening: $isListening');
+    if (isListening != state.isListening) {
       state = state.copyWith(isListening: isListening);
+    }
+  }
 
   void setIsGenerating(bool isGenerating) =>
       state = state.copyWith(isGenerating: isGenerating);
