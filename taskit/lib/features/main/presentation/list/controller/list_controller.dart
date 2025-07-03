@@ -16,10 +16,10 @@ import '../../../../task/domain/entities/task_entity.dart';
 import '../../../../task/domain/entities/task_status_enum.dart';
 
 final listControllerProvider =
-    NotifierProvider<ListController, ListState>(ListController.new);
+    AutoDisposeNotifierProvider<ListController, ListState>(ListController.new);
 final shouldFocusSearchTextFieldProvider = StateProvider<bool>((ref) => false);
 
-class ListController extends Notifier<ListState> {
+class ListController extends AutoDisposeNotifier<ListState> {
   late StreamSubscription _taskSub;
   ValueChanged<bool>? onFiltering;
 

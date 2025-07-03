@@ -28,6 +28,7 @@ mixin _$HomeState {
   List<TaskEntity> get todayOverDueTasks;
   List<TaskEntity> get thisWeekCompletedTasks;
   TaskEntity? get selectedTask;
+  bool? get isLogout;
   String get userName;
 
   /// Create a copy of HomeState
@@ -67,6 +68,8 @@ mixin _$HomeState {
                 .equals(other.thisWeekCompletedTasks, thisWeekCompletedTasks) &&
             (identical(other.selectedTask, selectedTask) ||
                 other.selectedTask == selectedTask) &&
+            (identical(other.isLogout, isLogout) ||
+                other.isLogout == isLogout) &&
             (identical(other.userName, userName) ||
                 other.userName == userName));
   }
@@ -87,11 +90,12 @@ mixin _$HomeState {
       const DeepCollectionEquality().hash(todayOverDueTasks),
       const DeepCollectionEquality().hash(thisWeekCompletedTasks),
       selectedTask,
+      isLogout,
       userName);
 
   @override
   String toString() {
-    return 'HomeState(error: $error, isTodayTaskLoading: $isTodayTaskLoading, isTomorrowTaskLoading: $isTomorrowTaskLoading, isThisWeekLoading: $isThisWeekLoading, todayTasks: $todayTasks, pendingTasks: $pendingTasks, todayCompletedTasks: $todayCompletedTasks, tomorrowTasks: $tomorrowTasks, thisWeekTasks: $thisWeekTasks, thisWeekOverDueTasks: $thisWeekOverDueTasks, todayOverDueTasks: $todayOverDueTasks, thisWeekCompletedTasks: $thisWeekCompletedTasks, selectedTask: $selectedTask, userName: $userName)';
+    return 'HomeState(error: $error, isTodayTaskLoading: $isTodayTaskLoading, isTomorrowTaskLoading: $isTomorrowTaskLoading, isThisWeekLoading: $isThisWeekLoading, todayTasks: $todayTasks, pendingTasks: $pendingTasks, todayCompletedTasks: $todayCompletedTasks, tomorrowTasks: $tomorrowTasks, thisWeekTasks: $thisWeekTasks, thisWeekOverDueTasks: $thisWeekOverDueTasks, todayOverDueTasks: $todayOverDueTasks, thisWeekCompletedTasks: $thisWeekCompletedTasks, selectedTask: $selectedTask, isLogout: $isLogout, userName: $userName)';
   }
 }
 
@@ -114,6 +118,7 @@ abstract mixin class $HomeStateCopyWith<$Res> {
       List<TaskEntity> todayOverDueTasks,
       List<TaskEntity> thisWeekCompletedTasks,
       TaskEntity? selectedTask,
+      bool? isLogout,
       String userName});
 
   $TaskEntityCopyWith<$Res>? get selectedTask;
@@ -144,6 +149,7 @@ class _$HomeStateCopyWithImpl<$Res> implements $HomeStateCopyWith<$Res> {
     Object? todayOverDueTasks = null,
     Object? thisWeekCompletedTasks = null,
     Object? selectedTask = freezed,
+    Object? isLogout = freezed,
     Object? userName = null,
   }) {
     return _then(_self.copyWith(
@@ -199,6 +205,10 @@ class _$HomeStateCopyWithImpl<$Res> implements $HomeStateCopyWith<$Res> {
           ? _self.selectedTask
           : selectedTask // ignore: cast_nullable_to_non_nullable
               as TaskEntity?,
+      isLogout: freezed == isLogout
+          ? _self.isLogout
+          : isLogout // ignore: cast_nullable_to_non_nullable
+              as bool?,
       userName: null == userName
           ? _self.userName
           : userName // ignore: cast_nullable_to_non_nullable
@@ -238,6 +248,7 @@ class _HomeState implements HomeState {
       final List<TaskEntity> todayOverDueTasks = const [],
       final List<TaskEntity> thisWeekCompletedTasks = const [],
       this.selectedTask,
+      this.isLogout,
       this.userName = ''})
       : _todayTasks = todayTasks,
         _pendingTasks = pendingTasks,
@@ -338,6 +349,8 @@ class _HomeState implements HomeState {
   @override
   final TaskEntity? selectedTask;
   @override
+  final bool? isLogout;
+  @override
   @JsonKey()
   final String userName;
 
@@ -379,6 +392,8 @@ class _HomeState implements HomeState {
                 other._thisWeekCompletedTasks, _thisWeekCompletedTasks) &&
             (identical(other.selectedTask, selectedTask) ||
                 other.selectedTask == selectedTask) &&
+            (identical(other.isLogout, isLogout) ||
+                other.isLogout == isLogout) &&
             (identical(other.userName, userName) ||
                 other.userName == userName));
   }
@@ -399,11 +414,12 @@ class _HomeState implements HomeState {
       const DeepCollectionEquality().hash(_todayOverDueTasks),
       const DeepCollectionEquality().hash(_thisWeekCompletedTasks),
       selectedTask,
+      isLogout,
       userName);
 
   @override
   String toString() {
-    return 'HomeState(error: $error, isTodayTaskLoading: $isTodayTaskLoading, isTomorrowTaskLoading: $isTomorrowTaskLoading, isThisWeekLoading: $isThisWeekLoading, todayTasks: $todayTasks, pendingTasks: $pendingTasks, todayCompletedTasks: $todayCompletedTasks, tomorrowTasks: $tomorrowTasks, thisWeekTasks: $thisWeekTasks, thisWeekOverDueTasks: $thisWeekOverDueTasks, todayOverDueTasks: $todayOverDueTasks, thisWeekCompletedTasks: $thisWeekCompletedTasks, selectedTask: $selectedTask, userName: $userName)';
+    return 'HomeState(error: $error, isTodayTaskLoading: $isTodayTaskLoading, isTomorrowTaskLoading: $isTomorrowTaskLoading, isThisWeekLoading: $isThisWeekLoading, todayTasks: $todayTasks, pendingTasks: $pendingTasks, todayCompletedTasks: $todayCompletedTasks, tomorrowTasks: $tomorrowTasks, thisWeekTasks: $thisWeekTasks, thisWeekOverDueTasks: $thisWeekOverDueTasks, todayOverDueTasks: $todayOverDueTasks, thisWeekCompletedTasks: $thisWeekCompletedTasks, selectedTask: $selectedTask, isLogout: $isLogout, userName: $userName)';
   }
 }
 
@@ -429,6 +445,7 @@ abstract mixin class _$HomeStateCopyWith<$Res>
       List<TaskEntity> todayOverDueTasks,
       List<TaskEntity> thisWeekCompletedTasks,
       TaskEntity? selectedTask,
+      bool? isLogout,
       String userName});
 
   @override
@@ -460,6 +477,7 @@ class __$HomeStateCopyWithImpl<$Res> implements _$HomeStateCopyWith<$Res> {
     Object? todayOverDueTasks = null,
     Object? thisWeekCompletedTasks = null,
     Object? selectedTask = freezed,
+    Object? isLogout = freezed,
     Object? userName = null,
   }) {
     return _then(_HomeState(
@@ -515,6 +533,10 @@ class __$HomeStateCopyWithImpl<$Res> implements _$HomeStateCopyWith<$Res> {
           ? _self.selectedTask
           : selectedTask // ignore: cast_nullable_to_non_nullable
               as TaskEntity?,
+      isLogout: freezed == isLogout
+          ? _self.isLogout
+          : isLogout // ignore: cast_nullable_to_non_nullable
+              as bool?,
       userName: null == userName
           ? _self.userName
           : userName // ignore: cast_nullable_to_non_nullable

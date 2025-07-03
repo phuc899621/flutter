@@ -6,14 +6,15 @@ import 'package:taskit/features/main/presentation/home/state/home_state.dart';
 import 'package:taskit/features/task/application/task_service.dart';
 import 'package:taskit/shared/extension/date_time.dart';
 
+import '../../../../../shared/application/token_service.dart';
 import '../../../../../shared/log/logger_provider.dart';
 import '../../../../task/domain/entities/task_entity.dart';
 import '../../../../user/application/user_service.dart';
 
 final homeControllerProvider =
-    NotifierProvider<HomeController, HomeState>(HomeController.new);
+    AutoDisposeNotifierProvider<HomeController, HomeState>(HomeController.new);
 
-class HomeController extends Notifier<HomeState> {
+class HomeController extends AutoDisposeNotifier<HomeState> {
   late final StreamSubscription _todaySub;
   late final StreamSubscription _tomorrowSub;
   late final StreamSubscription _thisWeekSub;
@@ -41,6 +42,11 @@ class HomeController extends Notifier<HomeState> {
     _userSub = user.watchUser().listen((user) {
       state = state.copyWith(userName: user.name);
     });
+  }
+
+  void logout() async {
+    await ref.read(tokenServiceProvider).deleteToken();
+    state = state.copyWith(isLogout: true);
   }
 
   void _restartListening() {

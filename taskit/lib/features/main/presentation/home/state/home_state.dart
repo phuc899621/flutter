@@ -20,5 +20,6 @@ sealed class HomeState with _$HomeState {
       @Default([]) List<TaskEntity> todayOverDueTasks,
       @Default([]) List<TaskEntity> thisWeekCompletedTasks,
       TaskEntity? selectedTask,
+      bool? isLogout,
       @Default('') String userName}) = _HomeState;
 }

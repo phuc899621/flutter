@@ -60,9 +60,60 @@ class _HomePageState extends ConsumerState<HomePage>
     context.push('/edit_task', extra: localId);
   }
 
+  //region SHOW Logout Dialog
+  void _showLogoutDialog() async {
+    final color = Theme.of(context).colorScheme;
+    final text = Theme.of(context).textTheme;
+    final controller = ref.read(homeControllerProvider.notifier);
+    showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+              titleTextStyle: text.titleLarge?.copyWith(
+                color: color.onSurface,
+                fontWeight: FontWeight.bold,
+              ),
+              title: Text('Logout'),
+              content: const Text('Are you sure you want to logout?'),
+              actions: [
+                TextButton(
+                    onPressed: context.pop,
+                    child: Text(
+                      'Cancel',
+                      style: text.labelLarge?.copyWith(
+                        color: color.primary,
+                      ),
+                    )),
+                TextButton(
+                    onPressed: () {
+                      controller.logout();
+                    },
+                    child: Text(
+                      'Confirm',
+                      style: text.labelLarge?.copyWith(
+                        color: color.onError,
+                      ),
+                    )),
+              ],
+            ));
+  }
+
+  //endregion
+  //region Listen
+  void _listen() {
+    ref.listen(homeControllerProvider.select((value) => value.isLogout),
+        (_, next) {
+      if (next != null && next) {
+        context.go('/');
+      }
+    });
+  }
+
+  //endregion
+
   //region MAIN
   @override
   Widget build(BuildContext context) {
+    _listen();
     final controller = ref.watch(homeControllerProvider.notifier);
     final color = Theme.of(context).colorScheme;
     ref.listen<AsyncValue<DateTime>>(timeStreamProvider, (_, next) {
@@ -165,7 +216,7 @@ class _HomePageState extends ConsumerState<HomePage>
         ),
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 5),
-          child: _notificationIconButton(),
+          child: _logoutIconButton(),
         ),
       ],
     );
@@ -245,7 +296,7 @@ class _HomePageState extends ConsumerState<HomePage>
     );
   }
 
-  Widget _notificationIconButton() {
+  Widget _logoutIconButton() {
     final color = Theme.of(context).colorScheme;
     return Material(
       color: Colors.transparent,
@@ -254,15 +305,16 @@ class _HomePageState extends ConsumerState<HomePage>
       elevation: 2,
       child: IconButton.filledTonal(
           iconSize: 30,
-          style: ButtonStyle(
-              backgroundColor: WidgetStatePropertyAll(color.primaryContainer)),
-          onPressed: () {},
-          color: color.onPrimaryContainer,
-          icon: Icon(Icons.notifications_none)),
+          style:
+              ButtonStyle(backgroundColor: WidgetStatePropertyAll(color.error)),
+          onPressed: _showLogoutDialog,
+          color: color.onError,
+          icon: Icon(Icons.logout)),
     );
   }
 
 //endregion
+
 //region TAB BAR
   Widget _tabBar() {
     final color = Theme.of(context).colorScheme;
