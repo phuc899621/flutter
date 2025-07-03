@@ -7,6 +7,6 @@ const String forgotPasswordResetRoute = 'reset';
 const String homeRoute = 'home';
 const String listRoute = 'list';
 const String timelineRoute = 'timeline';
-const String settingRoute = 'setting';
+const String aiRoute = 'ai';
 const String addTaskRoute = 'add_task';
 const String editTaskRoute = 'edit_task';

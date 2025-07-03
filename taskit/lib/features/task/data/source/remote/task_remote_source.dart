@@ -12,28 +12,35 @@ import '../../../../../shared/data/dto/response/base_response_data.dart';
 import '../../../../../shared/exception/failure.dart';
 import '../../../../../shared/log/logger_provider.dart';
 import '../../../../../shared/mixin/dio_exception_mapper.dart';
+import '../../dto/req/ai/ai_req.dart';
 import '../../dto/req/category/add_category_req.dart';
 import '../../dto/req/update_task/update_task_req.dart';
+import '../../dto/res/ai/ai_generate_task_data.dart';
+import '../../dto/res/ai/ai_question_data.dart';
 import '../../dto/res/category/add_category_data.dart';
 import '../../dto/res/subtask/add_subtask_data.dart';
 import '../../dto/res/subtask/update_subtask_data.dart';
 import '../../dto/res/task/add_task_data.dart';
 import '../../dto/res/task/update_task_data.dart';
+import 'ai_api.dart';
 import 'category_api.dart';
 
 final taskRemoteSourceProvider = Provider<ITaskRemoteSource>((ref) {
   final taskApi = ref.watch(taskApiProvider);
   final subtaskApi = ref.watch(subtaskApiProvider);
   final categoryApi = ref.watch(categoryApiProvider);
-  return TaskRemoteSource(taskApi, subtaskApi, categoryApi);
+  final aiApi = ref.watch(aiApiProvider);
+  return TaskRemoteSource(taskApi, subtaskApi, categoryApi, aiApi);
 });
 
 class TaskRemoteSource with DioExceptionMapper implements ITaskRemoteSource {
   final TaskApi _taskApi;
   final SubtaskApi _subtaskApi;
   final CategoryApi _categoryApi;
+  final AiApi _aiApi;
 
-  TaskRemoteSource(this._taskApi, this._subtaskApi, this._categoryApi);
+  TaskRemoteSource(
+      this._taskApi, this._subtaskApi, this._categoryApi, this._aiApi);
 
   //===========================================
   //================ Add Task =================
@@ -136,6 +143,34 @@ class TaskRemoteSource with DioExceptionMapper implements ITaskRemoteSource {
     try {
       final response = _subtaskApi.delete('Bearer $token', subtaskId);
       return response;
+    } on DioException catch (e, s) {
+      throw mapDioExceptionToFailure(e, s);
+    } catch (e, s) {
+      throw _mapToFailure(e, s);
+    }
+  }
+
+  //endregion
+  //=======================================
+//============= AI ==============
+//========================================
+  //region AI
+  @override
+  Future<BaseResponse<AiGenerateTaskData>> generateTask(
+      String token, AiReq aiReq) {
+    try {
+      return _aiApi.generate('Bearer $token', aiReq);
+    } on DioException catch (e, s) {
+      throw mapDioExceptionToFailure(e, s);
+    } catch (e, s) {
+      throw _mapToFailure(e, s);
+    }
+  }
+
+  @override
+  Future<BaseResponse<AiQuestionData>> getAnswer(String token, AiReq aiReq) {
+    try {
+      return _aiApi.getAnswer('Bearer $token', aiReq);
     } on DioException catch (e, s) {
       throw mapDioExceptionToFailure(e, s);
     } catch (e, s) {

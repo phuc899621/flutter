@@ -110,6 +110,7 @@ class _HomePageState extends ConsumerState<HomePage>
       ),
       children: [
         FloatingActionButton(
+            heroTag: 'Add Task',
             shape: CircleBorder(),
             foregroundColor: color.onPrimaryContainer,
             splashColor: color.primary,
@@ -120,15 +121,16 @@ class _HomePageState extends ConsumerState<HomePage>
             ),
             onPressed: () => context.push('/add_task')),
         FloatingActionButton(
+            heroTag: 'Add Task Using Voice',
             shape: CircleBorder(),
             foregroundColor: color.onPrimaryContainer,
             splashColor: color.primary,
             backgroundColor: color.primaryContainer,
+            onPressed: () => context.push('/voice'),
             child: Icon(
-              Icons.keyboard_voice,
+              Icons.mic,
               size: 30,
-            ),
-            onPressed: () {})
+            ))
       ],
     );
   }

@@ -3,15 +3,19 @@ import 'dart:async';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:multiple_result/multiple_result.dart';
 import 'package:rxdart/rxdart.dart';
+import 'package:taskit/features/task/data/dto/req/ai/ai_req.dart';
 import 'package:taskit/features/task/data/dto/req/subtask/add_subtask.dart';
 import 'package:taskit/features/task/data/dto/req/subtask/add_subtask_list_req.dart';
 import 'package:taskit/features/task/data/dto/req/subtask/update_subtask.dart';
 import 'package:taskit/features/task/data/dto/req/subtask/update_subtask_list_req.dart';
 import 'package:taskit/features/task/data/mapper/itask_mapper.dart';
 import 'package:taskit/features/task/data/source/remote/itask_remote_source.dart';
+import 'package:taskit/features/task/domain/entities/ai_task_entity.dart';
 import 'package:taskit/features/task/domain/entities/task_entity.dart';
 import 'package:taskit/features/task/domain/entities/task_priority_enum.dart';
+import 'package:taskit/features/user/data/source/local/iuser_local_source.dart';
 import 'package:taskit/shared/data/repository/itoken_repository.dart';
 import 'package:taskit/shared/data/repository/token_repository.dart';
 import 'package:taskit/shared/data/source/local/drift/database/database.dart';
@@ -39,14 +43,15 @@ final taskRepoProvider = Provider<ITaskRepo>((ref) {
   final iTokenRepo = ref.watch(tokenRepositoryProvider);
   final iTaskMapper = ref.watch(taskMapperProvider);
   final iTaskRemoteSource = ref.watch(taskRemoteSourceProvider);
-  return TaskRepo(
-      taskApi, taskLocalSource, iTokenRepo, iTaskMapper, iTaskRemoteSource);
+  return TaskRepo(taskApi, taskLocalSource, iTokenRepo, iTaskMapper,
+      iTaskRemoteSource, userLocalSource);
 });
 
 class TaskRepo with DioExceptionMapper implements ITaskRepo {
   final TaskApi _taskApi;
   final ITaskLocalSource _taskLocalSource;
   final ITaskRemoteSource _taskRemoteSource;
+  final IUserLocalSource _userLocalSource;
   final ITokenRepository _tokenService;
   final ITaskMapper _iTaskMapper;
   final Map<int, Timer> _syncTaskTitleTimers = {};
@@ -61,7 +66,7 @@ class TaskRepo with DioExceptionMapper implements ITaskRepo {
   final Map<int, Timer> _syncSubtaskTitleTimer = {};
 
   TaskRepo(this._taskApi, this._taskLocalSource, this._tokenService,
-      this._iTaskMapper, this._taskRemoteSource);
+      this._iTaskMapper, this._taskRemoteSource, this._userLocalSource);
 
   //=====================================
   //============= WATCH =================
@@ -304,6 +309,14 @@ class TaskRepo with DioExceptionMapper implements ITaskRepo {
     );
     insertRemoteTask(taskLocalId);
 
+    return taskLocalId;
+  }
+
+  @override
+  Future<int> insertTaskFromAi(TaskTableCompanion task) async {
+    int taskLocalId = await _taskLocalSource.insertTaskFromAi(task);
+    if (taskLocalId == -1) return -1;
+    insertRemoteTask(taskLocalId);
     return taskLocalId;
   }
 
@@ -669,5 +682,86 @@ class TaskRepo with DioExceptionMapper implements ITaskRepo {
     }
   }
 
+//endregion
+//=====================================
+//============= AI ===================
+//=====================================
+//region AI
+  @override
+  Future<Result<AiTaskEntity, Failure>> generateAiTask(
+      String text, String utcOffset) async {
+    try {
+      final token = await _tokenService.getToken();
+      final request = AiReq.generate(text: text, utcOffset: utcOffset);
+      final response =
+          await _taskRemoteSource.generateTask(token ?? '', request);
+      final category = await _taskLocalSource
+          .getCategoryByRemoteId(response.data.categoryId);
+      final user = await _userLocalSource.getUser();
+      if (category == null) {
+        return const Error(
+            Failure(message: 'Category not found when generate task by ai'));
+      }
+      if (user == null) {
+        return const Error(
+            Failure(message: 'User not found when generate task by ai'));
+      }
+      logger.i('generate task local');
+      final aiTask = _iTaskMapper.toAiTaskEntity(response.data);
+      int localId = await _taskLocalSource.insertTaskFromAi(
+          _iTaskMapper.fromAiGenerateTaskData(
+              response.data, user.localId, category.localId));
+      if (localId == -1) {
+        return const Error(Failure(message: 'Insert task error'));
+      }
+      insertRemoteTask(localId);
+      logger.i('generate task local success $localId');
+      return Success(aiTask);
+    } on Failure catch (e) {
+      return Error(e);
+    } catch (e, s) {
+      if (e is Exception) {
+        return Error(Failure(
+          message: e.toString(),
+          exception: e,
+          stackTrace: s,
+        ));
+      } else {
+        return Error(Failure(
+          message: e.toString(),
+          exception: Exception("Unknown error at generate AI Task"),
+          stackTrace: s,
+        ));
+      }
+    }
+  }
+
+  @override
+  Future<Result<String, Failure>> getAiAnswer(
+      String question, String utcOffset, String language) async {
+    try {
+      final token = await _tokenService.getToken();
+      final request = AiReq.question(
+          text: question, utcOffset: utcOffset, language: language);
+      final response = await _taskRemoteSource.getAnswer(token ?? '', request);
+      return Success(response.data.answer);
+    } on Failure catch (e) {
+      return Error(e);
+    } catch (e, s) {
+      if (e is Exception) {
+        return Error(Failure(
+          message: e.toString(),
+          exception: e,
+          stackTrace: s,
+        ));
+      } else {
+        return Error(Failure(
+          message: e.toString(),
+          exception: Exception("Unknown error at generate AI Task"),
+          stackTrace: s,
+        ));
+      }
+    }
+  }
 //endregion
 }

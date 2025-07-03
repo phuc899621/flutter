@@ -3,6 +3,7 @@ import 'package:taskit/features/task/domain/entities/task_entity.dart';
 import 'package:taskit/features/task/domain/entities/task_priority_enum.dart';
 
 import '../../../shared/exception/failure.dart';
+import '../domain/entities/ai_task_entity.dart';
 import '../domain/entities/category_entity.dart';
 import '../domain/entities/subtask_entity.dart';
 
@@ -77,4 +78,12 @@ abstract interface class ITaskService {
   Future<void> deleteTask(int localId);
 
   Future<void> deleteSubtask(int localId);
+
+  //================================
+//========== AI  ================
+//================================
+
+  Future<Result<AiTaskEntity, Failure>> generateAiTask(String text);
+
+  Future<Result<String, Failure>> getAiAnswer(String question, String language);
 }

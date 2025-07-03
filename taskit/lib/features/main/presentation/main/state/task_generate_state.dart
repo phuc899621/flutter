@@ -8,6 +8,8 @@ sealed class TaskGenerateState with _$TaskGenerateState {
     @Default(false) bool isListening,
     @Default(false) bool isGenerating,
     @Default('') String text,
+    bool? isGenerateSuccess,
+    String? error,
     @Default(false) bool isEditing,
   }) = _TaskGenerateState;
 }

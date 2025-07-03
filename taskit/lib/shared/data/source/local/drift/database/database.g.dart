@@ -8,7 +8,9 @@ class $UserTableTable extends UserTable
   @override
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
+
   $UserTableTable(this.attachedDatabase, [this._alias]);
+
   static const VerificationMeta _localIdMeta =
       const VerificationMeta('localId');
   @override
@@ -42,14 +44,18 @@ class $UserTableTable extends UserTable
   late final GeneratedColumn<String> avatar = GeneratedColumn<String>(
       'avatar', aliasedName, false,
       type: DriftSqlType.string, requiredDuringInsert: true);
+
   @override
   List<GeneratedColumn> get $columns =>
       [localId, remoteId, email, name, avatar];
+
   @override
   String get aliasedName => _alias ?? actualTableName;
+
   @override
   String get actualTableName => $name;
   static const String $name = 'user';
+
   @override
   VerificationContext validateIntegrity(Insertable<UserTableData> instance,
       {bool isInserting = false}) {
@@ -86,6 +92,7 @@ class $UserTableTable extends UserTable
 
   @override
   Set<GeneratedColumn> get $primaryKey => {localId};
+
   @override
   UserTableData map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
@@ -115,12 +122,14 @@ class UserTableData extends DataClass implements Insertable<UserTableData> {
   final String email;
   final String name;
   final String avatar;
+
   const UserTableData(
       {required this.localId,
       required this.remoteId,
       required this.email,
       required this.name,
       required this.avatar});
+
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
@@ -153,6 +162,7 @@ class UserTableData extends DataClass implements Insertable<UserTableData> {
       avatar: serializer.fromJson<String>(json['avatar']),
     );
   }
+
   @override
   Map<String, dynamic> toJson({ValueSerializer? serializer}) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
@@ -178,6 +188,7 @@ class UserTableData extends DataClass implements Insertable<UserTableData> {
         name: name ?? this.name,
         avatar: avatar ?? this.avatar,
       );
+
   UserTableData copyWithCompanion(UserTableCompanion data) {
     return UserTableData(
       localId: data.localId.present ? data.localId.value : this.localId,
@@ -202,6 +213,7 @@ class UserTableData extends DataClass implements Insertable<UserTableData> {
 
   @override
   int get hashCode => Object.hash(localId, remoteId, email, name, avatar);
+
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -219,6 +231,7 @@ class UserTableCompanion extends UpdateCompanion<UserTableData> {
   final Value<String> email;
   final Value<String> name;
   final Value<String> avatar;
+
   const UserTableCompanion({
     this.localId = const Value.absent(),
     this.remoteId = const Value.absent(),
@@ -226,6 +239,7 @@ class UserTableCompanion extends UpdateCompanion<UserTableData> {
     this.name = const Value.absent(),
     this.avatar = const Value.absent(),
   });
+
   UserTableCompanion.insert({
     this.localId = const Value.absent(),
     this.remoteId = const Value.absent(),
@@ -235,6 +249,7 @@ class UserTableCompanion extends UpdateCompanion<UserTableData> {
   })  : email = Value(email),
         name = Value(name),
         avatar = Value(avatar);
+
   static Insertable<UserTableData> custom({
     Expression<int>? localId,
     Expression<String>? remoteId,
@@ -305,7 +320,9 @@ class $CategoryTableTable extends CategoryTable
   @override
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
+
   $CategoryTableTable(this.attachedDatabase, [this._alias]);
+
   static const VerificationMeta _localIdMeta =
       const VerificationMeta('localId');
   @override
@@ -364,14 +381,18 @@ class $CategoryTableTable extends CategoryTable
       type: DriftSqlType.dateTime,
       requiredDuringInsert: false,
       defaultValue: currentDateAndTime);
+
   @override
   List<GeneratedColumn> get $columns =>
       [localId, remoteId, name, isSynced, userLocalId, createdAt, updatedAt];
+
   @override
   String get aliasedName => _alias ?? actualTableName;
+
   @override
   String get actualTableName => $name;
   static const String $name = 'category';
+
   @override
   VerificationContext validateIntegrity(Insertable<CategoryTableData> instance,
       {bool isInserting = false}) {
@@ -416,6 +437,7 @@ class $CategoryTableTable extends CategoryTable
 
   @override
   Set<GeneratedColumn> get $primaryKey => {localId};
+
   @override
   CategoryTableData map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
@@ -452,6 +474,7 @@ class CategoryTableData extends DataClass
   final int userLocalId;
   final DateTime createdAt;
   final DateTime updatedAt;
+
   const CategoryTableData(
       {required this.localId,
       required this.remoteId,
@@ -460,6 +483,7 @@ class CategoryTableData extends DataClass
       required this.userLocalId,
       required this.createdAt,
       required this.updatedAt});
+
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
@@ -498,6 +522,7 @@ class CategoryTableData extends DataClass
       updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
     );
   }
+
   @override
   Map<String, dynamic> toJson({ValueSerializer? serializer}) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
@@ -529,6 +554,7 @@ class CategoryTableData extends DataClass
         createdAt: createdAt ?? this.createdAt,
         updatedAt: updatedAt ?? this.updatedAt,
       );
+
   CategoryTableData copyWithCompanion(CategoryTableCompanion data) {
     return CategoryTableData(
       localId: data.localId.present ? data.localId.value : this.localId,
@@ -559,6 +585,7 @@ class CategoryTableData extends DataClass
   @override
   int get hashCode => Object.hash(
       localId, remoteId, name, isSynced, userLocalId, createdAt, updatedAt);
+
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -580,6 +607,7 @@ class CategoryTableCompanion extends UpdateCompanion<CategoryTableData> {
   final Value<int> userLocalId;
   final Value<DateTime> createdAt;
   final Value<DateTime> updatedAt;
+
   const CategoryTableCompanion({
     this.localId = const Value.absent(),
     this.remoteId = const Value.absent(),
@@ -589,6 +617,7 @@ class CategoryTableCompanion extends UpdateCompanion<CategoryTableData> {
     this.createdAt = const Value.absent(),
     this.updatedAt = const Value.absent(),
   });
+
   CategoryTableCompanion.insert({
     this.localId = const Value.absent(),
     this.remoteId = const Value.absent(),
@@ -599,6 +628,7 @@ class CategoryTableCompanion extends UpdateCompanion<CategoryTableData> {
     this.updatedAt = const Value.absent(),
   })  : name = Value(name),
         userLocalId = Value(userLocalId);
+
   static Insertable<CategoryTableData> custom({
     Expression<int>? localId,
     Expression<String>? remoteId,
@@ -685,7 +715,9 @@ class $TaskTableTable extends TaskTable
   @override
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
+
   $TaskTableTable(this.attachedDatabase, [this._alias]);
+
   static const VerificationMeta _localIdMeta =
       const VerificationMeta('localId');
   @override
@@ -798,6 +830,7 @@ class $TaskTableTable extends TaskTable
       type: DriftSqlType.dateTime,
       requiredDuringInsert: false,
       defaultValue: currentDateAndTime);
+
   @override
   List<GeneratedColumn> get $columns => [
         localId,
@@ -815,11 +848,14 @@ class $TaskTableTable extends TaskTable
         createdAt,
         updatedAt
       ];
+
   @override
   String get aliasedName => _alias ?? actualTableName;
+
   @override
   String get actualTableName => $name;
   static const String $name = 'task';
+
   @override
   VerificationContext validateIntegrity(Insertable<TaskTableData> instance,
       {bool isInserting = false}) {
@@ -900,6 +936,7 @@ class $TaskTableTable extends TaskTable
 
   @override
   Set<GeneratedColumn> get $primaryKey => {localId};
+
   @override
   TaskTableData map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
@@ -956,6 +993,7 @@ class TaskTableData extends DataClass implements Insertable<TaskTableData> {
   final bool hasTime;
   final DateTime createdAt;
   final DateTime updatedAt;
+
   const TaskTableData(
       {required this.localId,
       required this.remoteId,
@@ -971,6 +1009,7 @@ class TaskTableData extends DataClass implements Insertable<TaskTableData> {
       required this.hasTime,
       required this.createdAt,
       required this.updatedAt});
+
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
@@ -1038,6 +1077,7 @@ class TaskTableData extends DataClass implements Insertable<TaskTableData> {
       updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
     );
   }
+
   @override
   Map<String, dynamic> toJson({ValueSerializer? serializer}) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
@@ -1090,6 +1130,7 @@ class TaskTableData extends DataClass implements Insertable<TaskTableData> {
         createdAt: createdAt ?? this.createdAt,
         updatedAt: updatedAt ?? this.updatedAt,
       );
+
   TaskTableData copyWithCompanion(TaskTableCompanion data) {
     return TaskTableData(
       localId: data.localId.present ? data.localId.value : this.localId,
@@ -1151,6 +1192,7 @@ class TaskTableData extends DataClass implements Insertable<TaskTableData> {
       hasTime,
       createdAt,
       updatedAt);
+
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -1186,6 +1228,7 @@ class TaskTableCompanion extends UpdateCompanion<TaskTableData> {
   final Value<bool> hasTime;
   final Value<DateTime> createdAt;
   final Value<DateTime> updatedAt;
+
   const TaskTableCompanion({
     this.localId = const Value.absent(),
     this.remoteId = const Value.absent(),
@@ -1202,6 +1245,7 @@ class TaskTableCompanion extends UpdateCompanion<TaskTableData> {
     this.createdAt = const Value.absent(),
     this.updatedAt = const Value.absent(),
   });
+
   TaskTableCompanion.insert({
     this.localId = const Value.absent(),
     this.remoteId = const Value.absent(),
@@ -1220,6 +1264,7 @@ class TaskTableCompanion extends UpdateCompanion<TaskTableData> {
   })  : title = Value(title),
         categoryLocalId = Value(categoryLocalId),
         userLocalId = Value(userLocalId);
+
   static Insertable<TaskTableData> custom({
     Expression<int>? localId,
     Expression<String>? remoteId,
@@ -1362,7 +1407,9 @@ class $SubtaskTableTable extends SubtaskTable
   @override
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
+
   $SubtaskTableTable(this.attachedDatabase, [this._alias]);
+
   static const VerificationMeta _localIdMeta =
       const VerificationMeta('localId');
   @override
@@ -1437,6 +1484,7 @@ class $SubtaskTableTable extends SubtaskTable
       type: DriftSqlType.dateTime,
       requiredDuringInsert: false,
       defaultValue: currentDateAndTime);
+
   @override
   List<GeneratedColumn> get $columns => [
         localId,
@@ -1449,11 +1497,14 @@ class $SubtaskTableTable extends SubtaskTable
         createdAt,
         updatedAt
       ];
+
   @override
   String get aliasedName => _alias ?? actualTableName;
+
   @override
   String get actualTableName => $name;
   static const String $name = 'subtask';
+
   @override
   VerificationContext validateIntegrity(Insertable<SubtaskTableData> instance,
       {bool isInserting = false}) {
@@ -1510,6 +1561,7 @@ class $SubtaskTableTable extends SubtaskTable
 
   @override
   Set<GeneratedColumn> get $primaryKey => {localId};
+
   @override
   SubtaskTableData map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
@@ -1552,6 +1604,7 @@ class SubtaskTableData extends DataClass
   final DateTime? completedAt;
   final DateTime createdAt;
   final DateTime updatedAt;
+
   const SubtaskTableData(
       {required this.localId,
       required this.remoteId,
@@ -1562,6 +1615,7 @@ class SubtaskTableData extends DataClass
       this.completedAt,
       required this.createdAt,
       required this.updatedAt});
+
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
@@ -1610,6 +1664,7 @@ class SubtaskTableData extends DataClass
       updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
     );
   }
+
   @override
   Map<String, dynamic> toJson({ValueSerializer? serializer}) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
@@ -1647,6 +1702,7 @@ class SubtaskTableData extends DataClass
         createdAt: createdAt ?? this.createdAt,
         updatedAt: updatedAt ?? this.updatedAt,
       );
+
   SubtaskTableData copyWithCompanion(SubtaskTableCompanion data) {
     return SubtaskTableData(
       localId: data.localId.present ? data.localId.value : this.localId,
@@ -1683,6 +1739,7 @@ class SubtaskTableData extends DataClass
   @override
   int get hashCode => Object.hash(localId, remoteId, title, isSynced,
       isCompleted, taskLocalId, completedAt, createdAt, updatedAt);
+
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -1708,6 +1765,7 @@ class SubtaskTableCompanion extends UpdateCompanion<SubtaskTableData> {
   final Value<DateTime?> completedAt;
   final Value<DateTime> createdAt;
   final Value<DateTime> updatedAt;
+
   const SubtaskTableCompanion({
     this.localId = const Value.absent(),
     this.remoteId = const Value.absent(),
@@ -1719,6 +1777,7 @@ class SubtaskTableCompanion extends UpdateCompanion<SubtaskTableData> {
     this.createdAt = const Value.absent(),
     this.updatedAt = const Value.absent(),
   });
+
   SubtaskTableCompanion.insert({
     this.localId = const Value.absent(),
     this.remoteId = const Value.absent(),
@@ -1731,6 +1790,7 @@ class SubtaskTableCompanion extends UpdateCompanion<SubtaskTableData> {
     this.updatedAt = const Value.absent(),
   })  : title = Value(title),
         taskLocalId = Value(taskLocalId);
+
   static Insertable<SubtaskTableData> custom({
     Expression<int>? localId,
     Expression<String>? remoteId,
@@ -1833,7 +1893,9 @@ class $SettingTableTable extends SettingTable
   @override
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
+
   $SettingTableTable(this.attachedDatabase, [this._alias]);
+
   static const VerificationMeta _localIdMeta =
       const VerificationMeta('localId');
   @override
@@ -1897,6 +1959,7 @@ class $SettingTableTable extends SettingTable
       defaultConstraints:
           GeneratedColumn.constraintIsAlways('CHECK ("is_synced" IN (0, 1))'),
       defaultValue: const Constant(false));
+
   @override
   List<GeneratedColumn> get $columns => [
         localId,
@@ -1908,11 +1971,14 @@ class $SettingTableTable extends SettingTable
         remindBefore,
         isSynced
       ];
+
   @override
   String get aliasedName => _alias ?? actualTableName;
+
   @override
   String get actualTableName => $name;
-  static const String $name = 'setting';
+  static const String $name = 'ai';
+
   @override
   VerificationContext validateIntegrity(Insertable<SettingTableData> instance,
       {bool isInserting = false}) {
@@ -1971,6 +2037,7 @@ class $SettingTableTable extends SettingTable
 
   @override
   Set<GeneratedColumn> get $primaryKey => {localId};
+
   @override
   SettingTableData map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
@@ -2011,6 +2078,7 @@ class SettingTableData extends DataClass
   final String theme;
   final int remindBefore;
   final bool isSynced;
+
   const SettingTableData(
       {required this.localId,
       required this.remoteId,
@@ -2020,6 +2088,7 @@ class SettingTableData extends DataClass
       required this.theme,
       required this.remindBefore,
       required this.isSynced});
+
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
@@ -2062,6 +2131,7 @@ class SettingTableData extends DataClass
       isSynced: serializer.fromJson<bool>(json['isSynced']),
     );
   }
+
   @override
   Map<String, dynamic> toJson({ValueSerializer? serializer}) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
@@ -2097,6 +2167,7 @@ class SettingTableData extends DataClass
         remindBefore: remindBefore ?? this.remindBefore,
         isSynced: isSynced ?? this.isSynced,
       );
+
   SettingTableData copyWithCompanion(SettingTableCompanion data) {
     return SettingTableData(
       localId: data.localId.present ? data.localId.value : this.localId,
@@ -2133,6 +2204,7 @@ class SettingTableData extends DataClass
   @override
   int get hashCode => Object.hash(localId, remoteId, userLocalId,
       isNotificationEnabled, language, theme, remindBefore, isSynced);
+
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -2156,6 +2228,7 @@ class SettingTableCompanion extends UpdateCompanion<SettingTableData> {
   final Value<String> theme;
   final Value<int> remindBefore;
   final Value<bool> isSynced;
+
   const SettingTableCompanion({
     this.localId = const Value.absent(),
     this.remoteId = const Value.absent(),
@@ -2166,6 +2239,7 @@ class SettingTableCompanion extends UpdateCompanion<SettingTableData> {
     this.remindBefore = const Value.absent(),
     this.isSynced = const Value.absent(),
   });
+
   SettingTableCompanion.insert({
     this.localId = const Value.absent(),
     this.remoteId = const Value.absent(),
@@ -2180,6 +2254,7 @@ class SettingTableCompanion extends UpdateCompanion<SettingTableData> {
         language = Value(language),
         theme = Value(theme),
         remindBefore = Value(remindBefore);
+
   static Insertable<SettingTableData> custom({
     Expression<int>? localId,
     Expression<String>? remoteId,
@@ -2274,6 +2349,7 @@ class SettingTableCompanion extends UpdateCompanion<SettingTableData> {
 
 abstract class _$AppDatabase extends GeneratedDatabase {
   _$AppDatabase(QueryExecutor e) : super(e);
+
   $AppDatabaseManager get managers => $AppDatabaseManager(this);
   late final $UserTableTable userTable = $UserTableTable(this);
   late final $CategoryTableTable categoryTable = $CategoryTableTable(this);
@@ -2285,12 +2361,15 @@ abstract class _$AppDatabase extends GeneratedDatabase {
   late final SubtaskDao subtaskDao = SubtaskDao(this as AppDatabase);
   late final SettingDao settingDao = SettingDao(this as AppDatabase);
   late final CategoryDao categoryDao = CategoryDao(this as AppDatabase);
+
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
+
   @override
   List<DatabaseSchemaEntity> get allSchemaEntities =>
       [userTable, categoryTable, taskTable, subtaskTable, settingTable];
+
   @override
   StreamQueryUpdateRules get streamUpdateRules => const StreamQueryUpdateRules(
         [
@@ -2319,7 +2398,7 @@ abstract class _$AppDatabase extends GeneratedDatabase {
             on: TableUpdateQuery.onTableName('user',
                 limitUpdateKind: UpdateKind.delete),
             result: [
-              TableUpdate('setting', kind: UpdateKind.delete),
+              TableUpdate('ai', kind: UpdateKind.delete),
             ],
           ),
         ],
@@ -2402,6 +2481,7 @@ class $$UserTableTableFilterComposer
     super.$addJoinBuilderToRootComposer,
     super.$removeJoinBuilderFromRootComposer,
   });
+
   ColumnFilters<int> get localId => $composableBuilder(
       column: $table.localId, builder: (column) => ColumnFilters(column));
 
@@ -2490,6 +2570,7 @@ class $$UserTableTableOrderingComposer
     super.$addJoinBuilderToRootComposer,
     super.$removeJoinBuilderFromRootComposer,
   });
+
   ColumnOrderings<int> get localId => $composableBuilder(
       column: $table.localId, builder: (column) => ColumnOrderings(column));
 
@@ -2515,6 +2596,7 @@ class $$UserTableTableAnnotationComposer
     super.$addJoinBuilderToRootComposer,
     super.$removeJoinBuilderFromRootComposer,
   });
+
   GeneratedColumn<int> get localId =>
       $composableBuilder(column: $table.localId, builder: (column) => column);
 
@@ -2791,6 +2873,7 @@ class $$CategoryTableTableFilterComposer
     super.$addJoinBuilderToRootComposer,
     super.$removeJoinBuilderFromRootComposer,
   });
+
   ColumnFilters<int> get localId => $composableBuilder(
       column: $table.localId, builder: (column) => ColumnFilters(column));
 
@@ -2860,6 +2943,7 @@ class $$CategoryTableTableOrderingComposer
     super.$addJoinBuilderToRootComposer,
     super.$removeJoinBuilderFromRootComposer,
   });
+
   ColumnOrderings<int> get localId => $composableBuilder(
       column: $table.localId, builder: (column) => ColumnOrderings(column));
 
@@ -2908,6 +2992,7 @@ class $$CategoryTableTableAnnotationComposer
     super.$addJoinBuilderToRootComposer,
     super.$removeJoinBuilderFromRootComposer,
   });
+
   GeneratedColumn<int> get localId =>
       $composableBuilder(column: $table.localId, builder: (column) => column);
 
@@ -3191,6 +3276,7 @@ class $$TaskTableTableFilterComposer
     super.$addJoinBuilderToRootComposer,
     super.$removeJoinBuilderFromRootComposer,
   });
+
   ColumnFilters<int> get localId => $composableBuilder(
       column: $table.localId, builder: (column) => ColumnFilters(column));
 
@@ -3298,6 +3384,7 @@ class $$TaskTableTableOrderingComposer
     super.$addJoinBuilderToRootComposer,
     super.$removeJoinBuilderFromRootComposer,
   });
+
   ColumnOrderings<int> get localId => $composableBuilder(
       column: $table.localId, builder: (column) => ColumnOrderings(column));
 
@@ -3384,6 +3471,7 @@ class $$TaskTableTableAnnotationComposer
     super.$addJoinBuilderToRootComposer,
     super.$removeJoinBuilderFromRootComposer,
   });
+
   GeneratedColumn<int> get localId =>
       $composableBuilder(column: $table.localId, builder: (column) => column);
 
@@ -3709,6 +3797,7 @@ class $$SubtaskTableTableFilterComposer
     super.$addJoinBuilderToRootComposer,
     super.$removeJoinBuilderFromRootComposer,
   });
+
   ColumnFilters<int> get localId => $composableBuilder(
       column: $table.localId, builder: (column) => ColumnFilters(column));
 
@@ -3763,6 +3852,7 @@ class $$SubtaskTableTableOrderingComposer
     super.$addJoinBuilderToRootComposer,
     super.$removeJoinBuilderFromRootComposer,
   });
+
   ColumnOrderings<int> get localId => $composableBuilder(
       column: $table.localId, builder: (column) => ColumnOrderings(column));
 
@@ -3817,6 +3907,7 @@ class $$SubtaskTableTableAnnotationComposer
     super.$addJoinBuilderToRootComposer,
     super.$removeJoinBuilderFromRootComposer,
   });
+
   GeneratedColumn<int> get localId =>
       $composableBuilder(column: $table.localId, builder: (column) => column);
 
@@ -4037,6 +4128,7 @@ class $$SettingTableTableFilterComposer
     super.$addJoinBuilderToRootComposer,
     super.$removeJoinBuilderFromRootComposer,
   });
+
   ColumnFilters<int> get localId => $composableBuilder(
       column: $table.localId, builder: (column) => ColumnFilters(column));
 
@@ -4089,6 +4181,7 @@ class $$SettingTableTableOrderingComposer
     super.$addJoinBuilderToRootComposer,
     super.$removeJoinBuilderFromRootComposer,
   });
+
   ColumnOrderings<int> get localId => $composableBuilder(
       column: $table.localId, builder: (column) => ColumnOrderings(column));
 
@@ -4142,6 +4235,7 @@ class $$SettingTableTableAnnotationComposer
     super.$addJoinBuilderToRootComposer,
     super.$removeJoinBuilderFromRootComposer,
   });
+
   GeneratedColumn<int> get localId =>
       $composableBuilder(column: $table.localId, builder: (column) => column);
 
@@ -4306,15 +4400,21 @@ typedef $$SettingTableTableProcessedTableManager = ProcessedTableManager<
 
 class $AppDatabaseManager {
   final _$AppDatabase _db;
+
   $AppDatabaseManager(this._db);
+
   $$UserTableTableTableManager get userTable =>
       $$UserTableTableTableManager(_db, _db.userTable);
+
   $$CategoryTableTableTableManager get categoryTable =>
       $$CategoryTableTableTableManager(_db, _db.categoryTable);
+
   $$TaskTableTableTableManager get taskTable =>
       $$TaskTableTableTableManager(_db, _db.taskTable);
+
   $$SubtaskTableTableTableManager get subtaskTable =>
       $$SubtaskTableTableTableManager(_db, _db.subtaskTable);
+
   $$SettingTableTableTableManager get settingTable =>
       $$SettingTableTableTableManager(_db, _db.settingTable);
 }

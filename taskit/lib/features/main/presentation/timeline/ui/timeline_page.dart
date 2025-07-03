@@ -89,6 +89,7 @@ class _TimeLinePageState extends ConsumerState<TimelinePage> {
       });
     }
     return Scaffold(
+      backgroundColor: color.surface,
       body: SafeArea(
         top: true,
         child: NestedScrollView(
@@ -123,6 +124,7 @@ class _TimeLinePageState extends ConsumerState<TimelinePage> {
       ),
       children: [
         FloatingActionButton(
+            heroTag: 'Add Task',
             shape: CircleBorder(),
             foregroundColor: color.onPrimaryContainer,
             splashColor: color.primary,
@@ -133,15 +135,16 @@ class _TimeLinePageState extends ConsumerState<TimelinePage> {
             ),
             onPressed: () => context.push('/add_task')),
         FloatingActionButton(
+            heroTag: 'Add Task Using Voice',
             shape: CircleBorder(),
             foregroundColor: color.onPrimaryContainer,
             splashColor: color.primary,
             backgroundColor: color.primaryContainer,
+            onPressed: () => context.push('/voice'),
             child: Icon(
-              Icons.keyboard_voice,
+              Icons.mic,
               size: 30,
-            ),
-            onPressed: () {})
+            ))
       ],
     );
   }

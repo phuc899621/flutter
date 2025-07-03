@@ -4,6 +4,9 @@ import 'package:flutter_expandable_fab/flutter_expandable_fab.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:taskit/config/routers/router_provider.dart';
+import 'package:taskit/features/main/presentation/main/controller/main_controller.dart';
+import 'package:taskit/shared/extension/color.dart';
+import 'package:taskit/shared/log/logger_provider.dart';
 
 class MainPage extends ConsumerStatefulWidget {
   final StatefulNavigationShell navigationShell;
@@ -22,6 +25,7 @@ class _MainPageState extends ConsumerState<MainPage> {
 
   @override
   Widget build(BuildContext context) {
+    _listen();
     final color = Theme.of(context).colorScheme;
     final text = Theme.of(context).textTheme;
     SystemChrome.setSystemUIOverlayStyle(
@@ -36,9 +40,10 @@ class _MainPageState extends ConsumerState<MainPage> {
       ],
       child: Scaffold(
           key: _scaffoldKey,
-          floatingActionButtonLocation: ExpandableFab.location,
-          floatingActionButton: _fabAddTask(),
           body: widget.navigationShell,
+          floatingActionButton:
+              widget.navigationShell.currentIndex != 3 ? _fabAddTask() : null,
+          floatingActionButtonLocation: ExpandableFab.location,
           bottomNavigationBar: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
             child: Material(
@@ -77,11 +82,11 @@ class _MainPageState extends ConsumerState<MainPage> {
                   ),
                   NavigationDestination(
                     icon: Icon(
-                      Icons.settings_outlined,
+                      Icons.smart_toy_outlined,
                     ),
                     label: '',
                     selectedIcon: Icon(
-                      Icons.settings_rounded,
+                      Icons.smart_toy_rounded,
                       color: color.onPrimaryContainer,
                     ),
                   )
@@ -138,5 +143,44 @@ class _MainPageState extends ConsumerState<MainPage> {
             ))
       ],
     );
+  }
+
+  void _listen() {
+    final color = Theme.of(context).colorScheme;
+    final text = Theme.of(context).textTheme;
+    ref.listen(mainControllerProvider.select((value) => value.generateTaskText),
+        (_, next) {
+      if (next != null) {
+        logger.i('generate');
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            duration: const Duration(seconds: 3),
+            backgroundColor: color.success,
+            content: Text(
+              next,
+              style: text.titleMedium?.copyWith(
+                  color: color.onSuccess, fontWeight: FontWeight.w600),
+            ),
+          ),
+        );
+      }
+    });
+    ref.listen(mainControllerProvider.select((value) => value.error),
+        (_, next) {
+      if (next != null) {
+        logger.i('generate');
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            duration: const Duration(seconds: 3),
+            backgroundColor: color.error,
+            content: Text(
+              next,
+              style: text.titleMedium
+                  ?.copyWith(color: color.onError, fontWeight: FontWeight.w600),
+            ),
+          ),
+        );
+      }
+    });
   }
 }

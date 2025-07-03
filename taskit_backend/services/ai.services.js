@@ -136,64 +136,56 @@ Respond with valid pure JSON only. No explanation, no notes.`;
             const nowUtc = DateTime.utc();
             console.log('UTC sytem:', nowUtc.toISO());
             console.log('User UTC:', userUtcOffset);
-            const userLocalTime = nowUtc.setZone('UTC' + userUtcOffset); // = UTC + offset
-            console.log('User local time:', userLocalTime.toISO());
-            
-            const systemPrompt = `
-                You are a smart Taskit Assistant. You are helping a user understand their current tasks, subtasks, and categories. You can respond in Vietnamese or English, based on the user language.(vi mean Vietnamese, en mean English)
-                You will be provided with 3 data sources and some information about time, user:
-                - A list of tasks: each task includes title, description, status, priority, dueDate (UTC),  _id mean taskId, categoryId, hasTime.
-                - A list of subtasks: each has taskId, title, isCompleted.
-                - A list of categories: each has name and _id.
-                - userLanguage: the language the user prefers to communicate in (vi or en).
-                - userLocalOffset: the user's local time zone offset from UTC (e.g., +07:00, -05:00).
-                - nowUtc: the current UTC time.
-                - userLocalTime: the user's local time calculated from nowUtc and userLocalOffset.
+            const userLocalTime = nowUtc.setZone('UTC' + userUtcOffset); 
+            const systemInstruction = `
+                You are a smart Taskit Assistant. You help a user understand their current tasks, subtasks, and categories.
+                You can respond in Vietnamese or English based on userLanguage (vi = Vietnamese, en = English).
+                Your job is to analyze the user's question and provide a helpful response based only on the data provided.
+                Definitions:
+                - "pending" = tasks that are NOT completed and have NO dueDate
+                - "scheduled" = tasks that are NOT completed but HAVE a dueDate
+                - "dueDate" is always in UTC. You must convert it to the user's local time using userLocalOffset: ${userUtcOffset} to answer questions about due dates.
+                - never answer using dueDate in UTC, always convert it to user's local time.
+                - Task, job, quest = công việc, tác vụ, nhiệm vụ
+                - Subtask = công việc con, nhiệm vụ phụ, việc phụ
 
-                Your job is to analyze the user's question and respond with a relevant answer based on these task data.
-
-                Examples of possible user questions:
-                - Tôi còn bao nhiêu task đang pending?
-                - What tasks are due tomorrow?
-                - Liệt kê các subtasks chưa hoàn thành của task "Dọn nhà".
-                - What's the priority of the task named "Buy groceries"?
-
-                You should know:
-                - "pending" means tasks that are not completed and have no due date.
-                - "scheduled" means tasks that are not completed but have a due date.
-                - "dueDate" in task is alway UTC date, not local. 
-                - You must convert dueDate to user's local date using userLocalDateOffset ${userUtcOffset}. to answer questions about due dates.
-                - Task, Job, quest has another name is tác vụ or công việc, nhiệm vụ.
-                - Subtask, subjob, subquest has another name is công việc con, nhiệm vụ con, công việc phụ, nhiệm vụ phụ.
-    
-               You must respond in a single line of plain text.
-                    Formatting Rules:
-                    - DO NOT include any markdown formatting or styling.
-                    - DO NOT use quotation marks (") around task names or any part of the message.
-                    - DO NOT use escape characters such as \n, \t, \\, \", or any other special symbols.
-                    - DO NOT use bullets (-, *, •) or any list formatting.
-                    - DO NOT break the line. Keep the entire response on a single line, even if listing multiple tasks.
-                    - DO NOT hallucinate or invent data.
-                    - Use simple Vietnamese or English natural language depending on the question.
-
-                Here is the data you should use:
-                - Tasks: ${JSON.stringify(tasks)}
-                - Subtasks: ${JSON.stringify(subtasks)}
-                - Categories: ${JSON.stringify(categories)}
-                - userLanguage is: ${userLanguage}
-                - user local offset is: ${userUtcOffset} 
-                - now UTC time is: ${nowUtc.toISO()}
-                - user local time is: ${userLocalTime.toISO()}
+                Formatting Rules (STRICTLY FOLLOW THESE):
+                - Your response MUST NOT include any markdown (**), formatting (**bold**, _italic_), or escape characters.
+                - NEVER use escape characters such as \n, \t, \\, \", or any backslash symbol.
+                - NEVER include quotation marks " around any task name or sentence.
+                - Your output must be readable and natural without symbols or code formatting.
+                - Start directly with the content. Do not prefix the response with /, *, or any symbol.
+                - DO NOT use bullet points or lists
+                - DO NOT break the line
+                - DO NOT invent or hallucinate
+                - Use simple, natural Vietnamese or English
+                - Your output must be readable and natural without symbols or code formatting.
+                - Start directly with the content. Do not prefix the response with /, *, or any symbol.
+            `;
+            const userMetadata = `
+                userLanguage: ${userLanguage}
+                userLocalOffset: ${userUtcOffset}
+                nowUtc: ${nowUtc.toISO()}
+                userLocalTime: ${userLocalTime.toISO()}
+            `;
+            const taskDataBlock = `Tasks: ${JSON.stringify(tasks.slice(0, 50))}`;
+            const subtaskDataBlock = `Subtasks: ${JSON.stringify(subtasks.slice(0, 100))}`;
+            const categoryDataBlock = `Categories: ${JSON.stringify(categories)}`;
+            const fullPrompt = `
+                ${systemInstruction}
+                ${userMetadata}
+                ${taskDataBlock}
+                ${subtaskDataBlock}
+                ${categoryDataBlock}
                 `;
-
                 const userPrompt = `${userInput}`;
 
                 const response = await axios.post(
                     'https://openrouter.ai/api/v1/chat/completions',
                     {
-                        model: 'mistralai/mistral-small-3.2-24b-instruct:free',
+                        model: 'deepseek/deepseek-r1:free',
                         messages: [
-                            { role: 'system', content: systemPrompt },
+                            { role: 'system', content: fullPrompt },
                             { role: 'user', content: userPrompt }
                         ],
                     },
@@ -212,12 +204,13 @@ Respond with valid pure JSON only. No explanation, no notes.`;
         }
 
         const answer = response.data?.choices?.[0]?.message?.content;
+        
         if (!answer) {
             throw new Error('No response from AI. Try again.');
         }
 
         return {
-            answer: answer,
+            answer: cleanInputText(answer),
         }
 
         
@@ -226,6 +219,17 @@ Respond with valid pure JSON only. No explanation, no notes.`;
             console.error('Call API AI Error:', error?.response?.data || error.message);
         }
     }
+}
+function cleanInputText(text) {
+  return text
+    .replace(/\\n/g, ' ')
+    .replace(/\\t/g, ' ')
+    .replace(/\\\\/g, '')
+    .replace(/\\"/g, '')
+    .replace(/\//g, '')     
+    .replace(/"/g, '')      
+    .replace(/\s+/g, ' ')  
+    .trim();
 }
 
 export default AIServices;

@@ -3,12 +3,14 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../shared/data/source/local/drift/database/database.dart';
 import '../../../../shared/utils/task_entity_mapper.dart';
+import '../../domain/entities/ai_task_entity.dart';
 import '../../domain/entities/category_entity.dart';
 import '../../domain/entities/subtask_entity.dart';
 import '../../domain/entities/task_entity.dart';
 import '../dto/req/add_task/add_task.dart';
 import '../dto/req/ai_category/ai_category.dart';
 import '../dto/req/subtask/add_subtask.dart';
+import '../dto/res/ai/ai_generate_task_data.dart';
 import '../dto/res/subtask/add_subtask_data.dart';
 import '../dto/res/task/add_task_data.dart';
 import 'itask_mapper.dart';
@@ -194,5 +196,38 @@ class TaskMapper implements ITaskMapper {
         remoteId: Value(data.id),
         isSynced: Value(true),
       );
+
 //endregion
+//================================
+//========== AI ========
+//================================
+//region AI
+  @override
+  AiTaskEntity toAiTaskEntity(AiGenerateTaskData data) => AiTaskEntity(
+        title: data.title,
+        description: data.description,
+        hasTime: data.hasTime,
+        categoryId: data.categoryId,
+        priority: data.priority,
+        status: data.status,
+        userUtcDueDate: data.userUtcDueDate,
+      );
+
+//endregion
+
+  @override
+  TaskTableCompanion fromAiGenerateTaskData(
+      AiGenerateTaskData data, int userLocalId, int categoryLocalId) {
+    return TaskTableCompanion(
+      title: Value(data.title),
+      description: Value(data.description),
+      categoryLocalId: Value(categoryLocalId),
+      priority: Value(data.priority),
+      userLocalId: Value(userLocalId),
+      status: Value(data.status),
+      dueDate: Value(data.userUtcDueDate),
+      hasTime: Value(data.hasTime),
+      isSynced: Value(false),
+    );
+  }
 }

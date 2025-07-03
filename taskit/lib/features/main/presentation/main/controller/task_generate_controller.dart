@@ -1,5 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:taskit/features/main/presentation/main/controller/main_controller.dart';
 import 'package:taskit/features/main/presentation/main/state/task_generate_state.dart';
+import 'package:taskit/features/task/application/task_service.dart';
 
 import '../../../../../shared/log/logger_provider.dart';
 
@@ -31,4 +33,28 @@ class TaskGenerateController extends AutoDisposeNotifier<TaskGenerateState> {
 
   void setIsEditing(bool isEditing) =>
       state = state.copyWith(isEditing: isEditing);
+
+  void generateTask() async {
+    try {
+      final aiService = ref.read(taskServiceProvider);
+      state = state.copyWith(
+          isGenerating: true, error: null, isGenerateSuccess: false);
+      if (state.text.isEmpty) {
+        state = state.copyWith(isGenerating: false, error: 'Text is empty');
+        return;
+      }
+      final result = await aiService.generateAiTask(state.text);
+      result.when((success) {
+        final text = 'Task generated successfully with title: ${success.title}';
+        ref.read(mainControllerProvider.notifier).setGenerateTaskText(text);
+        state = state.copyWith(
+            isGenerating: false, error: null, isGenerateSuccess: true);
+      }, (error) {
+        state = state.copyWith(error: error.message, isGenerating: false);
+      });
+    } catch (e, s) {
+      logger.e(e);
+      state = state.copyWith(error: e.toString(), isGenerating: false);
+    }
+  }
 }

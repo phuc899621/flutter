@@ -79,6 +79,8 @@ abstract interface class ITaskLocalSource {
 
   Future<SubtaskTableData?> getSubtaskByLocalId(int localId);
 
+  Future<CategoryTableData?> getCategoryByRemoteId(String remoteId);
+
   // ================================
   // ========== INSERT ==============
   // ================================
@@ -88,6 +90,8 @@ abstract interface class ITaskLocalSource {
       List<SubtaskTableCompanion> subtasks, CategoryTableCompanion category);
 
   Future<int> insertSubtask(SubtaskTableCompanion subtask);
+
+  Future<int> insertTaskFromAi(TaskTableCompanion task);
 
   //================================
   //========== DELETE ==============

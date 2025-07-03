@@ -1,6 +1,5 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:multiple_result/multiple_result.dart';
 import 'package:taskit/features/task/domain/entities/task_priority_enum.dart';
@@ -10,6 +9,7 @@ import '../../../shared/exception/failure.dart';
 import '../../../shared/log/logger_provider.dart';
 import '../data/repo/itask_repo.dart';
 import '../data/repo/task_repo.dart';
+import '../domain/entities/ai_task_entity.dart';
 import '../domain/entities/category_entity.dart';
 import '../domain/entities/subtask_entity.dart';
 import '../domain/entities/task_entity.dart';
@@ -311,5 +311,28 @@ class TaskService implements ITaskService {
 
   @override
   Future<void> deleteSubtask(int localId) => _iTaskRepo.deleteSubtask(localId);
+
+//endregion
+
+//================================
+//========== AI  ================
+//================================
+  //region AI
+  @override
+  Future<Result<AiTaskEntity, Failure>> generateAiTask(String text) {
+    final offset = DateTime.now().timeZoneOffset;
+    final sign = offset.isNegative ? '-' : '+';
+    final utcOffset = '$sign$offset';
+    return _iTaskRepo.generateAiTask(text, utcOffset);
+  }
+
+  @override
+  Future<Result<String, Failure>> getAiAnswer(
+      String question, String language) {
+    final offset = DateTime.now().timeZoneOffset;
+    final sign = offset.isNegative ? '-' : '+';
+    final utcOffset = '$sign$offset';
+    return _iTaskRepo.getAiAnswer(question, utcOffset, language);
+  }
 //endregion
 }

@@ -1,6 +1,7 @@
 import 'package:avatar_glow/avatar_glow.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:speech_to_text/speech_to_text.dart';
 import 'package:taskit/features/main/presentation/main/controller/task_generate_controller.dart';
 
@@ -28,8 +29,36 @@ class _TaskGenerateBottomSheetState
     _speech = SpeechToText();
   }
 
+  void _listen() {
+    final color = Theme.of(context).colorScheme;
+    final text = Theme.of(context).textTheme;
+    ref.listen(taskGenerateControllerProvider.select((value) => value.error),
+        (_, next) {
+      if (next != null) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            duration: const Duration(seconds: 3),
+            backgroundColor: color.error,
+            content: Text(
+              next,
+              style: text.titleMedium?.copyWith(color: color.onError),
+            ),
+          ),
+        );
+      }
+    });
+    ref.listen(
+        taskGenerateControllerProvider
+            .select((value) => value.isGenerateSuccess), (_, next) async {
+      if (next != null && next) {
+        context.pop();
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    _listen();
     final state = ref.watch(taskGenerateControllerProvider);
     final color = Theme.of(context).colorScheme;
     return SingleChildScrollView(
@@ -74,7 +103,7 @@ class _TaskGenerateBottomSheetState
                         foregroundColor: color.onPrimaryContainer,
                         splashColor: color.primary,
                         backgroundColor: color.primaryContainer,
-                        onPressed: _listen,
+                        onPressed: _listenVoice,
                         child: Icon(
                           state.isListening ? Icons.mic : Icons.mic_none,
                           size: 30,
@@ -88,9 +117,8 @@ class _TaskGenerateBottomSheetState
     final state = ref.watch(taskGenerateControllerProvider);
     final controller = ref.read(taskGenerateControllerProvider.notifier);
     final color = Theme.of(context).colorScheme;
-    final textController = ref.read(taskGenerateTextController);
+    final textController = ref.watch(taskGenerateTextController);
     final text = Theme.of(context).textTheme;
-    if (isInit) {}
     return TextField(
       maxLines: 6,
       maxLength: 60,
@@ -99,7 +127,7 @@ class _TaskGenerateBottomSheetState
       onTapOutside: (event) {
         FocusScope.of(context).unfocus();
       },
-      controller: textController.getOrCreateController(initial: state.text),
+      controller: textController.getOrCreateController(),
       decoration: InputDecoration(
           counterText: '',
           focusedBorder: OutlineInputBorder(
@@ -147,7 +175,6 @@ class _TaskGenerateBottomSheetState
   }
 
 //endregion
-
 //region Icon Generate Task
   Widget _iconGenerateTask() {
     final state = ref.watch(taskGenerateControllerProvider);
@@ -162,7 +189,7 @@ class _TaskGenerateBottomSheetState
                 backgroundColor: state.isGenerating
                     ? color.primaryContainer
                     : color.surfaceContainerHighest),
-            onPressed: () => controller.setIsGenerating(!state.isGenerating),
+            onPressed: controller.generateTask,
             icon: state.isGenerating
                 ? CircularProgressIndicator()
                 : Icon(Icons.send_outlined)));
@@ -217,7 +244,7 @@ class _TaskGenerateBottomSheetState
               foregroundColor: color.onPrimaryContainer,
               splashColor: color.primary,
               backgroundColor: color.primaryContainer,
-              onPressed: _listen,
+              onPressed: _listenVoice,
               child: Icon(
                 state.isListening ? Icons.mic : Icons.mic_none,
                 size: 30,
@@ -227,13 +254,16 @@ class _TaskGenerateBottomSheetState
 
 //endregion
 //region START VOICE LISTEN
-  void _listen() async {
+  void _listenVoice() async {
     final controller = ref.read(taskGenerateControllerProvider.notifier);
-
+    final textController = ref.watch(taskGenerateTextController);
     final available = await _speech.initialize(
       onStatus: (status) {
         logger.i('🎙 onStatus: $status');
-        if (status == 'done' || status == 'notListening') {
+        if (status == 'listening') {
+          controller.setIsListening(true);
+        }
+        if (status == 'notListening') {
           controller.setIsListening(false);
         }
       },
@@ -248,12 +278,12 @@ class _TaskGenerateBottomSheetState
       controller.setIsListening(false);
       return;
     }
-
-    controller.setIsListening(true);
     _speech.listen(
       onResult: (result) {
         logger.i('Result: ${result.recognizedWords}');
         controller.setText(result.recognizedWords);
+        textController.getOrCreateController().text = result.recognizedWords;
+
         if (result.hasConfidenceRating && result.confidence > 0) {
           _confidence = result.confidence;
         }

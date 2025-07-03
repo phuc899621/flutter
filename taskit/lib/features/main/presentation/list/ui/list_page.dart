@@ -92,6 +92,7 @@ class _ListPageState extends ConsumerState<ListPage>
       });
     }
     return Scaffold(
+        backgroundColor: color.surface,
         body: SafeArea(
             top: true,
             child: NestedScrollView(
@@ -129,6 +130,7 @@ class _ListPageState extends ConsumerState<ListPage>
       ),
       children: [
         FloatingActionButton(
+            heroTag: 'Add Task',
             shape: CircleBorder(),
             foregroundColor: color.onPrimaryContainer,
             splashColor: color.primary,
@@ -139,15 +141,16 @@ class _ListPageState extends ConsumerState<ListPage>
             ),
             onPressed: () => context.push('/add_task')),
         FloatingActionButton(
+            heroTag: 'Add Task Using Voice',
             shape: CircleBorder(),
             foregroundColor: color.onPrimaryContainer,
             splashColor: color.primary,
             backgroundColor: color.primaryContainer,
+            onPressed: () => context.push('/voice'),
             child: Icon(
-              Icons.keyboard_voice,
+              Icons.mic,
               size: 30,
-            ),
-            onPressed: () {})
+            ))
       ],
     );
   }
@@ -179,7 +182,7 @@ class _ListPageState extends ConsumerState<ListPage>
       backgroundColor: color.primary,
       toolbarHeight: 70,
       title: Text('List Task'),
-      titleTextStyle: text.headlineMedium,
+      titleTextStyle: text.headlineSmall,
       actionsPadding: EdgeInsets.symmetric(horizontal: 5),
       actions: [
         FilledButton.tonalIcon(
@@ -191,6 +194,8 @@ class _ListPageState extends ConsumerState<ListPage>
       ],
     );
   }
+
+  //endregion
 
 //region SearchBar
   Widget _searchAppBar() {

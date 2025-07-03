@@ -36,6 +36,10 @@ class CategoryDao extends DatabaseAccessor<AppDatabase>
       (select(categoryTable)..where((tbl) => tbl.localId.equals(localId)))
           .getSingleOrNull();
 
+  Future<CategoryTableData?> getCategoryByRemoteId(String remoteId) =>
+      (select(categoryTable)..where((tbl) => tbl.remoteId.equals(remoteId)))
+          .getSingleOrNull();
+
   Future<CategoryTableData?> findByName(String name) => (select(categoryTable)
         ..where((tbl) => tbl.name.lower().equals(name.toLowerCase())))
       .getSingleOrNull();

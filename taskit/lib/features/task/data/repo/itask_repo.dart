@@ -1,6 +1,10 @@
+import 'package:multiple_result/multiple_result.dart';
+import 'package:taskit/features/task/domain/entities/ai_task_entity.dart';
 import 'package:taskit/features/task/domain/entities/task_entity.dart';
 import 'package:taskit/features/task/domain/entities/task_priority_enum.dart';
 import 'package:taskit/features/task/domain/entities/task_status_enum.dart';
+import 'package:taskit/shared/data/source/local/drift/database/database.dart';
+import 'package:taskit/shared/exception/failure.dart';
 
 import '../../domain/entities/category_entity.dart';
 import '../../domain/entities/subtask_entity.dart';
@@ -56,6 +60,8 @@ abstract interface class ITaskRepo {
 
   Future<void> insertSubtask(int taskLocalId);
 
+  Future<int> insertTaskFromAi(TaskTableCompanion task);
+
   //================================
   //========== DELETE ================
   //================================
@@ -104,4 +110,14 @@ abstract interface class ITaskRepo {
   Future<void> deleteRemoteTask(String taskRemoteId);
 
   Future<void> deleteRemoteSubtask(String subtaskRemoteId);
+
+//================================
+//========== AI  ================
+//================================
+
+  Future<Result<AiTaskEntity, Failure>> generateAiTask(
+      String text, String utcOffset);
+
+  Future<Result<String, Failure>> getAiAnswer(
+      String question, String utcOffset, String language);
 }

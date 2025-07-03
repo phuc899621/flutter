@@ -1,9 +1,11 @@
 import 'package:taskit/features/task/data/dto/req/ai_category/ai_category.dart';
+import 'package:taskit/features/task/data/dto/res/ai/ai_generate_task_data.dart';
 import 'package:taskit/features/task/data/dto/res/subtask/add_subtask_data.dart';
 import 'package:taskit/features/task/data/dto/res/task/add_task_data.dart';
 import 'package:taskit/features/task/domain/entities/task_entity.dart';
 import 'package:taskit/shared/data/source/local/drift/database/database.dart';
 
+import '../../domain/entities/ai_task_entity.dart';
 import '../../domain/entities/category_entity.dart';
 import '../../domain/entities/subtask_entity.dart';
 import '../dto/req/add_task/add_task.dart';
@@ -56,4 +58,13 @@ abstract interface class ITaskMapper {
 
   List<SubtaskTableCompanion> toSyncListSubtaskTblCompanion(
       List<AddSubtaskData> data);
+
+//================================
+//========== AI  ========
+//================================
+
+  AiTaskEntity toAiTaskEntity(AiGenerateTaskData data);
+
+  TaskTableCompanion fromAiGenerateTaskData(
+      AiGenerateTaskData data, int userLocalId, int categoryLocalId);
 }

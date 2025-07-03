@@ -270,6 +270,10 @@ class TaskLocalSource implements ITaskLocalSource {
   Future<SubtaskTableData?> getSubtaskByLocalId(int localId) =>
       _subtaskDao.getSubtasksByLocalId(localId);
 
+  @override
+  Future<CategoryTableData?> getCategoryByRemoteId(String remoteId) =>
+      _categoryDao.getCategoryByRemoteId(remoteId);
+
   //endregion
 
   // ================================
@@ -325,6 +329,17 @@ class TaskLocalSource implements ITaskLocalSource {
     } catch (e) {
       logger.e('Insert task error: $e');
       return 0;
+    }
+  }
+
+  @override
+  Future<int> insertTaskFromAi(TaskTableCompanion task) {
+    try {
+      logger.i('Insert task local from AI : $task');
+      return _taskDao.insertTask(task);
+    } catch (e) {
+      logger.e('Insert task error: $e');
+      return Future.value(-1);
     }
   }
 

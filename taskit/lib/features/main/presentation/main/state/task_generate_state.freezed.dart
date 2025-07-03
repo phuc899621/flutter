@@ -18,6 +18,8 @@ mixin _$TaskGenerateState {
   bool get isListening;
   bool get isGenerating;
   String get text;
+  bool? get isGenerateSuccess;
+  String? get error;
   bool get isEditing;
 
   /// Create a copy of TaskGenerateState
@@ -38,17 +40,20 @@ mixin _$TaskGenerateState {
             (identical(other.isGenerating, isGenerating) ||
                 other.isGenerating == isGenerating) &&
             (identical(other.text, text) || other.text == text) &&
+            (identical(other.isGenerateSuccess, isGenerateSuccess) ||
+                other.isGenerateSuccess == isGenerateSuccess) &&
+            (identical(other.error, error) || other.error == error) &&
             (identical(other.isEditing, isEditing) ||
                 other.isEditing == isEditing));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, isListening, isGenerating, text, isEditing);
+  int get hashCode => Object.hash(runtimeType, isListening, isGenerating, text,
+      isGenerateSuccess, error, isEditing);
 
   @override
   String toString() {
-    return 'TaskGenerateState(isListening: $isListening, isGenerating: $isGenerating, text: $text, isEditing: $isEditing)';
+    return 'TaskGenerateState(isListening: $isListening, isGenerating: $isGenerating, text: $text, isGenerateSuccess: $isGenerateSuccess, error: $error, isEditing: $isEditing)';
   }
 }
 
@@ -58,7 +63,13 @@ abstract mixin class $TaskGenerateStateCopyWith<$Res> {
           TaskGenerateState value, $Res Function(TaskGenerateState) _then) =
       _$TaskGenerateStateCopyWithImpl;
   @useResult
-  $Res call({bool isListening, bool isGenerating, String text, bool isEditing});
+  $Res call(
+      {bool isListening,
+      bool isGenerating,
+      String text,
+      bool? isGenerateSuccess,
+      String? error,
+      bool isEditing});
 }
 
 /// @nodoc
@@ -77,6 +88,8 @@ class _$TaskGenerateStateCopyWithImpl<$Res>
     Object? isListening = null,
     Object? isGenerating = null,
     Object? text = null,
+    Object? isGenerateSuccess = freezed,
+    Object? error = freezed,
     Object? isEditing = null,
   }) {
     return _then(_self.copyWith(
@@ -92,6 +105,14 @@ class _$TaskGenerateStateCopyWithImpl<$Res>
           ? _self.text
           : text // ignore: cast_nullable_to_non_nullable
               as String,
+      isGenerateSuccess: freezed == isGenerateSuccess
+          ? _self.isGenerateSuccess
+          : isGenerateSuccess // ignore: cast_nullable_to_non_nullable
+              as bool?,
+      error: freezed == error
+          ? _self.error
+          : error // ignore: cast_nullable_to_non_nullable
+              as String?,
       isEditing: null == isEditing
           ? _self.isEditing
           : isEditing // ignore: cast_nullable_to_non_nullable
@@ -107,6 +128,8 @@ class _TaskGenerateState implements TaskGenerateState {
       {this.isListening = false,
       this.isGenerating = false,
       this.text = '',
+      this.isGenerateSuccess,
+      this.error,
       this.isEditing = false});
 
   @override
@@ -118,6 +141,10 @@ class _TaskGenerateState implements TaskGenerateState {
   @override
   @JsonKey()
   final String text;
+  @override
+  final bool? isGenerateSuccess;
+  @override
+  final String? error;
   @override
   @JsonKey()
   final bool isEditing;
@@ -140,17 +167,20 @@ class _TaskGenerateState implements TaskGenerateState {
             (identical(other.isGenerating, isGenerating) ||
                 other.isGenerating == isGenerating) &&
             (identical(other.text, text) || other.text == text) &&
+            (identical(other.isGenerateSuccess, isGenerateSuccess) ||
+                other.isGenerateSuccess == isGenerateSuccess) &&
+            (identical(other.error, error) || other.error == error) &&
             (identical(other.isEditing, isEditing) ||
                 other.isEditing == isEditing));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, isListening, isGenerating, text, isEditing);
+  int get hashCode => Object.hash(runtimeType, isListening, isGenerating, text,
+      isGenerateSuccess, error, isEditing);
 
   @override
   String toString() {
-    return 'TaskGenerateState(isListening: $isListening, isGenerating: $isGenerating, text: $text, isEditing: $isEditing)';
+    return 'TaskGenerateState(isListening: $isListening, isGenerating: $isGenerating, text: $text, isGenerateSuccess: $isGenerateSuccess, error: $error, isEditing: $isEditing)';
   }
 }
 
@@ -162,7 +192,13 @@ abstract mixin class _$TaskGenerateStateCopyWith<$Res>
       __$TaskGenerateStateCopyWithImpl;
   @override
   @useResult
-  $Res call({bool isListening, bool isGenerating, String text, bool isEditing});
+  $Res call(
+      {bool isListening,
+      bool isGenerating,
+      String text,
+      bool? isGenerateSuccess,
+      String? error,
+      bool isEditing});
 }
 
 /// @nodoc
@@ -181,6 +217,8 @@ class __$TaskGenerateStateCopyWithImpl<$Res>
     Object? isListening = null,
     Object? isGenerating = null,
     Object? text = null,
+    Object? isGenerateSuccess = freezed,
+    Object? error = freezed,
     Object? isEditing = null,
   }) {
     return _then(_TaskGenerateState(
@@ -196,6 +234,14 @@ class __$TaskGenerateStateCopyWithImpl<$Res>
           ? _self.text
           : text // ignore: cast_nullable_to_non_nullable
               as String,
+      isGenerateSuccess: freezed == isGenerateSuccess
+          ? _self.isGenerateSuccess
+          : isGenerateSuccess // ignore: cast_nullable_to_non_nullable
+              as bool?,
+      error: freezed == error
+          ? _self.error
+          : error // ignore: cast_nullable_to_non_nullable
+              as String?,
       isEditing: null == isEditing
           ? _self.isEditing
           : isEditing // ignore: cast_nullable_to_non_nullable

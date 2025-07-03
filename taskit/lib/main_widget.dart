@@ -8,8 +8,14 @@ import 'package:taskit/shared/data/source/local/drift/dao/subtask.dart';
 import 'package:taskit/shared/data/source/local/drift/dao/task.dart';
 import 'package:taskit/shared/data/source/local/drift/dao/user.dart';
 import 'package:taskit/shared/data/source/local/drift/database/database.dart';
+import 'package:taskit/shared/log/logger_provider.dart';
 
 import 'config/app/app_color.dart';
+
+final languageCodeProvider = Provider<String>((ref) {
+  final locale = WidgetsBinding.instance.platformDispatcher.locale;
+  return locale.languageCode;
+});
 
 class MainWidget extends ConsumerWidget {
   const MainWidget({super.key});
@@ -40,6 +46,8 @@ class MainWidget extends ConsumerWidget {
       final subtasks = await subtaskDao.fetchSubtasks();
       debugPrint("$subtasks\n");
     });
+    final languageCode = ref.read(languageCodeProvider);
+    logger.i(languageCode);
     return MaterialApp.router(
       routerConfig: router,
       theme: ThemeData(
@@ -50,11 +58,11 @@ class MainWidget extends ConsumerWidget {
         scaffoldBackgroundColor: ConstColor.surface,
         textTheme: const TextTheme(
           headlineMedium: TextStyle(
-              color: ConstColor.onPrimary, fontWeight: FontWeight.w600),
+              color: ConstColor.onPrimary, fontWeight: FontWeight.w700),
           headlineSmall: TextStyle(
-              color: ConstColor.onPrimary, fontWeight: FontWeight.w600),
+              color: ConstColor.onPrimary, fontWeight: FontWeight.w700),
           headlineLarge: TextStyle(
-              color: ConstColor.onPrimary, fontWeight: FontWeight.w600),
+              color: ConstColor.onPrimary, fontWeight: FontWeight.w700),
           titleLarge: TextStyle(fontWeight: FontWeight.w500),
           titleMedium: TextStyle(fontWeight: FontWeight.w500),
           labelMedium: TextStyle(fontWeight: FontWeight.w500),
