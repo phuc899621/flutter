@@ -7,6 +7,7 @@ import 'package:taskit/features/auth/data/source/local/iauth_local.dart';
 import 'package:taskit/shared/application/itoken_service.dart';
 import 'package:taskit/shared/application/token_service.dart';
 import 'package:taskit/shared/data/dto/response/base_response.dart';
+import 'package:taskit/shared/log/logger_provider.dart';
 import 'package:taskit/shared/mixin/dio_exception_mapper.dart';
 
 import '../../../../shared/data/dto/response/base_response_data.dart';
@@ -158,6 +159,7 @@ class AuthRepo with DioExceptionMapper implements IAuthRepo {
   Future<BaseResponse<BaseData>> resetPass(
       ResetPassRequest data, String token) async {
     try {
+      logger.i('${data.toJson()} $token');
       final response = await _authApi.resetPass(data, token);
       return response;
     } on DioException catch (e, s) {

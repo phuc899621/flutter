@@ -365,6 +365,19 @@ class TaskRepo with DioExceptionMapper implements ITaskRepo {
     deleteRemoteSubtask(subtask.remoteId);
   }
 
+  @override
+  Future<void> deleteCategory(int localId) async {
+    // TODO: implement deleteCategory
+    final category = await _taskLocalSource.getCategoryByLocalId(localId);
+    if (category == null || category.name.toLowerCase().trim() == 'any') return;
+    final token = await _tokenService.getToken();
+    logger.i('delete category with localId $localId');
+    if (token == null || category.remoteId.isEmpty) return;
+    final categoryRemoteId = category.remoteId;
+    await _taskLocalSource.deleteCategoryByLocalId(localId);
+    deleteRemoteCategory(categoryRemoteId);
+  }
+
   //endregion
   //=====================================
   //============= INSERT REMOTE =========
@@ -677,6 +690,18 @@ class TaskRepo with DioExceptionMapper implements ITaskRepo {
       final token = await _tokenService.getToken();
       if (token == null) return;
       await _taskRemoteSource.deleteSubTask(token, subtaskRemoteId);
+    } catch (e, s) {
+      logger.e('delete task error: \n $e \n $s');
+    }
+  }
+
+  @override
+  Future<void> deleteRemoteCategory(String categoryRemoteId) async {
+    // TODO: implement deleteRemoteCategory
+    try {
+      final token = await _tokenService.getToken();
+      if (token == null) return;
+      _taskRemoteSource.deleteCategory(token, categoryRemoteId);
     } catch (e, s) {
       logger.e('delete task error: \n $e \n $s');
     }

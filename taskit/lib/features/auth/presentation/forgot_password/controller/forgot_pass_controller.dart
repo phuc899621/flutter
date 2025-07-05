@@ -1,6 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:taskit/features/auth/application/auth_service.dart';
 import 'package:taskit/features/auth/presentation/forgot_password/state/forgot_pass_state.dart';
+import 'package:taskit/shared/log/logger_provider.dart';
 
 import '../../../data/dto/req/forgot_pass/forgot_pass.dart';
 import '../../../data/dto/req/forgot_pass/forgot_pass_verify.dart';
@@ -109,8 +110,9 @@ class ForgotPassController extends AutoDisposeNotifier<ForgotPassState> {
       final formData = ResetPassRequest(
         email: state.forgotPassForm['email'],
         password: state.resetForm['password'],
-        confirmPassword: state.resetForm['confirmPassword'],
+        passwordConfirm: state.resetForm['passwordConfirm'],
       );
+      logger.i('$formData ${state.resetToken}');
       final result = await ref
           .read(authServiceProvider)
           .resetPass(formData, state.resetToken!);
@@ -121,6 +123,7 @@ class ForgotPassController extends AutoDisposeNotifier<ForgotPassState> {
           isResetSuccess: true,
         );
       }, (failure) {
+        logger.e(failure);
         state = state.copyWith(
           isLoading: false,
           isResetSuccess: null,
@@ -128,6 +131,7 @@ class ForgotPassController extends AutoDisposeNotifier<ForgotPassState> {
         );
       });
     } catch (e) {
+      logger.e(e);
       state = state.copyWith(
         isLoading: false,
         isResetSuccess: null,

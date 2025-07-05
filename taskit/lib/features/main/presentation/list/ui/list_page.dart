@@ -168,7 +168,7 @@ class _ListPageState extends ConsumerState<ListPage>
           color: state.isFiltering ? color.primary : color.onPrimaryContainer),
     );
     final filterStyleBtn = ButtonStyle(
-        elevation: WidgetStatePropertyAll(2),
+        elevation: WidgetStatePropertyAll(0),
         backgroundColor: WidgetStatePropertyAll(state.isFiltering
             ? color.surfaceContainerLow
             : color.primaryContainer));
@@ -185,12 +185,56 @@ class _ListPageState extends ConsumerState<ListPage>
       titleTextStyle: text.headlineSmall,
       actionsPadding: EdgeInsets.symmetric(horizontal: 5),
       actions: [
-        FilledButton.tonalIcon(
-          onPressed: () => context.push('/filter'),
-          label: filterTextBtn,
-          style: filterStyleBtn,
-          icon: filterIconBtn,
-        ),
+        if (state.isFiltering)
+          Container(
+              height: 40,
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(25),
+                  color: color.primaryContainer),
+              padding: EdgeInsets.symmetric(horizontal: 20),
+              child: Center(child: filterTextBtn)),
+        MenuAnchor(
+            alignmentOffset: Offset(0, 0),
+            menuChildren: [
+              MenuItemButton(
+                  leadingIcon: Icon(
+                    Icons.tune_outlined,
+                    size: 18,
+                    color: color.onSurfaceVariant,
+                  ),
+                  onPressed: () => context.push('/filter'),
+                  child: Text(
+                    'Custom filter',
+                    style: text.labelMedium?.copyWith(
+                      color: color.onSurfaceVariant,
+                    ),
+                  )),
+              /*MenuItemButton(
+                  leadingIcon: Icon(
+                    Icons.tune_outlined,
+                    size: 18,
+                    color: color.onSurfaceVariant,
+                  ),
+                  onPressed: () => context.push('/category'),
+                  child: Text(
+                    'Custom category',
+                    style: text.labelMedium?.copyWith(
+                      color: color.onSurfaceVariant,
+                    ),
+                  ))*/
+            ],
+            builder: (context, controller, child) => IconButton.filledTonal(
+                style: ButtonStyle(
+                  elevation: WidgetStatePropertyAll(2),
+                  backgroundColor:
+                      WidgetStatePropertyAll(color.primaryContainer),
+                ),
+                onPressed: () =>
+                    controller.isOpen ? controller.close() : controller.open(),
+                icon: Icon(
+                  Icons.more_vert_rounded,
+                  color: color.onPrimaryContainer,
+                )))
       ],
     );
   }

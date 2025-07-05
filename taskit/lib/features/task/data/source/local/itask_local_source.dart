@@ -99,4 +99,6 @@ abstract interface class ITaskLocalSource {
   Future<void> deleteTaskByLocalId(int id);
 
   Future<void> deleteSubtaskByLocalId(int id);
+
+  Future<void> deleteCategoryByLocalId(int id);
 }

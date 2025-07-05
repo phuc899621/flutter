@@ -171,7 +171,7 @@ class _SignupPageState extends ConsumerState<SignupPage> {
                             color: color.onPrimary,
                           ),
                         )
-                      : Text('Login',
+                      : Text('Signup',
                           style: text.titleMedium?.copyWith(
                             color: color.onPrimary,
                           )),

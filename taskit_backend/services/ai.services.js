@@ -157,6 +157,7 @@ Respond with valid pure JSON only. No explanation, no notes.`;
                 - Start directly with the content. Do not prefix the response with /, *, or any symbol.
                 - DO NOT use bullet points or lists
                 - DO NOT break the line
+                - Use '-' for dates, e.g., "01-10-2023" for October 1, 2023.
                 - DO NOT invent or hallucinate
                 - Use simple, natural Vietnamese or English
                 - Your output must be readable and natural without symbols or code formatting.

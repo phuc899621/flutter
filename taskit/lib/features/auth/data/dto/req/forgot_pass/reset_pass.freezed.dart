@@ -17,7 +17,7 @@ T _$identity<T>(T value) => value;
 mixin _$ResetPassRequest {
   String get email;
   String get password;
-  String get confirmPassword;
+  String get passwordConfirm;
 
   /// Create a copy of ResetPassRequest
   /// with the given fields replaced by the non-null parameter values.
@@ -38,18 +38,18 @@ mixin _$ResetPassRequest {
             (identical(other.email, email) || other.email == email) &&
             (identical(other.password, password) ||
                 other.password == password) &&
-            (identical(other.confirmPassword, confirmPassword) ||
-                other.confirmPassword == confirmPassword));
+            (identical(other.passwordConfirm, passwordConfirm) ||
+                other.passwordConfirm == passwordConfirm));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode =>
-      Object.hash(runtimeType, email, password, confirmPassword);
+      Object.hash(runtimeType, email, password, passwordConfirm);
 
   @override
   String toString() {
-    return 'ResetPassRequest(email: $email, password: $password, confirmPassword: $confirmPassword)';
+    return 'ResetPassRequest(email: $email, password: $password, passwordConfirm: $passwordConfirm)';
   }
 }
 
@@ -59,7 +59,7 @@ abstract mixin class $ResetPassRequestCopyWith<$Res> {
           ResetPassRequest value, $Res Function(ResetPassRequest) _then) =
       _$ResetPassRequestCopyWithImpl;
   @useResult
-  $Res call({String email, String password, String confirmPassword});
+  $Res call({String email, String password, String passwordConfirm});
 }
 
 /// @nodoc
@@ -77,7 +77,7 @@ class _$ResetPassRequestCopyWithImpl<$Res>
   $Res call({
     Object? email = null,
     Object? password = null,
-    Object? confirmPassword = null,
+    Object? passwordConfirm = null,
   }) {
     return _then(_self.copyWith(
       email: null == email
@@ -88,9 +88,9 @@ class _$ResetPassRequestCopyWithImpl<$Res>
           ? _self.password
           : password // ignore: cast_nullable_to_non_nullable
               as String,
-      confirmPassword: null == confirmPassword
-          ? _self.confirmPassword
-          : confirmPassword // ignore: cast_nullable_to_non_nullable
+      passwordConfirm: null == passwordConfirm
+          ? _self.passwordConfirm
+          : passwordConfirm // ignore: cast_nullable_to_non_nullable
               as String,
     ));
   }
@@ -102,7 +102,7 @@ class _ResetPassRequest implements ResetPassRequest {
   const _ResetPassRequest(
       {required this.email,
       required this.password,
-      required this.confirmPassword});
+      required this.passwordConfirm});
   factory _ResetPassRequest.fromJson(Map<String, dynamic> json) =>
       _$ResetPassRequestFromJson(json);
 
@@ -111,7 +111,7 @@ class _ResetPassRequest implements ResetPassRequest {
   @override
   final String password;
   @override
-  final String confirmPassword;
+  final String passwordConfirm;
 
   /// Create a copy of ResetPassRequest
   /// with the given fields replaced by the non-null parameter values.
@@ -136,18 +136,18 @@ class _ResetPassRequest implements ResetPassRequest {
             (identical(other.email, email) || other.email == email) &&
             (identical(other.password, password) ||
                 other.password == password) &&
-            (identical(other.confirmPassword, confirmPassword) ||
-                other.confirmPassword == confirmPassword));
+            (identical(other.passwordConfirm, passwordConfirm) ||
+                other.passwordConfirm == passwordConfirm));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode =>
-      Object.hash(runtimeType, email, password, confirmPassword);
+      Object.hash(runtimeType, email, password, passwordConfirm);
 
   @override
   String toString() {
-    return 'ResetPassRequest(email: $email, password: $password, confirmPassword: $confirmPassword)';
+    return 'ResetPassRequest(email: $email, password: $password, passwordConfirm: $passwordConfirm)';
   }
 }
 
@@ -159,7 +159,7 @@ abstract mixin class _$ResetPassRequestCopyWith<$Res>
       __$ResetPassRequestCopyWithImpl;
   @override
   @useResult
-  $Res call({String email, String password, String confirmPassword});
+  $Res call({String email, String password, String passwordConfirm});
 }
 
 /// @nodoc
@@ -177,7 +177,7 @@ class __$ResetPassRequestCopyWithImpl<$Res>
   $Res call({
     Object? email = null,
     Object? password = null,
-    Object? confirmPassword = null,
+    Object? passwordConfirm = null,
   }) {
     return _then(_ResetPassRequest(
       email: null == email
@@ -188,9 +188,9 @@ class __$ResetPassRequestCopyWithImpl<$Res>
           ? _self.password
           : password // ignore: cast_nullable_to_non_nullable
               as String,
-      confirmPassword: null == confirmPassword
-          ? _self.confirmPassword
-          : confirmPassword // ignore: cast_nullable_to_non_nullable
+      passwordConfirm: null == passwordConfirm
+          ? _self.passwordConfirm
+          : passwordConfirm // ignore: cast_nullable_to_non_nullable
               as String,
     ));
   }

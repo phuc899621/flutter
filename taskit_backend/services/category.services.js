@@ -38,22 +38,45 @@ class CategoryServices {
     
     static async deleteOne(id) {
         const session = await db.startSession();
+        let transactionStarted = false; // 👈 thêm flag
         try {
-            const category = await CategoryModel.findOne({_id:id});
-            const AnyCategory = await CategoryModel.findOne({name: "Any"});
+            const category = await CategoryModel.findOne({ _id: id });
+            if (!category) {
+                throw new HttpError("Category not found", 404);
+            }
+
+            const AnyCategory = await CategoryModel.findOne({ name: { $regex: /^any$/i } });
+            if (!AnyCategory) {
+                throw new HttpError("Default category 'Any' not found", 404);
+            }
+
             session.startTransaction();
-            const tasks=await TaskModel.find({categoryId:category._id},null,{session});
-            if(tasks.length > 0) {
-                const taskIds = tasks.map(task => task._id);
-                await TaskModel.updateMany({ _id: { $in: taskIds } }, { $set: { categoryId: AnyCategory._id } }, { session });
+            transactionStarted = true; 
+
+            const tasks = await TaskModel.find({ categoryId: category._id }, null, { session });
+            if (tasks.length > 0) {
+            const taskIds = tasks.map(task => task._id);
+            await TaskModel.updateMany(
+                { _id: { $in: taskIds } },
+                { $set: { categoryId: AnyCategory._id } },
+                { session }
+            );
             }
-            const result= await CategoryModel.deleteOne({_id: id,name: {$nin: ["Any"]}});
-            session.commitTransaction();
-            if(result.deletedCount === 0) {
-                throw new HttpError("Category not found",404);
+
+            const result = await CategoryModel.deleteOne(
+            { _id: id, name: { $not: /^any$/i } },
+            { session }
+            );
+
+            if (result.deletedCount === 0) {
+            throw new HttpError("Category not found or protected", 404);
             }
+
+            await session.commitTransaction();
         } catch (e) {
-            session.abortTransaction();
+            if (transactionStarted) {
+                await session.abortTransaction(); 
+            }
             throw new Error(`Delete one category by id error: ${e.message}`);
         } finally {
             session.endSession();

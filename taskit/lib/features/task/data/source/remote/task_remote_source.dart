@@ -139,6 +139,18 @@ class TaskRemoteSource with DioExceptionMapper implements ITaskRemoteSource {
   }
 
   @override
+  Future<BaseResponse<BaseData>> deleteCategory(String token, String id) {
+    try {
+      final response = _categoryApi.delete('Bearer $token', id);
+      return response;
+    } on DioException catch (e, s) {
+      throw mapDioExceptionToFailure(e, s);
+    } catch (e, s) {
+      throw _mapToFailure(e, s);
+    }
+  }
+
+  @override
   Future<BaseResponse<BaseData>> deleteSubTask(String token, String subtaskId) {
     try {
       final response = _subtaskApi.delete('Bearer $token', subtaskId);

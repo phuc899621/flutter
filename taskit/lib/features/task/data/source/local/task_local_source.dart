@@ -391,6 +391,10 @@ class TaskLocalSource implements ITaskLocalSource {
   Future<void> deleteSubtaskByLocalId(int id) =>
       _subtaskDao.deleteSubtaskById(id);
 
+  @override
+  Future<void> deleteCategoryByLocalId(int id) =>
+      _categoryDao.deleteCategoryById(id);
+
 //endregion
 
 // ================================

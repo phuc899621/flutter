@@ -262,44 +262,8 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                   ],
                 ),
               ),
-              SizedBox(height: 10),
               SizedBox(
-                width: double.infinity,
-                child: OutlinedButton.icon(
-                  icon: SvgPicture.asset(
-                    'assets/svg/google.svg',
-                    width: 24.0,
-                    height: 24.0,
-                    fit: BoxFit.cover,
-                  ),
-                  onPressed: () {},
-                  label: Text(
-                    'Login with Google',
-                    style: text.titleSmall?.copyWith(
-                      color: color.onSurfaceVariant,
-                    ),
-                  ),
-                  style: OutlinedButton.styleFrom(
-                    minimumSize: const Size.fromHeight(44),
-                    padding: EdgeInsets.zero,
-                    overlayColor: color.primary,
-                    backgroundColor: color.surfaceContainerLow,
-                    side: BorderSide(
-                      color: color.surfaceContainerHighest,
-                      width: 2.0,
-                    ),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12.0),
-                    ),
-                  ).copyWith(
-                    overlayColor: WidgetStatePropertyAll(
-                      color.primary.withAlpha(30), // hoverColor
-                    ),
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: 15,
+                height: 25,
               ),
               Align(
                 alignment: Alignment.center,

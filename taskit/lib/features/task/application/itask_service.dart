@@ -79,6 +79,8 @@ abstract interface class ITaskService {
 
   Future<void> deleteSubtask(int localId);
 
+  Future<void> deleteCategory(int localId);
+
   //================================
 //========== AI  ================
 //================================

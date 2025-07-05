@@ -312,6 +312,10 @@ class TaskService implements ITaskService {
   @override
   Future<void> deleteSubtask(int localId) => _iTaskRepo.deleteSubtask(localId);
 
+  @override
+  Future<void> deleteCategory(int localId) =>
+      _iTaskRepo.deleteCategory(localId);
+
 //endregion
 
 //================================

@@ -27,30 +27,37 @@ final authApiProvider = Provider<AuthApi>((ref) {
 @RestApi()
 sealed class AuthApi {
   factory AuthApi(Dio dio) => _AuthApi(dio);
+
   /*
   * Login
   * */
   @POST('/user/login')
   Future<BaseResponse<LoginData>> login(@Body() LoginRequest data);
+
   @GET('/user/login/verify')
   Future<BaseResponse<LoginVerifyData>> checkLogin(
       @Header('Authorization') String token);
+
   @POST('/user/signup')
   /*
   * Signup
   * */
   Future<BaseResponse<BaseData>> signup(@Body() SignupRequest data);
+
   @POST('/user/signup/verify')
   Future<BaseResponse<BaseData>> signupVerify(@Body() SignupVerifyRequest data);
+
   @POST('/user/forgot-password')
   /*
   * Forgot Password
   * */
   Future<BaseResponse<BaseData>> forgotPass(@Body() ForgotPassRequest data);
+
   @POST('/user/forgot-password/verify')
   Future<BaseResponse<ForgotPassData>> forgotPassVerify(
       @Body() ForgotPassVerifyRequest data);
-  @POST('/user/forgot-password/reset')
+
+  @PUT('/user/forgot-password/reset')
   Future<BaseResponse<BaseData>> resetPass(
       @Body() ResetPassRequest data, @Header('Reset-Token') String token);
 }

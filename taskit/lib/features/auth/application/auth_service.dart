@@ -10,6 +10,7 @@ import 'package:taskit/shared/exception/failure.dart';
 
 import '../../../shared/data/dto/response/base_response_data.dart';
 import '../../../shared/domain/model/base_model.dart';
+import '../../../shared/log/logger_provider.dart';
 import '../data/dto/req/forgot_pass/forgot_pass.dart';
 import '../data/dto/req/forgot_pass/forgot_pass_verify.dart';
 import '../data/dto/req/forgot_pass/reset_pass.dart';
@@ -162,6 +163,7 @@ class AuthService implements IAuthEntityMapper, IAuthService, IBaseModelMapper {
   Future<Result<BaseModel, Failure>> resetPass(
       ResetPassRequest data, String resetToken) async {
     try {
+      logger.i('${data.toJson()} $resetToken');
       final response = await _iAuthRepo.resetPass(data, resetToken);
       final model = mapToBaseModel(response);
       return Success(model);

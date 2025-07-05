@@ -10,3 +10,4 @@ const String timelineRoute = 'timeline';
 const String aiRoute = 'ai';
 const String addTaskRoute = 'add_task';
 const String editTaskRoute = 'edit_task';
+const String categoryRoute = 'category';

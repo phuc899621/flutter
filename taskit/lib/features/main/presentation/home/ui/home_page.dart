@@ -272,7 +272,7 @@ class _HomePageState extends ConsumerState<HomePage>
   }
 
   //endregion
-//region Search And Notification Icon
+//region Search And Logout Icon
 
   Widget _searchIconButton() {
     final color = Theme.of(context).colorScheme;

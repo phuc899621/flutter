@@ -43,6 +43,8 @@ abstract interface class ITaskRemoteSource {
 
   Future<BaseResponse<BaseData>> deleteSubTask(String token, String subTaskId);
 
+  Future<BaseResponse<BaseData>> deleteCategory(String token, String id);
+
 //=======================================
 //============= AI  ==============
 //========================================

@@ -69,6 +69,8 @@ abstract interface class ITaskRepo {
 
   Future<void> deleteSubtask(int localId);
 
+  Future<void> deleteCategory(int localId);
+
   //================================
   //========== INSERT REMOTE =======
   //================================
@@ -110,6 +112,8 @@ abstract interface class ITaskRepo {
   Future<void> deleteRemoteTask(String taskRemoteId);
 
   Future<void> deleteRemoteSubtask(String subtaskRemoteId);
+
+  Future<void> deleteRemoteCategory(String categoryRemoteId);
 
 //================================
 //========== AI  ================

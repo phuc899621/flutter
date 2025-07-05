@@ -40,6 +40,9 @@ final filteringTaskNavigatorKeyProvider = Provider.autoDispose((ref) {
 final taskGenerateNavigatorKeyProvider = Provider.autoDispose((ref) {
   return GlobalKey<NavigatorState>();
 });
+final categoryNavigationKeyProvider = Provider.autoDispose((ref) {
+  return GlobalKey<NavigatorState>();
+});
 final navigationShellProvider =
     Provider<StatefulNavigationShell>((ref) => throw UnimplementedError());
 

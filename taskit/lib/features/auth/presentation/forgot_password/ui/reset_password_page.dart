@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../../shared/log/logger_provider.dart';
 import '../../../../../shared/presentation/widget/custom_taskit_textfield.dart';
 import '../controller/forgot_pass_controller.dart';
 
@@ -26,36 +27,39 @@ class _ResetPasswordPageState extends ConsumerState<ResetPasswordPage> {
 
   void _listener() {
     ref.listen(forgotPassControllerProvider.select((value) => value.errorReset),
-        (_, next) {
-      if (next != null) {
-        _passwordController.clear();
-        _passwordConfirmController.clear();
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            duration: const Duration(seconds: 5),
-            backgroundColor: Colors.red,
-            content: Text(next),
-          ),
-        );
-      }
-    });
+            (_, next) {
+          if (next != null) {
+            _passwordController.clear();
+            _passwordConfirmController.clear();
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                duration: const Duration(seconds: 5),
+                backgroundColor: Colors.red,
+                content: Text(next),
+              ),
+            );
+          }
+        });
     ref.listen(
         forgotPassControllerProvider.select((value) => value.isResetSuccess),
-        (_, next) {
-      if (next != null && next) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            duration: Duration(seconds: 2),
-            backgroundColor: Colors.red,
-            content: Text('Password reset successfully'),
-          ),
-        );
-        context.go('/login');
-      }
-    });
+            (_, next) {
+          if (next != null && next) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                duration: Duration(seconds: 2),
+                backgroundColor: Colors.green,
+                content: Text('Password reset successfully'),
+              ),
+            );
+            context.go('/login');
+          }
+        });
   }
 
   void _onSummit() {
+    logger.i(
+        'onSummit ${_passwordConfirmController.text} ${_passwordController
+            .text}');
     final form = ({
       'password': _passwordController.text,
       'passwordConfirm': _passwordConfirmController.text
@@ -69,17 +73,22 @@ class _ResetPasswordPageState extends ConsumerState<ResetPasswordPage> {
   @override
   Widget build(BuildContext context) {
     _listener();
-    final text = Theme.of(context).textTheme;
-    final color = Theme.of(context).colorScheme;
+    final text = Theme
+        .of(context)
+        .textTheme;
+    final color = Theme
+        .of(context)
+        .colorScheme;
     return SafeArea(
       top: true,
       child: Scaffold(
         resizeToAvoidBottomInset: true,
         backgroundColor: color.primary,
         body: NestedScrollView(
-            headerSliverBuilder: (context, innerBoxIsScrolled) => [
-                  _topAppBar(),
-                ],
+            headerSliverBuilder: (context, innerBoxIsScrolled) =>
+            [
+              _topAppBar(),
+            ],
             body: _signupVerifyBody()),
       ),
     );
@@ -87,7 +96,9 @@ class _ResetPasswordPageState extends ConsumerState<ResetPasswordPage> {
 
   //region TOP APPBAR
   Widget _topAppBar() {
-    final color = Theme.of(context).colorScheme;
+    final color = Theme
+        .of(context)
+        .colorScheme;
     return SliverAppBar(
       automaticallyImplyLeading: false,
       toolbarHeight: 80,
@@ -99,8 +110,12 @@ class _ResetPasswordPageState extends ConsumerState<ResetPasswordPage> {
 //endregion
 //region Sign up verify body
   Widget _signupVerifyBody() {
-    final text = Theme.of(context).textTheme;
-    final color = Theme.of(context).colorScheme;
+    final text = Theme
+        .of(context)
+        .textTheme;
+    final color = Theme
+        .of(context)
+        .colorScheme;
     final state = ref.watch(forgotPassControllerProvider);
 
     return Container(
@@ -155,14 +170,14 @@ class _ResetPasswordPageState extends ConsumerState<ResetPasswordPage> {
                   ),
                   child: state.isLoading
                       ? Center(
-                          child: CircularProgressIndicator(
-                            color: color.onPrimary,
-                          ),
-                        )
+                    child: CircularProgressIndicator(
+                      color: color.onPrimary,
+                    ),
+                  )
                       : Text('Submit',
-                          style: text.titleMedium?.copyWith(
-                            color: color.onPrimary,
-                          )),
+                      style: text.titleMedium?.copyWith(
+                        color: color.onPrimary,
+                      )),
                 ),
               ),
             ]),
