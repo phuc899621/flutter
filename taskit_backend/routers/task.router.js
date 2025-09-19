@@ -78,7 +78,12 @@ router.get('/', jwtMiddleware, TaskController.getTasks);
  *                  example: false
  *              priority:
  *                  type: string
- *                  enum:
+ *                  enum: [low, medium, high, none]
+ *                  exanple: low
+ *              status:
+ *                  type: string
+ *                  enum: [scheduled, pending, completed]
+ *                  example: scheduled
  *                 
  *     responses:
  *       200:
@@ -113,9 +118,10 @@ router.post('/', jwtMiddleware,TaskMiddleware.createTaskMiddleware, TaskControll
  *     summary: Bulk update tasks
  *     description: >
  *          Update multiple tasks at once with the same value. 
- *          The client must provide an array of taskIds and corresponding (optional) taskLocalIds, 
+ *          The client must provide an array of Ids object, 
  *          along with the data to update for all tasks
- *          Returns the list of taskLocalIds and number of tasks successfully updated. 
+ *          For unmatched task/category ids, the tasks will be skipped
+ *          Returns the list of updated task Ids and skipped tasks Ids. 
  *     security:
  *       - bearerAuth: []
  *     requestBody:
@@ -125,17 +131,20 @@ router.post('/', jwtMiddleware,TaskMiddleware.createTaskMiddleware, TaskControll
  *           schema:
  *             type: object
  *             properties:
- *               taskIds:
+ *               ids:
  *                  type: array
  *                  items:
- *                     type: string
- *                     example: '507f1f77bcf86cd799439011'
- *               taskLocalIds:
- *                  type: array
- *                  items: 
- *                     type: int
- *                     example: 13
+ *                     type: object
+ *                     properties:
+ *                         taskId:
+ *                             type: string
+ *                             example: '507f1f77bcf86cd799439011'
+ *                             required: true
+ *                         taskLocalId:
+ *                             type: int
+ *                             example: 13
  *               data:
+ *                  required: true
  *                  type: object
  *                  properties:
  *                     title:
@@ -162,7 +171,7 @@ router.post('/', jwtMiddleware,TaskMiddleware.createTaskMiddleware, TaskControll
  *                        exanple: low
  *                     status:
  *                        type: string
- *                        enum: [scheduled, inProgress, completed]
+ *                        enum: [scheduled, pending, completed]
  *                        example: scheduled       
  *     responses:
  *       200:
@@ -174,20 +183,41 @@ router.post('/', jwtMiddleware,TaskMiddleware.createTaskMiddleware, TaskControll
  *                properties:
  *                  message:
  *                    type: string
- *                    example: Bulk update task successfully (same data applied to all tasks)
+ *                    example: Update bulk tasks successfully 
  *                  data: 
  *                    type: object
  *                    properties:
- *                      taskLocalIds:
+ *                      matchedCount:
+ *                        type: int
+ *                        example: 2
+ *                      modifiedCount:
+ *                        type: int
+ *                        example: 2
+ *                      updated:
  *                        type: array
  *                        items:
- *                          type: int
- *                          example: 13
- *                      taskIds:
+ *                          type: object
+ *                          properties:
+ *                              taskId:
+ *                                  type: string
+ *                                  example: '507f1f77bcf86cd799439011'
+ *                              taskLocalId:
+ *                                  type: int
+ *                                  example: 13
+ *                      skipped:       
  *                        type: array
  *                        items:
- *                          type: string
- *                          example: '507f1f77bcf86cd799439011'
+ *                          type: object
+ *                          properties:
+ *                              taskId:
+ *                                  type: string
+ *                                  example: '507f1f77bcf86cd799439011'
+ *                              taskLocalId:
+ *                                  type: int
+ *                                  example: 13
+ *                              reason:
+ *                                  type: string
+ *                                  example: 'Task not found'
  *       400:
  *         $ref: '#/components/responses/400'
  *       401:
@@ -197,7 +227,125 @@ router.post('/', jwtMiddleware,TaskMiddleware.createTaskMiddleware, TaskControll
  *       500:
  *         $ref: '#/components/responses/500'
  */
-router.patch('/bulk', jwtMiddleware, TaskController.updateTasksBulk);
+router.patch('/bulk', jwtMiddleware, TaskMiddleware.updateTasksBulkMiddleware, TaskController.updateTasksBulk);
+
+/** 
+ * @openapi
+ * '/api/tasks/bulk/multiple':
+ *   patch:
+ *     tags:
+ *       - Tasks
+ *     summary: Multiple update tasks
+ *     description: >
+ *          Update multiple tasks at once with different values. 
+ *          The client must provide an array of task object, which contains taskId and updating data 
+ *          For unmatched task/category ids, the tasks will be skipped
+ *          Returns the list of updated task Ids and skipped tasks Ids. 
+ *     security:
+ *       - bearerAuth: []
+ *     requestBody:
+ *       require: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               tasks:
+ *                  type: array
+ *                  items:
+ *                     type: object
+ *                     properties:
+ *                         taskId:
+ *                             required: true
+ *                             type: string
+ *                             example: '507f1f77bcf86cd799439011'
+ *                         taskLocalId:
+ *                             type: int
+ *                             example: 13
+ *                         data:
+ *                             type: object
+ *                             properties:
+ *                                 title:
+ *                                     type: string
+ *                                     example: 'Travel to New York'
+ *                                 description:
+ *                                     type: string
+ *                                     example: 'Buy tickets to New York'
+ *                                 categoryId:
+ *                                     type: string
+ *                                     example: '43532sdf32fds3'
+ *                                 dueDate:
+ *                                     type: string
+ *                                     format: date-time
+ *                                     nullable: true
+ *                                     example: "2025-09-20T17:00:00.000Z"
+ *                                 hasTime:
+ *                                     type: boolean
+ *                                     description: Indicates whether the task has a specific time or just a date
+ *                                     example: false
+ *                                 priority:
+ *                                     type: string
+ *                                     enum: [low, medium, high, none]
+ *                                     exanple: low
+ *                                 status:
+ *                                     type: string
+ *                                     enum: [scheduled, pending, completed]
+ *                                     example: scheduled
+ *     responses:
+ *       200:
+ *         description: Bulk update tasks successfully
+ *         content:
+ *            application/json:
+ *              schema:
+ *                type: object
+ *                properties:
+ *                  message:
+ *                    type: string
+ *                    example: Bulk update tasks successfully 
+ *                  data: 
+ *                    type: object
+ *                    properties:
+ *                      matchedCount:
+ *                        type: int
+ *                        example: 2
+ *                      modifiedCount:
+ *                        type: int
+ *                        example: 2
+ *                      updated:
+ *                        type: array
+ *                        items:
+ *                          type: object
+ *                          properties:
+ *                              taskId:
+ *                                  type: string
+ *                                  example: '507f1f77bcf86cd799439011'
+ *                              taskLocalId:
+ *                                  type: int
+ *                                  example: 13
+ *                      skipped:       
+ *                        type: array
+ *                        items:
+ *                          type: object
+ *                          properties:
+ *                              taskId:
+ *                                  type: string
+ *                                  example: '507f1f77bcf86cd799439011'
+ *                              taskLocalId:
+ *                                  type: int
+ *                                  example: 13
+ *                              reason:
+ *                                  type: string
+ *                                  example: 'Task not found'
+ *       400:
+ *         $ref: '#/components/responses/400'
+ *       401:
+ *         $ref: '#/components/responses/401'
+ *       404:
+ *         $ref: '#/components/responses/404'
+ *       500:
+ *         $ref: '#/components/responses/500'
+ */
+router.patch('/bulk/multiple', jwtMiddleware, TaskMiddleware.updateMultipleTasksMiddleware, TaskController.updateMultipleTasks);
 
 /** 
  * @openapi

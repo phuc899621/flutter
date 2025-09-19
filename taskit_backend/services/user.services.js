@@ -94,25 +94,13 @@ class UserServices {
             const isPasswordMatch = await bcrypt.compare(request.password, user.password);
             if (!isPasswordMatch) throw new HttpError("Invalid password", 401);
 
-            const token = jwt.sign(
+            const accessToken = jwt.sign(
                 { id: user._id, email: user.email },
                 process.env.JWT_SECRET || "899621",
                 { expiresIn: process.env.JWT_EXPIRES_IN || "1d" }
             );
-            const setting= await SettingServices.findByUserId(user._id);
-            const categories = await CategoryServices.findByUserId(user._id);
-            const task=await TaskServices.findByUserId(user._id);
             return {
-                    token: token,
-                    settings: setting,
-                    user: {
-                        _id: user._id,
-                        name: user.name,
-                        email: user.email,
-                        avatar: user.avatar,
-                    },
-                    tasks: task,
-                    categories: categories,
+                    accessToken
             };
             
         }catch (e) {

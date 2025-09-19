@@ -158,23 +158,24 @@ export const updateTaskPartialMiddleware = [
 ];
 
 export const updateTasksBulkMiddleware = [
-  body('taskIds')
+  body('ids')
     .notEmpty()
     .withMessage('Task IDs are required')
     .isArray()
     .withMessage('Task IDs must be an array'),
-    body('taskIds.*')
+    body('ids.*')
     .optional()
-    .isMongoId()
-    .withMessage('Task ID must be a valid MongoDB ObjectId'),
-    body('taskLocalIds')
-    .optional()
-    .isArray()
-    .withMessage('taskLocalIds must be an array'),
-    body('taskLocalIds.*')
+    .isObject()
+    .withMessage('Task IDs must be an array of objects'),
+    body('ids.*.taskLocalId')
     .optional()
     .isInt()
-    .withMessage('taskLocalId must be an integer'),
+    .withMessage('Task Local ID must be an integer'),
+    body('ids.*.taskId')
+    .notEmpty()
+    .withMessage('Task ID is required for each task')
+    .isMongoId()
+    .withMessage('Task ID must be a valid MongoDB ObjectId'),
     body('data')
     .notEmpty()
     .withMessage('Data is required')
@@ -214,6 +215,63 @@ export const updateTasksBulkMiddleware = [
     .withMessage('Status must be one of: pending, scheduled, completed'),
   validateResult('Bulk task updated validation')
 ];
+
+
+export const updateMultipleTasksMiddleware = [
+  body('tasks')
+    .notEmpty()
+    .withMessage('List of updated tasks are required')
+    .isArray()
+    .withMessage('List of updated tasks must be an array'),
+    body('tasks.*.taskId')
+    .notEmpty()
+    .withMessage('Task ID is required')
+    .isMongoId()
+    .withMessage('Task ID must be a valid MongoDB ObjectId'),
+    body('tasks.*.taskLocalId')
+    .optional()
+    .isInt()
+    .withMessage('taskLocalId must be an integer'),
+    body('tasks.*.data')
+    .notEmpty()
+    .withMessage('Update data is required') 
+    .isObject()
+    .withMessage('Update data must be an object'),
+    body('tasks.*.data.title')
+    .optional()
+    .isString()
+    .withMessage('Title must be a string'),
+    body('tasks.*.data.description')
+    .optional()
+    .isString()
+    .withMessage('Description must be a string'),
+    body('tasks.*.data.dueDate')
+    .optional({ nullable: true })
+    .isISO8601()
+    .withMessage('Due date must be a valid date in ISO 8601 format'),
+    body('tasks.*.data.hasTime')
+    .optional()
+    .isBoolean()
+    .withMessage('Has Time must be a boolean'),
+    body('tasks.*.data.priority')
+    .optional()    
+    .isIn(['low', 'medium', 'high', 'none'])
+    .withMessage('Priority must be one of: low, medium, high, none'),
+    body('tasks.*.data.categoryId')
+    .optional()
+    .isString()
+    .withMessage('Category must be a string')
+    .isMongoId()
+    .withMessage('Category ID must be a valid MongoDB ObjectId'),
+    body('tasks.*.data.status')
+    .optional()
+    .isString()
+    .withMessage('Status must be a string')
+    .isIn(['pending', 'scheduled', 'completed'])
+    .withMessage('Status must be one of: pending, scheduled, completed'),
+  validateResult('Multiple tasks updated validation')
+];
+
 
 export const deleteTaskMiddleware = [
   param('taskId')

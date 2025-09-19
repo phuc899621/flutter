@@ -147,32 +147,61 @@ class TaskServices {
             session.endSession();
         }
     }
-    static async updateTasksBulk(taskIds, taskLocalIds ,updateData) {
+    static async updateTasksBulk(ids ,updateData) {
         const session= await db.startSession();
         session.startTransaction();
         try {
-            if(taskLocalIds!==undefined && taskLocalIds.length!==taskIds.length){
-                throw new HttpError("TaskLocalIds and taskIds must have the same length", 400);
-            }
-        
-            if (updateData.categoryId){
-                const category = await CategoryModel.findById(updateData.categoryId).session(session);
-                if (!category) {
-                    throw new HttpError("Category not found", 404);
+            const results = [];
+            const updated=[];
+            const skipped=[];
+            let matchedCount = 0;
+            let modifiedCount = 0;
+
+            for (const { taskId, taskLocalId } of ids) {
+                const task = await TaskModel.findById(taskId).session(session);
+
+                if (!task) {
+                    skipped.push({ taskId, taskLocalId, reason: "Task not found" });
+                    continue;
+                }
+                matchedCount++;
+
+                if (updateData.categoryId) {
+                    const category = await CategoryModel.findById(updateData.categoryId).session(session);
+                    if (!category) {
+                        skipped.push({ taskId, taskLocalId, reason: "Category not found" });
+                        continue;
+                    }
+                }
+
+                const updatedTask = await TaskModel.findByIdAndUpdate(
+                    taskId,
+                    { $set: updateData },
+                    { new: true, session }
+                );
+
+                if (updatedTask) {
+                    modifiedCount++;
+                    updated.push({
+                        taskId,
+                        taskLocalId,
+                    });
+                } else {
+                    updated.push({
+                        taskId,
+                        taskLocalId,
+                    });
                 }
             }
-            
-            await TaskModel.updateMany(
-                {   _id:{$in:taskIds} },
-                { $set: updateData },
-                { session }
-            );
 
             await session.commitTransaction();
+
             return {
-                taskLocalIds,
-                taskIds,
-            }
+                matchedCount,
+                modifiedCount,
+                updated,
+                skipped,
+            };
         } catch (e) {
             await session.abortTransaction();
             throw new HttpError(`Bulk tasks updated error: ${e.message}`, 500);
@@ -180,7 +209,79 @@ class TaskServices {
             session.endSession();
         }
     }
-    static async delete_task(taskId) {
+    static async updateMultipleTasks(updateData) {
+        const session= await db.startSession();
+        session.startTransaction();
+        try {
+            const bulkOps = [];
+            const skippedTasks = [];
+            const updatedTasks = [];
+
+            for (const t of updateData) {
+                if (!t.taskId || !t.data) {
+                    skippedTasks.push({
+                        taskId: t.taskId || null,
+                        taskLocalId: t.taskLocalId || null,
+                    });
+                    continue;
+                }
+
+                const task = await TaskModel.findById(t.taskId).session(session);
+                if (!task) {
+                    skippedTasks.push({
+                        taskId: t.taskId,
+                        taskLocalId: t.taskLocalId,
+                        reason: "Task not found"
+                    });
+                    continue; 
+                }
+
+                if (t.data.categoryId) {
+                    const category = await CategoryModel.findById(t.data.categoryId).session(session);
+                    if (!category) {
+                        skippedTasks.push({
+                            taskId: t.taskId,
+                            taskLocalId: t.taskLocalId,
+                            reason: "Category not found"
+                        });
+                        continue; 
+                    }
+                }
+
+                bulkOps.push({
+                    updateOne: {
+                        filter: { _id: t.taskId },
+                        update: { $set: t.data }
+                    }
+                });
+
+                updatedTasks.push({
+                    taskId: t.taskId,
+                    taskLocalId: t.taskLocalId
+                });
+            }
+
+            let result = { matchedCount: 0, modifiedCount: 0 };
+            if (bulkOps.length > 0) {
+                result = await TaskModel.bulkWrite(bulkOps, { session });
+            }
+
+            await session.commitTransaction();
+
+            return {
+                matchedCount: result.matchedCount,
+                modifiedCount: result.modifiedCount,
+                updated: updatedTasks,
+                skipped: skippedTasks
+            };
+        } catch (e) {
+            await session.abortTransaction();
+            throw new HttpError(`Bulk tasks updated error: ${e.message}`, 500);
+        }finally{
+            session.endSession();
+        }
+    }
+static async delete_task(taskId) {
         const session=await db.startSession();
         try {
             session.startTransaction();

@@ -26,7 +26,7 @@ router.post('/signup/verify',AuthMiddleware.signup_verify, AuthController.signup
  *        application/json:
  *          schema:
  *           type: object
- *           require:
+ *           required:
  *              - email
  *              - password
  *           properties:
@@ -50,19 +50,9 @@ router.post('/signup/verify',AuthMiddleware.signup_verify, AuthController.signup
  *                  data:
  *                    type: object
  *                    properties:
- *                      token:
+ *                      accessToken:
  *                        type: string
  *                        example: eyJhbGciOiJIUzI1Ni
- *                      setting:
- *                        $ref: '#/components/schemas/Setting'
- *                      tasks:
- *                        type: array
- *                        items: 
- *                          $ref: '#/components/schemas/Task'
- *                      categories:
- *                        type: array
- *                        items:
- *                          $ref: '#/components/schemas/Category'
  *      400:
  *        description: Login Bad Request
  *        content:

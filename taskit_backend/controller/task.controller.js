@@ -92,12 +92,30 @@ export const updateTaskPartial = async (req, res) => {
 }
 export const updateTasksBulk = async (req, res) => {
     try {
-        const { taskIds, taskLocalIds,data } = req.body;
+        const { ids,data } = req.body;
         const result= await TaskServices.updateTasksBulk(
-            taskIds, taskLocalIds, data
+            ids, data
         );
         return res.status(200).json({
-            message: "Bulk update task successfully (same data applied to all tasks)",
+            message: "Update bulk tasks successfully",
+            data: result
+        });
+    } catch (e) {
+        const statusCode = e.statusCode || 500;
+        return res.status(statusCode).json({
+            message: e.message,
+            data: {}
+        });
+    }
+}
+export const updateMultipleTasks = async (req, res) => {
+    try {
+        const { tasks } = req.body;
+        const result= await TaskServices.updateMultipleTasks(
+            tasks
+        );
+        return res.status(200).json({
+            message: "Update multiple tasks successfully",
             data: result
         });
     } catch (e) {
