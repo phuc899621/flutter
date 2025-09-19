@@ -1,0 +1,2 @@
+C:/Users/phuc8/flutter_project/Learn/android/app/.cxx/Debug/4nm5z1r1/x86_64/CMakeFiles/edit_cache.dir
+C:/Users/phuc8/flutter_project/Learn/android/app/.cxx/Debug/4nm5z1r1/x86_64/CMakeFiles/rebuild_cache.dir
