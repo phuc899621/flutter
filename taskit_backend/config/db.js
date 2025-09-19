@@ -5,7 +5,7 @@ import mongoose from 'mongoose';
 
 const mongoURI=process.env.MONGODB_URI;
 const connection = mongoose.createConnection(mongoURI,{
-    ssl: true, // Bắt buộc dùng SSL cho MongoDB Atlas
+    ssl: true, 
 }).on('open',()=>{
     console.log("MongoDB connected!");
 }).on('error',(err)=>{

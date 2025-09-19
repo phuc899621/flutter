@@ -89,7 +89,7 @@ class UserServices {
     static async login(request){
         try {
             const user = await UserModel.findOne({ email: request.email });
-            if (!user) throw new HttpError("User not found", 404);
+            if (!user) throw new HttpError("Account not found", 404);
 
             const isPasswordMatch = await bcrypt.compare(request.password, user.password);
             if (!isPasswordMatch) throw new HttpError("Invalid password", 401);

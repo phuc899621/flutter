@@ -41,7 +41,7 @@ const transporter = {
       return result.body;
     } catch (error) {
       console.error('Error sending email:', error.statusCode, error.response?.body || error.message);
-      throw error; // để nơi gọi còn bắt được lỗi
+      throw error; 
     }
   },
 };

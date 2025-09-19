@@ -5,7 +5,7 @@ const validateResult = (prefix = 'Validation') => (req, res, next) => {
   if (!errors.isEmpty()) {
     const firstError = errors.array()[0].msg;
     return res.status(400).json({
-      message: `${prefix} error: ${firstError}`,
+      message: `${prefix} Bad Request: ${firstError}`,
       data: {}
     });
   }

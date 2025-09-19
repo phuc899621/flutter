@@ -10,10 +10,9 @@ const validateResult = (prefix = 'Validation') => (req, res, next) => {
   }
   next();
 };
-export const create_task = [
+export const createTaskMiddleware = [
   body('title')
-    .notEmpty()
-    .withMessage('Title is required')
+    .notEmpty().withMessage('Title is required')
     .isString()
     .withMessage('Title must be a string'),
     body('description')
@@ -54,14 +53,74 @@ export const create_task = [
     .withMessage('Subtask title is required')
     .isString()
     .withMessage('Subtask title must be a string'),
-    validateResult('Create task validation error')
+    validateResult('Create task validation')
 ];
-export const update_task = [
+export const updateTaskFullMiddleware = [
     param('taskId')
     .notEmpty()
     .withMessage('Task ID is required')
     .isMongoId()
     .withMessage('Task ID must be a valid MongoDB ObjectId'),
+    body('taskLocalId')
+    .optional()
+    .isInt()
+    .withMessage('localTaskId must be an integer'),
+  body('title')
+    .notEmpty()
+    .withMessage('Title is required')
+    .isString()
+    .withMessage('Title must be a string'),
+    body('description')
+    .custom((value) => {
+    if (value === null) {
+      throw new Error("Description is required");
+    }
+    return true;
+    })
+    .isString()
+    .withMessage('Description must be a string'),
+    body('dueDate')
+    .optional({ nullable: true })
+    .isISO8601()
+    .withMessage('Due date must be a valid date in ISO 8601 format'),
+    body('hasTime')
+    .notEmpty()
+    .withMessage('Has Time is required')
+    .isBoolean()
+    .withMessage('Has Time must be a boolean'),
+    body('priority')
+    .notEmpty()
+    .withMessage('Priority is required')
+    .isIn(['low', 'medium', 'high', 'none'])
+    .withMessage('Priority must be one of: low, medium, high, none'),
+    body('categoryId')
+    .notEmpty()
+    .withMessage('Category ID is required')
+    .isString()
+    .withMessage('Category must be a string')
+    .isMongoId()
+    .withMessage('Category ID must be a valid MongoDB ObjectId'),
+    body('status')
+    .notEmpty()
+    .withMessage('Status is required')
+    .isString()
+    .withMessage('Status must be a string')
+    .isIn(['pending', 'scheduled', 'completed'])
+    .withMessage('Status must be one of: pending, scheduled, completed'),
+
+  validateResult('Full task updated validation')
+];
+
+export const updateTaskPartialMiddleware = [
+    param('taskId')
+    .notEmpty()
+    .withMessage('Task ID is required')
+    .isMongoId()
+    .withMessage('Task ID must be a valid MongoDB ObjectId'),
+    body('taskLocalId')
+    .optional()
+    .isInt()
+    .withMessage('localTaskId must be an integer'),
   body('title')
     .optional()
     .isString()
@@ -90,16 +149,77 @@ export const update_task = [
     .withMessage('Category ID must be a valid MongoDB ObjectId'),
     body('status')
     .optional()
+    .isString()
+    .withMessage('Status must be a string')
     .isIn(['pending', 'scheduled', 'completed'])
     .withMessage('Status must be one of: pending, scheduled, completed'),
 
-  validateResult('Update task validation error')
+  validateResult('Partial task updated validation')
 ];
-export const delete_task = [
+
+export const updateTasksBulkMiddleware = [
+  body('taskIds')
+    .notEmpty()
+    .withMessage('Task IDs are required')
+    .isArray()
+    .withMessage('Task IDs must be an array'),
+    body('taskIds.*')
+    .optional()
+    .isMongoId()
+    .withMessage('Task ID must be a valid MongoDB ObjectId'),
+    body('taskLocalIds')
+    .optional()
+    .isArray()
+    .withMessage('taskLocalIds must be an array'),
+    body('taskLocalIds.*')
+    .optional()
+    .isInt()
+    .withMessage('taskLocalId must be an integer'),
+    body('data')
+    .notEmpty()
+    .withMessage('Data is required')
+    .isObject()
+    .withMessage('Data must be an object'),
+    body('data.title')
+    .optional()
+    .isString()
+    .withMessage('Title must be a string'),
+    body('data.description')
+    .optional()
+    .isString()
+    .withMessage('Description must be a string'),
+    body('data.dueDate')
+    .optional({ nullable: true })
+    .isISO8601()
+    .withMessage('Due date must be a valid date in ISO 8601 format'),
+    body('data.hasTime')
+    .optional()
+    .isBoolean()
+    .withMessage('Has Time must be a boolean'),
+    body('data.priority')
+    .optional()
+    .isIn(['low', 'medium', 'high', 'none'])
+    .withMessage('Priority must be one of: low, medium, high, none'),
+    body('data.categoryId')
+    .optional()
+    .isString()
+    .withMessage('Category must be a string')
+    .isMongoId()
+    .withMessage('Category ID must be a valid MongoDB ObjectId'),
+    body('data.status')
+    .optional()
+    .isString()
+    .withMessage('Status must be a string')
+    .isIn(['pending', 'scheduled', 'completed'])
+    .withMessage('Status must be one of: pending, scheduled, completed'),
+  validateResult('Bulk task updated validation')
+];
+
+export const deleteTaskMiddleware = [
   param('taskId')
     .notEmpty()
     .withMessage('Task ID is required')
     .isMongoId()
     .withMessage('Task ID must be a valid MongoDB ObjectId'),
-  validateResult('Delete task validation error')
+  validateResult('Delete task validation')
 ];

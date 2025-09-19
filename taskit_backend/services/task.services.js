@@ -3,12 +3,13 @@ import bcrypt from "bcryptjs";
 import UserServices from './user.services.js';
 import HttpError from '../utils/http.error.js';
 import CategoryServices from './category.services.js';
+import CategoryModel from '../models/category.model.js';
 import SubtaskModel from '../models/subtask.model.js'
 import SubtaskServices from './subtask.services.js';
 import db from '../config/db.js'
 
 class TaskServices {
-    static async create(userId, createTask,createSubtasks) {
+    static async createTask(userId, createTask,createSubtasks) {
         try {
             const user = await UserServices.findById(userId);
             if (!user) {
@@ -75,60 +76,114 @@ class TaskServices {
 
         }catch (e) {
             throw new HttpError(`Find task error: ${e.message}`, 500);
+        }finally{
+
         }
     }
-    static async update_task(taskId, updateData) {
+    
+    static async updateTaskPartial(taskId, updateData) {
+        const session=await db.startSession();
         try {
-            if (updateData.category) {
-                const category = await CategoryServices.findByName(updateData.category);
-                if (!category) {
-                    throw new HttpError("Category not found", 404);
-                }
-            }
             const task = await TaskModel.findById(taskId);
             if (!task) {
                 throw new HttpError("Task not found", 404);
             }
-            const query = {};
-            if (updateData.title) query.title = updateData.title;
-            if (updateData.description) query.description = updateData.description;
-            if ('dueDate' in updateData) {
-                query.dueDate = updateData.dueDate; 
-            }
-            if (updateData.status) query.status = updateData.status;
-            if (updateData.priority) query.priority = updateData.priority;
+            
             if (updateData.categoryId){
                 const category = await CategoryServices.findById(updateData.categoryId);
                 if (!category) {
                     throw new HttpError("Category not found", 404);
                 }
-                query.categoryId = updateData.categoryId;
             }
-            if (updateData.hasTime !== undefined) query.hasTime = updateData.hasTime;
-            let subtaskResult=[];
-  
-            if (updateData.subtasks) {
-                subtaskResult=await SubtaskServices.update_subtasks(updateData.subtasks);
-    
+            session.startTransaction();
+            
+            await TaskModel.findByIdAndUpdate(
+                taskId,
+                { $set: updateData },
+                { new: true, session }
+            );
+            await session.commitTransaction();
+            return {
+                taskLocalId: updateData.taskLocalId,
+                taskId: taskId,
+            }
+        } catch (e) {
+            session.abortTransaction();
+            throw new HttpError(`Update task error: ${e.message}`, 500);
+        }finally{
+            session.endSession();
+        }
+    }
+     static async updateTaskFull(taskId, updateData) {
+        const session= await db.startSession();
+        session.startTransaction();
+        try {
+            const task = await TaskModel.findById(taskId).session(session);
+            if (!task) {
+                throw new HttpError("Task not found", 404);
+            }
+        
+            if (updateData.categoryId){
+                const category = await CategoryModel.findById(updateData.categoryId).session(session);
+                if (!category) {
+                    throw new HttpError("Category not found", 404);
+                }
             }
             
             await TaskModel.findByIdAndUpdate(
                 taskId,
-                { $set: query },
-                { new: true }
+                { $set: updateData },
+                { new: true, overwrite: true, session }
             );
+            await session.commitTransaction();
             return {
-                localId: updateData.localId,
-                subtasks: subtaskResult,
+                taskLocalId: updateData.taskLocalId,
+                taskId: taskId,
             }
         } catch (e) {
-            throw new HttpError(`Update task error: ${e.message}`, 500);
+            await session.abortTransaction();
+            throw new HttpError(`Update task (full) error: ${e.message}`, 500);
+        }finally{
+            session.endSession();
+        }
+    }
+    static async updateTasksBulk(taskIds, taskLocalIds ,updateData) {
+        const session= await db.startSession();
+        session.startTransaction();
+        try {
+            if(taskLocalIds!==undefined && taskLocalIds.length!==taskIds.length){
+                throw new HttpError("TaskLocalIds and taskIds must have the same length", 400);
+            }
+        
+            if (updateData.categoryId){
+                const category = await CategoryModel.findById(updateData.categoryId).session(session);
+                if (!category) {
+                    throw new HttpError("Category not found", 404);
+                }
+            }
+            
+            await TaskModel.updateMany(
+                {   _id:{$in:taskIds} },
+                { $set: updateData },
+                { session }
+            );
+
+            await session.commitTransaction();
+            return {
+                taskLocalIds,
+                taskIds,
+            }
+        } catch (e) {
+            await session.abortTransaction();
+            throw new HttpError(`Bulk tasks updated error: ${e.message}`, 500);
+        }finally{
+            session.endSession();
         }
     }
     static async delete_task(taskId) {
         const session=await db.startSession();
         try {
-             session.startTransaction();
+            session.startTransaction();
             await TaskModel.deleteOne({_id:taskId},{session});
             await SubtaskModel.deleteMany({taskId},{session});
             await session.commitTransaction();
