@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import db from "../config/db.js";
+import HttpError from "../utils/http.error.js";
 const categorySchema = new mongoose.Schema({
     name: {
         type: String,
@@ -12,7 +13,13 @@ const categorySchema = new mongoose.Schema({
         required: true
     }
 }, { timestamps: true });
-
+categorySchema.pre('deleteOne', { document: true, query: false }, function(next) {
+  if (this.name === 'Any') {
+    const err = new HttpError('Cannot delete the default category "Any"',400);
+    return next(err);
+  }
+  next();
+});
 
 
 const Category = db.model("category", categorySchema);

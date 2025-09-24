@@ -17,7 +17,31 @@ const subtaskSchema = new Schema({
         ref: 'task',
         required: true,
     },
-},{timestamps: true});
+},{
+    timestamps: true,
+    toJSON: { 
+        virtuals: true,
+        transform: function (doc, ret) {
+            const {_id, __v, taskId, ...rest} = ret;
+            return {
+                id: _id.toHexString(),
+                taskId,
+                ...rest,    
+            }
+        }
+     },
+    toObject: { 
+        virtuals: true,
+        transform: function (doc, ret) {
+            const {_id, __v, taskId, ...rest} = ret;
+            return {
+                id: _id.toHexString(),
+                taskId,
+                ...rest,    
+            }
+        }
+     }
+});
 
 subtaskSchema.pre('save', async function (next) {
     this.updatedAt = Date.now();

@@ -1,3 +1,4 @@
+//#region Setting
 /**
  * @openapi
  * components:
@@ -5,7 +6,7 @@
  *     Setting:
  *       type: object
  *       properties:
- *         _id:
+ *         id:
  *           type: string 
  *           example: "66fdc011c06c8f2361"
  *         userId:
@@ -30,12 +31,11 @@
  *           type: string
  *           format: date-time
  *           example: "2025-07-05T06:06:31.213Z"
- *         __v:
- *           type: integer
- *           example: 0 
  *          
  */
+//#endregion
 
+//#region User
 /**
  * @openapi
  * components:
@@ -43,7 +43,7 @@
  *     User:
  *       type: object
  *       properties:
- *         _id:
+ *         id:
  *           type: string
  *           example: "66fdc011362027f2361"
  *         name:
@@ -57,7 +57,9 @@
  *           example: "uploads/image.png"
  *          
  */
+//#endregion
 
+//#region Task
 /**
  * @openapi
  * components:
@@ -65,24 +67,24 @@
  *     Task:
  *       type: object
  *       properties:
- *         _id:
+ *         id:
  *           type: string
  *           example: "507f1f77bcf86cd799439011"
+ *         userId:
+ *           type: string
+ *           example: "6868c0e7a7ddsas1231231"
+ *         categoryId:
+ *           type: string
+ *           example: "60df59f2fc13ae1c4e000001"
  *         title:
  *           type: string
  *           example: "Plan trip to Da Nang"
  *         description:
  *           type: string
  *           example: "Book flights, reserve hotel, and create itinerary"
- *         categoryId:
- *           type: string
- *           example: "60df59f2fc13ae1c4e000001"
  *         priority:
  *           type: string
  *           example: "low"
- *         userId:
- *           type: string
- *           example: "6868c0e7a7d"
  *         status:
  *           type: string
  *           example: "scheduled"
@@ -98,10 +100,10 @@
  *           type: string
  *           format: date-time
  *           example: "2025-07-05T06:06:31.213Z"    
- *         __v: 
- *           type: integer
- *           example: 0 
  */
+//#endregion
+
+//#region TaskWithSubtasks
 /**
  * @openapi
  * components:
@@ -144,7 +146,9 @@
  *           type: integer
  *           example: 0 
  */
+//#endregion
 
+//#region Subtask
 /**
  * @openapi
  * components:
@@ -152,8 +156,8 @@
  *     Subtask:
  *       type: object
  *       properties:
- *         _id:
- *           type: objectId
+ *         id:
+ *           type: string
  *           example: "66fdc011c0662027f2361"
  *         title:
  *           type: string
@@ -162,7 +166,7 @@
  *           type: boolean
  *           example: false
  *         taskId:
- *           type: objectId
+ *           type: string
  *           example: "66fdc011c0662027f2361"
  *         createdAt:
  *           type: string
@@ -172,11 +176,10 @@
  *           type: string
  *           format: date-time
  *           example: "2025-07-05T06:06:31.213Z"    
- *         __v: 
- *           type: integer
- *           example: 0 
  */
-//------Error-------------
+//#endregion
+
+//#region HTTP response
 /**
  * @openapi
  * components:
@@ -190,7 +193,7 @@
  *             properties:
  *               message:
  *                 type: string
- *                 example: "{Message} Error: {Error}"
+ *                 example: "Something went wrong"
  *               data:
  *                 type: object
  *                 example: {}
@@ -211,7 +214,7 @@
  *             properties:
  *               message:
  *                 type: string
- *                 example: "{Message} Bad Request: {Error}"
+ *                 example: "Title is required"
  *               data:
  *                 type: object
  *                 example: {}
@@ -250,8 +253,9 @@
  *             properties:
  *               message:
  *                 type: string
- *                 example: "{Message} Not found"
+ *                 example: "User not found"
  *               data:
  *                 type: object
  *                 example: {}
  */
+//#endregion

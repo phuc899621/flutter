@@ -1,6 +1,7 @@
 import TaskServices from '../services/task.services.js';
 import SubtaskServices from '../services/subtask.services.js';
 
+//#region CREATE
 export const createTask = async (req, res) => {
     try {
         const { title, description, 
@@ -25,7 +26,7 @@ export const createTask = async (req, res) => {
         }
         const result= await TaskServices.createTask(userId, createBody, createSubtask);
         return res.status(201).json({
-            message: "Create task successfully",
+            message: "Task created successfully",
             data: result
         });
     } catch (e) {
@@ -36,13 +37,52 @@ export const createTask = async (req, res) => {
         });
     }
 }
+//#endregion
+
+//#region READ
 export const getTasks = async (req, res) => {
     try {
         const userId = req.user.id;
-        const query= req.query || {};
-        const result = await TaskServices.findByUserId(userId,query);
+        const result = await TaskServices.getTasks(userId,req.query);
         return res.status(200).json({
-            message: "Get tasks successfully",
+            message: "Tasks retrieved successfully",
+            meta: result.meta,
+            data: result.data
+        });
+    } catch (e) {
+        const statusCode = e.statusCode || 500;
+        return res.status(statusCode).json({
+            message: e.message,
+            data: {}
+        });
+    }
+}
+
+export const getSyncTasks = async (req, res) => {
+    try {
+        const userId = req.user.id;
+        const {lastSyncTime} = req.query;
+        const result = await TaskServices.getSyncTasks(userId,lastSyncTime);
+        return res.status(200).json({
+            message: "Tasks synced successfully",
+            meta: result.meta,
+            data: result.data
+        });
+    } catch (e) {
+        const statusCode = e.statusCode || 500;
+        return res.status(statusCode).json({
+            message: e.message,
+            data: {}
+        });
+    }
+}
+
+export const getTask = async (req, res) => {
+    try {
+        const { taskId } = req.params;
+        const result = await TaskServices.getTask(taskId);
+        return res.status(200).json({
+            message: "Task retrieved successfully",
             data: result
         });
     } catch (e) {
@@ -54,6 +94,9 @@ export const getTasks = async (req, res) => {
     }
 }
 
+//#endregion
+
+//#region UPDATE
 export const updateTaskFull = async (req, res) => {
     try {
         const { taskId } = req.params;
@@ -61,7 +104,7 @@ export const updateTaskFull = async (req, res) => {
             taskId, req.body
         );
         return res.status(200).json({
-            message: "Update task successfully (full update)",
+            message: "Task updated successfully",
             data: result
         });
     } catch (e) {
@@ -79,7 +122,7 @@ export const updateTaskPartial = async (req, res) => {
             taskId, req.body
         );
         return res.status(200).json({
-            message: "Update task successfully (partial update)",
+            message: "Task partially updated successfully",
             data: result
         });
     } catch (e) {
@@ -97,7 +140,7 @@ export const updateTasksBulk = async (req, res) => {
             ids, data
         );
         return res.status(200).json({
-            message: "Update bulk tasks successfully",
+            message: "Bulk update completed successfully",
             data: result
         });
     } catch (e) {
@@ -115,7 +158,28 @@ export const updateMultipleTasks = async (req, res) => {
             tasks
         );
         return res.status(200).json({
-            message: "Update multiple tasks successfully",
+            message: "Tasks updated successfully (multiple contents)",
+            data: result
+        });
+    } catch (e) {
+        const statusCode = e.statusCode || 500;
+        return res.status(statusCode).json({
+            message: e.message,
+            data: {}
+        });
+    }
+}
+//#endregion
+
+//#region DELETE
+
+export const deleteTask = async (req, res) => {
+    try {
+        const userId = req.user.id;
+        const {taskId}=req.params;
+        const result =await TaskServices.deleteTask(userId,taskId);
+        return res.status(200).json({
+            message: "Delete task successfully",
             data: result
         });
     } catch (e) {
@@ -127,30 +191,14 @@ export const updateMultipleTasks = async (req, res) => {
     }
 }
 
-export const deleteTask = async (req, res) => {
-    try {
-        const {taskId}=req.params;
-        await TaskServices.delete_task(taskId);
-        return res.status(200).json({
-            message: "Delete task successfully",
-            data: {}
-        });
-    } catch (e) {
-        const statusCode = e.statusCode || 500;
-        return res.status(statusCode).json({
-            message: "An error occurred when delete task: " + e.message,
-            data: {}
-        });
-    }
-}
-
-export const deleteAllTasks = async (req, res) => {
+export const deleteBulkTasks = async (req, res) => {
     try {
         const userId = req.user.id;
-         await TaskServices.delete_all_tasks(userId);
+        const {ids}=req.body;
+        const result= await TaskServices.deleteBulkTasks(userId,ids);
         return res.status(200).json({
-            message: "Delete all task successfully",
-            data: {}
+            message: "Delete multiple tasks successfully",
+            data: result
         });
     } catch (e) {
         const statusCode = e.statusCode || 500;
@@ -163,3 +211,4 @@ export const deleteAllTasks = async (req, res) => {
 
 
 
+//#endregion

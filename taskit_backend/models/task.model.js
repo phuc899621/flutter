@@ -41,6 +41,35 @@ const taskSchema = new Schema({
         type: Boolean,
         default: false,
     }
-},{ timestamps: true });
+},{ 
+    timestamps: true, 
+    toJSON: { 
+        virtuals: true,
+        transform: function (doc, ret) {
+            const {_id, __v, userId, categoryId, ...rest} = ret;
+            return {
+                id: _id.toHexString(),
+                userId,
+                categoryId,
+                ...rest,    
+            }
+        }
+    }, 
+    toObject: { 
+        virtuals: true,
+        transform: function (doc, ret) {
+            const {_id, __v, userId, categoryId, ...rest} = ret;
+            return {
+                id: _id.toHexString(),
+                userId,
+                categoryId,
+                ...rest,    
+            }
+        } 
+    } });
+
+taskSchema.virtual("id").get(function () {
+  return this._id.toHexString();
+});             
 const TaskModel = db.model('task', taskSchema);
 export default TaskModel;
