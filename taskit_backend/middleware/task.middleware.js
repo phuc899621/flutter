@@ -138,10 +138,10 @@ export const updateTaskFullMiddleware = [
     .withMessage('Task ID is required')
     .isMongoId()
     .withMessage('Task ID must be a valid MongoDB ObjectId'),
-    body('taskLocalId')
+    body('localId')
     .optional()
     .isInt()
-    .withMessage('localTaskId must be an integer'),
+    .withMessage('task\'s localId must be an integer'),
   body('title')
     .notEmpty()
     .withMessage('Title is required')
@@ -196,10 +196,10 @@ export const updateTaskPartialMiddleware = [
     .withMessage('Task ID is required')
     .isMongoId()
     .withMessage('Task ID must be a valid MongoDB ObjectId'),
-    body('taskLocalId')
+    body('localId')
     .optional()
     .isInt()
-    .withMessage('localTaskId must be an integer'),
+    .withMessage('task\'s localId must be an integer'),
   body('title')
     .optional()
     .isString()
@@ -248,11 +248,11 @@ export const updateTasksBulkMiddleware = [
     .optional()
     .isObject()
     .withMessage('Task IDs must be an array of objects'),
-    body('ids.*.taskLocalId')
+    body('ids.*.localId')
     .optional()
     .isInt()
-    .withMessage('Task Local ID must be an integer'),
-    body('ids.*.taskId')
+    .withMessage('Task\'s localId must be an integer'),
+    body('ids.*.id')
     .notEmpty()
     .withMessage('Task ID is required for each task')
     .isMongoId()
@@ -305,15 +305,15 @@ export const updateMultipleTasksMiddleware = [
     .withMessage('List of updated tasks are required')
     .isArray()
     .withMessage('List of updated tasks must be an array'),
-    body('tasks.*.taskId')
+    body('tasks.*.id')
     .notEmpty()
     .withMessage('Task ID is required')
     .isMongoId()
     .withMessage('Task ID must be a valid MongoDB ObjectId'),
-    body('tasks.*.taskLocalId')
+    body('tasks.*.localId')
     .optional()
     .isInt()
-    .withMessage('taskLocalId must be an integer'),
+    .withMessage('Task\'s localId must be an integer'),
     body('tasks.*.data')
     .notEmpty()
     .withMessage('Update data is required') 

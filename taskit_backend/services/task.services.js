@@ -204,8 +204,8 @@ class TaskServices {
             );
             await session.commitTransaction();
             return {
-                taskLocalId: updateData.taskLocalId,
-                taskId: taskId,
+                localId: updateData.localId,
+                id: taskId,
             }
         } catch (e) {
             session.abortTransaction();
@@ -238,8 +238,8 @@ class TaskServices {
             );
             await session.commitTransaction();
             return {
-                taskLocalId: updateData.taskLocalId,
-                taskId: taskId,
+                localId: updateData.localId,
+                id: taskId,
             }
         } catch (e) {
             await session.abortTransaction();
@@ -258,11 +258,11 @@ class TaskServices {
             let matchedCount = 0;
             let modifiedCount = 0;
 
-            for (const { taskId, taskLocalId } of ids) {
+            for (const { id, localId } of ids) {
                 const task = await TaskModel.findById(taskId).session(session);
 
                 if (!task) {
-                    skipped.push({ taskId, taskLocalId, reason: "Task not found" });
+                    skipped.push({ id, localId, reason: "Task not found" });
                     continue;
                 }
                 matchedCount++;
@@ -270,13 +270,13 @@ class TaskServices {
                 if (updateData.categoryId) {
                     const category = await CategoryModel.findById(updateData.categoryId).session(session);
                     if (!category) {
-                        skipped.push({ taskId, taskLocalId, reason: "Category not found" });
+                        skipped.push({ id, localId, reason: "Category not found" });
                         continue;
                     }
                 }
 
                 const updatedTask = await TaskModel.findByIdAndUpdate(
-                    taskId,
+                    id,
                     { $set: updateData },
                     { new: true, session }
                 );
@@ -284,13 +284,13 @@ class TaskServices {
                 if (updatedTask) {
                     modifiedCount++;
                     updated.push({
-                        taskId,
-                        taskLocalId,
+                        id,
+                        localId,
                     });
                 } else {
                     updated.push({
-                        taskId,
-                        taskLocalId,
+                        id,
+                        localId,
                     });
                 }
             }
@@ -321,17 +321,17 @@ class TaskServices {
             for (const t of updateData) {
                 if (!t.taskId || !t.data) {
                     skippedTasks.push({
-                        taskId: t.taskId || null,
-                        taskLocalId: t.taskLocalId || null,
+                        id: t.id || null,
+                        localId: t.localId || null,
                     });
                     continue;
                 }
 
-                const task = await TaskModel.findById(t.taskId).session(session);
+                const task = await TaskModel.findById(t.id).session(session);
                 if (!task) {
                     skippedTasks.push({
-                        taskId: t.taskId,
-                        taskLocalId: t.taskLocalId,
+                        taskId: t.id,
+                        taskLocalId: t.localId,
                         reason: "Task not found"
                     });
                     continue; 
@@ -341,8 +341,8 @@ class TaskServices {
                     const category = await CategoryModel.findById(t.data.categoryId).session(session);
                     if (!category) {
                         skippedTasks.push({
-                            taskId: t.taskId,
-                            taskLocalId: t.taskLocalId,
+                            id: t.id,
+                            localId: t.localId,
                             reason: "Category not found"
                         });
                         continue; 
@@ -351,14 +351,14 @@ class TaskServices {
 
                 bulkOps.push({
                     updateOne: {
-                        filter: { _id: t.taskId },
+                        filter: { _id: t.id },
                         update: { $set: t.data }
                     }
                 });
 
                 updatedTasks.push({
-                    taskId: t.taskId,
-                    taskLocalId: t.taskLocalId
+                    id: t.id,
+                    localId: t.localId
                 });
             }
 
@@ -377,6 +377,7 @@ class TaskServices {
             };
         } catch (e) {
             await session.abortTransaction();
+            if(e instanceof HttpError) throw e;
             throw new HttpError(`Bulk tasks updated error: ${e.message}`, 500);
         }finally{
             session.endSession();

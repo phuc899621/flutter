@@ -100,6 +100,14 @@
  *           type: string
  *           format: date-time
  *           example: "2025-07-05T06:06:31.213Z"    
+ *     TaskWithLocalId:
+ *       allOf: 
+ *         - type: int  
+ *           properties:
+ *             localId:
+ *               type: integer
+ *               example: 1
+ *         - $ref: '#/components/schemas/Task'
  */
 //#endregion
 
@@ -176,6 +184,14 @@
  *           type: string
  *           format: date-time
  *           example: "2025-07-05T06:06:31.213Z"    
+ *     SubtaskWithLocalId:
+ *       allOf:
+ *         - type: int
+ *           properties:
+ *             localId:
+ *               type: integer
+ *               example: 1
+ *         - $ref: '#/components/schemas/Subtask'
  */
 //#endregion
 
