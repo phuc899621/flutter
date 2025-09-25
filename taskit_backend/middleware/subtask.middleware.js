@@ -11,26 +11,7 @@ const validateResult = (prefix = 'Validation') => (req, res, next) => {
   next();
 };
 
-export const add_subtasks=[
-    param('taskId')
-    .notEmpty()
-    .withMessage('Task ID is required')
-    .isMongoId()
-    .withMessage('Task ID must be a valid MongoDB ObjectId'),
-    body('subtasks')
-    .isArray()
-    .withMessage('Subtasks must be an array'),
-    body('subtasks.*.title')
-    .exists({ checkNull: true }) 
-    .withMessage('Title is required')
-    .isString()
-    .withMessage('Title must be a string'),
-    body('subtasks.*.isCompleted')
-    .optional()
-    .isBoolean()
-    .withMessage('isCompleted must be a boolean'),
-    validateResult('Add subtasks')
-]
+
 export const createSubtaskMiddleware=[
     param('taskId')
     .notEmpty()
@@ -155,36 +136,26 @@ export const updateSubtaskPartialMiddleware=[
   validateResult('Update subtask full')
 ]
 
-export const update_subtasks=[
-    body('subtasks')
-    .isArray()
-    .withMessage('Subtasks must be an array'),
-    body('subtasks.*.localId')
-    .optional()
-    .isInt()
-    .withMessage('Local ID must be an integer'),
-    body('subtasks.*.id')
-    .notEmpty()
-    .withMessage('Subtask ID is required')
-    .isMongoId()
-    .withMessage('Subtask ID must be a valid MongoDB ObjectId'),
 
-    body('subtasks.*.title')
-    .optional()
-    .isString()
-    .withMessage('Title must be a string'),
-    body('subtasks.*.isCompleted')
-    .optional()
-    .isBoolean()
-    .withMessage('isCompleted must be a boolean'),
-    validateResult('Add subtasks')
-]
-export const delete_all_subtasks=[
+
+export const deleteSubtaskMiddleware=[
     param('taskId')
     .notEmpty()
     .withMessage('Task ID is required')
     .isMongoId()
     .withMessage('Task ID must be a valid MongoDB ObjectId'),
-    validateResult('Delete subtasks')
-
+    param('subtaskId')
+    .notEmpty()
+    .withMessage('Subtask ID is required')
+    .isMongoId()
+    .withMessage('Subtask ID must be a valid MongoDB ObjectId'),
+    validateResult('Delete subtask')
+]
+export const deleteAllSubtasksMiddleware=[
+  param('taskId')
+    .notEmpty()
+    .withMessage('Task ID is required')
+    .isMongoId()
+    .withMessage('Task ID must be a valid MongoDB ObjectId'),
+    validateResult('Delete subtask')
 ]

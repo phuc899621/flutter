@@ -1242,7 +1242,7 @@ router.put('/:taskId/subtasks/:subtaskId', jwtMiddleware, SubtaskMiddleware.upda
 /** 
  * @openapi
  * '/api/tasks/{taskId}/subtasks/{subtaskId}':
- *   put:
+ *   patch:
  *     tags:
  *       - Subtasks
  *     summary: Update some fields of a subtask in a task
@@ -1310,7 +1310,113 @@ router.put('/:taskId/subtasks/:subtaskId', jwtMiddleware, SubtaskMiddleware.upda
 router.patch('/:taskId/subtasks/:subtaskId', jwtMiddleware, SubtaskMiddleware.updateSubtaskPartialMiddleware, SubtaskController.updateSubtaskPartial);
 
 
+/** 
+ * @openapi
+ * '/api/tasks/{taskId}/subtasks':
+ *   delete:
+ *     tags:
+ *       - Subtasks
+ *     summary: Delete single subtask
+ *     description: |
+ *          Delete a subtask in a task identified by taskId and subtaskId.
+ *          - The task ID and subtask ID are required as path parameters.
+ *          - Return the id of deleted subtask.
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - name: taskId
+ *         in: path
+ *         required: true
+ *         schema:
+ *           type: string
+ *           example: 507f1f77bcf86cd7
+ *       - name: subtaskId
+ *         in: path
+ *         required: true
+ *         schema:
+ *           type: string
+ *           example: 507f1f77bcf86cd7
+ *     responses:
+ *       200:
+ *         description: Subtask deleted successfully
+ *         content:
+ *            application/json:
+ *              schema:
+ *                type: object
+ *                properties:
+ *                  message:
+ *                    type: string
+ *                    example: Subtask deleted successfully
+ *                  data: 
+ *                    type: object
+ *                    properties:
+ *                      id:
+ *                        type: string
+ *                        example: 507f1f77bcf86cd7
+ * 
+ *       400:
+ *         $ref: '#/components/responses/400'
+ *       401:
+ *         $ref: '#/components/responses/401'
+ *       404:
+ *         $ref: '#/components/responses/404'
+ *       500:
+ *         $ref: '#/components/responses/500'
+ */
+router.delete('/:taskId/subtasks', jwtMiddleware, SubtaskMiddleware.deleteAllSubtasksMiddleware, SubtaskController.deleteAllSubtasks);
 
-router.delete('/:taskId/subtasks', jwtMiddleware, SubtaskMiddleware.delete_all_subtasks, SubtaskController.delete_all_subtasks);
+/** 
+ * @openapi
+ * '/api/tasks/{taskId}/subtasks/{subtaskId}':
+ *   delete:
+ *     tags:
+ *       - Subtasks
+ *     summary: Delete all subtasks in a task
+ *     description: |
+ *          Delete all subtask in a task identified by taskId
+ *          - The task ID are required as path parameters.
+ *          - Return the ids and total number of deleted subtasks
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - name: taskId
+ *         in: path
+ *         required: true
+ *         schema:
+ *           type: string
+ *           example: 507f1f77bcf86cd7
+ *     responses:
+ *       200:
+ *         description: Subtasks deleted successfully
+ *         content:
+ *            application/json:
+ *              schema:
+ *                type: object
+ *                properties:
+ *                  message:
+ *                    type: string
+ *                    example: Subtasks deleted successfully
+ *                  data: 
+ *                    type: object
+ *                    properties:
+ *                      ids:
+ *                        type: array
+ *                        items:
+ *                          type: string
+ *                          example: 507f1f77bcf86cd7
+ *                      deleteCount:
+ *                        type: integer
+ *                        example: 3
+ * 
+ *       400:
+ *         $ref: '#/components/responses/400'
+ *       401:
+ *         $ref: '#/components/responses/401'
+ *       404:
+ *         $ref: '#/components/responses/404'
+ *       500:
+ *         $ref: '#/components/responses/500'
+ */
+router.delete('/:taskId/subtasks/:subtaskId', jwtMiddleware, SubtaskMiddleware.deleteSubtaskMiddleware, SubtaskController.deleteSubtask);
 
 export default router;

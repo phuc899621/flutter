@@ -126,29 +126,41 @@ class SubtaskServices {
         }
     }
 
+    //#endregion
+    //#region DELETE
     
-    static async findByTaskIds(taskIds) {
+    static async deleteAllSubtasks(taskId) {
         try {
-            return await SubtaskModel.find({ taskId: { $in: taskIds } });
+            const task=await TaskModel.findById(taskId);
+            if(!task) throw new HttpError('Task not found',404);
+            let deleteCount=0;
+            let ids=[];
+            const subtasks = await SubtaskModel.find({taskId});
+            ids=subtasks.map(subtask=>subtask._id.toString());
+            const result=await SubtaskModel.deleteMany({taskId});
+            deleteCount=result.deletedCount;
+            return {deleteCount,ids};
         } catch (e) {
-            throw new Error(`Find subtasks by taskIds error: ${e.message}`);
-        }
-    }
-    static async delete_all_subtasks(taskId) {
-        try {
-            return await SubtaskModel.deleteMany({ taskId });
-        } catch (e) {
+            if(e instanceof HttpError) throw e;
             throw new Error(`Delete all subtasks error: ${e.message}`);
         }
     }
-    static async delete_subtask(subtaskId) {
+    static async deleteSubtask(taskId, subtsakId) {
         try{
-            return await SubtaskModel.deleteOne({_id:subtaskId});
+            const task=await TaskModel.findById(taskId);
+            if(!task) throw new HttpError('Task not found',404);
+            const subtask = await SubtaskModel.findOneAndDelete({ _id:subtsakId,taskId });
+            if(!subtask) throw new HttpError('Subtask not found',404);
+            return {
+                id: subtask._id.toString(),
+            };
         }catch(e){
+            if(e instanceof HttpError) throw e;
             throw new Error(`Delete subtask error: ${e.message}`);
         }
         
     }
+    //#endregion
 }
 
 export default SubtaskServices;

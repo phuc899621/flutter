@@ -107,52 +107,36 @@ export const updateSubtaskPartial = async (req, res) => {
 }
 
 
-export const update_subtasks = async (req, res) => {
-    try {
-        const result= await SubtaskServices.update_subtasks(req.body.subtasks);
-        return res.status(200).json({
-            message: "Update subtask successfully",
-            data: {
-                subtasks: result
-            }
-        });
-    } catch (e) {
-        const statusCode = e.statusCode || 500;
-        return res.status(statusCode).json({
-            message: "An error occurred when update subtask: " + e.message,
-            data: {}
-        });
-    }
-}
 
-export const delete_subtask = async (req, res) => {
+
+export const deleteSubtask = async (req, res) => {
     try {
-        const { subtaskId } = req.params;
-        await SubtaskServices.delete_subtask(subtaskId);
+        const { taskId, subtaskId } = req.params;
+        const result=await SubtaskServices.deleteSubtask(taskId, subtaskId);
         return res.status(200).json({
-            message: "Delete subtask successfully",
-            data: {}
+            message: "Subtask deleted successfully",
+            data: result
         });
     } catch (e) {
         const statusCode = e.statusCode || 500;
         return res.status(statusCode).json({
-            message: "An error occurred when delete subtask: " + e.message,
+            message: e.message,
             data: {}
         });
     }
 }
-export const delete_all_subtasks = async (req, res) => {
+export const deleteAllSubtasks = async (req, res) => {
     try {
         const { taskId } = req.params;
-        await SubtaskServices.delete_all_subtasks(taskId);
+        const result= await SubtaskServices.deleteAllSubtasks(taskId);
         return res.status(200).json({
-            message: "Delete all subtask successfully",
-            data: {}
+            message: "Subtasks deleted successfully",
+            data: result
         });
     } catch (e) {
         const statusCode = e.statusCode || 500;
         return res.status(statusCode).json({
-            message: "An error occurred when delete all subtask: " + e.message,
+            message: e.message,
             data: {}
         });
     }
