@@ -11,8 +11,16 @@ const validateResult = (prefix = 'Validation') => (req, res, next) => {
   }
   next();
 };
+export const getCategoryMiddleware = [
+  param('id')
+    .exists()
+    .withMessage('Category ID is required')
+    .isMongoId()
+    .withMessage('Invalid Category ID format'),
+  validateResult('Get Category')
+];
 
-export const create_category = [
+export const createCategoryMiddleware = [
   body('name')
     .trim()
     .notEmpty()
@@ -21,35 +29,42 @@ export const create_category = [
     .withMessage('Name must be at least 3 characters long'),
    body('localId')
    .optional()
-   .trim(),
+   .isInt()
+   .withMessage('Category\'s localId must be an integer'),
   validateResult('Create Category')
 ];
-export const update_category = [
-  param('categoryId')
+export const updateCategoryFullMiddleware = [
+  param('id')
     .exists()
     .withMessage('Category ID is required')
     .isMongoId()
-    .withMessage('Invalid Category ID format'),
+    .withMessage('Category ID must be a valid MongoDB ObjectId'),
   body('name')
-    .optional()
     .trim()
+    .notEmpty()
+    .withMessage('Category name is required')
     .isLength({min: 3})
     .withMessage('Name must be at least 3 characters long'),
   validateResult('Update Category')
 ];
-export const delete_category = [
-  param('categoryId')
+export const updateCategoryPartialMiddleware = [
+  param('id')
     .exists()
     .withMessage('Category ID is required')
     .isMongoId()
-    .withMessage('Invalid Category ID format'),
-  validateResult('Delete Category')
+    .withMessage('Category ID must be a valid MongoDB ObjectId'),
+  body('name')
+    .trim()
+    .optional()
+    .isLength({min: 3})
+    .withMessage('Name must be at least 3 characters long'),
+  validateResult('Update Category')
 ];
-export const delete_category_bulk = [
-  body('ids')
+export const deleteCategoryMiddleware = [
+  param('id')
     .exists()
-    .withMessage('IDs are required')
-    .isArray({min: 1})
-    .withMessage('IDs must be a non-empty array'),
-  validateResult('Delete Categories Bulk')
+    .withMessage('Category ID is required')
+    .isMongoId()
+    .withMessage('Category ID must be a valid MongoDB ObjectId'),
+  validateResult('Delete Category')
 ];

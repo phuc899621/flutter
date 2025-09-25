@@ -1,11 +1,12 @@
-import CategoryServices from '../services/category.services.js';
 
-export const create_category = async (req, res) => {
+import CategoryServices from '../services/category.services.js';
+//#region CREATE
+export const createCategory = async (req, res) => {
     try {
         const userId = req.user.id;
-        const result=await CategoryServices.create(userId, req.body);
+        const result=await CategoryServices.createCategory(userId, req.body);
         return res.status(201).json({
-            message: "Create category successfully",
+            message: "Category created successfully",
             data: result
         });
     } catch (e) {
@@ -16,13 +17,32 @@ export const create_category = async (req, res) => {
         });
     }
 }
-export const update_category = async (req, res) => {
+//#endregion
+
+//#region READ
+export const getCategories = async (req, res) => {
     try {
-        const { categoryId } = req.params;
-        await CategoryServices.updateOne(categoryId, req.body);
+        const userId = req.user.id;
+        const categories = await CategoryServices.getCategories(userId);
         return res.status(200).json({
-            message: "Update category successfully",
+            message: "Categories retrieved successfully",
+            data: categories
+        });
+    } catch (e) {
+        const statusCode = e.statusCode || 500;
+        return res.status(statusCode).json({
+            message: e.message,
             data: {}
+        });
+    }
+}
+export const getCategory= async (req, res) => {
+    try{
+        const { id } = req.params;
+        const category = await CategoryServices.getCategory(id);
+        return res.status(200).json({
+            message: "Category retrieved successfully",
+            data: category
         });
     }catch (e) {
         const statusCode = e.statusCode || 500;
@@ -32,49 +52,56 @@ export const update_category = async (req, res) => {
         });
     }
 }
-export const delete_category_bulk = async (req, res) => {
+//#endregion
+//#region UPDATE
+export const updateCategoryFull = async (req, res) => {
     try {
-        const { ids } = req.body;
-        await CategoryServices.deleteMany(ids);
-        return res.status(200).json({
-            message: "Delete categories successfully",
-            data: {}
-        });
-    } catch (e) {
-        const statusCode = e.statusCode || 500;
-        return res.status(statusCode).json({
-            message: e.message,
-            data: {}
-        });
-    }
-}
-
-export const delete_category = async (req, res) => {
-    try {
-        const { categoryId } = req.params;
-        await CategoryServices.deleteOne(categoryId);
-        return res.status(200).json({
-            message: "Delete category successfully",
-            data: {}
-        });
-    } catch (e) {
-        const statusCode = e.statusCode || 500;
-        return res.status(statusCode).json({
-            message: e.message,
-            data: {}
-        });
-    }
-}
-export const delete_all_categories = async (req, res) => {
-    try {
+        const { id } = req.params;
         const userId = req.user.id;
-        await CategoryServices.deleteAll(userId);
+        const result=await CategoryServices.updateCategoryFull(userId, id, req.body);
         return res.status(200).json({
-            message: "Delete all categories successfully",
+            message: "Category updated successfully",
+            data: result
+        });
+    }catch (e) {
+        const statusCode = e.statusCode || 500;
+        return res.status(statusCode).json({
+            message: e.message,
             data: {}
         });
     }
-    catch (e) {
+}
+export const updateCategoryPartial = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const userId = req.user.id;
+        const result= await CategoryServices.updateCategoryPartial(userId, id, req.body);
+        return res.status(200).json({
+            message: "Category updated successfully",
+            data: result
+        });
+    }catch (e) {
+        const statusCode = e.statusCode || 500;
+        return res.status(statusCode).json({
+            message: e.message,
+            data: {}
+        });
+    }
+}
+//#endregion
+//#region DELETE
+
+
+export const deleteCategory = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const userId = req.user.id;
+        const result=await CategoryServices.deleteOne(userId, id);
+        return res.status(200).json({
+            message: "Category deleted successfully",
+            data: result
+        });
+    } catch (e) {
         const statusCode = e.statusCode || 500;
         return res.status(statusCode).json({
             message: e.message,
@@ -84,19 +111,4 @@ export const delete_all_categories = async (req, res) => {
 }
 
 
-export const get_category = async (req, res) => {
-    try {
-        const userId = req.user.id;
-        const categories = await CategoryServices.findByUserId(userId);
-        return res.status(200).json({
-            message: "Get all categories successfully",
-            data: categories
-        });
-    } catch (e) {
-        const statusCode = e.statusCode || 500;
-        return res.status(statusCode).json({
-            message: "An error occurred when get all categories: " + e.message,
-            data: {}
-        });
-    }
-}
+//#endregion

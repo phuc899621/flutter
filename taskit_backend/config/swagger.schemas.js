@@ -127,34 +127,6 @@
  *                 $ref: '#/components/schemas/Subtask'
  */
 
-/**
- * @openapi
- * components:
- *   schemas:
- *     Category:
- *       type: object
- *       properties:
- *         _id:
- *           type: string
- *           example: "66fdc011c0662027f2361"
- *         name:
- *           type: string
- *           example: "Shopping"
- *         userId:
- *           type: string
- *         createdAt:
- *           type: string
- *           format: date-time
- *           example: "2025-07-05T06:06:31.213Z"
- *         updatedAt:
- *           type: string
- *           format: date-time
- *           example: "2025-07-05T06:06:31.213Z"    
- *         __v: 
- *           type: integer
- *           example: 0 
- */
-//#endregion
 
 //#region Subtask
 /**
@@ -192,6 +164,46 @@
  *               type: integer
  *               example: 1
  *         - $ref: '#/components/schemas/Subtask'
+ */
+//#endregion
+
+//#region Category
+/**
+ * @openapi
+ * components:
+ *   schemas:
+ *     Category:
+ *       type: object
+ *       properties:
+ *         id:
+ *           type: string
+ *           example: "66fdc011c0662027f2361"
+ *         name:
+ *           type: string
+ *           example: "Shopping"
+ *         userId:
+ *           type: string
+ *           example: "60df59f2fc13ae1c4e000001"
+ *         isDefault:
+ *           type: boolean
+ *           example: false
+ *         createdAt:
+ *           type: string
+ *           format: date-time
+ *           example: "2025-07-05T06:06:31.213Z"
+ *         updatedAt:
+ *           type: string
+ *           format: date-time
+ *           example: "2025-07-05T06:06:31.213Z" 
+ *     CategoryWithLocalId:
+ *       allOf:
+ *         - type: int
+ *           properties:
+ *             localId:
+ *               type: integer
+ *               example: 1
+ *         - $ref: '#/components/schemas/Category'
+ *    
  */
 //#endregion
 
