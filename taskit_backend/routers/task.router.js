@@ -12,12 +12,13 @@ const router = express.Router();
  *   post:
  *     tags:
  *       - Tasks
- *     summary: Create a new task
+ *     summary: Create a new task (optionally including subtasks)
  *     description: |
  *       This endpoint allows user to create a new task
  *       - Send task details in the request body 
  *       - The 'title' field is a must-have field, other fields are optional
  *       - The 'localId' field is an optional field, which is used to mark the local id of the task
+ *       - The 'subtasks' field is an optional field, which is used to create subtasks for the task
  *     security:
  *       - bearerAuth: []
  *     requestBody:
@@ -58,7 +59,17 @@ const router = express.Router();
  *                  type: string
  *                  enum: [scheduled, pending, completed]
  *                  example: scheduled
- *                 
+ *              subtasks:
+ *                  type: array
+ *                  items:
+ *                      type: object
+ *                      properties:
+ *                          title:
+ *                              type: string
+ *                              example: "Book flight tickets"
+ *                          isCompleted:
+ *                              type: boolean
+ *                              example: false
  *     responses:
  *       201:
  *         description: Task created successfully
@@ -121,7 +132,7 @@ const router = express.Router();
  *                          subtasks:
  *                            type: array
  *                            items:
- *                              $ref: '#/components/schemas/Subtask'
+ *                              $ref: '#/components/schemas/SubtaskWithLocalId'
  *       400:
  *         $ref: '#/components/responses/400'
  *         

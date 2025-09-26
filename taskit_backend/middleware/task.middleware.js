@@ -82,6 +82,10 @@ export const getTaskMiddleware = [
 
 //#region Create Task
 export const createTaskMiddleware = [
+  body('localId')
+    .optional()
+    .isInt()
+    .withMessage('Local ID must be an integer'),
   body('title')
     .notEmpty().withMessage('Title is required')
     .isString()
@@ -118,6 +122,10 @@ export const createTaskMiddleware = [
     .optional()
     .isArray()
     .withMessage('Subtasks must be an array'),
+    body('subtasks.*.localId')
+    .optional()
+    .isInt()
+    .withMessage('Subtask\'s localId must be an integer'),
     body('subtasks.*.title')
     .notEmpty()
     .withMessage('Subtask title is required')

@@ -9,7 +9,7 @@ export const createTask = async (req, res) => {
             categoryId, subtasks, localId,
             status,hasTime,dueDate } = req.body;
         const userId = req.user.id; 
-        const createBody={};
+        const createTask={};
         const createSubtask=[];
         if(title) createBody.title = title;
         if(description) createBody.description = description;
@@ -24,7 +24,7 @@ export const createTask = async (req, res) => {
                 ...subtask,
             })));
         }
-        const result= await TaskServices.createTask(userId, createBody, createSubtask);
+        const result= await TaskServices.createTask(userId, createTask, createSubtask);
         return res.status(201).json({
             message: "Task created successfully",
             data: result

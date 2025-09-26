@@ -12,40 +12,50 @@ import UserModel from '../models/user.model.js';
 class TaskServices {
     //#region CREATE
     static async createTask(userId, createTask,createSubtasks) {
+        const session=await db.startSession();
+        session.startTransaction();
         try {
-            const user = await UserModel.findById(userId);
+            const user = await UserModel.findById(userId).session(session);
             if (!user) {
                 throw new HttpError("User not found", 404);
             }
             if(createTask.categoryId){
-                const category = await CategoryModel.findById(createTask.categoryId);
+                const category = await CategoryModel.findById(createTask.categoryId).session(session);
                 if (!category) {
                     throw new HttpError("Category not found", 404);
                 }
             }else{
-                const anyCategory = await CategoryModel.findOne({ name: { $regex: /^any$/i } });
-                if (!anyCategory) {
-                    throw new HttpError("Default category 'Any' not found", 404);
+                const defaultCategory = await CategoryModel.findOne({ userId, isDefault: true },{_id:1}).session(session);;
+                if (!defaultCategory) {
+                    throw new HttpError("Default category not found", 404);
                 }
-                createTask.categoryId = anyCategory._id;
+                createTask.categoryId = defaultCategory._id;
             }
-            const taskResult= await TaskModel.create({...createTask, userId});
-            const subtasksResult=await SubtaskServices.create_subtasks(
-                taskResult._id, createSubtasks    
-            );
+            const taskResult= await TaskModel.create({...createTask, userId}).session(session);
+            const subtasksResult=(await SubtaskModel.create(createSubtasks.map(subtask=>({...subtask,taskId:taskResult._id})))).toObject();
+            if(subtasksResult.length==0||subtasksResult.length!=createSubtasks.length){
+                await session.abortTransaction();
+                throw new HttpError("Subtasks were not created",500);
+            }
             
-            const tasks={
-                ...taskResult.toObject(),
-                localId:parseInt(createTask.localId, 10),
-                subtasks: subtasksResult.map(subtask => ({
-                    ...subtask.toObject(),
-                    taskId: taskResult._id
-                }))
+            for(let i=0;i<subtasksResult.length;i++){
+                subtasksResult[i].localId=createSubtasks[i].localId;
             }
-            return tasks;
+            await session.commitTransaction();
+            return {
+                localId:parseInt(createTask.localId, 10),
+                ...taskResult.toObject(),
+                subtasks: subtasksResult.map(subtask => ({
+                    ...subtask,
+                    taskId: taskResult._id
+                })) 
+            }
         } catch (e) {
+            await session.abortTransaction();
             if (e instanceof HttpError) throw e;
             throw new HttpError(e.message, 500);
+        } finally {
+            await session.endSession();
         }
     }
     //#endregion
