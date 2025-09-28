@@ -26,7 +26,6 @@ class AuthService {
         session.startTransaction();
         try{ 
            
-            
             //check user exists and isVerified=true
             if (await UserServices.isVerifiedUser({email: request.email})) {
                 throw new HttpError("Your account already verified", 409);
@@ -44,7 +43,7 @@ class AuthService {
             const salt = await bcrypt.genSalt(10);
             request.password = await bcrypt.hash(request.password, salt);
 
-            const user = (await UserServices.findByEmail(request.email)).toObject();
+            const user = await UserServices.findByEmail(request.email);
             if(user){
                 //user exists and not verify -> update user
                 const updateRequest={
@@ -62,8 +61,9 @@ class AuthService {
                     password: request.password
                 },session);
             }
-            
-            const userAfterCreated = (await UserServices.findByEmail(request.email)).toObject();
+
+            const userCreatedDoc = await UserServices.findByEmail(request.email,session);
+            const userAfterCreated = userCreatedDoc.toObject();
             const otp = VerificationServices.generateOTP();
             
             if(await VerificationServices.isSignupRequested(userAfterCreated.id)){
@@ -105,6 +105,7 @@ class AuthService {
 
             await UserServices.verifyingUser(userId,session);
             await VerificationServices.deleteSignup(userId,session);
+            await session.commitTransaction();
 
         }catch (e) {
             await session.abortTransaction();
@@ -163,8 +164,9 @@ class AuthService {
             const userDoc = await UserServices.findOne(query);
 
             if (!userDoc) throw new HttpError("Account not found", 404);
+            if(!userDoc.isVerified) throw new HttpError("Account not verified", 401);
 
-            const isPasswordMatch = await bcrypt.compare(request.password, user.password);
+            const isPasswordMatch = await bcrypt.compare(request.password, userDoc.password);
             if (!isPasswordMatch) throw new HttpError("Invalid password", 401);
 
             const accessToken = jwt.sign(

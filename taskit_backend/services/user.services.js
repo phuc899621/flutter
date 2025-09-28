@@ -19,8 +19,8 @@ import multer from 'multer';
 import path from 'path';
 
 class UserServices {
-    static findByEmail(email) {
-        return UserModel.findOne({ email });
+    static findByEmail(email,session=null) {
+        return UserModel.findOne({ email },null,{session});
     }
     static async isVerifiedUser({email,id}) {
         if(await UserModel.findOne({ email,_id:id, isVerified: true })) return true;
@@ -37,8 +37,8 @@ class UserServices {
     static findOne(filter) {
         return UserModel.findOne(filter);
     }
-    static async verifyingUser(userId,session=null) {
-        return await UserModel.findOneAndUpdate({ _id: userId }, { isVerified: true }, { new: true, session });
+    static verifyingUser(userId,session=null) {
+        return UserModel.findOneAndUpdate({ _id: userId }, { isVerified: true }, { new: true, session });
     }
     static async createUser(request,session=null) {
         try {

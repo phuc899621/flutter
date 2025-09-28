@@ -38,6 +38,7 @@ export const signupMiddleware = [
       if(!/^[A-Za-z]/.test(value)) {
         throw new Error('Username must start with a letter');
       }
+      return true;
     }),
 
   body('password')
