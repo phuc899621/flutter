@@ -1,9 +1,13 @@
+import AuthService from '../services/auth.service.js';
 import UserServices from '../services/user.services.js';
 
 export const signup = async (req, res) => {
     try {
-        const result=await UserServices.signup(req.body);
-        return res.status(201).json(result);
+        const result=await AuthService.signup(req.body);
+        return res.status(201).json({
+            message: "Signup successfully! Please verify your email",
+            data: result
+        });
     } catch (e) {
         let statusCode = e.statusCode || 500;
         return res.status(statusCode).json({
@@ -12,10 +16,14 @@ export const signup = async (req, res) => {
         });
     }
 };
-export const signup_verify = async (req, res) => {
+export const verifySignup = async (req, res) => {
     try {
-        const result =await UserServices.signup_verify(req.body);
-        return res.status(201).json(result);
+        const {id,otp} = req.body;
+        await AuthService.verifySignup(id, otp);
+        return res.status(200).json({
+            message: "Verify your account successfully!",
+            data: {}
+        });
     } catch (e) {
         let statusCode = e.statusCode || 500;
         return res.status(statusCode).json({

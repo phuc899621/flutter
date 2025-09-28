@@ -2,61 +2,106 @@ import UserModel from '../models/user.model.js';
 import OtpAuthModel from '../models/otp.auth.model.js';
 import OtpAuthServices from './otp.auth.services.js';
 import OtpResetServices from './otp.reset.services.js';
-import CategoryServices from './category.services.js';
 import jwt from "jsonwebtoken";
-import SettingServices from './setting.services.js';
 import SettingModel from '../models/setting.model.js';
 import bcrypt from "bcryptjs";
 import CategoryModel from '../models/category.model.js';
 import HttpError from '../utils/http.error.js';
 import db from "../config/db.js";
-import OtpEmailModel from '../models/otp.email.model.js';
-import OtpEmailServices from './otp.email.services.js';
 import TaskModel from '../models/task.model.js';
 import TaskServices from './task.services.js';
 import SubtaskModel from '../models/subtask.model.js';
 import multer from 'multer';
 import path from 'path';
+import UserServices from './user.services.js';
+import VerificationServices from './verification.services.js';
+import { type } from 'os';
+import EmailServices from '../core/emailService.js';
+import e from 'express';
 
-class UserServices {
-    static findByEmail(email) {
-        return UserModel.findOne({ email });
-    }
-    static async isVerifiedUser(email) {
-        if(await UserModel.findOne({ email, isVerified: true })) return true;
-    }
-    static async findById(id) {
-        return await UserModel.findOne({ _id: id });
-    }
-    static async verifyingUser(userId,session=null) {
-        return await UserModel.findOneAndUpdate({ _id: userId }, { isVerified: true }, { new: true, session });
-    }
-    static async createUser(request,session=null) {
-        try {
-            const user = new UserModel(request);
-            await user.save({ session });
-            await CategoryServices.createDefaultCategories(user._id,session);
-            await SettingServices.createSetting(user._id,session);
-            return user.toObject();
-        } catch (e) {
-            if(e instanceof HttpError) throw e;
-            throw new HttpError(`Create user error: ${e.message}`, 500);
-        }
-    }
-    static async updateUser(userId, updateData,session=null) {
-        try {
-            const user = await UserModel.findByIdAndUpdate(
-                userId,
-                updateData,
-                { new: true, session }
-            )
-            return user.toObject();
-        } catch (e) {
-            if(e instanceof HttpError) throw e;
-            throw new HttpError(`Update user error: ${e.message}`, 500);
-        }
-    }
+class AuthService {
     
+    static async signup(request) {
+        const session = await db.startSession();
+        session.startTransaction();
+        try{ 
+            //check user exists and isVerified=true
+            if (await UserServices.isVerifiedUser(request.email)) {
+                throw new HttpError("Email already exists", 409);
+            }
+
+            //hash password
+            const salt = await bcrypt.genSalt(10);
+            request.password = await bcrypt.hash(request.password, salt);
+
+            const user = (await UserServices.findByEmail(request.email)).toObject();
+            if(user){
+                //user exists and not verify -> update user
+                const updateRequest={
+                    name: request.name,
+                    password: request.password
+                }
+                await UserServices.updateUser(user.id,updateRequest,session);
+            }else{
+                //user didn't exist -> create user
+                await UserServices.createUser({
+                    email: request.email,
+                    name: request.name,
+                    password: request.password
+                },session);
+            }
+            
+            const userAfterCreated = (await UserServices.findByEmail(request.email)).toObject();
+            const otp = VerificationServices.generateOTP();
+            
+            if(await VerificationServices.isSignupRequested(userAfterCreated.id)){
+                await VerificationServices.updateSignup(userAfterCreated.id, otp,session);
+            } else {
+                await VerificationServices.createSignup(userAfterCreated.id, otp,session);
+            }
+
+            
+            await EmailServices.sendEmail(
+                request.email,
+            "Verify email for Taskit account",
+            `Your OTP is: ${otp}. This OTP only last 30 minutes.`
+            );
+            await session.commitTransaction();
+            return { 
+                id: userAfterCreated.id,
+             };
+        }catch (e) {
+            await session.abortTransaction();
+            if (e instanceof HttpError) throw e;
+            throw new HttpError(`Sign up error: ${e.message}`, 500);
+        } finally {
+            await session.endSession();
+        }
+    }
+    static async verifySignup(userId, otp) {
+        const session = await db.startSession();
+        session.startTransaction();
+        try{ 
+            const verObj = await VerificationServices.getVerification({userId, type: 'signup'});
+            if (!verObj) {
+                throw new HttpError("User not found", 404);
+            }
+
+            if(!await bcrypt.compare(otp, verObj.otp)){
+                throw new HttpError("Wrong or Expired OTP", 400);
+            }
+
+            await UserServices.verifyUser(userId,session);
+            await VerificationServices.deleteSignup(userId,session);
+
+        }catch (e) {
+            await session.abortTransaction();
+            if (e instanceof HttpError) throw e;
+            throw new HttpError(`Sign up error: ${e.message}`, 500);
+        } finally {
+            await session.endSession();
+        }
+    }
     static async signup_verify(request) {
         const session = await db.startSession();
         try {
@@ -183,113 +228,8 @@ class UserServices {
             throw new HttpError(`Login verification error: ${e.message}`, 500);
         }
     } 
-    static async update_email(userId,email) {
-        
-        try {
-            const user = await UserModel.findById(userId);
-            if (!user) throw new HttpError("User not found", 404);
-
-            const existingUser = await UserModel.findOne({ email });
-            if (existingUser) throw new HttpError("Email already exists", 409);
-
-            const existingOtp = await OtpEmailServices.findByEmail(email);
-            if (existingOtp) {
-                await OtpEMailServices.deleteByEmail(email);
-            }
-            const otp = await OtpEmailServices.generateOTP();
-            await OtpEmailServices.create(email, otp);
-            await OtpEmailServices.sendOTP(email, otp);
-        } catch (e) {
-            throw new HttpError(`Update email error: ${e.message}`, 500);
-        } 
-    }
-    static async update_email_verify(userId,request) {
-        try {
-            const userOtp = await OtpEmailServices.findByEmail(request.email);
-            if (!userOtp) throw new HttpError("Invalid email", 400);
-
-            const checkUser = await UserModel.findById(userId);
-            if (!checkUser) throw new HttpError("User not found", 404);
-
-            if (await OtpEmailServices.compareOtp(request.otp, userOtp.otp)) {
-                const user = await UserModel.findByIdAndUpdate(
-                    userId,
-                    { email: request.email },
-                    { new: true }
-                );
-                await OtpEmailServices.deleteByEmail(request.email);
-                return {
-                    _id: user._id,
-                    name: user.name,
-                    email: user.email,
-                    avatar: user.avatar,
-                };
-            } else {
-                throw new HttpError("Invalid OTP", 400);
-            }
-        } catch (e) {
-            throw new HttpError(`Update email verification error: ${e.message}`, 500);
-        }
-    }
-    static async update_profile(userId, updateData) {
-        try {
-            const user = await UserModel.findByIdAndUpdate(
-                userId,
-               updateData,
-                { new: true }
-            );
-            if (!user) throw new HttpError("User not found", 404);
-            return {
-                _id: user._id,
-                name: user.name,
-                email: user.email,
-                avatar: user.avatar,
-            };
-        } catch (e) {
-            throw new HttpError(`Update profile error: ${e.message}`, 500);
-        }
-    }
-    static async update_password(userId, request) {
-        try{
-            const user = await UserModel.findById(userId);
-            if (!user) throw new HttpError("User not found", 404);
-            const {oldPassword, newPassword} = request;
-            const isPasswordMatch = await bcrypt.compare(oldPassword, user.password);
-            if (!isPasswordMatch) {
-                throw new HttpError("Old password is incorrect", 401);
-            }
-            const salt = await bcrypt.genSalt(10);
-            user.password = await bcrypt.hash(newPassword, salt);
-            await user.save();
-            
-        }catch (e) {
-            throw new HttpError(`Update password error: ${e.message}`, 500);
-        }
-    }
-    static async delete_account(userId) {
-        const session = await db.startSession();
-        try {
-            const user = await UserModel.findById(userId);
-            if (!user) throw new HttpError("User not found", 404);
-            await session.withTransaction(async () => {
-                await CategoryModel.deleteMany({ userId: user._id }).session(session);
-                await SettingModel.deleteOne({ userId: user._id }).session(session);
-
-                const tasks = await TaskModel.find({ userId }, null,{ session });
-                const taskIds = tasks.map(task => task._id);
-
-                await SubtaskModel.deleteMany({taskId: { $in: taskIds }},{session});
-                await TaskModel.deleteMany({ userId }, { session });
-                await UserModel.deleteOne({ _id: user._id }).session(session);
-            });
-        }catch (e) {
-            throw new HttpError(`Delete account error: ${e.message}`, 500);
-        }finally {
-            await session.endSession();
-        }
-    }
-            
+  
 
 }
 
-export default UserServices;
+export default AuthService;

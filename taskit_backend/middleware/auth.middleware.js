@@ -5,7 +5,7 @@ const validateResult = (prefix = 'Validation') => (req, res, next) => {
   if (!errors.isEmpty()) {
     const firstError = errors.array()[0].msg;
     return res.status(400).json({
-      message: `${prefix} Bad Request: ${firstError}`,
+      message: `${firstError}`,
       data: {}
     });
   }
@@ -13,7 +13,7 @@ const validateResult = (prefix = 'Validation') => (req, res, next) => {
 };
 
 
-export const signup = [
+export const signupMiddleware = [
   body('name')
     .trim()
     .notEmpty()
@@ -48,18 +48,19 @@ export const signup = [
   validateResult('Signup')
 ];
 
-export const signup_verify = [
-  body('email')
+export const verifySignupMiddleware = [
+  body('id')
     .trim()
     .notEmpty()
-    .withMessage('Email is required')
-    .isEmail()
-    .withMessage('Invalid email address'),
-
+    .withMessage('user Id is required')
+    .isMongoId()
+    .withMessage('User ID must be a valid MongoDB ObjectId'),
   body('otp')
     .trim()
     .notEmpty()
     .withMessage('OTP is required')
+    .isString()
+    .withMessage('OTP must be a string of number')
     .isLength({ min: 4, max: 4 })
     .withMessage('OTP must be exactly 4 characters long'),
   validateResult('Signup verification')

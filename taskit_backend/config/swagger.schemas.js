@@ -286,4 +286,23 @@
  *                 type: object
  *                 example: {}
  */
+
+/**
+ * @openapi
+ * components:
+ *   responses:
+ *     409:
+ *       description: Conflict
+ *       content:
+ *         application/json:
+ *           schema: 
+ *             type: object
+ *             properties:
+ *               message:
+ *                 type: string
+ *                 example: "Email already exists"
+ *               data:
+ *                 type: object
+ *                 example: {}
+ */
 //#endregion

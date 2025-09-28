@@ -26,7 +26,28 @@ const settingSchema = new mongoose.Schema({
     enum: [15, 30,60,1440,10080], 
     default: 30, 
   },
-},{timestamps: true});
+},{timestamps: true,
+  toJSON: { 
+        virtuals: true,
+        transform: function (doc, ret) {
+            const {_id, __v, ...rest} = ret;
+            return {
+                id: _id.toHexString(),
+                ...rest,    
+            }
+        }
+    }, 
+    toObject: { 
+        virtuals: true,
+        transform: function (doc, ret) {
+            const {_id, __v, ...rest} = ret;
+            return {
+                id: _id.toHexString(),
+                ...rest,    
+            }
+        }
+    }
+});
 
 
 const SettingModel = db.model("user-setting", settingSchema);

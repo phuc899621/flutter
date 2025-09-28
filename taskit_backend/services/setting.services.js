@@ -2,6 +2,18 @@ import SettingModel from "../models/setting.model.js";
 import UserServices from "./user.services.js";
 import HttpError from "../utils/http.error.js";
 class SettingServices {
+    static async createSetting(userId,session=null){ 
+        try {
+            const options={};
+            if(session) options.session=session;
+            const request = { userId };
+            const setting = new SettingModel(request);
+            await setting.save(options);
+            return setting.toObject();
+        } catch (e) {
+            throw new HttpError(`Create setting error: ${e.message}`,500);
+        }
+    }
     static async findByUserId(userId){
         return await SettingModel.findOne({userId});
     }

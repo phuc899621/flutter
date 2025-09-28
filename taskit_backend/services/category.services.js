@@ -136,6 +136,21 @@ class CategoryServices {
         }
     }
     //#endregion
+    //#region UTILS
+    static async createDefaultCategories(userId,session=null) {
+        try {
+            const defaultCategories = [
+                { name: 'Work', userId },
+                { name: 'Personal', userId },
+                { name: 'Shopping', userId },
+                { name: 'Health', userId },
+                { name: 'Any', userId },
+            ];  
+            await CategoryModel.insertMany(defaultCategories,{session});
+        } catch (e) {
+            throw new Error(`Create default category error: ${e.message}`);
+        }
+    }
 
   
 }

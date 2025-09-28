@@ -11,6 +11,10 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  isVerified: {
+    type: Boolean,
+    default: false,
+  },
   password: {
     type: String,
     required: true,
@@ -19,7 +23,26 @@ const userSchema = new mongoose.Schema({
     type: String,
     default: "uploads/default.jpg",
   },
-},{ timestamps: true });
+},{ timestamps: true, 
+  toJSON: { 
+        virtuals: true,
+        transform: function (doc, ret) {
+            const {_id, password, __v, ...rest} = ret;
+            return {
+                ...rest,    
+            }
+        }
+    },
+    toObject: {
+        virtuals: true,
+        transform: function (doc, ret) {
+            const {_id, password, __v, ...rest} = ret;
+            return {
+                ...rest,    
+            }
+        }
+    } 
+} );
 
 
 
