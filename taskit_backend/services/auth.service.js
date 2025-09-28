@@ -25,9 +25,19 @@ class AuthService {
         const session = await db.startSession();
         session.startTransaction();
         try{ 
+           
+            
             //check user exists and isVerified=true
             if (await UserServices.isVerifiedUser({email: request.email})) {
-                throw new HttpError("Email already exists", 409);
+                throw new HttpError("Your account already verified", 409);
+            }
+
+            if(
+                !(await UserServices.isUsernameBelongsToUser(request.email, request.username))&&
+                await UserServices.isUsernameExists(request.username)
+                
+            ){
+                throw new HttpError("Username already exists", 409);
             }
 
             //hash password
@@ -39,6 +49,7 @@ class AuthService {
                 //user exists and not verify -> update user
                 const updateRequest={
                     name: request.name,
+                    username: request.username,
                     password: request.password
                 }
                 await UserServices.updateUser(user.id,updateRequest,session);
@@ -47,6 +58,7 @@ class AuthService {
                 await UserServices.createUser({
                     email: request.email,
                     name: request.name,
+                    username: request.username,
                     password: request.password
                 },session);
             }

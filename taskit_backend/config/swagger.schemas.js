@@ -46,6 +46,9 @@
  *         id:
  *           type: string
  *           example: "66fdc011362027f2361"
+ *         username:
+ *           type: string
+ *           example: "user123"
  *         name:
  *           type: string
  *           example: "phuc"

@@ -13,6 +13,7 @@ const validateResult = (prefix = 'Validation') => (req, res, next) => {
 };
 
 
+
 export const signupMiddleware = [
   body('name')
     .trim()
@@ -27,6 +28,17 @@ export const signupMiddleware = [
     .withMessage('Email is required')
     .isEmail()
     .withMessage('Invalid email address'),
+  body('username')
+    .trim()
+    .notEmpty()
+    .withMessage('Username is required')
+    .isLength({ min: 6 })
+    .withMessage('Username must be at least 6 characters long')
+    .custom((value) => {
+      if(!/^[A-Za-z]/.test(value)) {
+        throw new Error('Username must start with a letter');
+      }
+    }),
 
   body('password')
     .trim()

@@ -25,6 +25,12 @@ class UserServices {
     static async isVerifiedUser({email,id}) {
         if(await UserModel.findOne({ email,_id:id, isVerified: true })) return true;
     }
+    static async isUsernameExists(username) {
+        if(await UserModel.findOne({ username })) return true;
+    }
+    static async isUsernameBelongsToUser(email, username) {
+        if(await UserModel.findOne({ username, email })) return true;
+    }
     static findById(id) {
         return UserModel.findOne({ _id: id });
     }
