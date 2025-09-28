@@ -166,7 +166,7 @@ class AuthService {
             if (!userDoc) throw new HttpError("Account not found", 404);
             if(!userDoc.isVerified) throw new HttpError("Account not verified", 401);
 
-            const isPasswordMatch = await bcrypt.compare(request.password, userDoc.password);
+            const isPasswordMatch =  bcrypt.compare(request.password, userDoc.password);
             if (!isPasswordMatch) throw new HttpError("Invalid password", 401);
 
             const accessToken = jwt.sign(
