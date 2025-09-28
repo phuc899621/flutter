@@ -22,11 +22,11 @@ class UserServices {
     static findByEmail(email) {
         return UserModel.findOne({ email });
     }
-    static async isVerifiedUser(email) {
-        if(await UserModel.findOne({ email, isVerified: true })) return true;
+    static async isVerifiedUser({email,id}) {
+        if(await UserModel.findOne({ email,_id:id, isVerified: true })) return true;
     }
-    static async findById(id) {
-        return await UserModel.findOne({ _id: id });
+    static findById(id) {
+        return UserModel.findOne({ _id: id });
     }
     static async verifyingUser(userId,session=null) {
         return await UserModel.findOneAndUpdate({ _id: userId }, { isVerified: true }, { new: true, session });

@@ -20,13 +20,13 @@ import EmailServices from '../core/emailService.js';
 import e from 'express';
 
 class AuthService {
-    
+    //#region signup flow
     static async signup(request) {
         const session = await db.startSession();
         session.startTransaction();
         try{ 
             //check user exists and isVerified=true
-            if (await UserServices.isVerifiedUser(request.email)) {
+            if (await UserServices.isVerifiedUser({email: request.email})) {
                 throw new HttpError("Email already exists", 409);
             }
 
@@ -91,7 +91,7 @@ class AuthService {
                 throw new HttpError("Wrong or Expired OTP", 400);
             }
 
-            await UserServices.verifyUser(userId,session);
+            await UserServices.verifyingUser(userId,session);
             await VerificationServices.deleteSignup(userId,session);
 
         }catch (e) {
@@ -102,6 +102,44 @@ class AuthService {
             await session.endSession();
         }
     }
+    static async resendSignupOtp(userId) {
+        const session = await db.startSession();
+        session.startTransaction();
+        try{ 
+            const user= (await UserServices.findById(userId)).toObject();
+            if (!user) {
+                throw new HttpError("User account not found", 404);
+            }
+            if(await UserServices.isVerifiedUser({email: user.email})){
+                throw new HttpError("User account already verified", 409);
+            }
+            const userDoc=user.toObject();
+
+            const otp = VerificationServices.generateOTP();
+
+            if(await VerificationServices.isSignupRequested(userDoc.id)){
+                await VerificationServices.updateSignup(userDoc.id, otp,session);
+            } else {
+                await VerificationServices.createSignup(userDoc.id, otp,session);
+            }
+
+            await EmailServices.sendEmail(
+                verObj.email,
+            "Verify email for Taskit account",
+            `Your OTP is: ${otp}. This OTP only last 30 minutes.`
+            );
+            await session.commitTransaction();
+
+        }catch (e) {
+            await session.abortTransaction();
+            if (e instanceof HttpError) throw e;
+            throw new HttpError(`Sign up error: ${e.message}`, 500);
+        } finally {
+            await session.endSession();
+        }
+    }
+    //#endregion
+
     static async signup_verify(request) {
         const session = await db.startSession();
         try {

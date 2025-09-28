@@ -124,6 +124,56 @@ router.post('/signup/verify',AuthMiddleware.verifySignupMiddleware, AuthControll
 
 /** 
  * @openapi
+ * '/api/auth/signup/resend':
+ *   post:
+ *     tags:
+ *       - Auth
+ *     summary: Resend verification code
+ *     description: |
+ *       Resend verification code for activating user account 
+ *       - Send user id in the request body
+ *       - Server will resend a verification code (4 digits) to the user
+ *     security:
+ *       - bearerAuth: []
+ *     requestBody:
+ *      require: true
+ *      content:
+ *        application/json:
+ *          schema:
+ *            type: object
+ *            required:
+ *              - id
+ *            properties:
+ *              id:
+ *                  type: string
+ *                  example: '60df59f2fc13ae1c4e000001'
+ *     responses:
+ *       200:
+ *         description: Send verification code successfully
+ *         content:
+ *            application/json:
+ *              schema:
+ *                type: object
+ *                properties:
+ *                  message:
+ *                    type: string
+ *                    example: Verify otp for signup has been send to your email
+ *                  data:
+ *                    type: object
+ *       400:
+ *         $ref: '#/components/responses/400'
+ *       404:
+ *         $ref: '#/components/responses/404'
+ *       409:
+ *         $ref: '#/components/responses/409'
+ *       500:
+ *         $ref: '#/components/responses/500'
+ */
+router.post('/signup/resend',AuthMiddleware.resendSignupOtpMiddleware, AuthController.resendSignupOtp);
+
+
+/** 
+ * @openapi
  * '/api/user/login':
  *  post:
  *    tags:

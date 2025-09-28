@@ -65,6 +65,17 @@ export const verifySignupMiddleware = [
     .withMessage('OTP must be exactly 4 characters long'),
   validateResult('Signup verification')
 ];
+
+export const resendSignupOtpMiddleware = [
+  body('id')
+    .trim()
+    .notEmpty()
+    .withMessage('User id is required')
+    .isMongoId()
+    .withMessage('User ID must be a valid MongoDB ObjectId'),
+  validateResult('Send verify otp')
+]
+
 export const login = [
   body('email')
     .trim()

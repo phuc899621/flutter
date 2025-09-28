@@ -32,6 +32,22 @@ export const verifySignup = async (req, res) => {
         });
     }
 };
+export const resendSignupOtp = async (req, res) => {
+    try {
+        const {id} = req.body;
+        await AuthService.resendSignupOtp(id);
+        return res.status(200).json({
+            message: "Verify otp for signup has been send to your email",
+            data: {}
+        });
+    } catch (e) {
+        let statusCode = e.statusCode || 500;
+        return res.status(statusCode).json({
+            message: e.message,
+            data: {}
+        });
+    }
+};
 
 export const login = async (req, res) => {
     try {
