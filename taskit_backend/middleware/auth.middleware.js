@@ -88,13 +88,11 @@ export const resendSignupOtpMiddleware = [
   validateResult('Send verify otp')
 ]
 
-export const login = [
-  body('email')
+export const loginMiddleware = [
+  body('identifier')
     .trim()
     .notEmpty()
-    .withMessage('Email is required')
-    .isEmail()
-    .withMessage('Invalid email address'),
+    .withMessage('Email or username is required'),
 
   body('password')
     .trim()
@@ -102,18 +100,7 @@ export const login = [
     .withMessage('Password is required')
     .isLength({ min: 3 })
     .withMessage('Password must be at least 3 characters'),
-
-  (req, res, next) => {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      const firstError = errors.array()[0].msg;
-      return res.status(400).json({
-        message: `Login error: ${firstError}`,
-        data: {}
-      });
-    }
-    next();
-  },
+  validateResult('Login')
 ];
 
 export const forgot_password = [

@@ -18,7 +18,7 @@ const router = express.Router();
  *     summary: Create a new user
  *     description: |
  *       This endpoint allows user to signup, but before that user has to verify their email
- *       - Send user details in the request body (email, password, name)
+ *       - Send user details in the request body (email, password, username, name)
  *       - Server will send a verification code to the user's email
  *       - Return the userId for user to include in the verify request
  *     security:
@@ -33,16 +33,22 @@ const router = express.Router();
  *              - email
  *              - password
  *              - name
+ *              - username
  *            properties:
  *              email:
  *                  type: string
  *                  example: 'email@gmail.com'
  *              name:
  *                  type: string
+ *                  description: User's full name (must be at least 3 characters long)
  *                  example: 'John Doe'
  *              password:
  *                  type: string
  *                  example: '******'
+ *              username:
+ *                  type: string
+ *                  description: User's username (must be at least 6 characters long; can contain letters, numbers, and special characters; must start with a letter)
+ *                  example: 'johndoe'
  *     responses:
  *       201:
  *         description: Signup successfully! Please verify your email
@@ -177,9 +183,12 @@ router.post('/signup/resend',AuthMiddleware.resendSignupOtpMiddleware, AuthContr
  * '/api/user/login':
  *  post:
  *    tags:
- *      - User
+ *      - Auth
  *    summary: Login
- *    description: Login into user's account using email and password
+ *    description: |
+ *      Login into user's account using email and password
+ *      - Send email/username and password in the request body
+ *      - Server will return accessToken, refreshToken and expired time for user to include in the verify request
  *    requestBody:
  *      require: true
  *      content:
@@ -187,15 +196,15 @@ router.post('/signup/resend',AuthMiddleware.resendSignupOtpMiddleware, AuthContr
  *          schema:
  *           type: object
  *           required:
- *              - email
+ *              - identifier
  *              - password
  *           properties:
- *              email:
+ *              identifier:
  *                  type: string
  *                  example: 'email@example.com'
  *              password:
  *                  type: string
- *                  example: ''
+ *                  example: '*****'
  *    responses:
  *      200:
  *          description: Login successfully!
@@ -213,44 +222,28 @@ router.post('/signup/resend',AuthMiddleware.resendSignupOtpMiddleware, AuthContr
  *                      accessToken:
  *                        type: string
  *                        example: eyJhbGciOiJIUzI1Ni
+ *                        description: Access token for user to include in the verify request
+ *                      refreshToken:
+ *                        type: string
+ *                        example: eyJhbGciOiJIUzI1Ni
+ *                        description: Refresh token for user to include in the verify request
+ *                      expiresAt:
+ *                        type: string
+ *                        format: date-time
+ *                        example: 2021-05-31T00:00:00.000Z
+ *                        description: Expired time of access token for app to refresh token
  *      400:
- *        description: Login Bad Request
- *        content:
- *          application/json:
- *            schema: 
- *              type: object
- *              properties:
- *                message:
- *                  type: string
- *                  example: "Login Bad Request: Password is required"
- *                data:
- *                  type: object
+ *        '$ref': '#/components/responses/400'
  *      401:
- *        description: Invalid Password
- *        content:
- *          application/json:
- *            schema: 
- *              type: object
- *              properties:
- *                message:
- *                  type: string
- *                  example: "Invalid password"
- *                data:
- *                  type: object  
+ *        '$ref': '#/components/responses/401'
+ *      404:
+ *        '$ref': '#/components/responses/404'
+ *      409:
+ *        '$ref': '#/components/responses/409'
  *      500:
- *        description: Server Error
- *        content:
- *          application/json:
- *            schema: 
- *              type: object
- *              properties:
- *                message:
- *                  type: string
- *                  example: "Login Error"
- *                data:
- *                  type: object
+ *        $ref: '#/components/responses/500'
  */
-router.post('/login',AuthMiddleware.login, AuthController.login);
+router.post('/login',AuthMiddleware.loginMiddleware, AuthController.login);
 
 
 

@@ -34,6 +34,9 @@ class UserServices {
     static findById(id) {
         return UserModel.findOne({ _id: id });
     }
+    static findOne(filter) {
+        return UserModel.findOne(filter);
+    }
     static async verifyingUser(userId,session=null) {
         return await UserModel.findOneAndUpdate({ _id: userId }, { isVerified: true }, { new: true, session });
     }

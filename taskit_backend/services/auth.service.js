@@ -152,57 +152,41 @@ class AuthService {
     }
     //#endregion
 
-    static async signup_verify(request) {
-        const session = await db.startSession();
-        try {
-            const getOtp = await OtpAuthServices.findByEmail(request.email);
-            if (!getOtp) throw new HttpError("Invalid email", 400);
+    //#region login flow
 
-            if (await OtpAuthServices.compareOtp(request.otp, getOtp.otp)) {
-                const { email,name, password } = getOtp;
-
-                await session.withTransaction(async () => {
-                    const result =await UserModel.create([{ email, name, password}], { session });
-                    const userId = result[0]._id;
-                    const defaultCategories = [
-                        { name: 'Work', userId },
-                        { name: 'Personal', userId },
-                        { name: 'Shopping', userId },
-                        { name: 'Health', userId },
-                        { name: 'Any', userId },
-                    ];  
-                    await CategoryModel.insertMany(defaultCategories,{session});
-                    await SettingModel.create([{ userId }], { session });
-                    await OtpAuthModel.deleteOne({ email }).session(session);
-                });
-                return { message: "Verify your account successfully!", data: {} };
-            } else {
-                throw new HttpError(`Wrong OTP for ${request.email}`, 400);
-            }
-        } catch (e) {
-            throw new HttpError(`Signup verify error: ${e.message}`, 500);
-        } finally {
-            await session.endSession();
-        }
-    }
     static async login(request){
         try {
-            const user = await UserModel.findOne({ email: request.email });
-            if (!user) throw new HttpError("Account not found", 404);
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            const query = emailRegex.test(request.identifier)
+                ? { email: request.identifier }
+                : { username: request.identifier };
+            const userDoc = await UserServices.findOne(query);
+
+            if (!userDoc) throw new HttpError("Account not found", 404);
 
             const isPasswordMatch = await bcrypt.compare(request.password, user.password);
             if (!isPasswordMatch) throw new HttpError("Invalid password", 401);
 
             const accessToken = jwt.sign(
-                { id: user._id, email: user.email },
+                { id: userDoc._id, email: userDoc.email, username: userDoc.username },
                 process.env.JWT_SECRET || "899621",
-                { expiresIn: process.env.JWT_EXPIRES_IN || "1d" }
+                { expiresIn: "1d" }
             );
+            const refreshToken = jwt.sign(
+                { id: userDoc._id, email: userDoc.email, username: userDoc.username },
+                process.env.JWT_SECRET || "899621",
+                { expiresIn: "7d" }
+            )
+            const expiresIn = 60 * 60 * 24;
+            const expiresAt = Date.now() + expiresIn * 1000;
             return {
-                    accessToken
+                accessToken
+                ,refreshToken,
+                expiresAt
             };
             
         }catch (e) {
+            if (e instanceof HttpError) throw e;
             throw new HttpError(`Login error: ${e.message}`, 500);
         }
 

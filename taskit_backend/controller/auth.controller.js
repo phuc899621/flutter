@@ -51,7 +51,7 @@ export const resendSignupOtp = async (req, res) => {
 
 export const login = async (req, res) => {
     try {
-        const result= await UserServices.login(req.body);
+        const result= await AuthService.login(req.body);
         return res.status(200).json({
             message: "Login successfully!",
             data: result
