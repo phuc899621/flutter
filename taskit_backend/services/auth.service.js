@@ -194,14 +194,15 @@ class AuthService {
         session.startTransaction();
         const { email } = request;
         try {
-            const user = (await UserServices.findByEmail(email)).toObject();
+            const user = await UserServices.findByEmail(email)
             if (!user) throw new HttpError("User not found", 404);
 
+            const userDoc=user.toObject();
             const otp=VerificationServices.generateOTP();
-            if(await VerificationServices.isResetRequested(user.id,session)){
-                await VerificationServices.updateReset(user.id, otp,session);
+            if(await VerificationServices.isResetRequested(userDoc.id,session)){
+                await VerificationServices.updateReset(userDoc.id, otp,session);
             }else{
-                await VerificationServices.createReset(user.id, otp,session);
+                await VerificationServices.createReset(userDoc.id, otp,session);
             }
             await EmailServices.sendEmail(email, "Reset password for Taskit account", `Your OTP is: ${otp}. This OTP only last 15 minutes.`);
             await session.commitTransaction();
@@ -218,29 +219,39 @@ class AuthService {
         session.startTransaction();
         const {email, otp} = request;
         try {
-            const user = (await UserServices.findByEmail(email,session)).toObject();
+            const user = await UserServices.findByEmail(email,session);
             if (!user) throw new HttpError("User not found", 404);
-        
-            const verObj = await VerificationServices.getVerification({userId: user.id, type: 'reset'});
+            
+            const userDoc=user.toObject();
+            const verObj = await VerificationServices.getVerification({userId: userDoc.id, type: 'reset'});
             if (!verObj) throw new HttpError("Otp has expired", 400);
-
             if(!await bcrypt.compare(otp, verObj.otp)){
                 throw new HttpError("Invalid otp", 400);
             }
 
-            await VerificationServices.deleteReset(user.id,session);
-
+            await VerificationServices.deleteReset(userDoc.id,session);
+        
+            
             const resetToken=ResetPassServices.generateResetToken();
-            await ResetPassServices.create(email, resetToken,session);
+
+            if(await ResetPassServices.findByEmail(email,session)){
+                await ResetPassServices.update(email, resetToken,session);
+            }else{
+                await ResetPassServices.create(email, resetToken,session);
+            }
+
             await session.commitTransaction();
             return resetToken;
         } catch (e) {
             await session.abortTransaction();
+            if (e instanceof HttpError) throw e;
             throw new HttpError(`Forgot password error: ${e.message}`, 500);
+        } finally {
+            await session.endSession();
         }
     }
-    static async resetPassword(request) {
-        const { resetToken, email, password } = request;
+    static async resetPassword(resetToken,request) {
+        const { email, password } = request;
         try {
             const user=await UserServices.findByEmail(email);
             if (!user) throw new HttpError("User not found", 404);
@@ -249,6 +260,7 @@ class AuthService {
             const otpObj = await ResetPassServices.findByEmail(email);
             if (!otpObj) throw new HttpError("Invalid reset token", 400);
 
+            console.log(otpObj.resetToken, resetToken);
             if (otpObj.resetToken !== resetToken) {
                 throw new HttpError("Invalid reset token", 400);
             }

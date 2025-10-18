@@ -129,9 +129,9 @@ export const forgotPasswordVerifyMiddleware = [
   validateResult('Forgot password verification')
 ];
 export const resetPasswordMiddleware = [
-  body('resetToken')
+  header('Reset-Token')
     .notEmpty()
-    .withMessage('Reset token is required'),
+    .withMessage('Reset token is required in the header'),
   body('email')
     .trim()
     .notEmpty()

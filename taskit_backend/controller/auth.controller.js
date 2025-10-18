@@ -102,7 +102,8 @@ export const forgotPasswordVerify = async (req, res) => {
 
 export const resetPassword = async (req, res) => {
     try {
-        await AuthServices.resetPassword(req.body);
+        const resetToken = req.headers['reset-token'];
+        await AuthServices.resetPassword(resetToken,req.body);
         return res.status(201).json({
             message: "Reset password successfully!",
             data: {}

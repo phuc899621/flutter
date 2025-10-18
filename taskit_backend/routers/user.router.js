@@ -10,9 +10,6 @@ import { multerErrorHandler } from '../middleware/multer.middleware.js';
 const router = express.Router();
 
 
-router.post('/forgot-password',AuthMiddleware.forgot_password, AuthController.forgot_password);
-router.post('/forgot-password/verify',AuthMiddleware.forgot_password_verify, AuthController.forgot_password_verify);
-router.put('/forgot-password/reset', AuthMiddleware.forgot_password_reset,AuthController.forgot_password_reset);
 router.get('/login/verify', AuthController.login_verify);
 
 router.put('/',jwtMiddleware, upload.single('avatar'), UserController.update_profile,multerErrorHandler);

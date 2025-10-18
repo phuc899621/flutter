@@ -284,8 +284,6 @@ router.post('/login',AuthMiddleware.loginMiddleware, AuthController.login);
  *                    type: object
  *      400:
  *        '$ref': '#/components/responses/400'
- *      401:
- *        '$ref': '#/components/responses/401'
  *      404:
  *        '$ref': '#/components/responses/404'
  *      500:
@@ -304,6 +302,7 @@ router.post('/forgot-password',AuthMiddleware.forgotPasswordMiddleware, AuthCont
  *      Get reset token for forgot password
  *      - Send email and verified code in the request body
  *      - Server will return a reset token for user to include in the reset password request
+ *  
  *    requestBody:
  *      require: true
  *      content:
@@ -339,8 +338,6 @@ router.post('/forgot-password',AuthMiddleware.forgotPasswordMiddleware, AuthCont
  *                        example: eyJhbGciOiJIUzI1Ni
  *      400:
  *        '$ref': '#/components/responses/400'
- *      401:
- *        '$ref': '#/components/responses/401'
  *      404:
  *        '$ref': '#/components/responses/404'
  *      500:
@@ -351,7 +348,7 @@ router.post('/forgot-password/verify',AuthMiddleware.forgotPasswordVerifyMiddlew
 /** 
  * @openapi
  * '/api/auth/forgot-password/reset':
- *  post:
+ *  put:
  *    tags:
  *      - Auth
  *    summary: Reset password
@@ -359,6 +356,14 @@ router.post('/forgot-password/verify',AuthMiddleware.forgotPasswordVerifyMiddlew
  *      Change the password that user has forgotten
  *      - User has to include reset token, password, password confirmation and email in the request body
  *      - Server will hash the password and update the user's password
+ *    parameters:
+ *      - in: header
+ *        name: Reset-Token
+ *        required: true
+ *        schema:
+ *          type: string
+ *          example: eyJhbGciOiJIUzI1Ni
+ *        description: Reset token for user to include in the reset password request
  *    requestBody:
  *      require: true
  *      content:
@@ -399,13 +404,11 @@ router.post('/forgot-password/verify',AuthMiddleware.forgotPasswordVerifyMiddlew
  *                    example: {}
  *      400:
  *        '$ref': '#/components/responses/400'
- *      401:
- *        '$ref': '#/components/responses/401'
  *      404:
  *        '$ref': '#/components/responses/404'
  *      500:
  *        $ref: '#/components/responses/500'
  */
-router.post('/forgot-password/reset',AuthMiddleware.resetPasswordMiddleware, AuthController.resetPassword);
+router.put('/forgot-password/reset',AuthMiddleware.resetPasswordMiddleware, AuthController.resetPassword);
 
 export default router;

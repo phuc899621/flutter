@@ -3,12 +3,20 @@ import ResetPassModel from "../models/reset.pass.model.js";
 import bcrypt from "bcryptjs";
 import crypto from "crypto";
 import jwt from "jsonwebtoken";
+import HttpError from "../utils/http.error.js";
 
 class ResetPassService {
-    static async create(email, resetToken, session) {
+    static async create(email, resetToken, session=null) {
         const resetPass = new ResetPassModel({ email, resetToken });
         await resetPass.save({ session });
     }
+    static async update(email, resetToken,session=null) {
+        try{
+            await ResetPassModel.findOneAndUpdate({ email }, { resetToken,createdAt:Date.now() },{session});
+        }catch(e){
+            throw new HttpError(`Update reset password verification error: ${e.message}`, 500);
+        }
+    }    
     static generateOTP() {
         return Math.floor(1000 + Math.random() * 9000).toString();
     }
