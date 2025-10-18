@@ -13,7 +13,7 @@ const verificationSchema = new mongoose.Schema({
   },
   type: {
     type: String, required: true,
-    enum: ['signup', 'forgot', 'reset']
+    enum: ['signup', 'reset']
   },
   createdAt: {
     type: Date, default: Date.now, expires: 900

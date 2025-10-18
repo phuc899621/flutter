@@ -354,7 +354,7 @@ router.post('/forgot-password/verify',AuthMiddleware.forgotPasswordVerifyMiddlew
  *    summary: Reset password
  *    description: |
  *      Change the password that user has forgotten
- *      - User has to include reset token, password, password confirmation and email in the request body
+ *      - User has to include reset token in the header and password, password confirmation, email in the request body
  *      - Server will hash the password and update the user's password
  *    parameters:
  *      - in: header
