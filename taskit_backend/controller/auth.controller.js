@@ -1,9 +1,8 @@
-import AuthService from '../services/auth.service.js';
-import UserServices from '../services/user.services.js';
+import AuthServices from '../services/auth.service.js';
 
 export const signup = async (req, res) => {
     try {
-        const result=await AuthService.signup(req.body);
+        const result=await AuthServices.signup(req.body);
         return res.status(201).json({
             message: "Signup successfully! Please verify your email",
             data: result
@@ -19,7 +18,7 @@ export const signup = async (req, res) => {
 export const verifySignup = async (req, res) => {
     try {
         const {id,otp} = req.body;
-        await AuthService.verifySignup(id, otp);
+        await AuthServices.verifySignup(id, otp);
         return res.status(200).json({
             message: "Verify your account successfully!",
             data: {}
@@ -35,7 +34,7 @@ export const verifySignup = async (req, res) => {
 export const resendSignupOtp = async (req, res) => {
     try {
         const {id} = req.body;
-        await AuthService.resendSignupOtp(id);
+        await AuthServices.resendSignupOtp(id);
         return res.status(200).json({
             message: "Verify otp for signup has been send to your email",
             data: {}
@@ -51,7 +50,7 @@ export const resendSignupOtp = async (req, res) => {
 
 export const login = async (req, res) => {
     try {
-        const result= await AuthService.login(req.body);
+        const result= await AuthServices.login(req.body);
         return res.status(200).json({
             message: "Login successfully!",
             data: result
@@ -65,11 +64,11 @@ export const login = async (req, res) => {
     }
 };
 
-export const forgot_password = async (req, res) => {
+export const forgotPassword = async (req, res) => {
     try {
-        await UserServices.forgot_password(req.body);
+        await AuthServices.forgotPassword(req.body);
         return res.status(201).json({
-            message: "Verify otp for forgot password has been send to your email",
+            message: "OTP for verify has been send to your email!",
             data: {}
         });
 
@@ -82,9 +81,9 @@ export const forgot_password = async (req, res) => {
     }
 };
 
-export const forgot_password_verify = async (req, res) => {
+export const forgotPasswordVerify = async (req, res) => {
     try {
-        const result =await UserServices.forgot_password_verify(req.body);
+        const result =await AuthServices.forgotPasswordVerify(req.body);
         return res.status(201).json({
                 message: "Verify successfully!",
                 data: {
@@ -101,9 +100,9 @@ export const forgot_password_verify = async (req, res) => {
     }
 };
 
-export const forgot_password_reset = async (req, res) => {
+export const resetPassword = async (req, res) => {
     try {
-        await UserServices.forgot_password_reset(req.headers['reset-token'], req.body);
+        await AuthServices.resetPassword(req.body);
         return res.status(201).json({
             message: "Reset password successfully!",
             data: {}

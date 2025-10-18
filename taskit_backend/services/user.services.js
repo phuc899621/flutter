@@ -1,7 +1,7 @@
 import UserModel from '../models/user.model.js';
 import OtpAuthModel from '../models/otp.auth.model.js';
 import OtpAuthServices from './otp.auth.services.js';
-import OtpResetServices from './otp.reset.services.js';
+import OtpResetServices from './reset.pass.services.js';
 import CategoryServices from './category.services.js';
 import jwt from "jsonwebtoken";
 import SettingServices from './setting.services.js';
@@ -66,117 +66,7 @@ class UserServices {
         }
     }
     
-    static async signup_verify(request) {
-        const session = await db.startSession();
-        try {
-            const getOtp = await OtpAuthServices.findByEmail(request.email);
-            if (!getOtp) throw new HttpError("Invalid email", 400);
-
-            if (await OtpAuthServices.compareOtp(request.otp, getOtp.otp)) {
-                const { email,name, password } = getOtp;
-
-                await session.withTransaction(async () => {
-                    const result =await UserModel.create([{ email, name, password}], { session });
-                    const userId = result[0]._id;
-                    const defaultCategories = [
-                        { name: 'Work', userId },
-                        { name: 'Personal', userId },
-                        { name: 'Shopping', userId },
-                        { name: 'Health', userId },
-                        { name: 'Any', userId },
-                    ];  
-                    await CategoryModel.insertMany(defaultCategories,{session});
-                    await SettingModel.create([{ userId }], { session });
-                    await OtpAuthModel.deleteOne({ email }).session(session);
-                });
-                return { message: "Verify your account successfully!", data: {} };
-            } else {
-                throw new HttpError(`Wrong OTP for ${request.email}`, 400);
-            }
-        } catch (e) {
-            throw new HttpError(`Signup verify error: ${e.message}`, 500);
-        } finally {
-            await session.endSession();
-        }
-    }
-    static async login(request){
-        try {
-            const user = await UserModel.findOne({ email: request.email });
-            if (!user) throw new HttpError("Account not found", 404);
-
-            const isPasswordMatch = await bcrypt.compare(request.password, user.password);
-            if (!isPasswordMatch) throw new HttpError("Invalid password", 401);
-
-            const accessToken = jwt.sign(
-                { id: user._id, email: user.email },
-                process.env.JWT_SECRET || "899621",
-                { expiresIn: process.env.JWT_EXPIRES_IN || "1d" }
-            );
-            return {
-                    accessToken
-            };
-            
-        }catch (e) {
-            throw new HttpError(`Login error: ${e.message}`, 500);
-        }
-
-
-    }
-    static async forgot_password(request) {
-        const { email } = request;
-        try {
-            const user = await this.findByEmail(email);
-            if (!user) throw new HttpError("User not found", 404);
-
-            const userOtp = await OtpResetServices.findByEmail(email);
-            if (userOtp) {
-                await OtpResetServices.deleteByEmail(email);
-            }
-
-            const otp = await OtpResetServices.generateOTP();
-            const resetToken = await OtpResetServices.generateResetToken();
-            await OtpResetServices.sendOTP(email, otp);
-            await OtpResetServices.create(email, otp, resetToken);
-        } catch (e) {
-            throw new HttpError(`Forgot password error: ${e.message}`, 500);
-        }
-    }
-    static async forgot_password_verify(request) {
-        try {
-            const userOtp = await OtpResetServices.findByEmail(request.email);
-            if (!userOtp) throw new HttpError("Invalid email", 400);
-
-            if (await OtpResetServices.compareOtp(request.otp, userOtp.otp)) {
-                return userOtp.resetToken;
-            } else {
-                throw new HttpError("Invalid OTP", 400);
-            }
-        } catch (e) {
-            throw new HttpError(`Forgot password verification error: ${e.message}`, 500);
-        }
-    }
-    static async forgot_password_reset(resetToken,request) {
-        const { email, password } = request;
-        try {
-            const userOtp = await OtpResetServices.findByEmail(email);
-            if (!userOtp) throw new HttpError("Otp has expired", 400);
-
-            if (userOtp.resetToken !== resetToken) {
-                throw new HttpError("Invalid reset token", 400);
-            }
-        
-            const user = await UserModel.findOne({ email });
-            const isPasswordMatch = await bcrypt.compare(password, user.password);
-            if (isPasswordMatch) throw new HttpError("New password cannot be the same as the old password", 400);
-            const salt = await bcrypt.genSalt(10);
-            user.password = await bcrypt.hash(password, salt);
-            await user.save();
-            
-            await OtpResetServices.deleteByEmail(email);
-        } catch (e) {
-            throw new HttpError(`Forgot password reset error: ${e.message}`, 500);
-        }
-    }
+    
     static async login_verify(token) {
         try {
             const decoded = jwt.verify(token, process.env.JWT_SECRET || "899621");

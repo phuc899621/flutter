@@ -15,7 +15,7 @@ const verificationSchema = new mongoose.Schema({
     type: String, required: true,
     enum: ['signup', 'forgot', 'reset']
   },
-  createAt: {
+  createdAt: {
     type: Date, default: Date.now, expires: 900
   },
 });

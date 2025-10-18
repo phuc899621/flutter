@@ -2,12 +2,9 @@ import mongoose from "mongoose";
 import db from "../config/db.js";
 import bcrypt from "bcryptjs";
 
-const otpResetScheme = new mongoose.Schema({
+const resetSchema = new mongoose.Schema({
   email: {
     type: String, required: true, unique: true,
-  },
-  otp: {
-    type: String, required: true,
   },
   resetToken: {
     type: String, required: true,
@@ -16,7 +13,7 @@ const otpResetScheme = new mongoose.Schema({
     type: Date, default: Date.now, expires: 1800,
   },
 });
-otpResetScheme.pre("save", async function () {
+resetSchema.pre("save", async function () {
   try {
     const salt = await bcrypt.genSalt(10);
     this.otp = await bcrypt.hash(this.otp, salt);
@@ -25,5 +22,5 @@ otpResetScheme.pre("save", async function () {
   }
 });
 
-const OtpResetModel = db.model("otp-reset-password", otpResetScheme);
-export default OtpResetModel;
+const ResetModel = db.model("reset-password", resetSchema);
+export default ResetModel;

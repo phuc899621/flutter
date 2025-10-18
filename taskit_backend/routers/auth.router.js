@@ -245,6 +245,167 @@ router.post('/signup/resend',AuthMiddleware.resendSignupOtpMiddleware, AuthContr
  */
 router.post('/login',AuthMiddleware.loginMiddleware, AuthController.login);
 
+/** 
+ * @openapi
+ * '/api/auth/forgot-password':
+ *  post:
+ *    tags:
+ *      - Auth
+ *    summary: Verify email for forgot password
+ *    description: |
+ *      Verify user account to reset user's password
+ *      - Send email in the request body
+ *      - Server will send a verification code to the user's email
+ *    requestBody:
+ *      require: true
+ *      content:
+ *        application/json:
+ *          schema:
+ *           type: object
+ *           required:
+ *              - email
+ *              - password
+ *           properties:
+ *              email:
+ *                  type: string
+ *                  example: 'email@example.com'
+ *    responses:
+ *      201:
+ *          description: Verify code sent successfully!
+ *          content:
+ *            application/json:
+ *              schema:
+ *                type: object
+ *                properties:
+ *                  message:
+ *                    type: string
+ *                    example: OTP for verify has been send to your email!
+ *                  data:
+ *                    type: object
+ *      400:
+ *        '$ref': '#/components/responses/400'
+ *      401:
+ *        '$ref': '#/components/responses/401'
+ *      404:
+ *        '$ref': '#/components/responses/404'
+ *      500:
+ *        $ref: '#/components/responses/500'
+ */
+router.post('/forgot-password',AuthMiddleware.forgotPasswordMiddleware, AuthController.forgotPassword);
 
+/** 
+ * @openapi
+ * '/api/auth/forgot-password/verify':
+ *  post:
+ *    tags:
+ *      - Auth
+ *    summary: Get reset token for forgot password
+ *    description: |
+ *      Get reset token for forgot password
+ *      - Send email and verified code in the request body
+ *      - Server will return a reset token for user to include in the reset password request
+ *    requestBody:
+ *      require: true
+ *      content:
+ *        application/json:
+ *          schema:
+ *           type: object
+ *           required:
+ *              - email
+ *              - otp
+ *           properties:
+ *              email:
+ *                  type: string
+ *                  example: 'email@example.com'
+ *              otp:
+ *                  type: string
+ *                  example: '1236'
+ *    responses:
+ *      201:
+ *          description: Verify successfully!
+ *          content:
+ *            application/json:
+ *              schema:
+ *                type: object
+ *                properties:
+ *                  message:
+ *                    type: string
+ *                    example: Verify successfully!
+ *                  data:
+ *                    type: object
+ *                    properties:
+ *                      resetToken:
+ *                        type: string
+ *                        example: eyJhbGciOiJIUzI1Ni
+ *      400:
+ *        '$ref': '#/components/responses/400'
+ *      401:
+ *        '$ref': '#/components/responses/401'
+ *      404:
+ *        '$ref': '#/components/responses/404'
+ *      500:
+ *        $ref: '#/components/responses/500'
+ */
+router.post('/forgot-password/verify',AuthMiddleware.forgotPasswordVerifyMiddleware, AuthController.forgotPasswordVerify);
+
+/** 
+ * @openapi
+ * '/api/auth/forgot-password/reset':
+ *  post:
+ *    tags:
+ *      - Auth
+ *    summary: Reset password
+ *    description: |
+ *      Change the password that user has forgotten
+ *      - User has to include reset token, password, password confirmation and email in the request body
+ *      - Server will hash the password and update the user's password
+ *    requestBody:
+ *      require: true
+ *      content:
+ *        application/json:
+ *          schema:
+ *           type: object
+ *           required:
+ *              - email
+ *              - password
+ *              - passwordConfirm
+ *              - resetToken
+ *           properties:
+ *              email:
+ *                  type: string
+ *                  example: 'email@example.com'
+ *              password:
+ *                  type: string
+ *                  example: '****'
+ *              passwordConfirm:
+ *                  type: string
+ *                  example: '****'
+ *              resetToken:
+ *                  type: string
+ *                  example: 'eyJhbGciOiJIUzI1Ni'
+ *    responses:
+ *      201:
+ *          description: Reset password successfully!
+ *          content:
+ *            application/json:
+ *              schema:
+ *                type: object
+ *                properties:
+ *                  message:
+ *                    type: string
+ *                    example: Reset password successfully!
+ *                  data:
+ *                    type: object
+ *                    example: {}
+ *      400:
+ *        '$ref': '#/components/responses/400'
+ *      401:
+ *        '$ref': '#/components/responses/401'
+ *      404:
+ *        '$ref': '#/components/responses/404'
+ *      500:
+ *        $ref: '#/components/responses/500'
+ */
+router.post('/forgot-password/reset',AuthMiddleware.resetPasswordMiddleware, AuthController.resetPassword);
 
 export default router;

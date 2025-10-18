@@ -104,7 +104,7 @@ export const loginMiddleware = [
   validateResult('Login')
 ];
 
-export const forgot_password = [
+export const forgotPasswordMiddleware = [
   body('email')
     .trim()
     .notEmpty()
@@ -113,25 +113,23 @@ export const forgot_password = [
     .withMessage('Invalid email address'),
   validateResult('Forgot password')
 ];
-export const forgot_password_verify = [
+export const forgotPasswordVerifyMiddleware = [
   body('email')
     .trim()
     .notEmpty()
     .withMessage('Email is required')
     .isEmail()
     .withMessage('Invalid email address'),
-
   body('otp')
     .trim()
     .notEmpty()
     .withMessage('OTP is required')
     .isLength({ min: 4, max: 4 })
     .withMessage('OTP must be exactly 4 characters long'),
-
   validateResult('Forgot password verification')
 ];
-export const forgot_password_reset = [
-  header('reset-token')
+export const resetPasswordMiddleware = [
+  body('resetToken')
     .notEmpty()
     .withMessage('Reset token is required'),
   body('email')
@@ -156,7 +154,7 @@ export const forgot_password_reset = [
       }
       return true;
     }),
-  validateResult('Forgot password reset')
+  validateResult('Reset password')
 ];
 
 export const login_verify = [

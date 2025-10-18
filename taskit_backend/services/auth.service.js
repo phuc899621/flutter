@@ -1,18 +1,11 @@
 import UserModel from '../models/user.model.js';
 import OtpAuthModel from '../models/otp.auth.model.js';
 import OtpAuthServices from './otp.auth.services.js';
-import OtpResetServices from './otp.reset.services.js';
+import ResetPassServices from './reset.pass.services.js';
 import jwt from "jsonwebtoken";
-import SettingModel from '../models/setting.model.js';
 import bcrypt from "bcryptjs";
-import CategoryModel from '../models/category.model.js';
 import HttpError from '../utils/http.error.js';
 import db from "../config/db.js";
-import TaskModel from '../models/task.model.js';
-import TaskServices from './task.services.js';
-import SubtaskModel from '../models/subtask.model.js';
-import multer from 'multer';
-import path from 'path';
 import UserServices from './user.services.js';
 import VerificationServices from './verification.services.js';
 import { type } from 'os';
@@ -194,59 +187,79 @@ class AuthService {
 
 
     }
-    static async forgot_password(request) {
+    //#endregion
+    //#region forgot password flow
+    static async forgotPassword(request) {
+        const session = await db.startSession();
+        session.startTransaction();
         const { email } = request;
         try {
-            const user = await this.findByEmail(email);
+            const user = (await UserServices.findByEmail(email)).toObject();
             if (!user) throw new HttpError("User not found", 404);
 
-            const userOtp = await OtpResetServices.findByEmail(email);
-            if (userOtp) {
-                await OtpResetServices.deleteByEmail(email);
+            const otp=VerificationServices.generateOTP();
+            if(await VerificationServices.isResetRequested(user.id,session)){
+                await VerificationServices.updateReset(user.id, otp,session);
+            }else{
+                await VerificationServices.createReset(user.id, otp,session);
+            }
+            await EmailServices.sendEmail(email, "Reset password for Taskit account", `Your OTP is: ${otp}. This OTP only last 15 minutes.`);
+            await session.commitTransaction();
+        } catch (e) {
+            await session.abortTransaction();
+            if (e instanceof HttpError) throw e;
+            throw new HttpError(`Verify email for forgot password error: ${e.message}`, 500);
+        } finally {
+            await session.endSession();
+        }
+    }
+    static async forgotPasswordVerify(request) {
+        const session = await db.startSession();
+        session.startTransaction();
+        const {email, otp} = request;
+        try {
+            const user = (await UserServices.findByEmail(email,session)).toObject();
+            if (!user) throw new HttpError("User not found", 404);
+        
+            const verObj = await VerificationServices.getVerification({userId: user.id, type: 'reset'});
+            if (!verObj) throw new HttpError("Otp has expired", 400);
+
+            if(!await bcrypt.compare(otp, verObj.otp)){
+                throw new HttpError("Invalid otp", 400);
             }
 
-            const otp = await OtpResetServices.generateOTP();
-            const resetToken = await OtpResetServices.generateResetToken();
-            await OtpResetServices.sendOTP(email, otp);
-            await OtpResetServices.create(email, otp, resetToken);
+            await VerificationServices.deleteReset(user.id,session);
+
+            const resetToken=ResetPassServices.generateResetToken();
+            await ResetPassServices.create(email, resetToken,session);
+            await session.commitTransaction();
+            return resetToken;
         } catch (e) {
+            await session.abortTransaction();
             throw new HttpError(`Forgot password error: ${e.message}`, 500);
         }
     }
-    static async forgot_password_verify(request) {
+    static async resetPassword(request) {
+        const { resetToken, email, password } = request;
         try {
-            const userOtp = await OtpResetServices.findByEmail(request.email);
-            if (!userOtp) throw new HttpError("Invalid email", 400);
+            const user=await UserServices.findByEmail(email);
+            if (!user) throw new HttpError("User not found", 404);
 
-            if (await OtpResetServices.compareOtp(request.otp, userOtp.otp)) {
-                return userOtp.resetToken;
-            } else {
-                throw new HttpError("Invalid OTP", 400);
-            }
-        } catch (e) {
-            throw new HttpError(`Forgot password verification error: ${e.message}`, 500);
-        }
-    }
-    static async forgot_password_reset(resetToken,request) {
-        const { email, password } = request;
-        try {
-            const userOtp = await OtpResetServices.findByEmail(email);
-            if (!userOtp) throw new HttpError("Otp has expired", 400);
 
-            if (userOtp.resetToken !== resetToken) {
+            const otpObj = await ResetPassServices.findByEmail(email);
+            if (!otpObj) throw new HttpError("Invalid reset token", 400);
+
+            if (otpObj.resetToken !== resetToken) {
                 throw new HttpError("Invalid reset token", 400);
             }
         
-            const user = await UserModel.findOne({ email });
-            const isPasswordMatch = await bcrypt.compare(password, user.password);
-            if (isPasswordMatch) throw new HttpError("New password cannot be the same as the old password", 400);
             const salt = await bcrypt.genSalt(10);
             user.password = await bcrypt.hash(password, salt);
             await user.save();
-            
-            await OtpResetServices.deleteByEmail(email);
+            await ResetPassServices.deleteByEmail(email);
         } catch (e) {
-            throw new HttpError(`Forgot password reset error: ${e.message}`, 500);
+            if (e instanceof HttpError) throw e;
+            throw new HttpError(`Reset password error: ${e.message}`, 500);
         }
     }
     static async login_verify(token) {

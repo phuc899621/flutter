@@ -1,25 +1,22 @@
 import EmailService from "../core/emailService.js";
-import OtpResetModel from "../models/otp.reset.model.js";
+import ResetPassModel from "../models/reset.pass.model.js";
 import bcrypt from "bcryptjs";
 import crypto from "crypto";
+import jwt from "jsonwebtoken";
 
-class OtpResetServices {
-    static async create(email, otp, resetToken) {
-        const otpUser = new OtpResetModel({
-            email: email,
-            otp: otp,
-            resetToken: resetToken,
-        });
-        return await otpUser.save();
+class ResetPassService {
+    static async create(email, resetToken, session) {
+        const resetPass = new ResetPassModel({ email, resetToken });
+        await resetPass.save({ session });
     }
     static generateOTP() {
         return Math.floor(1000 + Math.random() * 9000).toString();
     }
     static async findByEmail(email) {
-        return await OtpResetModel.findOne({email});
+        return await ResetPassModel.findOne({email});
     }
     static async deleteByEmail(email) {
-        return await OtpResetModel.deleteOne({email});
+        return await ResetPassModel.deleteOne({email});
     }
     static async compareOtp(otp, hashOtp) {
         return await bcrypt.compare(otp, hashOtp);
@@ -32,8 +29,8 @@ class OtpResetServices {
         );
     }
     static generateResetToken() {
-        return crypto.randomBytes(32).toString('hex');
+        return crypto.randomBytes(20).toString("hex");
     }
 }
 
-export default OtpResetServices;
+export default ResetPassService;
