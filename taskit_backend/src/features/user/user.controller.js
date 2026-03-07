@@ -1,4 +1,4 @@
-import UserServices from '../services/user.services.js';
+import UserServices from './user.services.js';
 
 export const update_profile = async (req, res,next) => {
     try {

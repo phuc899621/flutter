@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
-import db from "../config/db.js";
-import HttpError from "../utils/http.error.js";
+import db from "../../config/db.js";
+import HttpError from "../../utils/http.error.js";
 const categorySchema = new mongoose.Schema({
     name: {
         type: String,

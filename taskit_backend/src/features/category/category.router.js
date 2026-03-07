@@ -1,7 +1,7 @@
 import express from 'express';
-import * as CategoryController from '../controller/category.controller.js';
-import {jwtMiddleware} from '../middleware/jwt.middleware.js';
-import * as CategoryMiddleware from '../middleware/category.middleware.js';
+import * as CategoryController from './category.controller.js';
+import {jwtMiddleware} from '../auth/jwt.middleware.js';
+import * as CategoryMiddleware from './category.middleware.js';
 
 const router=express.Router();
 

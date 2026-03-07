@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import db from "../config/db.js";
+import db from "../../config/db.js";
 
 const userSchema = new mongoose.Schema({
   email: {
@@ -16,9 +16,20 @@ const userSchema = new mongoose.Schema({
     required: true,
     unique: true,
   },
-  isVerified: {
-    type: Boolean,
-    default: false,
+  status: {
+    type: String,
+    enum: ["pending", "verified","deleted"],
+    default: ["pending"],
+  },
+  provider: {
+    type: String,
+    enum: ["local", "google"],
+    default: "local",
+  },
+  providerId: {
+    type: String,
+    unique: true,
+    default: null,
   },
   password: {
     type: String,

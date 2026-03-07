@@ -1,7 +1,7 @@
 import express from 'express';
-import * as AIController from '../controller/ai.controller.js';
-import {jwtMiddleware} from '../middleware/jwt.middleware.js';
-import * as AIMiddleware from '../middleware/ai.middleware.js';
+import * as AIController from './ai.controller.js';
+import {jwtMiddleware} from '../auth/jwt.middleware.js';
+import * as AIMiddleware from './ai.middleware.js';
 
 const router = express.Router();
 

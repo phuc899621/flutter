@@ -1,8 +1,8 @@
-import AIServices from '../services/ai.services.js';
-import CategoryServices from '../services/category.services.js';
-import UserServices from '../services/user.services.js';
-import TaskServices from '../services/task.services.js';
-import SubtaskServices from '../services/subtask.services.js';
+import AIServices from './ai.services.js';
+import CategoryServices from '../category/category.services.js';
+import UserServices from '../user/user.services.js';
+import TaskServices from '../task/task.services.js';
+import SubtaskServices from '../task/subtask.services.js';
 
 export const suggestCategories = async (req, res) => {
     try {

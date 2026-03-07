@@ -1,6 +1,6 @@
-import SubtaskModel from '../models/subtask.model.js';
-import TaskModel from '../models/task.model.js';
-import HttpError from '../utils/http.error.js';
+import SubtaskModel from './subtask.model.js';
+import TaskModel from './task.model.js';
+import HttpError from '../../utils/http.error.js';
 
 class SubtaskServices {
     //#region CREATE

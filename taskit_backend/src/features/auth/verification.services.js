@@ -1,6 +1,5 @@
-import VerificationModel from '../models/verification.model.js';
-import UserServices from './user.services.js';
-import HttpError from '../utils/http.error.js';
+import VerificationModel from './verification.model.js';
+import HttpError from '../../utils/http.error.js';
 
 
 class VerificationServices {

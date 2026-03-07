@@ -1,13 +1,10 @@
-import TaskModel from '../models/task.model.js';
-import bcrypt from "bcryptjs";
-import UserServices from './user.services.js';
-import HttpError from '../utils/http.error.js';
-import CategoryServices from './category.services.js';
-import CategoryModel from '../models/category.model.js';
-import SubtaskModel from '../models/subtask.model.js'
-import SubtaskServices from './subtask.services.js';
-import db from '../config/db.js'
-import UserModel from '../models/user.model.js';
+import TaskModel from './task.model.js';
+import HttpError from '../../utils/http.error.js';
+import CategoryServices from '../category/category.services.js';
+import CategoryModel from '../category/category.model.js';
+import SubtaskModel from '../task/subtask.model.js';
+import db from '../../config/db.js'
+import UserModel from '../user/user.model.js';
 
 class TaskServices {
     //#region CREATE

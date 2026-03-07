@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import db from "../config/db.js";
+import db from "../../config/db.js";
 import bcrypt from "bcryptjs";
 const otpEmailSchema = new mongoose.Schema({
   email: {

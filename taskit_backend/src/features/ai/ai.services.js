@@ -1,7 +1,7 @@
 import 'dotenv/config';
 import axios from 'axios';
 import { DateTime } from 'luxon';
-import HttpError from '../utils/http.error.js';
+import HttpError from '../../utils/http.error.js';
 
 class AIServices {
     static async suggestCategories(title, excludedCategories=[]) {

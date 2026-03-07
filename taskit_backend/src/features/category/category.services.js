@@ -1,7 +1,7 @@
-import CategoryModel from "../models/category.model.js";
-import HttpError from "../utils/http.error.js";
-import TaskModel from "../models/task.model.js";
-import db from "../config/db.js";
+import CategoryModel from "./category.model.js";
+import HttpError from "../../utils/http.error.js";
+import TaskModel from "../task/task.model.js";
+import db from "../../config/db.js";
 
 class CategoryServices {
    //#region CREATE

@@ -1,6 +1,6 @@
-import SettingModel from "../models/setting.model.js";
-import UserServices from "./user.services.js";
-import HttpError from "../utils/http.error.js";
+import SettingModel from "./setting.model.js";
+import UserServices from "../user/user.services.js";
+import HttpError from "../../utils/http.error.js";
 class SettingServices {
     static async createSetting(userId,session=null){ 
         try {

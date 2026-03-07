@@ -1,22 +1,17 @@
-import UserModel from '../models/user.model.js';
-import OtpAuthModel from '../models/otp.auth.model.js';
-import OtpAuthServices from './otp.auth.services.js';
-import OtpResetServices from './reset.pass.services.js';
-import CategoryServices from './category.services.js';
+import UserModel from './user.model.js';
+
+import CategoryServices from '../category/category.services.js';
 import jwt from "jsonwebtoken";
-import SettingServices from './setting.services.js';
-import SettingModel from '../models/setting.model.js';
+import SettingServices from '../setting/setting.services.js';
+import SettingModel from '../setting/setting.model.js';
 import bcrypt from "bcryptjs";
-import CategoryModel from '../models/category.model.js';
-import HttpError from '../utils/http.error.js';
-import db from "../config/db.js";
-import OtpEmailModel from '../models/otp.email.model.js';
-import OtpEmailServices from './otp.email.services.js';
-import TaskModel from '../models/task.model.js';
-import TaskServices from './task.services.js';
-import SubtaskModel from '../models/subtask.model.js';
-import multer from 'multer';
-import path from 'path';
+import CategoryModel from '../category/category.model.js';
+import HttpError from '../../utils/http.error.js';
+import db from "../../config/db.js";
+import OtpEmailServices from '../auth/otp.email.services.js';
+import TaskModel from '../task/task.model.js';
+import TaskServices from '../task/task.services.js';
+import SubtaskModel from '../task/subtask.model.js';
 
 class UserServices {
     static findByEmail(email,session=null) {

@@ -1,4 +1,4 @@
-import SettingServices from "../services/setting.services.js";
+import SettingServices from "./setting.services.js";
 
 
 export const update_setting = async (req, res) => {

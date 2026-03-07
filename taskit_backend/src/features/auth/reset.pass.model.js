@@ -1,6 +1,5 @@
 import mongoose from "mongoose";
-import db from "../config/db.js";
-import bcrypt from "bcryptjs";
+import db from "../../config/db.js";
 
 const resetSchema = new mongoose.Schema({
   email: {

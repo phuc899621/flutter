@@ -1,9 +1,8 @@
-import EmailService from "../core/emailService.js";
-import ResetPassModel from "../models/reset.pass.model.js";
+import EmailService from "../../utils/emailService.js";
+import ResetPassModel from "./reset.pass.model.js";
 import bcrypt from "bcryptjs";
 import crypto from "crypto";
-import jwt from "jsonwebtoken";
-import HttpError from "../utils/http.error.js";
+import HttpError from "../../utils/http.error.js";
 
 class ResetPassService {
     static async create(email, resetToken, session=null) {

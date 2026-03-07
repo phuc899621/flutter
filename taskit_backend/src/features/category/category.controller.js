@@ -1,5 +1,5 @@
 
-import CategoryServices from '../services/category.services.js';
+import CategoryServices from './category.services.js';
 //#region CREATE
 export const createCategory = async (req, res) => {
     try {

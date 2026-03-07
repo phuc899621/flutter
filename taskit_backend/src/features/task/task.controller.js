@@ -1,5 +1,4 @@
-import TaskServices from '../services/task.services.js';
-import SubtaskServices from '../services/subtask.services.js';
+import TaskServices from './task.services.js';
 
 //#region CREATE
 export const createTask = async (req, res) => {

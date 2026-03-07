@@ -1,5 +1,5 @@
-import OtpEmailModel from "../models/otp.email.model.js";
-import EmailService from "../core/emailService.js";
+import OtpEmailModel from "./otp.email.model.js";
+import EmailService from "../../utils/emailService.js";
 import bcrypt from "bcryptjs";
 class OtpEmailServices {
     static async create(email, otp) {

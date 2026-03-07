@@ -1,17 +1,13 @@
-import UserModel from '../models/user.model.js';
-import OtpAuthModel from '../models/otp.auth.model.js';
-import OtpAuthServices from './otp.auth.services.js';
+
 import ResetPassServices from './reset.pass.services.js';
 import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
-import HttpError from '../utils/http.error.js';
-import db from "../config/db.js";
-import UserServices from './user.services.js';
+import HttpError from '../../utils/http.error.js';
+import db from "../../config/db.js";
+import UserServices from '../user/user.services.js';
 import VerificationServices from './verification.services.js';
 import { type } from 'os';
-import EmailServices from '../core/emailService.js';
-import e from 'express';
-
+import EmailServices from '../../utils/emailService.js';
 class AuthService {
     //#region signup flow
     static async signup(request) {

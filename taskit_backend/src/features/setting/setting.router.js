@@ -1,7 +1,7 @@
 import express from 'express';
-import * as SettingController from '../controller/setting.controller.js';
-import { jwtMiddleware } from '../middleware/jwt.middleware.js';
-import * as SettingMiddleware from '../middleware/setting.middleware.js';
+import * as SettingController from './setting.controller.js';
+import { jwtMiddleware } from '../auth/jwt.middleware.js';
+import * as SettingMiddleware from './setting.middleware.js';
 const router = express.Router();
 
 router.get('/', jwtMiddleware, SettingController.get_setting);

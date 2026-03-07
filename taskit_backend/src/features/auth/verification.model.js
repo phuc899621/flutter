@@ -1,7 +1,6 @@
 import mongoose from "mongoose";
-import db from "../config/db.js";
+import db from "../../config/db.js";
 import bcrypt from "bcryptjs";
-import e from "express";
 const verificationSchema = new mongoose.Schema({
   userId: {
     type: mongoose.Schema.Types.ObjectId,

@@ -1,6 +1,5 @@
 import mongoose from 'mongoose';
-import HTTPError from "../utils/http.error.js";
-import db from "../config/db.js";
+import db from "../../config/db.js";
 const { Schema } = mongoose;
 const taskSchema = new Schema({
     title: {

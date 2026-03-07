@@ -1,4 +1,4 @@
-import transporter from "../config/email.js";
+import transporter from "./email.js";
 
 class EmailServices {
     static async sendEmail(to, subject, text) {

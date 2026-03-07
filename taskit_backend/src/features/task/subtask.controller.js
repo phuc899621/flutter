@@ -1,4 +1,4 @@
-import SubtaskServices from '../services/subtask.services.js';
+import SubtaskServices from './subtask.services.js';
 
 export const createSubtask=async (req,res)=>{
     try{

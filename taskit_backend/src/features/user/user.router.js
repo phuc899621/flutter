@@ -1,11 +1,11 @@
 import express from 'express';
-import * as AuthController from '../controller/auth.controller.js';
-import * as AuthMiddleware from '../middleware/auth.middleware.js';
-import * as UserMiddleware from '../middleware/user.middleware.js';
-import {jwtMiddleware} from '../middleware/jwt.middleware.js';    
-import {upload} from '../middleware/upload.middleware.js';
-import * as UserController from '../controller/user.controller.js';
-import { multerErrorHandler } from '../middleware/multer.middleware.js';
+import * as AuthController from '../auth/auth.controller.js';
+import * as AuthMiddleware from '../auth/auth.middleware.js';
+import * as UserMiddleware from '../user/user.middleware.js';
+import {jwtMiddleware} from '../auth/jwt.middleware.js';    
+import {upload} from '../upload/upload.middleware.js';
+import * as UserController from '../user/user.controller.js';
+import { multerErrorHandler } from '../upload/multer.middleware.js';
 
 const router = express.Router();
 

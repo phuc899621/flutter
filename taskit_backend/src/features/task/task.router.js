@@ -1,9 +1,9 @@
 import express from 'express';
-import * as TaskController from '../controller/task.controller.js';
-import * as SubtaskController from '../controller/subtask.controller.js';
-import {jwtMiddleware} from '../middleware/jwt.middleware.js';
-import * as TaskMiddleware from '../middleware/task.middleware.js';
-import * as SubtaskMiddleware from '../middleware/subtask.middleware.js';
+import * as TaskController from './task.controller.js';
+import * as SubtaskController from './subtask.controller.js';
+import {jwtMiddleware} from '../auth/jwt.middleware.js';
+import * as TaskMiddleware from './task.middleware.js';
+import * as SubtaskMiddleware from './subtask.middleware.js';
 
 const router = express.Router();
 /** 
