@@ -1,7 +1,6 @@
 import mongoose from "mongoose";
 import db from "../config/db.js";
 import bcrypt from "bcryptjs";
-import e from "express";
 import { DatabaseError } from "../../utils/error.js";
 const otpScheme = new mongoose.Schema({
   user_id: {

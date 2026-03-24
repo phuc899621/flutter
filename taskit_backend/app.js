@@ -1,22 +1,12 @@
 import express from 'express';
 import bodyParser from 'body-parser';
-import userRouter from './src/features/user/user.router.js';
-import taskRouter from './src/features/task/task.router.js';
-import aiRouter from './src/features/ai/ai.router.js';
-import categoryRouter from './src/features/category/category.router.js';
-import authRouter from './src/features/auth/auth.router.js';
-import settingRouter from './src/features/setting/setting.router.js';
 import swaggerUI from 'swagger-ui-express';
 import swaggerSpec from './src/config/swagger.js';
+import errorHandler from './src/middleware/errorHandler.js';
+import apiV1 from './src/api/v1/index.js';
 const app=express();
 app.use(bodyParser.json());
-app.use('/api/docs',swaggerUI.serve, swaggerUI.setup(swaggerSpec));
-app.use('/api/user',userRouter);
-app.use('/api/auth',authRouter);
-app.use('/api/tasks',taskRouter);
-app.use('/api/ai',aiRouter);
-app.use('/api/categories',categoryRouter);
-app.use('/api/uploads', express.static('uploads'));
-app.use('/api/settings',settingRouter);
-
+app.use('/docs',swaggerUI.serve, swaggerUI.setup(swaggerSpec));
+app.use('/api/v1',apiV1)
+app.use(errorHandler)
 export default app;

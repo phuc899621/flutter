@@ -1,6 +1,5 @@
 import express from 'express';
 import * as AuthController from '../auth/auth.controller.js';
-import * as AuthMiddleware from '../auth/auth.middleware.js';
 import * as UserMiddleware from '../user/user.middleware.js';
 import {jwtMiddleware} from '../auth/jwt.middleware.js';    
 import {upload} from '../upload/upload.middleware.js';

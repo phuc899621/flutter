@@ -1,0 +1,69 @@
+2026-03-24 20:07:59 [[31merror[39m]: Create user error {"stack":"Error: Create user error\n    at UserServices.upsertUser (file:///M:/flutter/taskit_backend/src/features/user/user.services.js:66:13)\n    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)\n    at async AuthService.signup (file:///M:/flutter/taskit_backend/src/features/auth/auth.service.js:28:22)\n    at async signup (file:///M:/flutter/taskit_backend/src/features/auth/auth.controller.js:5:5)"}
+2026-03-24 20:09:11 [[31merror[39m]: Create user error
+ {"stack":"Error: Create user error\n    at UserServices.upsertUser (file:///M:/flutter/taskit_backend/src/features/user/user.services.js:66:13)\n    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)\n    at async AuthService.signup (file:///M:/flutter/taskit_backend/src/features/auth/auth.service.js:28:22)\n    at async signup (file:///M:/flutter/taskit_backend/src/features/auth/auth.controller.js:5:5)"}
+2026-03-24 20:11:06 [[31merror[39m]: Create user error
+
+Error: Create user error
+    at UserServices.upsertUser (file:///M:/flutter/taskit_backend/src/features/user/user.services.js:66:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async AuthService.signup (file:///M:/flutter/taskit_backend/src/features/auth/auth.service.js:28:22)
+    at async signup (file:///M:/flutter/taskit_backend/src/features/auth/auth.controller.js:5:5) 
+2026-03-24 20:11:55 [[31merror[39m]: Create user error user_id is not defined
+
+Error: Create user error user_id is not defined
+    at UserServices.upsertUser (file:///M:/flutter/taskit_backend/src/features/user/user.services.js:66:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async AuthService.signup (file:///M:/flutter/taskit_backend/src/features/auth/auth.service.js:28:22)
+    at async signup (file:///M:/flutter/taskit_backend/src/features/auth/auth.controller.js:5:5) 
+2026-03-24 20:13:17 [[31merror[39m]: Create user error: user_id is not defined
+
+Error: Create user error: user_id is not defined
+    at UserServices.upsertUser (file:///M:/flutter/taskit_backend/src/features/user/user.services.js:68:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async AuthService.signup (file:///M:/flutter/taskit_backend/src/features/auth/auth.service.js:28:22)
+    at async signup (file:///M:/flutter/taskit_backend/src/features/auth/auth.controller.js:5:5) 
+2026-03-24 20:14:09 [[31merror[39m]: Sign up error: VerificationModel.generateOTP is not a function
+
+Error: Sign up error: VerificationModel.generateOTP is not a function
+    at AuthService.signup (file:///M:/flutter/taskit_backend/src/features/auth/auth.service.js:44:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async signup (file:///M:/flutter/taskit_backend/src/features/auth/auth.controller.js:5:5) 
+2026-03-24 20:15:52 [[31merror[39m]: Cannot call abortTransaction after calling commitTransaction
+
+MongoTransactionError: Cannot call abortTransaction after calling commitTransaction
+    at ClientSession.abortTransaction (M:\flutter\taskit_backend\node_modules\mongodb\lib\sessions.js:376:19)
+    at AuthService.signup (file:///M:/flutter/taskit_backend/src/features/auth/auth.service.js:41:21)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async signup (file:///M:/flutter/taskit_backend/src/features/auth/auth.controller.js:5:5) 
+2026-03-24 20:16:27 [[31merror[39m]: Create default category ServerError: E11000 duplicate key error collection: test.categories index: userId_1_name_1 dup key: { userId: ObjectId('69c28e8a5b296b051e46fbf0'), name: "Work" }
+
+Error: Create default category ServerError: E11000 duplicate key error collection: test.categories index: userId_1_name_1 dup key: { userId: ObjectId('69c28e8a5b296b051e46fbf0'), name: "Work" }
+    at CategoryServices.createDefaultCategories (file:///M:/flutter/taskit_backend/src/features/category/category.services.js:151:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async UserServices.upsertUser (file:///M:/flutter/taskit_backend/src/features/user/user.services.js:63:7)
+    at async AuthService.signup (file:///M:/flutter/taskit_backend/src/features/auth/auth.service.js:28:22)
+    at async signup (file:///M:/flutter/taskit_backend/src/features/auth/auth.controller.js:5:5) 
+2026-03-24 20:19:45 [[31merror[39m]: Create default category ServerError: E11000 duplicate key error collection: test.categories index: userId_1_name_1 dup key: { userId: ObjectId('69c28e8a5b296b051e46fbf0'), name: "Work" }
+
+Error: Create default category ServerError: E11000 duplicate key error collection: test.categories index: userId_1_name_1 dup key: { userId: ObjectId('69c28e8a5b296b051e46fbf0'), name: "Work" }
+    at CategoryServices.createDefaultCategories (file:///M:/flutter/taskit_backend/src/features/category/category.services.js:160:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async UserServices.upsertUser (file:///M:/flutter/taskit_backend/src/features/user/user.services.js:63:7)
+    at async AuthService.signup (file:///M:/flutter/taskit_backend/src/features/auth/auth.service.js:28:22)
+    at async signup (file:///M:/flutter/taskit_backend/src/features/auth/auth.controller.js:5:5) 
+2026-03-24 20:22:10 [[31merror[39m]: Send email error
+
+Error: Send email error
+    at Object.sendMail (file:///M:/flutter/taskit_backend/src/utils/email.js:44:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async EmailServices.sendEmail (file:///M:/flutter/taskit_backend/src/utils/emailService.js:13:7)
+    at async AuthService.signup (file:///M:/flutter/taskit_backend/src/features/auth/auth.service.js:34:7)
+    at async signup (file:///M:/flutter/taskit_backend/src/features/auth/auth.controller.js:5:5) 
+2026-03-24 20:24:17 [[31merror[39m]: [1;31mSend email error
+[0m
+Error: Send email error
+    at Object.sendMail (file:///M:/flutter/taskit_backend/src/utils/email.js:44:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async EmailServices.sendEmail (file:///M:/flutter/taskit_backend/src/utils/emailService.js:13:7)
+    at async AuthService.signup (file:///M:/flutter/taskit_backend/src/features/auth/auth.service.js:34:7)
+    at async signup (file:///M:/flutter/taskit_backend/src/features/auth/auth.controller.js:5:5) 

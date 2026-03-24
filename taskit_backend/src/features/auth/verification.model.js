@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 import db from "../../config/db.js";
 import bcrypt from "bcryptjs";
+import { DatabaseError } from "../../utils/error.js";
 const verificationSchema = new mongoose.Schema({
   userId: {
     type: mongoose.Schema.Types.ObjectId,
@@ -10,20 +11,25 @@ const verificationSchema = new mongoose.Schema({
   otp: {
     type: String, required: true,
   },
-  type: {
+  purpose: {
     type: String, required: true,
     enum: ['signup', 'reset']
   },
   createdAt: {
-    type: Date, default: Date.now, expires: 900
+    type: Date, default: Date.now
   },
 });
+
+verificationSchema.index({ userId: 1, purpose: 1 }, { unique: true });
+verificationSchema.index({createdAt:1},{expireAfterSeconds: 900});
+
+
 verificationSchema.pre("save", async function () {
   try {
     const salt = await bcrypt.genSalt(10);
-    this.otp = await bcrypt.hash(this.otp, salt);
+    this.otp = bcrypt.hash(this.otp, salt);
   } catch (e) {
-    throw e;
+    throw new DatabaseError("Hashing error", e.message);
   }
 });
 verificationSchema.pre("findOneAndUpdate", async function (next) {

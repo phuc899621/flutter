@@ -1,8 +1,8 @@
 import EmailService from "../../utils/emailService.js";
+import { ServerError } from "../../utils/error.js";
 import ResetPassModel from "./reset.pass.model.js";
 import bcrypt from "bcryptjs";
 import crypto from "crypto";
-import HttpError from "../../utils/http.error.js";
 
 class ResetPassService {
     static async create(email, resetToken, session=null) {
@@ -13,7 +13,7 @@ class ResetPassService {
         try{
             await ResetPassModel.findOneAndUpdate({ email }, { resetToken,createdAt:Date.now() },{session});
         }catch(e){
-            throw new HttpError(`Update reset password verification error: ${e.message}`, 500);
+            throw new ServerError(`Update reset password verification error`,e.message);
         }
     }    
     static generateOTP() {

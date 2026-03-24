@@ -1,10 +1,10 @@
 import TaskModel from './task.model.js';
-import HttpError from '../../utils/http.error.js';
 import CategoryServices from '../category/category.services.js';
 import CategoryModel from '../category/category.model.js';
 import SubtaskModel from '../task/subtask.model.js';
 import db from '../../config/db.js'
 import UserModel from '../user/user.model.js';
+import { BaseError, NotFoundError, ServerError } from '../../utils/error.js';
 
 class TaskServices {
     //#region CREATE
@@ -14,17 +14,17 @@ class TaskServices {
         try {
             const user = await UserModel.findById(userId).session(session);
             if (!user) {
-                throw new HttpError("User not found", 404);
+                throw new ServerError("User not found", 404);
             }
             if(createTask.categoryId){
                 const category = await CategoryModel.findById(createTask.categoryId).session(session);
                 if (!category) {
-                    throw new HttpError("Category not found", 404);
+                    throw new ServerError("Category not found", 404);
                 }
             }else{
                 const defaultCategory = await CategoryModel.findOne({ userId, isDefault: true },{_id:1}).session(session);;
                 if (!defaultCategory) {
-                    throw new HttpError("Default category not found", 404);
+                    throw new ServerError("Default category not found", 404);
                 }
                 createTask.categoryId = defaultCategory._id;
             }
@@ -32,7 +32,7 @@ class TaskServices {
             const subtasksResult=(await SubtaskModel.create(createSubtasks.map(subtask=>({...subtask,taskId:taskResult._id})))).toObject();
             if(subtasksResult.length==0||subtasksResult.length!=createSubtasks.length){
                 await session.abortTransaction();
-                throw new HttpError("Subtasks were not created",500);
+                throw new ServerError("Subtasks were not created",500);
             }
             
             for(let i=0;i<subtasksResult.length;i++){
@@ -49,8 +49,8 @@ class TaskServices {
             }
         } catch (e) {
             await session.abortTransaction();
-            if (e instanceof HttpError) throw e;
-            throw new HttpError(e.message, 500);
+            if (e instanceof BaseError) throw e;
+            throw new ServerError(e.message, 500);
         } finally {
             await session.endSession();
         }
@@ -75,7 +75,7 @@ class TaskServices {
             if(userId){
                 const user = await UserModel.findById(userId);  
                 if (!user) {
-                    throw new HttpError("User not found", 404);
+                    throw new ServerError("User not found", 404);
                 }
             }
             const filter = { userId };
@@ -129,15 +129,15 @@ class TaskServices {
             };
 
         }catch (e) {
-            if(e instanceof HttpError) throw e;
-            throw new HttpError(e.message, 500);
+            if(e instanceof BaseError) throw e;
+            throw new ServerError(e.message, 500);
         }
     }
     static async getSyncTasks(userId,lastSyncTime) {
          try {
             const user = await UserModel.findById(userId);  
             if (!user) {
-                throw new HttpError("User not found", 404);
+                throw new ServerError("User not found", 404);
             }
 
             const filter = { userId };
@@ -164,8 +164,8 @@ class TaskServices {
                 }
             };
         } catch (e) {
-            if(e instanceof HttpError) throw e;
-            throw new HttpError(`Get sync tasks error: ${e.message}`, 500);
+            if(e instanceof BaseError) throw e;
+            throw new ServerError(`Get sync tasks error: ${e.message}`, 500);
         }
     }
 
@@ -173,14 +173,14 @@ class TaskServices {
         try{
             const task = await TaskModel.findById(taskId);
             if (!task) {
-                throw new HttpError("Task not found", 404);
+                throw new ServerError("Task not found", 404);
             }
             const subtasks = await SubtaskModel.find({ taskId: taskId });
             task.subtasks = subtasks.map(subtask => subtask.toObject());
             return task.toObject();
         }catch (e) {
-            if(e instanceof HttpError) throw e;
-            throw new HttpError(`Get task error: ${e.message}`, 500);
+            if(e instanceof BaseError) throw e;
+            throw new ServerError(`Get task error: ${e.message}`, 500);
         }
     }
     
@@ -193,13 +193,13 @@ class TaskServices {
             session.startTransaction();
             const task = await TaskModel.findById(taskId).session(session);
             if (!task) {
-                throw new HttpError("Task not found", 404);
+                throw new NotFoundError("Task not found", 404);
             }
             
             if (updateData.categoryId){
                 const category = await CategoryServices.findById(updateData.categoryId).session(session);
                 if (!category) {
-                    throw new HttpError("Category not found", 404);
+                    throw new NotFoundError("Category not found", 404);
                 }
             }
            
@@ -216,8 +216,8 @@ class TaskServices {
             }
         } catch (e) {
             session.abortTransaction();
-            if(e instanceof HttpError) throw e;
-            throw new HttpError(`Update task error: ${e.message}`, 500);
+            if(e instanceof BaseError) throw e;
+            throw new ServerError(`Update task error: ${e.message}`, 500);
         }finally{
             session.endSession();
         }
@@ -228,13 +228,13 @@ class TaskServices {
         try {
             const task = await TaskModel.findById(taskId).session(session);
             if (!task) {
-                throw new HttpError("Task not found", 404);
+                throw new NotFoundError("Task not found", 404);
             }
         
             if (updateData.categoryId){
                 const category = await CategoryModel.findById(updateData.categoryId).session(session);
                 if (!category) {
-                    throw new HttpError("Category not found", 404);
+                    throw new NotFoundError("Category not found", 404);
                 }
             }
             
@@ -250,8 +250,8 @@ class TaskServices {
             }
         } catch (e) {
             await session.abortTransaction();
-            if(e instanceof HttpError) throw e;
-            throw new HttpError(`Update tasks error: ${e.message}`, 500);
+            if(e instanceof BaseError) throw e;
+            throw new ServerError(`Update tasks error: ${e.message}`, 500);
         }finally{
             session.endSession();
         }
@@ -312,7 +312,8 @@ class TaskServices {
             };
         } catch (e) {
             await session.abortTransaction();
-            throw new HttpError(`Bulk tasks updated error: ${e.message}`, 500);
+            if(e instanceof BaseError) throw e;
+            throw new ServerError(`Bulk tasks updated error: ${e.message}`, 500);
         }finally{
             session.endSession();
         }
@@ -384,8 +385,8 @@ class TaskServices {
             };
         } catch (e) {
             await session.abortTransaction();
-            if(e instanceof HttpError) throw e;
-            throw new HttpError(`Bulk tasks updated error: ${e.message}`, 500);
+            if(e instanceof BaseError) throw e;
+            throw new ServerError(`Bulk tasks updated error: ${e.message}`, 500);
         }finally{
             session.endSession();
         }
@@ -400,8 +401,8 @@ class TaskServices {
             const user = await UserModel.findById(userId).session(session);
             const task = await TaskModel.findById(taskId).session(session);
             const subtaskIds = await SubtaskModel.find({taskId},{_id:1}).session(session);
-            if(!task) throw new HttpError("Task not found",404);
-            if(!user) throw new HttpError("User not found",404);
+            if(!task) throw new NotFoundError("Task not found",404);
+            if(!user) throw new NotFoundError("User not found",404);
 
             await TaskModel.deleteOne({_id:taskId,userId},{session});
             await SubtaskModel.deleteMany({taskId},{session});
@@ -412,8 +413,8 @@ class TaskServices {
             }
         } catch (e) {
             await session.abortTransaction();
-            if(e instanceof HttpError) throw e;
-            throw new HttpError(`Delete task error: ${e.message}`,500);
+            if(e instanceof BaseError) throw e;
+            throw new ServerError(`Delete task error: ${e.message}`,500);
         }finally{
             await session.endSession();
         }
@@ -423,7 +424,7 @@ class TaskServices {
         try {
             session.startTransaction();
             const user = await UserModel.findById(userId).session(session);
-            if(!user) throw new HttpError("User not found",404);
+            if(!user) throw new NotFoundError("User not found",404);
             let deleteCount=0;
             let deleteFailed=0;
             if(ids.length===0){
@@ -462,8 +463,8 @@ class TaskServices {
             }
         } catch (e) {
             await session.abortTransaction();
-            if(e instanceof HttpError) throw e;
-            throw new HttpError(`Delete multiple tasks error: ${e.message}`,500);
+            if(e instanceof BaseError) throw e;
+            throw new ServerError(`Delete multiple tasks error: ${e.message}`,500);
         }finally{
             await session.endSession();
         }

@@ -1,6 +1,6 @@
 import SettingModel from "./setting.model.js";
 import UserServices from "../user/user.services.js";
-import HttpError from "../../utils/http.error.js";
+import { ConflictError, NotFoundError, ServerError } from "../../utils/error.js";
 class SettingServices {
     static async createSetting(userId,session=null){ 
         try {
@@ -11,7 +11,7 @@ class SettingServices {
             await setting.save(options);
             return setting.toObject();
         } catch (e) {
-            throw new HttpError(`Create setting error: ${e.message}`,500);
+            throw new ServerError(`Create setting error: ${e.message}`,500);
         }
     }
     static async findByUserId(userId){
@@ -22,7 +22,7 @@ class SettingServices {
             const settings = await SettingModel.find();
             return settings;
         } catch (e) {
-            throw new Error(`Find all settings error: ${e.message}`);
+            throw new ServerError(`Find all settings error: ${e.message}`);
         }
     }
     static async findById(id){
@@ -30,7 +30,7 @@ class SettingServices {
             const setting = await SettingModel.findById(id);
             return setting;
         } catch (e) {
-            throw new Error(`Find setting by id error: ${e.message}`);
+            throw new ServerError(`Find setting by id error: ${e.message}`);
         }
     }
     static async updateByUserId(userId, request) {
@@ -41,24 +41,24 @@ class SettingServices {
                 { new: true, runValidators: true } 
             )
             if (!setting) {
-                throw new HttpError('Setting not found',404);
+                throw new NotFoundError('Setting not found',404);
             }
         } catch (e) {
-            throw new Error(`Update setting by userId error: ${e.message}`);
+            throw new ServerError(`Update setting by userId error: ${e.message}`);
         }
     }
     static async deleteByUserId(userId) {
         try {
             const user = await UserServices.findById(userId);
             if (user) {
-                throw new HttpError('Unable delete setting because user still exists', 409);
+                throw new ConflictError('Unable delete setting because user still exists', 409);
             }
             const setting = await SettingModel.findOneAndDelete({ userId: userId });
             if (!setting) {
-                throw new HttpError('Setting not found', 404);
+                throw new NotFoundError('Setting not found', 404);
             }
         } catch (e) {
-            throw new Error(`Delete setting by userId error: ${e.message}`);
+            throw new ServerError(`Delete setting by userId error: ${e.message}`);
         }
     }
 }

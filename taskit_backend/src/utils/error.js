@@ -1,51 +1,54 @@
 export class BaseError extends Error {
-  constructor(statusCode, message, detail = null) {
+  constructor(statusCode, message) {
     super(message);
 
     this.statusCode = statusCode;
-    this.detail = detail;
     this.type = this.constructor.name;
 
     Error.captureStackTrace(this, this.constructor);
   }
 }
-
-export class HttpError extends BaseError {
-  constructor(statusCode, message, detail = null) {
-    super(statusCode, message, detail);
+export class ServerError extends BaseError {
+  constructor(message = "Server error") {
+    super(500, message);
   }
 }
 
-export class NotFoundError extends BaseError{
-  constructor(message = "Not found", detail = null) {
-    super(404, message, detail);
+export class NotFoundError extends BaseError {
+  constructor(message = "Not found") {
+    super(404, message);
   }
 }
 
 export class ConflictError extends BaseError {
-  constructor(message = "Conflict", detail = null) {
-    super(409, message, detail);
+  constructor(message = "Conflict") {
+    super(409, message);
   }
 }
 
 export class ValidationError extends BaseError {
-  constructor(message = "Validation failed", detail = null) {
-    super(400, message, detail);
+  constructor(message = "Validation failed") {
+    super(400, message);
+  }
+}
+export class BadRequestError extends BaseError {
+  constructor(message = "Bad request") {
+    super(400, message);
   }
 }
 export class AuthenticationError extends BaseError {
-  constructor(message = "Authentication failed", detail = null) {
-    super(401, message, detail);
+  constructor(message = "Authentication failed") {
+    super(401, message);
   }
 }
 
 export class AuthorizationError extends BaseError {
-  constructor(message = "Authorization failed", detail = null) {
-    super(403, message, detail);
+  constructor(message = "Authorization failed") {
+    super(403, message);
   }
 }
 export class DatabaseError extends BaseError {
-  constructor(message = "Database error", detail = null) {
-    super(500, message, detail);
+  constructor(message = "Database error") {
+    super(500, message);
   }
 }

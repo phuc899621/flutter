@@ -11,15 +11,10 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  username: {
-    type: String,
-    required: true,
-    unique: true,
-  },
   status: {
     type: String,
     enum: ["pending", "verified","deleted"],
-    default: ["pending"],
+    default: "pending",
   },
   provider: {
     type: String,
