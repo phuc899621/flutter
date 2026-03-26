@@ -1,3 +1,4 @@
+import e from "express";
 import AuthServices from "./auth.service.js";
 
 export const signup = async (req, res, next) => {
@@ -10,44 +11,57 @@ export const signup = async (req, res, next) => {
     next(e);
   }
 };
-export const verifySignup = async (req, res) => {
+export const verifySignup = async (req, res, next) => {
   try {
-    const { id, otp } = req.body;
-    await AuthServices.verifySignup(id, otp);
+    const { email, otp } = req.body;
+    await AuthServices.verifySignup(email, otp);
     return res.status(200).json({
-      message: "Verify your account successfully!",
-      data: {},
+      message: "Your account has been activated!",
     });
   } catch (e) {
-    let statusCode = e.statusCode || 500;
-    return res.status(statusCode).json({
-      message: e.message,
-      data: {},
-    });
+    next(e);
   }
 };
-export const resendSignupOtp = async (req, res) => {
+export const resendSignupOtp = async (req, res, next) => {
   try {
-    const { id } = req.body;
-    await AuthServices.resendSignupOtp(id);
+    const { email } = req.params;
+    await AuthServices.resendSignupOtp(email);
     return res.status(200).json({
-      message: "Verify otp for signup has been send to your email",
-      data: {},
+      message: "OTP code has been resend to your email!",
     });
   } catch (e) {
-    let statusCode = e.statusCode || 500;
-    return res.status(statusCode).json({
-      message: e.message,
-      data: {},
-    });
+    next(e);
   }
 };
 
-export const login = async (req, res) => {
+export const login = async (req, res, next) => {
   try {
-    const result = await AuthServices.login(req.body);
+    const { email, password } = req.body;
+    const result = await AuthServices.login(email, password);
     return res.status(200).json({
       message: "Login successfully!",
+      data: result,
+    });
+  } catch (e) {
+    next(e);
+  }
+};
+export const refresh = async (req, res, next) => {
+  try {
+    const result = await AuthServices.refreshToken(req.refreshToken);
+    return res.status(200).json({
+      message: "Refresh token successfully!",
+      data: result,
+    });
+  } catch (e) {
+    next(e);
+  }
+};
+export const logout = async (req, res, next) => {
+  try {
+    const result = await AuthServices.logout(refreshToken);
+    return res.status(200).json({
+      message: "Logout successfully!",
       data: result,
     });
   } catch (e) {

@@ -1,43 +1,50 @@
-import EmailService from "../../utils/emailService.js";
 import { ServerError } from "../../utils/error.js";
+import EmailServices from "../email/email.service.js";
 import ResetPassModel from "./reset.pass.model.js";
 import bcrypt from "bcryptjs";
 import crypto from "crypto";
 
 class ResetPassService {
-    static async create(email, resetToken, session=null) {
-        const resetPass = new ResetPassModel({ email, resetToken });
-        await resetPass.save({ session });
+  static async create(email, resetToken, session = null) {
+    const resetPass = new ResetPassModel({ email, resetToken });
+    await resetPass.save({ session });
+  }
+  static async update(email, resetToken, session = null) {
+    try {
+      await ResetPassModel.findOneAndUpdate(
+        { email },
+        { resetToken, createdAt: Date.now() },
+        { session },
+      );
+    } catch (e) {
+      throw new ServerError(
+        `Update reset password verification error`,
+        e.message,
+      );
     }
-    static async update(email, resetToken,session=null) {
-        try{
-            await ResetPassModel.findOneAndUpdate({ email }, { resetToken,createdAt:Date.now() },{session});
-        }catch(e){
-            throw new ServerError(`Update reset password verification error`,e.message);
-        }
-    }    
-    static generateOTP() {
-        return Math.floor(1000 + Math.random() * 9000).toString();
-    }
-    static async findByEmail(email) {
-        return await ResetPassModel.findOne({email});
-    }
-    static async deleteByEmail(email) {
-        return await ResetPassModel.deleteOne({email});
-    }
-    static async compareOtp(otp, hashOtp) {
-        return await bcrypt.compare(otp, hashOtp);
-    }
-    static async sendOTP(email, otp) {
-        return EmailService.sendEmail(
-            email,
-            "Verify email for Taskit account",
-            `Your OTP is: ${otp}. This OTP only last 15 minutes.`
-        );
-    }
-    static generateResetToken() {
-        return crypto.randomBytes(20).toString("hex");
-    }
+  }
+  static generateOTP() {
+    return Math.floor(1000 + Math.random() * 9000).toString();
+  }
+  static async findByEmail(email) {
+    return await ResetPassModel.findOne({ email });
+  }
+  static async deleteByEmail(email) {
+    return await ResetPassModel.deleteOne({ email });
+  }
+  static async compareOtp(otp, hashOtp) {
+    return await bcrypt.compare(otp, hashOtp);
+  }
+  static async sendOTP(email, otp) {
+    return EmailServices.sendEmail(
+      email,
+      "Verify email for Taskit account",
+      `Your OTP is: ${otp}. This OTP only last 15 minutes.`,
+    );
+  }
+  static generateResetToken() {
+    return crypto.randomBytes(20).toString("hex");
+  }
 }
 
 export default ResetPassService;

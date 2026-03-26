@@ -67,3 +67,823 @@ Error: Send email error
     at async EmailServices.sendEmail (file:///M:/flutter/taskit_backend/src/utils/emailService.js:13:7)
     at async AuthService.signup (file:///M:/flutter/taskit_backend/src/features/auth/auth.service.js:34:7)
     at async signup (file:///M:/flutter/taskit_backend/src/features/auth/auth.controller.js:5:5) 
+2026-03-25 08:41:04 [[31merror[39m]: [1;31mCreate user error: Plan executor error during findAndModify :: caused by :: E11000 duplicate key error collection: Taskit.users index: providerId_1 dup key: { providerId: null }
+[0m
+Error: Create user error: Plan executor error during findAndModify :: caused by :: E11000 duplicate key error collection: Taskit.users index: providerId_1 dup key: { providerId: null }
+    at UserServices.upsertUser (file:///M:/flutter/taskit_backend/src/features/user/user.services.js:68:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async AuthService.signup (file:///M:/flutter/taskit_backend/src/features/auth/auth.service.js:29:22)
+    at async signup (file:///M:/flutter/taskit_backend/src/features/auth/auth.controller.js:5:5) 
+2026-03-25 08:44:02 [[31merror[39m]: [1;31mCreate user error: Plan executor error during findAndModify :: caused by :: E11000 duplicate key error collection: Taskit.users index: providerId_1 dup key: { providerId: null }
+[0m
+Error: Create user error: Plan executor error during findAndModify :: caused by :: E11000 duplicate key error collection: Taskit.users index: providerId_1 dup key: { providerId: null }
+    at UserServices.upsertUser (file:///M:/flutter/taskit_backend/src/features/user/user.services.js:68:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async AuthService.signup (file:///M:/flutter/taskit_backend/src/features/auth/auth.service.js:29:22)
+    at async signup (file:///M:/flutter/taskit_backend/src/features/auth/auth.controller.js:5:5) 
+2026-03-25 08:54:50 [[31merror[39m]: [1;31mSend email error
+[0m
+Error: Send email error
+    at Object.sendMail (file:///M:/flutter/taskit_backend/src/utils/email.js:49:13)
+    at EmailServices.sendEmail (file:///M:/flutter/taskit_backend/src/features/email/email.service.js:15:40)
+    at AuthService.signup (file:///M:/flutter/taskit_backend/src/features/auth/auth.service.js:36:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async signup (file:///M:/flutter/taskit_backend/src/features/auth/auth.controller.js:5:5) 
+2026-03-25 08:55:31 [[31merror[39m]: [1;31mSend email error
+[0m
+Error: Send email error
+    at Object.sendMail (file:///M:/flutter/taskit_backend/src/utils/email.js:49:13)
+    at EmailServices.sendEmail (file:///M:/flutter/taskit_backend/src/features/email/email.service.js:15:40)
+    at AuthService.signup (file:///M:/flutter/taskit_backend/src/features/auth/auth.service.js:36:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async signup (file:///M:/flutter/taskit_backend/src/features/auth/auth.controller.js:5:5) 
+2026-03-25 08:56:04 [[31merror[39m]: [1;31mSend email error: princess is not defined
+[0m
+Error: Send email error: princess is not defined
+    at Object.sendMail (file:///M:/flutter/taskit_backend/src/utils/email.js:49:13)
+    at EmailServices.sendEmail (file:///M:/flutter/taskit_backend/src/features/email/email.service.js:15:40)
+    at AuthService.signup (file:///M:/flutter/taskit_backend/src/features/auth/auth.service.js:36:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async signup (file:///M:/flutter/taskit_backend/src/features/auth/auth.controller.js:5:5) 
+2026-03-25 18:31:38 [[31merror[39m]: [1;31mSign up error: VerificationServices is not defined
+[0m
+Error: Sign up error: VerificationServices is not defined
+    at AuthService.signup (file:///M:/flutter/taskit_backend/src/features/auth/auth.service.js:48:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async signup (file:///M:/flutter/taskit_backend/src/features/auth/auth.controller.js:5:5) 
+2026-03-25 18:32:44 [[31merror[39m]: [1;31mSign up error: Verifica is not defined
+[0m
+Error: Sign up error: Verifica is not defined
+    at AuthService.signup (file:///M:/flutter/taskit_backend/src/features/auth/auth.service.js:46:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async signup (file:///M:/flutter/taskit_backend/src/features/auth/auth.controller.js:5:5) 
+2026-03-25 21:23:04 [[31merror[39m]: [1;31mError Signup error: UserServices is not defined[0m
+Error: Signup error: UserServices is not defined
+    at AuthService.signup (file:///M:/flutter/taskit_backend/src/features/auth/auth.service.js:49:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async signup (file:///M:/flutter/taskit_backend/src/features/auth/auth.controller.js:5:5) {
+  "requestId": "6138f6d6-61cd-4e62-9544-fe3cbd5093d3",
+  "method": "POST",
+  "url": "/api/v1/auth/signup",
+  "status": 500
+}
+2026-03-25 21:23:04 [[31merror[39m]: [1;31mAPI Error[0m {
+  "requestId": "6138f6d6-61cd-4e62-9544-fe3cbd5093d3",
+  "method": "POST",
+  "url": "/api/v1/auth/signup",
+  "status": 500,
+  "time": "35.14 ms",
+  "ip": "::1"
+}
+2026-03-25 21:23:46 [[31merror[39m]: [1;31mError Signup error: Cannot destructure property 'status' of 'undefined' as it is undefined.[0m
+Error: Signup error: Cannot destructure property 'status' of 'undefined' as it is undefined.
+    at AuthService.signup (file:///M:/flutter/taskit_backend/src/features/auth/auth.service.js:49:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async signup (file:///M:/flutter/taskit_backend/src/features/auth/auth.controller.js:5:5) {
+  "requestId": "424b32c5-93f4-4034-85ca-80d8db524e39",
+  "method": "POST",
+  "url": "/api/v1/auth/signup",
+  "status": 500
+}
+2026-03-25 21:23:46 [[31merror[39m]: [1;31mAPI Error[0m {
+  "requestId": "424b32c5-93f4-4034-85ca-80d8db524e39",
+  "method": "POST",
+  "url": "/api/v1/auth/signup",
+  "status": 500,
+  "time": "28.83 ms",
+  "ip": "::1"
+}
+2026-03-25 21:26:17 [[31merror[39m]: [1;31mError Signup error: Cannot destructure property 'status' of 'undefined' as it is undefined.[0m
+Error: Signup error: Cannot destructure property 'status' of 'undefined' as it is undefined.
+    at AuthService.signup (file:///M:/flutter/taskit_backend/src/features/auth/auth.service.js:49:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async signup (file:///M:/flutter/taskit_backend/src/features/auth/auth.controller.js:5:5) {
+  "requestId": "c3fabd90-33e4-4546-9336-250363881a2b",
+  "method": "POST",
+  "url": "/api/v1/auth/signup",
+  "status": 500
+}
+2026-03-25 21:26:17 [[31merror[39m]: [1;31mAPI Error[0m {
+  "requestId": "c3fabd90-33e4-4546-9336-250363881a2b",
+  "method": "POST",
+  "url": "/api/v1/auth/signup",
+  "status": 500,
+  "time": "20.68 ms",
+  "ip": "::1"
+}
+2026-03-25 21:28:01 [[31merror[39m]: [1;31mError Signup error: TypeError: Cannot destructure property 'status' of 'undefined' as it is undefined.[0m
+Error: Signup error: TypeError: Cannot destructure property 'status' of 'undefined' as it is undefined.
+    at AuthService.signup (file:///M:/flutter/taskit_backend/src/features/auth/auth.service.js:49:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async signup (file:///M:/flutter/taskit_backend/src/features/auth/auth.controller.js:5:5) {
+  "requestId": "ffc5c062-7f2e-460c-9c46-9ab8ed1f0c78",
+  "method": "POST",
+  "url": "/api/v1/auth/signup",
+  "status": 500
+}
+2026-03-25 21:28:01 [[31merror[39m]: [1;31mAPI Error[0m {
+  "requestId": "ffc5c062-7f2e-460c-9c46-9ab8ed1f0c78",
+  "method": "POST",
+  "url": "/api/v1/auth/signup",
+  "status": 500,
+  "time": "59.26 ms",
+  "ip": "::1"
+}
+2026-03-25 21:31:51 [[31merror[39m]: [1;31mError Signup error: TypeError: Cannot destructure property 'status' of 'undefined' as it is undefined.[0m
+Error: Signup error: TypeError: Cannot destructure property 'status' of 'undefined' as it is undefined.
+    at AuthService.signup (file:///M:/flutter/taskit_backend/src/features/auth/auth.service.js:50:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async signup (file:///M:/flutter/taskit_backend/src/features/auth/auth.controller.js:5:5) {
+  "requestId": "ce4c5cd5-01f5-43f3-9911-e4a3ef4e6dc2",
+  "method": "POST",
+  "url": "/api/v1/auth/signup",
+  "status": 500
+}
+2026-03-25 21:31:51 [[31merror[39m]: [1;31mAPI Error[0m {
+  "requestId": "ce4c5cd5-01f5-43f3-9911-e4a3ef4e6dc2",
+  "method": "POST",
+  "url": "/api/v1/auth/signup",
+  "status": 500,
+  "time": "16.75 ms",
+  "ip": "::1"
+}
+2026-03-25 21:33:10 [[31merror[39m]: [1;31mError Signup error: TypeError: Cannot destructure property 'status' of 'undefined' as it is undefined.[0m
+Error: Signup error: TypeError: Cannot destructure property 'status' of 'undefined' as it is undefined.
+    at AuthService.signup (file:///M:/flutter/taskit_backend/src/features/auth/auth.service.js:50:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async signup (file:///M:/flutter/taskit_backend/src/features/auth/auth.controller.js:5:5) {
+  "requestId": "156c933b-a290-4585-b8a8-3b1c321577ad",
+  "method": "POST",
+  "url": "/api/v1/auth/signup",
+  "status": 500
+}
+2026-03-25 21:33:10 [[31merror[39m]: [1;31mAPI Error[0m {
+  "requestId": "156c933b-a290-4585-b8a8-3b1c321577ad",
+  "method": "POST",
+  "url": "/api/v1/auth/signup",
+  "status": 500,
+  "time": "19.46 ms",
+  "ip": "::1"
+}
+2026-03-25 21:35:06 [[31merror[39m]: [1;31mError Signup error: TypeError: Cannot destructure property 'status' of 'undefined' as it is undefined.[0m
+Error: Signup error: TypeError: Cannot destructure property 'status' of 'undefined' as it is undefined.
+    at AuthService.signup (file:///M:/flutter/taskit_backend/src/features/auth/auth.service.js:50:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async signup (file:///M:/flutter/taskit_backend/src/features/auth/auth.controller.js:5:5) {
+  "requestId": "24535480-febc-4774-aafc-9774e2846267",
+  "method": "POST",
+  "url": "/api/v1/auth/signup",
+  "status": 500
+}
+2026-03-25 21:35:06 [[31merror[39m]: [1;31mAPI Error[0m {
+  "requestId": "24535480-febc-4774-aafc-9774e2846267",
+  "method": "POST",
+  "url": "/api/v1/auth/signup",
+  "status": 500,
+  "time": "17.49 ms",
+  "ip": "::1"
+}
+2026-03-25 21:39:06 [[31merror[39m]: [1;31mError Signup error: TypeError: Cannot read properties of null (reading '$elemMatch')[0m
+Error: Signup error: TypeError: Cannot read properties of null (reading '$elemMatch')
+    at AuthService.signup (file:///M:/flutter/taskit_backend/src/features/auth/auth.service.js:50:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async signup (file:///M:/flutter/taskit_backend/src/features/auth/auth.controller.js:5:5) {
+  "requestId": "1cc94b41-de0c-4920-a2ad-916e53f8b3df",
+  "method": "POST",
+  "url": "/api/v1/auth/signup",
+  "status": 500
+}
+2026-03-25 21:39:06 [[31merror[39m]: [1;31mAPI Error[0m {
+  "requestId": "1cc94b41-de0c-4920-a2ad-916e53f8b3df",
+  "method": "POST",
+  "url": "/api/v1/auth/signup",
+  "status": 500,
+  "time": "20.64 ms",
+  "ip": "::1"
+}
+2026-03-25 21:43:10 [[31merror[39m]: [1;31mError id is not defined[0m
+ReferenceError: id is not defined
+    at verifySignup (file:///M:/flutter/taskit_backend/src/features/auth/auth.controller.js:16:37)
+    at Layer.handle [as handle_request] (M:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at next (M:\flutter\taskit_backend\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (M:\flutter\taskit_backend\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (M:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at M:\flutter\taskit_backend\node_modules\express\lib\router\index.js:284:15
+    at router.process_params (M:\flutter\taskit_backend\node_modules\express\lib\router\index.js:346:12)
+    at next (M:\flutter\taskit_backend\node_modules\express\lib\router\index.js:280:10)
+    at router.handle (M:\flutter\taskit_backend\node_modules\express\lib\router\index.js:175:3)
+    at router (M:\flutter\taskit_backend\node_modules\express\lib\router\index.js:47:12) {
+  "requestId": "4b6d02fb-7f08-4998-ae22-c171e4f18b78",
+  "method": "POST",
+  "url": "/api/v1/auth/signup/verify",
+  "status": 500
+}
+2026-03-25 21:43:10 [[31merror[39m]: [1;31mAPI Error[0m {
+  "requestId": "4b6d02fb-7f08-4998-ae22-c171e4f18b78",
+  "method": "POST",
+  "url": "/api/v1/auth/signup/verify",
+  "status": 500,
+  "time": "96.52 ms",
+  "ip": "::1"
+}
+2026-03-25 21:43:29 [[31merror[39m]: [1;31mError Verify signup error : Cannot read properties of null (reading 'toObject')[0m
+Error: Verify signup error : Cannot read properties of null (reading 'toObject')
+    at AuthService.verifySignup (file:///M:/flutter/taskit_backend/src/features/auth/auth.service.js:67:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async verifySignup (file:///M:/flutter/taskit_backend/src/features/auth/auth.controller.js:16:5) {
+  "requestId": "d26d1f5e-fb64-401c-a20e-5cfd0d210893",
+  "method": "POST",
+  "url": "/api/v1/auth/signup/verify",
+  "status": 500
+}
+2026-03-25 21:43:29 [[31merror[39m]: [1;31mAPI Error[0m {
+  "requestId": "d26d1f5e-fb64-401c-a20e-5cfd0d210893",
+  "method": "POST",
+  "url": "/api/v1/auth/signup/verify",
+  "status": 500,
+  "time": "160.23 ms",
+  "ip": "::1"
+}
+2026-03-25 21:46:10 [[31merror[39m]: [1;31mError Verify signup error : Cannot read properties of null (reading 'toObject')[0m
+Error: Verify signup error : Cannot read properties of null (reading 'toObject')
+    at AuthService.verifySignup (file:///M:/flutter/taskit_backend/src/features/auth/auth.service.js:68:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async verifySignup (file:///M:/flutter/taskit_backend/src/features/auth/auth.controller.js:16:5) {
+  "requestId": "0beecfa9-1294-43b6-bf7b-aaa2a456df16",
+  "method": "POST",
+  "url": "/api/v1/auth/signup/verify",
+  "status": 500
+}
+2026-03-25 21:46:10 [[31merror[39m]: [1;31mAPI Error[0m {
+  "requestId": "0beecfa9-1294-43b6-bf7b-aaa2a456df16",
+  "method": "POST",
+  "url": "/api/v1/auth/signup/verify",
+  "status": 500,
+  "time": "145.90 ms",
+  "ip": "::1"
+}
+2026-03-25 21:47:25 [[31merror[39m]: [1;31mError Account not found[0m
+Error: Account not found
+    at AuthService.verifySignup (file:///M:/flutter/taskit_backend/src/features/auth/auth.service.js:60:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async verifySignup (file:///M:/flutter/taskit_backend/src/features/auth/auth.controller.js:16:5) {
+  "requestId": "ff6a4100-74bc-4aac-b58f-60deda85062f",
+  "method": "POST",
+  "url": "/api/v1/auth/signup/verify",
+  "status": 404
+}
+2026-03-25 21:47:33 [[31merror[39m]: [1;31mError Verify signup error : Invalid OTP status code (no body)[0m
+Error: Verify signup error : Invalid OTP status code (no body)
+    at AuthService.verifySignup (file:///M:/flutter/taskit_backend/src/features/auth/auth.service.js:68:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async verifySignup (file:///M:/flutter/taskit_backend/src/features/auth/auth.controller.js:16:5) {
+  "requestId": "c899d25d-05c5-4de5-b847-44657dc5ef05",
+  "method": "POST",
+  "url": "/api/v1/auth/signup/verify",
+  "status": 500
+}
+2026-03-25 21:47:33 [[31merror[39m]: [1;31mAPI Error[0m {
+  "requestId": "c899d25d-05c5-4de5-b847-44657dc5ef05",
+  "method": "POST",
+  "url": "/api/v1/auth/signup/verify",
+  "status": 500,
+  "time": "188.67 ms",
+  "ip": "::1"
+}
+2026-03-25 21:51:00 [[31merror[39m]: [1;31mError Verify signup error : Invalid OTP status code (no body)[0m
+Error: Verify signup error : Invalid OTP status code (no body)
+    at AuthService.verifySignup (file:///M:/flutter/taskit_backend/src/features/auth/auth.service.js:68:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async verifySignup (file:///M:/flutter/taskit_backend/src/features/auth/auth.controller.js:16:5) {
+  "requestId": "a378259b-661c-47cc-a59f-5b706b5b8c55",
+  "method": "POST",
+  "url": "/api/v1/auth/signup/verify",
+  "status": 500
+}
+2026-03-25 21:51:00 [[31merror[39m]: [1;31mAPI Error[0m {
+  "requestId": "a378259b-661c-47cc-a59f-5b706b5b8c55",
+  "method": "POST",
+  "url": "/api/v1/auth/signup/verify",
+  "status": 500,
+  "time": "1247.66 ms",
+  "ip": "::1"
+}
+2026-03-25 21:56:09 [[31merror[39m]: [1;31mError Invalid OTP[0m
+Error: Invalid OTP
+    at VerificationService.verifySignupOTP (file:///M:/flutter/taskit_backend/src/features/verification/verification.service.js:48:24)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async AuthService.verifySignup (file:///M:/flutter/taskit_backend/src/features/auth/auth.service.js:61:7)
+    at async verifySignup (file:///M:/flutter/taskit_backend/src/features/auth/auth.controller.js:16:5) {
+  "requestId": "b486dc53-da79-43b9-9118-f6cd95a91edd",
+  "method": "POST",
+  "url": "/api/v1/auth/signup/verify",
+  "status": 400
+}
+2026-03-25 21:56:25 [[31merror[39m]: [1;31mError Invalid OTP[0m
+Error: Invalid OTP
+    at VerificationService.verifySignupOTP (file:///M:/flutter/taskit_backend/src/features/verification/verification.service.js:48:24)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async AuthService.verifySignup (file:///M:/flutter/taskit_backend/src/features/auth/auth.service.js:61:7)
+    at async verifySignup (file:///M:/flutter/taskit_backend/src/features/auth/auth.controller.js:16:5) {
+  "requestId": "11eefb40-7213-4c67-bfde-13776c03a136",
+  "method": "POST",
+  "url": "/api/v1/auth/signup/verify",
+  "status": 400
+}
+2026-03-25 21:56:33 [[31merror[39m]: [1;31mError id is not defined[0m
+ReferenceError: id is not defined
+    at resendSignupOtp (file:///M:/flutter/taskit_backend/src/features/auth/auth.controller.js:27:40)
+    at Layer.handle [as handle_request] (M:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at next (M:\flutter\taskit_backend\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (M:\flutter\taskit_backend\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (M:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at M:\flutter\taskit_backend\node_modules\express\lib\router\index.js:284:15
+    at router.process_params (M:\flutter\taskit_backend\node_modules\express\lib\router\index.js:346:12)
+    at next (M:\flutter\taskit_backend\node_modules\express\lib\router\index.js:280:10)
+    at router.handle (M:\flutter\taskit_backend\node_modules\express\lib\router\index.js:175:3)
+    at router (M:\flutter\taskit_backend\node_modules\express\lib\router\index.js:47:12) {
+  "requestId": "83babafb-7b1d-43ba-a6f8-904bc1b56799",
+  "method": "POST",
+  "url": "/api/v1/auth/signup/resend",
+  "status": 500
+}
+2026-03-25 21:56:33 [[31merror[39m]: [1;31mAPI Error[0m {
+  "requestId": "83babafb-7b1d-43ba-a6f8-904bc1b56799",
+  "method": "POST",
+  "url": "/api/v1/auth/signup/resend",
+  "status": 500,
+  "time": "1.42 ms",
+  "ip": "::1"
+}
+2026-03-25 21:57:00 [[31merror[39m]: [1;31mError Resend signup otp error: verObj is not defined[0m
+Error: Resend signup otp error: verObj is not defined
+    at AuthService.resendSignupOtp (file:///M:/flutter/taskit_backend/src/features/auth/auth.service.js:92:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async resendSignupOtp (file:///M:/flutter/taskit_backend/src/features/auth/auth.controller.js:27:5) {
+  "requestId": "b46ecd47-4ff2-481c-9922-32c9b2df6a21",
+  "method": "POST",
+  "url": "/api/v1/auth/signup/resend",
+  "status": 500
+}
+2026-03-25 21:57:00 [[31merror[39m]: [1;31mAPI Error[0m {
+  "requestId": "b46ecd47-4ff2-481c-9922-32c9b2df6a21",
+  "method": "POST",
+  "url": "/api/v1/auth/signup/resend",
+  "status": 500,
+  "time": "214.92 ms",
+  "ip": "::1"
+}
+2026-03-26 10:47:24 [[31merror[39m]: [1;31mError Resend signup otp error: User account not found status code (no body)[0m
+Error: Resend signup otp error: User account not found status code (no body)
+    at AuthService.resendSignupOtp (file:///M:/flutter/taskit_backend/src/features/auth/auth.service.js:96:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async resendSignupOtp (file:///M:/flutter/taskit_backend/src/features/auth/auth.controller.js:27:5) {
+  "requestId": "145e8c05-b226-4ab3-84f8-ce8f8f67392b",
+  "method": "POST",
+  "url": "/api/v1/auth/signup/resend",
+  "status": 500
+}
+2026-03-26 10:47:24 [[31merror[39m]: [1;31mAPI Error[0m {
+  "requestId": "145e8c05-b226-4ab3-84f8-ce8f8f67392b",
+  "method": "POST",
+  "url": "/api/v1/auth/signup/resend",
+  "status": 500,
+  "time": "62.96 ms",
+  "ip": "::1"
+}
+2026-03-26 11:03:52 [[31merror[39m]: [1;31mError User account not found[0m
+Error: User account not found
+    at UserService.validateUserForResendOTP (file:///M:/flutter/taskit_backend/src/features/user/user.service.js:47:24)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async AuthService.resendSignupOtp (file:///M:/flutter/taskit_backend/src/features/auth/auth.service.js:81:23)
+    at async resendSignupOtp (file:///M:/flutter/taskit_backend/src/features/auth/auth.controller.js:27:5) {
+  "requestId": "a6f75ec3-4d9d-44ea-bdab-173c87ae9083",
+  "method": "POST",
+  "url": "/api/v1/auth/signup/resend",
+  "status": 400
+}
+2026-03-26 11:06:02 [[31merror[39m]: [1;31mError schema.validate is not a function[0m
+TypeError: schema.validate is not a function
+    at file:///M:/flutter/taskit_backend/src/middleware/validate.js:8:39
+    at Layer.handle [as handle_request] (M:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at next (M:\flutter\taskit_backend\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (M:\flutter\taskit_backend\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (M:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at M:\flutter\taskit_backend\node_modules\express\lib\router\index.js:284:15
+    at router.process_params (M:\flutter\taskit_backend\node_modules\express\lib\router\index.js:346:12)
+    at next (M:\flutter\taskit_backend\node_modules\express\lib\router\index.js:280:10)
+    at router.handle (M:\flutter\taskit_backend\node_modules\express\lib\router\index.js:175:3)
+    at router (M:\flutter\taskit_backend\node_modules\express\lib\router\index.js:47:12) {
+  "requestId": "77e42e23-8e30-4f72-9b70-b70b9de89597",
+  "method": "POST",
+  "url": "/api/v1/auth/signup/resend",
+  "status": 500
+}
+2026-03-26 11:06:02 [[31merror[39m]: [1;31mAPI Error[0m {
+  "requestId": "77e42e23-8e30-4f72-9b70-b70b9de89597",
+  "method": "POST",
+  "url": "/api/v1/auth/signup/resend",
+  "status": 500,
+  "time": "13.54 ms",
+  "ip": "::1"
+}
+2026-03-26 11:07:36 [[31merror[39m]: [1;31mError schema.validate is not a function[0m
+TypeError: schema.validate is not a function
+    at file:///M:/flutter/taskit_backend/src/middleware/validate.js:8:39
+    at Layer.handle [as handle_request] (M:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at next (M:\flutter\taskit_backend\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (M:\flutter\taskit_backend\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (M:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at M:\flutter\taskit_backend\node_modules\express\lib\router\index.js:284:15
+    at router.process_params (M:\flutter\taskit_backend\node_modules\express\lib\router\index.js:346:12)
+    at next (M:\flutter\taskit_backend\node_modules\express\lib\router\index.js:280:10)
+    at router.handle (M:\flutter\taskit_backend\node_modules\express\lib\router\index.js:175:3)
+    at router (M:\flutter\taskit_backend\node_modules\express\lib\router\index.js:47:12) {
+  "requestId": "eb3cec13-80b2-4015-ab96-d93cba05e5e5",
+  "method": "POST",
+  "url": "/api/v1/auth/signup/resend",
+  "status": 500
+}
+2026-03-26 11:07:36 [[31merror[39m]: [1;31mAPI Error[0m {
+  "requestId": "eb3cec13-80b2-4015-ab96-d93cba05e5e5",
+  "method": "POST",
+  "url": "/api/v1/auth/signup/resend",
+  "status": 500,
+  "time": "1.86 ms",
+  "ip": "::1"
+}
+2026-03-26 11:09:53 [[31merror[39m]: [1;31mError Email is required[0m
+Error: Email is required
+    at file:///M:/flutter/taskit_backend/src/middleware/validate.js:14:15
+    at Layer.handle [as handle_request] (M:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at next (M:\flutter\taskit_backend\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (M:\flutter\taskit_backend\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (M:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at M:\flutter\taskit_backend\node_modules\express\lib\router\index.js:284:15
+    at router.process_params (M:\flutter\taskit_backend\node_modules\express\lib\router\index.js:346:12)
+    at next (M:\flutter\taskit_backend\node_modules\express\lib\router\index.js:280:10)
+    at router.handle (M:\flutter\taskit_backend\node_modules\express\lib\router\index.js:175:3)
+    at router (M:\flutter\taskit_backend\node_modules\express\lib\router\index.js:47:12) {
+  "requestId": "90e7e7a4-45d9-4db2-9017-e7cb75f95eaa",
+  "method": "POST",
+  "url": "/api/v1/auth/signup/resend",
+  "status": 400
+}
+2026-03-26 11:12:23 [[31merror[39m]: [1;31mError Email must be email[0m
+Error: Email must be email
+    at file:///M:/flutter/taskit_backend/src/middleware/validate.js:14:15
+    at Layer.handle [as handle_request] (M:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at next (M:\flutter\taskit_backend\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (M:\flutter\taskit_backend\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (M:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at M:\flutter\taskit_backend\node_modules\express\lib\router\index.js:284:15
+    at param (M:\flutter\taskit_backend\node_modules\express\lib\router\index.js:365:14)
+    at param (M:\flutter\taskit_backend\node_modules\express\lib\router\index.js:376:14)
+    at router.process_params (M:\flutter\taskit_backend\node_modules\express\lib\router\index.js:421:3)
+    at next (M:\flutter\taskit_backend\node_modules\express\lib\router\index.js:280:10) {
+  "requestId": "c83a3547-5204-4262-ab52-0597a535cd65",
+  "method": "POST",
+  "url": "/api/v1/auth/signup/resend/email",
+  "status": 400
+}
+2026-03-26 11:13:49 [[31merror[39m]: [1;31mError Must be a valid email[0m
+Error: Must be a valid email
+    at file:///M:/flutter/taskit_backend/src/middleware/validate.js:14:15
+    at Layer.handle [as handle_request] (M:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at next (M:\flutter\taskit_backend\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (M:\flutter\taskit_backend\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (M:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at M:\flutter\taskit_backend\node_modules\express\lib\router\index.js:284:15
+    at param (M:\flutter\taskit_backend\node_modules\express\lib\router\index.js:365:14)
+    at param (M:\flutter\taskit_backend\node_modules\express\lib\router\index.js:376:14)
+    at router.process_params (M:\flutter\taskit_backend\node_modules\express\lib\router\index.js:421:3)
+    at next (M:\flutter\taskit_backend\node_modules\express\lib\router\index.js:280:10) {
+  "requestId": "ed9f7c2e-c43f-4b16-922c-88a212d79d8e",
+  "method": "POST",
+  "url": "/api/v1/auth/signup/resend/email",
+  "status": 400
+}
+2026-03-26 12:30:47 [[31merror[39m]: [1;31mError Verify signup error : bcrypt is not defined[0m
+Error: Verify signup error : bcrypt is not defined
+    at AuthService.verifySignup (file:///M:/flutter/taskit_backend/src/features/auth/auth.service.js:80:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async verifySignup (file:///M:/flutter/taskit_backend/src/features/auth/auth.controller.js:16:5) {
+  "requestId": "817f98a0-7281-4e01-847d-cbeb888269f1",
+  "method": "POST",
+  "url": "/api/v1/auth/signup/verify",
+  "status": 500
+}
+2026-03-26 12:30:47 [[31merror[39m]: [1;31mAPI Error[0m {
+  "requestId": "817f98a0-7281-4e01-847d-cbeb888269f1",
+  "method": "POST",
+  "url": "/api/v1/auth/signup/verify",
+  "status": 500,
+  "time": "136.84 ms",
+  "ip": "::1"
+}
+2026-03-26 12:31:25 [[31merror[39m]: [1;31mError Wrong or Expired OTP[0m
+Error: Wrong or Expired OTP
+    at VerificationService.verifySignupOTP (file:///M:/flutter/taskit_backend/src/features/verification/verification.service.js:51:31)
+    at async AuthService.verifySignup (file:///M:/flutter/taskit_backend/src/features/auth/auth.service.js:73:7)
+    at async verifySignup (file:///M:/flutter/taskit_backend/src/features/auth/auth.controller.js:16:5) {
+  "requestId": "60dfdd09-8435-4d1b-8b68-94dbbc0059c7",
+  "method": "POST",
+  "url": "/api/v1/auth/signup/verify",
+  "status": 400
+}
+2026-03-26 12:38:28 [[31merror[39m]: [1;31mError Invalid OTP[0m
+Error: Invalid OTP
+    at VerificationService.verifySignupOTP (file:///M:/flutter/taskit_backend/src/features/verification/verification.service.js:50:24)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async AuthService.verifySignup (file:///M:/flutter/taskit_backend/src/features/auth/auth.service.js:73:7)
+    at async verifySignup (file:///M:/flutter/taskit_backend/src/features/auth/auth.controller.js:16:5) {
+  "requestId": "d83ff0c5-c95f-4620-8d95-c64567a44a3c",
+  "method": "POST",
+  "url": "/api/v1/auth/signup/verify",
+  "status": 400
+}
+2026-03-26 12:38:47 [[31merror[39m]: [1;31mError Invalid OTP[0m
+Error: Invalid OTP
+    at VerificationService.verifySignupOTP (file:///M:/flutter/taskit_backend/src/features/verification/verification.service.js:50:24)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async AuthService.verifySignup (file:///M:/flutter/taskit_backend/src/features/auth/auth.service.js:73:7)
+    at async verifySignup (file:///M:/flutter/taskit_backend/src/features/auth/auth.controller.js:16:5) {
+  "requestId": "e33f0c48-2b88-4f44-8399-f494b9b3d98d",
+  "method": "POST",
+  "url": "/api/v1/auth/signup/verify",
+  "status": 400
+}
+2026-03-26 12:44:35 [[31merror[39m]: [1;31mError Wrong or Expired OTP[0m
+Error: Wrong or Expired OTP
+    at VerificationService.verifySignupOTP (file:///M:/flutter/taskit_backend/src/features/verification/verification.service.js:52:31)
+    at async AuthService.verifySignup (file:///M:/flutter/taskit_backend/src/features/auth/auth.service.js:74:7)
+    at async verifySignup (file:///M:/flutter/taskit_backend/src/features/auth/auth.controller.js:16:5) {
+  "requestId": "ac018d3b-15c5-4202-9ab2-e7dbc76d0720",
+  "method": "POST",
+  "url": "/api/v1/auth/signup/verify",
+  "status": 400
+}
+2026-03-26 12:45:21 [[31merror[39m]: [1;31mError Invalid OTP[0m
+Error: Invalid OTP
+    at VerificationService.verifySignupOTP (file:///M:/flutter/taskit_backend/src/features/verification/verification.service.js:50:24)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async AuthService.verifySignup (file:///M:/flutter/taskit_backend/src/features/auth/auth.service.js:74:7)
+    at async verifySignup (file:///M:/flutter/taskit_backend/src/features/auth/auth.controller.js:16:5) {
+  "requestId": "5e2cf5b7-1105-4a56-bd9f-bbf53fcfb160",
+  "method": "POST",
+  "url": "/api/v1/auth/signup/verify",
+  "status": 400
+}
+2026-03-26 12:46:31 [[31merror[39m]: [1;31mError Invalid OTP[0m
+Error: Invalid OTP
+    at VerificationService.verifySignupOTP (file:///M:/flutter/taskit_backend/src/features/verification/verification.service.js:50:24)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async AuthService.verifySignup (file:///M:/flutter/taskit_backend/src/features/auth/auth.service.js:74:7)
+    at async verifySignup (file:///M:/flutter/taskit_backend/src/features/auth/auth.controller.js:16:5) {
+  "requestId": "a50eece1-77ef-4b08-aeb4-4e52da0598c8",
+  "method": "POST",
+  "url": "/api/v1/auth/signup/verify",
+  "status": 400
+}
+2026-03-26 12:47:31 [[31merror[39m]: [1;31mError Invalid OTP[0m
+Error: Invalid OTP
+    at VerificationService.verifySignupOTP (file:///M:/flutter/taskit_backend/src/features/verification/verification.service.js:50:24)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async AuthService.verifySignup (file:///M:/flutter/taskit_backend/src/features/auth/auth.service.js:74:7)
+    at async verifySignup (file:///M:/flutter/taskit_backend/src/features/auth/auth.controller.js:16:5) {
+  "requestId": "bbcfee1a-a464-424a-b3fa-293f3e0ffc76",
+  "method": "POST",
+  "url": "/api/v1/auth/signup/verify",
+  "status": 400
+}
+2026-03-26 12:49:02 [[31merror[39m]: [1;31mError Invalid OTP[0m
+Error: Invalid OTP
+    at VerificationService.verifySignupOTP (file:///M:/flutter/taskit_backend/src/features/verification/verification.service.js:50:24)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async AuthService.verifySignup (file:///M:/flutter/taskit_backend/src/features/auth/auth.service.js:74:7)
+    at async verifySignup (file:///M:/flutter/taskit_backend/src/features/auth/auth.controller.js:16:5) {
+  "requestId": "cf4662c5-b57f-437f-ae64-577c92cfe382",
+  "method": "POST",
+  "url": "/api/v1/auth/signup/verify",
+  "status": 400
+}
+2026-03-26 12:50:17 [[31merror[39m]: [1;31mError This account already exists[0m
+Error: This account already exists
+    at UserService.validateEmailForSignup (file:///M:/flutter/taskit_backend/src/features/user/user.service.js:24:15)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async AuthService.signup (file:///M:/flutter/taskit_backend/src/features/auth/auth.service.js:36:7)
+    at async signup (file:///M:/flutter/taskit_backend/src/features/auth/auth.controller.js:5:5) {
+  "requestId": "25dbb17f-f787-40e3-a56f-7c6da70059d1",
+  "method": "POST",
+  "url": "/api/v1/auth/signup",
+  "status": 400
+}
+2026-03-26 12:50:34 [[31merror[39m]: [1;31mError Email is required[0m
+Error: Email is required
+    at file:///M:/flutter/taskit_backend/src/middleware/validate.js:14:15
+    at Layer.handle [as handle_request] (M:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at next (M:\flutter\taskit_backend\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (M:\flutter\taskit_backend\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (M:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at M:\flutter\taskit_backend\node_modules\express\lib\router\index.js:284:15
+    at router.process_params (M:\flutter\taskit_backend\node_modules\express\lib\router\index.js:346:12)
+    at next (M:\flutter\taskit_backend\node_modules\express\lib\router\index.js:280:10)
+    at router.handle (M:\flutter\taskit_backend\node_modules\express\lib\router\index.js:175:3)
+    at router (M:\flutter\taskit_backend\node_modules\express\lib\router\index.js:47:12) {
+  "requestId": "a0ee7a7b-eb09-4a7d-bb2f-a4950becf035",
+  "method": "POST",
+  "url": "/api/v1/auth/login",
+  "status": 400
+}
+2026-03-26 12:50:38 [[31merror[39m]: [1;31mError Must be a valid email[0m
+Error: Must be a valid email
+    at file:///M:/flutter/taskit_backend/src/middleware/validate.js:14:15
+    at Layer.handle [as handle_request] (M:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at next (M:\flutter\taskit_backend\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (M:\flutter\taskit_backend\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (M:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at M:\flutter\taskit_backend\node_modules\express\lib\router\index.js:284:15
+    at router.process_params (M:\flutter\taskit_backend\node_modules\express\lib\router\index.js:346:12)
+    at next (M:\flutter\taskit_backend\node_modules\express\lib\router\index.js:280:10)
+    at router.handle (M:\flutter\taskit_backend\node_modules\express\lib\router\index.js:175:3)
+    at router (M:\flutter\taskit_backend\node_modules\express\lib\router\index.js:47:12) {
+  "requestId": "a8627b39-73a2-4346-9c81-5704c5d7c048",
+  "method": "POST",
+  "url": "/api/v1/auth/login",
+  "status": 400
+}
+2026-03-26 12:50:44 [[31merror[39m]: [1;31mError Password must be at lest 8 characters[0m
+Error: Password must be at lest 8 characters
+    at file:///M:/flutter/taskit_backend/src/middleware/validate.js:14:15
+    at Layer.handle [as handle_request] (M:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at next (M:\flutter\taskit_backend\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (M:\flutter\taskit_backend\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (M:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at M:\flutter\taskit_backend\node_modules\express\lib\router\index.js:284:15
+    at router.process_params (M:\flutter\taskit_backend\node_modules\express\lib\router\index.js:346:12)
+    at next (M:\flutter\taskit_backend\node_modules\express\lib\router\index.js:280:10)
+    at router.handle (M:\flutter\taskit_backend\node_modules\express\lib\router\index.js:175:3)
+    at router (M:\flutter\taskit_backend\node_modules\express\lib\router\index.js:47:12) {
+  "requestId": "6c755c09-c829-49ba-8c12-b6574910bc9d",
+  "method": "POST",
+  "url": "/api/v1/auth/login",
+  "status": 400
+}
+2026-03-26 12:50:54 [[31merror[39m]: [1;31mError Validate email for login error: Cast to string failed for value "{ email: 'dinhlelytran1225@gmail.com', password: '123456789' }" (type Object) at path "email" for model "user"[0m
+Error: Validate email for login error: Cast to string failed for value "{ email: 'dinhlelytran1225@gmail.com', password: '123456789' }" (type Object) at path "email" for model "user"
+    at UserService.validateUserForLogin (file:///M:/flutter/taskit_backend/src/features/user/user.service.js:41:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async AuthService.login (file:///M:/flutter/taskit_backend/src/features/auth/auth.service.js:117:23)
+    at async login (file:///M:/flutter/taskit_backend/src/features/auth/auth.controller.js:38:20) {
+  "requestId": "fd839db0-a65f-4ea2-954d-24dcc065b49f",
+  "method": "POST",
+  "url": "/api/v1/auth/login",
+  "status": 500
+}
+2026-03-26 12:50:54 [[31merror[39m]: [1;31mAPI Error[0m {
+  "requestId": "fd839db0-a65f-4ea2-954d-24dcc065b49f",
+  "method": "POST",
+  "url": "/api/v1/auth/login",
+  "status": 500,
+  "time": "2.24 ms",
+  "ip": "::1"
+}
+2026-03-26 12:51:48 [[31merror[39m]: [1;31mError User does not exist[0m
+Error: User does not exist
+    at UserService.validateUserForLogin (file:///M:/flutter/taskit_backend/src/features/user/user.service.js:35:15)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async AuthService.login (file:///M:/flutter/taskit_backend/src/features/auth/auth.service.js:117:23)
+    at async login (file:///M:/flutter/taskit_backend/src/features/auth/auth.controller.js:40:20) {
+  "requestId": "aeaf1ac9-3623-4eef-a35f-4d6f885b3d28",
+  "method": "POST",
+  "url": "/api/v1/auth/login",
+  "status": 400
+}
+2026-03-26 12:52:18 [[31merror[39m]: [1;31mError Login error: secretOrPrivateKey must have a value[0m
+Error: Login error: secretOrPrivateKey must have a value
+    at AuthService.login (file:///M:/flutter/taskit_backend/src/features/auth/auth.service.js:130:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async login (file:///M:/flutter/taskit_backend/src/features/auth/auth.controller.js:40:20) {
+  "requestId": "7a7e0f1e-b28c-49fa-98f0-0363c3b5f5b7",
+  "method": "POST",
+  "url": "/api/v1/auth/login",
+  "status": 500
+}
+2026-03-26 12:52:18 [[31merror[39m]: [1;31mAPI Error[0m {
+  "requestId": "7a7e0f1e-b28c-49fa-98f0-0363c3b5f5b7",
+  "method": "POST",
+  "url": "/api/v1/auth/login",
+  "status": 500,
+  "time": "178.18 ms",
+  "ip": "::1"
+}
+2026-03-26 12:54:41 [[31merror[39m]: [1;31mError Login error: secretOrPrivateKey must have a value[0m
+Error: Login error: secretOrPrivateKey must have a value
+    at AuthService.login (file:///M:/flutter/taskit_backend/src/features/auth/auth.service.js:130:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async login (file:///M:/flutter/taskit_backend/src/features/auth/auth.controller.js:40:20) {
+  "requestId": "dbc559ab-6f8a-42c7-a6d1-f75b85d404d1",
+  "method": "POST",
+  "url": "/api/v1/auth/login",
+  "status": 500
+}
+2026-03-26 12:54:41 [[31merror[39m]: [1;31mAPI Error[0m {
+  "requestId": "dbc559ab-6f8a-42c7-a6d1-f75b85d404d1",
+  "method": "POST",
+  "url": "/api/v1/auth/login",
+  "status": 500,
+  "time": "142.52 ms",
+  "ip": "::1"
+}
+2026-03-26 12:55:16 [[31merror[39m]: [1;31mError Login error: secretOrPrivateKey must have a value[0m
+Error: Login error: secretOrPrivateKey must have a value
+    at AuthService.login (file:///M:/flutter/taskit_backend/src/features/auth/auth.service.js:130:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async login (file:///M:/flutter/taskit_backend/src/features/auth/auth.controller.js:40:20) {
+  "requestId": "3c88f95d-e2c2-4ad4-a7b9-0959c704643f",
+  "method": "POST",
+  "url": "/api/v1/auth/login",
+  "status": 500
+}
+2026-03-26 12:55:16 [[31merror[39m]: [1;31mAPI Error[0m {
+  "requestId": "3c88f95d-e2c2-4ad4-a7b9-0959c704643f",
+  "method": "POST",
+  "url": "/api/v1/auth/login",
+  "status": 500,
+  "time": "187.20 ms",
+  "ip": "::1"
+}
+2026-03-26 12:57:41 [[31merror[39m]: [1;31mError Login error: BaseError is not defined[0m
+Error: Login error: BaseError is not defined
+    at AuthService.login (file:///M:/flutter/taskit_backend/src/features/auth/auth.service.js:130:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async login (file:///M:/flutter/taskit_backend/src/features/auth/auth.controller.js:40:20) {
+  "requestId": "6510f882-0e82-4fd9-b728-34d88e8703cc",
+  "method": "POST",
+  "url": "/api/v1/auth/login",
+  "status": 500
+}
+2026-03-26 12:57:41 [[31merror[39m]: [1;31mAPI Error[0m {
+  "requestId": "6510f882-0e82-4fd9-b728-34d88e8703cc",
+  "method": "POST",
+  "url": "/api/v1/auth/login",
+  "status": 500,
+  "time": "221.97 ms",
+  "ip": "::1"
+}
+2026-03-26 12:58:20 [[31merror[39m]: [1;31mError JWT error: secretOrPrivateKey must have a value[0m
+Error: JWT error: secretOrPrivateKey must have a value
+    at generateAccessToken (file:///M:/flutter/taskit_backend/src/utils/token.js:15:11)
+    at AuthService.login (file:///M:/flutter/taskit_backend/src/features/auth/auth.service.js:118:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async login (file:///M:/flutter/taskit_backend/src/features/auth/auth.controller.js:40:20) {
+  "requestId": "6bcee325-f918-4a8b-a3ec-78b00fe2bd51",
+  "method": "POST",
+  "url": "/api/v1/auth/login",
+  "status": 500
+}
+2026-03-26 12:58:20 [[31merror[39m]: [1;31mAPI Error[0m {
+  "requestId": "6bcee325-f918-4a8b-a3ec-78b00fe2bd51",
+  "method": "POST",
+  "url": "/api/v1/auth/login",
+  "status": 500,
+  "time": "134.97 ms",
+  "ip": "::1"
+}
+2026-03-26 12:58:58 [[31merror[39m]: [1;31mError JWT error: secretOrPrivateKey must have a value[0m
+Error: JWT error: secretOrPrivateKey must have a value
+    at generateAccessToken (file:///M:/flutter/taskit_backend/src/utils/token.js:16:11)
+    at AuthService.login (file:///M:/flutter/taskit_backend/src/features/auth/auth.service.js:118:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async login (file:///M:/flutter/taskit_backend/src/features/auth/auth.controller.js:40:20) {
+  "requestId": "453b62eb-2e6c-4cad-804e-7d89d8452607",
+  "method": "POST",
+  "url": "/api/v1/auth/login",
+  "status": 500
+}
+2026-03-26 12:58:58 [[31merror[39m]: [1;31mAPI Error[0m {
+  "requestId": "453b62eb-2e6c-4cad-804e-7d89d8452607",
+  "method": "POST",
+  "url": "/api/v1/auth/login",
+  "status": 500,
+  "time": "151.94 ms",
+  "ip": "::1"
+}
+2026-03-26 12:59:18 [[31merror[39m]: [1;31mError Login error: ERR value is not an integer or out of range[0m
+Error: Login error: ERR value is not an integer or out of range
+    at AuthService.login (file:///M:/flutter/taskit_backend/src/features/auth/auth.service.js:130:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async login (file:///M:/flutter/taskit_backend/src/features/auth/auth.controller.js:40:20) {
+  "requestId": "12227661-ba08-43d2-9076-d8d975f1119e",
+  "method": "POST",
+  "url": "/api/v1/auth/login",
+  "status": 500
+}
+2026-03-26 12:59:18 [[31merror[39m]: [1;31mAPI Error[0m {
+  "requestId": "12227661-ba08-43d2-9076-d8d975f1119e",
+  "method": "POST",
+  "url": "/api/v1/auth/login",
+  "status": 500,
+  "time": "149.89 ms",
+  "ip": "::1"
+}

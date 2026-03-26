@@ -23,7 +23,6 @@ function colorCode(color) {
   }
 }
 
-// Custom format để tô màu message theo level
 const messageColorize = winston.format((info) => {
   let msgColor;
   switch (info.level) {
@@ -44,10 +43,9 @@ const messageColorize = winston.format((info) => {
   return info;
 })();
 
-// Format log chính
 const logFormat = winston.format.combine(
-  messageColorize, // màu riêng cho message
-  winston.format.colorize(), // màu level
+  messageColorize,
+  winston.format.colorize(),
   winston.format.timestamp({ format: "YYYY-MM-DD HH:mm:ss" }),
   winston.format.printf(({ timestamp, level, message, stack, ...meta }) => {
     const metaStr = Object.keys(meta).length

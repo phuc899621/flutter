@@ -2,10 +2,9 @@ import ResetPassServices from "./reset.pass.services.js";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
 import db from "../../config/db.js";
-import UserServices from "../user/user.services.js";
-import VerificationServices from "./verification.services.js";
-import EmailServices from "../../utils/emailService.js";
 import {
+  AuthenticationError,
+  AuthorizationError,
   BadRequestError,
   BaseError,
   ConflictError,
@@ -13,6 +12,19 @@ import {
   ServerError,
 } from "../../utils/error.js";
 import logger from "../../utils/logger.js";
+import EmailServices from "../email/email.service.js";
+import VerificationService from "../verification/verification.service.js";
+import UserService from "../user/user.service.js";
+import {
+  generateAccessToken,
+  generateRefreshToken,
+  verifyRefreshToken,
+} from "../../utils/token.js";
+import {
+  isRefreshTokenValid,
+  revokeRefreshToken,
+  saveRefreshToken,
+} from "../../utils/redis.service.js";
 class AuthService {
   //#region signup flow
   static async signup(data) {
@@ -21,92 +33,77 @@ class AuthService {
     session.startTransaction();
     try {
       //check user exists and verified
-      await UserServices.validateEmailForSignup(email);
+      await UserService.validateEmailForSignup(email);
+      logger.info(`User ${email} exists`);
       //hash password
       const hashPassword = await AuthService.hashPassword(password);
       const name = email.split("@")[0];
 
-      const userId = await UserServices.upsertUser(
+      const userId = await UserService.createOrUpdateUser(
         { email, password: hashPassword, name },
         session,
       );
+      logger.info(`User ${userId} created`);
 
-      const otp = await VerificationServices.upsertSignupOTP(userId, session);
-      logger.info(`OTP is: ${otp}. This OTP only last 30 minutes.`);
-      //   await EmailServices.sendEmail(
-      //     email,
-      //     "Verify email for create Taskit account",
-      //     `Your OTP is: ${otp}. This OTP only last 30 minutes.`,
-      //   );
-
-      await session.commitTransaction();
-    } catch (e) {
-      await session.abortTransaction();
-      if (e instanceof BaseError) throw e;
-      console.log(e);
-      throw new ServerError(`Sign up error: ${e.message}`);
-    } finally {
-      await session.endSession();
-    }
-  }
-  static async verifySignup(userId, otp) {
-    const session = await db.startSession();
-    session.startTransaction();
-    try {
-      const verObj = await VerificationServices.getVerification({
+      const otp = await VerificationService.createOrUpdateSignupOTP(
         userId,
-        type: "signup",
-      });
-      if (!verObj) {
-        throw new NotFoundError("User not found");
-      }
-
-      if (!(await bcrypt.compare(otp, verObj.otp))) {
-        throw new BadRequestError("Wrong or Expired OTP");
-      }
-
-      await UserServices.verifyingUser(userId, session);
-      await VerificationServices.deleteSignup(userId, session);
+        session,
+      );
+      logger.info(`OTP is: ${otp}. This OTP only last 30 minutes.`);
+      EmailServices.sendEmail(
+        email,
+        "Activate taskit account",
+        `Your OTP is: ${otp}. This OTP only last 30 minutes.`,
+      );
+      logger.info(`Email sent to ${email}`);
       await session.commitTransaction();
     } catch (e) {
       await session.abortTransaction();
       if (e instanceof BaseError) throw e;
-      throw new ServerError(`Verify sign up error`, e.message);
+      throw new ServerError(`Signup error: ${e}`);
     } finally {
       await session.endSession();
     }
   }
-  static async resendSignupOtp(userId) {
+  static async verifySignup(email, otp) {
     const session = await db.startSession();
     session.startTransaction();
     try {
-      const user = (await UserServices.findById(userId)).toObject();
-      if (!user) {
-        throw new NotFoundError("User account not found");
-      }
-      if (await UserServices.isVerifiedUser({ email: user.email })) {
-        throw new ConflictError("User account already verified");
-      }
-      const userDoc = user.toObject();
-
-      const otp = VerificationServices.generateOTP();
-
-      if (await VerificationServices.isSignupRequested(userDoc.id)) {
-        await VerificationServices.updateSignup(userDoc.id, otp, session);
-      } else {
-        await VerificationServices.createSignup(userDoc.id, otp, session);
-      }
-
-      await EmailServices.sendEmail(
-        verObj.email,
+      const userDoc = await UserService.findUserByEmail(email, session);
+      if (!userDoc) throw new NotFoundError("Account not found");
+      await VerificationService.verifySignupOTP(userDoc.id, otp);
+      await UserService.activateAccount(userDoc.id, session);
+      logger.info(`Account activated for ${userDoc.email}`);
+      await VerificationService.deleteSignupOTP(userDoc.id, session);
+      await session.commitTransaction();
+    } catch (e) {
+      await session.abortTransaction();
+      if (e instanceof BaseError) throw e;
+      throw new ServerError(`Verify signup error : ${e.message}`);
+    } finally {
+      await session.endSession();
+    }
+  }
+  static async resendSignupOtp(email) {
+    const session = await db.startSession();
+    session.startTransaction();
+    try {
+      const userDoc = await UserService.validateUserForResendOTP(email);
+      const otp = await VerificationService.createOrUpdateSignupOTP(
+        userDoc.id,
+        session,
+      );
+      EmailServices.sendEmail(
+        email,
         "Verify email for Taskit account",
         `Your OTP is: ${otp}. This OTP only last 30 minutes.`,
       );
+      logger.info(`OTP is: ${otp}. This OTP only last 30 minutes.`);
       await session.commitTransaction();
     } catch (e) {
       await session.abortTransaction();
       if (e instanceof BaseError) throw e;
-      throw new ServerError(`Sign up error`, e.message);
+      throw new ServerError(`Resend signup otp error: ${e.message}`);
     } finally {
       await session.endSession();
     }
@@ -115,44 +112,42 @@ class AuthService {
 
   //#region login flow
 
-  static async login(request) {
+  static async login(email, password) {
     try {
-      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      const query = emailRegex.test(request.identifier)
-        ? { email: request.identifier }
-        : { username: request.identifier };
-      const userDoc = await UserServices.findOne(query);
-
-      if (!userDoc) throw new ServerError("Account not found", 404);
-      if (!userDoc.isVerified)
-        throw new ServerError("Account not verified", 401);
-
-      const isPasswordMatch = bcrypt.compare(
-        request.password,
-        userDoc.password,
-      );
-      if (!isPasswordMatch) throw new ServerError("Invalid password", 401);
-
-      const accessToken = jwt.sign(
-        { id: userDoc._id, email: userDoc.email, username: userDoc.username },
-        process.env.JWT_SECRET || "899621",
-        { expiresIn: "1d" },
-      );
-      const refreshToken = jwt.sign(
-        { id: userDoc._id, email: userDoc.email, username: userDoc.username },
-        process.env.JWT_SECRET || "899621",
-        { expiresIn: "7d" },
-      );
-      const expiresIn = 60 * 60 * 24;
-      const expiresAt = Date.now() + expiresIn * 1000;
+      const userDoc = await UserService.validateUserForLogin(email, password);
+      const accessToken = generateAccessToken(userDoc);
+      const refreshToken = generateRefreshToken(userDoc);
+      await saveRefreshToken(refreshToken, userDoc.id);
+      logger.info(`Login success for ${userDoc.email}`);
+      logger.info(`Access token: ${accessToken}`);
+      logger.info(`Refresh token: ${refreshToken}`);
       return {
         accessToken,
         refreshToken,
-        expiresAt,
       };
     } catch (e) {
       if (e instanceof BaseError) throw e;
-      throw new ServerError(`Login error: ${e.message}`, 500);
+      throw new ServerError(`Login error: ${e.message}`);
+    }
+  }
+  static async refreshToken(refreshToken) {
+    try {
+      const userId = await isRefreshTokenValid(refreshToken);
+      if (!userId) throw new AuthorizationError("Invalid refresh token");
+      verifyRefreshToken(refreshToken);
+      const accessToken = generateAccessToken(userId);
+      return { accessToken };
+    } catch (e) {
+      if (e instanceof BaseError) throw e;
+      throw new ServerError(`Refresh token error: ${e.message}`);
+    }
+  }
+  static async logout(refreshToken) {
+    try {
+      await revokeRefreshToken(refreshToken);
+    } catch (e) {
+      if (e instanceof BaseError) throw e;
+      throw new ServerError(`Logout error: ${e.message}`);
     }
   }
   //#endregion
