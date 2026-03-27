@@ -17,17 +17,17 @@ router.post(
 router.post("/login", AuthValidate.loginValidate, AuthController.login);
 router.post(
   "/forgot-password",
-  AuthValidate.forgotPasswordMiddleware,
+  AuthValidate.forgotPasswordValidate,
   AuthController.forgotPassword,
 );
 router.post(
   "/forgot-password/verify",
-  AuthValidate.forgotPasswordVerifyMiddleware,
+  AuthValidate.forgotPasswordVerifyValidate,
   AuthController.forgotPasswordVerify,
 );
 router.put(
   "/forgot-password/reset",
-  AuthValidate.resetPasswordMiddleware,
+  AuthValidate.resetPasswordValidate,
   AuthController.resetPassword,
 );
 

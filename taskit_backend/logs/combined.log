@@ -1472,3 +1472,465 @@ Error: Login error: ERR value is not an integer or out of range
   "time": "104.79 ms",
   "ip": "::1"
 }
+2026-03-27 12:50:39 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-03-27 12:50:49 [[31merror[39m]: [1;31mError Validate email for login error: UserService.comparePassword is not a function[0m
+Error: Validate email for login error: UserService.comparePassword is not a function
+    at UserService.validateUserForLogin (file:///M:/flutter/taskit_backend/src/features/user/user.service.js:49:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async AuthService.login (file:///M:/flutter/taskit_backend/src/features/auth/auth.service.js:113:23)
+    at async login (file:///M:/flutter/taskit_backend/src/features/auth/auth.controller.js:40:20) {
+  "requestId": "ba8884d6-e605-49de-a08a-2496e3b69fcd",
+  "method": "POST",
+  "url": "/api/v1/auth/login",
+  "status": 500
+}
+2026-03-27 12:50:49 [[31merror[39m]: [1;31mAPI Error[0m {
+  "requestId": "ba8884d6-e605-49de-a08a-2496e3b69fcd",
+  "method": "POST",
+  "url": "/api/v1/auth/login",
+  "status": 500,
+  "time": "76.79 ms",
+  "ip": "::1"
+}
+2026-03-27 12:51:22 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-03-27 12:51:53 [[31merror[39m]: [1;31mError Validate email for login error: bcrypt is not defined[0m
+Error: Validate email for login error: bcrypt is not defined
+    at UserService.validateUserForLogin (file:///M:/flutter/taskit_backend/src/features/user/user.service.js:49:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async AuthService.login (file:///M:/flutter/taskit_backend/src/features/auth/auth.service.js:113:23)
+    at async login (file:///M:/flutter/taskit_backend/src/features/auth/auth.controller.js:40:20) {
+  "requestId": "ae2fc74e-37df-4087-8487-38b08b6baa42",
+  "method": "POST",
+  "url": "/api/v1/auth/login",
+  "status": 500
+}
+2026-03-27 12:51:53 [[31merror[39m]: [1;31mAPI Error[0m {
+  "requestId": "ae2fc74e-37df-4087-8487-38b08b6baa42",
+  "method": "POST",
+  "url": "/api/v1/auth/login",
+  "status": 500,
+  "time": "56.67 ms",
+  "ip": "::1"
+}
+2026-03-27 12:52:28 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-03-27 12:52:31 [[32minfo[39m]: [1;32mGenerate access token for dinhlelytran1225@gmail.com[0m 
+2026-03-27 12:52:31 [[32minfo[39m]: [1;32mAccess token exp: taskit20111979[0m 
+2026-03-27 12:52:31 [[32minfo[39m]: [1;32mGenerate refresh token for dinhlelytran1225@gmail.com[0m 
+2026-03-27 12:52:31 [[32minfo[39m]: [1;32mRefresh token saved for 69c33eb35b296b051e47004b:604800:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWMzM2ViMzViMjk2YjA1MWU0NzAwNGIiLCJpYXQiOjE3NzQ1OTA3NTEsImV4cCI6MTc3NTE5NTU1MX0.HE5VbA0gObPjWAjrRag_Ohbq_8IwWY7tJ6w9Bxb5QcY[0m 
+2026-03-27 12:52:31 [[32minfo[39m]: [1;32mLogin success for dinhlelytran1225@gmail.com[0m 
+2026-03-27 12:52:31 [[32minfo[39m]: [1;32mAccess token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWMzM2ViMzViMjk2YjA1MWU0NzAwNGIiLCJpYXQiOjE3NzQ1OTA3NTEsImV4cCI6MTc3NDU5MTY1MX0.Iv_ba-B77upMEPe7nC8-Q4lj8VtdpFNTvLf7F5bU50A[0m 
+2026-03-27 12:52:31 [[32minfo[39m]: [1;32mRefresh token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWMzM2ViMzViMjk2YjA1MWU0NzAwNGIiLCJpYXQiOjE3NzQ1OTA3NTEsImV4cCI6MTc3NTE5NTU1MX0.HE5VbA0gObPjWAjrRag_Ohbq_8IwWY7tJ6w9Bxb5QcY[0m 
+2026-03-27 12:52:31 [[32minfo[39m]: [1;32mAPI Request[0m {
+  "requestId": "ea014cff-77b1-4a1f-a182-761b99eab3ae",
+  "method": "POST",
+  "url": "/api/v1/auth/login",
+  "status": 200,
+  "time": "275.20 ms",
+  "ip": "::1"
+}
+2026-03-27 12:52:45 [[31merror[39m]: [1;31mError schema.validate is not a function[0m
+TypeError: schema.validate is not a function
+    at file:///M:/flutter/taskit_backend/src/middleware/validate.js:8:39
+    at Layer.handle [as handle_request] (M:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at next (M:\flutter\taskit_backend\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (M:\flutter\taskit_backend\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (M:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at M:\flutter\taskit_backend\node_modules\express\lib\router\index.js:284:15
+    at router.process_params (M:\flutter\taskit_backend\node_modules\express\lib\router\index.js:346:12)
+    at next (M:\flutter\taskit_backend\node_modules\express\lib\router\index.js:280:10)
+    at router.handle (M:\flutter\taskit_backend\node_modules\express\lib\router\index.js:175:3)
+    at router (M:\flutter\taskit_backend\node_modules\express\lib\router\index.js:47:12) {
+  "requestId": "d36f4a75-c6bf-4b38-b0e8-f203082270c9",
+  "method": "POST",
+  "url": "/api/v1/auth/forgot-password",
+  "status": 500
+}
+2026-03-27 12:52:45 [[31merror[39m]: [1;31mAPI Error[0m {
+  "requestId": "d36f4a75-c6bf-4b38-b0e8-f203082270c9",
+  "method": "POST",
+  "url": "/api/v1/auth/forgot-password",
+  "status": 500,
+  "time": "2.19 ms",
+  "ip": "::1"
+}
+2026-03-27 12:54:10 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-03-27 12:54:38 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-03-27 12:55:11 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-03-27 12:55:37 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-03-27 12:55:44 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-03-27 12:55:48 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-03-27 12:55:54 [[31merror[39m]: [1;31mError User account does not exist[0m
+Error: User account does not exist
+    at UserService.ensureUserVerified (file:///M:/flutter/taskit_backend/src/features/user/user.service.js:24:13)
+    at UserService.validateUserForForgotPassword (file:///M:/flutter/taskit_backend/src/features/user/user.service.js:55:12)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async AuthService.forgotPassword (file:///M:/flutter/taskit_backend/src/features/auth/auth.service.js:156:23)
+    at async forgotPassword (file:///M:/flutter/taskit_backend/src/features/auth/auth.controller.js:74:5) {
+  "requestId": "a432cfa3-4994-4f03-9548-97fd517d1d80",
+  "method": "POST",
+  "url": "/api/v1/auth/forgot-password",
+  "status": 400
+}
+2026-03-27 12:55:54 [[33mwarn[39m]: [1;33mAPI Warning[0m {
+  "requestId": "a432cfa3-4994-4f03-9548-97fd517d1d80",
+  "method": "POST",
+  "url": "/api/v1/auth/forgot-password",
+  "status": 400,
+  "time": "55.63 ms",
+  "ip": "::1"
+}
+2026-03-27 12:56:03 [[32minfo[39m]: [1;32mUser document: [object Object][0m 
+2026-03-27 12:56:03 [[31merror[39m]: [1;31mError Verify email for forgot password error: Class constructor HashHelper cannot be invoked without 'new'[0m
+Error: Verify email for forgot password error: Class constructor HashHelper cannot be invoked without 'new'
+    at AuthService.forgotPassword (file:///M:/flutter/taskit_backend/src/features/auth/auth.service.js:170:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async forgotPassword (file:///M:/flutter/taskit_backend/src/features/auth/auth.controller.js:74:5) {
+  "requestId": "8f2b5ea1-1f3c-45c8-9dd3-014d8f20fca4",
+  "method": "POST",
+  "url": "/api/v1/auth/forgot-password",
+  "status": 500
+}
+2026-03-27 12:56:03 [[31merror[39m]: [1;31mAPI Error[0m {
+  "requestId": "8f2b5ea1-1f3c-45c8-9dd3-014d8f20fca4",
+  "method": "POST",
+  "url": "/api/v1/auth/forgot-password",
+  "status": 500,
+  "time": "39.42 ms",
+  "ip": "::1"
+}
+2026-03-27 12:58:06 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-03-27 12:58:12 [[32minfo[39m]: [1;32mUser document: [object Object][0m 
+2026-03-27 12:58:12 [[32minfo[39m]: [1;32mAPI Request[0m {
+  "requestId": "34f425a9-edfb-4ea6-aa4f-c7d781f0ed5e",
+  "method": "POST",
+  "url": "/api/v1/auth/forgot-password",
+  "status": 201,
+  "time": "243.93 ms",
+  "ip": "::1"
+}
+2026-03-27 12:58:37 [[33mwarn[39m]: [1;33mAPI Warning[0m {
+  "requestId": "f0a3b390-b8e9-48d7-a404-1ace681c404b",
+  "method": "POST",
+  "url": "/api/auth/forgot-password/verify",
+  "status": 404,
+  "time": "1.40 ms",
+  "ip": "::1"
+}
+2026-03-27 12:58:43 [[31merror[39m]: [1;31mError User account does not exist[0m
+Error: User account does not exist
+    at UserService.ensureUserVerified (file:///M:/flutter/taskit_backend/src/features/user/user.service.js:24:13)
+    at UserService.validateUserForForgotPassword (file:///M:/flutter/taskit_backend/src/features/user/user.service.js:55:12)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async AuthService.forgotPasswordVerify (file:///M:/flutter/taskit_backend/src/features/auth/auth.service.js:183:23)
+    at async forgotPasswordVerify (file:///M:/flutter/taskit_backend/src/features/auth/auth.controller.js:85:20) {
+  "requestId": "48fe3337-fe81-4863-ab38-719e8f350cc0",
+  "method": "POST",
+  "url": "/api/v1/auth/forgot-password/verify",
+  "status": 400
+}
+2026-03-27 12:58:43 [[33mwarn[39m]: [1;33mAPI Warning[0m {
+  "requestId": "48fe3337-fe81-4863-ab38-719e8f350cc0",
+  "method": "POST",
+  "url": "/api/v1/auth/forgot-password/verify",
+  "status": 400,
+  "time": "37.11 ms",
+  "ip": "::1"
+}
+2026-03-27 12:58:53 [[32minfo[39m]: [1;32mUser document: [object Object][0m 
+2026-03-27 12:58:53 [[31merror[39m]: [1;31mError Forgot password verify error: BaseError is not defined[0m
+Error: Forgot password verify error: BaseError is not defined
+    at AuthService.forgotPasswordVerify (file:///M:/flutter/taskit_backend/src/features/auth/auth.service.js:198:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async forgotPasswordVerify (file:///M:/flutter/taskit_backend/src/features/auth/auth.controller.js:85:20) {
+  "requestId": "f0ec2d94-f4a5-4921-b6a4-515a6f1116ab",
+  "method": "POST",
+  "url": "/api/v1/auth/forgot-password/verify",
+  "status": 500
+}
+2026-03-27 12:58:53 [[31merror[39m]: [1;31mAPI Error[0m {
+  "requestId": "f0ec2d94-f4a5-4921-b6a4-515a6f1116ab",
+  "method": "POST",
+  "url": "/api/v1/auth/forgot-password/verify",
+  "status": 500,
+  "time": "37.79 ms",
+  "ip": "::1"
+}
+2026-03-27 12:59:21 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-03-27 12:59:27 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-03-27 12:59:31 [[32minfo[39m]: [1;32mUser document: [object Object][0m 
+2026-03-27 12:59:31 [[31merror[39m]: [1;31mError Forgot password verify error: BaseError is not defined[0m
+Error: Forgot password verify error: BaseError is not defined
+    at AuthService.forgotPasswordVerify (file:///M:/flutter/taskit_backend/src/features/auth/auth.service.js:197:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async forgotPasswordVerify (file:///M:/flutter/taskit_backend/src/features/auth/auth.controller.js:85:20) {
+  "requestId": "7e06bd0f-f513-4883-a759-b45f674bb558",
+  "method": "POST",
+  "url": "/api/v1/auth/forgot-password/verify",
+  "status": 500
+}
+2026-03-27 12:59:31 [[31merror[39m]: [1;31mAPI Error[0m {
+  "requestId": "7e06bd0f-f513-4883-a759-b45f674bb558",
+  "method": "POST",
+  "url": "/api/v1/auth/forgot-password/verify",
+  "status": 500,
+  "time": "60.62 ms",
+  "ip": "::1"
+}
+2026-03-27 13:00:19 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-03-27 13:00:23 [[32minfo[39m]: [1;32mUser document: [object Object][0m 
+2026-03-27 13:00:23 [[31merror[39m]: [1;31mError Verify forgot_password OTP error: Cast to ObjectId failed for value "{ userId: '69c33eb35b296b051e47004b', otp: '2783' }" (type Object) at path "userId" for model "verification"[0m
+Error: Verify forgot_password OTP error: Cast to ObjectId failed for value "{ userId: '69c33eb35b296b051e47004b', otp: '2783' }" (type Object) at path "userId" for model "verification"
+    at VerificationService.verifyOTP (file:///M:/flutter/taskit_backend/src/features/verification/verification.service.js:38:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async AuthService.forgotPasswordVerify (file:///M:/flutter/taskit_backend/src/features/auth/auth.service.js:183:7)
+    at async forgotPasswordVerify (file:///M:/flutter/taskit_backend/src/features/auth/auth.controller.js:85:20) {
+  "requestId": "b8bf089a-1a9a-4987-b3f7-f4e3aadaeff9",
+  "method": "POST",
+  "url": "/api/v1/auth/forgot-password/verify",
+  "status": 500
+}
+2026-03-27 13:00:23 [[31merror[39m]: [1;31mAPI Error[0m {
+  "requestId": "b8bf089a-1a9a-4987-b3f7-f4e3aadaeff9",
+  "method": "POST",
+  "url": "/api/v1/auth/forgot-password/verify",
+  "status": 500,
+  "time": "58.37 ms",
+  "ip": "::1"
+}
+2026-03-27 13:01:47 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-03-27 13:01:51 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-03-27 13:02:48 [[32minfo[39m]: [1;32mUser document: [object Object][0m 
+2026-03-27 13:02:48 [[31merror[39m]: [1;31mError Verify forgot_password OTP error: Cast to ObjectId failed for value "{ userId: '69c33eb35b296b051e47004b', otp: '2783' }" (type Object) at path "userId" for model "verification"[0m
+Error: Verify forgot_password OTP error: Cast to ObjectId failed for value "{ userId: '69c33eb35b296b051e47004b', otp: '2783' }" (type Object) at path "userId" for model "verification"
+    at VerificationService.verifyOTP (file:///M:/flutter/taskit_backend/src/features/verification/verification.service.js:38:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async AuthService.forgotPasswordVerify (file:///M:/flutter/taskit_backend/src/features/auth/auth.service.js:183:7)
+    at async forgotPasswordVerify (file:///M:/flutter/taskit_backend/src/features/auth/auth.controller.js:85:20) {
+  "requestId": "bce8bd7d-15d9-41b0-ad05-d142fc15c09b",
+  "method": "POST",
+  "url": "/api/v1/auth/forgot-password/verify",
+  "status": 500
+}
+2026-03-27 13:02:48 [[31merror[39m]: [1;31mAPI Error[0m {
+  "requestId": "bce8bd7d-15d9-41b0-ad05-d142fc15c09b",
+  "method": "POST",
+  "url": "/api/v1/auth/forgot-password/verify",
+  "status": 500,
+  "time": "98.78 ms",
+  "ip": "::1"
+}
+2026-03-27 13:03:56 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-03-27 13:04:16 [[32minfo[39m]: [1;32mUser document: [object Object][0m 
+2026-03-27 13:04:16 [[32minfo[39m]: [1;32mOTP document for 69c33eb35b296b051e47004b: {
+  _id: new ObjectId('69c61c767406bd32dcb99456'),
+  purpose: 'forgot_password',
+  userId: new ObjectId('69c33eb35b296b051e47004b'),
+  __v: 0,
+  createdAt: 2026-03-27T05:58:12.542Z,
+  otp: '$2b$10$LNPhrliwRbaYO/4MqWRe2.bZf6hgmfUBql6mrXjMsVx45TeEJ3IrG',
+  updatedAt: 2026-03-27T05:58:12.542Z
+}[0m 
+2026-03-27 13:04:16 [[32minfo[39m]: [1;32mGenerate forgot password token for dinhlelytran1225@gmail.com[0m 
+2026-03-27 13:04:16 [[32minfo[39m]: [1;32mAPI Request[0m {
+  "requestId": "34434c0e-cf73-4e72-9aaf-28a22aeaa863",
+  "method": "POST",
+  "url": "/api/v1/auth/forgot-password/verify",
+  "status": 201,
+  "time": "249.64 ms",
+  "ip": "::1"
+}
+2026-03-27 13:06:42 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-03-27 13:06:45 [[32minfo[39m]: [1;32mUser document: [object Object][0m 
+2026-03-27 13:06:45 [[32minfo[39m]: [1;32mOTP document for 69c33eb35b296b051e47004b: null[0m 
+2026-03-27 13:06:45 [[31merror[39m]: [1;31mError Invalid OTP[0m
+Error: Invalid OTP
+    at VerificationService.verifyOTP (file:///M:/flutter/taskit_backend/src/features/verification/verification.service.js:33:26)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async AuthService.forgotPasswordVerify (file:///M:/flutter/taskit_backend/src/features/auth/auth.service.js:183:7)
+    at async forgotPasswordVerify (file:///M:/flutter/taskit_backend/src/features/auth/auth.controller.js:85:20) {
+  "requestId": "15bcc2d1-1875-46b5-9615-e1e3a91a2df7",
+  "method": "POST",
+  "url": "/api/v1/auth/forgot-password/verify",
+  "status": 400
+}
+2026-03-27 13:06:45 [[33mwarn[39m]: [1;33mAPI Warning[0m {
+  "requestId": "15bcc2d1-1875-46b5-9615-e1e3a91a2df7",
+  "method": "POST",
+  "url": "/api/v1/auth/forgot-password/verify",
+  "status": 400,
+  "time": "242.31 ms",
+  "ip": "::1"
+}
+2026-03-27 13:06:50 [[32minfo[39m]: [1;32mUser document: [object Object][0m 
+2026-03-27 13:06:50 [[32minfo[39m]: [1;32mAPI Request[0m {
+  "requestId": "b83c6da3-3bbd-4a3d-8694-c2a8e3c2365f",
+  "method": "POST",
+  "url": "/api/v1/auth/forgot-password",
+  "status": 201,
+  "time": "212.87 ms",
+  "ip": "::1"
+}
+2026-03-27 13:08:53 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-03-27 13:08:56 [[32minfo[39m]: [1;32mUser document:[0m {
+  "id": "69c33eb35b296b051e47004b",
+  "email": "dinhlelytran1225@gmail.com",
+  "avatar": "uploads/default.jpg",
+  "createdAt": "2026-03-25T01:47:27.554Z",
+  "name": "dinhlelytran1225",
+  "provider": "local",
+  "providerId": null,
+  "status": "verified",
+  "updatedAt": "2026-03-26T05:50:00.458Z"
+}
+2026-03-27 13:08:56 [[32minfo[39m]: [1;32mOTP document for 69c33eb35b296b051e47004b: {
+  _id: new ObjectId('69c61e7b7406bd32dcb9945a'),
+  userId: new ObjectId('69c33eb35b296b051e47004b'),
+  purpose: 'forgot_password',
+  __v: 0,
+  createdAt: 2026-03-27T06:06:50.417Z,
+  otp: '$2b$10$aoFxSdQReAtX2Nfnx6LYX.6u/lDJqFVM1xQPgA0kVHj1.i2vC/XRW',
+  updatedAt: 2026-03-27T06:06:50.417Z
+}[0m 
+2026-03-27 13:08:56 [[32minfo[39m]: [1;32mcompare result for 69c33eb35b296b051e47004b: {
+  _id: new ObjectId('69c61e7b7406bd32dcb9945a'),
+  userId: new ObjectId('69c33eb35b296b051e47004b'),
+  purpose: 'forgot_password',
+  __v: 0,
+  createdAt: 2026-03-27T06:06:50.417Z,
+  otp: '$2b$10$aoFxSdQReAtX2Nfnx6LYX.6u/lDJqFVM1xQPgA0kVHj1.i2vC/XRW',
+  updatedAt: 2026-03-27T06:06:50.417Z
+}: [object Promise][0m 
+2026-03-27 13:08:56 [[32minfo[39m]: [1;32mGenerate forgot password token for dinhlelytran1225@gmail.com[0m 
+2026-03-27 13:08:56 [[32minfo[39m]: [1;32mAPI Request[0m {
+  "requestId": "a0ac291b-6aba-4760-87e0-c4aa9fce9545",
+  "method": "POST",
+  "url": "/api/v1/auth/forgot-password/verify",
+  "status": 201,
+  "time": "314.27 ms",
+  "ip": "::1"
+}
+2026-03-27 13:11:17 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-03-27 13:11:48 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-03-27 13:12:24 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-03-27 13:12:25 [[32minfo[39m]: [1;32mUser document:[0m {
+  "id": "69c33eb35b296b051e47004b",
+  "email": "dinhlelytran1225@gmail.com",
+  "avatar": "uploads/default.jpg",
+  "createdAt": "2026-03-25T01:47:27.554Z",
+  "name": "dinhlelytran1225",
+  "provider": "local",
+  "providerId": null,
+  "status": "verified",
+  "updatedAt": "2026-03-26T05:50:00.458Z"
+}
+2026-03-27 13:12:25 [[32minfo[39m]: [1;32mAPI Request[0m {
+  "requestId": "95fa0224-ce8f-40d6-883e-b7fd4b635719",
+  "method": "POST",
+  "url": "/api/v1/auth/forgot-password",
+  "status": 201,
+  "time": "785.17 ms",
+  "ip": "::1"
+}
+2026-03-27 13:12:31 [[32minfo[39m]: [1;32mUser document:[0m {
+  "id": "69c33eb35b296b051e47004b",
+  "email": "dinhlelytran1225@gmail.com",
+  "avatar": "uploads/default.jpg",
+  "createdAt": "2026-03-25T01:47:27.554Z",
+  "name": "dinhlelytran1225",
+  "provider": "local",
+  "providerId": null,
+  "status": "verified",
+  "updatedAt": "2026-03-26T05:50:00.458Z"
+}
+2026-03-27 13:12:31 [[32minfo[39m]: [1;32mOTP document for 69c33eb35b296b051e47004b: {
+  _id: new ObjectId('69c61fcb7406bd32dcb9945d'),
+  purpose: 'forgot_password',
+  userId: new ObjectId('69c33eb35b296b051e47004b'),
+  __v: 0,
+  createdAt: 2026-03-27T06:12:25.786Z,
+  otp: '$2b$10$dmgldOum5hI7vfh3wY0uHOdm/C4wvWgwtXxyMtIbFLnfZVcUVcTNe',
+  updatedAt: 2026-03-27T06:12:25.786Z
+}[0m 
+2026-03-27 13:12:31 [[31merror[39m]: [1;31mError Wrong or Expired OTP[0m
+Error: Wrong or Expired OTP
+    at VerificationService.verifyOTP (file:///M:/flutter/taskit_backend/src/features/verification/verification.service.js:35:15)
+    at async AuthService.forgotPasswordVerify (file:///M:/flutter/taskit_backend/src/features/auth/auth.service.js:183:7)
+    at async forgotPasswordVerify (file:///M:/flutter/taskit_backend/src/features/auth/auth.controller.js:85:20) {
+  "requestId": "450467a5-1434-4ddc-8d65-c24f815141bb",
+  "method": "POST",
+  "url": "/api/v1/auth/forgot-password/verify",
+  "status": 400
+}
+2026-03-27 13:12:31 [[33mwarn[39m]: [1;33mAPI Warning[0m {
+  "requestId": "450467a5-1434-4ddc-8d65-c24f815141bb",
+  "method": "POST",
+  "url": "/api/v1/auth/forgot-password/verify",
+  "status": 400,
+  "time": "209.38 ms",
+  "ip": "::1"
+}
+2026-03-27 13:12:42 [[32minfo[39m]: [1;32mUser document:[0m {
+  "id": "69c33eb35b296b051e47004b",
+  "email": "dinhlelytran1225@gmail.com",
+  "avatar": "uploads/default.jpg",
+  "createdAt": "2026-03-25T01:47:27.554Z",
+  "name": "dinhlelytran1225",
+  "provider": "local",
+  "providerId": null,
+  "status": "verified",
+  "updatedAt": "2026-03-26T05:50:00.458Z"
+}
+2026-03-27 13:12:42 [[32minfo[39m]: [1;32mOTP document for 69c33eb35b296b051e47004b: {
+  _id: new ObjectId('69c61fcb7406bd32dcb9945d'),
+  purpose: 'forgot_password',
+  userId: new ObjectId('69c33eb35b296b051e47004b'),
+  __v: 0,
+  createdAt: 2026-03-27T06:12:25.786Z,
+  otp: '$2b$10$dmgldOum5hI7vfh3wY0uHOdm/C4wvWgwtXxyMtIbFLnfZVcUVcTNe',
+  updatedAt: 2026-03-27T06:12:25.786Z
+}[0m 
+2026-03-27 13:12:43 [[32minfo[39m]: [1;32mGenerate forgot password token for dinhlelytran1225@gmail.com[0m 
+2026-03-27 13:12:43 [[32minfo[39m]: [1;32mAPI Request[0m {
+  "requestId": "8b779bfd-41b7-4145-8343-0003af9e12d8",
+  "method": "POST",
+  "url": "/api/v1/auth/forgot-password/verify",
+  "status": 201,
+  "time": "350.07 ms",
+  "ip": "::1"
+}
+2026-03-27 13:13:32 [[32minfo[39m]: [1;32mVerify forgot password token for undefined[0m 
+2026-03-27 13:13:32 [[31merror[39m]: [1;31mError Forgot password token expired[0m
+Error: Forgot password token expired
+    at verifyForgotPasswordToken (file:///M:/flutter/taskit_backend/src/utils/token.js:47:11)
+    at AuthService.resetPassword (file:///M:/flutter/taskit_backend/src/features/auth/auth.service.js:202:26)
+    at resetPassword (file:///M:/flutter/taskit_backend/src/features/auth/auth.controller.js:97:24)
+    at Layer.handle [as handle_request] (M:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at next (M:\flutter\taskit_backend\node_modules\express\lib\router\route.js:149:13)
+    at file:///M:/flutter/taskit_backend/src/middleware/validate.js:20:5
+    at Layer.handle [as handle_request] (M:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at next (M:\flutter\taskit_backend\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (M:\flutter\taskit_backend\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (M:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5) {
+  "requestId": "45150b9c-427c-4f63-9cd8-245d7044e37c",
+  "method": "PUT",
+  "url": "/api/v1/auth/forgot-password/reset",
+  "status": 403
+}
+2026-03-27 13:13:32 [[33mwarn[39m]: [1;33mAPI Warning[0m {
+  "requestId": "45150b9c-427c-4f63-9cd8-245d7044e37c",
+  "method": "PUT",
+  "url": "/api/v1/auth/forgot-password/reset",
+  "status": 403,
+  "time": "4.01 ms",
+  "ip": "::1"
+}
+2026-03-27 13:13:36 [[32minfo[39m]: [1;32mVerify forgot password token for undefined[0m 
+2026-03-27 13:13:36 [[32minfo[39m]: [1;32mReset password for 69c33eb35b296b051e47004b[0m 
+2026-03-27 13:13:37 [[32minfo[39m]: [1;32mAPI Request[0m {
+  "requestId": "1e46966d-3fcf-465f-8501-b0232d73ed8d",
+  "method": "PUT",
+  "url": "/api/v1/auth/forgot-password/reset",
+  "status": 201,
+  "time": "117.07 ms",
+  "ip": "::1"
+}

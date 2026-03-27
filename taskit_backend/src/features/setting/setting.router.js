@@ -1,11 +1,16 @@
-import express from 'express';
-import * as SettingController from './setting.controller.js';
-import { jwtMiddleware } from '../auth/jwt.middleware.js';
-import * as SettingMiddleware from './setting.middleware.js';
+import express from "express";
+import * as SettingController from "./setting.controller.js";
+import * as SettingMiddleware from "./setting.middleware.js";
+import { authMiddleware } from "../../middleware/auth.middleware.js";
 const router = express.Router();
 
-router.get('/', jwtMiddleware, SettingController.get_setting);
-router.patch('/', jwtMiddleware, SettingMiddleware.update_setting, SettingController.update_setting);
-router.delete('/', jwtMiddleware, SettingController.delete_setting);
+router.get("/", authMiddleware, SettingController.get_setting);
+router.patch(
+  "/",
+  authMiddleware,
+  SettingMiddleware.update_setting,
+  SettingController.update_setting,
+);
+router.delete("/", authMiddleware, SettingController.delete_setting);
 
 export default router;

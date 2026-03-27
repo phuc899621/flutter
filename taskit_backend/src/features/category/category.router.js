@@ -1,11 +1,11 @@
-import express from 'express';
-import * as CategoryController from './category.controller.js';
-import {jwtMiddleware} from '../auth/jwt.middleware.js';
-import * as CategoryMiddleware from './category.middleware.js';
+import express from "express";
+import * as CategoryController from "./category.controller.js";
+import * as CategoryMiddleware from "./category.middleware.js";
+import { authMiddleware } from "../../middleware/auth.middleware.js";
 
-const router=express.Router();
+const router = express.Router();
 
-/** 
+/**
  * @openapi
  * '/api/categories':
  *   get:
@@ -27,19 +27,19 @@ const router=express.Router();
  *                  message:
  *                    type: string
  *                    example: Categories retrieved successfully
- *                  data: 
+ *                  data:
  *                    type: array
  *                    items:
  *                      $ref: '#/components/schemas/Category'
- * 
+ *
  *       401:
  *         $ref: '#/components/responses/401'
  *       500:
  *         $ref: '#/components/responses/500'
  */
-router.get('/',jwtMiddleware,CategoryController.getCategories);
+router.get("/", authMiddleware, CategoryController.getCategories);
 
-/** 
+/**
  * @openapi
  * '/api/categories/{id}':
  *   get:
@@ -70,9 +70,9 @@ router.get('/',jwtMiddleware,CategoryController.getCategories);
  *                  message:
  *                    type: string
  *                    example: Category retrieved successfully
- *                  data: 
+ *                  data:
  *                    $ref: '#/components/schemas/Category'
- * 
+ *
  *       400:
  *         $ref: '#/components/responses/400'
  *       401:
@@ -82,9 +82,14 @@ router.get('/',jwtMiddleware,CategoryController.getCategories);
  *       500:
  *         $ref: '#/components/responses/500'
  */
-router.get('/:id',jwtMiddleware,CategoryMiddleware.getCategoryMiddleware,CategoryController.getCategory);
+router.get(
+  "/:id",
+  authMiddleware,
+  CategoryMiddleware.getCategoryMiddleware,
+  CategoryController.getCategory,
+);
 
-/** 
+/**
  * @openapi
  * '/api/categories':
  *   post:
@@ -124,9 +129,9 @@ router.get('/:id',jwtMiddleware,CategoryMiddleware.getCategoryMiddleware,Categor
  *                  message:
  *                    type: string
  *                    example: Category created successfully
- *                  data: 
+ *                  data:
  *                    '#/components/schemas/CategoryWithLocalId'
- * 
+ *
  *       400:
  *         $ref: '#/components/responses/400'
  *       401:
@@ -136,10 +141,14 @@ router.get('/:id',jwtMiddleware,CategoryMiddleware.getCategoryMiddleware,Categor
  *       500:
  *         $ref: '#/components/responses/500'
  */
-router.post('/',jwtMiddleware,CategoryMiddleware.createCategoryMiddleware,CategoryController.createCategory);
+router.post(
+  "/",
+  authMiddleware,
+  CategoryMiddleware.createCategoryMiddleware,
+  CategoryController.createCategory,
+);
 
-
-/** 
+/**
  * @openapi
  * '/api/categories/{id}':
  *   put:
@@ -150,7 +159,7 @@ router.post('/',jwtMiddleware,CategoryMiddleware.createCategoryMiddleware,Catego
  *          Update a category for the authenticated user using the category ID with all fields required.
  *          - The category data is required in the request body and it must include name.
  *          - The name must be at least 3 characters long and must not the same as another category.
- *  
+ *
  *     security:
  *       - bearerAuth: []
  *     requestBody:
@@ -176,9 +185,9 @@ router.post('/',jwtMiddleware,CategoryMiddleware.createCategoryMiddleware,Catego
  *                  message:
  *                    type: string
  *                    example: Category updated successfully
- *                  data: 
+ *                  data:
  *                    '#/components/schemas/Category'
- * 
+ *
  *       400:
  *         $ref: '#/components/responses/400'
  *       401:
@@ -188,9 +197,14 @@ router.post('/',jwtMiddleware,CategoryMiddleware.createCategoryMiddleware,Catego
  *       500:
  *         $ref: '#/components/responses/500'
  */
-router.put('/:id',jwtMiddleware,CategoryMiddleware.updateCategoryFullMiddleware,CategoryController.updateCategoryFull);
+router.put(
+  "/:id",
+  authMiddleware,
+  CategoryMiddleware.updateCategoryFullMiddleware,
+  CategoryController.updateCategoryFull,
+);
 
-/** 
+/**
  * @openapi
  * '/api/categories/{id}':
  *   patch:
@@ -223,9 +237,9 @@ router.put('/:id',jwtMiddleware,CategoryMiddleware.updateCategoryFullMiddleware,
  *                  message:
  *                    type: string
  *                    example: Category updated successfully
- *                  data: 
+ *                  data:
  *                    '#/components/schemas/Category'
- * 
+ *
  *       400:
  *         $ref: '#/components/responses/400'
  *       401:
@@ -235,9 +249,14 @@ router.put('/:id',jwtMiddleware,CategoryMiddleware.updateCategoryFullMiddleware,
  *       500:
  *         $ref: '#/components/responses/500'
  */
-router.patch('/:id',jwtMiddleware,CategoryMiddleware.updateCategoryPartialMiddleware,CategoryController.updateCategoryPartial);
+router.patch(
+  "/:id",
+  authMiddleware,
+  CategoryMiddleware.updateCategoryPartialMiddleware,
+  CategoryController.updateCategoryPartial,
+);
 
-/** 
+/**
  * @openapi
  * '/api/categories/{id}':
  *   delete:
@@ -260,13 +279,13 @@ router.patch('/:id',jwtMiddleware,CategoryMiddleware.updateCategoryPartialMiddle
  *                  message:
  *                    type: string
  *                    example: Category deleted successfully
- *                  data: 
+ *                  data:
  *                    type: object
  *                    properties:
  *                      id:
  *                        type: string
  *                        example: "507f1f77bcf86cd7"
- * 
+ *
  *       400:
  *         $ref: '#/components/responses/400'
  *       401:
@@ -276,7 +295,11 @@ router.patch('/:id',jwtMiddleware,CategoryMiddleware.updateCategoryPartialMiddle
  *       500:
  *         $ref: '#/components/responses/500'
  */
-router.delete('/:id',jwtMiddleware,CategoryMiddleware.deleteCategoryMiddleware,CategoryController.deleteCategory);
-
+router.delete(
+  "/:id",
+  authMiddleware,
+  CategoryMiddleware.deleteCategoryMiddleware,
+  CategoryController.deleteCategory,
+);
 
 export default router;

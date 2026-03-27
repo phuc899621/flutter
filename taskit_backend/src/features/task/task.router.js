@@ -1,12 +1,12 @@
-import express from 'express';
-import * as TaskController from './task.controller.js';
-import * as SubtaskController from './subtask.controller.js';
-import {jwtMiddleware} from '../auth/jwt.middleware.js';
-import * as TaskMiddleware from './task.middleware.js';
-import * as SubtaskMiddleware from './subtask.middleware.js';
+import express from "express";
+import * as TaskController from "./task.controller.js";
+import * as SubtaskController from "./subtask.controller.js";
+import * as TaskMiddleware from "./task.middleware.js";
+import * as SubtaskMiddleware from "./subtask.middleware.js";
+import { authMiddleware } from "../../middleware/auth.middleware.js";
 
 const router = express.Router();
-/** 
+/**
  * @openapi
  * '/api/tasks':
  *   post:
@@ -15,7 +15,7 @@ const router = express.Router();
  *     summary: Create a new task (optionally including subtasks)
  *     description: |
  *       This endpoint allows user to create a new task
- *       - Send task details in the request body 
+ *       - Send task details in the request body
  *       - The 'title' field is a must-have field, other fields are optional
  *       - The 'localId' field is an optional field, which is used to mark the local id of the task
  *       - The 'subtasks' field is an optional field, which is used to create subtasks for the task
@@ -86,7 +86,7 @@ const router = express.Router();
  *                    items:
  *                      type: object
  *                      properties:
- *                          id: 
+ *                          id:
  *                            type: string
  *                            example: "66fdc011c0662027f2361"
  *                          userId:
@@ -135,7 +135,7 @@ const router = express.Router();
  *                              $ref: '#/components/schemas/SubtaskWithLocalId'
  *       400:
  *         $ref: '#/components/responses/400'
- *         
+ *
  *       401:
  *         $ref: '#/components/responses/401'
  *       404:
@@ -143,16 +143,20 @@ const router = express.Router();
  *       500:
  *         $ref: '#/components/responses/500'
  */
-router.post('/', jwtMiddleware,TaskMiddleware.createTaskMiddleware, TaskController.createTask);
+router.post(
+  "/",
+  authMiddleware,
+  TaskMiddleware.createTaskMiddleware,
+  TaskController.createTask,
+);
 
-
-/** 
+/**
  * @openapi
  * '/api/tasks':
  *   get:
  *     tags:
  *       - Tasks
- *     summary: Get a list of tasks 
+ *     summary: Get a list of tasks
  *     description: |
  *          Retrieve a paginated list of tasks.
  *          - Supports optional query parameters for filtering and pagination
@@ -167,10 +171,10 @@ router.post('/', jwtMiddleware,TaskMiddleware.createTaskMiddleware, TaskControll
  *              - title: Filter by task title
  *              - sortBy: The field to sort by (default: createdAt)
  *              - sortOrder: The order to sort by (default: desc)
- * 
- *              
  *
- * 
+ *
+ *
+ *
  *     security:
  *       - bearerAuth: []
  *     parameters:
@@ -185,7 +189,7 @@ router.post('/', jwtMiddleware,TaskMiddleware.createTaskMiddleware, TaskControll
  *         required: false
  *         schema:
  *           type: integer
- *           example: 10 
+ *           example: 10
  *       - name: title
  *         in: query
  *         required: false
@@ -283,8 +287,8 @@ router.post('/', jwtMiddleware,TaskMiddleware.createTaskMiddleware, TaskControll
  *                    type: array
  *                    items:
  *                      $ref: '#/components/schemas/TaskWithSubtasks'
- *       400:              
- *         $ref: '#/components/responses/400'   
+ *       400:
+ *         $ref: '#/components/responses/400'
  *       401:
  *         $ref: '#/components/responses/401'
  *       404:
@@ -292,9 +296,14 @@ router.post('/', jwtMiddleware,TaskMiddleware.createTaskMiddleware, TaskControll
  *       500:
  *         $ref: '#/components/responses/500'
  */
-router.get('/', jwtMiddleware, TaskMiddleware.getTasksMiddleware, TaskController.getTasks);
+router.get(
+  "/",
+  authMiddleware,
+  TaskMiddleware.getTasksMiddleware,
+  TaskController.getTasks,
+);
 
-/** 
+/**
  * @openapi
  * '/api/tasks/sync':
  *   get:
@@ -337,8 +346,8 @@ router.get('/', jwtMiddleware, TaskMiddleware.getTasksMiddleware, TaskController
  *                    type: array
  *                    items:
  *                      $ref: '#/components/schemas/TaskWithSubtasks'
- *       400:              
- *         $ref: '#/components/responses/400'   
+ *       400:
+ *         $ref: '#/components/responses/400'
  *       401:
  *         $ref: '#/components/responses/401'
  *       404:
@@ -346,9 +355,14 @@ router.get('/', jwtMiddleware, TaskMiddleware.getTasksMiddleware, TaskController
  *       500:
  *         $ref: '#/components/responses/500'
  */
-router.get('/sync', jwtMiddleware, TaskMiddleware.getSyncTasksMiddleware, TaskController.getSyncTasks);
+router.get(
+  "/sync",
+  authMiddleware,
+  TaskMiddleware.getSyncTasksMiddleware,
+  TaskController.getSyncTasks,
+);
 
-/** 
+/**
  * @openapi
  * '/api/tasks/{taskId}':
  *   get:
@@ -384,8 +398,8 @@ router.get('/sync', jwtMiddleware, TaskMiddleware.getSyncTasksMiddleware, TaskCo
  *                    type: array
  *                    items:
  *                      $ref: '#/components/schemas/TaskWithSubtasks'
- *       400:              
- *         $ref: '#/components/responses/400'   
+ *       400:
+ *         $ref: '#/components/responses/400'
  *       401:
  *         $ref: '#/components/responses/401'
  *       404:
@@ -393,9 +407,14 @@ router.get('/sync', jwtMiddleware, TaskMiddleware.getSyncTasksMiddleware, TaskCo
  *       500:
  *         $ref: '#/components/responses/500'
  */
-router.get(':taskId', jwtMiddleware, TaskMiddleware.getTaskMiddleware, TaskController.getTask);
+router.get(
+  ":taskId",
+  authMiddleware,
+  TaskMiddleware.getTaskMiddleware,
+  TaskController.getTask,
+);
 
-/** 
+/**
  * @openapi
  * '/api/tasks/bulk':
  *   patch:
@@ -403,10 +422,10 @@ router.get(':taskId', jwtMiddleware, TaskMiddleware.getTaskMiddleware, TaskContr
  *       - Tasks
  *     summary: Bulk update multiple tasks
  *     description: |
- *          Update multiple tasks at once with the same content. 
+ *          Update multiple tasks at once with the same content.
  *          - Provide a list of task IDs object and an object of data to update
  *          - For unmatched task IDs, the tasks will be skipped
- *          Returns the list of updated task Ids and skipped tasks Ids. 
+ *          Returns the list of updated task Ids and skipped tasks Ids.
  *     security:
  *       - bearerAuth: []
  *     requestBody:
@@ -457,7 +476,7 @@ router.get(':taskId', jwtMiddleware, TaskMiddleware.getTaskMiddleware, TaskContr
  *                     status:
  *                        type: string
  *                        enum: [scheduled, pending, completed]
- *                        example: scheduled       
+ *                        example: scheduled
  *     responses:
  *       200:
  *         description: Bulk update completed successfully
@@ -469,7 +488,7 @@ router.get(':taskId', jwtMiddleware, TaskMiddleware.getTaskMiddleware, TaskContr
  *                  message:
  *                    type: string
  *                    example: Bulk update completed successfully
- *                  data: 
+ *                  data:
  *                    type: object
  *                    properties:
  *                      matchedCount:
@@ -489,7 +508,7 @@ router.get(':taskId', jwtMiddleware, TaskMiddleware.getTaskMiddleware, TaskContr
  *                              localId:
  *                                  type: int
  *                                  example: 13
- *                      skipped:       
+ *                      skipped:
  *                        type: array
  *                        items:
  *                          type: object
@@ -512,9 +531,14 @@ router.get(':taskId', jwtMiddleware, TaskMiddleware.getTaskMiddleware, TaskContr
  *       500:
  *         $ref: '#/components/responses/500'
  */
-router.patch('/bulk', jwtMiddleware, TaskMiddleware.updateTasksBulkMiddleware, TaskController.updateTasksBulk);
+router.patch(
+  "/bulk",
+  authMiddleware,
+  TaskMiddleware.updateTasksBulkMiddleware,
+  TaskController.updateTasksBulk,
+);
 
-/** 
+/**
  * @openapi
  * '/api/tasks/bulk/multiple':
  *   patch:
@@ -522,10 +546,10 @@ router.patch('/bulk', jwtMiddleware, TaskMiddleware.updateTasksBulkMiddleware, T
  *       - Tasks
  *     summary: Bulk update multiple tasks with different update data.
  *     description: |
- *          Update multiple tasks at once with different values. 
- *          - The client must provide an array of task object, which contains taskId and updating data 
+ *          Update multiple tasks at once with different values.
+ *          - The client must provide an array of task object, which contains taskId and updating data
  *          - For unmatched task/category ids, the tasks will be skipped
- *          Returns the list of updated task Ids and skipped tasks Ids. 
+ *          Returns the list of updated task Ids and skipped tasks Ids.
  *     security:
  *       - bearerAuth: []
  *     requestBody:
@@ -587,7 +611,7 @@ router.patch('/bulk', jwtMiddleware, TaskMiddleware.updateTasksBulkMiddleware, T
  *                  message:
  *                    type: string
  *                    example: Tasks updated successfully (multiple contents)
- *                  data: 
+ *                  data:
  *                    type: object
  *                    properties:
  *                      matchedCount:
@@ -607,7 +631,7 @@ router.patch('/bulk', jwtMiddleware, TaskMiddleware.updateTasksBulkMiddleware, T
  *                              localId:
  *                                  type: int
  *                                  example: 13
- *                      skipped:       
+ *                      skipped:
  *                        type: array
  *                        items:
  *                          type: object
@@ -630,9 +654,14 @@ router.patch('/bulk', jwtMiddleware, TaskMiddleware.updateTasksBulkMiddleware, T
  *       500:
  *         $ref: '#/components/responses/500'
  */
-router.patch('/bulk/multiple', jwtMiddleware, TaskMiddleware.updateMultipleTasksMiddleware, TaskController.updateMultipleTasks);
+router.patch(
+  "/bulk/multiple",
+  authMiddleware,
+  TaskMiddleware.updateMultipleTasksMiddleware,
+  TaskController.updateMultipleTasks,
+);
 
-/** 
+/**
  * @openapi
  * '/api/tasks/{taskId}':
  *   put:
@@ -671,7 +700,7 @@ router.patch('/bulk/multiple', jwtMiddleware, TaskMiddleware.updateMultipleTasks
  *               localId:
  *                  type: int
  *                  example: 13
- *                  description: The local id of task (usually used in local database)  
+ *                  description: The local id of task (usually used in local database)
  *               description:
  *                  type: string
  *                  example: 'Book flights, hotel, and prepare itinerary for Da Nang trip'
@@ -691,11 +720,11 @@ router.patch('/bulk/multiple', jwtMiddleware, TaskMiddleware.updateMultipleTasks
  *                  type: string
  *                  enum: [low, medium, high, none]
  *                  exanple: low
- *               status: 
+ *               status:
  *                  type: string
  *                  enum: [pending, inProgress, completed]
  *                  example: pending
- *                 
+ *
  *     responses:
  *       200:
  *         description: Task updated successfully
@@ -707,7 +736,7 @@ router.patch('/bulk/multiple', jwtMiddleware, TaskMiddleware.updateMultipleTasks
  *                  message:
  *                    type: string
  *                    example: Task updated successfully
- *                  data: 
+ *                  data:
  *                    type: object
  *                    properties:
  *                      localId:
@@ -726,9 +755,14 @@ router.patch('/bulk/multiple', jwtMiddleware, TaskMiddleware.updateMultipleTasks
  *       500:
  *         $ref: '#/components/responses/500'
  */
-router.put('/:taskId', jwtMiddleware, TaskMiddleware.updateTaskFullMiddleware ,TaskController.updateTaskFull);
+router.put(
+  "/:taskId",
+  authMiddleware,
+  TaskMiddleware.updateTaskFullMiddleware,
+  TaskController.updateTaskFull,
+);
 
-/** 
+/**
  * @openapi
  * '/api/tasks/{taskId}':
  *   patch:
@@ -761,7 +795,7 @@ router.put('/:taskId', jwtMiddleware, TaskMiddleware.updateTaskFullMiddleware ,T
  *               localId:
  *                  type: int
  *                  example: 13
- *                  description: The local id of task (usually used in local database)  
+ *                  description: The local id of task (usually used in local database)
  *               description:
  *                  type: string
  *                  example: 'Book flights, hotel, and prepare itinerary for Da Nang trip'
@@ -781,11 +815,11 @@ router.put('/:taskId', jwtMiddleware, TaskMiddleware.updateTaskFullMiddleware ,T
  *                  type: string
  *                  enum: [low, medium, high, none]
  *                  exanple: low
- *               status: 
+ *               status:
  *                  type: string
  *                  enum: [pending, inProgress, completed]
  *                  example: pending
- *                 
+ *
  *     responses:
  *       200:
  *         description: Task partially updated successfully
@@ -797,7 +831,7 @@ router.put('/:taskId', jwtMiddleware, TaskMiddleware.updateTaskFullMiddleware ,T
  *                  message:
  *                    type: string
  *                    example: Update task successfully (partial update)
- *                  data: 
+ *                  data:
  *                    type: object
  *                    properties:
  *                      localId:
@@ -816,9 +850,14 @@ router.put('/:taskId', jwtMiddleware, TaskMiddleware.updateTaskFullMiddleware ,T
  *       500:
  *         $ref: '#/components/responses/500'
  */
-router.patch('/:taskId', jwtMiddleware, TaskMiddleware.updateTaskPartialMiddleware,TaskController.updateTaskPartial);
+router.patch(
+  "/:taskId",
+  authMiddleware,
+  TaskMiddleware.updateTaskPartialMiddleware,
+  TaskController.updateTaskPartial,
+);
 
-/** 
+/**
  * @openapi
  * '/api/tasks':
  *   delete:
@@ -841,7 +880,7 @@ router.patch('/:taskId', jwtMiddleware, TaskMiddleware.updateTaskPartialMiddlewa
  *                  items:
  *                     type: string
  *                     example: 507f1f77bcf86cd799439011
- * 
+ *
  *     responses:
  *       200:
  *         description: Multiple tasks and related subtasks deleted successfully
@@ -853,7 +892,7 @@ router.patch('/:taskId', jwtMiddleware, TaskMiddleware.updateTaskPartialMiddlewa
  *                  message:
  *                    type: string
  *                    example: Delete multiple tasks successfully
- *                  data: 
+ *                  data:
  *                    type: object
  *                    properties:
  *                      deleteCount:
@@ -875,7 +914,7 @@ router.patch('/:taskId', jwtMiddleware, TaskMiddleware.updateTaskPartialMiddlewa
  *                                  items:
  *                                      type: string
  *                                      example: '507f1f77bcf86cd799439011'
- * 
+ *
  *       400:
  *         $ref: '#/components/responses/400'
  *       401:
@@ -885,9 +924,14 @@ router.patch('/:taskId', jwtMiddleware, TaskMiddleware.updateTaskPartialMiddlewa
  *       500:
  *         $ref: '#/components/responses/500'
  */
-router.delete('/', jwtMiddleware, TaskMiddleware.deleteBulkTasksMiddleware, TaskController.deleteBulkTasks);
+router.delete(
+  "/",
+  authMiddleware,
+  TaskMiddleware.deleteBulkTasksMiddleware,
+  TaskController.deleteBulkTasks,
+);
 
-/** 
+/**
  * @openapi
  * '/api/tasks/{taskId}':
  *   delete:
@@ -916,7 +960,7 @@ router.delete('/', jwtMiddleware, TaskMiddleware.deleteBulkTasksMiddleware, Task
  *                  message:
  *                    type: string
  *                    example: Delete task successfully
- *                  data: 
+ *                  data:
  *                    type: object
  *                    properties:
  *                      taskId:
@@ -936,10 +980,14 @@ router.delete('/', jwtMiddleware, TaskMiddleware.deleteBulkTasksMiddleware, Task
  *       500:
  *         $ref: '#/components/responses/500'
  */
-router.delete('/:taskId', jwtMiddleware,TaskMiddleware.deleteTaskMiddleware, TaskController.deleteTask);
+router.delete(
+  "/:taskId",
+  authMiddleware,
+  TaskMiddleware.deleteTaskMiddleware,
+  TaskController.deleteTask,
+);
 
-
-/** 
+/**
  * @openapi
  * '/api/tasks/{taskId}/subtasks':
  *   get:
@@ -947,7 +995,7 @@ router.delete('/:taskId', jwtMiddleware,TaskMiddleware.deleteTaskMiddleware, Tas
  *       - Subtasks
  *     summary: Get subtasks by task ID
  *     description: |
- *          Retrieve all subtasks for a task identified by taskId. 
+ *          Retrieve all subtasks for a task identified by taskId.
  *          Query parameters can be used for filtering title and isCompleted field.
  *     security:
  *       - bearerAuth: []
@@ -981,11 +1029,11 @@ router.delete('/:taskId', jwtMiddleware,TaskMiddleware.deleteTaskMiddleware, Tas
  *                  message:
  *                    type: string
  *                    example: Subtasks retrieved successfully
- *                  data: 
+ *                  data:
  *                    type: array
  *                    items:
  *                      $ref: '#/components/schemas/Subtask'
- * 
+ *
  *       400:
  *         $ref: '#/components/responses/400'
  *       401:
@@ -995,9 +1043,14 @@ router.delete('/:taskId', jwtMiddleware,TaskMiddleware.deleteTaskMiddleware, Tas
  *       500:
  *         $ref: '#/components/responses/500'
  */
-router.get('/:taskId/subtasks', jwtMiddleware,SubtaskMiddleware.getSubtasksMiddleware, SubtaskController.getSubtasks);
+router.get(
+  "/:taskId/subtasks",
+  authMiddleware,
+  SubtaskMiddleware.getSubtasksMiddleware,
+  SubtaskController.getSubtasks,
+);
 
-/** 
+/**
  * @openapi
  * '/api/tasks/{taskId}/subtasks/{subtaskId}':
  *   get:
@@ -1005,7 +1058,7 @@ router.get('/:taskId/subtasks', jwtMiddleware,SubtaskMiddleware.getSubtasksMiddl
  *       - Subtasks
  *     summary: Get single subtask by task & subtask ID
  *     description: |
- *          Retrieve details of a specific subtask for a task identified by taskId and subtaskId. 
+ *          Retrieve details of a specific subtask for a task identified by taskId and subtaskId.
  *     security:
  *       - bearerAuth: []
  *     parameters:
@@ -1032,9 +1085,9 @@ router.get('/:taskId/subtasks', jwtMiddleware,SubtaskMiddleware.getSubtasksMiddl
  *                  message:
  *                    type: string
  *                    example: Subtask retrieved successfully
- *                  data: 
+ *                  data:
  *                    $ref: '#/components/schemas/Subtask'
- * 
+ *
  *       400:
  *         $ref: '#/components/responses/400'
  *       401:
@@ -1044,9 +1097,14 @@ router.get('/:taskId/subtasks', jwtMiddleware,SubtaskMiddleware.getSubtasksMiddl
  *       500:
  *         $ref: '#/components/responses/500'
  */
-router.get('/:taskId/subtasks/:subtaskId', jwtMiddleware,SubtaskMiddleware.getSubtaskMiddleware, SubtaskController.getSubtask);
+router.get(
+  "/:taskId/subtasks/:subtaskId",
+  authMiddleware,
+  SubtaskMiddleware.getSubtaskMiddleware,
+  SubtaskController.getSubtask,
+);
 
-/** 
+/**
  * @openapi
  * '/api/tasks/{taskId}/subtasks':
  *   post:
@@ -1057,7 +1115,7 @@ router.get('/:taskId/subtasks/:subtaskId', jwtMiddleware,SubtaskMiddleware.getSu
  *          Create a new subtask in a task identified by taskId.
  *          - The task ID is required as a path parameter.
  *          - The subtask data (title is required, isCompleted is optional) is provided in the request body as a JSON object.
- *          
+ *
  *     security:
  *       - bearerAuth: []
  *     parameters:
@@ -1093,9 +1151,9 @@ router.get('/:taskId/subtasks/:subtaskId', jwtMiddleware,SubtaskMiddleware.getSu
  *                  message:
  *                    type: string
  *                    example: Subtask created successfully
- *                  data: 
+ *                  data:
  *                    $ref: '#/components/schemas/Subtask'
- * 
+ *
  *       400:
  *         $ref: '#/components/responses/400'
  *       401:
@@ -1105,9 +1163,14 @@ router.get('/:taskId/subtasks/:subtaskId', jwtMiddleware,SubtaskMiddleware.getSu
  *       500:
  *         $ref: '#/components/responses/500'
  */
-router.post('/:taskId/subtasks', jwtMiddleware, SubtaskMiddleware.createSubtaskMiddleware, SubtaskController.createSubtask);
+router.post(
+  "/:taskId/subtasks",
+  authMiddleware,
+  SubtaskMiddleware.createSubtaskMiddleware,
+  SubtaskController.createSubtask,
+);
 
-/** 
+/**
  * @openapi
  * '/api/tasks/{taskId}/subtasks/bulk':
  *   post:
@@ -1160,11 +1223,11 @@ router.post('/:taskId/subtasks', jwtMiddleware, SubtaskMiddleware.createSubtaskM
  *                  message:
  *                    type: string
  *                    example: Multiple subtasks created successfully
- *                  data: 
+ *                  data:
  *                    type: array
  *                    items:
  *                      $ref: '#/components/schemas/Subtask'
- * 
+ *
  *       400:
  *         $ref: '#/components/responses/400'
  *       401:
@@ -1174,10 +1237,14 @@ router.post('/:taskId/subtasks', jwtMiddleware, SubtaskMiddleware.createSubtaskM
  *       500:
  *         $ref: '#/components/responses/500'
  */
-router.post('/:taskId/subtasks/bulk', jwtMiddleware, SubtaskMiddleware.createSubtasksMiddleware, SubtaskController.createSubtasks);
+router.post(
+  "/:taskId/subtasks/bulk",
+  authMiddleware,
+  SubtaskMiddleware.createSubtasksMiddleware,
+  SubtaskController.createSubtasks,
+);
 
-
-/** 
+/**
  * @openapi
  * '/api/tasks/{taskId}/subtasks/{subtaskId}':
  *   put:
@@ -1234,11 +1301,11 @@ router.post('/:taskId/subtasks/bulk', jwtMiddleware, SubtaskMiddleware.createSub
  *                  message:
  *                    type: string
  *                    example: Subtask updated successfully
- *                  data: 
+ *                  data:
  *                    type: array
  *                    items:
  *                      $ref: '#/components/schemas/SubtaskWithLocalId'
- * 
+ *
  *       400:
  *         $ref: '#/components/responses/400'
  *       401:
@@ -1248,9 +1315,14 @@ router.post('/:taskId/subtasks/bulk', jwtMiddleware, SubtaskMiddleware.createSub
  *       500:
  *         $ref: '#/components/responses/500'
  */
-router.put('/:taskId/subtasks/:subtaskId', jwtMiddleware, SubtaskMiddleware.updateSubtaskFullMiddleware, SubtaskController.updateSubtaskFull);
+router.put(
+  "/:taskId/subtasks/:subtaskId",
+  authMiddleware,
+  SubtaskMiddleware.updateSubtaskFullMiddleware,
+  SubtaskController.updateSubtaskFull,
+);
 
-/** 
+/**
  * @openapi
  * '/api/tasks/{taskId}/subtasks/{subtaskId}':
  *   patch:
@@ -1304,11 +1376,11 @@ router.put('/:taskId/subtasks/:subtaskId', jwtMiddleware, SubtaskMiddleware.upda
  *                  message:
  *                    type: string
  *                    example: Subtask updated successfully
- *                  data: 
+ *                  data:
  *                    type: array
  *                    items:
  *                      $ref: '#/components/schemas/SubtaskWithLocalId'
- * 
+ *
  *       400:
  *         $ref: '#/components/responses/400'
  *       401:
@@ -1318,10 +1390,14 @@ router.put('/:taskId/subtasks/:subtaskId', jwtMiddleware, SubtaskMiddleware.upda
  *       500:
  *         $ref: '#/components/responses/500'
  */
-router.patch('/:taskId/subtasks/:subtaskId', jwtMiddleware, SubtaskMiddleware.updateSubtaskPartialMiddleware, SubtaskController.updateSubtaskPartial);
+router.patch(
+  "/:taskId/subtasks/:subtaskId",
+  authMiddleware,
+  SubtaskMiddleware.updateSubtaskPartialMiddleware,
+  SubtaskController.updateSubtaskPartial,
+);
 
-
-/** 
+/**
  * @openapi
  * '/api/tasks/{taskId}/subtasks':
  *   delete:
@@ -1358,13 +1434,13 @@ router.patch('/:taskId/subtasks/:subtaskId', jwtMiddleware, SubtaskMiddleware.up
  *                  message:
  *                    type: string
  *                    example: Subtask deleted successfully
- *                  data: 
+ *                  data:
  *                    type: object
  *                    properties:
  *                      id:
  *                        type: string
  *                        example: 507f1f77bcf86cd7
- * 
+ *
  *       400:
  *         $ref: '#/components/responses/400'
  *       401:
@@ -1374,9 +1450,14 @@ router.patch('/:taskId/subtasks/:subtaskId', jwtMiddleware, SubtaskMiddleware.up
  *       500:
  *         $ref: '#/components/responses/500'
  */
-router.delete('/:taskId/subtasks', jwtMiddleware, SubtaskMiddleware.deleteAllSubtasksMiddleware, SubtaskController.deleteAllSubtasks);
+router.delete(
+  "/:taskId/subtasks",
+  authMiddleware,
+  SubtaskMiddleware.deleteAllSubtasksMiddleware,
+  SubtaskController.deleteAllSubtasks,
+);
 
-/** 
+/**
  * @openapi
  * '/api/tasks/{taskId}/subtasks/{subtaskId}':
  *   delete:
@@ -1407,7 +1488,7 @@ router.delete('/:taskId/subtasks', jwtMiddleware, SubtaskMiddleware.deleteAllSub
  *                  message:
  *                    type: string
  *                    example: Subtasks deleted successfully
- *                  data: 
+ *                  data:
  *                    type: object
  *                    properties:
  *                      ids:
@@ -1418,7 +1499,7 @@ router.delete('/:taskId/subtasks', jwtMiddleware, SubtaskMiddleware.deleteAllSub
  *                      deleteCount:
  *                        type: integer
  *                        example: 3
- * 
+ *
  *       400:
  *         $ref: '#/components/responses/400'
  *       401:
@@ -1428,6 +1509,11 @@ router.delete('/:taskId/subtasks', jwtMiddleware, SubtaskMiddleware.deleteAllSub
  *       500:
  *         $ref: '#/components/responses/500'
  */
-router.delete('/:taskId/subtasks/:subtaskId', jwtMiddleware, SubtaskMiddleware.deleteSubtaskMiddleware, SubtaskController.deleteSubtask);
+router.delete(
+  "/:taskId/subtasks/:subtaskId",
+  authMiddleware,
+  SubtaskMiddleware.deleteSubtaskMiddleware,
+  SubtaskController.deleteSubtask,
+);
 
 export default router;

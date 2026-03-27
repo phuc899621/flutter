@@ -59,68 +59,47 @@ export const refresh = async (req, res, next) => {
 };
 export const logout = async (req, res, next) => {
   try {
-    const result = await AuthServices.logout(refreshToken);
+    const result = await AuthServices.logout(req.refreshToken);
     return res.status(200).json({
       message: "Logout successfully!",
       data: result,
     });
   } catch (e) {
-    const statusCode = e.statusCode || 500;
-    return res.status(statusCode).json({
-      message: e.message,
-      data: {},
-    });
+    next(e);
   }
 };
 
-export const forgotPassword = async (req, res) => {
+export const forgotPassword = async (req, res, next) => {
   try {
     await AuthServices.forgotPassword(req.body);
     return res.status(201).json({
       message: "OTP for verify has been send to your email!",
-      data: {},
     });
   } catch (e) {
-    const statusCode = e.statusCode || 500;
-    return res.status(statusCode).json({
-      message: e.message,
-      data: {},
-    });
+    next(e);
   }
 };
 
-export const forgotPasswordVerify = async (req, res) => {
+export const forgotPasswordVerify = async (req, res, next) => {
   try {
     const result = await AuthServices.forgotPasswordVerify(req.body);
     return res.status(201).json({
-      message: "Verify successfully!",
-      data: {
-        resetToken: result,
-      },
+      message: "Verify account for forgot password successfully!",
+      data: result,
     });
   } catch (e) {
-    const statusCode = e.statusCode || 500;
-    return res.status(statusCode).json({
-      message: e.message,
-      data: {},
-    });
+    next(e);
   }
 };
 
-export const resetPassword = async (req, res) => {
+export const resetPassword = async (req, res, next) => {
   try {
-    const resetToken = req.headers["reset-token"];
-    await AuthServices.resetPassword(resetToken, req.body);
+    await AuthServices.resetPassword(req.body);
     return res.status(201).json({
       message: "Reset password successfully!",
-      data: {},
     });
   } catch (e) {
-    const statusCode = e.statusCode || 500;
-    return res.status(statusCode).json({
-      message: e.message,
-      data: {},
-    });
+    next(e);
   }
 };
 

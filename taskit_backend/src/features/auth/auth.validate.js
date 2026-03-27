@@ -56,42 +56,49 @@ export const loginValidate = validate({
       .messages(joiMsg("Password", { min: 8 })),
   }),
 });
-
-export const forgotPasswordMiddleware = validate(
-  Joi.object({
-    email: Joi.string().trim().email().required().messages({
-      "string.empty": "Email is required",
-      "string.email": "Invalid email address",
-    }),
+export const freshTokenValidate = validate({
+  body: Joi.object({
+    refreshToken: Joi.string().required().messages(joiMsg("Refresh token")),
   }),
-);
-export const forgotPasswordVerifyMiddleware = validate(
-  Joi.object({
-    email: Joi.string().trim().email().required(),
-
-    otp: Joi.string().length(4).required().messages({
-      "string.empty": "OTP is required",
-      "string.length": "OTP must be exactly 4 characters long",
-    }),
+});
+export const logoutValidate = validate({
+  body: Joi.object({
+    refreshToken: Joi.string().required().messages(joiMsg("Refresh token")),
   }),
-);
-export const resetPasswordMiddleware = validate(
-  Joi.object({
-    email: Joi.string().trim().email().required().messages({
-      "string.empty": "Email is required",
-      "string.email": "Invalid email address",
-    }),
+});
 
-    password: Joi.string().trim().min(3).required().messages({
-      "string.empty": "Password is required",
-      "string.min": "Password must be at least 3 characters",
-    }),
-
-    passwordConfirm: Joi.any().valid(Joi.ref("password")).required().messages({
-      "any.only": "Passwords do not match",
-    }),
+export const forgotPasswordValidate = validate({
+  body: Joi.object({
+    email: Joi.string()
+      .trim()
+      .email()
+      .required()
+      .messages(joiMsg("Email", { email: true })),
   }),
-);
+});
+export const forgotPasswordVerifyValidate = validate({
+  body: Joi.object({
+    email: Joi.string()
+      .trim()
+      .email()
+      .required()
+      .messages(joiMsg("Email", { email: true })),
+    otp: Joi.string()
+      .length(4)
+      .required()
+      .messages(joiMsg("OTP", { exactly: 4 })),
+  }),
+});
+export const resetPasswordValidate = validate({
+  body: Joi.object({
+    resetToken: Joi.string().trim().required().messages(joiMsg("Reset token")),
+    password: Joi.string()
+      .trim()
+      .min(8)
+      .required()
+      .messages(joiMsg("Password", { min: 8 })),
+  }),
+});
 
 export const loginVerifyHeaderMiddleware = validate(
   Joi.object({

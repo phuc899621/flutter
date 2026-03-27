@@ -21,8 +21,8 @@ class VerificationRepository {
     );
     return otp;
   }
-  static findSignupOTPByUserId(userId) {
-    return VerificationModel.findOne({ userId, purpose: "signup" });
+  static findByUserIdAndPurpose(userId, purpose) {
+    return VerificationModel.findOne({ userId, purpose });
   }
   static deleteByUserIdAndPurpose(userId, purpose, session) {
     return VerificationModel.findOneAndDelete({ userId, purpose }, { session });

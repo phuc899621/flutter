@@ -12,7 +12,7 @@ class UserRepository {
     if (status) query.status = status;
     return UserModel.findOne(query).session(session);
   }
-  static upsertByEmail({ email, name, password, status }, session) {
+  static async upsertByEmail({ email, name, password, status }, session) {
     const updateData = {
       name,
       password,
@@ -25,7 +25,7 @@ class UserRepository {
         delete updateData[key];
       }
     });
-    return UserModel.findOneAndUpdate(
+    const user = await UserModel.findOneAndUpdate(
       { email },
       {
         $set: updateData,
@@ -36,21 +36,11 @@ class UserRepository {
         session,
       },
     );
+    return user.toObject();
   }
-  static async updateById({ userId, name, password, status }, session) {
-    const updateData = {
-      name,
-      password,
-      status,
-      updatedAt: new Date(),
-    };
-    Object.keys(updateData).forEach((key) => {
-      if (updateData[key] == null) {
-        delete updateData[key];
-      }
-    });
-    return UserModel.findOneAndUpdate(
-      { _id: userId },
+  static async updateById(userId, updateData, session) {
+    return UserModel.findByIdAndUpdate(
+      userId,
       { $set: updateData },
       { new: true, session },
     );

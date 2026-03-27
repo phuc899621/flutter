@@ -1,16 +1,27 @@
 export const joiMsg = (
   label,
-  { min = null, max = null, email = null, required = true },
+  {
+    min = null,
+    max = null,
+    email = null,
+    required = true,
+    exactly = null,
+  } = {},
 ) => {
   return {
     ...(required && { "string.empty": `${label} must not be empty` }),
     ...(required && { "any.required": `${label} is required` }),
     ...(email && { "string.email": `Must be a valid email` }),
-    ...(min !== null && {
-      "string.min": `${label} must be at lest ${min} characters`,
+    ...(exactly && {
+      "string.length": `${label} must be exactly ${exactly} characters`,
     }),
-    ...(max && {
-      "string.max": `${label} must be less than ${max} characters`,
-    }),
+    ...(min &&
+      exactly === null && {
+        "string.min": `${label} must be at lest ${min} characters`,
+      }),
+    ...(max &&
+      exactly === null && {
+        "string.max": `${label} must be less than ${max} characters`,
+      }),
   };
 };

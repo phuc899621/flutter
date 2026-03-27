@@ -14,15 +14,24 @@ import { BadRequestError, BaseError, ServerError } from "../../utils/error.js";
 import CategoryServices from "../category/category.services.js";
 import logger from "../../utils/logger.js";
 import UserRepository from "./user.repo.js";
+import { USER_STATUS } from "../../shared/constants/userStatus.js";
+import { HashHelper } from "../../utils/hash.helper.js";
 
 class UserService {
+  //#region validate user status
+  static ensureUserVerified(user) {
+    if (!user || user.status != USER_STATUS.VERIFIED)
+      throw new BadRequestError("User account does not exist");
+  }
+  static ensureUserNotVerified(user) {
+    if (user && user.status == USER_STATUS.VERIFIED)
+      throw new BadRequestError("This account already exists");
+  }
   static async validateEmailForSignup(email) {
     try {
       const user = await UserRepository.findByEmail(email);
       logger.info(`User document: ${user}`);
-      if (user && user.status == "verified")
-        throw new BadRequestError("This account already exists");
-      return user.toObject();
+      this.ensureUserNotVerified(user);
     } catch (e) {
       if (e instanceof BaseError) throw e;
       throw new ServerError(`Validate email for signup error: ${e.message}`);
@@ -31,9 +40,8 @@ class UserService {
   static async validateUserForLogin(email, password) {
     try {
       const user = await UserRepository.findByEmail(email);
-      if (!user || user.status != "verified")
-        throw new BadRequestError("User does not exist");
-      if (!UserService.comparePassword(password, user.password))
+      this.ensureUserVerified(user);
+      if (!(await HashHelper.compare(password, user.password)))
         throw new BadRequestError("Invalid password");
       return user.toObject();
     } catch (e) {
@@ -41,14 +49,27 @@ class UserService {
       throw new ServerError(`Validate email for login error: ${e.message}`);
     }
   }
+  static async validateUserForForgotPassword(email) {
+    try {
+      const user = await UserRepository.findByEmail(email);
+      this.ensureUserVerified(user);
+      logger.info(`User document:`, user.toObject());
+      return user.toObject();
+    } catch (e) {
+      if (e instanceof BaseError) throw e;
+      throw new ServerError(
+        `Validate email for forgot password error: ${e.message}`,
+      );
+    }
+  }
   static async validateUserForResendOTP(email) {
     try {
       const user = await UserRepository.findByEmail(email);
       if (!user) throw new BadRequestError("User account does not exist");
-      if (user.status == "verified")
-        throw new BadRequestError("User account already verified");
+      if (user.status == USER_STATUS.VERIFIED)
+        throw new BadRequestError("This account already exists");
       logger.info(`User document: ${user.toObject()}`);
-      return user?.toObject();
+      return user.toObject();
     } catch (e) {
       if (e instanceof BaseError) throw e;
       throw new ServerError(
@@ -60,61 +81,46 @@ class UserService {
     const user = await UserRepository.findByEmail(email, {}, session);
     return user?.toObject();
   }
-  static comparePassword(password, hash) {
-    return bcrypt.compare(password, hash);
-  }
   static findById(id) {
-    return UserModel.findOne({ _id: id });
-  }
-  static findOne(filter) {
-    return UserModel.findOne(filter);
+    return UserModel.findById(id);
   }
   static async activateAccount(userId, session = null) {
-    await UserRepository.updateById({ userId, status: "verified" }, session);
+    await UserRepository.updateById(
+      userId,
+      { status: USER_STATUS.VERIFIED },
+      session,
+    );
   }
   static async createOrUpdateUser({ email, password, name }, session = null) {
     try {
+      const hashPassword = await HashHelper.hash(password);
       const user = await UserRepository.upsertByEmail(
-        { email, name, password, status: "pending" },
+        { email, name, password: hashPassword, status: USER_STATUS.PENDING },
         session,
       );
-      logger.info(`User ${user._id} created`);
-      await CategoryServices.createDefaultCategories(user._id, session);
-      await SettingServices.createSetting(user._id, session);
-      return user._id;
+      logger.info(`User ${user.id} created`);
+      await CategoryServices.createDefaultCategories(user.id, session);
+      await SettingServices.createSetting(user.id, session);
+      return user.id;
     } catch (e) {
       if (e instanceof BaseError) throw e;
       throw new ServerError(`Create user error: ${e.message}`);
     }
   }
-  static async updateByEmail(email, updateData, session = null) {
+  static async updateUserPassword(userId, password, session) {
     try {
-      const result = await UserModel.findOneAndUpdate({ email }, updateData, {
-        new: true,
+      const hashPassword = await HashHelper.hash(password);
+      await UserRepository.updateById(
+        userId,
+        { password: hashPassword },
         session,
-      });
-      return result._id;
+      );
     } catch (e) {
       if (e instanceof BaseError) throw e;
-      throw new ServerError(500, "Update user by email error", e.message);
+      throw new ServerError(`Reset password error: ${e.message}`);
     }
   }
 
-  static async login_verify(token) {
-    try {
-      const decoded = jwt.verify(token, process.env.JWT_SECRET || "899621");
-      const user = await this.findByEmail(decoded.email);
-      if (!user) throw new HttpError("User not found", 404);
-      return {
-        _id: user._id,
-        name: user.name,
-        email: user.email,
-        avatar: user.avatar,
-      };
-    } catch (e) {
-      throw new HttpError(`Login verification error: ${e.message}`, 500);
-    }
-  }
   static async update_email(userId, email) {
     try {
       const user = await UserModel.findById(userId);
