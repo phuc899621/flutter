@@ -1,5 +1,5 @@
-import logger from "./logger.js";
-import redisClient from "./redis.js";
+import logger from "../utils/logger.js";
+import redisClient from "../utils/redis.client.js";
 import "dotenv/config";
 const expiresInSeconds = process.env.REFRESH_TTL_SECONDS || 60 * 60 * 24 * 7;
 export const saveRefreshToken = async (token, userId) => {

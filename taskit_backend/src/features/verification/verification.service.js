@@ -1,10 +1,12 @@
-import VerificationModel from "./verification.model.js";
-import { BadRequestError, BaseError, ServerError } from "../../utils/error.js";
+import {
+  BadRequestError,
+  BaseError,
+  ServerError,
+} from "../../shared/utils/error.js";
 import VerificationRepository from "./verification.repo.js";
-import logger from "../../utils/logger.js";
-import bcrypt from "bcryptjs";
+import logger from "../../shared/utils/logger.js";
 import { OTP_PURPOSE } from "../../shared/constants/otpPurpose.js";
-import { HashHelper } from "../../utils/hash.helper.js";
+import { HashHelper } from "../../shared/helpers/hash.helper.js";
 
 class VerificationService {
   static generateOTP() {

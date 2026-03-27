@@ -1,6 +1,6 @@
 import OtpEmailModel from "./otp.email.model.js";
 import bcrypt from "bcryptjs";
-import EmailServices from "../email/email.service.js";
+import EmailServices from "../../shared/services/email.service.js";
 class OtpEmailServices {
   static async create(email, otp) {
     const otpUser = new OtpEmailModel({

@@ -1,6 +1,5 @@
-import "dotenv/config";
-import { AuthorizationError } from "../utils/error.js";
-import { verifyAccessToken } from "../utils/token.js";
+import { AuthorizationError } from "../shared/utils/error.js";
+import { verifyAccessToken } from "../shared/services/token.service.js";
 
 export const authMiddleware = async (req, res, next) => {
   const token = req.headers["authorization"]?.split(" ")[1];

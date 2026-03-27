@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
-import db from "../../config/db.js";
-import { ServerError } from "../../utils/error.js";
+import db from "../../shared/utils/db.js";
+import { ServerError } from "../../shared/utils/error.js";
 const categorySchema = new mongoose.Schema(
   {
     name: {

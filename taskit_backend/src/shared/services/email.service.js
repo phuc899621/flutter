@@ -1,5 +1,5 @@
-import transporter from "../../utils/email.js";
-import { BaseError, ServerError } from "../../utils/error.js";
+import transporter from "../utils/email.client.js";
+import { BaseError, ServerError } from "../utils/error.js";
 
 class EmailServices {
   static async sendEmail(to, subject, text, html, from, fromName, customId) {

@@ -1,6 +1,6 @@
 import Joi from "joi";
 import validate from "../../middleware/validate.js";
-import { joiMsg } from "../../utils/joi.helper.js";
+import { joiMsg } from "../../shared/helpers/validation.helper.js";
 
 export const signupValidate = validate({
   body: Joi.object({
@@ -32,7 +32,7 @@ export const verifySignupValidate = validate({
   }),
 });
 export const resendSignupOtpValidate = validate({
-  params: Joi.object({
+  body: Joi.object({
     email: Joi.string()
       .trim()
       .required()

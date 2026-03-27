@@ -1,12 +1,12 @@
 import CategoryModel from "./category.model.js";
 import TaskModel from "../task/task.model.js";
-import db from "../../config/db.js";
+import db from "../../shared/utils/db.js";
 import {
   BadRequestError,
   BaseError,
   NotFoundError,
   ServerError,
-} from "../../utils/error.js";
+} from "../../shared/utils/error.js";
 
 class CategoryServices {
   //#region CREATE

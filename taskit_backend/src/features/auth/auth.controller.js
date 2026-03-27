@@ -1,9 +1,9 @@
 import e from "express";
-import AuthServices from "./auth.service.js";
+import AuthService from "./auth.service.js";
 
 export const signup = async (req, res, next) => {
   try {
-    await AuthServices.signup(req.body);
+    await AuthService.signup(req.body);
     return res.status(201).json({
       message: "Please check your email to verify your account",
     });
@@ -14,7 +14,7 @@ export const signup = async (req, res, next) => {
 export const verifySignup = async (req, res, next) => {
   try {
     const { email, otp } = req.body;
-    await AuthServices.verifySignup(email, otp);
+    await AuthService.verifySignup(email, otp);
     return res.status(200).json({
       message: "Your account has been activated!",
     });
@@ -24,8 +24,8 @@ export const verifySignup = async (req, res, next) => {
 };
 export const resendSignupOtp = async (req, res, next) => {
   try {
-    const { email } = req.params;
-    await AuthServices.resendSignupOtp(email);
+    const { email } = req.body;
+    await AuthService.resendSignupOtp(email);
     return res.status(200).json({
       message: "OTP code has been resend to your email!",
     });
@@ -37,7 +37,7 @@ export const resendSignupOtp = async (req, res, next) => {
 export const login = async (req, res, next) => {
   try {
     const { email, password } = req.body;
-    const result = await AuthServices.login(email, password);
+    const result = await AuthService.login(email, password);
     return res.status(200).json({
       message: "Login successfully!",
       data: result,
@@ -48,7 +48,7 @@ export const login = async (req, res, next) => {
 };
 export const refresh = async (req, res, next) => {
   try {
-    const result = await AuthServices.refreshToken(req.refreshToken);
+    const result = await AuthService.refreshToken(req.refreshToken);
     return res.status(200).json({
       message: "Refresh token successfully!",
       data: result,
@@ -59,7 +59,7 @@ export const refresh = async (req, res, next) => {
 };
 export const logout = async (req, res, next) => {
   try {
-    const result = await AuthServices.logout(req.refreshToken);
+    const result = await AuthService.logout(req.refreshToken);
     return res.status(200).json({
       message: "Logout successfully!",
       data: result,
@@ -71,7 +71,7 @@ export const logout = async (req, res, next) => {
 
 export const forgotPassword = async (req, res, next) => {
   try {
-    await AuthServices.forgotPassword(req.body);
+    await AuthService.forgotPassword(req.body);
     return res.status(201).json({
       message: "OTP for verify has been send to your email!",
     });
@@ -82,7 +82,7 @@ export const forgotPassword = async (req, res, next) => {
 
 export const forgotPasswordVerify = async (req, res, next) => {
   try {
-    const result = await AuthServices.forgotPasswordVerify(req.body);
+    const result = await AuthService.forgotPasswordVerify(req.body);
     return res.status(201).json({
       message: "Verify account for forgot password successfully!",
       data: result,
@@ -94,7 +94,7 @@ export const forgotPasswordVerify = async (req, res, next) => {
 
 export const resetPassword = async (req, res, next) => {
   try {
-    await AuthServices.resetPassword(req.body);
+    await AuthService.resetPassword(req.body);
     return res.status(201).json({
       message: "Reset password successfully!",
     });

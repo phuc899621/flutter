@@ -1,21 +1,23 @@
 import UserModel from "./user.model.js";
 
-import jwt from "jsonwebtoken";
 import SettingModel from "../setting/setting.model.js";
 import SettingServices from "../setting/setting.services.js";
 import bcrypt from "bcryptjs";
 import CategoryModel from "../category/category.model.js";
-import db from "../../config/db.js";
+import db from "../../shared/utils/db.js";
 import OtpEmailServices from "../auth/otp.email.services.js";
 import TaskModel from "../task/task.model.js";
-import TaskServices from "../task/task.services.js";
 import SubtaskModel from "../task/subtask.model.js";
-import { BadRequestError, BaseError, ServerError } from "../../utils/error.js";
+import {
+  BadRequestError,
+  BaseError,
+  ServerError,
+} from "../../shared/utils/error.js";
 import CategoryServices from "../category/category.services.js";
-import logger from "../../utils/logger.js";
+import logger from "../../shared/utils/logger.js";
 import UserRepository from "./user.repo.js";
 import { USER_STATUS } from "../../shared/constants/userStatus.js";
-import { HashHelper } from "../../utils/hash.helper.js";
+import { HashHelper } from "../../shared/helpers/hash.helper.js";
 
 class UserService {
   //#region validate user status

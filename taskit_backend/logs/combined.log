@@ -1968,3 +1968,25 @@ Error: Invalid password
   "time": "108.84 ms",
   "ip": "::1"
 }
+2026-03-27 14:20:13 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-03-27 14:20:14 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-03-27 14:21:07 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-03-27 14:21:07 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-03-27 14:21:27 [[32minfo[39m]: [1;32mGenerate access token for dinhlelytran1225@gmail.com[0m 
+2026-03-27 14:21:27 [[32minfo[39m]: [1;32mGenerate refresh token for dinhlelytran1225@gmail.com[0m 
+2026-03-27 14:21:27 [[32minfo[39m]: [1;32mRefresh token saved for 69c33eb35b296b051e47004b:604800:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWMzM2ViMzViMjk2YjA1MWU0NzAwNGIiLCJpYXQiOjE3NzQ1OTYwODcsImV4cCI6MTc3NTIwMDg4N30.0Rc_bYHqnPXpQqGxzZFdkLMB5GDgcSyWFDHG5pAQm1k[0m 
+2026-03-27 14:21:27 [[32minfo[39m]: [1;32mLogin success for dinhlelytran1225@gmail.com[0m 
+2026-03-27 14:21:27 [[32minfo[39m]: [1;32mAccess token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWMzM2ViMzViMjk2YjA1MWU0NzAwNGIiLCJpYXQiOjE3NzQ1OTYwODcsImV4cCI6MTc3NDU5Njk4N30.nbKfolov8XAnBrtviIKx3Ca5fkKVYMmXKQpJMm1v4RE[0m 
+2026-03-27 14:21:27 [[32minfo[39m]: [1;32mRefresh token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWMzM2ViMzViMjk2YjA1MWU0NzAwNGIiLCJpYXQiOjE3NzQ1OTYwODcsImV4cCI6MTc3NTIwMDg4N30.0Rc_bYHqnPXpQqGxzZFdkLMB5GDgcSyWFDHG5pAQm1k[0m 
+2026-03-27 14:21:27 [[32minfo[39m]: [1;32mAPI Request[0m {
+  "requestId": "6893645a-9c74-4472-baf3-7f65f6a17ae6",
+  "method": "POST",
+  "url": "/api/v1/auth/login",
+  "status": 200,
+  "time": "167.04 ms",
+  "ip": "::1"
+}
+2026-03-27 14:24:31 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-03-27 14:24:32 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-03-27 14:24:54 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-03-27 14:24:55 [[32minfo[39m]: [1;32mMongoDB connected![0m 

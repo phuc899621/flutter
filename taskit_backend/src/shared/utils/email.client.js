@@ -1,9 +1,9 @@
-import "dotenv/config";
 import { BrevoClient } from "@getbrevo/brevo";
-import { ServerError } from "./error.js";
+import { ServerError } from "../utils/error.js";
+import { EMAIL_CONFIG } from "../../config/email.config.js";
 
 const client = new BrevoClient({
-  apiKey: process.env.BREVO_API_KEY,
+  apiKey: EMAIL_CONFIG.brevoApiKey,
 });
 
 const transporter = {
@@ -11,14 +11,8 @@ const transporter = {
     try {
       const emailData = {
         sender: {
-          name:
-            mailOptions.fromName ||
-            process.env.TASKIT_SENDER_NAME ||
-            "Taskit App",
-          email:
-            mailOptions.from ||
-            process.env.TASKIT_SENDER_EMAIL ||
-            "noreply@taskit.com",
+          name: mailOptions.fromName || EMAIL_CONFIG.defaultSender.name,
+          email: mailOptions.from || EMAIL_CONFIG.defaultSender.email,
         },
         to: [
           {

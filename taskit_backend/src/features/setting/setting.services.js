@@ -4,7 +4,7 @@ import {
   ConflictError,
   NotFoundError,
   ServerError,
-} from "../../utils/error.js";
+} from "../../shared/utils/error.js";
 class SettingServices {
   static async createSetting(userId, session = null) {
     try {

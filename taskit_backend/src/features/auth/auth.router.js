@@ -10,7 +10,7 @@ router.post(
   AuthController.verifySignup,
 );
 router.post(
-  "/signup/resend/:email",
+  "/signup/resend",
   AuthValidate.resendSignupOtpValidate,
   AuthController.resendSignupOtp,
 );

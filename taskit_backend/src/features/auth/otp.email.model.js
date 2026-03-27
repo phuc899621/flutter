@@ -1,15 +1,20 @@
 import mongoose from "mongoose";
-import db from "../../config/db.js";
+import db from "../../shared/utils/db.js";
 import bcrypt from "bcryptjs";
 const otpEmailSchema = new mongoose.Schema({
   email: {
-    type: String, required: true, unique: true,
+    type: String,
+    required: true,
+    unique: true,
   },
   otp: {
-    type: String, required: true,
+    type: String,
+    required: true,
   },
   createAt: {
-    type: Date, default: Date.now, expires: 1800,
+    type: Date,
+    default: Date.now,
+    expires: 1800,
   },
 });
 otpEmailSchema.pre("save", async function () {

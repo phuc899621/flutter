@@ -1,166 +1,172 @@
-import SubtaskModel from './subtask.model.js';
-import TaskModel from './task.model.js';
-import { BaseError, NotFoundError, ServerError } from '../../utils/error.js';
+import SubtaskModel from "./subtask.model.js";
+import TaskModel from "./task.model.js";
+import {
+  BaseError,
+  NotFoundError,
+  ServerError,
+} from "../../shared/utils/error.js";
 
 class SubtaskServices {
-    //#region CREATE
-    static async createSubtask(taskId, data) {
-        try {
-            const task=await TaskModel.findById(taskId);
-            if(!task) throw new HttpError('Task not found',404);
-            const subtask = await SubtaskModel.create({ ...data, taskId });
-            return subtask.toObject();
-        } catch (e) {
-            if(e instanceof BaseError) throw e;
-            throw new ServerError(`Create subtask error: ${e.message}`, 500);
-        }
+  //#region CREATE
+  static async createSubtask(taskId, data) {
+    try {
+      const task = await TaskModel.findById(taskId);
+      if (!task) throw new HttpError("Task not found", 404);
+      const subtask = await SubtaskModel.create({ ...data, taskId });
+      return subtask.toObject();
+    } catch (e) {
+      if (e instanceof BaseError) throw e;
+      throw new ServerError(`Create subtask error: ${e.message}`, 500);
     }
-    static async createSubtasks(taskId, data) {
-        try {
-            const task=await TaskModel.findById(taskId);
-            if(!task) throw new HttpError('Task not found',404);
+  }
+  static async createSubtasks(taskId, data) {
+    try {
+      const task = await TaskModel.findById(taskId);
+      if (!task) throw new HttpError("Task not found", 404);
 
-            const subtasks = await SubtaskModel.insertMany(data.map((subtask) => 
-                ({ ...subtask, taskId })));
-            return subtasks.map(s => s.toObject());
-        } catch (e) {
-            if(e instanceof BaseError) throw e;
-            throw new ServerError(`Create subtask error: ${e.message}`, 500);
-        }
+      const subtasks = await SubtaskModel.insertMany(
+        data.map((subtask) => ({ ...subtask, taskId })),
+      );
+      return subtasks.map((s) => s.toObject());
+    } catch (e) {
+      if (e instanceof BaseError) throw e;
+      throw new ServerError(`Create subtask error: ${e.message}`, 500);
     }
-    //#endregion
-    //#region READ
-    static async getSubtasks(taskId, query) {
-        try {
-            const filter = { taskId };
-            const task=await TaskModel.findById(taskId);
-            if(!task) throw new NotFoundError('Task not found',404);
-            if(query.title){
-                filter.title = { $regex: query.title, $options: 'i' };
-            }
-            if(query.isCompleted){
-                filter.isCompleted = query.isCompleted;
-            }
-            const subtasks = await SubtaskModel.find(filter);
-            return subtasks.map((subtask) => ({
-                ...subtask.toObject(),
-            }))
-        } catch (e) {
-            if(e instanceof BaseError) throw e;
-            throw new ServerError(`Get subtasks error: ${e.message}`,500);
-        }
+  }
+  //#endregion
+  //#region READ
+  static async getSubtasks(taskId, query) {
+    try {
+      const filter = { taskId };
+      const task = await TaskModel.findById(taskId);
+      if (!task) throw new NotFoundError("Task not found", 404);
+      if (query.title) {
+        filter.title = { $regex: query.title, $options: "i" };
+      }
+      if (query.isCompleted) {
+        filter.isCompleted = query.isCompleted;
+      }
+      const subtasks = await SubtaskModel.find(filter);
+      return subtasks.map((subtask) => ({
+        ...subtask.toObject(),
+      }));
+    } catch (e) {
+      if (e instanceof BaseError) throw e;
+      throw new ServerError(`Get subtasks error: ${e.message}`, 500);
     }
-    static async getSubtask(taskId, subtaskId) {
-        try {
-            const task=await TaskModel.findById(taskId);
-            if(!task) throw new HttpError('Task not found',404);
-            const subtask = await SubtaskModel.findOne({_id:subtaskId,taskId});
-            if(!subtask) throw new HttpError('Subtask not found',404);
-            return subtask.toObject();
-        } catch (e) {
-            if(e instanceof BaseError) throw e;
-            throw new ServerError(`Get subtask error: ${e.message}`, 500);
-        }
+  }
+  static async getSubtask(taskId, subtaskId) {
+    try {
+      const task = await TaskModel.findById(taskId);
+      if (!task) throw new HttpError("Task not found", 404);
+      const subtask = await SubtaskModel.findOne({ _id: subtaskId, taskId });
+      if (!subtask) throw new HttpError("Subtask not found", 404);
+      return subtask.toObject();
+    } catch (e) {
+      if (e instanceof BaseError) throw e;
+      throw new ServerError(`Get subtask error: ${e.message}`, 500);
     }
-    //#endregion
+  }
+  //#endregion
 
-    //#region UPDATE
-    static async updateSubtaskFull(taskId,subtaskId,data) {
-        try{
-            const task=await TaskModel.findById(taskId);
-            if(!task) throw new NotFoundError('Task not found',404);
-            const subtask = await SubtaskModel.findOneAndUpdate(
-                { _id:subtaskId,taskId },
-                { ...data,taskId},
-                { new: true,overwrite:true }
-            );
-            if(!subtask) throw new NotFoundError('Subtask not found',404);
-            return {
-                localId:data.localId,
-                ...subtask.toObject()
-            }
-        } catch (e) {
-            if(e instanceof BaseError) throw e;
-            throw new ServerError(`Update subtask error: ${e.message}`, 500);
-        }
+  //#region UPDATE
+  static async updateSubtaskFull(taskId, subtaskId, data) {
+    try {
+      const task = await TaskModel.findById(taskId);
+      if (!task) throw new NotFoundError("Task not found", 404);
+      const subtask = await SubtaskModel.findOneAndUpdate(
+        { _id: subtaskId, taskId },
+        { ...data, taskId },
+        { new: true, overwrite: true },
+      );
+      if (!subtask) throw new NotFoundError("Subtask not found", 404);
+      return {
+        localId: data.localId,
+        ...subtask.toObject(),
+      };
+    } catch (e) {
+      if (e instanceof BaseError) throw e;
+      throw new ServerError(`Update subtask error: ${e.message}`, 500);
     }
+  }
 
-    static async updateSubtaskPartial(taskId, subtaskId, data) {
-        try{
-            const task=await TaskModel.findById(taskId);
-            if(!task) throw new HttpError('Task not found',404);
-            const subtask = await SubtaskModel.findOneAndUpdate(
-                { _id:subtaskId,taskId },
-                { $set: data },
-                { new: true }
-            );
-            if(!subtask) throw new HttpError('Subtask not found',404);
-            return subtask.toObject();
-        } catch (e) {
-            if(e instanceof BaseError) throw e;
-            throw new ServerError(`Update subtask error: ${e.message}`, 500);
-        }
+  static async updateSubtaskPartial(taskId, subtaskId, data) {
+    try {
+      const task = await TaskModel.findById(taskId);
+      if (!task) throw new HttpError("Task not found", 404);
+      const subtask = await SubtaskModel.findOneAndUpdate(
+        { _id: subtaskId, taskId },
+        { $set: data },
+        { new: true },
+      );
+      if (!subtask) throw new HttpError("Subtask not found", 404);
+      return subtask.toObject();
+    } catch (e) {
+      if (e instanceof BaseError) throw e;
+      throw new ServerError(`Update subtask error: ${e.message}`, 500);
     }
-    static async update_subtasks(subtasks) {
-        try {
-            const updatedSubtasks = await Promise.all(
-                subtasks.map(async (subtask) => {
-                    if (!subtask.id || typeof subtask !== 'object') {
-                        return null;
-                    }
-                    const { id, localId, ...updateData } = subtask;
-                    const result = await SubtaskModel.findOneAndUpdate(
-                        { _id:id },
-                        { $set: updateData },
-                        { new: true }
-                    );
+  }
+  static async update_subtasks(subtasks) {
+    try {
+      const updatedSubtasks = await Promise.all(
+        subtasks.map(async (subtask) => {
+          if (!subtask.id || typeof subtask !== "object") {
+            return null;
+          }
+          const { id, localId, ...updateData } = subtask;
+          const result = await SubtaskModel.findOneAndUpdate(
+            { _id: id },
+            { $set: updateData },
+            { new: true },
+          );
 
-                    if (!result) return null;
-                    return parseInt(localId, 10);
-                })
-            );
-            return updatedSubtasks.filter(subtask => subtask !== null);
-        
-        } catch (e) {
-            throw new ServerError(`Update subtasks error: ${e.message}`);
-        }
+          if (!result) return null;
+          return parseInt(localId, 10);
+        }),
+      );
+      return updatedSubtasks.filter((subtask) => subtask !== null);
+    } catch (e) {
+      throw new ServerError(`Update subtasks error: ${e.message}`);
     }
+  }
 
-    //#endregion
-    //#region DELETE
-    
-    static async deleteAllSubtasks(taskId) {
-        try {
-            const task=await TaskModel.findById(taskId);
-            if(!task) throw new HttpError('Task not found',404);
-            let deleteCount=0;
-            let ids=[];
-            const subtasks = await SubtaskModel.find({taskId});
-            ids=subtasks.map(subtask=>subtask._id.toString());
-            const result=await SubtaskModel.deleteMany({taskId});
-            deleteCount=result.deletedCount;
-            return {deleteCount,ids};
-        } catch (e) {
-            if(e instanceof BaseError) throw e;
-            throw new ServerError(`Delete all subtasks error: ${e.message}`);
-        }
+  //#endregion
+  //#region DELETE
+
+  static async deleteAllSubtasks(taskId) {
+    try {
+      const task = await TaskModel.findById(taskId);
+      if (!task) throw new HttpError("Task not found", 404);
+      let deleteCount = 0;
+      let ids = [];
+      const subtasks = await SubtaskModel.find({ taskId });
+      ids = subtasks.map((subtask) => subtask._id.toString());
+      const result = await SubtaskModel.deleteMany({ taskId });
+      deleteCount = result.deletedCount;
+      return { deleteCount, ids };
+    } catch (e) {
+      if (e instanceof BaseError) throw e;
+      throw new ServerError(`Delete all subtasks error: ${e.message}`);
     }
-    static async deleteSubtask(taskId, subtsakId) {
-        try{
-            const task=await TaskModel.findById(taskId);
-            if(!task) throw new NotFoundError('Task not found',404);
-            const subtask = await SubtaskModel.findOneAndDelete({ _id:subtsakId,taskId });
-            if(!subtask) throw new NotFoundError('Subtask not found',404);
-            return {
-                id: subtask._id.toString(),
-            };
-        }catch(e){
-            if(e instanceof BaseError) throw e;
-            throw new ServerError(`Delete subtask error: ${e.message}`);
-        }
-        
+  }
+  static async deleteSubtask(taskId, subtsakId) {
+    try {
+      const task = await TaskModel.findById(taskId);
+      if (!task) throw new NotFoundError("Task not found", 404);
+      const subtask = await SubtaskModel.findOneAndDelete({
+        _id: subtsakId,
+        taskId,
+      });
+      if (!subtask) throw new NotFoundError("Subtask not found", 404);
+      return {
+        id: subtask._id.toString(),
+      };
+    } catch (e) {
+      if (e instanceof BaseError) throw e;
+      throw new ServerError(`Delete subtask error: ${e.message}`);
     }
-    //#endregion
+  }
+  //#endregion
 }
 
 export default SubtaskServices;

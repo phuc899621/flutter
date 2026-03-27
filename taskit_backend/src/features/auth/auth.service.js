@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
-import db from "../../config/db.js";
+import db from "../../shared/utils/db.js";
 import {
   AuthenticationError,
   AuthorizationError,
@@ -9,9 +9,9 @@ import {
   ConflictError,
   NotFoundError,
   ServerError,
-} from "../../utils/error.js";
-import logger from "../../utils/logger.js";
-import EmailServices from "../email/email.service.js";
+} from "../../shared/utils/error.js";
+import logger from "../../shared/utils/logger.js";
+import EmailServices from "../../shared/services/email.service.js";
 import VerificationService from "../verification/verification.service.js";
 import UserService from "../user/user.service.js";
 import {
@@ -20,12 +20,12 @@ import {
   generateRefreshToken,
   verifyForgotPasswordToken,
   verifyRefreshToken,
-} from "../../utils/token.js";
+} from "../../shared/services/token.service.js";
 import {
   isRefreshTokenValid,
   revokeRefreshToken,
   saveRefreshToken,
-} from "../../utils/redis.service.js";
+} from "../../shared/services/redis.service.js";
 class AuthService {
   //#region signup flow
   static async signup(data) {

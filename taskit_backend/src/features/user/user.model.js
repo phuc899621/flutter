@@ -1,6 +1,5 @@
 import mongoose from "mongoose";
-import db from "../../config/db.js";
-import { spread } from "axios";
+import db from "../../shared/utils/db.js";
 
 const userSchema = new mongoose.Schema(
   {

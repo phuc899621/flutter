@@ -1,4 +1,4 @@
-import { ValidationError } from "../utils/error.js";
+import { ValidationError } from "../shared/utils/error.js";
 
 const validate = (schemas = {}) => {
   return (req, res, next) => {

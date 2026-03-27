@@ -1,14 +1,11 @@
-import jwt from "jsonwebtoken";
-import logger from "./logger.js";
-import "dotenv/config";
-import { AuthorizationError, BaseError, ServerError } from "./error.js";
-import { OTP_PURPOSE } from "../shared/constants/otpPurpose.js";
-import { signToken, verifyToken } from "./jwt.helper.js";
-import { JWT_CONFIG } from "../config/jwt.js";
+import logger from "../utils/logger.js";
+import { AuthorizationError, BaseError, ServerError } from "../utils/error.js";
+import { OTP_PURPOSE } from "../constants/otpPurpose.js";
+import { signToken, verifyToken } from "../helpers/jwt.helper.js";
+import { JWT_CONFIG } from "../../config/jwt.config.js";
 export const generateAccessToken = (user) => {
   try {
     logger.info(`Generate access token for ${user.email}`);
-    logger.info(`Access token exp: ${process.env.JWT_ACCESS_SECRET}`);
     return signToken({ userId: user.id }, JWT_CONFIG.ACCESS);
   } catch (e) {
     if (e instanceof BaseError) throw e;

@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
-import db from "../../config/db.js";
+import db from "../../shared/utils/db.js";
 import bcrypt from "bcryptjs";
-import { DatabaseError } from "../../utils/error.js";
+import { DatabaseError } from "../../shared/utils/error.js";
 const verificationSchema = new mongoose.Schema(
   {
     userId: {
