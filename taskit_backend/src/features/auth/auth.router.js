@@ -15,6 +15,12 @@ router.post(
   AuthController.resendSignupOtp,
 );
 router.post("/login", AuthValidate.loginValidate, AuthController.login);
+router.post("/logout", AuthValidate.logoutValidate, AuthController.logout);
+router.post(
+  "/refresh",
+  AuthValidate.refreshTokenValidate,
+  AuthController.refreshToken,
+);
 router.post(
   "/forgot-password",
   AuthValidate.forgotPasswordValidate,

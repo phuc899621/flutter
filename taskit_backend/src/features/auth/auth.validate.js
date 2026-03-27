@@ -56,7 +56,7 @@ export const loginValidate = validate({
       .messages(joiMsg("Password", { min: 8 })),
   }),
 });
-export const freshTokenValidate = validate({
+export const refreshTokenValidate = validate({
   body: Joi.object({
     refreshToken: Joi.string().required().messages(joiMsg("Refresh token")),
   }),
