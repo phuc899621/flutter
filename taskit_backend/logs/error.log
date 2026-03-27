@@ -1104,3 +1104,13 @@ Error: Forgot password token expired
   "url": "/api/v1/auth/forgot-password/reset",
   "status": 403
 }
+2026-03-27 13:13:56 [[31merror[39m]: [1;31mError Invalid password[0m
+Error: Invalid password
+    at UserService.validateUserForLogin (file:///M:/flutter/taskit_backend/src/features/user/user.service.js:45:15)
+    at async AuthService.login (file:///M:/flutter/taskit_backend/src/features/auth/auth.service.js:112:23)
+    at async login (file:///M:/flutter/taskit_backend/src/features/auth/auth.controller.js:40:20) {
+  "requestId": "a103d68a-ed16-494b-bdf0-0a58eacd7249",
+  "method": "POST",
+  "url": "/api/v1/auth/login",
+  "status": 400
+}

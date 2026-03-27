@@ -1934,3 +1934,37 @@ Error: Forgot password token expired
   "time": "117.07 ms",
   "ip": "::1"
 }
+2026-03-27 13:13:55 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-03-27 13:13:56 [[31merror[39m]: [1;31mError Invalid password[0m
+Error: Invalid password
+    at UserService.validateUserForLogin (file:///M:/flutter/taskit_backend/src/features/user/user.service.js:45:15)
+    at async AuthService.login (file:///M:/flutter/taskit_backend/src/features/auth/auth.service.js:112:23)
+    at async login (file:///M:/flutter/taskit_backend/src/features/auth/auth.controller.js:40:20) {
+  "requestId": "a103d68a-ed16-494b-bdf0-0a58eacd7249",
+  "method": "POST",
+  "url": "/api/v1/auth/login",
+  "status": 400
+}
+2026-03-27 13:13:56 [[33mwarn[39m]: [1;33mAPI Warning[0m {
+  "requestId": "a103d68a-ed16-494b-bdf0-0a58eacd7249",
+  "method": "POST",
+  "url": "/api/v1/auth/login",
+  "status": 400,
+  "time": "140.42 ms",
+  "ip": "::1"
+}
+2026-03-27 13:14:02 [[32minfo[39m]: [1;32mGenerate access token for dinhlelytran1225@gmail.com[0m 
+2026-03-27 13:14:02 [[32minfo[39m]: [1;32mAccess token exp: taskit20111979[0m 
+2026-03-27 13:14:02 [[32minfo[39m]: [1;32mGenerate refresh token for dinhlelytran1225@gmail.com[0m 
+2026-03-27 13:14:02 [[32minfo[39m]: [1;32mRefresh token saved for 69c33eb35b296b051e47004b:604800:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWMzM2ViMzViMjk2YjA1MWU0NzAwNGIiLCJpYXQiOjE3NzQ1OTIwNDIsImV4cCI6MTc3NTE5Njg0Mn0.X2kdx_Tx-zKr9Wyyf0asTj5gO8gCll4KE3ecZiyusE8[0m 
+2026-03-27 13:14:02 [[32minfo[39m]: [1;32mLogin success for dinhlelytran1225@gmail.com[0m 
+2026-03-27 13:14:02 [[32minfo[39m]: [1;32mAccess token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWMzM2ViMzViMjk2YjA1MWU0NzAwNGIiLCJpYXQiOjE3NzQ1OTIwNDIsImV4cCI6MTc3NDU5Mjk0Mn0.13c2O6SSgR8jMvHPT_rWI_z1xXEfk6V9W_volCayF_g[0m 
+2026-03-27 13:14:02 [[32minfo[39m]: [1;32mRefresh token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWMzM2ViMzViMjk2YjA1MWU0NzAwNGIiLCJpYXQiOjE3NzQ1OTIwNDIsImV4cCI6MTc3NTE5Njg0Mn0.X2kdx_Tx-zKr9Wyyf0asTj5gO8gCll4KE3ecZiyusE8[0m 
+2026-03-27 13:14:02 [[32minfo[39m]: [1;32mAPI Request[0m {
+  "requestId": "dcf5f975-da0d-4b6a-be92-3874d70c81c2",
+  "method": "POST",
+  "url": "/api/v1/auth/login",
+  "status": 200,
+  "time": "108.84 ms",
+  "ip": "::1"
+}
