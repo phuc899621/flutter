@@ -14,10 +14,11 @@ import '../../../domain/entities/task_status_enum.dart';
 import '../state/add_task_state.dart';
 
 final addTaskControllerProvider =
-    AutoDisposeNotifierProvider<AddTaskController, AddTaskState>(
-        AddTaskController.new);
+    NotifierProvider.autoDispose<AddTaskController, AddTaskState>(
+      AddTaskController.new,
+    );
 
-class AddTaskController extends AutoDisposeNotifier<AddTaskState> {
+class AddTaskController extends Notifier<AddTaskState> {
   late final StreamSubscription _categorySub;
 
   @override
@@ -52,10 +53,17 @@ class AddTaskController extends AutoDisposeNotifier<AddTaskState> {
   }
 
   void addSubtask() {
-    state = state.copyWith(subtasks: [
-      ...state.subtasks,
-      SubtaskEntity(localId: -1, title: '', isCompleted: false, taskLocalId: -1)
-    ]);
+    state = state.copyWith(
+      subtasks: [
+        ...state.subtasks,
+        SubtaskEntity(
+          localId: -1,
+          title: '',
+          isCompleted: false,
+          taskLocalId: -1,
+        ),
+      ],
+    );
   }
 
   void onDeleteSubtask(int index) {
@@ -80,9 +88,12 @@ class AddTaskController extends AutoDisposeNotifier<AddTaskState> {
       return;
     }
     state = state.copyWith(
-        isTimeSelected: true,
-        selectedDate:
-            state.selectedDate!.copyWith(hour: s.hour, minute: s.minute));
+      isTimeSelected: true,
+      selectedDate: state.selectedDate!.copyWith(
+        hour: s.hour,
+        minute: s.minute,
+      ),
+    );
   }
 
   void setAddCategory(String s) {
@@ -95,9 +106,10 @@ class AddTaskController extends AutoDisposeNotifier<AddTaskState> {
 
   void onAddCategory() async {
     final category = CategoryEntity(
-        localId: -1,
-        name: state.addCategory,
-        userLocalId: await ref.read(userServiceProvider).getUserLocalId());
+      localId: -1,
+      name: state.addCategory,
+      userLocalId: await ref.read(userServiceProvider).getUserLocalId(),
+    );
     ref.read(taskServiceProvider).insertCategory(category);
     state = state.copyWith(addCategory: '');
   }
@@ -108,24 +120,26 @@ class AddTaskController extends AutoDisposeNotifier<AddTaskState> {
     final taskService = ref.read(taskServiceProvider);
     final result = await taskService.getAICategory(title);
     final userLocalId = await ref.read(userServiceProvider).getUserLocalId();
-    result.when((aiCategories) {
-      debugPrintStack(stackTrace: StackTrace.current, label: 'aiCategories');
+    result.when(
+      (aiCategories) {
+        debugPrintStack(stackTrace: StackTrace.current, label: 'aiCategories');
 
-      state = state.copyWith(
+        state = state.copyWith(
           aiCategories: aiCategories
-              .map((e) => e.copyWith(
-                    userLocalId: userLocalId,
-                  ))
-              .toList());
-      if (aiCategories.contains(state.selectedCategory) ||
-          state.categories.contains(state.selectedCategory)) {
-        return;
-      }
-      state = state.copyWith(selectedCategory: state.categories.first);
-    }, (failure) {
-      debugPrintStack(stackTrace: StackTrace.current, label: 'aiCategories');
-      state = state.copyWith(aiCategories: []);
-    });
+              .map((e) => e.copyWith(userLocalId: userLocalId))
+              .toList(),
+        );
+        if (aiCategories.contains(state.selectedCategory) ||
+            state.categories.contains(state.selectedCategory)) {
+          return;
+        }
+        state = state.copyWith(selectedCategory: state.categories.first);
+      },
+      (failure) {
+        debugPrintStack(stackTrace: StackTrace.current, label: 'aiCategories');
+        state = state.copyWith(aiCategories: []);
+      },
+    );
     state = state.copyWith(isCategoriesLoading: false);
   }
 
@@ -141,9 +155,10 @@ class AddTaskController extends AutoDisposeNotifier<AddTaskState> {
       state = state.copyWith(categories: categories);
       if (state.selectedCategory == null) {
         state = state.copyWith(
-            selectedCategory: categories
-                .where((element) => element.name.toLowerCase() == 'any')
-                .first);
+          selectedCategory: categories
+              .where((element) => element.name.toLowerCase() == 'any')
+              .first,
+        );
       }
       Duration(seconds: 1);
       state = state.copyWith(isCategoriesLoading: false);
@@ -152,10 +167,11 @@ class AddTaskController extends AutoDisposeNotifier<AddTaskState> {
 
   Future<void> addTask() async {
     state = state.copyWith(
-        isLoading: true,
-        subtasks: state.subtasks
-            .where((element) => element.title.isNotEmpty)
-            .toList());
+      isLoading: true,
+      subtasks: state.subtasks
+          .where((element) => element.title.isNotEmpty)
+          .toList(),
+    );
     final taskService = ref.read(taskServiceProvider);
     final userLocalId = await ref.read(userServiceProvider).getUserLocalId();
 
@@ -163,7 +179,8 @@ class AddTaskController extends AutoDisposeNotifier<AddTaskState> {
       localId: -1,
       title: state.title,
       description: state.description,
-      category: state.selectedCategory ??
+      category:
+          state.selectedCategory ??
           CategoryEntity(localId: -1, name: 'any', userLocalId: userLocalId),
       priority: state.selectedPriority,
       status: state.selectedDate == null
@@ -177,10 +194,13 @@ class AddTaskController extends AutoDisposeNotifier<AddTaskState> {
       updatedAt: DateTime.now(),
     );
     final result = await taskService.insertTask(task);
-    result.when((task) {
-      state = state.copyWith(isLoading: false, isCreateTaskSuccess: true);
-    }, (error) {
-      state = state.copyWith(error: error.message, isLoading: false);
-    });
+    result.when(
+      (task) {
+        state = state.copyWith(isLoading: false, isCreateTaskSuccess: true);
+      },
+      (error) {
+        state = state.copyWith(error: error.message, isLoading: false);
+      },
+    );
   }
 }

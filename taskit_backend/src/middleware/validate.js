@@ -11,7 +11,7 @@ const validate = (schemas = {}) => {
       });
 
       if (error) {
-        throw new ValidationError(error.details[0].message);
+        throw new ValidationError(error.details[0].message.replace(/"/g, ""));
       }
 
       req[key] = value;

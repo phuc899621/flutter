@@ -67,6 +67,11 @@ export const logoutValidate = validate({
   }),
 });
 
+export const loginWithGoogleValidate = validate({
+  body: Joi.object({
+    token: Joi.string().required().messages(joiMsg("Token")),
+  }),
+});
 export const forgotPasswordValidate = validate({
   body: Joi.object({
     email: Joi.string()

@@ -1,8 +1,13 @@
+import 'dart:convert';
+
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
+//import 'package:google_sign_in/google_sign_in.dart';
+import 'package:http/http.dart' as http;
 
 import '../../../../../shared/presentation/widget/custom_taskit_textfield.dart';
 import '../controller/login_controller.dart';
@@ -17,6 +22,8 @@ class LoginPage extends ConsumerStatefulWidget {
 class _LoginPageState extends ConsumerState<LoginPage> {
   late TextEditingController _emailController;
   late TextEditingController _passwordController;
+
+  // final GoogleSignIn _googleSignIn = GoogleSignIn.instance;
 
   @override
   void initState() {
@@ -34,8 +41,10 @@ class _LoginPageState extends ConsumerState<LoginPage> {
 
   void _listener() {
     final color = Theme.of(context).colorScheme;
-    ref.listen(loginControllerProvider.select((value) => value.error),
-        (_, next) {
+    ref.listen(loginControllerProvider.select((value) => value.error), (
+      _,
+      next,
+    ) {
       if (next != null) {
         final message = ScaffoldMessenger.of(context);
         message.hideCurrentSnackBar();
@@ -48,18 +57,57 @@ class _LoginPageState extends ConsumerState<LoginPage> {
         );
       }
     });
-    ref.listen(loginControllerProvider.select((value) => value.isLoginSuccess),
-        (_, next) {
-      if (next != null && next) {
-        context.go('/home');
+    ref.listen(
+      loginControllerProvider.select((value) => value.isLoginSuccess),
+      (_, next) {
+        if (next != null && next) {
+          context.go('/home');
+        }
+      },
+    );
+  }
+
+  Future<void> _onLoginWithGoogle() async {
+    /*try {
+      final account = await _googleSignIn.authenticate();
+      if (account == null) debugPrint('fail');
+      final List<String> scopes = ['email', 'profile'];
+      final GoogleSignInServerAuthorization? auth = await account
+          .authorizationClient
+          .authorizeServer(scopes);
+      final String? serverAuthCode = auth?.serverAuthCode;
+      if (serverAuthCode != null) {
+        debugPrint('Server auth code: $serverAuthCode');
+        await _sendServerAuthCodeToBackend(serverAuthCode);
       }
-    });
+    } catch (e) {
+      debugPrint('Error: $e');
+    }*/
+  }
+
+  Future<void> _sendServerAuthCodeToBackend(String code) async {
+    final url = Uri.parse('http://192.168.1.7:8080/api/v1/auth/google');
+    try {
+      final response = await http.post(
+        url,
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode({'serverAuthCode': code}),
+      );
+
+      if (response.statusCode == 200) {
+        debugPrint('Backend verified token successfully');
+      } else {
+        debugPrint('Backend verification failed: ${response.body}');
+      }
+    } catch (e) {
+      debugPrint('Error sending code to backend: $e');
+    }
   }
 
   void _onSummit() {
     final formData = ({
       'email': _emailController.text,
-      'password': _passwordController.text
+      'password': _passwordController.text,
     });
     ref.read(loginControllerProvider.notifier).setLoginForm(formData);
     ref.read(loginControllerProvider.notifier).login();
@@ -73,15 +121,16 @@ class _LoginPageState extends ConsumerState<LoginPage> {
     final text = Theme.of(context).textTheme;
     final color = Theme.of(context).colorScheme;
     return SafeArea(
-        top: true,
-        child: Scaffold(
-            resizeToAvoidBottomInset: false,
-            backgroundColor: color.primary,
-            body: NestedScrollView(
-                headerSliverBuilder: (context, innerBoxIsScrolled) => [
-                      _topAppBar(),
-                    ],
-                body: _loginBody())));
+      top: true,
+      child: Scaffold(
+        resizeToAvoidBottomInset: false,
+        backgroundColor: color.primary,
+        body: NestedScrollView(
+          headerSliverBuilder: (context, innerBoxIsScrolled) => [_topAppBar()],
+          body: _loginBody(),
+        ),
+      ),
+    );
   }
 
   //endregion
@@ -91,59 +140,60 @@ class _LoginPageState extends ConsumerState<LoginPage> {
     final text = Theme.of(context).textTheme;
     final color = Theme.of(context).colorScheme;
     return SliverAppBar(
-        toolbarHeight: 200,
-        pinned: true,
-        expandedHeight: 200,
-        backgroundColor: color.primary,
-        flexibleSpace: FlexibleSpaceBar(
-          background: Stack(
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(bottom: 15, left: 30),
-                child: Column(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Hello!',
-                        style: text.displayMedium,
-                      ),
-                      Text(
-                        'Welcome to Taskit app',
-                        style: text.headlineSmall?.copyWith(
-                            fontWeight: FontWeight.w500, fontSize: 20),
-                      ),
-                    ]),
+      toolbarHeight: 200,
+      pinned: true,
+      expandedHeight: 200,
+      backgroundColor: color.primary,
+      flexibleSpace: FlexibleSpaceBar(
+        background: Stack(
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(bottom: 15, left: 30),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.end,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text('Hello!', style: text.displayMedium),
+                  Text(
+                    'Welcome to Taskit app',
+                    style: text.headlineSmall?.copyWith(
+                      fontWeight: FontWeight.w500,
+                      fontSize: 20,
+                    ),
+                  ),
+                ],
               ),
-              Padding(
-                padding: const EdgeInsets.only(top: 20.0, right: 20),
-                child: Align(
-                  alignment: Alignment.topRight,
-                  child: Material(
-                    elevation: 2,
-                    color: Colors.transparent,
-                    shape: CircleBorder(),
-                    child: Container(
-                      width: 100,
-                      height: 100,
-                      decoration: BoxDecoration(
-                        color: color.primaryContainer,
-                        shape: BoxShape.circle,
-                      ),
-                      child: Center(
-                        child: SvgPicture.asset(
-                          'assets/svg/taskit_icon.svg',
-                          width: 60,
-                          height: 60,
-                        ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 20.0, right: 20),
+              child: Align(
+                alignment: Alignment.topRight,
+                child: Material(
+                  elevation: 2,
+                  color: Colors.transparent,
+                  shape: CircleBorder(),
+                  child: Container(
+                    width: 100,
+                    height: 100,
+                    decoration: BoxDecoration(
+                      color: color.primaryContainer,
+                      shape: BoxShape.circle,
+                    ),
+                    child: Center(
+                      child: SvgPicture.asset(
+                        'assets/svg/taskit_icon.svg',
+                        width: 60,
+                        height: 60,
                       ),
                     ),
                   ),
                 ),
               ),
-            ],
-          ),
-        ));
+            ),
+          ],
+        ),
+      ),
+    );
   }
 
   //endregion
@@ -154,97 +204,119 @@ class _LoginPageState extends ConsumerState<LoginPage> {
     final color = Theme.of(context).colorScheme;
     return Container(
       padding: EdgeInsets.symmetric(vertical: 20, horizontal: 30),
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.vertical(top: Radius.circular(30)),
-          color: color.surface),
+      decoration: BoxDecoration(color: color.surface),
       child: SingleChildScrollView(
         child: Column(
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text('Login',
-                  style: text.headlineMedium?.copyWith(
-                      color: color.primary, fontWeight: FontWeight.w800)),
-              SizedBox(
-                height: 25,
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Login',
+              style: text.headlineMedium?.copyWith(
+                color: color.primary,
+                fontWeight: FontWeight.w800,
               ),
-              SizedBox(
-                  width: double.infinity,
-                  child: TaskitOutlineTextField(
-                      labelText: 'Email',
-                      controller: _emailController,
-                      autofillHints: AutofillHints.email,
-                      keyboardType: TextInputType.emailAddress)),
-              SizedBox(
-                height: 15,
+            ),
+            SizedBox(height: 25),
+            SizedBox(
+              width: double.infinity,
+              child: TaskitOutlineTextField(
+                labelText: 'Email',
+                controller: _emailController,
+                autofillHints: AutofillHints.email,
+                keyboardType: TextInputType.emailAddress,
               ),
-              TaskitOutLineTextFieldWithPassword(
-                  labelText: 'Password', controller: _passwordController),
-              SizedBox(
-                height: 10,
-              ),
-              Align(
-                alignment: Alignment.centerRight,
-                child: RichText(
-                  textScaler: MediaQuery.of(context).textScaler,
-                  text: TextSpan(
-                    children: [
-                      TextSpan(
-                          text: 'Forgot your password',
-                          style: text.bodySmall?.copyWith(
-                            color: color.primary,
-                            fontWeight: FontWeight.bold,
-                          ),
-                          recognizer: TapGestureRecognizer()
-                            ..onTap = () => context.push('/forgot_password'))
-                    ],
-                    style: text.bodyMedium,
-                  ),
+            ),
+            SizedBox(height: 15),
+            TaskitOutLineTextFieldWithPassword(
+              labelText: 'Password',
+              controller: _passwordController,
+            ),
+            SizedBox(height: 10),
+            Align(
+              alignment: Alignment.centerRight,
+              child: RichText(
+                textScaler: MediaQuery.of(context).textScaler,
+                text: TextSpan(
+                  children: [
+                    TextSpan(
+                      text: 'Forgot your password',
+                      style: text.bodySmall?.copyWith(
+                        color: color.primary,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      recognizer: TapGestureRecognizer()
+                        ..onTap = () => context.push('/forgot_password'),
+                    ),
+                  ],
+                  style: text.bodyMedium,
                 ),
               ),
-              SizedBox(
-                height: 15,
+            ),
+            SizedBox(height: 15),
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton(
+                onPressed: _onSummit,
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: color.primary,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20.0),
+                  ),
+                ),
+                child: state.isLoading
+                    ? Center(
+                        child: CircularProgressIndicator(
+                          color: color.onPrimary,
+                        ),
+                      )
+                    : Text(
+                        'Login',
+                        style: text.titleMedium?.copyWith(
+                          color: color.onPrimary,
+                        ),
+                      ),
               ),
-              SizedBox(
-                width: double.infinity,
-                child: ElevatedButton(
-                  onPressed: _onSummit,
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: color.primary,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20.0),
+            ),
+            SizedBox(height: 10),
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton(
+                onPressed: _onLoginWithGoogle,
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: color.surface,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20.0),
+                  ),
+                ),
+                child: Column(
+                  children: [
+                    FaIcon(FontAwesomeIcons.google),
+                    Text(
+                      'Login with Google',
+                      style: text.titleMedium?.copyWith(color: color.onPrimary),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            SizedBox(
+              width: double.infinity,
+              height: 40,
+              child: Stack(
+                children: [
+                  Center(
+                    child: Container(
+                      height: 4,
+                      decoration: BoxDecoration(
+                        color: color.surfaceContainerHighest,
+                        borderRadius: BorderRadius.circular(40),
+                      ),
                     ),
                   ),
-                  child: state.isLoading
-                      ? Center(
-                          child: CircularProgressIndicator(
-                            color: color.onPrimary,
-                          ),
-                        )
-                      : Text('Login',
-                          style: text.titleMedium?.copyWith(
-                            color: color.onPrimary,
-                          )),
-                ),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              SizedBox(
-                width: double.infinity,
-                height: 40,
-                child: Stack(
-                  children: [
-                    Center(
-                        child: Container(
-                            height: 4,
-                            decoration: BoxDecoration(
-                              color: color.surfaceContainerHighest,
-                              borderRadius: BorderRadius.circular(40),
-                            ))),
-                    Center(
-                        child: Container(
+                  Center(
+                    child: Container(
                       width: 60.0,
                       decoration: BoxDecoration(
                         color: color.surface,
@@ -254,48 +326,50 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                         child: Text(
                           'OR',
                           style: text.labelMedium?.copyWith(
-                              color: color.onSurfaceVariant,
-                              fontWeight: FontWeight.w600),
+                            color: color.onSurfaceVariant,
+                            fontWeight: FontWeight.w600,
+                          ),
                         ),
                       ),
-                    ))
-                  ],
-                ),
-              ),
-              SizedBox(
-                height: 25,
-              ),
-              Align(
-                alignment: Alignment.center,
-                child: RichText(
-                  textScaler: MediaQuery.of(context).textScaler,
-                  text: TextSpan(
-                    children: [
-                      TextSpan(
-                        text: 'Don\'t have an account? ',
-                        style: text.bodySmall?.copyWith(
-                          color: color.onSurfaceVariant,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                      TextSpan(
-                        text: 'Sign up here',
-                        style: text.bodySmall?.copyWith(
-                          color: color.primary,
-                          fontWeight: FontWeight.w600,
-                        ),
-                        recognizer: TapGestureRecognizer()
-                          ..onTap = () => context.push('/signup'),
-                      )
-                    ],
-                    style: text.bodyMedium,
+                    ),
                   ),
+                ],
+              ),
+            ),
+            SizedBox(height: 25),
+            Align(
+              alignment: Alignment.center,
+              child: RichText(
+                textScaler: MediaQuery.of(context).textScaler,
+                text: TextSpan(
+                  children: [
+                    TextSpan(
+                      text: 'Don\'t have an account? ',
+                      style: text.bodySmall?.copyWith(
+                        color: color.onSurfaceVariant,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    TextSpan(
+                      text: 'Sign up here',
+                      style: text.bodySmall?.copyWith(
+                        color: color.primary,
+                        fontWeight: FontWeight.w600,
+                      ),
+                      recognizer: TapGestureRecognizer()
+                        ..onTap = () => context.push('/signup'),
+                    ),
+                  ],
+                  style: text.bodyMedium,
                 ),
-              )
-            ]),
+              ),
+            ),
+            SizedBox(height: 15),
+          ],
+        ),
       ),
     );
   }
 
-//endregion
+  //endregion
 }

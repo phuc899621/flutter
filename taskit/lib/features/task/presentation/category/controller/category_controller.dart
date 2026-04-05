@@ -5,10 +5,11 @@ import 'package:taskit/features/task/application/task_service.dart';
 import 'package:taskit/features/task/presentation/category/state/category_state.dart';
 
 final categoryControllerProvider =
-    AutoDisposeNotifierProvider<CategoryController, CategoryState>(
-        CategoryController.new);
+    NotifierProvider.autoDispose<CategoryController, CategoryState>(
+      CategoryController.new,
+    );
 
-class CategoryController extends AutoDisposeNotifier<CategoryState> {
+class CategoryController extends Notifier<CategoryState> {
   late StreamSubscription _categorySub;
 
   @override

@@ -6,19 +6,18 @@ import '../../../data/dto/req/signup/signup_request.dart';
 import '../state/signup_state.dart';
 
 final signUpControllerProvider =
-    AutoDisposeNotifierProvider<SignUpController, SignupState>(
-        SignUpController.new);
+    NotifierProvider.autoDispose<SignUpController, SignupState>(
+      SignUpController.new,
+    );
 
-class SignUpController extends AutoDisposeNotifier<SignupState> {
+class SignUpController extends Notifier<SignupState> {
   @override
   SignupState build() {
     return SignupState();
   }
 
   void togglePasswordVisibility() {
-    state = state.copyWith(
-      isPasswordVisibility: !state.isPasswordVisibility,
-    );
+    state = state.copyWith(isPasswordVisibility: !state.isPasswordVisibility);
   }
 
   void toggleConfirmPasswordVisibility() {
@@ -43,18 +42,18 @@ class SignUpController extends AutoDisposeNotifier<SignupState> {
         passwordConfirm: state.signupForm['confirmPassword'],
       );
       final result = await ref.read(authServiceProvider).signup(formData);
-      result.when((success) {
-        state = state.copyWith(
-          isLoading: false,
-          isSignUpSuccess: true,
-        );
-      }, (failure) {
-        state = state.copyWith(
-          isLoading: false,
-          isSignUpSuccess: null,
-          error: failure.message,
-        );
-      });
+      result.when(
+        (success) {
+          state = state.copyWith(isLoading: false, isSignUpSuccess: true);
+        },
+        (failure) {
+          state = state.copyWith(
+            isLoading: false,
+            isSignUpSuccess: null,
+            error: failure.message,
+          );
+        },
+      );
     } catch (e) {
       state = state.copyWith(
         isLoading: false,
@@ -65,9 +64,7 @@ class SignUpController extends AutoDisposeNotifier<SignupState> {
   }
 
   void setFormData(Map<String, dynamic> formData) {
-    state = state.copyWith(
-      signupForm: formData,
-    );
+    state = state.copyWith(signupForm: formData);
   }
 
   Future<void> verify() async {
@@ -79,20 +76,22 @@ class SignUpController extends AutoDisposeNotifier<SignupState> {
         isVerifySuccess: null,
       );
       final formData = SignupVerifyRequest(
-          email: state.signupForm['email'], otp: state.verifyForm['otp']);
+        email: state.signupForm['email'],
+        otp: state.verifyForm['otp'],
+      );
       final result = await ref.read(authServiceProvider).signupVerify(formData);
-      result.when((success) {
-        state = state.copyWith(
-          isLoading: false,
-          isVerifySuccess: true,
-        );
-      }, (failure) {
-        state = state.copyWith(
-          isLoading: false,
-          isVerifySuccess: null,
-          error: failure.message,
-        );
-      });
+      result.when(
+        (success) {
+          state = state.copyWith(isLoading: false, isVerifySuccess: true);
+        },
+        (failure) {
+          state = state.copyWith(
+            isLoading: false,
+            isVerifySuccess: null,
+            error: failure.message,
+          );
+        },
+      );
     } catch (e) {
       state = state.copyWith(
         isLoading: false,
@@ -103,8 +102,6 @@ class SignUpController extends AutoDisposeNotifier<SignupState> {
   }
 
   void setVerifyForm(Map<String, dynamic> data) {
-    state = state.copyWith(
-      verifyForm: data,
-    );
+    state = state.copyWith(verifyForm: data);
   }
 }

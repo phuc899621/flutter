@@ -1114,3 +1114,54 @@ Error: Invalid password
   "url": "/api/v1/auth/login",
   "status": 400
 }
+2026-03-29 13:52:39 [[31merror[39m]: [1;31mError Token is required[0m
+Error: Token is required
+    at file:///M:/flutter/taskit_backend/src/middleware/validate.js:14:15
+    at Layer.handle [as handle_request] (M:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at next (M:\flutter\taskit_backend\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (M:\flutter\taskit_backend\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (M:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at M:\flutter\taskit_backend\node_modules\express\lib\router\index.js:284:15
+    at router.process_params (M:\flutter\taskit_backend\node_modules\express\lib\router\index.js:346:12)
+    at next (M:\flutter\taskit_backend\node_modules\express\lib\router\index.js:280:10)
+    at router.handle (M:\flutter\taskit_backend\node_modules\express\lib\router\index.js:175:3)
+    at router (M:\flutter\taskit_backend\node_modules\express\lib\router\index.js:47:12) {
+  "requestId": "41341273-35e7-4443-a74e-b89ead0aac55",
+  "method": "POST",
+  "url": "/api/v1/auth/google",
+  "status": 400
+}
+2026-03-29 13:53:07 [[31merror[39m]: [1;31mError "token" must be a string[0m
+Error: "token" must be a string
+    at file:///M:/flutter/taskit_backend/src/middleware/validate.js:14:15
+    at Layer.handle [as handle_request] (M:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at next (M:\flutter\taskit_backend\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (M:\flutter\taskit_backend\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (M:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at M:\flutter\taskit_backend\node_modules\express\lib\router\index.js:284:15
+    at router.process_params (M:\flutter\taskit_backend\node_modules\express\lib\router\index.js:346:12)
+    at next (M:\flutter\taskit_backend\node_modules\express\lib\router\index.js:280:10)
+    at router.handle (M:\flutter\taskit_backend\node_modules\express\lib\router\index.js:175:3)
+    at router (M:\flutter\taskit_backend\node_modules\express\lib\router\index.js:47:12) {
+  "requestId": "f7f66317-ecf7-4acb-83e6-f07030674ed8",
+  "method": "POST",
+  "url": "/api/v1/auth/google",
+  "status": 400
+}
+2026-03-29 13:55:21 [[31merror[39m]: [1;31mError token must be a string[0m
+Error: token must be a string
+    at file:///M:/flutter/taskit_backend/src/middleware/validate.js:14:15
+    at Layer.handle [as handle_request] (M:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at next (M:\flutter\taskit_backend\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (M:\flutter\taskit_backend\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (M:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at M:\flutter\taskit_backend\node_modules\express\lib\router\index.js:284:15
+    at router.process_params (M:\flutter\taskit_backend\node_modules\express\lib\router\index.js:346:12)
+    at next (M:\flutter\taskit_backend\node_modules\express\lib\router\index.js:280:10)
+    at router.handle (M:\flutter\taskit_backend\node_modules\express\lib\router\index.js:175:3)
+    at router (M:\flutter\taskit_backend\node_modules\express\lib\router\index.js:47:12) {
+  "requestId": "6e1ea7b1-8b8b-4541-b337-647246691f46",
+  "method": "POST",
+  "url": "/api/v1/auth/google",
+  "status": 400
+}

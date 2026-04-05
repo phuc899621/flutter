@@ -4,10 +4,7 @@ import 'package:smooth_sheets/smooth_sheets.dart';
 import 'package:taskit/shared/log/logger_provider.dart';
 
 class SheetShell extends ConsumerWidget {
-  const SheetShell({
-    super.key,
-    required this.navigator,
-  });
+  const SheetShell({super.key, required this.navigator});
 
   final Widget navigator;
 
@@ -23,11 +20,10 @@ class SheetShell extends ConsumerWidget {
         }
       },
       child: SheetKeyboardDismissible(
-        dismissBehavior:
-            SheetKeyboardDismissBehavior.onDragDown(isContentScrollAware: true),
+        dismissBehavior: SheetKeyboardDismissBehavior.onDragDown(
+          isContentScrollAware: true,
+        ),
         child: PagedSheet(
-          shrinkChildToAvoidStaticOverlap: true,
-          shrinkChildToAvoidDynamicOverlap: true,
           decoration: MaterialSheetDecoration(
             size: SheetSize.stretch,
             borderRadius: BorderRadius.vertical(top: Radius.circular(16)),

@@ -6,19 +6,18 @@ import '../../../application/auth_service.dart';
 import '../../../data/dto/req/login/login_request.dart';
 
 final loginControllerProvider =
-    AutoDisposeNotifierProvider<LoginController, LoginState>(
-        LoginController.new);
+    NotifierProvider.autoDispose<LoginController, LoginState>(
+      LoginController.new,
+    );
 
-class LoginController extends AutoDisposeNotifier<LoginState> {
+class LoginController extends Notifier<LoginState> {
   @override
   LoginState build() {
-    return const LoginState();
+    return LoginState();
   }
 
   void togglePasswordVisibility() {
-    state = state.copyWith(
-      isPasswordVisibility: !state.isPasswordVisibility,
-    );
+    state = state.copyWith(isPasswordVisibility: !state.isPasswordVisibility);
   }
 
   Future<void> login() async {
@@ -34,20 +33,23 @@ class LoginController extends AutoDisposeNotifier<LoginState> {
         password: state.loginForm['password'],
       );
       final result = await ref.read(authServiceProvider).login(formData);
-      result.when((success) async {
-        state = state.copyWith(
-          isLoading: false,
-          isLoginSuccess: true,
-          error: null,
-        );
-      }, (failure) {
-        debugPrint('error when login $failure');
-        state = state.copyWith(
-          isLoading: false,
-          isLoginSuccess: null,
-          error: failure.message,
-        );
-      });
+      result.when(
+        (success) async {
+          state = state.copyWith(
+            isLoading: false,
+            isLoginSuccess: true,
+            error: null,
+          );
+        },
+        (failure) {
+          debugPrint('error when login $failure');
+          state = state.copyWith(
+            isLoading: false,
+            isLoginSuccess: null,
+            error: failure.message,
+          );
+        },
+      );
     } catch (e) {
       debugPrint('error when login $e');
       state = state.copyWith(
@@ -59,8 +61,6 @@ class LoginController extends AutoDisposeNotifier<LoginState> {
   }
 
   void setLoginForm(Map<String, dynamic> formData) {
-    state = state.copyWith(
-      loginForm: formData,
-    );
+    state = state.copyWith(loginForm: formData);
   }
 }

@@ -30,8 +30,10 @@ class _SignupPageState extends ConsumerState<SignupPage> {
 
   void _listener() {
     final color = Theme.of(context).colorScheme;
-    ref.listen(signUpControllerProvider.select((value) => value.error),
-        (_, next) {
+    ref.listen(signUpControllerProvider.select((value) => value.error), (
+      _,
+      next,
+    ) {
       if (next != null) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
@@ -44,13 +46,14 @@ class _SignupPageState extends ConsumerState<SignupPage> {
     });
     // listen for success
     ref.listen(
-        signUpControllerProvider.select((value) => value.isSignUpSuccess),
-        (_, next) {
-      //_la gia tri cu, next la gia tri moi
-      if (next != null && next) {
-        context.push('/signup/verify');
-      }
-    });
+      signUpControllerProvider.select((value) => value.isSignUpSuccess),
+      (_, next) {
+        //_la gia tri cu, next la gia tri moi
+        if (next != null && next) {
+          context.push('/signup/verify');
+        }
+      },
+    );
   }
 
   void _onSubmit() {
@@ -69,7 +72,6 @@ class _SignupPageState extends ConsumerState<SignupPage> {
   @override
   Widget build(BuildContext context) {
     final color = Theme.of(context).colorScheme;
-    final text = Theme.of(context).textTheme;
     _listener();
     return SafeArea(
       top: true,
@@ -77,17 +79,15 @@ class _SignupPageState extends ConsumerState<SignupPage> {
         backgroundColor: color.primary,
         resizeToAvoidBottomInset: true,
         body: NestedScrollView(
-            headerSliverBuilder: (context, innerBoxIsScrolled) => [
-                  _topAppBar(),
-                ],
-            body: _signupBody()),
+          headerSliverBuilder: (context, innerBoxIsScrolled) => [_topAppBar()],
+          body: _signupBody(),
+        ),
       ),
     );
   }
 
   //region TOP APPBAR
   Widget _topAppBar() {
-    final text = Theme.of(context).textTheme;
     final color = Theme.of(context).colorScheme;
     return SliverAppBar(
       automaticallyImplyLeading: false,
@@ -106,84 +106,85 @@ class _SignupPageState extends ConsumerState<SignupPage> {
     return Container(
       padding: EdgeInsets.symmetric(vertical: 20, horizontal: 30),
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.vertical(top: Radius.circular(30)),
-          color: color.surface),
+        borderRadius: BorderRadius.vertical(top: Radius.circular(30)),
+        color: color.surface,
+      ),
       child: SingleChildScrollView(
         child: Column(
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              TextButton.icon(
-                onPressed: context.pop,
-                label: Text(
-                  'Back to login',
-                  style: text.labelLarge?.copyWith(color: color.primary),
-                ),
-                icon: Icon(Icons.arrow_back_rounded, color: color.primary),
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            TextButton.icon(
+              onPressed: context.pop,
+              label: Text(
+                'Back to login',
+                style: text.labelLarge?.copyWith(color: color.primary),
               ),
-              Text('Sign up',
-                  style: text.headlineMedium?.copyWith(
-                      color: color.primary, fontWeight: FontWeight.w800)),
-              SizedBox(
-                height: 25,
+              icon: Icon(Icons.arrow_back_rounded, color: color.primary),
+            ),
+            Text(
+              'Sign up',
+              style: text.headlineMedium?.copyWith(
+                color: color.primary,
+                fontWeight: FontWeight.w800,
               ),
-              TaskitOutlineTextField(
-                labelText: 'Email',
-                controller: _emailController,
-                autofillHints: AutofillHints.email,
-                keyboardType: TextInputType.emailAddress,
-              ),
-              SizedBox(
-                height: 15,
-              ),
-              TaskitOutlineTextField(
-                  labelText: "Full Name",
-                  controller: _nameController,
-                  autofillHints: AutofillHints.name,
-                  keyboardType: TextInputType.text),
-              SizedBox(
-                height: 15,
-              ),
-              TaskitOutLineTextFieldWithPassword(
-                  labelText: 'Password', controller: _passwordController),
-              SizedBox(
-                height: 15,
-              ),
-              TaskitOutLineTextFieldWithPassword(
-                  labelText: 'Confirm password', controller: _passwordConfirm),
-              SizedBox(
-                height: 20,
-              ),
-              SizedBox(
-                width: double.infinity,
-                child: ElevatedButton(
-                  onPressed: _onSubmit,
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: color.primary,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20.0),
-                    ),
+            ),
+            SizedBox(height: 25),
+            TaskitOutlineTextField(
+              labelText: 'Email',
+              controller: _emailController,
+              autofillHints: AutofillHints.email,
+              keyboardType: TextInputType.emailAddress,
+            ),
+            SizedBox(height: 15),
+            TaskitOutlineTextField(
+              labelText: "Full Name",
+              controller: _nameController,
+              autofillHints: AutofillHints.name,
+              keyboardType: TextInputType.text,
+            ),
+            SizedBox(height: 15),
+            TaskitOutLineTextFieldWithPassword(
+              labelText: 'Password',
+              controller: _passwordController,
+            ),
+            SizedBox(height: 15),
+            TaskitOutLineTextFieldWithPassword(
+              labelText: 'Confirm password',
+              controller: _passwordConfirm,
+            ),
+            SizedBox(height: 20),
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton(
+                onPressed: _onSubmit,
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: color.primary,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20.0),
                   ),
-                  child: state.isLoading
-                      ? Center(
-                          child: CircularProgressIndicator(
-                            color: color.onPrimary,
-                          ),
-                        )
-                      : Text('Signup',
-                          style: text.titleMedium?.copyWith(
-                            color: color.onPrimary,
-                          )),
                 ),
+                child: state.isLoading
+                    ? Center(
+                        child: CircularProgressIndicator(
+                          color: color.onPrimary,
+                        ),
+                      )
+                    : Text(
+                        'Signup',
+                        style: text.titleMedium?.copyWith(
+                          color: color.onPrimary,
+                        ),
+                      ),
               ),
-              SizedBox(
-                height: 15,
-              ),
-            ]),
+            ),
+            SizedBox(height: 15),
+          ],
+        ),
       ),
     );
   }
 
-//endregion
+  //endregion
 }

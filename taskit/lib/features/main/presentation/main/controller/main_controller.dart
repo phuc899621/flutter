@@ -2,9 +2,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:taskit/features/main/presentation/main/state/main_state.dart';
 
 final mainControllerProvider =
-    AutoDisposeNotifierProvider<MainController, MainState>(MainController.new);
+    NotifierProvider.autoDispose<MainController, MainState>(MainController.new);
 
-class MainController extends AutoDisposeNotifier<MainState> {
+class MainController extends Notifier<MainState> {
   @override
   MainState build() => MainState();
 

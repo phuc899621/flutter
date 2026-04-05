@@ -5,5 +5,7 @@ import 'package:taskit/main_widget.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  runApp(const ProviderScope(child: MainWidget()));
+  runApp(
+    ProviderScope(retry: (retryCount, error) => null, child: MainWidget()),
+  );
 }

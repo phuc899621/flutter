@@ -15,6 +15,11 @@ router.post(
   AuthController.resendSignupOtp,
 );
 router.post("/login", AuthValidate.loginValidate, AuthController.login);
+router.post(
+  "/google",
+  AuthValidate.loginWithGoogleValidate,
+  AuthController.loginWithGoogle,
+);
 router.post("/logout", AuthValidate.logoutValidate, AuthController.logout);
 router.post(
   "/refresh",

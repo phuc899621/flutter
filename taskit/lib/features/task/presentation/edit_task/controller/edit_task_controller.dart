@@ -9,10 +9,11 @@ import '../../../domain/entities/task_priority_enum.dart';
 import '../state/edit_task_state.dart';
 
 final editTaskControllerProvider =
-    AutoDisposeNotifierProvider<EditTaskController, EditTaskState>(
-        EditTaskController.new);
+    NotifierProvider.autoDispose<EditTaskController, EditTaskState>(
+      EditTaskController.new,
+    );
 
-class EditTaskController extends AutoDisposeNotifier<EditTaskState> {
+class EditTaskController extends Notifier<EditTaskState> {
   StreamSubscription? _taskSub;
   late StreamSubscription _categorySub;
   late StreamSubscription _subtaskSub;
@@ -61,7 +62,12 @@ class EditTaskController extends AutoDisposeNotifier<EditTaskState> {
       return;
     }
     final newDueDate = DateTime(
-        dueDate.year, dueDate.month, dueDate.day, dueTime.hour, dueTime.minute);
+      dueDate.year,
+      dueDate.month,
+      dueDate.day,
+      dueTime.hour,
+      dueTime.minute,
+    );
     ref
         .read(taskServiceProvider)
         .updateTaskDueDate(state.task?.localId ?? -1, newDueDate);
@@ -87,17 +93,17 @@ class EditTaskController extends AutoDisposeNotifier<EditTaskState> {
 
   void fetchTask(int localId) {
     if (_taskSub != null) return;
-    _taskSub = ref
-        .read(taskServiceProvider)
-        .watchTaskByLocalId(localId)
-        .listen((task) {
-      state = state.copyWith(task: task);
-    });
+    _taskSub = ref.read(taskServiceProvider).watchTaskByLocalId(localId).listen(
+      (task) {
+        state = state.copyWith(task: task);
+      },
+    );
   }
 
   void _fetchCategory() {
-    _categorySub =
-        ref.read(taskServiceProvider).watchAllCategories().listen((categories) {
+    _categorySub = ref.read(taskServiceProvider).watchAllCategories().listen((
+      categories,
+    ) {
       state = state.copyWith(categories: categories);
     });
   }

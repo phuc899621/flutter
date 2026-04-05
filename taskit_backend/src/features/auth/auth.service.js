@@ -26,6 +26,7 @@ import {
   revokeRefreshToken,
   saveRefreshToken,
 } from "../../shared/services/redis.service.js";
+import { verifyGoogleToken } from "../../shared/services/auth.google.service.js";
 class AuthService {
   //#region signup flow
   static async signup(data) {
@@ -145,6 +146,14 @@ class AuthService {
       throw new ServerError(`Logout error: ${e.message}`);
     }
   }
+  static async loginWithGoogle(token) {
+    try {
+      const payload = await verifyGoogleToken(token);
+    } catch (e) {
+      if (e instanceof BaseError) throw e;
+      throw new ServerError(`Login with google error: ${e.message}`);
+    }
+  }
   //#endregion
   //#region forgot password flow
   static async forgotPassword(request) {
@@ -221,10 +230,6 @@ class AuthService {
     } catch (e) {
       throw new ServerError(`Login verification error: ${e.message}`, 500);
     }
-  }
-  static async hashPassword(password) {
-    const salt = await bcrypt.genSalt(10);
-    return await bcrypt.hash(password, salt);
   }
 }
 

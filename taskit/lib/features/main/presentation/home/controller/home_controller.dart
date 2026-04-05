@@ -12,9 +12,9 @@ import '../../../../task/domain/entities/task_entity.dart';
 import '../../../../user/application/user_service.dart';
 
 final homeControllerProvider =
-    AutoDisposeNotifierProvider<HomeController, HomeState>(HomeController.new);
+    NotifierProvider.autoDispose<HomeController, HomeState>(HomeController.new);
 
-class HomeController extends AutoDisposeNotifier<HomeState> {
+class HomeController extends Notifier<HomeState> {
   late final StreamSubscription _todaySub;
   late final StreamSubscription _tomorrowSub;
   late final StreamSubscription _thisWeekSub;
@@ -104,8 +104,9 @@ class HomeController extends AutoDisposeNotifier<HomeState> {
       debugPrint("Over Due: $tasks");
       state = state.copyWith(todayOverDueTasks: tasks);
     });
-    _thisWeekOverDueSub =
-        taskService.watchThisWeekOverDueTask().listen((tasks) {
+    _thisWeekOverDueSub = taskService.watchThisWeekOverDueTask().listen((
+      tasks,
+    ) {
       debugPrint("Over Due: $tasks");
       state = state.copyWith(thisWeekOverDueTasks: tasks);
     });
@@ -117,8 +118,9 @@ class HomeController extends AutoDisposeNotifier<HomeState> {
       debugPrint("Completed Today: $tasks");
       state = state.copyWith(todayCompletedTasks: tasks);
     });
-    _completedThisWeekSub =
-        taskService.watchCompletedThisWeekTask().listen((tasks) {
+    _completedThisWeekSub = taskService.watchCompletedThisWeekTask().listen((
+      tasks,
+    ) {
       debugPrint("Completed This Week: $tasks");
       state = state.copyWith(thisWeekCompletedTasks: tasks);
     });

@@ -6,10 +6,11 @@ import 'package:taskit/features/task/application/task_service.dart';
 import '../../../../../shared/log/logger_provider.dart';
 
 final taskGenerateControllerProvider =
-    AutoDisposeNotifierProvider<TaskGenerateController, TaskGenerateState>(
-        TaskGenerateController.new);
+    NotifierProvider.autoDispose<TaskGenerateController, TaskGenerateState>(
+      TaskGenerateController.new,
+    );
 
-class TaskGenerateController extends AutoDisposeNotifier<TaskGenerateState> {
+class TaskGenerateController extends Notifier<TaskGenerateState> {
   @override
   TaskGenerateState build() {
     return TaskGenerateState();
@@ -38,20 +39,30 @@ class TaskGenerateController extends AutoDisposeNotifier<TaskGenerateState> {
     try {
       final aiService = ref.read(taskServiceProvider);
       state = state.copyWith(
-          isGenerating: true, error: null, isGenerateSuccess: false);
+        isGenerating: true,
+        error: null,
+        isGenerateSuccess: false,
+      );
       if (state.text.isEmpty) {
         state = state.copyWith(isGenerating: false, error: 'Text is empty');
         return;
       }
       final result = await aiService.generateAiTask(state.text);
-      result.when((success) {
-        final text = 'Task generated successfully with title: ${success.title}';
-        ref.read(mainControllerProvider.notifier).setGenerateTaskText(text);
-        state = state.copyWith(
-            isGenerating: false, error: null, isGenerateSuccess: true);
-      }, (error) {
-        state = state.copyWith(error: error.message, isGenerating: false);
-      });
+      result.when(
+        (success) {
+          final text =
+              'Task generated successfully with title: ${success.title}';
+          ref.read(mainControllerProvider.notifier).setGenerateTaskText(text);
+          state = state.copyWith(
+            isGenerating: false,
+            error: null,
+            isGenerateSuccess: true,
+          );
+        },
+        (error) {
+          state = state.copyWith(error: error.message, isGenerating: false);
+        },
+      );
     } catch (e, s) {
       logger.e(e);
       state = state.copyWith(error: e.toString(), isGenerating: false);

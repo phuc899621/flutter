@@ -8,9 +8,9 @@ import 'package:taskit/shared/log/logger_provider.dart';
 import '../../../domain/entity/message.dart';
 
 final aiControllerProvider =
-    AutoDisposeNotifierProvider<AiController, AiState>(AiController.new);
+    NotifierProvider.autoDispose<AiController, AiState>(AiController.new);
 
-class AiController extends AutoDisposeNotifier<AiState> {
+class AiController extends Notifier<AiState> {
   @override
   AiState build() {
     // TODO: implement build
@@ -29,17 +29,23 @@ class AiController extends AutoDisposeNotifier<AiState> {
       final languageCode = ref.read(languageCodeProvider);
       final result = await aiService.getAiAnswer(s, languageCode);
       logger.i('ask ai $result');
-      result.when((value) {
-        addMessage(Message(
-            content: value,
-            isUser: false,
-            timestamp: DateTime.now(),
-            id: DateTime.now().millisecondsSinceEpoch.toString()));
-        state = state.copyWith(isLoading: false, isReceiveAiMessage: true);
-      }, (error) {
-        state = state.copyWith(isLoading: false);
-        errorController.setError(error.message);
-      });
+      result.when(
+        (value) {
+          addMessage(
+            Message(
+              content: value,
+              isUser: false,
+              timestamp: DateTime.now(),
+              id: DateTime.now().millisecondsSinceEpoch.toString(),
+            ),
+          );
+          state = state.copyWith(isLoading: false, isReceiveAiMessage: true);
+        },
+        (error) {
+          state = state.copyWith(isLoading: false);
+          errorController.setError(error.message);
+        },
+      );
     } catch (e) {
       logger.e(e);
       ref.read(mainControllerProvider.notifier).setError(e.toString());

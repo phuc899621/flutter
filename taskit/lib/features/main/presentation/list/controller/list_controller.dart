@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_riverpod/legacy.dart';
 import 'package:taskit/features/main/presentation/list/state/list_state.dart';
 import 'package:taskit/features/task/domain/entities/category_entity.dart';
 import 'package:taskit/features/task/domain/entities/filter_date_option_enum.dart';
@@ -16,10 +17,10 @@ import '../../../../task/domain/entities/task_entity.dart';
 import '../../../../task/domain/entities/task_status_enum.dart';
 
 final listControllerProvider =
-    AutoDisposeNotifierProvider<ListController, ListState>(ListController.new);
+    NotifierProvider.autoDispose<ListController, ListState>(ListController.new);
 final shouldFocusSearchTextFieldProvider = StateProvider<bool>((ref) => false);
 
-class ListController extends AutoDisposeNotifier<ListState> {
+class ListController extends Notifier<ListState> {
   late StreamSubscription _taskSub;
   ValueChanged<bool>? onFiltering;
 
@@ -32,11 +33,12 @@ class ListController extends AutoDisposeNotifier<ListState> {
   void _startTaskListener() {
     _taskSub = ref.watch(taskServiceProvider).watchAllTasks().listen((tasks) {
       state = state.copyWith(
-          filteringTask: _filteringTasks(tasks),
-          allTask: tasks,
-          filteringPendingTask: _filteringPendingTasks(tasks),
-          filteringCompletedTask: _filteringCompletedTasks(tasks),
-          filteringScheduledTask: _filteringScheduledTasks(tasks));
+        filteringTask: _filteringTasks(tasks),
+        allTask: tasks,
+        filteringPendingTask: _filteringPendingTasks(tasks),
+        filteringCompletedTask: _filteringCompletedTasks(tasks),
+        filteringScheduledTask: _filteringScheduledTasks(tasks),
+      );
     });
   }
 
@@ -94,12 +96,11 @@ class ListController extends AutoDisposeNotifier<ListState> {
 
   void callUpdateFilteringTask() {
     state = state.copyWith(
-        filteringTask: _filteringTasks(
-          state.allTask,
-        ),
-        filteringPendingTask: _filteringPendingTasks(state.allTask),
-        filteringCompletedTask: _filteringCompletedTasks(state.allTask),
-        filteringScheduledTask: _filteringScheduledTasks(state.allTask));
+      filteringTask: _filteringTasks(state.allTask),
+      filteringPendingTask: _filteringPendingTasks(state.allTask),
+      filteringCompletedTask: _filteringCompletedTasks(state.allTask),
+      filteringScheduledTask: _filteringScheduledTasks(state.allTask),
+    );
   }
 
   List<TaskEntity> _filteringTasks(List<TaskEntity> allTasks) {
@@ -120,12 +121,14 @@ class ListController extends AutoDisposeNotifier<ListState> {
   void _orderingsTasks(List<TaskEntity> filteringTasks) {
     switch (state.orderByOption) {
       case OrderByOption.titleAtoZ:
-        filteringTasks
-            .sort((task1, task2) => task1.title.compareTo(task2.title));
+        filteringTasks.sort(
+          (task1, task2) => task1.title.compareTo(task2.title),
+        );
         break;
       case OrderByOption.titleZtoA:
-        filteringTasks
-            .sort((task1, task2) => task2.title.compareTo(task1.title));
+        filteringTasks.sort(
+          (task1, task2) => task2.title.compareTo(task1.title),
+        );
         break;
       case OrderByOption.dueDateSoonToLate:
         filteringTasks.sort((task1, task2) {
@@ -156,20 +159,26 @@ class ListController extends AutoDisposeNotifier<ListState> {
         });
         break;
       case OrderByOption.priorityLowToHigh:
-        filteringTasks.sort((task1, task2) =>
-            task1.priority.index.compareTo(task2.priority.index));
+        filteringTasks.sort(
+          (task1, task2) =>
+              task1.priority.index.compareTo(task2.priority.index),
+        );
         break;
       case OrderByOption.priorityHighToLow:
-        filteringTasks.sort((task1, task2) =>
-            task2.priority.index.compareTo(task1.priority.index));
+        filteringTasks.sort(
+          (task1, task2) =>
+              task2.priority.index.compareTo(task1.priority.index),
+        );
         break;
       case OrderByOption.categoryAtoZ:
-        filteringTasks.sort((task1, task2) =>
-            task1.category.name.compareTo(task2.category.name));
+        filteringTasks.sort(
+          (task1, task2) => task1.category.name.compareTo(task2.category.name),
+        );
         break;
       case OrderByOption.categoryZtoA:
-        filteringTasks.sort((task1, task2) =>
-            task2.category.name.compareTo(task1.category.name));
+        filteringTasks.sort(
+          (task1, task2) => task2.category.name.compareTo(task1.category.name),
+        );
         break;
       case OrderByOption.defaultOption:
         break;

@@ -10,10 +10,11 @@ import 'package:taskit/features/task/presentation/filter_task/state/filter_state
 import 'package:taskit/shared/log/logger_provider.dart';
 
 final filterControllerProvider =
-    AutoDisposeNotifierProvider<FilterController, FilterState>(
-        FilterController.new);
+    NotifierProvider.autoDispose<FilterController, FilterState>(
+      FilterController.new,
+    );
 
-class FilterController extends AutoDisposeNotifier<FilterState> {
+class FilterController extends Notifier<FilterState> {
   late StreamSubscription _categorySub;
 
   @override
@@ -28,8 +29,9 @@ class FilterController extends AutoDisposeNotifier<FilterState> {
   //region LISTENING
   //endregion
   void _startListening() {
-    _categorySub =
-        ref.read(taskServiceProvider).watchAllCategories().listen((categories) {
+    _categorySub = ref.read(taskServiceProvider).watchAllCategories().listen((
+      categories,
+    ) {
       state = state.copyWith(categories: categories);
     });
   }
@@ -93,26 +95,28 @@ class FilterController extends AutoDisposeNotifier<FilterState> {
   void onSelectCategory(CategoryEntity selectedCategory, bool isSelected) {
     if (!isSelected) {
       state = state.copyWith(
-          selectedCategories: List.from(state.selectedCategories)
-            ..removeWhere(
-              (category) => category.localId == selectedCategory.localId,
-            ));
+        selectedCategories: List.from(state.selectedCategories)
+          ..removeWhere(
+            (category) => category.localId == selectedCategory.localId,
+          ),
+      );
     } else {
       state = state.copyWith(
-          selectedCategories: [...state.selectedCategories, selectedCategory]);
+        selectedCategories: [...state.selectedCategories, selectedCategory],
+      );
     }
   }
 
   void onSelectPriority(TaskPriority selectedPriority, bool isSelected) {
     if (!isSelected) {
       state = state.copyWith(
-          selectedPriorities: List.from(state.selectedPriorities)
-            ..removeWhere(
-              (priority) => priority == selectedPriority,
-            ));
+        selectedPriorities: List.from(state.selectedPriorities)
+          ..removeWhere((priority) => priority == selectedPriority),
+      );
     } else {
       state = state.copyWith(
-          selectedPriorities: [...state.selectedPriorities, selectedPriority]);
+        selectedPriorities: [...state.selectedPriorities, selectedPriority],
+      );
     }
   }
 
@@ -140,9 +144,10 @@ class FilterController extends AutoDisposeNotifier<FilterState> {
 
   void onCancelFilteringDate() {
     state = state.copyWith(
-        selectedStartDate: null,
-        selectedEndDate: null,
-        selectedDateOption: FilterDateOption.noDateFilter);
+      selectedStartDate: null,
+      selectedEndDate: null,
+      selectedDateOption: FilterDateOption.noDateFilter,
+    );
   }
 
   //==============================================
@@ -153,49 +158,61 @@ class FilterController extends AutoDisposeNotifier<FilterState> {
 
   void onSaveFilteringCategory() {
     state = state.copyWith(
-        filteringCategories: state.selectedCategories, selectedCategories: []);
+      filteringCategories: state.selectedCategories,
+      selectedCategories: [],
+    );
     checkIsFiltering();
   }
 
   void onSaveFilteringPriority() {
     state = state.copyWith(
-        filteringPriorities: state.selectedPriorities, selectedPriorities: []);
+      filteringPriorities: state.selectedPriorities,
+      selectedPriorities: [],
+    );
     checkIsFiltering();
   }
 
   void onSaveFilteringStartDate() {
     state = state.copyWith(
-        filteringStartDate: state.selectedStartDate, selectedStartDate: null);
+      filteringStartDate: state.selectedStartDate,
+      selectedStartDate: null,
+    );
   }
 
   void onSaveFilteringEndDate() {
     state = state.copyWith(
-        filteringEndDate: state.selectedEndDate, selectedEndDate: null);
+      filteringEndDate: state.selectedEndDate,
+      selectedEndDate: null,
+    );
   }
 
   void onSaveFilteringDate() {
     if (state.selectedDateOption == FilterDateOption.custom) {
       if (state.selectedStartDate != null || state.selectedEndDate != null) {
         state = state.copyWith(
-            filteringDateOption: FilterDateOption.custom,
-            filteringStartDate: state.selectedStartDate,
-            filteringEndDate: state.selectedEndDate);
+          filteringDateOption: FilterDateOption.custom,
+          filteringStartDate: state.selectedStartDate,
+          filteringEndDate: state.selectedEndDate,
+        );
       } else {
         state = state.copyWith(
-            filteringDateOption: FilterDateOption.noDateFilter,
-            filteringStartDate: null,
-            filteringEndDate: null);
+          filteringDateOption: FilterDateOption.noDateFilter,
+          filteringStartDate: null,
+          filteringEndDate: null,
+        );
       }
     } else {
       state = state.copyWith(
-          filteringDateOption: state.selectedDateOption,
-          filteringStartDate: null,
-          filteringEndDate: null);
+        filteringDateOption: state.selectedDateOption,
+        filteringStartDate: null,
+        filteringEndDate: null,
+      );
     }
     state = state.copyWith(
-        selectedDateOption: FilterDateOption.noDateFilter,
-        selectedStartDate: null,
-        selectedEndDate: null);
+      selectedDateOption: FilterDateOption.noDateFilter,
+      selectedStartDate: null,
+      selectedEndDate: null,
+    );
     checkIsFiltering();
   }
 
@@ -210,7 +227,8 @@ class FilterController extends AutoDisposeNotifier<FilterState> {
     listController.setFilteringEndDate(state.filteringEndDate);
     listController.setIsFiltering(state.isFiltering);
     logger.i(
-        'onSaveFiltering ${state.isFiltering} ${state.filteringDateOption} ${state.filteringStartDate} ${state.filteringEndDate} ${state.filteringCategories} ${state.filteringPriorities}');
+      'onSaveFiltering ${state.isFiltering} ${state.filteringDateOption} ${state.filteringStartDate} ${state.filteringEndDate} ${state.filteringCategories} ${state.filteringPriorities}',
+    );
   }
 
   void checkIsFiltering() {
