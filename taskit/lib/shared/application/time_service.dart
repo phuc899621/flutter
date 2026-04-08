@@ -1,11 +1,11 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:rxdart/rxdart.dart';
 
-final timeStreamProvider = StreamProvider.autoDispose<DateTime>((ref) {
-  return Stream<DateTime>.periodic(
-    const Duration(minutes: 1),
-    (_) => DateTime.now(),
-  ).startWith(DateTime.now());
+final timeStreamProvider = StreamProvider.autoDispose<DateTime>((ref) async* {
+  yield DateTime.now();
+
+  await for (final _ in Stream.periodic(const Duration(minutes: 1))){
+    yield DateTime.now();
+  }
 });
 
 final timeServiceProvider = Provider<TimeService>((ref) {

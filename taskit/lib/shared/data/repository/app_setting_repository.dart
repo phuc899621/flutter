@@ -1,4 +1,4 @@
-abstract interface class ILocalRepository{
+abstract interface class AppSettingRepository{
   Future<void> saveNotification(bool isNotificationEnabled);
   Future<bool?> getNotification();
   Future<void> saveRemindBefore(int remindBefore);

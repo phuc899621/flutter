@@ -1,4 +1,4 @@
-abstract interface class ILocalService{
+abstract interface class AppSettingService{
   Future<void> saveNotification(bool isNotificationEnabled);
   Future<bool?> getNotification();
   Future<void> saveRemindBefore(int remindBefore);

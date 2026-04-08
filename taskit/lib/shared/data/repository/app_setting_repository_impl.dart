@@ -1,17 +1,18 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:taskit/shared/data/repository/ilocal_repository.dart';
+import 'package:taskit/shared/data/repository/app_setting_repository.dart';
 
-import '../source/local/local_source.dart';
+import '../source/local/app_setting_local_source.dart';
 
-final localRepositoryProvider=Provider<ILocalRepository>((ref){
-  return LocalRepository(ref.read(localSourceProvider));
+final appSettingRepositoryProvider=Provider<AppSettingRepository>((ref){
+  final localSource=ref.watch(appSettingLocalSourceProvider);
+  return AppSettingRepositoryImpl(localSource);
 });
 
 
 
-class LocalRepository implements ILocalRepository{
-  final LocalSource _localSource;
-  LocalRepository(this._localSource);
+class AppSettingRepositoryImpl implements AppSettingRepository{
+  final AppSettingLocalSource _localSource;
+  AppSettingRepositoryImpl(this._localSource);
 
   @override
   Future<List<String>?> getCategories()=>_localSource.getCategories();
