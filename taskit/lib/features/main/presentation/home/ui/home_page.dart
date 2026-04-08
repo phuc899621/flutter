@@ -3,12 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_expandable_fab/flutter_expandable_fab.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:taskit/config/routers/router_provider.dart';
 import 'package:taskit/features/main/presentation/home/controller/home_controller.dart';
 import 'package:taskit/features/main/presentation/home/ui/widget/task_item.dart';
 import 'package:taskit/features/main/presentation/list/controller/list_controller.dart';
 import 'package:taskit/shared/application/time_service.dart';
 import 'package:taskit/shared/extension/date_time.dart';
+
+import '../../../../../shared/config/routers/router_provider.dart';
 
 class HomePage extends ConsumerStatefulWidget {
   const HomePage({super.key});
@@ -190,8 +191,7 @@ class _HomePageState extends ConsumerState<HomePage>
 //region TOP APPBAR
   Widget _topAppBar() {
     final color = Theme.of(context).colorScheme;
-    final text = Theme.of(context).textTheme;
-    final state = ref.watch(homeControllerProvider);
+
     return SliverAppBar(
       expandedHeight: 180,
       snap: true,
@@ -258,8 +258,6 @@ class _HomePageState extends ConsumerState<HomePage>
   //region Collapsed TopAppBar Widget
   Widget _collapseAppBar() {
     final text = Theme.of(context).textTheme;
-    final color = Theme.of(context).colorScheme;
-    final state = ref.watch(homeControllerProvider);
 
     return FlexibleSpaceBar(
       titlePadding: EdgeInsets.symmetric(vertical: 12, horizontal: 14),

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:smooth_sheets/smooth_sheets.dart';
-import 'package:taskit/config/routers/router_name.dart';
 import 'package:taskit/features/auth/presentation/forgot_password/ui/reset_password_page.dart';
 import 'package:taskit/features/auth/presentation/signup/ui/signup_veriry_page.dart';
 import 'package:taskit/features/main/presentation/ai/ui/ai_page.dart';
@@ -19,16 +18,17 @@ import 'package:taskit/features/task/presentation/edit_task/ui/sheet_shell.dart'
 import 'package:taskit/features/task/presentation/filter_task/ui/category_filter_bottom_sheet.dart';
 import 'package:taskit/features/task/presentation/filter_task/ui/end_date_filter_bottom_sheet.dart';
 import 'package:taskit/features/task/presentation/filter_task/ui/filter_bottom_sheet.dart';
+import 'package:taskit/shared/config/routers/router_name.dart';
 
-import '../../features/auth/presentation/forgot_password/ui/forgot_password_page.dart';
-import '../../features/auth/presentation/forgot_password/ui/forgot_password_verify_page.dart';
-import '../../features/auth/presentation/login/ui/login_page.dart';
-import '../../features/auth/presentation/signup/ui/signup_page.dart';
-import '../../features/main/presentation/main/ui/main_page.dart';
-import '../../features/main/presentation/timeline/ui/timeline_page.dart';
-import '../../features/task/presentation/filter_task/ui/date_filter_bottom_sheet.dart';
-import '../../features/task/presentation/filter_task/ui/priority_filter_bottom_sheet.dart';
-import '../../features/task/presentation/filter_task/ui/start_date_filter_bottom_sheet.dart';
+import '../../../features/auth/presentation/forgot_password/ui/forgot_password_page.dart';
+import '../../../features/auth/presentation/forgot_password/ui/forgot_password_verify_page.dart';
+import '../../../features/auth/presentation/login/ui/login_page.dart';
+import '../../../features/auth/presentation/signup/ui/signup_page.dart';
+import '../../../features/main/presentation/main/ui/main_page.dart';
+import '../../../features/main/presentation/timeline/ui/timeline_page.dart';
+import '../../../features/task/presentation/filter_task/ui/date_filter_bottom_sheet.dart';
+import '../../../features/task/presentation/filter_task/ui/priority_filter_bottom_sheet.dart';
+import '../../../features/task/presentation/filter_task/ui/start_date_filter_bottom_sheet.dart';
 import '../app/animation/router_anim.dart';
 
 final editTaskNavigatorKeyProvider = Provider.autoDispose((ref) {

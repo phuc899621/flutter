@@ -13,7 +13,4 @@ _AddSubtaskData _$AddSubtaskDataFromJson(Map<String, dynamic> json) =>
     );
 
 Map<String, dynamic> _$AddSubtaskDataToJson(_AddSubtaskData instance) =>
-    <String, dynamic>{
-      'localId': instance.localId,
-      '_id': instance.id,
-    };
+    <String, dynamic>{'localId': instance.localId, '_id': instance.id};

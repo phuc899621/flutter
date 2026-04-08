@@ -1,6 +1,5 @@
-// dart format width=80
-// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// coverage:ignore-file
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
@@ -15,48 +14,47 @@ T _$identity<T>(T value) => value;
 
 /// @nodoc
 mixin _$LoginVerifyData {
-  String get name;
-  String get email;
 
-  /// Create a copy of LoginVerifyData
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @pragma('vm:prefer-inline')
-  $LoginVerifyDataCopyWith<LoginVerifyData> get copyWith =>
-      _$LoginVerifyDataCopyWithImpl<LoginVerifyData>(
-          this as LoginVerifyData, _$identity);
+ String get name; String get email;
+/// Create a copy of LoginVerifyData
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$LoginVerifyDataCopyWith<LoginVerifyData> get copyWith => _$LoginVerifyDataCopyWithImpl<LoginVerifyData>(this as LoginVerifyData, _$identity);
 
   /// Serializes this LoginVerifyData to a JSON map.
   Map<String, dynamic> toJson();
 
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is LoginVerifyData &&
-            (identical(other.name, name) || other.name == name) &&
-            (identical(other.email, email) || other.email == email));
-  }
 
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  int get hashCode => Object.hash(runtimeType, name, email);
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is LoginVerifyData&&(identical(other.name, name) || other.name == name)&&(identical(other.email, email) || other.email == email));
+}
 
-  @override
-  String toString() {
-    return 'LoginVerifyData(name: $name, email: $email)';
-  }
+@JsonKey(includeFromJson: false, includeToJson: false)
+@override
+int get hashCode => Object.hash(runtimeType,name,email);
+
+@override
+String toString() {
+  return 'LoginVerifyData(name: $name, email: $email)';
+}
+
+
 }
 
 /// @nodoc
-abstract mixin class $LoginVerifyDataCopyWith<$Res> {
-  factory $LoginVerifyDataCopyWith(
-          LoginVerifyData value, $Res Function(LoginVerifyData) _then) =
-      _$LoginVerifyDataCopyWithImpl;
-  @useResult
-  $Res call({String name, String email});
-}
+abstract mixin class $LoginVerifyDataCopyWith<$Res>  {
+  factory $LoginVerifyDataCopyWith(LoginVerifyData value, $Res Function(LoginVerifyData) _then) = _$LoginVerifyDataCopyWithImpl;
+@useResult
+$Res call({
+ String name, String email
+});
 
+
+
+
+}
 /// @nodoc
 class _$LoginVerifyDataCopyWithImpl<$Res>
     implements $LoginVerifyDataCopyWith<$Res> {
@@ -65,84 +63,199 @@ class _$LoginVerifyDataCopyWithImpl<$Res>
   final LoginVerifyData _self;
   final $Res Function(LoginVerifyData) _then;
 
-  /// Create a copy of LoginVerifyData
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? name = null,
-    Object? email = null,
-  }) {
-    return _then(_self.copyWith(
-      name: null == name
-          ? _self.name
-          : name // ignore: cast_nullable_to_non_nullable
-              as String,
-      email: null == email
-          ? _self.email
-          : email // ignore: cast_nullable_to_non_nullable
-              as String,
-    ));
-  }
+/// Create a copy of LoginVerifyData
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') @override $Res call({Object? name = null,Object? email = null,}) {
+  return _then(_self.copyWith(
+name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
+as String,email: null == email ? _self.email : email // ignore: cast_nullable_to_non_nullable
+as String,
+  ));
+}
+
+}
+
+
+/// Adds pattern-matching-related methods to [LoginVerifyData].
+extension LoginVerifyDataPatterns on LoginVerifyData {
+/// A variant of `map` that fallback to returning `orElse`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _LoginVerifyData value)?  $default,{required TResult orElse(),}){
+final _that = this;
+switch (_that) {
+case _LoginVerifyData() when $default != null:
+return $default(_that);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// Callbacks receives the raw object, upcasted.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case final Subclass2 value:
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _LoginVerifyData value)  $default,){
+final _that = this;
+switch (_that) {
+case _LoginVerifyData():
+return $default(_that);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `map` that fallback to returning `null`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _LoginVerifyData value)?  $default,){
+final _that = this;
+switch (_that) {
+case _LoginVerifyData() when $default != null:
+return $default(_that);case _:
+  return null;
+
+}
+}
+/// A variant of `when` that fallback to an `orElse` callback.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String name,  String email)?  $default,{required TResult orElse(),}) {final _that = this;
+switch (_that) {
+case _LoginVerifyData() when $default != null:
+return $default(_that.name,_that.email);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// As opposed to `map`, this offers destructuring.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case Subclass2(:final field2):
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String name,  String email)  $default,) {final _that = this;
+switch (_that) {
+case _LoginVerifyData():
+return $default(_that.name,_that.email);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `when` that fallback to returning `null`
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String name,  String email)?  $default,) {final _that = this;
+switch (_that) {
+case _LoginVerifyData() when $default != null:
+return $default(_that.name,_that.email);case _:
+  return null;
+
+}
+}
+
 }
 
 /// @nodoc
 @JsonSerializable()
+
 class _LoginVerifyData implements LoginVerifyData {
   const _LoginVerifyData({required this.name, required this.email});
-  factory _LoginVerifyData.fromJson(Map<String, dynamic> json) =>
-      _$LoginVerifyDataFromJson(json);
+  factory _LoginVerifyData.fromJson(Map<String, dynamic> json) => _$LoginVerifyDataFromJson(json);
 
-  @override
-  final String name;
-  @override
-  final String email;
+@override final  String name;
+@override final  String email;
 
-  /// Create a copy of LoginVerifyData
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @pragma('vm:prefer-inline')
-  _$LoginVerifyDataCopyWith<_LoginVerifyData> get copyWith =>
-      __$LoginVerifyDataCopyWithImpl<_LoginVerifyData>(this, _$identity);
+/// Create a copy of LoginVerifyData
+/// with the given fields replaced by the non-null parameter values.
+@override @JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$LoginVerifyDataCopyWith<_LoginVerifyData> get copyWith => __$LoginVerifyDataCopyWithImpl<_LoginVerifyData>(this, _$identity);
 
-  @override
-  Map<String, dynamic> toJson() {
-    return _$LoginVerifyDataToJson(
-      this,
-    );
-  }
+@override
+Map<String, dynamic> toJson() {
+  return _$LoginVerifyDataToJson(this, );
+}
 
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _LoginVerifyData &&
-            (identical(other.name, name) || other.name == name) &&
-            (identical(other.email, email) || other.email == email));
-  }
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _LoginVerifyData&&(identical(other.name, name) || other.name == name)&&(identical(other.email, email) || other.email == email));
+}
 
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  int get hashCode => Object.hash(runtimeType, name, email);
+@JsonKey(includeFromJson: false, includeToJson: false)
+@override
+int get hashCode => Object.hash(runtimeType,name,email);
 
-  @override
-  String toString() {
-    return 'LoginVerifyData(name: $name, email: $email)';
-  }
+@override
+String toString() {
+  return 'LoginVerifyData(name: $name, email: $email)';
+}
+
+
 }
 
 /// @nodoc
-abstract mixin class _$LoginVerifyDataCopyWith<$Res>
-    implements $LoginVerifyDataCopyWith<$Res> {
-  factory _$LoginVerifyDataCopyWith(
-          _LoginVerifyData value, $Res Function(_LoginVerifyData) _then) =
-      __$LoginVerifyDataCopyWithImpl;
-  @override
-  @useResult
-  $Res call({String name, String email});
-}
+abstract mixin class _$LoginVerifyDataCopyWith<$Res> implements $LoginVerifyDataCopyWith<$Res> {
+  factory _$LoginVerifyDataCopyWith(_LoginVerifyData value, $Res Function(_LoginVerifyData) _then) = __$LoginVerifyDataCopyWithImpl;
+@override @useResult
+$Res call({
+ String name, String email
+});
 
+
+
+
+}
 /// @nodoc
 class __$LoginVerifyDataCopyWithImpl<$Res>
     implements _$LoginVerifyDataCopyWith<$Res> {
@@ -151,25 +264,17 @@ class __$LoginVerifyDataCopyWithImpl<$Res>
   final _LoginVerifyData _self;
   final $Res Function(_LoginVerifyData) _then;
 
-  /// Create a copy of LoginVerifyData
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $Res call({
-    Object? name = null,
-    Object? email = null,
-  }) {
-    return _then(_LoginVerifyData(
-      name: null == name
-          ? _self.name
-          : name // ignore: cast_nullable_to_non_nullable
-              as String,
-      email: null == email
-          ? _self.email
-          : email // ignore: cast_nullable_to_non_nullable
-              as String,
-    ));
-  }
+/// Create a copy of LoginVerifyData
+/// with the given fields replaced by the non-null parameter values.
+@override @pragma('vm:prefer-inline') $Res call({Object? name = null,Object? email = null,}) {
+  return _then(_LoginVerifyData(
+name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
+as String,email: null == email ? _self.email : email // ignore: cast_nullable_to_non_nullable
+as String,
+  ));
+}
+
+
 }
 
 // dart format on

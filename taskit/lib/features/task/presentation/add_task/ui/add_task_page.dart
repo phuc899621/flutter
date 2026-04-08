@@ -4,13 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
-import 'package:taskit/config/app/app_color.dart';
 import 'package:taskit/features/task/domain/entities/task_priority_enum.dart';
 import 'package:taskit/features/task/presentation/add_task/controller/add_task_controller.dart';
 import 'package:taskit/shared/extension/color.dart';
 import 'package:taskit/shared/extension/date_time.dart';
 import 'package:taskit/shared/extension/string.dart';
 import 'package:taskit/shared/log/logger_provider.dart';
+
+import '../../../../../shared/config/app/app_color.dart';
 
 class AddTaskPage extends ConsumerStatefulWidget {
   const AddTaskPage({super.key});

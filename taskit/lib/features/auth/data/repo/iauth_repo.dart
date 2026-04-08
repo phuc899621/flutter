@@ -1,5 +1,5 @@
+import '../../../../shared/data/dto/response/base_data.dart';
 import '../../../../shared/data/dto/response/base_response.dart';
-import '../../../../shared/data/dto/response/base_response_data.dart';
 import '../dto/req/forgot_pass/forgot_pass.dart';
 import '../dto/req/forgot_pass/forgot_pass_verify.dart';
 import '../dto/req/forgot_pass/reset_pass.dart';

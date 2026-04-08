@@ -19,6 +19,7 @@ import 'package:taskit/features/user/data/source/local/iuser_local_source.dart';
 import 'package:taskit/shared/data/repository/itoken_repository.dart';
 import 'package:taskit/shared/data/repository/token_repository.dart';
 import 'package:taskit/shared/data/source/local/drift/database/database.dart';
+import 'package:taskit/shared/helpers/base_response_mapper.dart';
 
 import '../../../../shared/exception/failure.dart';
 import '../../../../shared/log/logger_provider.dart';
@@ -29,6 +30,7 @@ import '../../domain/entities/subtask_entity.dart';
 import '../../domain/entities/task_status_enum.dart';
 import '../dto/req/category/add_category_req.dart';
 import '../dto/req/update_task/update_task_req.dart';
+import '../dto/res/task/add_task_data.dart';
 import '../mapper/task_mapper.dart';
 import '../source/local/itask_local_source.dart';
 import '../source/local/task_local_source.dart';
@@ -248,7 +250,7 @@ class TaskRepo with DioExceptionMapper implements ITaskRepo {
       final token = await _tokenService.getToken();
       final categoryData =
           await _taskApi.getAiCategory('Bearer $token', categoryReq);
-      return _iTaskMapper.stringListToCategoryEntity(categoryData.data);
+      return _iTaskMapper.stringListToCategoryEntity(categoryData.data??[]);
     } on DioException catch (e, s) {
       debugPrint(e.toString() + s.toString());
       throw mapDioExceptionToFailure(e, s);
@@ -400,10 +402,10 @@ class TaskRepo with DioExceptionMapper implements ITaskRepo {
           _iTaskMapper.toAddTaskReq(
               taskTblData, categoryTblData, subtasksTblData));
       logger.i('add task response: \n $response');
-
+      final responseData = BaseResponseMapper.requireData(response);
       _taskLocalSource.updateSyncAddTaskAndSubtask(
-          _iTaskMapper.toSyncTaskTableCompanion(response.data),
-          _iTaskMapper.toSyncListSubtaskTblCompanion(response.data.subtasks));
+          _iTaskMapper.toSyncTaskTableCompanion(responseData),
+          _iTaskMapper.toSyncListSubtaskTblCompanion(responseData.subtasks));
     } catch (e, s) {
       logger.e('add task error: \n $e \n $s');
     }
@@ -428,8 +430,9 @@ class TaskRepo with DioExceptionMapper implements ITaskRepo {
       logger.i('add subtask request: \n $request');
       final response = await _taskRemoteSource.addSubTask(
           token, taskTblData.remoteId, request);
+      final responseData = BaseResponseMapper.requireData(response);
       await _taskLocalSource.updateSyncSubtasksFromSubtasksTblCompanion(
-          _iTaskMapper.toSyncListSubtaskTblCompanion(response.data));
+          _iTaskMapper.toSyncListSubtaskTblCompanion(responseData));
     } catch (e, s) {
       logger.e('add subtasks error: \n $e \n $s');
     }
@@ -450,9 +453,10 @@ class TaskRepo with DioExceptionMapper implements ITaskRepo {
       logger.i('add category request: \n $request');
 
       final categoryRes = await _taskRemoteSource.addCategory(token, request);
+      final categoryResData = BaseResponseMapper.requireData(categoryRes);
       logger.i('add category response: \n $categoryRes');
       await _taskLocalSource.updateSyncAddCategory(
-          categoryRes.data.localId, categoryRes.data.id);
+          categoryResData.localId, categoryResData.id);
     } catch (e, s) {
       logger.e('add subtasks error: \n $e \n $s');
     }
@@ -477,7 +481,8 @@ class TaskRepo with DioExceptionMapper implements ITaskRepo {
       );
       final response = await _taskRemoteSource.updateTask(
           token, taskTblData.remoteId, request);
-      await _taskLocalSource.updateSyncTask(response.data.localId);
+      final responseData = BaseResponseMapper.requireData(response);
+      await _taskLocalSource.updateSyncTask(responseData.localId);
     } catch (e, s) {
       logger.e('update task error: \n $e \n $s');
     }
@@ -497,7 +502,8 @@ class TaskRepo with DioExceptionMapper implements ITaskRepo {
       );
       final response = await _taskRemoteSource.updateTask(
           token, taskTblData.remoteId, request);
-      await _taskLocalSource.updateSyncTask(response.data.localId);
+      final responseData = BaseResponseMapper.requireData(response);
+      await _taskLocalSource.updateSyncTask(responseData.localId);
     } catch (e, s) {
       logger.e('update task error: \n $e \n $s');
     }
@@ -515,7 +521,8 @@ class TaskRepo with DioExceptionMapper implements ITaskRepo {
           localId: taskLocalId, dueDate: taskTblData.dueDate);
       final response = await _taskRemoteSource.updateTask(
           token, taskTblData.remoteId, request);
-      await _taskLocalSource.updateSyncTask(response.data.localId);
+      final responseData = BaseResponseMapper.requireData(response);
+      await _taskLocalSource.updateSyncTask(responseData.localId);
     } catch (e, s) {
       logger.e('update task error: \n $e \n $s');
     }
@@ -537,7 +544,8 @@ class TaskRepo with DioExceptionMapper implements ITaskRepo {
           localId: taskLocalId, categoryId: categoryTblData.remoteId);
       final response = await _taskRemoteSource.updateTask(
           token, taskTblData.remoteId, request);
-      await _taskLocalSource.updateSyncTask(response.data.localId);
+      final responseData = BaseResponseMapper.requireData(response);
+      await _taskLocalSource.updateSyncTask(responseData.localId);
     } catch (e, s) {
       logger.e('update task error: \n $e \n $s');
     }
@@ -555,7 +563,8 @@ class TaskRepo with DioExceptionMapper implements ITaskRepo {
           localId: taskLocalId, hasTime: taskTblData.hasTime);
       final response = await _taskRemoteSource.updateTask(
           token, taskTblData.remoteId, request);
-      await _taskLocalSource.updateSyncTask(response.data.localId);
+      final responseData = BaseResponseMapper.requireData(response);
+      await _taskLocalSource.updateSyncTask(responseData.localId);
     } catch (e, s) {
       logger.e('update task error: \n $e \n $s');
     }
@@ -573,7 +582,8 @@ class TaskRepo with DioExceptionMapper implements ITaskRepo {
           localId: taskLocalId, priority: taskTblData.priority);
       final response = await _taskRemoteSource.updateTask(
           token, taskTblData.remoteId, request);
-      await _taskLocalSource.updateSyncTask(response.data.localId);
+      final responseData = BaseResponseMapper.requireData(response);
+      await _taskLocalSource.updateSyncTask(responseData.localId);
     } catch (e, s) {
       logger.e('update task error: \n $e \n $s');
     }
@@ -595,7 +605,8 @@ class TaskRepo with DioExceptionMapper implements ITaskRepo {
           localId: taskLocalId, status: taskTblData.status);
       final response = await _taskRemoteSource.updateTask(
           token, taskTblData.remoteId, request);
-      await _taskLocalSource.updateSyncTask(response.data.localId);
+      final responseData = BaseResponseMapper.requireData(response);
+      await _taskLocalSource.updateSyncTask(responseData.localId);
     } catch (e, s) {
       logger.e('update task error: \n $e \n $s');
     }
@@ -617,7 +628,8 @@ class TaskRepo with DioExceptionMapper implements ITaskRepo {
       ]);
       logger.i('update subtask request: \n $request');
       final response = await _taskRemoteSource.updateSubtask(token, request);
-      await _taskLocalSource.updateSyncSubtasks(response.data.subtasks);
+      final responseData = BaseResponseMapper.requireData(response);
+      await _taskLocalSource.updateSyncSubtasks(responseData.subtasks);
     } catch (e, s) {
       logger.e('update subtask error: \n $e \n $s');
     }
@@ -640,7 +652,8 @@ class TaskRepo with DioExceptionMapper implements ITaskRepo {
               .toList());
       logger.i('update subtask request: \n $request');
       final response = await _taskRemoteSource.updateSubtask(token, request);
-      await _taskLocalSource.updateSyncSubtasks(response.data.subtasks);
+      final responseData = BaseResponseMapper.requireData(response);
+      await _taskLocalSource.updateSyncSubtasks(responseData.subtasks);
     } catch (e, s) {
       logger.e('update subtask error: \n $e \n $s');
     }
@@ -662,7 +675,8 @@ class TaskRepo with DioExceptionMapper implements ITaskRepo {
       ]);
       logger.i('update subtask request: \n $request');
       final response = await _taskRemoteSource.updateSubtask(token, request);
-      await _taskLocalSource.updateSyncSubtasks(response.data.subtasks);
+      final responseData = BaseResponseMapper.requireData(response);
+      await _taskLocalSource.updateSyncSubtasks(responseData.subtasks);
     } catch (e, s) {
       logger.e('update subtask error: \n $e \n $s');
     }
@@ -720,8 +734,9 @@ class TaskRepo with DioExceptionMapper implements ITaskRepo {
       final request = AiReq.generate(text: text, utcOffset: utcOffset);
       final response =
           await _taskRemoteSource.generateTask(token ?? '', request);
+      final responseData = BaseResponseMapper.requireData(response);
       final category = await _taskLocalSource
-          .getCategoryByRemoteId(response.data.categoryId);
+          .getCategoryByRemoteId(responseData.categoryId);
       final user = await _userLocalSource.getUser();
       if (category == null) {
         return const Error(
@@ -732,10 +747,10 @@ class TaskRepo with DioExceptionMapper implements ITaskRepo {
             Failure(message: 'User not found when generate task by ai'));
       }
       logger.i('generate task local');
-      final aiTask = _iTaskMapper.toAiTaskEntity(response.data);
+      final aiTask = _iTaskMapper.toAiTaskEntity(responseData);
       int localId = await _taskLocalSource.insertTaskFromAi(
           _iTaskMapper.fromAiGenerateTaskData(
-              response.data, user.localId, category.localId));
+              responseData, user.localId, category.localId));
       if (localId == -1) {
         return const Error(Failure(message: 'Insert task error'));
       }
@@ -769,7 +784,8 @@ class TaskRepo with DioExceptionMapper implements ITaskRepo {
       final request = AiReq.question(
           text: question, utcOffset: utcOffset, language: language);
       final response = await _taskRemoteSource.getAnswer(token ?? '', request);
-      return Success(response.data.answer);
+      final responseData = BaseResponseMapper.requireData(response);
+      return Success(responseData.answer);
     } on Failure catch (e) {
       return Error(e);
     } catch (e, s) {

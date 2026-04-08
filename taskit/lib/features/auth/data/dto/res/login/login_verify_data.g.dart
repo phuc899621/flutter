@@ -13,7 +13,4 @@ _LoginVerifyData _$LoginVerifyDataFromJson(Map<String, dynamic> json) =>
     );
 
 Map<String, dynamic> _$LoginVerifyDataToJson(_LoginVerifyData instance) =>
-    <String, dynamic>{
-      'name': instance.name,
-      'email': instance.email,
-    };
+    <String, dynamic>{'name': instance.name, 'email': instance.email};

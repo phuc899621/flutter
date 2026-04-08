@@ -7,22 +7,22 @@ part of 'add_task_data.dart';
 // **************************************************************************
 
 _AddTaskData _$AddTaskDataFromJson(Map<String, dynamic> json) => _AddTaskData(
-      id: json['_id'] as String,
-      localId: (json['localId'] as num).toInt(),
-      title: json['title'] as String,
-      description: json['description'] as String,
-      categoryId: json['categoryId'] as String,
-      priority: json['priority'] as String,
-      userId: json['userId'] as String,
-      status: json['status'] as String,
-      dueDate: json['dueDate'] == null
-          ? null
-          : DateTime.parse(json['dueDate'] as String),
-      hasTime: json['hasTime'] as bool,
-      subtasks: (json['subtasks'] as List<dynamic>)
-          .map((e) => AddSubtaskData.fromJson(e as Map<String, dynamic>))
-          .toList(),
-    );
+  id: json['_id'] as String,
+  localId: (json['localId'] as num).toInt(),
+  title: json['title'] as String,
+  description: json['description'] as String,
+  categoryId: json['categoryId'] as String,
+  priority: json['priority'] as String,
+  userId: json['userId'] as String,
+  status: json['status'] as String,
+  dueDate: json['dueDate'] == null
+      ? null
+      : DateTime.parse(json['dueDate'] as String),
+  hasTime: json['hasTime'] as bool,
+  subtasks: (json['subtasks'] as List<dynamic>)
+      .map((e) => AddSubtaskData.fromJson(e as Map<String, dynamic>))
+      .toList(),
+);
 
 Map<String, dynamic> _$AddTaskDataToJson(_AddTaskData instance) =>
     <String, dynamic>{

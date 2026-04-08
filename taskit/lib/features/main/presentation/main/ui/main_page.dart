@@ -3,10 +3,11 @@ import 'package:flutter/services.dart';
 import 'package:flutter_expandable_fab/flutter_expandable_fab.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:taskit/config/routers/router_provider.dart';
 import 'package:taskit/features/main/presentation/main/controller/main_controller.dart';
 import 'package:taskit/shared/extension/color.dart';
 import 'package:taskit/shared/log/logger_provider.dart';
+
+import '../../../../../shared/config/routers/router_provider.dart';
 
 class MainPage extends ConsumerStatefulWidget {
   final StatefulNavigationShell navigationShell;

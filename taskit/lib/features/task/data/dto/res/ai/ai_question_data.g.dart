@@ -7,11 +7,7 @@ part of 'ai_question_data.dart';
 // **************************************************************************
 
 _AiQuestionData _$AiQuestionDataFromJson(Map<String, dynamic> json) =>
-    _AiQuestionData(
-      answer: json['answer'] as String,
-    );
+    _AiQuestionData(answer: json['answer'] as String);
 
 Map<String, dynamic> _$AiQuestionDataToJson(_AiQuestionData instance) =>
-    <String, dynamic>{
-      'answer': instance.answer,
-    };
+    <String, dynamic>{'answer': instance.answer};

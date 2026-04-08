@@ -6,7 +6,7 @@ import 'package:taskit/shared/extension/color.dart';
 import 'package:taskit/shared/extension/date_time.dart';
 import 'package:taskit/shared/utils/task_entity_mapper.dart';
 
-import '../../../../../../config/app/app_color.dart';
+import '../../../../../../shared/config/app/app_color.dart';
 import '../../../../../task/domain/entities/task_priority_enum.dart';
 import '../../../../../task/domain/entities/task_status_enum.dart';
 

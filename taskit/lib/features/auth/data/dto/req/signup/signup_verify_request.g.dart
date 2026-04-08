@@ -13,8 +13,5 @@ _SignupVerifyRequest _$SignupVerifyRequestFromJson(Map<String, dynamic> json) =>
     );
 
 Map<String, dynamic> _$SignupVerifyRequestToJson(
-        _SignupVerifyRequest instance) =>
-    <String, dynamic>{
-      'email': instance.email,
-      'otp': instance.otp,
-    };
+  _SignupVerifyRequest instance,
+) => <String, dynamic>{'email': instance.email, 'otp': instance.otp};

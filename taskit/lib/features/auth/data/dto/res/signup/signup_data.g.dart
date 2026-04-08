@@ -6,11 +6,8 @@ part of 'signup_data.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_SignupData _$SignupDataFromJson(Map<String, dynamic> json) => _SignupData(
-      email: json['email'] as String,
-    );
+_SignupData _$SignupDataFromJson(Map<String, dynamic> json) =>
+    _SignupData(email: json['email'] as String);
 
 Map<String, dynamic> _$SignupDataToJson(_SignupData instance) =>
-    <String, dynamic>{
-      'email': instance.email,
-    };
+    <String, dynamic>{'email': instance.email};

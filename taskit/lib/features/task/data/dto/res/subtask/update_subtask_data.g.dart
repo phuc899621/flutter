@@ -14,6 +14,4 @@ _UpdateSubtaskData _$UpdateSubtaskDataFromJson(Map<String, dynamic> json) =>
     );
 
 Map<String, dynamic> _$UpdateSubtaskDataToJson(_UpdateSubtaskData instance) =>
-    <String, dynamic>{
-      'subtasks': instance.subtasks,
-    };
+    <String, dynamic>{'subtasks': instance.subtasks};

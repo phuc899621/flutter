@@ -5,11 +5,12 @@ import 'package:taskit/features/auth/data/dto/res/forgot_pass/verify.dart';
 import 'package:taskit/features/auth/data/repo/iauth_repo.dart';
 import 'package:taskit/features/auth/domain/mapper/iauth_mapper.dart';
 import 'package:taskit/shared/data/dto/response/base_response.dart';
-import 'package:taskit/shared/domain/mapper/ibase_model_mapper.dart';
+import 'package:taskit/shared/domain/mapper/base_model_mapper.dart';
 import 'package:taskit/shared/exception/failure.dart';
 
-import '../../../shared/data/dto/response/base_response_data.dart';
+import '../../../shared/data/dto/response/base_data.dart';
 import '../../../shared/domain/model/base_model.dart';
+import '../../../shared/helpers/base_response_mapper.dart';
 import '../../../shared/log/logger_provider.dart';
 import '../data/dto/req/forgot_pass/forgot_pass.dart';
 import '../data/dto/req/forgot_pass/forgot_pass_verify.dart';
@@ -25,7 +26,7 @@ final authServiceProvider = Provider<IAuthService>((ref) {
   return AuthService(authRepo);
 });
 
-class AuthService implements IAuthEntityMapper, IAuthService, IBaseModelMapper {
+class AuthService implements IAuthEntityMapper, IAuthService, BaseModelMapper {
   final IAuthRepo _iAuthRepo;
 
   AuthService(this._iAuthRepo);
@@ -213,15 +214,16 @@ class AuthService implements IAuthEntityMapper, IAuthService, IBaseModelMapper {
   }
 
   @override
-  BaseModel mapToBaseModel(BaseResponse<BaseData> data) {
+  BaseModel mapToBaseModel(BaseResponse<BaseData?> data) {
     return const BaseModel();
   }
 
   @override
   ForgotPassVerifyEntity mapToForgotPassVerifyEntity(
       BaseResponse<ForgotPassData> data) {
+    final responseData = BaseResponseMapper.requireData(data);
     return ForgotPassVerifyEntity(
-      resetToken: data.data.resetToken,
+      resetToken: responseData.resetToken,
     );
   }
 }

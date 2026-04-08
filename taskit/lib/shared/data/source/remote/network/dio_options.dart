@@ -1,11 +1,12 @@
 import 'package:dio/dio.dart';
-import 'package:taskit/config/app/app.dart';
+
+import '../../../../config/app/app.dart';
 
 BaseOptions buildBaseOptions(){
   return BaseOptions(
     baseUrl: AppConfigs.baseUrl,
-    connectTimeout: const Duration(seconds: 100),
-    receiveTimeout: const Duration(seconds: 100),
+    connectTimeout: const Duration(seconds: 500),
+    receiveTimeout: const Duration(seconds: 500),
     sendTimeout: const Duration(seconds: 100),
     contentType:Headers.jsonContentType
   );

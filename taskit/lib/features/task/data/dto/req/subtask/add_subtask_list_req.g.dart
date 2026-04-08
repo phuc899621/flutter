@@ -14,6 +14,4 @@ _AddSubtaskListReq _$AddSubtaskListReqFromJson(Map<String, dynamic> json) =>
     );
 
 Map<String, dynamic> _$AddSubtaskListReqToJson(_AddSubtaskListReq instance) =>
-    <String, dynamic>{
-      'subtasks': instance.subtasks,
-    };
+    <String, dynamic>{'subtasks': instance.subtasks};

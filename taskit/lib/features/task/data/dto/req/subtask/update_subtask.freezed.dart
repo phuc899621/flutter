@@ -1,6 +1,5 @@
-// dart format width=80
-// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// coverage:ignore-file
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
@@ -12,65 +11,77 @@ part of 'update_subtask.dart';
 
 // dart format off
 T _$identity<T>(T value) => value;
-UpdateSubtaskReq _$UpdateSubtaskReqFromJson(Map<String, dynamic> json) {
-  switch (json['runtimeType']) {
-    case 'all':
-      return _UpdateSubtaskAllReq.fromJson(json);
-    case 'statusOnly':
-      return _UpdateSubtaskStatusReq.fromJson(json);
-    case 'titleOnly':
-      return _UpdateSubtaskTitleReq.fromJson(json);
-
-    default:
-      throw CheckedFromJsonException(json, 'runtimeType', 'UpdateSubtaskReq',
-          'Invalid union type "${json['runtimeType']}"!');
-  }
+UpdateSubtaskReq _$UpdateSubtaskReqFromJson(
+  Map<String, dynamic> json
+) {
+        switch (json['runtimeType']) {
+                  case 'all':
+          return _UpdateSubtaskAllReq.fromJson(
+            json
+          );
+                case 'statusOnly':
+          return _UpdateSubtaskStatusReq.fromJson(
+            json
+          );
+                case 'titleOnly':
+          return _UpdateSubtaskTitleReq.fromJson(
+            json
+          );
+        
+          default:
+            throw CheckedFromJsonException(
+  json,
+  'runtimeType',
+  'UpdateSubtaskReq',
+  'Invalid union type "${json['runtimeType']}"!'
+);
+        }
+      
 }
 
 /// @nodoc
 mixin _$UpdateSubtaskReq {
-  String get id;
-  int get localId;
 
-  /// Create a copy of UpdateSubtaskReq
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @pragma('vm:prefer-inline')
-  $UpdateSubtaskReqCopyWith<UpdateSubtaskReq> get copyWith =>
-      _$UpdateSubtaskReqCopyWithImpl<UpdateSubtaskReq>(
-          this as UpdateSubtaskReq, _$identity);
+ String get id; int get localId;
+/// Create a copy of UpdateSubtaskReq
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$UpdateSubtaskReqCopyWith<UpdateSubtaskReq> get copyWith => _$UpdateSubtaskReqCopyWithImpl<UpdateSubtaskReq>(this as UpdateSubtaskReq, _$identity);
 
   /// Serializes this UpdateSubtaskReq to a JSON map.
   Map<String, dynamic> toJson();
 
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is UpdateSubtaskReq &&
-            (identical(other.id, id) || other.id == id) &&
-            (identical(other.localId, localId) || other.localId == localId));
-  }
 
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  int get hashCode => Object.hash(runtimeType, id, localId);
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is UpdateSubtaskReq&&(identical(other.id, id) || other.id == id)&&(identical(other.localId, localId) || other.localId == localId));
+}
 
-  @override
-  String toString() {
-    return 'UpdateSubtaskReq(id: $id, localId: $localId)';
-  }
+@JsonKey(includeFromJson: false, includeToJson: false)
+@override
+int get hashCode => Object.hash(runtimeType,id,localId);
+
+@override
+String toString() {
+  return 'UpdateSubtaskReq(id: $id, localId: $localId)';
+}
+
+
 }
 
 /// @nodoc
-abstract mixin class $UpdateSubtaskReqCopyWith<$Res> {
-  factory $UpdateSubtaskReqCopyWith(
-          UpdateSubtaskReq value, $Res Function(UpdateSubtaskReq) _then) =
-      _$UpdateSubtaskReqCopyWithImpl;
-  @useResult
-  $Res call({String id, int localId});
-}
+abstract mixin class $UpdateSubtaskReqCopyWith<$Res>  {
+  factory $UpdateSubtaskReqCopyWith(UpdateSubtaskReq value, $Res Function(UpdateSubtaskReq) _then) = _$UpdateSubtaskReqCopyWithImpl;
+@useResult
+$Res call({
+ String id, int localId
+});
 
+
+
+
+}
 /// @nodoc
 class _$UpdateSubtaskReqCopyWithImpl<$Res>
     implements $UpdateSubtaskReqCopyWith<$Res> {
@@ -79,99 +90,211 @@ class _$UpdateSubtaskReqCopyWithImpl<$Res>
   final UpdateSubtaskReq _self;
   final $Res Function(UpdateSubtaskReq) _then;
 
-  /// Create a copy of UpdateSubtaskReq
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? id = null,
-    Object? localId = null,
-  }) {
-    return _then(_self.copyWith(
-      id: null == id
-          ? _self.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      localId: null == localId
-          ? _self.localId
-          : localId // ignore: cast_nullable_to_non_nullable
-              as int,
-    ));
-  }
+/// Create a copy of UpdateSubtaskReq
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? localId = null,}) {
+  return _then(_self.copyWith(
+id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
+as String,localId: null == localId ? _self.localId : localId // ignore: cast_nullable_to_non_nullable
+as int,
+  ));
+}
+
+}
+
+
+/// Adds pattern-matching-related methods to [UpdateSubtaskReq].
+extension UpdateSubtaskReqPatterns on UpdateSubtaskReq {
+/// A variant of `map` that fallback to returning `orElse`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _UpdateSubtaskAllReq value)?  all,TResult Function( _UpdateSubtaskStatusReq value)?  statusOnly,TResult Function( _UpdateSubtaskTitleReq value)?  titleOnly,required TResult orElse(),}){
+final _that = this;
+switch (_that) {
+case _UpdateSubtaskAllReq() when all != null:
+return all(_that);case _UpdateSubtaskStatusReq() when statusOnly != null:
+return statusOnly(_that);case _UpdateSubtaskTitleReq() when titleOnly != null:
+return titleOnly(_that);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// Callbacks receives the raw object, upcasted.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case final Subclass2 value:
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _UpdateSubtaskAllReq value)  all,required TResult Function( _UpdateSubtaskStatusReq value)  statusOnly,required TResult Function( _UpdateSubtaskTitleReq value)  titleOnly,}){
+final _that = this;
+switch (_that) {
+case _UpdateSubtaskAllReq():
+return all(_that);case _UpdateSubtaskStatusReq():
+return statusOnly(_that);case _UpdateSubtaskTitleReq():
+return titleOnly(_that);}
+}
+/// A variant of `map` that fallback to returning `null`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _UpdateSubtaskAllReq value)?  all,TResult? Function( _UpdateSubtaskStatusReq value)?  statusOnly,TResult? Function( _UpdateSubtaskTitleReq value)?  titleOnly,}){
+final _that = this;
+switch (_that) {
+case _UpdateSubtaskAllReq() when all != null:
+return all(_that);case _UpdateSubtaskStatusReq() when statusOnly != null:
+return statusOnly(_that);case _UpdateSubtaskTitleReq() when titleOnly != null:
+return titleOnly(_that);case _:
+  return null;
+
+}
+}
+/// A variant of `when` that fallback to an `orElse` callback.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( String id,  bool isCompleted,  int localId,  String title)?  all,TResult Function( String id,  bool isCompleted,  int localId)?  statusOnly,TResult Function( String id,  int localId,  String title)?  titleOnly,required TResult orElse(),}) {final _that = this;
+switch (_that) {
+case _UpdateSubtaskAllReq() when all != null:
+return all(_that.id,_that.isCompleted,_that.localId,_that.title);case _UpdateSubtaskStatusReq() when statusOnly != null:
+return statusOnly(_that.id,_that.isCompleted,_that.localId);case _UpdateSubtaskTitleReq() when titleOnly != null:
+return titleOnly(_that.id,_that.localId,_that.title);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// As opposed to `map`, this offers destructuring.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case Subclass2(:final field2):
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( String id,  bool isCompleted,  int localId,  String title)  all,required TResult Function( String id,  bool isCompleted,  int localId)  statusOnly,required TResult Function( String id,  int localId,  String title)  titleOnly,}) {final _that = this;
+switch (_that) {
+case _UpdateSubtaskAllReq():
+return all(_that.id,_that.isCompleted,_that.localId,_that.title);case _UpdateSubtaskStatusReq():
+return statusOnly(_that.id,_that.isCompleted,_that.localId);case _UpdateSubtaskTitleReq():
+return titleOnly(_that.id,_that.localId,_that.title);}
+}
+/// A variant of `when` that fallback to returning `null`
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( String id,  bool isCompleted,  int localId,  String title)?  all,TResult? Function( String id,  bool isCompleted,  int localId)?  statusOnly,TResult? Function( String id,  int localId,  String title)?  titleOnly,}) {final _that = this;
+switch (_that) {
+case _UpdateSubtaskAllReq() when all != null:
+return all(_that.id,_that.isCompleted,_that.localId,_that.title);case _UpdateSubtaskStatusReq() when statusOnly != null:
+return statusOnly(_that.id,_that.isCompleted,_that.localId);case _UpdateSubtaskTitleReq() when titleOnly != null:
+return titleOnly(_that.id,_that.localId,_that.title);case _:
+  return null;
+
+}
+}
+
 }
 
 /// @nodoc
 @JsonSerializable()
+
 class _UpdateSubtaskAllReq implements UpdateSubtaskReq {
-  const _UpdateSubtaskAllReq(
-      {required this.id,
-      required this.isCompleted,
-      required this.localId,
-      required this.title,
-      final String? $type})
-      : $type = $type ?? 'all';
-  factory _UpdateSubtaskAllReq.fromJson(Map<String, dynamic> json) =>
-      _$UpdateSubtaskAllReqFromJson(json);
+  const _UpdateSubtaskAllReq({required this.id, required this.isCompleted, required this.localId, required this.title, final  String? $type}): $type = $type ?? 'all';
+  factory _UpdateSubtaskAllReq.fromJson(Map<String, dynamic> json) => _$UpdateSubtaskAllReqFromJson(json);
 
-  @override
-  final String id;
-  final bool isCompleted;
-  @override
-  final int localId;
-  final String title;
+@override final  String id;
+ final  bool isCompleted;
+@override final  int localId;
+ final  String title;
 
-  @JsonKey(name: 'runtimeType')
-  final String $type;
+@JsonKey(name: 'runtimeType')
+final String $type;
 
-  /// Create a copy of UpdateSubtaskReq
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @pragma('vm:prefer-inline')
-  _$UpdateSubtaskAllReqCopyWith<_UpdateSubtaskAllReq> get copyWith =>
-      __$UpdateSubtaskAllReqCopyWithImpl<_UpdateSubtaskAllReq>(
-          this, _$identity);
 
-  @override
-  Map<String, dynamic> toJson() {
-    return _$UpdateSubtaskAllReqToJson(
-      this,
-    );
-  }
+/// Create a copy of UpdateSubtaskReq
+/// with the given fields replaced by the non-null parameter values.
+@override @JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$UpdateSubtaskAllReqCopyWith<_UpdateSubtaskAllReq> get copyWith => __$UpdateSubtaskAllReqCopyWithImpl<_UpdateSubtaskAllReq>(this, _$identity);
 
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _UpdateSubtaskAllReq &&
-            (identical(other.id, id) || other.id == id) &&
-            (identical(other.isCompleted, isCompleted) ||
-                other.isCompleted == isCompleted) &&
-            (identical(other.localId, localId) || other.localId == localId) &&
-            (identical(other.title, title) || other.title == title));
-  }
+@override
+Map<String, dynamic> toJson() {
+  return _$UpdateSubtaskAllReqToJson(this, );
+}
 
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  int get hashCode => Object.hash(runtimeType, id, isCompleted, localId, title);
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _UpdateSubtaskAllReq&&(identical(other.id, id) || other.id == id)&&(identical(other.isCompleted, isCompleted) || other.isCompleted == isCompleted)&&(identical(other.localId, localId) || other.localId == localId)&&(identical(other.title, title) || other.title == title));
+}
 
-  @override
-  String toString() {
-    return 'UpdateSubtaskReq.all(id: $id, isCompleted: $isCompleted, localId: $localId, title: $title)';
-  }
+@JsonKey(includeFromJson: false, includeToJson: false)
+@override
+int get hashCode => Object.hash(runtimeType,id,isCompleted,localId,title);
+
+@override
+String toString() {
+  return 'UpdateSubtaskReq.all(id: $id, isCompleted: $isCompleted, localId: $localId, title: $title)';
+}
+
+
 }
 
 /// @nodoc
-abstract mixin class _$UpdateSubtaskAllReqCopyWith<$Res>
-    implements $UpdateSubtaskReqCopyWith<$Res> {
-  factory _$UpdateSubtaskAllReqCopyWith(_UpdateSubtaskAllReq value,
-          $Res Function(_UpdateSubtaskAllReq) _then) =
-      __$UpdateSubtaskAllReqCopyWithImpl;
-  @override
-  @useResult
-  $Res call({String id, bool isCompleted, int localId, String title});
-}
+abstract mixin class _$UpdateSubtaskAllReqCopyWith<$Res> implements $UpdateSubtaskReqCopyWith<$Res> {
+  factory _$UpdateSubtaskAllReqCopyWith(_UpdateSubtaskAllReq value, $Res Function(_UpdateSubtaskAllReq) _then) = __$UpdateSubtaskAllReqCopyWithImpl;
+@override @useResult
+$Res call({
+ String id, bool isCompleted, int localId, String title
+});
 
+
+
+
+}
 /// @nodoc
 class __$UpdateSubtaskAllReqCopyWithImpl<$Res>
     implements _$UpdateSubtaskAllReqCopyWith<$Res> {
@@ -180,106 +303,76 @@ class __$UpdateSubtaskAllReqCopyWithImpl<$Res>
   final _UpdateSubtaskAllReq _self;
   final $Res Function(_UpdateSubtaskAllReq) _then;
 
-  /// Create a copy of UpdateSubtaskReq
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $Res call({
-    Object? id = null,
-    Object? isCompleted = null,
-    Object? localId = null,
-    Object? title = null,
-  }) {
-    return _then(_UpdateSubtaskAllReq(
-      id: null == id
-          ? _self.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      isCompleted: null == isCompleted
-          ? _self.isCompleted
-          : isCompleted // ignore: cast_nullable_to_non_nullable
-              as bool,
-      localId: null == localId
-          ? _self.localId
-          : localId // ignore: cast_nullable_to_non_nullable
-              as int,
-      title: null == title
-          ? _self.title
-          : title // ignore: cast_nullable_to_non_nullable
-              as String,
-    ));
-  }
+/// Create a copy of UpdateSubtaskReq
+/// with the given fields replaced by the non-null parameter values.
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? isCompleted = null,Object? localId = null,Object? title = null,}) {
+  return _then(_UpdateSubtaskAllReq(
+id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
+as String,isCompleted: null == isCompleted ? _self.isCompleted : isCompleted // ignore: cast_nullable_to_non_nullable
+as bool,localId: null == localId ? _self.localId : localId // ignore: cast_nullable_to_non_nullable
+as int,title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
+as String,
+  ));
+}
+
+
 }
 
 /// @nodoc
 @JsonSerializable()
+
 class _UpdateSubtaskStatusReq implements UpdateSubtaskReq {
-  const _UpdateSubtaskStatusReq(
-      {required this.id,
-      required this.isCompleted,
-      required this.localId,
-      final String? $type})
-      : $type = $type ?? 'statusOnly';
-  factory _UpdateSubtaskStatusReq.fromJson(Map<String, dynamic> json) =>
-      _$UpdateSubtaskStatusReqFromJson(json);
+  const _UpdateSubtaskStatusReq({required this.id, required this.isCompleted, required this.localId, final  String? $type}): $type = $type ?? 'statusOnly';
+  factory _UpdateSubtaskStatusReq.fromJson(Map<String, dynamic> json) => _$UpdateSubtaskStatusReqFromJson(json);
 
-  @override
-  final String id;
-  final bool isCompleted;
-  @override
-  final int localId;
+@override final  String id;
+ final  bool isCompleted;
+@override final  int localId;
 
-  @JsonKey(name: 'runtimeType')
-  final String $type;
+@JsonKey(name: 'runtimeType')
+final String $type;
 
-  /// Create a copy of UpdateSubtaskReq
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @pragma('vm:prefer-inline')
-  _$UpdateSubtaskStatusReqCopyWith<_UpdateSubtaskStatusReq> get copyWith =>
-      __$UpdateSubtaskStatusReqCopyWithImpl<_UpdateSubtaskStatusReq>(
-          this, _$identity);
 
-  @override
-  Map<String, dynamic> toJson() {
-    return _$UpdateSubtaskStatusReqToJson(
-      this,
-    );
-  }
+/// Create a copy of UpdateSubtaskReq
+/// with the given fields replaced by the non-null parameter values.
+@override @JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$UpdateSubtaskStatusReqCopyWith<_UpdateSubtaskStatusReq> get copyWith => __$UpdateSubtaskStatusReqCopyWithImpl<_UpdateSubtaskStatusReq>(this, _$identity);
 
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _UpdateSubtaskStatusReq &&
-            (identical(other.id, id) || other.id == id) &&
-            (identical(other.isCompleted, isCompleted) ||
-                other.isCompleted == isCompleted) &&
-            (identical(other.localId, localId) || other.localId == localId));
-  }
+@override
+Map<String, dynamic> toJson() {
+  return _$UpdateSubtaskStatusReqToJson(this, );
+}
 
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  int get hashCode => Object.hash(runtimeType, id, isCompleted, localId);
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _UpdateSubtaskStatusReq&&(identical(other.id, id) || other.id == id)&&(identical(other.isCompleted, isCompleted) || other.isCompleted == isCompleted)&&(identical(other.localId, localId) || other.localId == localId));
+}
 
-  @override
-  String toString() {
-    return 'UpdateSubtaskReq.statusOnly(id: $id, isCompleted: $isCompleted, localId: $localId)';
-  }
+@JsonKey(includeFromJson: false, includeToJson: false)
+@override
+int get hashCode => Object.hash(runtimeType,id,isCompleted,localId);
+
+@override
+String toString() {
+  return 'UpdateSubtaskReq.statusOnly(id: $id, isCompleted: $isCompleted, localId: $localId)';
+}
+
+
 }
 
 /// @nodoc
-abstract mixin class _$UpdateSubtaskStatusReqCopyWith<$Res>
-    implements $UpdateSubtaskReqCopyWith<$Res> {
-  factory _$UpdateSubtaskStatusReqCopyWith(_UpdateSubtaskStatusReq value,
-          $Res Function(_UpdateSubtaskStatusReq) _then) =
-      __$UpdateSubtaskStatusReqCopyWithImpl;
-  @override
-  @useResult
-  $Res call({String id, bool isCompleted, int localId});
-}
+abstract mixin class _$UpdateSubtaskStatusReqCopyWith<$Res> implements $UpdateSubtaskReqCopyWith<$Res> {
+  factory _$UpdateSubtaskStatusReqCopyWith(_UpdateSubtaskStatusReq value, $Res Function(_UpdateSubtaskStatusReq) _then) = __$UpdateSubtaskStatusReqCopyWithImpl;
+@override @useResult
+$Res call({
+ String id, bool isCompleted, int localId
+});
 
+
+
+
+}
 /// @nodoc
 class __$UpdateSubtaskStatusReqCopyWithImpl<$Res>
     implements _$UpdateSubtaskStatusReqCopyWith<$Res> {
@@ -288,100 +381,75 @@ class __$UpdateSubtaskStatusReqCopyWithImpl<$Res>
   final _UpdateSubtaskStatusReq _self;
   final $Res Function(_UpdateSubtaskStatusReq) _then;
 
-  /// Create a copy of UpdateSubtaskReq
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $Res call({
-    Object? id = null,
-    Object? isCompleted = null,
-    Object? localId = null,
-  }) {
-    return _then(_UpdateSubtaskStatusReq(
-      id: null == id
-          ? _self.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      isCompleted: null == isCompleted
-          ? _self.isCompleted
-          : isCompleted // ignore: cast_nullable_to_non_nullable
-              as bool,
-      localId: null == localId
-          ? _self.localId
-          : localId // ignore: cast_nullable_to_non_nullable
-              as int,
-    ));
-  }
+/// Create a copy of UpdateSubtaskReq
+/// with the given fields replaced by the non-null parameter values.
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? isCompleted = null,Object? localId = null,}) {
+  return _then(_UpdateSubtaskStatusReq(
+id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
+as String,isCompleted: null == isCompleted ? _self.isCompleted : isCompleted // ignore: cast_nullable_to_non_nullable
+as bool,localId: null == localId ? _self.localId : localId // ignore: cast_nullable_to_non_nullable
+as int,
+  ));
+}
+
+
 }
 
 /// @nodoc
 @JsonSerializable()
+
 class _UpdateSubtaskTitleReq implements UpdateSubtaskReq {
-  const _UpdateSubtaskTitleReq(
-      {required this.id,
-      required this.localId,
-      required this.title,
-      final String? $type})
-      : $type = $type ?? 'titleOnly';
-  factory _UpdateSubtaskTitleReq.fromJson(Map<String, dynamic> json) =>
-      _$UpdateSubtaskTitleReqFromJson(json);
+  const _UpdateSubtaskTitleReq({required this.id, required this.localId, required this.title, final  String? $type}): $type = $type ?? 'titleOnly';
+  factory _UpdateSubtaskTitleReq.fromJson(Map<String, dynamic> json) => _$UpdateSubtaskTitleReqFromJson(json);
 
-  @override
-  final String id;
-  @override
-  final int localId;
-  final String title;
+@override final  String id;
+@override final  int localId;
+ final  String title;
 
-  @JsonKey(name: 'runtimeType')
-  final String $type;
+@JsonKey(name: 'runtimeType')
+final String $type;
 
-  /// Create a copy of UpdateSubtaskReq
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @pragma('vm:prefer-inline')
-  _$UpdateSubtaskTitleReqCopyWith<_UpdateSubtaskTitleReq> get copyWith =>
-      __$UpdateSubtaskTitleReqCopyWithImpl<_UpdateSubtaskTitleReq>(
-          this, _$identity);
 
-  @override
-  Map<String, dynamic> toJson() {
-    return _$UpdateSubtaskTitleReqToJson(
-      this,
-    );
-  }
+/// Create a copy of UpdateSubtaskReq
+/// with the given fields replaced by the non-null parameter values.
+@override @JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$UpdateSubtaskTitleReqCopyWith<_UpdateSubtaskTitleReq> get copyWith => __$UpdateSubtaskTitleReqCopyWithImpl<_UpdateSubtaskTitleReq>(this, _$identity);
 
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _UpdateSubtaskTitleReq &&
-            (identical(other.id, id) || other.id == id) &&
-            (identical(other.localId, localId) || other.localId == localId) &&
-            (identical(other.title, title) || other.title == title));
-  }
+@override
+Map<String, dynamic> toJson() {
+  return _$UpdateSubtaskTitleReqToJson(this, );
+}
 
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  int get hashCode => Object.hash(runtimeType, id, localId, title);
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _UpdateSubtaskTitleReq&&(identical(other.id, id) || other.id == id)&&(identical(other.localId, localId) || other.localId == localId)&&(identical(other.title, title) || other.title == title));
+}
 
-  @override
-  String toString() {
-    return 'UpdateSubtaskReq.titleOnly(id: $id, localId: $localId, title: $title)';
-  }
+@JsonKey(includeFromJson: false, includeToJson: false)
+@override
+int get hashCode => Object.hash(runtimeType,id,localId,title);
+
+@override
+String toString() {
+  return 'UpdateSubtaskReq.titleOnly(id: $id, localId: $localId, title: $title)';
+}
+
+
 }
 
 /// @nodoc
-abstract mixin class _$UpdateSubtaskTitleReqCopyWith<$Res>
-    implements $UpdateSubtaskReqCopyWith<$Res> {
-  factory _$UpdateSubtaskTitleReqCopyWith(_UpdateSubtaskTitleReq value,
-          $Res Function(_UpdateSubtaskTitleReq) _then) =
-      __$UpdateSubtaskTitleReqCopyWithImpl;
-  @override
-  @useResult
-  $Res call({String id, int localId, String title});
-}
+abstract mixin class _$UpdateSubtaskTitleReqCopyWith<$Res> implements $UpdateSubtaskReqCopyWith<$Res> {
+  factory _$UpdateSubtaskTitleReqCopyWith(_UpdateSubtaskTitleReq value, $Res Function(_UpdateSubtaskTitleReq) _then) = __$UpdateSubtaskTitleReqCopyWithImpl;
+@override @useResult
+$Res call({
+ String id, int localId, String title
+});
 
+
+
+
+}
 /// @nodoc
 class __$UpdateSubtaskTitleReqCopyWithImpl<$Res>
     implements _$UpdateSubtaskTitleReqCopyWith<$Res> {
@@ -390,30 +458,18 @@ class __$UpdateSubtaskTitleReqCopyWithImpl<$Res>
   final _UpdateSubtaskTitleReq _self;
   final $Res Function(_UpdateSubtaskTitleReq) _then;
 
-  /// Create a copy of UpdateSubtaskReq
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $Res call({
-    Object? id = null,
-    Object? localId = null,
-    Object? title = null,
-  }) {
-    return _then(_UpdateSubtaskTitleReq(
-      id: null == id
-          ? _self.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      localId: null == localId
-          ? _self.localId
-          : localId // ignore: cast_nullable_to_non_nullable
-              as int,
-      title: null == title
-          ? _self.title
-          : title // ignore: cast_nullable_to_non_nullable
-              as String,
-    ));
-  }
+/// Create a copy of UpdateSubtaskReq
+/// with the given fields replaced by the non-null parameter values.
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? localId = null,Object? title = null,}) {
+  return _then(_UpdateSubtaskTitleReq(
+id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
+as String,localId: null == localId ? _self.localId : localId // ignore: cast_nullable_to_non_nullable
+as int,title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
+as String,
+  ));
+}
+
+
 }
 
 // dart format on

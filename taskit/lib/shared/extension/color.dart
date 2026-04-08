@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../../config/app/app_color.dart';
 import '../../features/task/domain/entities/task_priority_enum.dart';
 import '../../features/task/domain/entities/task_status_enum.dart';
+import '../config/app/app_color.dart';
 
 extension TaskPriorityColor on TaskPriority {
   Color toColor() {

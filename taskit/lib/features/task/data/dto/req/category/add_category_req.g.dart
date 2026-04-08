@@ -13,7 +13,4 @@ _AddCategoryReq _$AddCategoryReqFromJson(Map<String, dynamic> json) =>
     );
 
 Map<String, dynamic> _$AddCategoryReqToJson(_AddCategoryReq instance) =>
-    <String, dynamic>{
-      'name': instance.name,
-      'localId': instance.localId,
-    };
+    <String, dynamic>{'name': instance.name, 'localId': instance.localId};

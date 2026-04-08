@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:taskit/config/app/text_theme.dart';
+import 'package:taskit/shared/config/app/text_theme.dart';
 
 import 'app_color.dart';
 

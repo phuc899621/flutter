@@ -7,15 +7,12 @@ part of 'forgot_pass_verify.dart';
 // **************************************************************************
 
 _ForgotPassVerifyRequest _$ForgotPassVerifyRequestFromJson(
-        Map<String, dynamic> json) =>
-    _ForgotPassVerifyRequest(
-      email: json['email'] as String,
-      otp: json['otp'] as String,
-    );
+  Map<String, dynamic> json,
+) => _ForgotPassVerifyRequest(
+  email: json['email'] as String,
+  otp: json['otp'] as String,
+);
 
 Map<String, dynamic> _$ForgotPassVerifyRequestToJson(
-        _ForgotPassVerifyRequest instance) =>
-    <String, dynamic>{
-      'email': instance.email,
-      'otp': instance.otp,
-    };
+  _ForgotPassVerifyRequest instance,
+) => <String, dynamic>{'email': instance.email, 'otp': instance.otp};

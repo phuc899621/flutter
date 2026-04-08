@@ -7,8 +7,8 @@ import 'package:taskit/features/task/data/dto/res/subtask/add_subtask_data.dart'
 import 'package:taskit/features/task/data/dto/res/subtask/update_subtask_data.dart';
 import 'package:taskit/shared/data/source/remote/network/network_service.dart';
 
+import '../../../../../shared/data/dto/response/base_data.dart';
 import '../../../../../shared/data/dto/response/base_response.dart';
-import '../../../../../shared/data/dto/response/base_response_data.dart';
 import '../../dto/req/subtask/add_subtask_list_req.dart';
 
 part 'subtask_api.g.dart';

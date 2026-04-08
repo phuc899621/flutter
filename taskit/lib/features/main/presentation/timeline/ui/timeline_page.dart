@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_expandable_fab/flutter_expandable_fab.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:taskit/config/app/app_color.dart';
 import 'package:taskit/features/main/presentation/timeline/controller/timeline_controller.dart';
 import 'package:taskit/shared/extension/date_time.dart';
 
-import '../../../../../config/routers/router_provider.dart';
+import '../../../../../shared/config/app/app_color.dart';
+import '../../../../../shared/config/routers/router_provider.dart';
 import '../../home/ui/widget/task_item.dart';
 import '../../list/controller/list_controller.dart';
 
@@ -78,7 +78,6 @@ class _TimeLinePageState extends ConsumerState<TimelinePage> {
 //region MAIN
   @override
   Widget build(BuildContext context) {
-    final text = Theme.of(context).textTheme;
     final color = Theme.of(context).colorScheme;
     final controller = ref.read(timelineControllerProvider.notifier);
     final state = ref.watch(timelineControllerProvider);

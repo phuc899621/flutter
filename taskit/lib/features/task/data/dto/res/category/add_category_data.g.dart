@@ -13,7 +13,4 @@ _AddCategoryData _$AddCategoryDataFromJson(Map<String, dynamic> json) =>
     );
 
 Map<String, dynamic> _$AddCategoryDataToJson(_AddCategoryData instance) =>
-    <String, dynamic>{
-      'localId': instance.localId,
-      'id': instance.id,
-    };
+    <String, dynamic>{'localId': instance.localId, 'id': instance.id};

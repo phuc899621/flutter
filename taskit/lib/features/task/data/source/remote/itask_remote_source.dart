@@ -10,7 +10,7 @@ import 'package:taskit/features/task/data/dto/res/task/add_task_data.dart';
 import 'package:taskit/features/task/data/dto/res/task/update_task_data.dart';
 import 'package:taskit/shared/data/dto/response/base_response.dart';
 
-import '../../../../../shared/data/dto/response/base_response_data.dart';
+import '../../../../../shared/data/dto/response/base_data.dart';
 import '../../dto/req/add_task/add_task.dart';
 import '../../dto/req/ai/ai_req.dart';
 import '../../dto/res/ai/ai_question_data.dart';

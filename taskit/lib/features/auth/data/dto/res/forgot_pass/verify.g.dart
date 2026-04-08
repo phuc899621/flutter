@@ -7,13 +7,9 @@ part of 'verify.dart';
 // **************************************************************************
 
 _ForgotPassVerifyData _$ForgotPassVerifyDataFromJson(
-        Map<String, dynamic> json) =>
-    _ForgotPassVerifyData(
-      resetToken: json['resetToken'] as String,
-    );
+  Map<String, dynamic> json,
+) => _ForgotPassVerifyData(resetToken: json['resetToken'] as String);
 
 Map<String, dynamic> _$ForgotPassVerifyDataToJson(
-        _ForgotPassVerifyData instance) =>
-    <String, dynamic>{
-      'resetToken': instance.resetToken,
-    };
+  _ForgotPassVerifyData instance,
+) => <String, dynamic>{'resetToken': instance.resetToken};

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:taskit/config/routers/router_provider.dart';
+import 'package:taskit/shared/config/app/app_color.dart';
+import 'package:taskit/shared/config/routers/router_provider.dart';
 import 'package:taskit/shared/data/source/local/drift/dao/category.dart';
 import 'package:taskit/shared/data/source/local/drift/dao/setting.dart';
 import 'package:taskit/shared/data/source/local/drift/dao/subtask.dart';
@@ -9,9 +10,6 @@ import 'package:taskit/shared/data/source/local/drift/dao/task.dart';
 import 'package:taskit/shared/data/source/local/drift/dao/user.dart';
 import 'package:taskit/shared/data/source/local/drift/database/database.dart';
 import 'package:taskit/shared/log/logger_provider.dart';
-
-import 'config/app/app_color.dart';
-
 final languageCodeProvider = Provider<String>((ref) {
   final locale = WidgetsBinding.instance.platformDispatcher.locale;
   return locale.languageCode;

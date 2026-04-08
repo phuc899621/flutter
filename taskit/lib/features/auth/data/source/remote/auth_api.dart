@@ -3,8 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:retrofit/error_logger.dart';
 import 'package:retrofit/http.dart';
 
+import '../../../../../shared/data/dto/response/base_data.dart';
 import '../../../../../shared/data/dto/response/base_response.dart';
-import '../../../../../shared/data/dto/response/base_response_data.dart';
 import '../../../../../shared/data/source/remote/network/network_service.dart';
 import '../../dto/req/forgot_pass/forgot_pass.dart';
 import '../../dto/req/forgot_pass/forgot_pass_verify.dart';
