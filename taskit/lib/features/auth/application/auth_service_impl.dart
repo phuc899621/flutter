@@ -1,16 +1,15 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:multiple_result/multiple_result.dart';
 import 'package:taskit/features/auth/data/dto/req/login/login_request.dart';
-import 'package:taskit/features/auth/data/dto/res/forgot_pass/verify.dart';
+import 'package:taskit/features/auth/data/mapper/auth_mapper_impl.dart';
 import 'package:taskit/features/auth/data/repo/iauth_repo.dart';
-import 'package:taskit/features/auth/domain/mapper/iauth_mapper.dart';
+import 'package:taskit/features/auth/domain/mapper/auth_mapper.dart';
 import 'package:taskit/shared/data/dto/response/base_response.dart';
 import 'package:taskit/shared/domain/mapper/base_model_mapper.dart';
 import 'package:taskit/shared/exception/failure.dart';
 
 import '../../../shared/data/dto/response/base_data.dart';
 import '../../../shared/domain/model/base_model.dart';
-import '../../../shared/helpers/base_response_mapper.dart';
 import '../../../shared/log/logger_provider.dart';
 import '../data/dto/req/forgot_pass/forgot_pass.dart';
 import '../data/dto/req/forgot_pass/forgot_pass_verify.dart';
@@ -23,13 +22,14 @@ import 'iauth_service.dart';
 
 final authServiceProvider = Provider<IAuthService>((ref) {
   final authRepo = ref.watch(authRepoProvider);
-  return AuthService(authRepo);
+  final authEntityMapper= ref.watch(authEntityMapperProvider);
+  return AuthService(authRepo, authEntityMapper);
 });
 
-class AuthService implements IAuthEntityMapper, IAuthService, BaseModelMapper {
+class AuthService implements IAuthService, BaseModelMapper {
   final IAuthRepo _iAuthRepo;
-
-  AuthService(this._iAuthRepo);
+  final AuthEntityMapper _authEntityMapper;
+  AuthService(this._iAuthRepo, this._authEntityMapper);
 
   /*
   * Login
@@ -192,7 +192,7 @@ class AuthService implements IAuthEntityMapper, IAuthService, BaseModelMapper {
       ForgotPassVerifyRequest data) async {
     try {
       final response = await _iAuthRepo.forgotPassVerify(data);
-      final entity = mapToForgotPassVerifyEntity(response);
+      final entity = _authEntityMapper.mapToForgotPassVerifyEntity(response);
       return Success(entity);
     } on Failure catch (e) {
       return Error(e);
@@ -218,12 +218,5 @@ class AuthService implements IAuthEntityMapper, IAuthService, BaseModelMapper {
     return const BaseModel();
   }
 
-  @override
-  ForgotPassVerifyEntity mapToForgotPassVerifyEntity(
-      BaseResponse<ForgotPassData> data) {
-    final responseData = BaseResponseMapper.requireData(data);
-    return ForgotPassVerifyEntity(
-      resetToken: responseData.resetToken,
-    );
-  }
+
 }

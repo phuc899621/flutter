@@ -7,9 +7,9 @@ import 'package:taskit/features/auth/data/source/local/iauth_local.dart';
 import 'package:taskit/shared/application/itoken_service.dart';
 import 'package:taskit/shared/application/token_service.dart';
 import 'package:taskit/shared/data/dto/response/base_response.dart';
-import 'package:taskit/shared/helpers/base_response_mapper.dart';
+import 'package:taskit/shared/helpers/base_response_helper.dart';
 import 'package:taskit/shared/log/logger_provider.dart';
-import 'package:taskit/shared/mixin/dio_exception_mapper.dart';
+import 'package:taskit/shared/data/source/remote/network/dio_exception_mapper.dart';
 import '../../../../shared/data/dto/response/base_data.dart';
 import '../../../../shared/exception/failure.dart';
 import '../dto/req/forgot_pass/forgot_pass.dart';
@@ -48,7 +48,7 @@ class AuthRepo with DioExceptionMapper implements IAuthRepo {
   Future<BaseResponse<LoginData>> login(LoginRequest data) async {
     try {
       final response = await _authApi.login(data);
-      final responseData = BaseResponseMapper.requireData(response);
+      final responseData = BaseResponseHelper.requireData(response);
       await _iAuthLocalDataSource.cacheLogin(responseData);
       return response;
     } on DioException catch (e, s) {

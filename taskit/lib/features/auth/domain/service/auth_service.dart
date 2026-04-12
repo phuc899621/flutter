@@ -9,7 +9,7 @@ import '../data/dto/req/signup/signup_request.dart';
 import '../data/dto/req/signup/signup_verify_request.dart';
 import '../domain/entites/forgot_pass/forgot_pass_verify.dart';
 
-abstract interface class IAuthService {
+abstract interface class AuthService {
   Future<Result<void, Failure>> login(LoginRequest data);
   Future<Result<void, Failure>> checkLogin();
 

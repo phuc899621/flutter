@@ -1,6 +1,6 @@
 import '../data/dto/response/base_response.dart';
 
-class BaseResponseMapper {
+class BaseResponseHelper {
   static T requireData<T>(BaseResponse<T> response) {
     if (response.data == null) {
       throw Exception('Expected non-null data: ${response.message}');
