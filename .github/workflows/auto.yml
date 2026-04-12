@@ -12,6 +12,7 @@ on:
       - "taskit_backend/**"
 jobs:
   deploy:
+    environment: TASKIT_SECRET_KEY
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
