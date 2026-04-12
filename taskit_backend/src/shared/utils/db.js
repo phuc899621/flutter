@@ -1,7 +1,6 @@
 import mongoose from "mongoose";
 import { MONGO_CONFIG } from "../../config/db.config.js";
 import logger from "./logger.js";
-console.log(MONGO_CONFIG.uri);
 const connection = mongoose
   .createConnection(MONGO_CONFIG.uri, MONGO_CONFIG.options)
   .on("open", () => {
