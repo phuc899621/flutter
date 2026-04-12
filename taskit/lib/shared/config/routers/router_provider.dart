@@ -56,19 +56,19 @@ final goRouterProvider = Provider<GoRouter>((ref) {
       ),
       GoRoute(
         path: '/login',
-        name: loginRoute,
+        name: RouteName.login,
         pageBuilder: (context, state) => TaskitAnimation.slidePageTransition(
             context, state, const LoginPage()),
       ),
       GoRoute(
           path: '/signup',
-          name: signUpRoute,
+          name: RouteName.signup,
           pageBuilder: (context, state) => TaskitAnimation.slidePageTransition(
               context, state, const SignupPage()),
           routes: [
             GoRoute(
               path: 'verify',
-              name: signUpVerifyRoute,
+              name: RouteName.signupVerify,
               pageBuilder: (context, state) =>
                   TaskitAnimation.slidePageTransition(
                       context, state, const SignupVerifyPage()),
@@ -76,20 +76,20 @@ final goRouterProvider = Provider<GoRouter>((ref) {
           ]),
       GoRoute(
         path: '/forgot_password',
-        name: forgotPasswordRoute,
+        name: RouteName.forgotPassword,
         pageBuilder: (context, state) => TaskitAnimation.slidePageTransition(
             context, state, const ForgotPasswordPage()),
         routes: [
           GoRoute(
               path: 'verify',
-              name: forgotPasswordVerifyRoute,
+              name: RouteName.forgotPasswordVerify,
               pageBuilder: (context, state) =>
                   TaskitAnimation.slidePageTransition(
                       context, state, const ForgotPasswordVerifyPage()),
               routes: [
                 GoRoute(
                   path: 'reset',
-                  name: forgotPasswordResetRoute,
+                  name: RouteName.forgotPasswordReset,
                   pageBuilder: (context, state) =>
                       TaskitAnimation.slidePageTransition(
                           context, state, const ResetPasswordPage()),
@@ -99,7 +99,7 @@ final goRouterProvider = Provider<GoRouter>((ref) {
       ),
       GoRoute(
         path: '/add_task',
-        name: addTaskRoute,
+        name: RouteName.addTask,
         pageBuilder: (context, state) => TaskitAnimation.slidePageTransition(
             context, state, const AddTaskPage()),
       ),
@@ -253,7 +253,7 @@ final goRouterProvider = Provider<GoRouter>((ref) {
             routes: [
               GoRoute(
                   path: '/home',
-                  name: homeRoute,
+                  name: RouteName.home,
                   pageBuilder: (context, state) =>
                       TaskitAnimation.slidePageTransition(
                           context, state, const HomePage()),
@@ -264,7 +264,7 @@ final goRouterProvider = Provider<GoRouter>((ref) {
             routes: [
               GoRoute(
                 path: '/list',
-                name: listRoute,
+                name: RouteName.list,
                 pageBuilder: (context, state) =>
                     TaskitAnimation.slidePageTransition(
                         context, state, const ListPage()),
@@ -275,7 +275,7 @@ final goRouterProvider = Provider<GoRouter>((ref) {
             routes: [
               GoRoute(
                 path: '/timeline',
-                name: timelineRoute,
+                name: RouteName.timeline,
                 pageBuilder: (context, state) =>
                     TaskitAnimation.slidePageTransition(
                         context, state, const TimelinePage()),
@@ -286,7 +286,7 @@ final goRouterProvider = Provider<GoRouter>((ref) {
             routes: [
               GoRoute(
                   path: '/ai',
-                  name: aiRoute,
+                  name: RouteName.ai,
                   pageBuilder: (context, state) =>
                       TaskitAnimation.slidePageTransition(
                           context, state, const AiPage())),

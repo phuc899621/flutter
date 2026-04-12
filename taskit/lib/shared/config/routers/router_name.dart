@@ -1,13 +1,18 @@
-const String loginRoute = 'login';
-const String signUpRoute = 'signup';
-const String signUpVerifyRoute = 'verifySignup';
-const String forgotPasswordRoute = 'forgot_password';
-const String forgotPasswordVerifyRoute = 'verifyPassword';
-const String forgotPasswordResetRoute = 'reset';
-const String homeRoute = 'home';
-const String listRoute = 'list';
-const String timelineRoute = 'timeline';
-const String aiRoute = 'ai';
-const String addTaskRoute = 'add_task';
-const String editTaskRoute = 'edit_task';
-const String categoryRoute = 'category';
+class RouteName {
+  static const login = 'login';
+  static const signup = 'signup';
+  static const signupVerify = 'verifySignup';
+
+  static const forgotPassword = 'forgot_password';
+  static const forgotPasswordVerify = 'verifyPassword';
+  static const forgotPasswordReset = 'reset';
+
+  static const home = 'home';
+  static const list = 'list';
+  static const timeline = 'timeline';
+  static const ai = 'ai';
+
+  static const addTask = 'add_task';
+  static const editTask = 'edit_task';
+  static const category = 'category';
+}

@@ -2,32 +2,32 @@ import 'package:flutter/material.dart';
 
 import '../../features/task/domain/entities/task_priority_enum.dart';
 import '../../features/task/domain/entities/task_status_enum.dart';
-import '../config/app/app_color.dart';
+import '../config/app/theme/app_color.dart';
 
 extension TaskPriorityColor on TaskPriority {
   Color toColor() {
     switch (this) {
       case TaskPriority.high:
-        return ConstColor.onHighContainer;
+        return AppColor.onHighContainer;
       case TaskPriority.medium:
-        return ConstColor.onMediumContainer;
+        return AppColor.onMediumContainer;
       case TaskPriority.low:
-        return ConstColor.onLowContainer;
+        return AppColor.onLowContainer;
       default:
-        return ConstColor.onNoneContainer;
+        return AppColor.onNoneContainer;
     }
   }
 
   Color toColorContainer() {
     switch (this) {
       case TaskPriority.high:
-        return ConstColor.highContainer;
+        return AppColor.highContainer;
       case TaskPriority.medium:
-        return ConstColor.mediumContainer;
+        return AppColor.mediumContainer;
       case TaskPriority.low:
-        return ConstColor.lowContainer;
+        return AppColor.lowContainer;
       default:
-        return ConstColor.noneContainer;
+        return AppColor.noneContainer;
     }
   }
 }
@@ -36,60 +36,60 @@ extension TaskStatusColor on TaskStatus {
   Color toColor() {
     switch (this) {
       case TaskStatus.completed:
-        return ConstColor.onCompletedContainer;
+        return AppColor.onCompletedContainer;
       case TaskStatus.pending:
-        return ConstColor.onPendingContainer;
+        return AppColor.onPendingContainer;
       case TaskStatus.scheduled:
-        return ConstColor.onScheduledContainer;
+        return AppColor.onScheduledContainer;
     }
   }
 
   Color toColorContainer() {
     switch (this) {
       case TaskStatus.completed:
-        return ConstColor.completedContainer;
+        return AppColor.completedContainer;
       case TaskStatus.pending:
-        return ConstColor.pendingContainer;
+        return AppColor.pendingContainer;
       case TaskStatus.scheduled:
-        return ConstColor.scheduledContainer;
+        return AppColor.scheduledContainer;
     }
   }
 }
 
 extension ThemeColor on ColorScheme {
-  Color get highContainer => ConstColor.highContainer;
+  Color get highContainer => AppColor.highContainer;
 
-  Color get onHighContainer => ConstColor.onHighContainer;
+  Color get onHighContainer => AppColor.onHighContainer;
 
-  Color get mediumContainer => ConstColor.mediumContainer;
+  Color get mediumContainer => AppColor.mediumContainer;
 
-  Color get onMediumContainer => ConstColor.onMediumContainer;
+  Color get onMediumContainer => AppColor.onMediumContainer;
 
-  Color get lowContainer => ConstColor.lowContainer;
+  Color get lowContainer => AppColor.lowContainer;
 
-  Color get onLowContainer => ConstColor.onLowContainer;
+  Color get onLowContainer => AppColor.onLowContainer;
 
-  Color get noneContainer => ConstColor.noneContainer;
+  Color get noneContainer => AppColor.noneContainer;
 
-  Color get onNoneContainer => ConstColor.onNoneContainer;
+  Color get onNoneContainer => AppColor.onNoneContainer;
 
-  Color get scheduledContainer => ConstColor.scheduledContainer;
+  Color get scheduledContainer => AppColor.scheduledContainer;
 
-  Color get onScheduledContainer => ConstColor.onScheduledContainer;
+  Color get onScheduledContainer => AppColor.onScheduledContainer;
 
-  Color get pendingContainer => ConstColor.pendingContainer;
+  Color get pendingContainer => AppColor.pendingContainer;
 
-  Color get onPendingContainer => ConstColor.onPendingContainer;
+  Color get onPendingContainer => AppColor.onPendingContainer;
 
-  Color get completedContainer => ConstColor.completedContainer;
+  Color get completedContainer => AppColor.completedContainer;
 
-  Color get onCompletedContainer => ConstColor.onCompletedContainer;
+  Color get onCompletedContainer => AppColor.onCompletedContainer;
 
-  Color get success => ConstColor.success;
+  Color get success => AppColor.success;
 
-  Color get onSuccess => ConstColor.onSuccess;
+  Color get onSuccess => AppColor.onSuccess;
 
-  Color get warning => ConstColor.warning;
+  Color get warning => AppColor.warning;
 
-  Color get onWarning => ConstColor.onWarning;
+  Color get onWarning => AppColor.onWarning;
 }

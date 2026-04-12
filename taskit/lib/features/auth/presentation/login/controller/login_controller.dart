@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:taskit/features/auth/presentation/login/state/login_state.dart';
 
-import '../../../application/auth_service.dart';
+import '../../../application/auth_service_impl.dart';
 import '../../../data/dto/req/login/login_request.dart';
 
 final loginControllerProvider =

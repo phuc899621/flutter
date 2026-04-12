@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 
-import '../../../../config/app/app.dart';
+import '../../../../config/app/app_config.dart';
 
 BaseOptions buildBaseOptions(){
   return BaseOptions(

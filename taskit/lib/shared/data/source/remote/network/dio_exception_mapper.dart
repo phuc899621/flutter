@@ -1,9 +1,23 @@
 import 'package:dio/dio.dart';
 import 'package:taskit/shared/extension/string_hardcoded.dart';
 
-import '../exception/failure.dart';
+import '../../../../exception/failure.dart';
 
 mixin DioExceptionMapper {
+  Future<T> callSafe<T>(Future<T> Function() call, {String? errorMessage}) async {
+    try {
+      return await call();
+    } on DioException catch (e, s) {
+      throw mapDioExceptionToFailure(e, s);
+    } catch (e, s) {
+      throw Failure(
+        message: errorMessage ?? e.toString(),
+        exception: e is Exception ? e : Exception(e.toString()),
+        stackTrace: s,
+      );
+    }
+  }
+
   Failure mapDioExceptionToFailure(DioException e, StackTrace stackTrace) {
     switch (e.type) {
       case DioExceptionType.connectionTimeout:
@@ -38,7 +52,8 @@ mixin DioExceptionMapper {
         );
       case DioExceptionType.badResponse:
         final response=e.response?.data;
-        String message="Bad response with API server. Please try again later";
+        final statusCode=e.response?.statusCode;
+        String message=_getErrorMessageForStatusCode(statusCode);
         if (response is Map<String, dynamic>) {
           final dynamic msg = response['message'];
           if (msg is String && msg.isNotEmpty) {

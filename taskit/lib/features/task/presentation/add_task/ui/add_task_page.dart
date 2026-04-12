@@ -11,7 +11,7 @@ import 'package:taskit/shared/extension/date_time.dart';
 import 'package:taskit/shared/extension/string.dart';
 import 'package:taskit/shared/log/logger_provider.dart';
 
-import '../../../../../shared/config/app/app_color.dart';
+import '../../../../../shared/config/app/theme/app_color.dart';
 
 class AddTaskPage extends ConsumerStatefulWidget {
   const AddTaskPage({super.key});
@@ -144,7 +144,7 @@ class _AddTaskPageState extends ConsumerState<AddTaskPage> {
                     child: Text(
                       'Cancel',
                       style: text.titleSmall?.copyWith(
-                          color: ConstColor.onSurfaceVariant,
+                          color: AppColor.onSurfaceVariant,
                           fontWeight: FontWeight.w600),
                     )),
                 FilledButton.tonal(
@@ -163,7 +163,7 @@ class _AddTaskPageState extends ConsumerState<AddTaskPage> {
                     child: Text(
                       'Add',
                       style: text.titleSmall?.copyWith(
-                          color: ConstColor.onPrimaryContainer,
+                          color: AppColor.onPrimaryContainer,
                           fontWeight: FontWeight.w600),
                     ))
               ],

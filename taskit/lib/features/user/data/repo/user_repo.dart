@@ -5,7 +5,7 @@ import 'package:taskit/features/user/data/source/local/iuser_local_source.dart';
 import 'package:taskit/features/user/domain/entity/user_entity.dart';
 import 'package:taskit/features/user/domain/mapper/iuser_mapper.dart';
 import 'package:taskit/shared/data/source/local/drift/database/database.dart';
-import 'package:taskit/shared/mixin/dio_exception_mapper.dart';
+import 'package:taskit/shared/data/source/remote/network/dio_exception_mapper.dart';
 
 import '../source/local/user_local_source.dart';
 

@@ -30,7 +30,7 @@ class _SignupPageState extends ConsumerState<SignupPage> {
 
   void _listener() {
     final color = Theme.of(context).colorScheme;
-    ref.listen(signUpControllerProvider.select((value) => value.error), (
+    ref.listen(signupControllerProvider.select((value) => value.error), (
       _,
       next,
     ) {
@@ -46,7 +46,7 @@ class _SignupPageState extends ConsumerState<SignupPage> {
     });
     // listen for success
     ref.listen(
-      signUpControllerProvider.select((value) => value.isSignUpSuccess),
+      signupControllerProvider.select((value) => value.isSignUpSuccess),
       (_, next) {
         //_la gia tri cu, next la gia tri moi
         if (next != null && next) {
@@ -57,16 +57,18 @@ class _SignupPageState extends ConsumerState<SignupPage> {
   }
 
   void _onSubmit() {
-    if (true) {
-      final formData = {
-        'name': _nameController.text,
-        'email': _emailController.text,
-        'password': _passwordController.text,
-        'confirmPassword': _passwordConfirm.text,
-      };
-      ref.read(signUpControllerProvider.notifier).setFormData(formData);
-      ref.read(signUpControllerProvider.notifier).signUp();
+    if (_passwordController.text != _passwordConfirm.text) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          duration: Duration(seconds: 5),
+          backgroundColor: Colors.red,
+          content: Text("Password not match!"),
+        ),
+      );
+      return;
     }
+    final controller = ref.read(signupControllerProvider.notifier);
+    controller.signup(_emailController.text, _passwordController.text);
   }
 
   @override
@@ -100,7 +102,7 @@ class _SignupPageState extends ConsumerState<SignupPage> {
   //endregion
   //region SignUp Body
   Widget _signupBody() {
-    final state = ref.watch(signUpControllerProvider);
+    final state = ref.watch(signupControllerProvider);
     final text = Theme.of(context).textTheme;
     final color = Theme.of(context).colorScheme;
     return Container(
@@ -138,13 +140,6 @@ class _SignupPageState extends ConsumerState<SignupPage> {
               keyboardType: TextInputType.emailAddress,
             ),
             SizedBox(height: 15),
-            TaskitOutlineTextField(
-              labelText: "Full Name",
-              controller: _nameController,
-              autofillHints: AutofillHints.name,
-              keyboardType: TextInputType.text,
-            ),
-            SizedBox(height: 15),
             TaskitOutLineTextFieldWithPassword(
               labelText: 'Password',
               controller: _passwordController,
@@ -160,13 +155,16 @@ class _SignupPageState extends ConsumerState<SignupPage> {
               child: ElevatedButton(
                 onPressed: _onSubmit,
                 style: ElevatedButton.styleFrom(
+                  minimumSize: const Size(double.infinity, 56),
                   backgroundColor: color.primary,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(20.0),
                   ),
                 ),
                 child: state.isLoading
-                    ? Center(
+                    ? SizedBox(
+                        width: 20,
+                        height: 20,
                         child: CircularProgressIndicator(
                           color: color.onPrimary,
                         ),

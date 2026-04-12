@@ -2,7 +2,7 @@ import 'package:drift/drift.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:taskit/features/auth/data/dto/res/login/login_data.dart';
-import 'package:taskit/features/auth/data/source/local/iauth_local.dart';
+import 'package:taskit/features/auth/data/source/local/auth_local.dart';
 import 'package:taskit/shared/data/source/local/drift/dao/category.dart';
 import 'package:taskit/shared/data/source/local/drift/dao/task.dart';
 import 'package:taskit/shared/data/source/local/drift/dao/user.dart';
@@ -55,7 +55,7 @@ class AuthLocalDataSourceImpl implements AuthLocalDataSource {
   Future<void> cacheLogin(LoginData loginData) async {
     try {
       tokenSource.saveToken(loginData.token);
-      db.transaction(() async {
+      await db.transaction(() async {
         await userDao.deleteIfExist();
         final userLocalId = await userDao.insertUser(UserTableCompanion(
           remoteId: Value(loginData.user.id),

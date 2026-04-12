@@ -31,8 +31,10 @@ class _SignupVerifyPageState extends ConsumerState<SignupVerifyPage> {
 
   void _listener() {
     final color = Theme.of(context).colorScheme;
-    ref.listen(signUpControllerProvider.select((value) => value.error),
-        (_, next) {
+    ref.listen(signupControllerProvider.select((value) => value.error), (
+      _,
+      next,
+    ) {
       if (next != null) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
@@ -45,32 +47,30 @@ class _SignupVerifyPageState extends ConsumerState<SignupVerifyPage> {
     });
     // listen for success
     ref.listen(
-        signUpControllerProvider.select((value) => value.isVerifySuccess),
-        (_, next) {
-      if (next != null && next) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            duration: Duration(seconds: 5),
-            backgroundColor: Colors.green,
-            content: Text("Code verify success!"),
-          ),
-        );
-        context.go('/login');
-      }
-    });
+      signupControllerProvider.select((value) => value.isVerifySuccess),
+      (_, next) {
+        if (next != null && next) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              duration: Duration(seconds: 5),
+              backgroundColor: Colors.green,
+              content: Text("Code verify success!"),
+            ),
+          );
+          context.go('/login');
+        }
+      },
+    );
   }
 
   void _onVerify() {
-    if (true) {
-      final formData = {
-        'otp': _otpController0.text +
-            _otpController1.text +
-            _otpController2.text +
-            _otpController3.text,
-      };
-      ref.read(signUpControllerProvider.notifier).setVerifyForm(formData);
-      ref.read(signUpControllerProvider.notifier).verify();
-    }
+    final otp =
+        _otpController0.text +
+        _otpController1.text +
+        _otpController2.text +
+        _otpController3.text;
+    final controller = ref.read(signupControllerProvider.notifier);
+    controller.verify(otp);
   }
 
   void _onResend() {}
@@ -78,7 +78,6 @@ class _SignupVerifyPageState extends ConsumerState<SignupVerifyPage> {
   @override
   Widget build(BuildContext context) {
     _listener();
-    final text = Theme.of(context).textTheme;
     final color = Theme.of(context).colorScheme;
     return SafeArea(
       top: true,
@@ -86,10 +85,9 @@ class _SignupVerifyPageState extends ConsumerState<SignupVerifyPage> {
         resizeToAvoidBottomInset: true,
         backgroundColor: color.primary,
         body: NestedScrollView(
-            headerSliverBuilder: (context, innerBoxIsScrolled) => [
-                  _topAppBar(),
-                ],
-            body: _signupVerifyBody()),
+          headerSliverBuilder: (context, innerBoxIsScrolled) => [_topAppBar()],
+          body: _signupVerifyBody(),
+        ),
       ),
     );
   }
@@ -106,148 +104,144 @@ class _SignupVerifyPageState extends ConsumerState<SignupVerifyPage> {
     );
   }
 
-//endregion
-//region Sign up verify body
+  //endregion
+  //region Sign up verify body
   Widget _signupVerifyBody() {
     final text = Theme.of(context).textTheme;
     final color = Theme.of(context).colorScheme;
-    final state = ref.watch(signUpControllerProvider);
+    final state = ref.watch(signupControllerProvider);
 
     return Container(
       padding: EdgeInsets.symmetric(vertical: 20, horizontal: 30),
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.vertical(top: Radius.circular(30)),
-          color: color.surface),
+        borderRadius: BorderRadius.vertical(top: Radius.circular(30)),
+        color: color.surface,
+      ),
       child: SingleChildScrollView(
         child: Column(
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              IconButton.filledTonal(
-                onPressed: context.pop,
-                style: IconButton.styleFrom(
-                  backgroundColor: color.surfaceContainer,
-                  foregroundColor: color.primary,
-                ),
-                icon: Icon(Icons.arrow_back_rounded, color: color.primary),
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            IconButton.filledTonal(
+              onPressed: context.pop,
+              style: IconButton.styleFrom(
+                backgroundColor: color.surfaceContainer,
+                foregroundColor: color.primary,
               ),
-              Text('Almost there',
-                  style: text.headlineMedium?.copyWith(
-                      color: color.primary, fontWeight: FontWeight.w800)),
-              SizedBox(
-                height: 5,
+              icon: Icon(Icons.arrow_back_rounded, color: color.primary),
+            ),
+            Text(
+              'Almost there',
+              style: text.headlineMedium?.copyWith(
+                color: color.primary,
+                fontWeight: FontWeight.w800,
               ),
-              RichText(
-                textScaler: MediaQuery.of(context).textScaler,
-                text: TextSpan(
-                  children: [
-                    TextSpan(
-                      text: 'We sent a code to ',
-                    ),
-                    TextSpan(
-                      text: state.signupForm['email'],
-                      style: text.labelMedium?.copyWith(
-                        color: color.primary,
-                      ),
-                    ),
-                    TextSpan(
-                      text:
-                          '. Please enter 4 digit code that mentioned in your email',
-                    )
-                  ],
-                  style: text.labelMedium?.copyWith(
-                      fontWeight: FontWeight.w600,
-                      color: color.onSurfaceVariant),
-                ),
-              ),
-              SizedBox(
-                height: 25,
-              ),
-              Row(
-                mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.center,
+            ),
+            SizedBox(height: 5),
+            RichText(
+              textScaler: MediaQuery.of(context).textScaler,
+              text: TextSpan(
                 children: [
-                  Expanded(
-                    child: SizedBox(
-                      width: 200.0,
-                      child: TaskitCodeTextField(controller: _otpController0),
-                    ),
+                  TextSpan(text: 'We sent a code to '),
+                  TextSpan(
+                    text: state.signupForm.email,
+                    style: text.labelMedium?.copyWith(color: color.primary),
                   ),
-                  const SizedBox(width: 30.0),
-                  Expanded(
-                    child: SizedBox(
-                      width: 200.0,
-                      child: TaskitCodeTextField(controller: _otpController1),
-                    ),
-                  ),
-                  const SizedBox(width: 30.0),
-                  Expanded(
-                    child: SizedBox(
-                      width: 200.0,
-                      child: TaskitCodeTextField(controller: _otpController2),
-                    ),
-                  ),
-                  const SizedBox(width: 30.0),
-                  Expanded(
-                    child: SizedBox(
-                      width: 200.0,
-                      child: TaskitCodeTextField(controller: _otpController3),
-                    ),
+                  TextSpan(
+                    text:
+                        '. Please enter 4 digit code that mentioned in your email',
                   ),
                 ],
+                style: text.labelMedium?.copyWith(
+                  fontWeight: FontWeight.w600,
+                  color: color.onSurfaceVariant,
+                ),
               ),
-              SizedBox(
-                height: 15,
-              ),
-              SizedBox(
-                width: double.infinity,
-                child: ElevatedButton(
-                  onPressed: _onVerify,
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: color.primary,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20.0),
-                    ),
+            ),
+            SizedBox(height: 25),
+            Row(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Expanded(
+                  child: SizedBox(
+                    width: 200.0,
+                    child: TaskitCodeTextField(controller: _otpController0),
                   ),
-                  child: state.isLoading
-                      ? Center(
-                          child: CircularProgressIndicator(
-                            color: color.onPrimary,
-                          ),
-                        )
-                      : Text('Verify',
-                          style: text.titleMedium?.copyWith(
-                            color: color.onPrimary,
-                          )),
                 ),
-              ),
-              SizedBox(
-                height: 15,
-              ),
-              RichText(
-                textScaler: MediaQuery.of(context).textScaler,
-                text: TextSpan(
-                  children: [
-                    TextSpan(
-                      text: 'Haven’t got the email yet?',
-                      style: text.labelMedium,
-                    ),
-                    TextSpan(
-                      text: ' Resend code!',
-                      style: text.labelMedium?.copyWith(
-                        color: color.primary,
+                const SizedBox(width: 30.0),
+                Expanded(
+                  child: SizedBox(
+                    width: 200.0,
+                    child: TaskitCodeTextField(controller: _otpController1),
+                  ),
+                ),
+                const SizedBox(width: 30.0),
+                Expanded(
+                  child: SizedBox(
+                    width: 200.0,
+                    child: TaskitCodeTextField(controller: _otpController2),
+                  ),
+                ),
+                const SizedBox(width: 30.0),
+                Expanded(
+                  child: SizedBox(
+                    width: 200.0,
+                    child: TaskitCodeTextField(controller: _otpController3),
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(height: 15),
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton(
+                onPressed: _onVerify,
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: color.primary,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20.0),
+                  ),
+                ),
+                child: state.isLoading
+                    ? Center(
+                        child: CircularProgressIndicator(
+                          color: color.onPrimary,
+                        ),
+                      )
+                    : Text(
+                        'Verify',
+                        style: text.titleMedium?.copyWith(
+                          color: color.onPrimary,
+                        ),
                       ),
-                      recognizer: TapGestureRecognizer()
-                        ..onTap = () => _onVerify(),
-                    )
-                  ],
-                  style: text.labelMedium,
-                ),
               ),
-            ]),
+            ),
+            SizedBox(height: 15),
+            RichText(
+              textScaler: MediaQuery.of(context).textScaler,
+              text: TextSpan(
+                children: [
+                  TextSpan(
+                    text: 'Haven’t got the email yet?',
+                    style: text.labelMedium,
+                  ),
+                  TextSpan(
+                    text: ' Resend code!',
+                    style: text.labelMedium?.copyWith(color: color.primary),
+                    recognizer: TapGestureRecognizer()
+                      ..onTap = () => _onVerify(),
+                  ),
+                ],
+                style: text.labelMedium,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
-//endregion
+
+  //endregion
 }

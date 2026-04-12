@@ -6,7 +6,7 @@ import 'package:go_router/go_router.dart';
 import 'package:taskit/features/main/presentation/timeline/controller/timeline_controller.dart';
 import 'package:taskit/shared/extension/date_time.dart';
 
-import '../../../../../shared/config/app/app_color.dart';
+import '../../../../../shared/config/app/theme/app_color.dart';
 import '../../../../../shared/config/routers/router_provider.dart';
 import '../../home/ui/widget/task_item.dart';
 import '../../list/controller/list_controller.dart';
@@ -356,7 +356,7 @@ class _TimeLinePageState extends ConsumerState<TimelinePage> {
           Spacer(),
           Container(
             decoration: BoxDecoration(
-                shape: BoxShape.circle, color: ConstColor.surfaceContainer),
+                shape: BoxShape.circle, color: AppColor.surfaceContainer),
             child: IconButton(
                 onPressed: () {
                   _easyDateController.animateToCurrentDate();
@@ -365,7 +365,7 @@ class _TimeLinePageState extends ConsumerState<TimelinePage> {
           ),
           Container(
             decoration: BoxDecoration(
-                shape: BoxShape.circle, color: ConstColor.surfaceContainer),
+                shape: BoxShape.circle, color: AppColor.surfaceContainer),
             child: IconButton(
                 onPressed: () {
                   _easyDateController.animateToFocusDate();

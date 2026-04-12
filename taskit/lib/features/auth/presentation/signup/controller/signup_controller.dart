@@ -1,16 +1,17 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:taskit/features/auth/data/dto/req/signup/signup_verify_request.dart';
+import 'package:taskit/features/auth/domain/entites/signup/signup_model.dart';
+import 'package:taskit/features/auth/domain/entites/signup/signup_verify_model.dart';
 
-import '../../../application/auth_service.dart';
-import '../../../data/dto/req/signup/signup_request.dart';
+import '../../../application/auth_service_impl.dart';
 import '../state/signup_state.dart';
 
-final signUpControllerProvider =
-    NotifierProvider.autoDispose<SignUpController, SignupState>(
-      SignUpController.new,
+final signupControllerProvider =
+    NotifierProvider.autoDispose<SignupController, SignupState>(
+      SignupController.new,
     );
 
-class SignUpController extends Notifier<SignupState> {
+class SignupController extends Notifier<SignupState> {
   @override
   SignupState build() {
     return SignupState();
@@ -26,22 +27,18 @@ class SignUpController extends Notifier<SignupState> {
     );
   }
 
-  Future<void> signUp() async {
+  Future<void> signup(String email, String password) async {
     try {
-      //trang thai loading
       state = state.copyWith(
         isLoading: true,
         error: null,
         isSignUpSuccess: null,
+        signupForm: SignupModel(email: email, password: password),
       );
 
-      final formData = SignupRequest(
-        name: state.signupForm['name'],
-        email: state.signupForm['email'],
-        password: state.signupForm['password'],
-        passwordConfirm: state.signupForm['confirmPassword'],
-      );
-      final result = await ref.read(authServiceProvider).signup(formData);
+      final result = await ref
+          .read(authServiceProvider)
+          .signup(state.signupForm);
       result.when(
         (success) {
           state = state.copyWith(isLoading: false, isSignUpSuccess: true);
@@ -63,23 +60,20 @@ class SignUpController extends Notifier<SignupState> {
     }
   }
 
-  void setFormData(Map<String, dynamic> formData) {
-    state = state.copyWith(signupForm: formData);
-  }
 
-  Future<void> verify() async {
+  Future<void> verify(String otp) async {
     try {
       //trang thai loading
       state = state.copyWith(
         isLoading: true,
         error: null,
         isVerifySuccess: null,
+        verifyForm: SignupVerifyModel(
+          email: state.signupForm.email,
+          otp: otp,
+        ),
       );
-      final formData = SignupVerifyRequest(
-        email: state.signupForm['email'],
-        otp: state.verifyForm['otp'],
-      );
-      final result = await ref.read(authServiceProvider).signupVerify(formData);
+      final result = await ref.read(authServiceProvider).signupVerify(state.verifyForm);
       result.when(
         (success) {
           state = state.copyWith(isLoading: false, isVerifySuccess: true);
@@ -101,7 +95,4 @@ class SignUpController extends Notifier<SignupState> {
     }
   }
 
-  void setVerifyForm(Map<String, dynamic> data) {
-    state = state.copyWith(verifyForm: data);
-  }
 }

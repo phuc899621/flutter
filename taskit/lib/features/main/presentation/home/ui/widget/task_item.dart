@@ -6,7 +6,7 @@ import 'package:taskit/shared/extension/color.dart';
 import 'package:taskit/shared/extension/date_time.dart';
 import 'package:taskit/shared/utils/task_entity_mapper.dart';
 
-import '../../../../../../shared/config/app/app_color.dart';
+import '../../../../../../shared/config/app/theme/app_color.dart';
 import '../../../../../task/domain/entities/task_priority_enum.dart';
 import '../../../../../task/domain/entities/task_status_enum.dart';
 
@@ -118,7 +118,7 @@ class TaskItem extends ConsumerWidget {
                       const Icon(
                         Icons.schedule_outlined,
                         size: 16,
-                        color: ConstColor.onSurfaceVariant,
+                        color: AppColor.onSurfaceVariant,
                       ),
                       Text(
                         task.hasTime

@@ -11,7 +11,7 @@ import '../../../../../shared/data/dto/response/base_data.dart';
 import '../../../../../shared/data/dto/response/base_response.dart';
 import '../../../../../shared/exception/failure.dart';
 import '../../../../../shared/log/logger_provider.dart';
-import '../../../../../shared/mixin/dio_exception_mapper.dart';
+import '../../../../../shared/data/source/remote/network/dio_exception_mapper.dart';
 import '../../dto/req/ai/ai_req.dart';
 import '../../dto/req/category/add_category_req.dart';
 import '../../dto/req/update_task/update_task_req.dart';

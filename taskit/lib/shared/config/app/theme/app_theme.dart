@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:taskit/shared/config/app/text_theme.dart';
 
 import 'app_color.dart';
 
@@ -9,8 +8,15 @@ final themeProvider = Provider<ThemeData>((ref) => ThemeData(
 //primary
       primaryColor: AppColor.primary,
       scaffoldBackgroundColor: AppColor.surface,
-      textTheme: ref.watch(textThemeProvider),
-//text
+      textTheme: TextTheme(
+          headlineMedium:
+          TextStyle(color: AppColor.onPrimary, fontWeight: FontWeight.w600),
+          headlineSmall:
+          TextStyle(color: AppColor.onPrimary, fontWeight: FontWeight.w600),
+
+          //label
+          labelLarge: TextStyle(fontWeight: FontWeight.w500)
+      ),
       colorScheme: const ColorScheme.light(
         primary: AppColor.primary,
         onPrimary: AppColor.onPrimary,

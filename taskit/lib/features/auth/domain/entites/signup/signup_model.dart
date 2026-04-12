@@ -1,8 +1,8 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-part 'signup.freezed.dart';
+part 'signup_model.freezed.dart';
 
 @freezed
 abstract class SignupModel with _$SignupModel {
-  factory SignupModel({required String email}) = _SignupModel;
+  const factory SignupModel({required String email, required String password}) = _SignupModel;
 }

@@ -1,5 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:taskit/features/auth/application/auth_service.dart';
+import 'package:taskit/features/auth/application/auth_service_impl.dart';
 import 'package:taskit/features/auth/presentation/forgot_password/state/forgot_pass_state.dart';
 import 'package:taskit/shared/log/logger_provider.dart';
 
