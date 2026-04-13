@@ -9,6 +9,7 @@ import timingMiddleware from "./src/middleware/timing.js";
 const app = express();
 app.use(requestIdMiddleware);
 app.use(timingMiddleware);
+app.use(express.static("public"));
 app.use(bodyParser.json());
 app.use("/docs", swaggerUI.serve, swaggerUI.setup(swaggerSpec));
 app.use("/api/v1", apiV1);

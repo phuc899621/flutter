@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Taskit API</title>
+
+    <style>
+      body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background: #0f172a;
+        color: #e2e8f0;
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        height: 100vh;
+      }
+
+      .container {
+        text-align: center;
+        max-width: 700px;
+        padding: 20px;
+      }
+
+      h1 {
+        font-size: 42px;
+        color: #38bdf8;
+        margin-bottom: 10px;
+      }
+
+      p {
+        font-size: 18px;
+        line-height: 1.6;
+        color: #cbd5e1;
+      }
+
+      .card {
+        margin-top: 20px;
+        background: #1e293b;
+        padding: 20px;
+        border-radius: 12px;
+        text-align: left;
+      }
+
+      code {
+        background: #0b1220;
+        padding: 2px 6px;
+        border-radius: 5px;
+        color: #22c55e;
+      }
+      .api-version {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .status {
+        margin-top: 15px;
+        display: inline-block;
+        padding: 8px 14px;
+        background: #22c55e;
+        color: black;
+        border-radius: 20px;
+        font-weight: bold;
+      }
+
+      footer {
+        margin-top: 25px;
+        font-size: 14px;
+        color: #64748b;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="container">
+      <h1>Taskit API</h1>
+      <p>
+        Backend API service for Taskit App – manage saving online tasks, users,
+        authentication and AI features.
+      </p>
+
+      <div class="status">Server Running</div>
+
+      <div class="card">
+        <h3>API Info</h3>
+        <div class="api-version">
+          <p>API version:</p>
+          <code>v1</code>
+        </div>
+        <p>Base URL:</p>
+        <code>http://taskit-api.id.vn/api/v1</code>
+
+        <p style="margin-top: 10px">Example endpoints:</p>
+        <ul>
+          <li><code>POST /auth/login</code></li>
+          <li><code>POST /auth/register</code></li>
+          <li><code>GET /tasks</code></li>
+          <li><code>POST /tasks</code></li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>⚙️ Tech Stack</h3>
+        <ul>
+          <li>Node.js + Express</li>
+          <li>MongoDB</li>
+          <li>Docker</li>
+          <li>Nginx Reverse Proxy</li>
+          <li>Redis cache data</li>
+        </ul>
+      </div>
+
+      <footer>Made with love by phuc899621</footer>
+    </div>
+  </body>
+</html>
