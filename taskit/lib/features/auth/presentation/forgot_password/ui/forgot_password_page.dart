@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../../../shared/presentation/widget/custom_taskit_textfield.dart';
+import '../../../../../shared/widget/text_field/taskit_outline_text_field.dart';
 import '../controller/forgot_pass_controller.dart';
 
 class ForgotPasswordPage extends ConsumerStatefulWidget {
@@ -25,31 +25,31 @@ class _ForgotPasswordPageState extends ConsumerState<ForgotPasswordPage> {
 
   void _listener() {
     ref.listen(
-        forgotPassControllerProvider.select((value) => value.errorForgotPass),
-        (_, next) {
-      if (next != null) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            duration: const Duration(seconds: 5),
-            backgroundColor: Colors.red,
-            content: Text(next),
-          ),
-        );
-      }
-    });
+      forgotPassControllerProvider.select((value) => value.errorForgotPass),
+      (_, next) {
+        if (next != null) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              duration: const Duration(seconds: 5),
+              backgroundColor: Colors.red,
+              content: Text(next),
+            ),
+          );
+        }
+      },
+    );
     ref.listen(
-        forgotPassControllerProvider
-            .select((value) => value.isForgotPassSuccess), (_, next) {
-      if (next != null && next) {
-        context.push('/forgot_password/verify');
-      }
-    });
+      forgotPassControllerProvider.select((value) => value.isForgotPassSuccess),
+      (_, next) {
+        if (next != null && next) {
+          context.push('/forgot_password/verify');
+        }
+      },
+    );
   }
 
   void _onSummit() {
-    final formData = ({
-      'email': _emailController.text,
-    });
+    final formData = ({'email': _emailController.text});
     ref.read(forgotPassControllerProvider.notifier).setForgotPassForm(formData);
     ref.read(forgotPassControllerProvider.notifier).forgotPass();
   }
@@ -65,10 +65,9 @@ class _ForgotPasswordPageState extends ConsumerState<ForgotPasswordPage> {
         resizeToAvoidBottomInset: true,
         backgroundColor: color.primary,
         body: NestedScrollView(
-            headerSliverBuilder: (context, innerBoxIsScrolled) => [
-                  _topAppBar(),
-                ],
-            body: _forgotPasswordBody()),
+          headerSliverBuilder: (context, innerBoxIsScrolled) => [_topAppBar()],
+          body: _forgotPasswordBody(),
+        ),
       ),
     );
   }
@@ -85,8 +84,8 @@ class _ForgotPasswordPageState extends ConsumerState<ForgotPasswordPage> {
     );
   }
 
-//endregion
-//region Sign up verify body
+  //endregion
+  //region Sign up verify body
   Widget _forgotPasswordBody() {
     final text = Theme.of(context).textTheme;
     final color = Theme.of(context).colorScheme;
@@ -95,69 +94,75 @@ class _ForgotPasswordPageState extends ConsumerState<ForgotPasswordPage> {
     return Container(
       padding: EdgeInsets.symmetric(vertical: 20, horizontal: 30),
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.vertical(top: Radius.circular(30)),
-          color: color.surface),
+        borderRadius: BorderRadius.vertical(top: Radius.circular(30)),
+        color: color.surface,
+      ),
       child: SingleChildScrollView(
         child: Column(
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              TextButton.icon(
-                onPressed: context.pop,
-                label: Text(
-                  'Back to login',
-                  style: text.labelLarge?.copyWith(color: color.primary),
-                ),
-                icon: Icon(Icons.arrow_back_rounded, color: color.primary),
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            TextButton.icon(
+              onPressed: context.pop,
+              label: Text(
+                'Back to login',
+                style: text.labelLarge?.copyWith(color: color.primary),
               ),
-              Text('Forgot Password?',
-                  style: text.headlineMedium?.copyWith(
-                      color: color.primary, fontWeight: FontWeight.w800)),
-              SizedBox(
-                height: 5,
+              icon: Icon(Icons.arrow_back_rounded, color: color.primary),
+            ),
+            Text(
+              'Forgot Password?',
+              style: text.headlineMedium?.copyWith(
+                color: color.primary,
+                fontWeight: FontWeight.w800,
               ),
-              Text(
-                  'Don\'t worry! Please enter the email associated with your account below.',
-                  style: text.labelMedium?.copyWith(
-                      fontWeight: FontWeight.w600,
-                      color: color.onSurfaceVariant)),
-              SizedBox(
-                height: 25,
+            ),
+            SizedBox(height: 5),
+            Text(
+              'Don\'t worry! Please enter the email associated with your account below.',
+              style: text.labelMedium?.copyWith(
+                fontWeight: FontWeight.w600,
+                color: color.onSurfaceVariant,
               ),
-              TaskitOutlineTextField(
-                  labelText: "Email",
-                  controller: _emailController,
-                  autofillHints: AutofillHints.email,
-                  keyboardType: TextInputType.emailAddress),
-              SizedBox(
-                height: 30,
-              ),
-              SizedBox(
-                width: double.infinity,
-                child: ElevatedButton(
-                  onPressed: _onSummit,
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: color.primary,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20.0),
-                    ),
+            ),
+            SizedBox(height: 25),
+            TaskitOutlineTextField(
+              labelText: "Email",
+              controller: _emailController,
+              autofillHints: const [AutofillHints.email],
+              keyboardType: TextInputType.emailAddress,
+            ),
+            SizedBox(height: 30),
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton(
+                onPressed: _onSummit,
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: color.primary,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20.0),
                   ),
-                  child: state.isLoading
-                      ? Center(
-                          child: CircularProgressIndicator(
-                            color: color.onPrimary,
-                          ),
-                        )
-                      : Text('Send Code',
-                          style: text.titleMedium?.copyWith(
-                            color: color.onPrimary,
-                          )),
                 ),
+                child: state.isLoading
+                    ? Center(
+                        child: CircularProgressIndicator(
+                          color: color.onPrimary,
+                        ),
+                      )
+                    : Text(
+                        'Send Code',
+                        style: text.titleMedium?.copyWith(
+                          color: color.onPrimary,
+                        ),
+                      ),
               ),
-            ]),
+            ),
+          ],
+        ),
       ),
     );
   }
-//endregion
+
+  //endregion
 }

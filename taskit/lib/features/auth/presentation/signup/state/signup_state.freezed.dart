@@ -14,7 +14,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$SignupState {
 
- bool? get isSignUpSuccess; bool? get isVerifySuccess; bool get isLoading; String? get error; SignupModel get signupForm; SignupVerifyModel get verifyForm; bool get isPasswordVisibility; bool get isConfirmPasswordVisibility;
+ bool get isLoading; String? get apiError; SignupStatus get status; SignupRegisterEntity get registerForm; SignupVerifyEntity get verifyForm; SignupResendEntity get resendForm;
 /// Create a copy of SignupState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -25,16 +25,16 @@ $SignupStateCopyWith<SignupState> get copyWith => _$SignupStateCopyWithImpl<Sign
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is SignupState&&(identical(other.isSignUpSuccess, isSignUpSuccess) || other.isSignUpSuccess == isSignUpSuccess)&&(identical(other.isVerifySuccess, isVerifySuccess) || other.isVerifySuccess == isVerifySuccess)&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading)&&(identical(other.error, error) || other.error == error)&&(identical(other.signupForm, signupForm) || other.signupForm == signupForm)&&(identical(other.verifyForm, verifyForm) || other.verifyForm == verifyForm)&&(identical(other.isPasswordVisibility, isPasswordVisibility) || other.isPasswordVisibility == isPasswordVisibility)&&(identical(other.isConfirmPasswordVisibility, isConfirmPasswordVisibility) || other.isConfirmPasswordVisibility == isConfirmPasswordVisibility));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is SignupState&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading)&&(identical(other.apiError, apiError) || other.apiError == apiError)&&(identical(other.status, status) || other.status == status)&&const DeepCollectionEquality().equals(other.registerForm, registerForm)&&const DeepCollectionEquality().equals(other.verifyForm, verifyForm)&&const DeepCollectionEquality().equals(other.resendForm, resendForm));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,isSignUpSuccess,isVerifySuccess,isLoading,error,signupForm,verifyForm,isPasswordVisibility,isConfirmPasswordVisibility);
+int get hashCode => Object.hash(runtimeType,isLoading,apiError,status,const DeepCollectionEquality().hash(registerForm),const DeepCollectionEquality().hash(verifyForm),const DeepCollectionEquality().hash(resendForm));
 
 @override
 String toString() {
-  return 'SignupState(isSignUpSuccess: $isSignUpSuccess, isVerifySuccess: $isVerifySuccess, isLoading: $isLoading, error: $error, signupForm: $signupForm, verifyForm: $verifyForm, isPasswordVisibility: $isPasswordVisibility, isConfirmPasswordVisibility: $isConfirmPasswordVisibility)';
+  return 'SignupState(isLoading: $isLoading, apiError: $apiError, status: $status, registerForm: $registerForm, verifyForm: $verifyForm, resendForm: $resendForm)';
 }
 
 
@@ -45,11 +45,11 @@ abstract mixin class $SignupStateCopyWith<$Res>  {
   factory $SignupStateCopyWith(SignupState value, $Res Function(SignupState) _then) = _$SignupStateCopyWithImpl;
 @useResult
 $Res call({
- bool? isSignUpSuccess, bool? isVerifySuccess, bool isLoading, String? error, SignupModel signupForm, SignupVerifyModel verifyForm, bool isPasswordVisibility, bool isConfirmPasswordVisibility
+ bool isLoading, String? apiError, SignupStatus status, SignupRegisterEntity registerForm, SignupVerifyEntity verifyForm, SignupResendEntity resendForm
 });
 
 
-$SignupModelCopyWith<$Res> get signupForm;$SignupVerifyModelCopyWith<$Res> get verifyForm;
+
 
 }
 /// @nodoc
@@ -62,38 +62,18 @@ class _$SignupStateCopyWithImpl<$Res>
 
 /// Create a copy of SignupState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? isSignUpSuccess = freezed,Object? isVerifySuccess = freezed,Object? isLoading = null,Object? error = freezed,Object? signupForm = null,Object? verifyForm = null,Object? isPasswordVisibility = null,Object? isConfirmPasswordVisibility = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? isLoading = null,Object? apiError = freezed,Object? status = null,Object? registerForm = freezed,Object? verifyForm = freezed,Object? resendForm = freezed,}) {
   return _then(_self.copyWith(
-isSignUpSuccess: freezed == isSignUpSuccess ? _self.isSignUpSuccess : isSignUpSuccess // ignore: cast_nullable_to_non_nullable
-as bool?,isVerifySuccess: freezed == isVerifySuccess ? _self.isVerifySuccess : isVerifySuccess // ignore: cast_nullable_to_non_nullable
-as bool?,isLoading: null == isLoading ? _self.isLoading : isLoading // ignore: cast_nullable_to_non_nullable
-as bool,error: freezed == error ? _self.error : error // ignore: cast_nullable_to_non_nullable
-as String?,signupForm: null == signupForm ? _self.signupForm : signupForm // ignore: cast_nullable_to_non_nullable
-as SignupModel,verifyForm: null == verifyForm ? _self.verifyForm : verifyForm // ignore: cast_nullable_to_non_nullable
-as SignupVerifyModel,isPasswordVisibility: null == isPasswordVisibility ? _self.isPasswordVisibility : isPasswordVisibility // ignore: cast_nullable_to_non_nullable
-as bool,isConfirmPasswordVisibility: null == isConfirmPasswordVisibility ? _self.isConfirmPasswordVisibility : isConfirmPasswordVisibility // ignore: cast_nullable_to_non_nullable
-as bool,
+isLoading: null == isLoading ? _self.isLoading : isLoading // ignore: cast_nullable_to_non_nullable
+as bool,apiError: freezed == apiError ? _self.apiError : apiError // ignore: cast_nullable_to_non_nullable
+as String?,status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
+as SignupStatus,registerForm: freezed == registerForm ? _self.registerForm : registerForm // ignore: cast_nullable_to_non_nullable
+as SignupRegisterEntity,verifyForm: freezed == verifyForm ? _self.verifyForm : verifyForm // ignore: cast_nullable_to_non_nullable
+as SignupVerifyEntity,resendForm: freezed == resendForm ? _self.resendForm : resendForm // ignore: cast_nullable_to_non_nullable
+as SignupResendEntity,
   ));
 }
-/// Create a copy of SignupState
-/// with the given fields replaced by the non-null parameter values.
-@override
-@pragma('vm:prefer-inline')
-$SignupModelCopyWith<$Res> get signupForm {
-  
-  return $SignupModelCopyWith<$Res>(_self.signupForm, (value) {
-    return _then(_self.copyWith(signupForm: value));
-  });
-}/// Create a copy of SignupState
-/// with the given fields replaced by the non-null parameter values.
-@override
-@pragma('vm:prefer-inline')
-$SignupVerifyModelCopyWith<$Res> get verifyForm {
-  
-  return $SignupVerifyModelCopyWith<$Res>(_self.verifyForm, (value) {
-    return _then(_self.copyWith(verifyForm: value));
-  });
-}
+
 }
 
 
@@ -175,10 +155,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( bool? isSignUpSuccess,  bool? isVerifySuccess,  bool isLoading,  String? error,  SignupModel signupForm,  SignupVerifyModel verifyForm,  bool isPasswordVisibility,  bool isConfirmPasswordVisibility)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( bool isLoading,  String? apiError,  SignupStatus status,  SignupRegisterEntity registerForm,  SignupVerifyEntity verifyForm,  SignupResendEntity resendForm)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _SignupState() when $default != null:
-return $default(_that.isSignUpSuccess,_that.isVerifySuccess,_that.isLoading,_that.error,_that.signupForm,_that.verifyForm,_that.isPasswordVisibility,_that.isConfirmPasswordVisibility);case _:
+return $default(_that.isLoading,_that.apiError,_that.status,_that.registerForm,_that.verifyForm,_that.resendForm);case _:
   return orElse();
 
 }
@@ -196,10 +176,10 @@ return $default(_that.isSignUpSuccess,_that.isVerifySuccess,_that.isLoading,_tha
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( bool? isSignUpSuccess,  bool? isVerifySuccess,  bool isLoading,  String? error,  SignupModel signupForm,  SignupVerifyModel verifyForm,  bool isPasswordVisibility,  bool isConfirmPasswordVisibility)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( bool isLoading,  String? apiError,  SignupStatus status,  SignupRegisterEntity registerForm,  SignupVerifyEntity verifyForm,  SignupResendEntity resendForm)  $default,) {final _that = this;
 switch (_that) {
 case _SignupState():
-return $default(_that.isSignUpSuccess,_that.isVerifySuccess,_that.isLoading,_that.error,_that.signupForm,_that.verifyForm,_that.isPasswordVisibility,_that.isConfirmPasswordVisibility);case _:
+return $default(_that.isLoading,_that.apiError,_that.status,_that.registerForm,_that.verifyForm,_that.resendForm);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -216,10 +196,10 @@ return $default(_that.isSignUpSuccess,_that.isVerifySuccess,_that.isLoading,_tha
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( bool? isSignUpSuccess,  bool? isVerifySuccess,  bool isLoading,  String? error,  SignupModel signupForm,  SignupVerifyModel verifyForm,  bool isPasswordVisibility,  bool isConfirmPasswordVisibility)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( bool isLoading,  String? apiError,  SignupStatus status,  SignupRegisterEntity registerForm,  SignupVerifyEntity verifyForm,  SignupResendEntity resendForm)?  $default,) {final _that = this;
 switch (_that) {
 case _SignupState() when $default != null:
-return $default(_that.isSignUpSuccess,_that.isVerifySuccess,_that.isLoading,_that.error,_that.signupForm,_that.verifyForm,_that.isPasswordVisibility,_that.isConfirmPasswordVisibility);case _:
+return $default(_that.isLoading,_that.apiError,_that.status,_that.registerForm,_that.verifyForm,_that.resendForm);case _:
   return null;
 
 }
@@ -231,17 +211,15 @@ return $default(_that.isSignUpSuccess,_that.isVerifySuccess,_that.isLoading,_tha
 
 
 class _SignupState implements SignupState {
-   _SignupState({this.isSignUpSuccess, this.isVerifySuccess, this.isLoading = false, this.error, this.signupForm = const SignupModel(email: '', password: ''), this.verifyForm = const SignupVerifyModel(email: '', otp: ''), this.isPasswordVisibility = false, this.isConfirmPasswordVisibility = false});
+   _SignupState({this.isLoading = false, this.apiError, this.status = SignupStatus.initial, this.registerForm = SignupEntity.initialRegister, this.verifyForm = SignupEntity.initialVerify, this.resendForm = SignupEntity.initialResend});
   
 
-@override final  bool? isSignUpSuccess;
-@override final  bool? isVerifySuccess;
 @override@JsonKey() final  bool isLoading;
-@override final  String? error;
-@override@JsonKey() final  SignupModel signupForm;
-@override@JsonKey() final  SignupVerifyModel verifyForm;
-@override@JsonKey() final  bool isPasswordVisibility;
-@override@JsonKey() final  bool isConfirmPasswordVisibility;
+@override final  String? apiError;
+@override@JsonKey() final  SignupStatus status;
+@override@JsonKey() final  SignupRegisterEntity registerForm;
+@override@JsonKey() final  SignupVerifyEntity verifyForm;
+@override@JsonKey() final  SignupResendEntity resendForm;
 
 /// Create a copy of SignupState
 /// with the given fields replaced by the non-null parameter values.
@@ -253,16 +231,16 @@ _$SignupStateCopyWith<_SignupState> get copyWith => __$SignupStateCopyWithImpl<_
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _SignupState&&(identical(other.isSignUpSuccess, isSignUpSuccess) || other.isSignUpSuccess == isSignUpSuccess)&&(identical(other.isVerifySuccess, isVerifySuccess) || other.isVerifySuccess == isVerifySuccess)&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading)&&(identical(other.error, error) || other.error == error)&&(identical(other.signupForm, signupForm) || other.signupForm == signupForm)&&(identical(other.verifyForm, verifyForm) || other.verifyForm == verifyForm)&&(identical(other.isPasswordVisibility, isPasswordVisibility) || other.isPasswordVisibility == isPasswordVisibility)&&(identical(other.isConfirmPasswordVisibility, isConfirmPasswordVisibility) || other.isConfirmPasswordVisibility == isConfirmPasswordVisibility));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _SignupState&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading)&&(identical(other.apiError, apiError) || other.apiError == apiError)&&(identical(other.status, status) || other.status == status)&&const DeepCollectionEquality().equals(other.registerForm, registerForm)&&const DeepCollectionEquality().equals(other.verifyForm, verifyForm)&&const DeepCollectionEquality().equals(other.resendForm, resendForm));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,isSignUpSuccess,isVerifySuccess,isLoading,error,signupForm,verifyForm,isPasswordVisibility,isConfirmPasswordVisibility);
+int get hashCode => Object.hash(runtimeType,isLoading,apiError,status,const DeepCollectionEquality().hash(registerForm),const DeepCollectionEquality().hash(verifyForm),const DeepCollectionEquality().hash(resendForm));
 
 @override
 String toString() {
-  return 'SignupState(isSignUpSuccess: $isSignUpSuccess, isVerifySuccess: $isVerifySuccess, isLoading: $isLoading, error: $error, signupForm: $signupForm, verifyForm: $verifyForm, isPasswordVisibility: $isPasswordVisibility, isConfirmPasswordVisibility: $isConfirmPasswordVisibility)';
+  return 'SignupState(isLoading: $isLoading, apiError: $apiError, status: $status, registerForm: $registerForm, verifyForm: $verifyForm, resendForm: $resendForm)';
 }
 
 
@@ -273,11 +251,11 @@ abstract mixin class _$SignupStateCopyWith<$Res> implements $SignupStateCopyWith
   factory _$SignupStateCopyWith(_SignupState value, $Res Function(_SignupState) _then) = __$SignupStateCopyWithImpl;
 @override @useResult
 $Res call({
- bool? isSignUpSuccess, bool? isVerifySuccess, bool isLoading, String? error, SignupModel signupForm, SignupVerifyModel verifyForm, bool isPasswordVisibility, bool isConfirmPasswordVisibility
+ bool isLoading, String? apiError, SignupStatus status, SignupRegisterEntity registerForm, SignupVerifyEntity verifyForm, SignupResendEntity resendForm
 });
 
 
-@override $SignupModelCopyWith<$Res> get signupForm;@override $SignupVerifyModelCopyWith<$Res> get verifyForm;
+
 
 }
 /// @nodoc
@@ -290,39 +268,19 @@ class __$SignupStateCopyWithImpl<$Res>
 
 /// Create a copy of SignupState
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? isSignUpSuccess = freezed,Object? isVerifySuccess = freezed,Object? isLoading = null,Object? error = freezed,Object? signupForm = null,Object? verifyForm = null,Object? isPasswordVisibility = null,Object? isConfirmPasswordVisibility = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? isLoading = null,Object? apiError = freezed,Object? status = null,Object? registerForm = freezed,Object? verifyForm = freezed,Object? resendForm = freezed,}) {
   return _then(_SignupState(
-isSignUpSuccess: freezed == isSignUpSuccess ? _self.isSignUpSuccess : isSignUpSuccess // ignore: cast_nullable_to_non_nullable
-as bool?,isVerifySuccess: freezed == isVerifySuccess ? _self.isVerifySuccess : isVerifySuccess // ignore: cast_nullable_to_non_nullable
-as bool?,isLoading: null == isLoading ? _self.isLoading : isLoading // ignore: cast_nullable_to_non_nullable
-as bool,error: freezed == error ? _self.error : error // ignore: cast_nullable_to_non_nullable
-as String?,signupForm: null == signupForm ? _self.signupForm : signupForm // ignore: cast_nullable_to_non_nullable
-as SignupModel,verifyForm: null == verifyForm ? _self.verifyForm : verifyForm // ignore: cast_nullable_to_non_nullable
-as SignupVerifyModel,isPasswordVisibility: null == isPasswordVisibility ? _self.isPasswordVisibility : isPasswordVisibility // ignore: cast_nullable_to_non_nullable
-as bool,isConfirmPasswordVisibility: null == isConfirmPasswordVisibility ? _self.isConfirmPasswordVisibility : isConfirmPasswordVisibility // ignore: cast_nullable_to_non_nullable
-as bool,
+isLoading: null == isLoading ? _self.isLoading : isLoading // ignore: cast_nullable_to_non_nullable
+as bool,apiError: freezed == apiError ? _self.apiError : apiError // ignore: cast_nullable_to_non_nullable
+as String?,status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
+as SignupStatus,registerForm: freezed == registerForm ? _self.registerForm : registerForm // ignore: cast_nullable_to_non_nullable
+as SignupRegisterEntity,verifyForm: freezed == verifyForm ? _self.verifyForm : verifyForm // ignore: cast_nullable_to_non_nullable
+as SignupVerifyEntity,resendForm: freezed == resendForm ? _self.resendForm : resendForm // ignore: cast_nullable_to_non_nullable
+as SignupResendEntity,
   ));
 }
 
-/// Create a copy of SignupState
-/// with the given fields replaced by the non-null parameter values.
-@override
-@pragma('vm:prefer-inline')
-$SignupModelCopyWith<$Res> get signupForm {
-  
-  return $SignupModelCopyWith<$Res>(_self.signupForm, (value) {
-    return _then(_self.copyWith(signupForm: value));
-  });
-}/// Create a copy of SignupState
-/// with the given fields replaced by the non-null parameter values.
-@override
-@pragma('vm:prefer-inline')
-$SignupVerifyModelCopyWith<$Res> get verifyForm {
-  
-  return $SignupVerifyModelCopyWith<$Res>(_self.verifyForm, (value) {
-    return _then(_self.copyWith(verifyForm: value));
-  });
-}
+
 }
 
 // dart format on

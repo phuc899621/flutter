@@ -8,8 +8,9 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 //import 'package:google_sign_in/google_sign_in.dart';
 import 'package:http/http.dart' as http;
+import 'package:taskit/shared/widget/text_field/taskit_outline_text_field.dart';
+import 'package:taskit/shared/widget/text_field/taskit_password_text_field.dart';
 
-import '../../../../../shared/presentation/widget/custom_taskit_textfield.dart';
 import '../controller/login_controller.dart';
 
 class LoginPage extends ConsumerStatefulWidget {
@@ -126,6 +127,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
         resizeToAvoidBottomInset: false,
         backgroundColor: color.primary,
         body: NestedScrollView(
+          physics: NeverScrollableScrollPhysics(),
           headerSliverBuilder: (context, innerBoxIsScrolled) => [_topAppBar()],
           body: _loginBody(),
         ),
@@ -224,12 +226,12 @@ class _LoginPageState extends ConsumerState<LoginPage> {
               child: TaskitOutlineTextField(
                 labelText: 'Email',
                 controller: _emailController,
-                autofillHints: AutofillHints.email,
+                autofillHints: const [AutofillHints.email],
                 keyboardType: TextInputType.emailAddress,
               ),
             ),
             SizedBox(height: 15),
-            TaskitOutLineTextFieldWithPassword(
+            TaskitPasswordTextField(
               labelText: 'Password',
               controller: _passwordController,
             ),
@@ -290,12 +292,17 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                     borderRadius: BorderRadius.circular(20.0),
                   ),
                 ),
-                child: Column(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  spacing: 15.0,
                   children: [
-                    FaIcon(FontAwesomeIcons.google),
+                    FaIcon(FontAwesomeIcons.google, color: color.onSurface),
                     Text(
                       'Login with Google',
-                      style: text.titleMedium?.copyWith(color: color.onPrimary),
+                      style: text.titleMedium?.copyWith(
+                        color: color.onSurface,
+                        fontWeight: FontWeight.w600,
+                      ),
                     ),
                   ],
                 ),

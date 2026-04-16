@@ -1,4 +1,4 @@
 class AppConfigs {
-  static String baseUrl = 'http://143.198.84.219:8080/api/v1';
-  static String auth = '/user';
+  static const String baseUrl = 'https://taskit-api.id.vn/api/v1/';
+  static const String auth = 'auth';
 }

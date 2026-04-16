@@ -1,18 +1,18 @@
 import 'package:taskit/features/auth/data/dto/req/signup/signup_request.dart';
-import 'package:taskit/features/auth/data/dto/req/signup/signup_verify_request.dart';
 import 'package:taskit/features/auth/data/dto/res/forgot_pass/verify.dart';
 
 import '../../../../shared/data/dto/response/base_response.dart';
-import '../entites/forgot_pass/forgot_pass_verify.dart';
-import '../entites/signup/signup_model.dart';
-import '../entites/signup/signup_verify_model.dart';
+import '../entities/forgot_pass/forgot_pass_verify.dart';
+import '../entities/signup/signup_entity.dart';
 
 abstract interface class AuthEntityMapper {
-  ForgotPassVerifyEntity mapToForgotPassVerifyEntity(
+  ForgotPassVerifyEntity toForgotPassVerifyEntity(
     BaseResponse<ForgotPassData> data,
   );
 
-  SignupRequest mapToSignupRequest(SignupModel data);
+  SignupRegisterRequest toSignupRegisterRequest(SignupRegisterEntity data);
 
-  SignupVerifyRequest mapToSignupVerifyRequest(SignupVerifyModel data);
+  SignupResendRequest toSignupResendRequest(SignupResendEntity data);
+
+  SignupVerifyRequest toSignupVerifyRequest(SignupVerifyEntity data);
 }

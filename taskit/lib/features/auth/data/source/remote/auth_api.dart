@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:retrofit/error_logger.dart';
 import 'package:retrofit/http.dart';
 
+import '../../../../../shared/config/app/app_config.dart';
 import '../../../../../shared/data/dto/response/base_data.dart';
 import '../../../../../shared/data/dto/response/base_response.dart';
 import '../../../../../shared/data/source/remote/network/network_service.dart';
@@ -11,7 +12,6 @@ import '../../dto/req/forgot_pass/forgot_pass_verify.dart';
 import '../../dto/req/forgot_pass/reset_pass.dart';
 import '../../dto/req/login/login_request.dart';
 import '../../dto/req/signup/signup_request.dart';
-import '../../dto/req/signup/signup_verify_request.dart';
 import '../../dto/res/forgot_pass/verify.dart';
 import '../../dto/res/login/login_data.dart';
 import '../../dto/res/login/login_verify_data.dart';
@@ -24,7 +24,7 @@ final authApiProvider = Provider<AuthApi>((ref) {
   return AuthApi(dio);
 });
 
-@RestApi(baseUrl: '/auth')
+@RestApi(baseUrl: AppConfigs.auth)
 sealed class AuthApi {
   factory AuthApi(Dio dio) => _AuthApi(dio);
 
@@ -36,7 +36,8 @@ sealed class AuthApi {
 
   @GET('/login/verify')
   Future<BaseResponse<LoginVerifyData>> checkLogin(
-      @Header('Authorization') String token);
+    @Header('Authorization') String token,
+  );
 
   @POST('/signup')
   /*
@@ -45,7 +46,10 @@ sealed class AuthApi {
   Future<BaseResponse<BaseData>> signup(@Body() SignupRequest data);
 
   @POST('/signup/verify')
-  Future<BaseResponse<BaseData>> signupVerify(@Body() SignupVerifyRequest data);
+  Future<BaseResponse<BaseData>> signupVerify(@Body() SignupRequest data);
+
+  @POST('/signup/resend')
+  Future<BaseResponse<BaseData>> signupResend(@Body() SignupRequest data);
 
   @POST('/forgot-password')
   /*
@@ -55,9 +59,12 @@ sealed class AuthApi {
 
   @POST('/forgot-password/verify')
   Future<BaseResponse<ForgotPassData>> forgotPassVerify(
-      @Body() ForgotPassVerifyRequest data);
+    @Body() ForgotPassVerifyRequest data,
+  );
 
   @PUT('/forgot-password/reset')
   Future<BaseResponse<BaseData>> resetPass(
-      @Body() ResetPassRequest data, @Header('Reset-Token') String token);
+    @Body() ResetPassRequest data,
+    @Header('Reset-Token') String token,
+  );
 }

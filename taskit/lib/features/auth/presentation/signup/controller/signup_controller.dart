@@ -1,9 +1,8 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:taskit/features/auth/data/dto/req/signup/signup_verify_request.dart';
-import 'package:taskit/features/auth/domain/entites/signup/signup_model.dart';
-import 'package:taskit/features/auth/domain/entites/signup/signup_verify_model.dart';
+import 'package:taskit/shared/constants/signup_status.dart';
 
 import '../../../application/auth_service_impl.dart';
+import '../../../domain/entities/signup/signup_entity.dart';
 import '../state/signup_state.dart';
 
 final signupControllerProvider =
@@ -17,82 +16,116 @@ class SignupController extends Notifier<SignupState> {
     return SignupState();
   }
 
-  void togglePasswordVisibility() {
-    state = state.copyWith(isPasswordVisibility: !state.isPasswordVisibility);
-  }
-
-  void toggleConfirmPasswordVisibility() {
-    state = state.copyWith(
-      isConfirmPasswordVisibility: !state.isConfirmPasswordVisibility,
-    );
-  }
-
-  Future<void> signup(String email, String password) async {
+  Future<void> signup(
+    String email,
+    String password,
+    String passwordConfirm,
+  ) async {
     try {
       state = state.copyWith(
         isLoading: true,
-        error: null,
-        isSignUpSuccess: null,
-        signupForm: SignupModel(email: email, password: password),
+        apiError: null,
+        status: SignupStatus.initial,
+        registerForm: SignupRegisterEntity(email: email, password: password),
       );
-
       final result = await ref
           .read(authServiceProvider)
-          .signup(state.signupForm);
+          .signup(state.registerForm);
       result.when(
         (success) {
-          state = state.copyWith(isLoading: false, isSignUpSuccess: true);
+          state = state.copyWith(
+            isLoading: false,
+            status: SignupStatus.signupSuccess,
+            resendForm: SignupResendEntity(email: email),
+          );
         },
         (failure) {
           state = state.copyWith(
             isLoading: false,
-            isSignUpSuccess: null,
-            error: failure.message,
+            status: SignupStatus.initial,
+            apiError: failure.message,
           );
         },
       );
     } catch (e) {
       state = state.copyWith(
         isLoading: false,
-        isSignUpSuccess: null,
-        error: e.toString(),
+        status: SignupStatus.initial,
+        apiError: e.toString(),
       );
     }
   }
 
+  Future<void> resend() async {
+    try {
+      state = state.copyWith(
+        isLoading: true,
+        apiError: null,
+        status: SignupStatus.initial,
+      );
+      final result = await ref
+          .read(authServiceProvider)
+          .signupResend(state.resendForm);
+      result.when(
+        (success) {
+          state = state.copyWith(
+            isLoading: false,
+            status: SignupStatus.resendSuccess,
+          );
+        },
+        (failure) {
+          state = state.copyWith(
+            isLoading: false,
+            status: SignupStatus.initial,
+            apiError: failure.message,
+          );
+        },
+      );
+    } catch (e) {
+      state = state.copyWith(
+        isLoading: false,
+        status: SignupStatus.initial,
+        apiError: e.toString(),
+      );
+    }
+  }
 
   Future<void> verify(String otp) async {
     try {
       //trang thai loading
       state = state.copyWith(
         isLoading: true,
-        error: null,
-        isVerifySuccess: null,
-        verifyForm: SignupVerifyModel(
-          email: state.signupForm.email,
+        apiError: null,
+        status: SignupStatus.initial,
+        verifyForm: SignupVerifyEntity(
+          email: state.registerForm.email,
           otp: otp,
         ),
       );
-      final result = await ref.read(authServiceProvider).signupVerify(state.verifyForm);
+      final result = await ref
+          .read(authServiceProvider)
+          .signupVerify(state.verifyForm);
       result.when(
         (success) {
-          state = state.copyWith(isLoading: false, isVerifySuccess: true);
+          state = state.copyWith(
+            isLoading: false,
+            status: SignupStatus.verifySuccess,
+          );
         },
         (failure) {
           state = state.copyWith(
             isLoading: false,
-            isVerifySuccess: null,
-            error: failure.message,
+            status: SignupStatus.initial,
+            apiError: failure.message,
           );
         },
       );
     } catch (e) {
       state = state.copyWith(
         isLoading: false,
-        isVerifySuccess: null,
-        error: e.toString(),
+        status: SignupStatus.initial,
+        apiError: e.toString(),
       );
     }
   }
-
 }

@@ -11,11 +11,38 @@ part of 'signup_request.dart';
 
 // dart format off
 T _$identity<T>(T value) => value;
+SignupRequest _$SignupRequestFromJson(
+  Map<String, dynamic> json
+) {
+        switch (json['runtimeType']) {
+                  case 'register':
+          return SignupRegisterRequest.fromJson(
+            json
+          );
+                case 'verify':
+          return SignupVerifyRequest.fromJson(
+            json
+          );
+                case 'resend':
+          return SignupResendRequest.fromJson(
+            json
+          );
+        
+          default:
+            throw CheckedFromJsonException(
+  json,
+  'runtimeType',
+  'SignupRequest',
+  'Invalid union type "${json['runtimeType']}"!'
+);
+        }
+      
+}
 
 /// @nodoc
 mixin _$SignupRequest {
 
- String get email; String get password;
+ String get email;
 /// Create a copy of SignupRequest
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -28,16 +55,16 @@ $SignupRequestCopyWith<SignupRequest> get copyWith => _$SignupRequestCopyWithImp
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is SignupRequest&&(identical(other.email, email) || other.email == email)&&(identical(other.password, password) || other.password == password));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is SignupRequest&&(identical(other.email, email) || other.email == email));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,email,password);
+int get hashCode => Object.hash(runtimeType,email);
 
 @override
 String toString() {
-  return 'SignupRequest(email: $email, password: $password)';
+  return 'SignupRequest(email: $email)';
 }
 
 
@@ -48,7 +75,7 @@ abstract mixin class $SignupRequestCopyWith<$Res>  {
   factory $SignupRequestCopyWith(SignupRequest value, $Res Function(SignupRequest) _then) = _$SignupRequestCopyWithImpl;
 @useResult
 $Res call({
- String email, String password
+ String email
 });
 
 
@@ -65,10 +92,9 @@ class _$SignupRequestCopyWithImpl<$Res>
 
 /// Create a copy of SignupRequest
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? email = null,Object? password = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? email = null,}) {
   return _then(_self.copyWith(
 email: null == email ? _self.email : email // ignore: cast_nullable_to_non_nullable
-as String,password: null == password ? _self.password : password // ignore: cast_nullable_to_non_nullable
 as String,
   ));
 }
@@ -90,11 +116,13 @@ extension SignupRequestPatterns on SignupRequest {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _SignupRequest value)?  $default,{required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( SignupRegisterRequest value)?  register,TResult Function( SignupVerifyRequest value)?  verify,TResult Function( SignupResendRequest value)?  resend,required TResult orElse(),}){
 final _that = this;
 switch (_that) {
-case _SignupRequest() when $default != null:
-return $default(_that);case _:
+case SignupRegisterRequest() when register != null:
+return register(_that);case SignupVerifyRequest() when verify != null:
+return verify(_that);case SignupResendRequest() when resend != null:
+return resend(_that);case _:
   return orElse();
 
 }
@@ -112,11 +140,13 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _SignupRequest value)  $default,){
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( SignupRegisterRequest value)  register,required TResult Function( SignupVerifyRequest value)  verify,required TResult Function( SignupResendRequest value)  resend,}){
 final _that = this;
 switch (_that) {
-case _SignupRequest():
-return $default(_that);case _:
+case SignupRegisterRequest():
+return register(_that);case SignupVerifyRequest():
+return verify(_that);case SignupResendRequest():
+return resend(_that);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -133,11 +163,13 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _SignupRequest value)?  $default,){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( SignupRegisterRequest value)?  register,TResult? Function( SignupVerifyRequest value)?  verify,TResult? Function( SignupResendRequest value)?  resend,}){
 final _that = this;
 switch (_that) {
-case _SignupRequest() when $default != null:
-return $default(_that);case _:
+case SignupRegisterRequest() when register != null:
+return register(_that);case SignupVerifyRequest() when verify != null:
+return verify(_that);case SignupResendRequest() when resend != null:
+return resend(_that);case _:
   return null;
 
 }
@@ -154,10 +186,12 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String email,  String password)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( String email,  String password)?  register,TResult Function( String email,  String otp)?  verify,TResult Function( String email)?  resend,required TResult orElse(),}) {final _that = this;
 switch (_that) {
-case _SignupRequest() when $default != null:
-return $default(_that.email,_that.password);case _:
+case SignupRegisterRequest() when register != null:
+return register(_that.email,_that.password);case SignupVerifyRequest() when verify != null:
+return verify(_that.email,_that.otp);case SignupResendRequest() when resend != null:
+return resend(_that.email);case _:
   return orElse();
 
 }
@@ -175,10 +209,12 @@ return $default(_that.email,_that.password);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String email,  String password)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( String email,  String password)  register,required TResult Function( String email,  String otp)  verify,required TResult Function( String email)  resend,}) {final _that = this;
 switch (_that) {
-case _SignupRequest():
-return $default(_that.email,_that.password);case _:
+case SignupRegisterRequest():
+return register(_that.email,_that.password);case SignupVerifyRequest():
+return verify(_that.email,_that.otp);case SignupResendRequest():
+return resend(_that.email);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -195,10 +231,12 @@ return $default(_that.email,_that.password);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String email,  String password)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( String email,  String password)?  register,TResult? Function( String email,  String otp)?  verify,TResult? Function( String email)?  resend,}) {final _that = this;
 switch (_that) {
-case _SignupRequest() when $default != null:
-return $default(_that.email,_that.password);case _:
+case SignupRegisterRequest() when register != null:
+return register(_that.email,_that.password);case SignupVerifyRequest() when verify != null:
+return verify(_that.email,_that.otp);case SignupResendRequest() when resend != null:
+return resend(_that.email);case _:
   return null;
 
 }
@@ -209,27 +247,31 @@ return $default(_that.email,_that.password);case _:
 /// @nodoc
 @JsonSerializable()
 
-class _SignupRequest implements SignupRequest {
-  const _SignupRequest({required this.email, required this.password});
-  factory _SignupRequest.fromJson(Map<String, dynamic> json) => _$SignupRequestFromJson(json);
+class SignupRegisterRequest implements SignupRequest {
+  const SignupRegisterRequest({required this.email, required this.password, final  String? $type}): $type = $type ?? 'register';
+  factory SignupRegisterRequest.fromJson(Map<String, dynamic> json) => _$SignupRegisterRequestFromJson(json);
 
 @override final  String email;
-@override final  String password;
+ final  String password;
+
+@JsonKey(name: 'runtimeType')
+final String $type;
+
 
 /// Create a copy of SignupRequest
 /// with the given fields replaced by the non-null parameter values.
 @override @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
-_$SignupRequestCopyWith<_SignupRequest> get copyWith => __$SignupRequestCopyWithImpl<_SignupRequest>(this, _$identity);
+$SignupRegisterRequestCopyWith<SignupRegisterRequest> get copyWith => _$SignupRegisterRequestCopyWithImpl<SignupRegisterRequest>(this, _$identity);
 
 @override
 Map<String, dynamic> toJson() {
-  return _$SignupRequestToJson(this, );
+  return _$SignupRegisterRequestToJson(this, );
 }
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _SignupRequest&&(identical(other.email, email) || other.email == email)&&(identical(other.password, password) || other.password == password));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is SignupRegisterRequest&&(identical(other.email, email) || other.email == email)&&(identical(other.password, password) || other.password == password));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -238,15 +280,15 @@ int get hashCode => Object.hash(runtimeType,email,password);
 
 @override
 String toString() {
-  return 'SignupRequest(email: $email, password: $password)';
+  return 'SignupRequest.register(email: $email, password: $password)';
 }
 
 
 }
 
 /// @nodoc
-abstract mixin class _$SignupRequestCopyWith<$Res> implements $SignupRequestCopyWith<$Res> {
-  factory _$SignupRequestCopyWith(_SignupRequest value, $Res Function(_SignupRequest) _then) = __$SignupRequestCopyWithImpl;
+abstract mixin class $SignupRegisterRequestCopyWith<$Res> implements $SignupRequestCopyWith<$Res> {
+  factory $SignupRegisterRequestCopyWith(SignupRegisterRequest value, $Res Function(SignupRegisterRequest) _then) = _$SignupRegisterRequestCopyWithImpl;
 @override @useResult
 $Res call({
  String email, String password
@@ -257,19 +299,167 @@ $Res call({
 
 }
 /// @nodoc
-class __$SignupRequestCopyWithImpl<$Res>
-    implements _$SignupRequestCopyWith<$Res> {
-  __$SignupRequestCopyWithImpl(this._self, this._then);
+class _$SignupRegisterRequestCopyWithImpl<$Res>
+    implements $SignupRegisterRequestCopyWith<$Res> {
+  _$SignupRegisterRequestCopyWithImpl(this._self, this._then);
 
-  final _SignupRequest _self;
-  final $Res Function(_SignupRequest) _then;
+  final SignupRegisterRequest _self;
+  final $Res Function(SignupRegisterRequest) _then;
 
 /// Create a copy of SignupRequest
 /// with the given fields replaced by the non-null parameter values.
 @override @pragma('vm:prefer-inline') $Res call({Object? email = null,Object? password = null,}) {
-  return _then(_SignupRequest(
+  return _then(SignupRegisterRequest(
 email: null == email ? _self.email : email // ignore: cast_nullable_to_non_nullable
 as String,password: null == password ? _self.password : password // ignore: cast_nullable_to_non_nullable
+as String,
+  ));
+}
+
+
+}
+
+/// @nodoc
+@JsonSerializable()
+
+class SignupVerifyRequest implements SignupRequest {
+  const SignupVerifyRequest({required this.email, required this.otp, final  String? $type}): $type = $type ?? 'verify';
+  factory SignupVerifyRequest.fromJson(Map<String, dynamic> json) => _$SignupVerifyRequestFromJson(json);
+
+@override final  String email;
+ final  String otp;
+
+@JsonKey(name: 'runtimeType')
+final String $type;
+
+
+/// Create a copy of SignupRequest
+/// with the given fields replaced by the non-null parameter values.
+@override @JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$SignupVerifyRequestCopyWith<SignupVerifyRequest> get copyWith => _$SignupVerifyRequestCopyWithImpl<SignupVerifyRequest>(this, _$identity);
+
+@override
+Map<String, dynamic> toJson() {
+  return _$SignupVerifyRequestToJson(this, );
+}
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is SignupVerifyRequest&&(identical(other.email, email) || other.email == email)&&(identical(other.otp, otp) || other.otp == otp));
+}
+
+@JsonKey(includeFromJson: false, includeToJson: false)
+@override
+int get hashCode => Object.hash(runtimeType,email,otp);
+
+@override
+String toString() {
+  return 'SignupRequest.verify(email: $email, otp: $otp)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class $SignupVerifyRequestCopyWith<$Res> implements $SignupRequestCopyWith<$Res> {
+  factory $SignupVerifyRequestCopyWith(SignupVerifyRequest value, $Res Function(SignupVerifyRequest) _then) = _$SignupVerifyRequestCopyWithImpl;
+@override @useResult
+$Res call({
+ String email, String otp
+});
+
+
+
+
+}
+/// @nodoc
+class _$SignupVerifyRequestCopyWithImpl<$Res>
+    implements $SignupVerifyRequestCopyWith<$Res> {
+  _$SignupVerifyRequestCopyWithImpl(this._self, this._then);
+
+  final SignupVerifyRequest _self;
+  final $Res Function(SignupVerifyRequest) _then;
+
+/// Create a copy of SignupRequest
+/// with the given fields replaced by the non-null parameter values.
+@override @pragma('vm:prefer-inline') $Res call({Object? email = null,Object? otp = null,}) {
+  return _then(SignupVerifyRequest(
+email: null == email ? _self.email : email // ignore: cast_nullable_to_non_nullable
+as String,otp: null == otp ? _self.otp : otp // ignore: cast_nullable_to_non_nullable
+as String,
+  ));
+}
+
+
+}
+
+/// @nodoc
+@JsonSerializable()
+
+class SignupResendRequest implements SignupRequest {
+  const SignupResendRequest({required this.email, final  String? $type}): $type = $type ?? 'resend';
+  factory SignupResendRequest.fromJson(Map<String, dynamic> json) => _$SignupResendRequestFromJson(json);
+
+@override final  String email;
+
+@JsonKey(name: 'runtimeType')
+final String $type;
+
+
+/// Create a copy of SignupRequest
+/// with the given fields replaced by the non-null parameter values.
+@override @JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$SignupResendRequestCopyWith<SignupResendRequest> get copyWith => _$SignupResendRequestCopyWithImpl<SignupResendRequest>(this, _$identity);
+
+@override
+Map<String, dynamic> toJson() {
+  return _$SignupResendRequestToJson(this, );
+}
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is SignupResendRequest&&(identical(other.email, email) || other.email == email));
+}
+
+@JsonKey(includeFromJson: false, includeToJson: false)
+@override
+int get hashCode => Object.hash(runtimeType,email);
+
+@override
+String toString() {
+  return 'SignupRequest.resend(email: $email)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class $SignupResendRequestCopyWith<$Res> implements $SignupRequestCopyWith<$Res> {
+  factory $SignupResendRequestCopyWith(SignupResendRequest value, $Res Function(SignupResendRequest) _then) = _$SignupResendRequestCopyWithImpl;
+@override @useResult
+$Res call({
+ String email
+});
+
+
+
+
+}
+/// @nodoc
+class _$SignupResendRequestCopyWithImpl<$Res>
+    implements $SignupResendRequestCopyWith<$Res> {
+  _$SignupResendRequestCopyWithImpl(this._self, this._then);
+
+  final SignupResendRequest _self;
+  final $Res Function(SignupResendRequest) _then;
+
+/// Create a copy of SignupRequest
+/// with the given fields replaced by the non-null parameter values.
+@override @pragma('vm:prefer-inline') $Res call({Object? email = null,}) {
+  return _then(SignupResendRequest(
+email: null == email ? _self.email : email // ignore: cast_nullable_to_non_nullable
 as String,
   ));
 }

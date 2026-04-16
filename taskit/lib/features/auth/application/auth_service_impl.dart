@@ -2,7 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:multiple_result/multiple_result.dart';
 import 'package:taskit/features/auth/data/dto/req/login/login_request.dart';
 import 'package:taskit/features/auth/data/mapper/auth_mapper_impl.dart';
-import 'package:taskit/features/auth/domain/entites/signup/signup_model.dart';
+import 'package:taskit/features/auth/domain/entities/signup/signup_entity.dart';
 import 'package:taskit/features/auth/domain/mapper/auth_mapper.dart';
 import 'package:taskit/features/auth/domain/repo/auth_repo.dart';
 import 'package:taskit/shared/data/mapper/base_model_mapper_impl.dart';
@@ -14,11 +14,8 @@ import '../../../shared/domain/model/base_model.dart';
 import '../data/dto/req/forgot_pass/forgot_pass.dart';
 import '../data/dto/req/forgot_pass/forgot_pass_verify.dart';
 import '../data/dto/req/forgot_pass/reset_pass.dart';
-import '../data/dto/req/signup/signup_request.dart';
-import '../data/dto/req/signup/signup_verify_request.dart';
 import '../data/repo/auth_repo_impl.dart';
-import '../domain/entites/forgot_pass/forgot_pass_verify.dart';
-import '../domain/entites/signup/signup_verify_model.dart';
+import '../domain/entities/forgot_pass/forgot_pass_verify.dart';
 import '../domain/service/auth_service.dart';
 
 final authServiceProvider = Provider.autoDispose<AuthService>((ref) {
@@ -57,18 +54,26 @@ class AuthServiceImpl with ResultHandler implements AuthService {
   * Sign Up
   * */
   @override
-  Future<Result<void, Failure>> signup(SignupModel data) async =>
+  Future<Result<void, Failure>> signup(SignupRegisterEntity data) async =>
       runSafe(() async {
-        final request = _authEntityMapper.mapToSignupRequest(data);
-        await _authRepo.signup(
-          request
+        final request = _authEntityMapper.toSignupRegisterRequest(data);
+        await _authRepo.signup(request);
+      });
+
+  @override
+  Future<Result<void, Failure>> signupVerify(SignupVerifyEntity data) async =>
+      runSafe(() async {
+        await _authRepo.signupVerify(
+          _authEntityMapper.toSignupVerifyRequest(data),
         );
       });
 
   @override
-  Future<Result<void, Failure>> signupVerify(SignupVerifyModel data) async =>
+  Future<Result<void, Failure>> signupResend(SignupResendEntity data) async =>
       runSafe(() async {
-        await _authRepo.signupVerify(_authEntityMapper.mapToSignupVerifyRequest(data));
+        await _authRepo.signupResend(
+          _authEntityMapper.toSignupResendRequest(data),
+        );
       });
 
   /*
@@ -94,6 +99,6 @@ class AuthServiceImpl with ResultHandler implements AuthService {
     ForgotPassVerifyRequest data,
   ) async => runSafe(() async {
     final response = await _authRepo.forgotPassVerify(data);
-    return _authEntityMapper.mapToForgotPassVerifyEntity(response);
+    return _authEntityMapper.toForgotPassVerifyEntity(response);
   });
 }

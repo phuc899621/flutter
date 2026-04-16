@@ -2,8 +2,10 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:taskit/shared/utils/snack_bar_utils.dart';
+import 'package:taskit/shared/widget/text_field/taskit_code_text_field.dart';
 
-import '../../../../../shared/presentation/widget/custom_taskit_textfield.dart';
+import '../../../../../shared/constants/signup_status.dart';
 import '../controller/signup_controller.dart';
 
 class SignupVerifyPage extends ConsumerStatefulWidget {
@@ -15,65 +17,63 @@ class SignupVerifyPage extends ConsumerStatefulWidget {
 }
 
 class _SignupVerifyPageState extends ConsumerState<SignupVerifyPage> {
-  final TextEditingController _otpController0 = TextEditingController();
-  final TextEditingController _otpController1 = TextEditingController();
-  final TextEditingController _otpController2 = TextEditingController();
-  final TextEditingController _otpController3 = TextEditingController();
+  final List<TextEditingController> _otpControllers = List.generate(
+    4,
+    (_) => TextEditingController(),
+  );
 
   @override
   void dispose() {
-    _otpController0.dispose();
-    _otpController1.dispose();
-    _otpController2.dispose();
-    _otpController3.dispose();
+    for (var controller in _otpControllers) {
+      controller.dispose();
+    }
     super.dispose();
   }
 
   void _listener() {
     final color = Theme.of(context).colorScheme;
-    ref.listen(signupControllerProvider.select((value) => value.error), (
+    ref.listen(signupControllerProvider.select((value) => value.apiError), (
       _,
       next,
     ) {
       if (next != null) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            duration: const Duration(seconds: 5),
-            backgroundColor: color.error,
-            content: Text(next),
-          ),
-        );
+        SnackBarUtils.show(context, next, isError: true);
       }
     });
     // listen for success
-    ref.listen(
-      signupControllerProvider.select((value) => value.isVerifySuccess),
-      (_, next) {
-        if (next != null && next) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              duration: Duration(seconds: 5),
-              backgroundColor: Colors.green,
-              content: Text("Code verify success!"),
-            ),
-          );
+    ref.listen(signupControllerProvider.select((value) => value.status), (
+      _,
+      next,
+    ) async {
+      if (next == SignupStatus.verifySuccess) {
+        SnackBarUtils.show(context, "Verify success!");
+        await Future.delayed(const Duration(seconds: 1, milliseconds: 500));
+        if (context.mounted) {
           context.go('/login');
         }
-      },
-    );
+      }
+    });
+    ref.listen(signupControllerProvider.select((value) => value.status), (
+      _,
+      next,
+    ) {
+      if (next == SignupStatus.resendSuccess) {
+        SnackBarUtils.show(context, "Code resend success!");
+      }
+    });
   }
 
   void _onVerify() {
-    final otp =
-        _otpController0.text +
-        _otpController1.text +
-        _otpController2.text +
-        _otpController3.text;
+    final otp = _otpControllers.map((e) => e.text).join();
+    if (otp.length != 4) {
+      SnackBarUtils.show(context, "Please enter 4 digit code", isError: true);
+      return;
+    }
     final controller = ref.read(signupControllerProvider.notifier);
     controller.verify(otp);
   }
 
-  void _onResend() {}
+  void _onResend() => ref.read(signupControllerProvider.notifier).resend();
 
   @override
   Widget build(BuildContext context) {
@@ -84,27 +84,16 @@ class _SignupVerifyPageState extends ConsumerState<SignupVerifyPage> {
       child: Scaffold(
         resizeToAvoidBottomInset: true,
         backgroundColor: color.primary,
-        body: NestedScrollView(
-          headerSliverBuilder: (context, innerBoxIsScrolled) => [_topAppBar()],
-          body: _signupVerifyBody(),
+        body: Column(
+          children: [
+            const SizedBox(height: 80),
+            Expanded(child: _signupVerifyBody()),
+          ],
         ),
       ),
     );
   }
 
-  //region TOP APPBAR
-  Widget _topAppBar() {
-    final text = Theme.of(context).textTheme;
-    final color = Theme.of(context).colorScheme;
-    return SliverAppBar(
-      automaticallyImplyLeading: false,
-      toolbarHeight: 80,
-      expandedHeight: 80,
-      backgroundColor: color.primary,
-    );
-  }
-
-  //endregion
   //region Sign up verify body
   Widget _signupVerifyBody() {
     final text = Theme.of(context).textTheme;
@@ -145,7 +134,7 @@ class _SignupVerifyPageState extends ConsumerState<SignupVerifyPage> {
                 children: [
                   TextSpan(text: 'We sent a code to '),
                   TextSpan(
-                    text: state.signupForm.email,
+                    text: state.registerForm.email,
                     style: text.labelMedium?.copyWith(color: color.primary),
                   ),
                   TextSpan(
@@ -162,36 +151,31 @@ class _SignupVerifyPageState extends ConsumerState<SignupVerifyPage> {
             SizedBox(height: 25),
             Row(
               mainAxisSize: MainAxisSize.max,
+              spacing: 20,
+              crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Expanded(
-                  child: SizedBox(
-                    width: 200.0,
-                    child: TaskitCodeTextField(controller: _otpController0),
+              children: List.generate(
+                4,
+                (index) => Flexible(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 4),
+                    child: SizedBox(
+                      width: 50,
+                      child: TaskitCodeTextField(
+                        controller: _otpControllers[index],
+                        onChanged: (value) {
+                          if (value.isEmpty && index > 0) {
+                            FocusScope.of(context).previousFocus();
+                          }
+                          if (value.length == 1 && index < 3) {
+                            FocusScope.of(context).nextFocus();
+                          }
+                        },
+                      ),
+                    ),
                   ),
                 ),
-                const SizedBox(width: 30.0),
-                Expanded(
-                  child: SizedBox(
-                    width: 200.0,
-                    child: TaskitCodeTextField(controller: _otpController1),
-                  ),
-                ),
-                const SizedBox(width: 30.0),
-                Expanded(
-                  child: SizedBox(
-                    width: 200.0,
-                    child: TaskitCodeTextField(controller: _otpController2),
-                  ),
-                ),
-                const SizedBox(width: 30.0),
-                Expanded(
-                  child: SizedBox(
-                    width: 200.0,
-                    child: TaskitCodeTextField(controller: _otpController3),
-                  ),
-                ),
-              ],
+              ),
             ),
             SizedBox(height: 15),
             SizedBox(
@@ -231,7 +215,7 @@ class _SignupVerifyPageState extends ConsumerState<SignupVerifyPage> {
                     text: ' Resend code!',
                     style: text.labelMedium?.copyWith(color: color.primary),
                     recognizer: TapGestureRecognizer()
-                      ..onTap = () => _onVerify(),
+                      ..onTap = () => _onResend(),
                   ),
                 ],
                 style: text.labelMedium,

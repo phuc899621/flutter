@@ -12,7 +12,7 @@ part of 'auth_api.dart';
 
 class _AuthApi implements AuthApi {
   _AuthApi(this._dio, {this.baseUrl, this.errorLogger}) {
-    baseUrl ??= '/auth';
+    baseUrl ??= 'auth';
   }
 
   final Dio _dio;
@@ -113,7 +113,7 @@ class _AuthApi implements AuthApi {
   }
 
   @override
-  Future<BaseResponse<BaseData>> signupVerify(SignupVerifyRequest data) async {
+  Future<BaseResponse<BaseData>> signupVerify(SignupRequest data) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
@@ -123,6 +123,36 @@ class _AuthApi implements AuthApi {
           .compose(
             _dio.options,
             '/signup/verify',
+            queryParameters: queryParameters,
+            data: _data,
+          )
+          .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
+    );
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    late BaseResponse<BaseData> _value;
+    try {
+      _value = BaseResponse<BaseData>.fromJson(
+        _result.data!,
+        (json) => BaseData.fromJson(json as Map<String, dynamic>),
+      );
+    } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options, response: _result);
+      rethrow;
+    }
+    return _value;
+  }
+
+  @override
+  Future<BaseResponse<BaseData>> signupResend(SignupRequest data) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = data;
+    final _options = _setStreamType<BaseResponse<BaseData>>(
+      Options(method: 'POST', headers: _headers, extra: _extra)
+          .compose(
+            _dio.options,
+            '/signup/resend',
             queryParameters: queryParameters,
             data: _data,
           )

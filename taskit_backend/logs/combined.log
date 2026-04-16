@@ -2088,3 +2088,254 @@ Error: token must be a string
   "time": "1044.17 ms",
   "ip": "::1"
 }
+2026-04-13 10:08:54 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-04-13 10:08:59 [[33mwarn[39m]: [1;33mAPI Warning[0m {
+  "requestId": "cad96e63-0994-4c03-8d95-ee7a4e894e8a",
+  "method": "GET",
+  "url": "/",
+  "status": 404,
+  "time": "7.70 ms",
+  "ip": "::1"
+}
+2026-04-13 10:09:02 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-04-13 10:10:42 [[32minfo[39m]: [1;32mAPI Request[0m {
+  "requestId": "677f1fb8-1117-4536-9ac9-0604ecce4fe5",
+  "method": "GET",
+  "url": "/",
+  "status": 200,
+  "time": "3.05 ms",
+  "ip": "::1"
+}
+2026-04-13 10:10:42 [[33mwarn[39m]: [1;33mAPI Warning[0m {
+  "requestId": "4c2e9872-78f3-411e-9f33-621438eee53a",
+  "method": "GET",
+  "url": "/favicon.ico",
+  "status": 404,
+  "time": "0.98 ms",
+  "ip": "::1"
+}
+2026-04-13 10:12:58 [[32minfo[39m]: [1;32mAPI Request[0m {
+  "requestId": "53b86f81-bb41-41c6-9a01-3ad0e40faa15",
+  "method": "GET",
+  "url": "/",
+  "status": 200,
+  "time": "6.35 ms",
+  "ip": "::1"
+}
+2026-04-13 10:13:00 [[32minfo[39m]: [1;32mAPI Request[0m {
+  "requestId": "547efacf-5aab-48c6-bac0-b22f34e18c26",
+  "method": "GET",
+  "url": "/",
+  "status": 304,
+  "time": "12.65 ms",
+  "ip": "::1"
+}
+2026-04-13 10:13:05 [[32minfo[39m]: [1;32mAPI Request[0m {
+  "requestId": "2d219ef4-e099-4ff8-9fb4-d951efccef0a",
+  "method": "GET",
+  "url": "/",
+  "status": 200,
+  "time": "1.11 ms",
+  "ip": "::1"
+}
+2026-04-13 10:13:36 [[32minfo[39m]: [1;32mAPI Request[0m {
+  "requestId": "881434ef-66b7-4b65-9d44-d8ceb21212f7",
+  "method": "GET",
+  "url": "/",
+  "status": 200,
+  "time": "1.34 ms",
+  "ip": "::1"
+}
+2026-04-13 10:13:37 [[32minfo[39m]: [1;32mAPI Request[0m {
+  "requestId": "269fe1f3-3534-46e7-967d-d160b3c084cc",
+  "method": "GET",
+  "url": "/",
+  "status": 304,
+  "time": "0.67 ms",
+  "ip": "::1"
+}
+2026-04-13 10:13:40 [[32minfo[39m]: [1;32mAPI Request[0m {
+  "requestId": "ed401c44-f50e-4a91-b5aa-358f0057a125",
+  "method": "GET",
+  "url": "/",
+  "status": 304,
+  "time": "1.32 ms",
+  "ip": "::1"
+}
+2026-04-13 10:13:40 [[32minfo[39m]: [1;32mAPI Request[0m {
+  "requestId": "c72034f9-5070-4f05-81b5-16d2f6594b3a",
+  "method": "GET",
+  "url": "/",
+  "status": 304,
+  "time": "0.77 ms",
+  "ip": "::1"
+}
+2026-04-13 10:13:40 [[32minfo[39m]: [1;32mAPI Request[0m {
+  "requestId": "1613f068-de62-4ae8-9222-db764c8a4212",
+  "method": "GET",
+  "url": "/",
+  "status": 304,
+  "time": "0.99 ms",
+  "ip": "::1"
+}
+2026-04-13 10:15:10 [[32minfo[39m]: [1;32mAPI Request[0m {
+  "requestId": "be6aadd6-1e04-4ad9-aa90-ee5fa715daca",
+  "method": "GET",
+  "url": "/",
+  "status": 200,
+  "time": "1.42 ms",
+  "ip": "::1"
+}
+2026-04-13 10:15:24 [[32minfo[39m]: [1;32mAPI Request[0m {
+  "requestId": "3c4a6359-1ff8-4c50-84c9-238420a85cb0",
+  "method": "GET",
+  "url": "/",
+  "status": 200,
+  "time": "1.22 ms",
+  "ip": "::1"
+}
+2026-04-13 10:15:34 [[32minfo[39m]: [1;32mAPI Request[0m {
+  "requestId": "73609b2a-109c-40ac-b013-2041160bf3b0",
+  "method": "GET",
+  "url": "/",
+  "status": 200,
+  "time": "0.96 ms",
+  "ip": "::1"
+}
+2026-04-13 10:17:18 [[32minfo[39m]: [1;32mAPI Request[0m {
+  "requestId": "bb7abbfc-dc1c-4e02-afc7-c8938a8e7dbe",
+  "method": "GET",
+  "url": "/",
+  "status": 200,
+  "time": "2.51 ms",
+  "ip": "::1"
+}
+2026-04-13 10:17:33 [[32minfo[39m]: [1;32mAPI Request[0m {
+  "requestId": "9d214842-17ef-44ef-92db-2f277c1a2e00",
+  "method": "GET",
+  "url": "/",
+  "status": 200,
+  "time": "1.07 ms",
+  "ip": "::1"
+}
+2026-04-13 10:18:17 [[32minfo[39m]: [1;32mAPI Request[0m {
+  "requestId": "30bae52f-a062-4b04-8871-8e7b352325dc",
+  "method": "GET",
+  "url": "/",
+  "status": 200,
+  "time": "0.97 ms",
+  "ip": "::1"
+}
+2026-04-13 10:18:18 [[32minfo[39m]: [1;32mAPI Request[0m {
+  "requestId": "81fa711f-8858-4143-be7b-9bf6f246b765",
+  "method": "GET",
+  "url": "/",
+  "status": 304,
+  "time": "1.49 ms",
+  "ip": "::1"
+}
+2026-04-13 10:19:00 [[32minfo[39m]: [1;32mAPI Request[0m {
+  "requestId": "eff67b10-6cb9-4c25-82c7-597844f2f2d7",
+  "method": "GET",
+  "url": "/",
+  "status": 200,
+  "time": "1.46 ms",
+  "ip": "::1"
+}
+2026-04-13 10:19:13 [[32minfo[39m]: [1;32mAPI Request[0m {
+  "requestId": "5ef57e3c-43e8-4f47-835b-643497ea5241",
+  "method": "GET",
+  "url": "/",
+  "status": 200,
+  "time": "1.27 ms",
+  "ip": "::1"
+}
+2026-04-13 10:19:37 [[32minfo[39m]: [1;32mAPI Request[0m {
+  "requestId": "588495e4-7f4c-4589-9c02-304a4cb76e7f",
+  "method": "GET",
+  "url": "/",
+  "status": 200,
+  "time": "1.19 ms",
+  "ip": "::1"
+}
+2026-04-13 10:19:46 [[32minfo[39m]: [1;32mAPI Request[0m {
+  "requestId": "7b0b71cf-b30b-47c0-9b76-530ca07b05e0",
+  "method": "GET",
+  "url": "/",
+  "status": 200,
+  "time": "0.75 ms",
+  "ip": "::1"
+}
+2026-04-13 10:19:53 [[32minfo[39m]: [1;32mAPI Request[0m {
+  "requestId": "48100d6e-c720-4cac-bba2-4578333dc28e",
+  "method": "GET",
+  "url": "/",
+  "status": 200,
+  "time": "0.84 ms",
+  "ip": "::1"
+}
+2026-04-13 10:19:59 [[32minfo[39m]: [1;32mAPI Request[0m {
+  "requestId": "25bba337-3bdc-4baf-9e9e-1079611a58c5",
+  "method": "GET",
+  "url": "/",
+  "status": 200,
+  "time": "0.86 ms",
+  "ip": "::1"
+}
+2026-04-13 10:20:22 [[32minfo[39m]: [1;32mAPI Request[0m {
+  "requestId": "ea91bc8f-8fc0-481a-b2c2-668ef94dfacd",
+  "method": "GET",
+  "url": "/",
+  "status": 200,
+  "time": "1.83 ms",
+  "ip": "::1"
+}
+2026-04-13 10:20:35 [[32minfo[39m]: [1;32mAPI Request[0m {
+  "requestId": "d8a73820-5fdd-4f5c-99c9-9f6ab7c7ed53",
+  "method": "GET",
+  "url": "/",
+  "status": 200,
+  "time": "0.69 ms",
+  "ip": "::1"
+}
+2026-04-13 10:21:26 [[32minfo[39m]: [1;32mAPI Request[0m {
+  "requestId": "90a2e31c-ddc1-4c61-825d-a5fa78c6af82",
+  "method": "GET",
+  "url": "/",
+  "status": 200,
+  "time": "1.56 ms",
+  "ip": "::1"
+}
+2026-04-13 10:23:41 [[32minfo[39m]: [1;32mAPI Request[0m {
+  "requestId": "71256e2c-b75e-4459-8ead-1144248660c2",
+  "method": "GET",
+  "url": "/",
+  "status": 200,
+  "time": "0.99 ms",
+  "ip": "::1"
+}
+2026-04-13 10:23:41 [[32minfo[39m]: [1;32mAPI Request[0m {
+  "requestId": "1668f234-66e6-45cb-963c-965611df0ffe",
+  "method": "GET",
+  "url": "/",
+  "status": 304,
+  "time": "0.50 ms",
+  "ip": "::1"
+}
+2026-04-13 10:23:59 [[32minfo[39m]: [1;32mAPI Request[0m {
+  "requestId": "5296d7a4-39c5-48e5-ba95-8db743e6a847",
+  "method": "GET",
+  "url": "/",
+  "status": 200,
+  "time": "0.70 ms",
+  "ip": "::1"
+}
+2026-04-13 10:24:10 [[32minfo[39m]: [1;32mAPI Request[0m {
+  "requestId": "6f2e66d9-acbb-4ad3-908b-4127173f37df",
+  "method": "GET",
+  "url": "/",
+  "status": 200,
+  "time": "0.79 ms",
+  "ip": "::1"
+}
+2026-04-13 16:29:30 [[32minfo[39m]: [1;32mMongoDB connected![0m 

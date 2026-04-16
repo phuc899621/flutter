@@ -1,7 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:taskit/features/auth/domain/entites/signup/signup_verify_model.dart';
+import 'package:taskit/shared/constants/signup_status.dart';
 
-import '../../../domain/entites/signup/signup_model.dart';
+import '../../../domain/entities/signup/signup_entity.dart';
 
 part 'signup_state.freezed.dart';
 
@@ -9,14 +9,11 @@ part 'signup_state.freezed.dart';
 @freezed
 abstract class SignupState with _$SignupState {
   factory SignupState({
-    bool? isSignUpSuccess,
-    bool? isVerifySuccess,
     @Default(false) bool isLoading,
-    String? error,
-    @Default(SignupModel(email: '', password: '')) SignupModel signupForm,
-    @Default(SignupVerifyModel(email: '', otp: ''))
-    SignupVerifyModel verifyForm,
-    @Default(false) bool isPasswordVisibility,
-    @Default(false) bool isConfirmPasswordVisibility,
+    String? apiError,
+    @Default(SignupStatus.initial) SignupStatus status,
+    @Default(SignupEntity.initialRegister) SignupRegisterEntity registerForm,
+    @Default(SignupEntity.initialVerify) SignupVerifyEntity verifyForm,
+    @Default(SignupEntity.initialResend) SignupResendEntity resendForm,
   }) = _SignupState;
 }

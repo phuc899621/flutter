@@ -5,10 +5,18 @@ part 'signup_request.g.dart';
 
 @freezed
 abstract class SignupRequest with _$SignupRequest {
-  const factory SignupRequest({
+  const factory SignupRequest.register({
     required String email,
     required String password,
-  }) = _SignupRequest;
+  }) = SignupRegisterRequest;
+
+  const factory SignupRequest.verify({
+    required String email,
+    required String otp,
+  }) = SignupVerifyRequest;
+
+  const factory SignupRequest.resend({required String email}) =
+      SignupResendRequest;
 
   factory SignupRequest.fromJson(Map<String, dynamic> json) =>
       _$SignupRequestFromJson(json);
