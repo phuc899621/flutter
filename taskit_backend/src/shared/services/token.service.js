@@ -40,7 +40,7 @@ export const verifyForgotPasswordToken = (token) => {
     const decoded = verifyToken(token, JWT_CONFIG.FORGOT_PASSWORD);
     if (decoded.purpose !== OTP_PURPOSE.FORGOT_PASSWORD)
       throw new AuthorizationError("Invalid forgot password token");
-    if (isTokenResetUsed(decoded))
+    if (isTokenResetUsed(token))
       throw new AuthorizationError("Forgot password token expired");
     return decoded;
   } catch (e) {
