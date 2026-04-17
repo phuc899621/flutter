@@ -34,13 +34,13 @@ export const generateForgotPasswordToken = (user) => {
     throw new ServerError(`JWT error: ${e.message}`);
   }
 };
-export const verifyForgotPasswordToken = (token) => {
+export const verifyForgotPasswordToken = async (token) => {
   try {
     logger.info(`Verify forgot password token for ${token.email}`);
     const decoded = verifyToken(token, JWT_CONFIG.FORGOT_PASSWORD);
     if (decoded.purpose !== OTP_PURPOSE.FORGOT_PASSWORD)
       throw new AuthorizationError("Invalid forgot password token");
-    if (isTokenResetUsed(token))
+    if (await isTokenResetUsed(token))
       throw new AuthorizationError("Forgot password token expired");
     return decoded;
   } catch (e) {
