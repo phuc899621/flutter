@@ -56,24 +56,19 @@ class AuthServiceImpl with ResultHandler implements AuthService {
   @override
   Future<Result<void, Failure>> signup(SignupRegisterEntity data) async =>
       runSafe(() async {
-        final request = _authEntityMapper.toSignupRegisterRequest(data);
-        await _authRepo.signup(request);
+        await _authRepo.signup(data);
       });
 
   @override
   Future<Result<void, Failure>> signupVerify(SignupVerifyEntity data) async =>
       runSafe(() async {
-        await _authRepo.signupVerify(
-          _authEntityMapper.toSignupVerifyRequest(data),
-        );
+        await _authRepo.signupVerify(data);
       });
 
   @override
   Future<Result<void, Failure>> signupResend(SignupResendEntity data) async =>
       runSafe(() async {
-        await _authRepo.signupResend(
-          _authEntityMapper.toSignupResendRequest(data),
-        );
+        await _authRepo.signupResend(data);
       });
 
   /*

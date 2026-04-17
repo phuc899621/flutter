@@ -1,19 +1,22 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:taskit/features/auth/data/dto/req/login/login_request.dart';
 import 'package:taskit/features/auth/data/dto/res/login/login_data.dart';
+import 'package:taskit/features/auth/data/mapper/signup_mapper.dart';
 import 'package:taskit/features/auth/data/source/local/auth_local.dart';
+import 'package:taskit/features/auth/domain/entities/signup/signup_entity.dart';
 import 'package:taskit/features/auth/domain/repo/auth_repo.dart';
 import 'package:taskit/shared/application/itoken_service.dart';
 import 'package:taskit/shared/application/token_service.dart';
 import 'package:taskit/shared/data/dto/response/base_response.dart';
+import 'package:taskit/shared/data/mapper/result_mapper.dart';
 import 'package:taskit/shared/data/source/remote/network/dio_exception_mapper.dart';
+import 'package:taskit/shared/domain/entities/default_result.dart';
 import 'package:taskit/shared/helpers/base_response_helper.dart';
 
 import '../../../../shared/data/dto/response/base_data.dart';
 import '../dto/req/forgot_pass/forgot_pass.dart';
 import '../dto/req/forgot_pass/forgot_pass_verify.dart';
 import '../dto/req/forgot_pass/reset_pass.dart';
-import '../dto/req/signup/signup_request.dart';
 import '../dto/res/forgot_pass/verify.dart';
 import '../dto/res/login/login_verify_data.dart';
 import '../source/local/auth_local_impl.dart';
@@ -62,25 +65,25 @@ class AuthRepoImpl with DioExceptionMapper implements AuthRepo {
   * Sign Up
   * */
   @override
-  Future<BaseResponse<BaseData>> signup(SignupRegisterRequest data) async {
+  Future<DefaultResult> signup(SignupRegisterEntity data) async {
     return callSafe(
-      () async => await _authApi.signup(data),
+      () async => (await _authApi.signup(data.toDto())).toDefault(),
       errorMessage: "An unexpected error occurred when sign up",
     );
   }
 
   @override
-  Future<BaseResponse<BaseData>> signupVerify(SignupVerifyRequest data) async {
+  Future<DefaultResult> signupVerify(SignupVerifyEntity data) async {
     return callSafe(
-      () async => await _authApi.signupVerify(data),
+      () async => (await _authApi.signupVerify(data.toDto())).toDefault(),
       errorMessage: "An unexpected error occurred when verify signup",
     );
   }
 
   @override
-  Future<BaseResponse<BaseData>> signupResend(SignupResendRequest data) async {
+  Future<DefaultResult> signupResend(SignupResendEntity data) async {
     return callSafe(
-      () async => await _authApi.signupResend(data),
+      () async => (await _authApi.signupResend(data.toDto())).toDefault(),
       errorMessage: "An unexpected error occurred when resend signup",
     );
   }
