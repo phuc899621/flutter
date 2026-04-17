@@ -209,7 +209,7 @@ class AuthService {
   static async resetPassword(request) {
     const { password, resetToken } = request;
     try {
-      const { userId } = verifyForgotPasswordToken(resetToken);
+      const { userId } = await verifyForgotPasswordToken(resetToken);
       logger.info(`Reset password for ${userId}`);
       await UserService.updateUserPassword(userId, password);
       markForgotPasswordTokenAsUsed(resetToken);
