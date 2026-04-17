@@ -94,6 +94,15 @@ export const forgotPasswordVerifyValidate = validate({
       .messages(joiMsg("OTP", { exactly: 4 })),
   }),
 });
+export const resendForgotPasswordOtpValidate = validate({
+  body: Joi.object({
+    email: Joi.string()
+      .trim()
+      .required()
+      .email()
+      .messages(joiMsg("Email", { email: true })),
+  }),
+});
 export const resetPasswordValidate = validate({
   body: Joi.object({
     resetToken: Joi.string().trim().required().messages(joiMsg("Reset token")),

@@ -36,6 +36,11 @@ router.post(
   AuthValidate.forgotPasswordVerifyValidate,
   AuthController.forgotPasswordVerify,
 );
+router.post(
+  "/forgot-password/resend",
+  AuthValidate.resendForgotPasswordOtpValidate,
+  AuthController.resendForgotPasswordOtp,
+);
 router.put(
   "/forgot-password/reset",
   AuthValidate.resetPasswordValidate,

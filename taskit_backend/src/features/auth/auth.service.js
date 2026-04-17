@@ -206,6 +206,30 @@ class AuthService {
       await session.endSession();
     }
   }
+  static async resendForgotPasswordOtp(email) {
+    const session = await db.startSession();
+    session.startTransaction();
+    try {
+      const userDoc = await UserService.validateUserForResendOTP(email);
+      const otp = await VerificationService.createForgotPasswordOTP(
+        userDoc.id,
+        session,
+      );
+      EmailServices.sendEmail(
+        email,
+        "Verify email for forgot password",
+        `Your OTP is: ${otp}. This OTP only last 30 minutes.`,
+      );
+      logger.info(`OTP is: ${otp}. This OTP only last 30 minutes.`);
+      await session.commitTransaction();
+    } catch (e) {
+      await session.abortTransaction();
+      if (e instanceof BaseError) throw e;
+      throw new ServerError(`Resend signup otp error: ${e.message}`);
+    } finally {
+      await session.endSession();
+    }
+  }
   static async resetPassword(request) {
     const { password, resetToken } = request;
     try {

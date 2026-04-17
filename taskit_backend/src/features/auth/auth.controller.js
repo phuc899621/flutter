@@ -103,6 +103,17 @@ export const forgotPasswordVerify = async (req, res, next) => {
     next(e);
   }
 };
+export const resendForgotPasswordOtp = async (req, res, next) => {
+  try {
+    const { email } = req.body;
+    await AuthService.resendForgotPasswordOtp(email);
+    return res.status(200).json({
+      message: "OTP code has been resend to your email!",
+    });
+  } catch (e) {
+    next(e);
+  }
+};
 
 export const resetPassword = async (req, res, next) => {
   try {
