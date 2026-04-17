@@ -20,7 +20,7 @@ class _SubtaskApi implements SubtaskApi {
   final ParseErrorLogger? errorLogger;
 
   @override
-  Future<BaseResponse<UpdateSubtaskData>> update(
+  Future<DataResponse<UpdateSubtaskData>> update(
     String token,
     UpdateSubtaskListReq updateList,
   ) async {
@@ -29,7 +29,7 @@ class _SubtaskApi implements SubtaskApi {
     final _headers = <String, dynamic>{r'Authorization': token};
     _headers.removeWhere((k, v) => v == null);
     final _data = updateList;
-    final _options = _setStreamType<BaseResponse<UpdateSubtaskData>>(
+    final _options = _setStreamType<DataResponse<UpdateSubtaskData>>(
       Options(method: 'PUT', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
@@ -40,9 +40,9 @@ class _SubtaskApi implements SubtaskApi {
           .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
     );
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late BaseResponse<UpdateSubtaskData> _value;
+    late DataResponse<UpdateSubtaskData> _value;
     try {
-      _value = BaseResponse<UpdateSubtaskData>.fromJson(
+      _value = DataResponse<UpdateSubtaskData>.fromJson(
         _result.data!,
         (json) => UpdateSubtaskData.fromJson(json as Map<String, dynamic>),
       );
@@ -54,7 +54,7 @@ class _SubtaskApi implements SubtaskApi {
   }
 
   @override
-  Future<BaseResponse<List<AddSubtaskData>>> add(
+  Future<DataResponse<List<AddSubtaskData>>> add(
     String token,
     String taskId,
     AddSubtaskListReq addList,
@@ -64,7 +64,7 @@ class _SubtaskApi implements SubtaskApi {
     final _headers = <String, dynamic>{r'Authorization': token};
     _headers.removeWhere((k, v) => v == null);
     final _data = addList;
-    final _options = _setStreamType<BaseResponse<List<AddSubtaskData>>>(
+    final _options = _setStreamType<DataResponse<List<AddSubtaskData>>>(
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
@@ -75,9 +75,9 @@ class _SubtaskApi implements SubtaskApi {
           .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
     );
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late BaseResponse<List<AddSubtaskData>> _value;
+    late DataResponse<List<AddSubtaskData>> _value;
     try {
-      _value = BaseResponse<List<AddSubtaskData>>.fromJson(
+      _value = DataResponse<List<AddSubtaskData>>.fromJson(
         _result.data!,
         (json) => json is List<dynamic>
             ? json
@@ -95,13 +95,13 @@ class _SubtaskApi implements SubtaskApi {
   }
 
   @override
-  Future<BaseResponse<BaseData>> delete(String token, String subtaskId) async {
+  Future<DataResponse<BaseData>> delete(String token, String subtaskId) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{r'Authorization': token};
     _headers.removeWhere((k, v) => v == null);
     const Map<String, dynamic>? _data = null;
-    final _options = _setStreamType<BaseResponse<BaseData>>(
+    final _options = _setStreamType<DataResponse<BaseData>>(
       Options(method: 'DELETE', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
@@ -112,9 +112,9 @@ class _SubtaskApi implements SubtaskApi {
           .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
     );
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late BaseResponse<BaseData> _value;
+    late DataResponse<BaseData> _value;
     try {
-      _value = BaseResponse<BaseData>.fromJson(
+      _value = DataResponse<BaseData>.fromJson(
         _result.data!,
         (json) => BaseData.fromJson(json as Map<String, dynamic>),
       );

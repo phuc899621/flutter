@@ -31,7 +31,6 @@ class _SignupVerifyPageState extends ConsumerState<SignupVerifyPage> {
   }
 
   void _listener() {
-    final color = Theme.of(context).colorScheme;
     ref.listen(signupControllerProvider.select((value) => value.apiError), (
       _,
       next,
@@ -45,20 +44,19 @@ class _SignupVerifyPageState extends ConsumerState<SignupVerifyPage> {
       _,
       next,
     ) async {
-      if (next == SignupStatus.verifySuccess) {
-        SnackBarUtils.show(context, "Verify success!");
-        await Future.delayed(const Duration(seconds: 1, milliseconds: 500));
-        if (context.mounted) {
-          context.go('/login');
-        }
-      }
-    });
-    ref.listen(signupControllerProvider.select((value) => value.status), (
-      _,
-      next,
-    ) {
-      if (next == SignupStatus.resendSuccess) {
-        SnackBarUtils.show(context, "Code resend success!");
+      switch (next) {
+        case SignupStatus.verifySuccess:
+          SnackBarUtils.show(context, "Verify success!");
+          final router = GoRouter.of(context);
+          await Future.delayed(const Duration(seconds: 1, milliseconds: 500));
+          if (context.mounted) {
+            router.go('/login');
+          }
+          break;
+        case SignupStatus.resend:
+          SnackBarUtils.show(context, "Code resend success!");
+        default:
+          break;
       }
     });
   }
@@ -134,7 +132,7 @@ class _SignupVerifyPageState extends ConsumerState<SignupVerifyPage> {
                 children: [
                   TextSpan(text: 'We sent a code to '),
                   TextSpan(
-                    text: state.registerForm.email,
+                    text: state.email,
                     style: text.labelMedium?.copyWith(color: color.primary),
                   ),
                   TextSpan(
@@ -188,7 +186,7 @@ class _SignupVerifyPageState extends ConsumerState<SignupVerifyPage> {
                     borderRadius: BorderRadius.circular(20.0),
                   ),
                 ),
-                child: state.isLoading
+                child: state.status == SignupStatus.loading
                     ? Center(
                         child: CircularProgressIndicator(
                           color: color.onPrimary,

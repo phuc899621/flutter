@@ -8,7 +8,7 @@ import 'package:taskit/features/task/data/dto/res/subtask/add_subtask_data.dart'
 import 'package:taskit/features/task/data/dto/res/subtask/update_subtask_data.dart';
 import 'package:taskit/features/task/data/dto/res/task/add_task_data.dart';
 import 'package:taskit/features/task/data/dto/res/task/update_task_data.dart';
-import 'package:taskit/shared/data/dto/response/base_response.dart';
+import 'package:taskit/shared/data/dto/response/data_response.dart';
 
 import '../../../../../shared/data/dto/response/base_data.dart';
 import '../../dto/req/add_task/add_task.dart';
@@ -19,38 +19,50 @@ abstract interface class ITaskRemoteSource {
   //=======================================
   //============= ADD Task ================
   //========================================
-  Future<BaseResponse<AddTaskData>> addTask(String token, AddTaskReq task);
+  Future<DataResponse<AddTaskData>> addTask(String token, AddTaskReq task);
 
-  Future<BaseResponse<List<AddSubtaskData>>> addSubTask(
-      String token, String taskId, AddSubtaskListReq task);
+  Future<DataResponse<List<AddSubtaskData>>> addSubTask(
+    String token,
+    String taskId,
+    AddSubtaskListReq task,
+  );
 
-  Future<BaseResponse<AddCategoryData>> addCategory(
-      String token, AddCategoryReq category);
+  Future<DataResponse<AddCategoryData>> addCategory(
+    String token,
+    AddCategoryReq category,
+  );
 
   //=======================================
   //============= Update Task ================
   //========================================
-  Future<BaseResponse<UpdateTaskData>> updateTask(
-      String token, String taskId, UpdateTaskReq updateTaskReq);
+  Future<DataResponse<UpdateTaskData>> updateTask(
+    String token,
+    String taskId,
+    UpdateTaskReq updateTaskReq,
+  );
 
-  Future<BaseResponse<UpdateSubtaskData>> updateSubtask(
-      String token, UpdateSubtaskListReq updateList);
+  Future<DataResponse<UpdateSubtaskData>> updateSubtask(
+    String token,
+    UpdateSubtaskListReq updateList,
+  );
 
-//=======================================
-//============= Delete Task ==============
-//========================================
-  Future<BaseResponse<BaseData>> deleteTask(String token, String taskId);
+  //=======================================
+  //============= Delete Task ==============
+  //========================================
+  Future<DataResponse<BaseData>> deleteTask(String token, String taskId);
 
-  Future<BaseResponse<BaseData>> deleteSubTask(String token, String subTaskId);
+  Future<DataResponse<BaseData>> deleteSubTask(String token, String subTaskId);
 
-  Future<BaseResponse<BaseData>> deleteCategory(String token, String id);
+  Future<DataResponse<BaseData>> deleteCategory(String token, String id);
 
-//=======================================
-//============= AI  ==============
-//========================================
+  //=======================================
+  //============= AI  ==============
+  //========================================
 
-  Future<BaseResponse<AiQuestionData>> getAnswer(String token, AiReq aiReq);
+  Future<DataResponse<AiQuestionData>> getAnswer(String token, AiReq aiReq);
 
-  Future<BaseResponse<AiGenerateTaskData>> generateTask(
-      String token, AiReq aiReq);
+  Future<DataResponse<AiGenerateTaskData>> generateTask(
+    String token,
+    AiReq aiReq,
+  );
 }

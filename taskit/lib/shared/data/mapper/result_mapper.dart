@@ -1,13 +1,16 @@
-import 'package:taskit/shared/data/dto/response/base_response.dart';
+import 'package:taskit/shared/data/dto/response/data_response.dart';
+import 'package:taskit/shared/data/dto/response/message_response.dart';
 import 'package:taskit/shared/domain/entities/data_result.dart';
-import 'package:taskit/shared/domain/entities/default_result.dart';
+import 'package:taskit/shared/domain/entities/message_result.dart';
 
-extension ResultMapper on BaseResponse {
-  DefaultResult toDefault() {
-    return DefaultResult(message: message);
+extension DataResponseMapper<T> on DataResponse<T> {
+  DataResult<E> toResult<E>(E entity) {
+    return DataResult<E>(message: message, data: entity);
   }
+}
 
-  DataResult<T> toData<T>(T data) {
-    return DataResult<T>(message: message, data: data);
+extension MessageResponseMapper on MessageResponse {
+  MessageResult toResult() {
+    return MessageResult(message: message);
   }
 }

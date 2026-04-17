@@ -20,7 +20,7 @@ class _TaskApi implements TaskApi {
   final ParseErrorLogger? errorLogger;
 
   @override
-  Future<BaseResponse<List<String>>> getAiCategory(
+  Future<DataResponse<List<String>>> getAiCategory(
     String token,
     AiCategoryReq categoryReq,
   ) async {
@@ -29,7 +29,7 @@ class _TaskApi implements TaskApi {
     final _headers = <String, dynamic>{r'Authorization': token};
     _headers.removeWhere((k, v) => v == null);
     final _data = categoryReq;
-    final _options = _setStreamType<BaseResponse<List<String>>>(
+    final _options = _setStreamType<DataResponse<List<String>>>(
       Options(method: 'GET', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
@@ -40,9 +40,9 @@ class _TaskApi implements TaskApi {
           .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
     );
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late BaseResponse<List<String>> _value;
+    late DataResponse<List<String>> _value;
     try {
-      _value = BaseResponse<List<String>>.fromJson(
+      _value = DataResponse<List<String>>.fromJson(
         _result.data!,
         (json) => json is List<dynamic>
             ? json.map<String>((i) => i as String).toList()
@@ -56,7 +56,7 @@ class _TaskApi implements TaskApi {
   }
 
   @override
-  Future<BaseResponse<AddTaskData>> createTask(
+  Future<DataResponse<AddTaskData>> createTask(
     String token,
     AddTaskReq addTaskReq,
   ) async {
@@ -65,7 +65,7 @@ class _TaskApi implements TaskApi {
     final _headers = <String, dynamic>{r'Authorization': token};
     _headers.removeWhere((k, v) => v == null);
     final _data = addTaskReq;
-    final _options = _setStreamType<BaseResponse<AddTaskData>>(
+    final _options = _setStreamType<DataResponse<AddTaskData>>(
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
@@ -76,9 +76,9 @@ class _TaskApi implements TaskApi {
           .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
     );
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late BaseResponse<AddTaskData> _value;
+    late DataResponse<AddTaskData> _value;
     try {
-      _value = BaseResponse<AddTaskData>.fromJson(
+      _value = DataResponse<AddTaskData>.fromJson(
         _result.data!,
         (json) => AddTaskData.fromJson(json as Map<String, dynamic>),
       );
@@ -90,7 +90,7 @@ class _TaskApi implements TaskApi {
   }
 
   @override
-  Future<BaseResponse<UpdateTaskData>> updateTask(
+  Future<DataResponse<UpdateTaskData>> updateTask(
     String token,
     String taskId,
     UpdateTaskReq updateTaskReq,
@@ -100,7 +100,7 @@ class _TaskApi implements TaskApi {
     final _headers = <String, dynamic>{r'Authorization': token};
     _headers.removeWhere((k, v) => v == null);
     final _data = updateTaskReq;
-    final _options = _setStreamType<BaseResponse<UpdateTaskData>>(
+    final _options = _setStreamType<DataResponse<UpdateTaskData>>(
       Options(method: 'PATCH', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
@@ -111,9 +111,9 @@ class _TaskApi implements TaskApi {
           .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
     );
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late BaseResponse<UpdateTaskData> _value;
+    late DataResponse<UpdateTaskData> _value;
     try {
-      _value = BaseResponse<UpdateTaskData>.fromJson(
+      _value = DataResponse<UpdateTaskData>.fromJson(
         _result.data!,
         (json) => UpdateTaskData.fromJson(json as Map<String, dynamic>),
       );
@@ -125,13 +125,13 @@ class _TaskApi implements TaskApi {
   }
 
   @override
-  Future<BaseResponse<BaseData>> deleteTask(String token, String taskId) async {
+  Future<DataResponse<BaseData>> deleteTask(String token, String taskId) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{r'Authorization': token};
     _headers.removeWhere((k, v) => v == null);
     const Map<String, dynamic>? _data = null;
-    final _options = _setStreamType<BaseResponse<BaseData>>(
+    final _options = _setStreamType<DataResponse<BaseData>>(
       Options(method: 'DELETE', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
@@ -142,9 +142,9 @@ class _TaskApi implements TaskApi {
           .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
     );
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late BaseResponse<BaseData> _value;
+    late DataResponse<BaseData> _value;
     try {
-      _value = BaseResponse<BaseData>.fromJson(
+      _value = DataResponse<BaseData>.fromJson(
         _result.data!,
         (json) => BaseData.fromJson(json as Map<String, dynamic>),
       );

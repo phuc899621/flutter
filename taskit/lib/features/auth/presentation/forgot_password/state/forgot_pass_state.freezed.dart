@@ -14,7 +14,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$ForgotPassState {
 
- bool get isLoading; bool? get isForgotPassSuccess; bool? get isVerifySuccess; bool? get isResetSuccess; String? get errorForgotPass; String? get errorVerify; String? get errorReset; Map<String, dynamic> get forgotPassForm; Map<String, dynamic> get verifyForm; Map<String, dynamic> get resetForm; String? get resetToken;
+ String? get apiError; ForgotPassStatus get status; String get email; String get otp; String get password; String? get resetToken;
 /// Create a copy of ForgotPassState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -25,16 +25,16 @@ $ForgotPassStateCopyWith<ForgotPassState> get copyWith => _$ForgotPassStateCopyW
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is ForgotPassState&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading)&&(identical(other.isForgotPassSuccess, isForgotPassSuccess) || other.isForgotPassSuccess == isForgotPassSuccess)&&(identical(other.isVerifySuccess, isVerifySuccess) || other.isVerifySuccess == isVerifySuccess)&&(identical(other.isResetSuccess, isResetSuccess) || other.isResetSuccess == isResetSuccess)&&(identical(other.errorForgotPass, errorForgotPass) || other.errorForgotPass == errorForgotPass)&&(identical(other.errorVerify, errorVerify) || other.errorVerify == errorVerify)&&(identical(other.errorReset, errorReset) || other.errorReset == errorReset)&&const DeepCollectionEquality().equals(other.forgotPassForm, forgotPassForm)&&const DeepCollectionEquality().equals(other.verifyForm, verifyForm)&&const DeepCollectionEquality().equals(other.resetForm, resetForm)&&(identical(other.resetToken, resetToken) || other.resetToken == resetToken));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is ForgotPassState&&(identical(other.apiError, apiError) || other.apiError == apiError)&&(identical(other.status, status) || other.status == status)&&(identical(other.email, email) || other.email == email)&&(identical(other.otp, otp) || other.otp == otp)&&(identical(other.password, password) || other.password == password)&&(identical(other.resetToken, resetToken) || other.resetToken == resetToken));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,isLoading,isForgotPassSuccess,isVerifySuccess,isResetSuccess,errorForgotPass,errorVerify,errorReset,const DeepCollectionEquality().hash(forgotPassForm),const DeepCollectionEquality().hash(verifyForm),const DeepCollectionEquality().hash(resetForm),resetToken);
+int get hashCode => Object.hash(runtimeType,apiError,status,email,otp,password,resetToken);
 
 @override
 String toString() {
-  return 'ForgotPassState(isLoading: $isLoading, isForgotPassSuccess: $isForgotPassSuccess, isVerifySuccess: $isVerifySuccess, isResetSuccess: $isResetSuccess, errorForgotPass: $errorForgotPass, errorVerify: $errorVerify, errorReset: $errorReset, forgotPassForm: $forgotPassForm, verifyForm: $verifyForm, resetForm: $resetForm, resetToken: $resetToken)';
+  return 'ForgotPassState(apiError: $apiError, status: $status, email: $email, otp: $otp, password: $password, resetToken: $resetToken)';
 }
 
 
@@ -45,7 +45,7 @@ abstract mixin class $ForgotPassStateCopyWith<$Res>  {
   factory $ForgotPassStateCopyWith(ForgotPassState value, $Res Function(ForgotPassState) _then) = _$ForgotPassStateCopyWithImpl;
 @useResult
 $Res call({
- bool isLoading, bool? isForgotPassSuccess, bool? isVerifySuccess, bool? isResetSuccess, String? errorForgotPass, String? errorVerify, String? errorReset, Map<String, dynamic> forgotPassForm, Map<String, dynamic> verifyForm, Map<String, dynamic> resetForm, String? resetToken
+ String? apiError, ForgotPassStatus status, String email, String otp, String password, String? resetToken
 });
 
 
@@ -62,19 +62,14 @@ class _$ForgotPassStateCopyWithImpl<$Res>
 
 /// Create a copy of ForgotPassState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? isLoading = null,Object? isForgotPassSuccess = freezed,Object? isVerifySuccess = freezed,Object? isResetSuccess = freezed,Object? errorForgotPass = freezed,Object? errorVerify = freezed,Object? errorReset = freezed,Object? forgotPassForm = null,Object? verifyForm = null,Object? resetForm = null,Object? resetToken = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? apiError = freezed,Object? status = null,Object? email = null,Object? otp = null,Object? password = null,Object? resetToken = freezed,}) {
   return _then(_self.copyWith(
-isLoading: null == isLoading ? _self.isLoading : isLoading // ignore: cast_nullable_to_non_nullable
-as bool,isForgotPassSuccess: freezed == isForgotPassSuccess ? _self.isForgotPassSuccess : isForgotPassSuccess // ignore: cast_nullable_to_non_nullable
-as bool?,isVerifySuccess: freezed == isVerifySuccess ? _self.isVerifySuccess : isVerifySuccess // ignore: cast_nullable_to_non_nullable
-as bool?,isResetSuccess: freezed == isResetSuccess ? _self.isResetSuccess : isResetSuccess // ignore: cast_nullable_to_non_nullable
-as bool?,errorForgotPass: freezed == errorForgotPass ? _self.errorForgotPass : errorForgotPass // ignore: cast_nullable_to_non_nullable
-as String?,errorVerify: freezed == errorVerify ? _self.errorVerify : errorVerify // ignore: cast_nullable_to_non_nullable
-as String?,errorReset: freezed == errorReset ? _self.errorReset : errorReset // ignore: cast_nullable_to_non_nullable
-as String?,forgotPassForm: null == forgotPassForm ? _self.forgotPassForm : forgotPassForm // ignore: cast_nullable_to_non_nullable
-as Map<String, dynamic>,verifyForm: null == verifyForm ? _self.verifyForm : verifyForm // ignore: cast_nullable_to_non_nullable
-as Map<String, dynamic>,resetForm: null == resetForm ? _self.resetForm : resetForm // ignore: cast_nullable_to_non_nullable
-as Map<String, dynamic>,resetToken: freezed == resetToken ? _self.resetToken : resetToken // ignore: cast_nullable_to_non_nullable
+apiError: freezed == apiError ? _self.apiError : apiError // ignore: cast_nullable_to_non_nullable
+as String?,status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
+as ForgotPassStatus,email: null == email ? _self.email : email // ignore: cast_nullable_to_non_nullable
+as String,otp: null == otp ? _self.otp : otp // ignore: cast_nullable_to_non_nullable
+as String,password: null == password ? _self.password : password // ignore: cast_nullable_to_non_nullable
+as String,resetToken: freezed == resetToken ? _self.resetToken : resetToken // ignore: cast_nullable_to_non_nullable
 as String?,
   ));
 }
@@ -160,10 +155,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( bool isLoading,  bool? isForgotPassSuccess,  bool? isVerifySuccess,  bool? isResetSuccess,  String? errorForgotPass,  String? errorVerify,  String? errorReset,  Map<String, dynamic> forgotPassForm,  Map<String, dynamic> verifyForm,  Map<String, dynamic> resetForm,  String? resetToken)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String? apiError,  ForgotPassStatus status,  String email,  String otp,  String password,  String? resetToken)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _ForgotPassState() when $default != null:
-return $default(_that.isLoading,_that.isForgotPassSuccess,_that.isVerifySuccess,_that.isResetSuccess,_that.errorForgotPass,_that.errorVerify,_that.errorReset,_that.forgotPassForm,_that.verifyForm,_that.resetForm,_that.resetToken);case _:
+return $default(_that.apiError,_that.status,_that.email,_that.otp,_that.password,_that.resetToken);case _:
   return orElse();
 
 }
@@ -181,10 +176,10 @@ return $default(_that.isLoading,_that.isForgotPassSuccess,_that.isVerifySuccess,
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( bool isLoading,  bool? isForgotPassSuccess,  bool? isVerifySuccess,  bool? isResetSuccess,  String? errorForgotPass,  String? errorVerify,  String? errorReset,  Map<String, dynamic> forgotPassForm,  Map<String, dynamic> verifyForm,  Map<String, dynamic> resetForm,  String? resetToken)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String? apiError,  ForgotPassStatus status,  String email,  String otp,  String password,  String? resetToken)  $default,) {final _that = this;
 switch (_that) {
 case _ForgotPassState():
-return $default(_that.isLoading,_that.isForgotPassSuccess,_that.isVerifySuccess,_that.isResetSuccess,_that.errorForgotPass,_that.errorVerify,_that.errorReset,_that.forgotPassForm,_that.verifyForm,_that.resetForm,_that.resetToken);case _:
+return $default(_that.apiError,_that.status,_that.email,_that.otp,_that.password,_that.resetToken);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -201,10 +196,10 @@ return $default(_that.isLoading,_that.isForgotPassSuccess,_that.isVerifySuccess,
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( bool isLoading,  bool? isForgotPassSuccess,  bool? isVerifySuccess,  bool? isResetSuccess,  String? errorForgotPass,  String? errorVerify,  String? errorReset,  Map<String, dynamic> forgotPassForm,  Map<String, dynamic> verifyForm,  Map<String, dynamic> resetForm,  String? resetToken)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String? apiError,  ForgotPassStatus status,  String email,  String otp,  String password,  String? resetToken)?  $default,) {final _that = this;
 switch (_that) {
 case _ForgotPassState() when $default != null:
-return $default(_that.isLoading,_that.isForgotPassSuccess,_that.isVerifySuccess,_that.isResetSuccess,_that.errorForgotPass,_that.errorVerify,_that.errorReset,_that.forgotPassForm,_that.verifyForm,_that.resetForm,_that.resetToken);case _:
+return $default(_that.apiError,_that.status,_that.email,_that.otp,_that.password,_that.resetToken);case _:
   return null;
 
 }
@@ -216,37 +211,14 @@ return $default(_that.isLoading,_that.isForgotPassSuccess,_that.isVerifySuccess,
 
 
 class _ForgotPassState implements ForgotPassState {
-  const _ForgotPassState({this.isLoading = false, this.isForgotPassSuccess, this.isVerifySuccess, this.isResetSuccess, this.errorForgotPass, this.errorVerify, this.errorReset, final  Map<String, dynamic> forgotPassForm = const {}, final  Map<String, dynamic> verifyForm = const {}, final  Map<String, dynamic> resetForm = const {}, this.resetToken}): _forgotPassForm = forgotPassForm,_verifyForm = verifyForm,_resetForm = resetForm;
+  const _ForgotPassState({this.apiError, this.status = ForgotPassStatus.initial, this.email = '', this.otp = '', this.password = '', this.resetToken});
   
 
-@override@JsonKey() final  bool isLoading;
-@override final  bool? isForgotPassSuccess;
-@override final  bool? isVerifySuccess;
-@override final  bool? isResetSuccess;
-@override final  String? errorForgotPass;
-@override final  String? errorVerify;
-@override final  String? errorReset;
- final  Map<String, dynamic> _forgotPassForm;
-@override@JsonKey() Map<String, dynamic> get forgotPassForm {
-  if (_forgotPassForm is EqualUnmodifiableMapView) return _forgotPassForm;
-  // ignore: implicit_dynamic_type
-  return EqualUnmodifiableMapView(_forgotPassForm);
-}
-
- final  Map<String, dynamic> _verifyForm;
-@override@JsonKey() Map<String, dynamic> get verifyForm {
-  if (_verifyForm is EqualUnmodifiableMapView) return _verifyForm;
-  // ignore: implicit_dynamic_type
-  return EqualUnmodifiableMapView(_verifyForm);
-}
-
- final  Map<String, dynamic> _resetForm;
-@override@JsonKey() Map<String, dynamic> get resetForm {
-  if (_resetForm is EqualUnmodifiableMapView) return _resetForm;
-  // ignore: implicit_dynamic_type
-  return EqualUnmodifiableMapView(_resetForm);
-}
-
+@override final  String? apiError;
+@override@JsonKey() final  ForgotPassStatus status;
+@override@JsonKey() final  String email;
+@override@JsonKey() final  String otp;
+@override@JsonKey() final  String password;
 @override final  String? resetToken;
 
 /// Create a copy of ForgotPassState
@@ -259,16 +231,16 @@ _$ForgotPassStateCopyWith<_ForgotPassState> get copyWith => __$ForgotPassStateCo
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ForgotPassState&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading)&&(identical(other.isForgotPassSuccess, isForgotPassSuccess) || other.isForgotPassSuccess == isForgotPassSuccess)&&(identical(other.isVerifySuccess, isVerifySuccess) || other.isVerifySuccess == isVerifySuccess)&&(identical(other.isResetSuccess, isResetSuccess) || other.isResetSuccess == isResetSuccess)&&(identical(other.errorForgotPass, errorForgotPass) || other.errorForgotPass == errorForgotPass)&&(identical(other.errorVerify, errorVerify) || other.errorVerify == errorVerify)&&(identical(other.errorReset, errorReset) || other.errorReset == errorReset)&&const DeepCollectionEquality().equals(other._forgotPassForm, _forgotPassForm)&&const DeepCollectionEquality().equals(other._verifyForm, _verifyForm)&&const DeepCollectionEquality().equals(other._resetForm, _resetForm)&&(identical(other.resetToken, resetToken) || other.resetToken == resetToken));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ForgotPassState&&(identical(other.apiError, apiError) || other.apiError == apiError)&&(identical(other.status, status) || other.status == status)&&(identical(other.email, email) || other.email == email)&&(identical(other.otp, otp) || other.otp == otp)&&(identical(other.password, password) || other.password == password)&&(identical(other.resetToken, resetToken) || other.resetToken == resetToken));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,isLoading,isForgotPassSuccess,isVerifySuccess,isResetSuccess,errorForgotPass,errorVerify,errorReset,const DeepCollectionEquality().hash(_forgotPassForm),const DeepCollectionEquality().hash(_verifyForm),const DeepCollectionEquality().hash(_resetForm),resetToken);
+int get hashCode => Object.hash(runtimeType,apiError,status,email,otp,password,resetToken);
 
 @override
 String toString() {
-  return 'ForgotPassState(isLoading: $isLoading, isForgotPassSuccess: $isForgotPassSuccess, isVerifySuccess: $isVerifySuccess, isResetSuccess: $isResetSuccess, errorForgotPass: $errorForgotPass, errorVerify: $errorVerify, errorReset: $errorReset, forgotPassForm: $forgotPassForm, verifyForm: $verifyForm, resetForm: $resetForm, resetToken: $resetToken)';
+  return 'ForgotPassState(apiError: $apiError, status: $status, email: $email, otp: $otp, password: $password, resetToken: $resetToken)';
 }
 
 
@@ -279,7 +251,7 @@ abstract mixin class _$ForgotPassStateCopyWith<$Res> implements $ForgotPassState
   factory _$ForgotPassStateCopyWith(_ForgotPassState value, $Res Function(_ForgotPassState) _then) = __$ForgotPassStateCopyWithImpl;
 @override @useResult
 $Res call({
- bool isLoading, bool? isForgotPassSuccess, bool? isVerifySuccess, bool? isResetSuccess, String? errorForgotPass, String? errorVerify, String? errorReset, Map<String, dynamic> forgotPassForm, Map<String, dynamic> verifyForm, Map<String, dynamic> resetForm, String? resetToken
+ String? apiError, ForgotPassStatus status, String email, String otp, String password, String? resetToken
 });
 
 
@@ -296,19 +268,14 @@ class __$ForgotPassStateCopyWithImpl<$Res>
 
 /// Create a copy of ForgotPassState
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? isLoading = null,Object? isForgotPassSuccess = freezed,Object? isVerifySuccess = freezed,Object? isResetSuccess = freezed,Object? errorForgotPass = freezed,Object? errorVerify = freezed,Object? errorReset = freezed,Object? forgotPassForm = null,Object? verifyForm = null,Object? resetForm = null,Object? resetToken = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? apiError = freezed,Object? status = null,Object? email = null,Object? otp = null,Object? password = null,Object? resetToken = freezed,}) {
   return _then(_ForgotPassState(
-isLoading: null == isLoading ? _self.isLoading : isLoading // ignore: cast_nullable_to_non_nullable
-as bool,isForgotPassSuccess: freezed == isForgotPassSuccess ? _self.isForgotPassSuccess : isForgotPassSuccess // ignore: cast_nullable_to_non_nullable
-as bool?,isVerifySuccess: freezed == isVerifySuccess ? _self.isVerifySuccess : isVerifySuccess // ignore: cast_nullable_to_non_nullable
-as bool?,isResetSuccess: freezed == isResetSuccess ? _self.isResetSuccess : isResetSuccess // ignore: cast_nullable_to_non_nullable
-as bool?,errorForgotPass: freezed == errorForgotPass ? _self.errorForgotPass : errorForgotPass // ignore: cast_nullable_to_non_nullable
-as String?,errorVerify: freezed == errorVerify ? _self.errorVerify : errorVerify // ignore: cast_nullable_to_non_nullable
-as String?,errorReset: freezed == errorReset ? _self.errorReset : errorReset // ignore: cast_nullable_to_non_nullable
-as String?,forgotPassForm: null == forgotPassForm ? _self._forgotPassForm : forgotPassForm // ignore: cast_nullable_to_non_nullable
-as Map<String, dynamic>,verifyForm: null == verifyForm ? _self._verifyForm : verifyForm // ignore: cast_nullable_to_non_nullable
-as Map<String, dynamic>,resetForm: null == resetForm ? _self._resetForm : resetForm // ignore: cast_nullable_to_non_nullable
-as Map<String, dynamic>,resetToken: freezed == resetToken ? _self.resetToken : resetToken // ignore: cast_nullable_to_non_nullable
+apiError: freezed == apiError ? _self.apiError : apiError // ignore: cast_nullable_to_non_nullable
+as String?,status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
+as ForgotPassStatus,email: null == email ? _self.email : email // ignore: cast_nullable_to_non_nullable
+as String,otp: null == otp ? _self.otp : otp // ignore: cast_nullable_to_non_nullable
+as String,password: null == password ? _self.password : password // ignore: cast_nullable_to_non_nullable
+as String,resetToken: freezed == resetToken ? _self.resetToken : resetToken // ignore: cast_nullable_to_non_nullable
 as String?,
   ));
 }

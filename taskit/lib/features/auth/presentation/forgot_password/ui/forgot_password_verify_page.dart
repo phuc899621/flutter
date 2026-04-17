@@ -2,8 +2,10 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:taskit/shared/utils/snack_bar_utils.dart';
 import 'package:taskit/shared/widget/text_field/taskit_code_text_field.dart';
 
+import '../../../../../shared/constants/forgot_pass_status.dart';
 import '../controller/forgot_pass_controller.dart';
 
 class ForgotPasswordVerifyPage extends ConsumerStatefulWidget {
@@ -16,91 +18,64 @@ class ForgotPasswordVerifyPage extends ConsumerStatefulWidget {
 
 class _ForgotPasswordVerifyPageState
     extends ConsumerState<ForgotPasswordVerifyPage> {
-  final TextEditingController _otpController0 = TextEditingController();
-  final TextEditingController _otpController1 = TextEditingController();
-  final TextEditingController _otpController2 = TextEditingController();
-  final TextEditingController _otpController3 = TextEditingController();
+  final List<TextEditingController> _otpControllers = List.generate(
+    4,
+    (_) => TextEditingController(),
+  );
 
   @override
   void dispose() {
-    _otpController0.dispose();
-    _otpController1.dispose();
-    _otpController2.dispose();
-    _otpController3.dispose();
+    for (var controller in _otpControllers) {
+      controller.dispose();
+    }
     super.dispose();
   }
 
   void _listener() {
-    final color = Theme.of(context).colorScheme;
-    ref.listen(
-      forgotPassControllerProvider.select((value) => value.errorVerify),
-      (_, next) {
-        if (next != null) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              duration: const Duration(seconds: 5),
-              backgroundColor: color.error,
-              content: Text(next),
-            ),
-          );
-        }
-      },
-    );
-    ref.listen(
-      forgotPassControllerProvider.select((value) => value.isVerifySuccess),
-      (_, next) {
-        if (next != null && next) {
-          context.push('/forgot_password/verify/reset');
-        }
-      },
-    );
+    ref.listen(forgotPassControllerProvider.select((value) => value.apiError), (
+      _,
+      next,
+    ) {
+      if (next != null) {
+        SnackBarUtils.show(context, next, isError: true);
+      }
+    });
+    ref.listen(forgotPassControllerProvider.select((value) => value.status), (
+      _,
+      next,
+    ) {
+      if (next == ForgotPassStatus.verifySuccess) {
+        context.push('/forgot_password/verify/reset');
+      }
+    });
   }
 
   void _onSummit() {
-    final formData = ({
-      'otp':
-          _otpController0.text +
-          _otpController1.text +
-          _otpController2.text +
-          _otpController3.text,
-    });
-    ref.read(forgotPassControllerProvider.notifier).setVerifyForm(formData);
-    ref.read(forgotPassControllerProvider.notifier).verify();
+    final otp = _otpControllers.map((e) => e.text).join();
+    ref.read(forgotPassControllerProvider.notifier).verify(otp);
   }
 
-  void _onResend() {}
+  void _onResend() => ref.read(forgotPassControllerProvider.notifier).resend();
 
   @override
   Widget build(BuildContext context) {
     _listener();
-    final text = Theme.of(context).textTheme;
     final color = Theme.of(context).colorScheme;
     return SafeArea(
       top: true,
       child: Scaffold(
         resizeToAvoidBottomInset: true,
         backgroundColor: color.primary,
-        body: NestedScrollView(
-          headerSliverBuilder: (context, innerBoxIsScrolled) => [_topAppBar()],
-          body: _signupVerifyBody(),
+        body: Column(
+          children: [
+            const SizedBox(height: 80),
+            Expanded(child: _signupVerifyBody()),
+          ],
         ),
       ),
     );
   }
 
-  //region TOP APPBAR
-  Widget _topAppBar() {
-    final text = Theme.of(context).textTheme;
-    final color = Theme.of(context).colorScheme;
-    return SliverAppBar(
-      automaticallyImplyLeading: false,
-      toolbarHeight: 80,
-      expandedHeight: 80,
-      backgroundColor: color.primary,
-    );
-  }
-
-  //endregion
   //region Sign up verify body
   Widget _signupVerifyBody() {
     final text = Theme.of(context).textTheme;
@@ -144,36 +119,31 @@ class _ForgotPasswordVerifyPageState
             SizedBox(height: 25),
             Row(
               mainAxisSize: MainAxisSize.max,
+              spacing: 20,
+              crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Expanded(
-                  child: SizedBox(
-                    width: 200.0,
-                    child: TaskitCodeTextField(controller: _otpController0),
+              children: List.generate(
+                4,
+                (index) => Flexible(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 4),
+                    child: SizedBox(
+                      width: 50,
+                      child: TaskitCodeTextField(
+                        controller: _otpControllers[index],
+                        onChanged: (value) {
+                          if (value.isEmpty && index > 0) {
+                            FocusScope.of(context).previousFocus();
+                          }
+                          if (value.length == 1 && index < 3) {
+                            FocusScope.of(context).nextFocus();
+                          }
+                        },
+                      ),
+                    ),
                   ),
                 ),
-                const SizedBox(width: 30.0),
-                Expanded(
-                  child: SizedBox(
-                    width: 200.0,
-                    child: TaskitCodeTextField(controller: _otpController1),
-                  ),
-                ),
-                const SizedBox(width: 30.0),
-                Expanded(
-                  child: SizedBox(
-                    width: 200.0,
-                    child: TaskitCodeTextField(controller: _otpController2),
-                  ),
-                ),
-                const SizedBox(width: 30.0),
-                Expanded(
-                  child: SizedBox(
-                    width: 200.0,
-                    child: TaskitCodeTextField(controller: _otpController3),
-                  ),
-                ),
-              ],
+              ),
             ),
             SizedBox(height: 15),
             SizedBox(
@@ -186,7 +156,7 @@ class _ForgotPasswordVerifyPageState
                     borderRadius: BorderRadius.circular(20.0),
                   ),
                 ),
-                child: state.isLoading
+                child: state.status == ForgotPassStatus.loading
                     ? Center(
                         child: CircularProgressIndicator(
                           color: color.onPrimary,

@@ -5,7 +5,7 @@ import 'package:retrofit/http.dart';
 import 'package:taskit/shared/data/source/remote/network/network_service.dart';
 
 import '../../../../../shared/data/dto/response/base_data.dart';
-import '../../../../../shared/data/dto/response/base_response.dart';
+import '../../../../../shared/data/dto/response/data_response.dart';
 import '../../dto/req/category/add_category_req.dart';
 import '../../dto/res/category/add_category_data.dart';
 
@@ -21,13 +21,13 @@ abstract class CategoryApi {
   factory CategoryApi(Dio dio) => _CategoryApi(dio);
 
   @POST('/category')
-  Future<BaseResponse<AddCategoryData>> add(
+  Future<DataResponse<AddCategoryData>> add(
     @Header('Authorization') String token,
     @Body() AddCategoryReq addCategoryReq,
   );
 
   @DELETE('/category/{id}')
-  Future<BaseResponse<BaseData>> delete(
+  Future<DataResponse<BaseData>> delete(
     @Header('Authorization') String token,
     @Path('id') String id,
   );

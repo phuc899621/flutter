@@ -57,11 +57,7 @@ class _SignupPageState extends ConsumerState<SignupPage> {
     final isValid = _formKey.currentState?.validate();
     if (isValid == null || !isValid) return;
     final controller = ref.read(signupControllerProvider.notifier);
-    controller.signup(
-      _emailController.text,
-      _passwordController.text,
-      _passwordConfirm.text,
-    );
+    controller.signup(_emailController.text, _passwordController.text);
   }
 
   @override
@@ -188,7 +184,7 @@ class _SignupPageState extends ConsumerState<SignupPage> {
                       borderRadius: BorderRadius.circular(20.0),
                     ),
                   ),
-                  child: state.isLoading
+                  child: state.status == SignupStatus.loading
                       ? SizedBox(
                           width: 20,
                           height: 20,

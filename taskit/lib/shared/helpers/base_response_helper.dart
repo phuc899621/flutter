@@ -1,16 +1,10 @@
-import '../data/dto/response/base_response.dart';
+import '../data/dto/response/data_response.dart';
 
 class BaseResponseHelper {
-  static T requireData<T>(BaseResponse<T> response) {
+  static T requireData<T>(DataResponse<T> response) {
     if (response.data == null) {
       throw Exception('Expected non-null data: ${response.message}');
     }
     return response.data!;
-  }
-
-  static void checkSuccess<T>(BaseResponse<T> response) {
-    if (response.success != true) {
-      throw Exception('API failed: ${response.message}');
-    }
   }
 }

@@ -20,7 +20,7 @@ class _AiApi implements AiApi {
   final ParseErrorLogger? errorLogger;
 
   @override
-  Future<BaseResponse<AiGenerateTaskData>> generate(
+  Future<DataResponse<AiGenerateTaskData>> generate(
     String token,
     AiReq aiReq,
   ) async {
@@ -29,7 +29,7 @@ class _AiApi implements AiApi {
     final _headers = <String, dynamic>{r'Authorization': token};
     _headers.removeWhere((k, v) => v == null);
     final _data = aiReq;
-    final _options = _setStreamType<BaseResponse<AiGenerateTaskData>>(
+    final _options = _setStreamType<DataResponse<AiGenerateTaskData>>(
       Options(method: 'GET', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
@@ -40,9 +40,9 @@ class _AiApi implements AiApi {
           .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
     );
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late BaseResponse<AiGenerateTaskData> _value;
+    late DataResponse<AiGenerateTaskData> _value;
     try {
-      _value = BaseResponse<AiGenerateTaskData>.fromJson(
+      _value = DataResponse<AiGenerateTaskData>.fromJson(
         _result.data!,
         (json) => AiGenerateTaskData.fromJson(json as Map<String, dynamic>),
       );
@@ -54,7 +54,7 @@ class _AiApi implements AiApi {
   }
 
   @override
-  Future<BaseResponse<AiQuestionData>> getAnswer(
+  Future<DataResponse<AiQuestionData>> getAnswer(
     String token,
     AiReq aiReq,
   ) async {
@@ -63,7 +63,7 @@ class _AiApi implements AiApi {
     final _headers = <String, dynamic>{r'Authorization': token};
     _headers.removeWhere((k, v) => v == null);
     final _data = aiReq;
-    final _options = _setStreamType<BaseResponse<AiQuestionData>>(
+    final _options = _setStreamType<DataResponse<AiQuestionData>>(
       Options(method: 'GET', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
@@ -74,9 +74,9 @@ class _AiApi implements AiApi {
           .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
     );
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late BaseResponse<AiQuestionData> _value;
+    late DataResponse<AiQuestionData> _value;
     try {
-      _value = BaseResponse<AiQuestionData>.fromJson(
+      _value = DataResponse<AiQuestionData>.fromJson(
         _result.data!,
         (json) => AiQuestionData.fromJson(json as Map<String, dynamic>),
       );

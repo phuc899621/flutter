@@ -1,28 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:taskit/shared/utils/snack_bar_utils.dart';
+import 'package:taskit/shared/widget/text_field/taskit_password_text_field.dart';
 
 import '../../../../../shared/constants/forgot_pass_status.dart';
-import '../../../../../shared/widget/text_field/taskit_outline_text_field.dart';
+import '../../../../../shared/utils/snack_bar_utils.dart';
 import '../controller/forgot_pass_controller.dart';
 
-class ForgotPasswordPage extends ConsumerStatefulWidget {
-  const ForgotPasswordPage({super.key});
+class ForgotPasswordResetPage extends ConsumerStatefulWidget {
+  const ForgotPasswordResetPage({super.key});
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() =>
-      _ForgotPasswordPageState();
+      _ForgotPasswordResetPageState();
 }
 
-class _ForgotPasswordPageState extends ConsumerState<ForgotPasswordPage> {
-  final TextEditingController _emailController = TextEditingController();
+class _ForgotPasswordResetPageState
+    extends ConsumerState<ForgotPasswordResetPage> {
+  final _passwordController = TextEditingController();
+  final _passwordConfirmController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
+  final _confirmKey = GlobalKey<FormFieldState<String>>();
 
   @override
   void dispose() {
+    _passwordController.dispose();
+    _passwordConfirmController.dispose();
     super.dispose();
-    _emailController.dispose();
   }
 
   void _listener() {
@@ -31,24 +35,36 @@ class _ForgotPasswordPageState extends ConsumerState<ForgotPasswordPage> {
       next,
     ) {
       if (next != null) {
+        _passwordController.clear();
+        _passwordConfirmController.clear();
         SnackBarUtils.show(context, next, isError: true);
       }
     });
     ref.listen(forgotPassControllerProvider.select((value) => value.status), (
       _,
       next,
-    ) {
-      if (next == ForgotPassStatus.forgotSuccess) {
-        context.push('/forgot_password/verify');
+    ) async {
+      if (next == ForgotPassStatus.resetSuccess) {
+        SnackBarUtils.show(
+          context,
+          "Reset password success!",
+          duration: Duration(seconds: 2),
+        );
+        final router = GoRouter.of(context);
+        await Future.delayed(const Duration(seconds: 2));
+        if (context.mounted) {
+          router.go('/login');
+        }
       }
     });
   }
 
-  void _onSummit() async {
-    if (!_formKey.currentState!.validate()) return;
+  void _onSummit() {
+    final isValid = _formKey.currentState?.validate();
+    if (isValid == null || !isValid) return;
     ref
         .read(forgotPassControllerProvider.notifier)
-        .forgotPass(_emailController.text);
+        .reset(_passwordController.text);
   }
 
   @override
@@ -63,7 +79,7 @@ class _ForgotPasswordPageState extends ConsumerState<ForgotPasswordPage> {
         body: Column(
           children: [
             const SizedBox(height: 80),
-            Expanded(child: _forgotPasswordBody()),
+            Expanded(child: _signupVerifyBody()),
           ],
         ),
       ),
@@ -71,7 +87,7 @@ class _ForgotPasswordPageState extends ConsumerState<ForgotPasswordPage> {
   }
 
   //region Sign up verify body
-  Widget _forgotPasswordBody() {
+  Widget _signupVerifyBody() {
     final text = Theme.of(context).textTheme;
     final color = Theme.of(context).colorScheme;
     final state = ref.watch(forgotPassControllerProvider);
@@ -90,49 +106,69 @@ class _ForgotPasswordPageState extends ConsumerState<ForgotPasswordPage> {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              TextButton.icon(
+              IconButton.filledTonal(
                 onPressed: context.pop,
-                label: Text(
-                  'Back to login',
-                  style: text.labelLarge?.copyWith(color: color.primary),
+                style: IconButton.styleFrom(
+                  backgroundColor: color.surfaceContainer,
+                  foregroundColor: color.primary,
                 ),
                 icon: Icon(Icons.arrow_back_rounded, color: color.primary),
               ),
               Text(
-                'Forgot Password?',
+                'You\'re Verified',
                 style: text.headlineMedium?.copyWith(
                   color: color.primary,
                   fontWeight: FontWeight.w800,
                 ),
               ),
-              SizedBox(height: 5),
               Text(
-                'Don\'t worry! Please enter the email associated with your account below.',
+                'Now, set a new password for your account',
                 style: text.labelMedium?.copyWith(
                   fontWeight: FontWeight.w600,
                   color: color.onSurfaceVariant,
                 ),
               ),
               SizedBox(height: 25),
-              TaskitOutlineTextField(
-                labelText: 'Email',
-                controller: _emailController,
-                autofillHints: const [AutofillHints.email],
-                autoFocus: true,
-                keyboardType: TextInputType.emailAddress,
+              TaskitPasswordTextField(
+                labelText: 'New password',
+                controller: _passwordController,
+                onChanged: (value) {
+                  if (_passwordConfirmController.text.isNotEmpty) {
+                    _confirmKey.currentState?.validate();
+                  }
+                },
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'Please enter your email';
+                    return 'Please enter your password';
                   }
-                  if (!RegExp(
-                    r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$',
-                  ).hasMatch(value)) {
-                    return 'Please enter a valid email';
+                  if (value.length < 8) {
+                    return 'Password must be at least 8 characters';
                   }
                   return null;
                 },
               ),
-              SizedBox(height: 30),
+              SizedBox(height: 15),
+              TaskitPasswordTextField(
+                formKey: _confirmKey,
+                labelText: 'Confirm new password',
+                controller: _passwordConfirmController,
+                autovalidateMode: AutovalidateMode.onUserInteraction,
+                onChanged: (value) {
+                  if (value.isNotEmpty) {
+                    _confirmKey.currentState?.validate();
+                  }
+                },
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter your password again';
+                  }
+                  if (value != _passwordController.text) {
+                    return 'Password does not match';
+                  }
+                  return null;
+                },
+              ),
+              SizedBox(height: 15),
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
@@ -150,7 +186,7 @@ class _ForgotPasswordPageState extends ConsumerState<ForgotPasswordPage> {
                           ),
                         )
                       : Text(
-                          'Send Code',
+                          'Submit',
                           style: text.titleMedium?.copyWith(
                             color: color.onPrimary,
                           ),

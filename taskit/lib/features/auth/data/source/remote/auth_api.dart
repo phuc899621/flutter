@@ -2,14 +2,12 @@ import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:retrofit/error_logger.dart';
 import 'package:retrofit/http.dart';
+import 'package:taskit/shared/data/dto/response/message_response.dart';
 
 import '../../../../../shared/config/app/app_config.dart';
-import '../../../../../shared/data/dto/response/base_data.dart';
-import '../../../../../shared/data/dto/response/base_response.dart';
+import '../../../../../shared/data/dto/response/data_response.dart';
 import '../../../../../shared/data/source/remote/network/network_service.dart';
-import '../../dto/req/forgot_pass/forgot_pass.dart';
-import '../../dto/req/forgot_pass/forgot_pass_verify.dart';
-import '../../dto/req/forgot_pass/reset_pass.dart';
+import '../../dto/req/forgot_pass/forgot_password_request.dart';
 import '../../dto/req/login/login_request.dart';
 import '../../dto/req/signup/signup_request.dart';
 import '../../dto/res/forgot_pass/verify.dart';
@@ -32,10 +30,10 @@ sealed class AuthApi {
   * Login
   * */
   @POST('/login')
-  Future<BaseResponse<LoginData>> login(@Body() LoginRequest data);
+  Future<DataResponse<LoginData>> login(@Body() LoginRequest data);
 
   @GET('/login/verify')
-  Future<BaseResponse<LoginVerifyData>> checkLogin(
+  Future<DataResponse<LoginVerifyData>> checkLogin(
     @Header('Authorization') String token,
   );
 
@@ -43,28 +41,28 @@ sealed class AuthApi {
   /*
   * Signup
   * */
-  Future<BaseResponse<BaseData>> signup(@Body() SignupRequest data);
+  Future<MessageResponse> signup(@Body() SignupRequest data);
 
   @POST('/signup/verify')
-  Future<BaseResponse<BaseData>> signupVerify(@Body() SignupRequest data);
+  Future<MessageResponse> signupVerify(@Body() SignupRequest data);
 
   @POST('/signup/resend')
-  Future<BaseResponse<BaseData>> signupResend(@Body() SignupRequest data);
+  Future<MessageResponse> signupResend(@Body() SignupRequest data);
 
   @POST('/forgot-password')
   /*
   * Forgot Password
   * */
-  Future<BaseResponse<BaseData>> forgotPass(@Body() ForgotPassRequest data);
+  Future<MessageResponse> forgotPass(@Body() ForgotPassRequest data);
 
   @POST('/forgot-password/verify')
-  Future<BaseResponse<ForgotPassData>> forgotPassVerify(
-    @Body() ForgotPassVerifyRequest data,
+  Future<DataResponse<ForgotPassData>> forgotPassVerify(
+    @Body() ForgotPassRequest data,
   );
 
+  @POST('/forgot-password/resend')
+  Future<MessageResponse> forgotPassResend(@Body() ForgotPassRequest data);
+
   @PUT('/forgot-password/reset')
-  Future<BaseResponse<BaseData>> resetPass(
-    @Body() ResetPassRequest data,
-    @Header('Reset-Token') String token,
-  );
+  Future<MessageResponse> forgotPassReset(@Body() ForgotPassRequest data);
 }

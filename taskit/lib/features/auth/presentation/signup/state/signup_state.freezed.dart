@@ -14,7 +14,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$SignupState {
 
- bool get isLoading; String? get apiError; SignupStatus get status; SignupRegisterEntity get registerForm; SignupVerifyEntity get verifyForm; SignupResendEntity get resendForm;
+ String? get apiError; SignupStatus get status; String get email; String get otp; String get password;
 /// Create a copy of SignupState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -25,16 +25,16 @@ $SignupStateCopyWith<SignupState> get copyWith => _$SignupStateCopyWithImpl<Sign
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is SignupState&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading)&&(identical(other.apiError, apiError) || other.apiError == apiError)&&(identical(other.status, status) || other.status == status)&&const DeepCollectionEquality().equals(other.registerForm, registerForm)&&const DeepCollectionEquality().equals(other.verifyForm, verifyForm)&&const DeepCollectionEquality().equals(other.resendForm, resendForm));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is SignupState&&(identical(other.apiError, apiError) || other.apiError == apiError)&&(identical(other.status, status) || other.status == status)&&(identical(other.email, email) || other.email == email)&&(identical(other.otp, otp) || other.otp == otp)&&(identical(other.password, password) || other.password == password));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,isLoading,apiError,status,const DeepCollectionEquality().hash(registerForm),const DeepCollectionEquality().hash(verifyForm),const DeepCollectionEquality().hash(resendForm));
+int get hashCode => Object.hash(runtimeType,apiError,status,email,otp,password);
 
 @override
 String toString() {
-  return 'SignupState(isLoading: $isLoading, apiError: $apiError, status: $status, registerForm: $registerForm, verifyForm: $verifyForm, resendForm: $resendForm)';
+  return 'SignupState(apiError: $apiError, status: $status, email: $email, otp: $otp, password: $password)';
 }
 
 
@@ -45,7 +45,7 @@ abstract mixin class $SignupStateCopyWith<$Res>  {
   factory $SignupStateCopyWith(SignupState value, $Res Function(SignupState) _then) = _$SignupStateCopyWithImpl;
 @useResult
 $Res call({
- bool isLoading, String? apiError, SignupStatus status, SignupRegisterEntity registerForm, SignupVerifyEntity verifyForm, SignupResendEntity resendForm
+ String? apiError, SignupStatus status, String email, String otp, String password
 });
 
 
@@ -62,15 +62,14 @@ class _$SignupStateCopyWithImpl<$Res>
 
 /// Create a copy of SignupState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? isLoading = null,Object? apiError = freezed,Object? status = null,Object? registerForm = freezed,Object? verifyForm = freezed,Object? resendForm = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? apiError = freezed,Object? status = null,Object? email = null,Object? otp = null,Object? password = null,}) {
   return _then(_self.copyWith(
-isLoading: null == isLoading ? _self.isLoading : isLoading // ignore: cast_nullable_to_non_nullable
-as bool,apiError: freezed == apiError ? _self.apiError : apiError // ignore: cast_nullable_to_non_nullable
+apiError: freezed == apiError ? _self.apiError : apiError // ignore: cast_nullable_to_non_nullable
 as String?,status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
-as SignupStatus,registerForm: freezed == registerForm ? _self.registerForm : registerForm // ignore: cast_nullable_to_non_nullable
-as SignupRegisterEntity,verifyForm: freezed == verifyForm ? _self.verifyForm : verifyForm // ignore: cast_nullable_to_non_nullable
-as SignupVerifyEntity,resendForm: freezed == resendForm ? _self.resendForm : resendForm // ignore: cast_nullable_to_non_nullable
-as SignupResendEntity,
+as SignupStatus,email: null == email ? _self.email : email // ignore: cast_nullable_to_non_nullable
+as String,otp: null == otp ? _self.otp : otp // ignore: cast_nullable_to_non_nullable
+as String,password: null == password ? _self.password : password // ignore: cast_nullable_to_non_nullable
+as String,
   ));
 }
 
@@ -155,10 +154,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( bool isLoading,  String? apiError,  SignupStatus status,  SignupRegisterEntity registerForm,  SignupVerifyEntity verifyForm,  SignupResendEntity resendForm)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String? apiError,  SignupStatus status,  String email,  String otp,  String password)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _SignupState() when $default != null:
-return $default(_that.isLoading,_that.apiError,_that.status,_that.registerForm,_that.verifyForm,_that.resendForm);case _:
+return $default(_that.apiError,_that.status,_that.email,_that.otp,_that.password);case _:
   return orElse();
 
 }
@@ -176,10 +175,10 @@ return $default(_that.isLoading,_that.apiError,_that.status,_that.registerForm,_
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( bool isLoading,  String? apiError,  SignupStatus status,  SignupRegisterEntity registerForm,  SignupVerifyEntity verifyForm,  SignupResendEntity resendForm)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String? apiError,  SignupStatus status,  String email,  String otp,  String password)  $default,) {final _that = this;
 switch (_that) {
 case _SignupState():
-return $default(_that.isLoading,_that.apiError,_that.status,_that.registerForm,_that.verifyForm,_that.resendForm);case _:
+return $default(_that.apiError,_that.status,_that.email,_that.otp,_that.password);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -196,10 +195,10 @@ return $default(_that.isLoading,_that.apiError,_that.status,_that.registerForm,_
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( bool isLoading,  String? apiError,  SignupStatus status,  SignupRegisterEntity registerForm,  SignupVerifyEntity verifyForm,  SignupResendEntity resendForm)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String? apiError,  SignupStatus status,  String email,  String otp,  String password)?  $default,) {final _that = this;
 switch (_that) {
 case _SignupState() when $default != null:
-return $default(_that.isLoading,_that.apiError,_that.status,_that.registerForm,_that.verifyForm,_that.resendForm);case _:
+return $default(_that.apiError,_that.status,_that.email,_that.otp,_that.password);case _:
   return null;
 
 }
@@ -211,15 +210,14 @@ return $default(_that.isLoading,_that.apiError,_that.status,_that.registerForm,_
 
 
 class _SignupState implements SignupState {
-   _SignupState({this.isLoading = false, this.apiError, this.status = SignupStatus.initial, this.registerForm = SignupEntity.initialRegister, this.verifyForm = SignupEntity.initialVerify, this.resendForm = SignupEntity.initialResend});
+   _SignupState({this.apiError, this.status = SignupStatus.initial, this.email = '', this.otp = '', this.password = ''});
   
 
-@override@JsonKey() final  bool isLoading;
 @override final  String? apiError;
 @override@JsonKey() final  SignupStatus status;
-@override@JsonKey() final  SignupRegisterEntity registerForm;
-@override@JsonKey() final  SignupVerifyEntity verifyForm;
-@override@JsonKey() final  SignupResendEntity resendForm;
+@override@JsonKey() final  String email;
+@override@JsonKey() final  String otp;
+@override@JsonKey() final  String password;
 
 /// Create a copy of SignupState
 /// with the given fields replaced by the non-null parameter values.
@@ -231,16 +229,16 @@ _$SignupStateCopyWith<_SignupState> get copyWith => __$SignupStateCopyWithImpl<_
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _SignupState&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading)&&(identical(other.apiError, apiError) || other.apiError == apiError)&&(identical(other.status, status) || other.status == status)&&const DeepCollectionEquality().equals(other.registerForm, registerForm)&&const DeepCollectionEquality().equals(other.verifyForm, verifyForm)&&const DeepCollectionEquality().equals(other.resendForm, resendForm));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _SignupState&&(identical(other.apiError, apiError) || other.apiError == apiError)&&(identical(other.status, status) || other.status == status)&&(identical(other.email, email) || other.email == email)&&(identical(other.otp, otp) || other.otp == otp)&&(identical(other.password, password) || other.password == password));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,isLoading,apiError,status,const DeepCollectionEquality().hash(registerForm),const DeepCollectionEquality().hash(verifyForm),const DeepCollectionEquality().hash(resendForm));
+int get hashCode => Object.hash(runtimeType,apiError,status,email,otp,password);
 
 @override
 String toString() {
-  return 'SignupState(isLoading: $isLoading, apiError: $apiError, status: $status, registerForm: $registerForm, verifyForm: $verifyForm, resendForm: $resendForm)';
+  return 'SignupState(apiError: $apiError, status: $status, email: $email, otp: $otp, password: $password)';
 }
 
 
@@ -251,7 +249,7 @@ abstract mixin class _$SignupStateCopyWith<$Res> implements $SignupStateCopyWith
   factory _$SignupStateCopyWith(_SignupState value, $Res Function(_SignupState) _then) = __$SignupStateCopyWithImpl;
 @override @useResult
 $Res call({
- bool isLoading, String? apiError, SignupStatus status, SignupRegisterEntity registerForm, SignupVerifyEntity verifyForm, SignupResendEntity resendForm
+ String? apiError, SignupStatus status, String email, String otp, String password
 });
 
 
@@ -268,15 +266,14 @@ class __$SignupStateCopyWithImpl<$Res>
 
 /// Create a copy of SignupState
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? isLoading = null,Object? apiError = freezed,Object? status = null,Object? registerForm = freezed,Object? verifyForm = freezed,Object? resendForm = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? apiError = freezed,Object? status = null,Object? email = null,Object? otp = null,Object? password = null,}) {
   return _then(_SignupState(
-isLoading: null == isLoading ? _self.isLoading : isLoading // ignore: cast_nullable_to_non_nullable
-as bool,apiError: freezed == apiError ? _self.apiError : apiError // ignore: cast_nullable_to_non_nullable
+apiError: freezed == apiError ? _self.apiError : apiError // ignore: cast_nullable_to_non_nullable
 as String?,status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
-as SignupStatus,registerForm: freezed == registerForm ? _self.registerForm : registerForm // ignore: cast_nullable_to_non_nullable
-as SignupRegisterEntity,verifyForm: freezed == verifyForm ? _self.verifyForm : verifyForm // ignore: cast_nullable_to_non_nullable
-as SignupVerifyEntity,resendForm: freezed == resendForm ? _self.resendForm : resendForm // ignore: cast_nullable_to_non_nullable
-as SignupResendEntity,
+as SignupStatus,email: null == email ? _self.email : email // ignore: cast_nullable_to_non_nullable
+as String,otp: null == otp ? _self.otp : otp // ignore: cast_nullable_to_non_nullable
+as String,password: null == password ? _self.password : password // ignore: cast_nullable_to_non_nullable
+as String,
   ));
 }
 

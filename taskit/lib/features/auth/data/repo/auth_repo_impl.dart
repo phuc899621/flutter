@@ -1,23 +1,21 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:taskit/features/auth/data/dto/req/login/login_request.dart';
 import 'package:taskit/features/auth/data/dto/res/login/login_data.dart';
+import 'package:taskit/features/auth/data/mapper/forgot_password_mapper.dart';
 import 'package:taskit/features/auth/data/mapper/signup_mapper.dart';
 import 'package:taskit/features/auth/data/source/local/auth_local.dart';
 import 'package:taskit/features/auth/domain/entities/signup/signup_entity.dart';
 import 'package:taskit/features/auth/domain/repo/auth_repo.dart';
 import 'package:taskit/shared/application/itoken_service.dart';
 import 'package:taskit/shared/application/token_service.dart';
-import 'package:taskit/shared/data/dto/response/base_response.dart';
+import 'package:taskit/shared/data/dto/response/data_response.dart';
 import 'package:taskit/shared/data/mapper/result_mapper.dart';
 import 'package:taskit/shared/data/source/remote/network/dio_exception_mapper.dart';
-import 'package:taskit/shared/domain/entities/default_result.dart';
+import 'package:taskit/shared/domain/entities/data_result.dart';
+import 'package:taskit/shared/domain/entities/message_result.dart';
 import 'package:taskit/shared/helpers/base_response_helper.dart';
 
-import '../../../../shared/data/dto/response/base_data.dart';
-import '../dto/req/forgot_pass/forgot_pass.dart';
-import '../dto/req/forgot_pass/forgot_pass_verify.dart';
-import '../dto/req/forgot_pass/reset_pass.dart';
-import '../dto/res/forgot_pass/verify.dart';
+import '../../domain/entities/forgot_pass/forgot_pass_entity.dart';
 import '../dto/res/login/login_verify_data.dart';
 import '../source/local/auth_local_impl.dart';
 import '../source/remote/auth_api.dart';
@@ -41,7 +39,7 @@ class AuthRepoImpl with DioExceptionMapper implements AuthRepo {
   * */
   //region LOGIN
   @override
-  Future<BaseResponse<LoginData>> login(LoginRequest data) async {
+  Future<DataResponse<LoginData>> login(LoginRequest data) async {
     return callSafe(() async {
       final response = await _authApi.login(data);
       final responseData = BaseResponseHelper.requireData(response);
@@ -51,7 +49,7 @@ class AuthRepoImpl with DioExceptionMapper implements AuthRepo {
   }
 
   @override
-  Future<BaseResponse<LoginVerifyData>> checkLogin() async {
+  Future<DataResponse<LoginVerifyData>> checkLogin() async {
     final token = await _iTokenService.getToken();
     return callSafe(
       () async => await _authApi.checkLogin('Bearer $token'),
@@ -65,25 +63,25 @@ class AuthRepoImpl with DioExceptionMapper implements AuthRepo {
   * Sign Up
   * */
   @override
-  Future<DefaultResult> signup(SignupRegisterEntity data) async {
+  Future<MessageResult> signup(SignupRegisterEntity data) async {
     return callSafe(
-      () async => (await _authApi.signup(data.toDto())).toDefault(),
+      () async => (await _authApi.signup(data.toDto())).toResult(),
       errorMessage: "An unexpected error occurred when sign up",
     );
   }
 
   @override
-  Future<DefaultResult> signupVerify(SignupVerifyEntity data) async {
+  Future<MessageResult> signupVerify(SignupVerifyEntity data) async {
     return callSafe(
-      () async => (await _authApi.signupVerify(data.toDto())).toDefault(),
+      () async => (await _authApi.signupVerify(data.toDto())).toResult(),
       errorMessage: "An unexpected error occurred when verify signup",
     );
   }
 
   @override
-  Future<DefaultResult> signupResend(SignupResendEntity data) async {
+  Future<MessageResult> signupResend(SignupResendEntity data) async {
     return callSafe(
-      () async => (await _authApi.signupResend(data.toDto())).toDefault(),
+      () async => (await _authApi.signupResend(data.toDto())).toResult(),
       errorMessage: "An unexpected error occurred when resend signup",
     );
   }
@@ -92,32 +90,43 @@ class AuthRepoImpl with DioExceptionMapper implements AuthRepo {
   * Forgot Password
   * */
   @override
-  Future<BaseResponse<BaseData>> forgotPass(ForgotPassRequest data) async {
+  Future<MessageResult> forgotPass(ForgotPasswordEntity data) async {
     return callSafe(
-      () async => await _authApi.forgotPass(data),
+      () async => (await _authApi.forgotPass(data.toDto())).toResult(),
       errorMessage: "An unexpected error occurred when sending forgot password",
     );
   }
 
   @override
-  Future<BaseResponse<BaseData>> resetPass(
-    ResetPassRequest data,
-    String token,
-  ) async {
+  Future<MessageResult> forgotPassReset(ForgotPasswordResetEntity data) async {
     return callSafe(
-      () async => await _authApi.resetPass(data, token),
+      () async => (await _authApi.forgotPassReset(data.toDto())).toResult(),
       errorMessage: "An unexpected error occurred when reset password",
     );
   }
 
   @override
-  Future<BaseResponse<ForgotPassData>> forgotPassVerify(
-    ForgotPassVerifyRequest data,
+  Future<DataResult<ForgotPasswordVerifyResultEntity>> forgotPassVerify(
+    ForgotPasswordVerifyEntity data,
   ) async {
     return callSafe(
-      () async => await _authApi.forgotPassVerify(data),
+      () async {
+        final response = await _authApi.forgotPassVerify(data.toDto());
+        return response.toResult(response.data.toEntity());
+      },
       errorMessage:
           "An unexpected error occurred when verify for forgot password",
+    );
+  }
+
+  @override
+  Future<MessageResult> forgotPassResend(
+    ForgotPasswordResendEntity data,
+  ) async {
+    return callSafe(
+      () async => (await _authApi.forgotPassResend(data.toDto())).toResult(),
+      errorMessage:
+          "An unexpected error occurred when resend otp for forgot password",
     );
   }
 }

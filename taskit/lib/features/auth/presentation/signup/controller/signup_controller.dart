@@ -16,32 +16,25 @@ class SignupController extends Notifier<SignupState> {
     return SignupState();
   }
 
-  Future<void> signup(
-    String email,
-    String password,
-    String passwordConfirm,
-  ) async {
+  Future<void> signup(String email, String password) async {
     try {
       state = state.copyWith(
-        isLoading: true,
         apiError: null,
-        status: SignupStatus.initial,
-        registerForm: SignupRegisterEntity(email: email, password: password),
+        status: SignupStatus.loading,
+        email: email,
+        password: password,
       );
-      final result = await ref
-          .read(authServiceProvider)
-          .signup(state.registerForm);
+      final form = SignupRegisterEntity(
+        email: state.email,
+        password: state.password,
+      );
+      final result = await ref.read(authServiceProvider).signup(form);
       result.when(
         (success) {
-          state = state.copyWith(
-            isLoading: false,
-            status: SignupStatus.signupSuccess,
-            resendForm: SignupResendEntity(email: email),
-          );
+          state = state.copyWith(status: SignupStatus.signupSuccess);
         },
         (failure) {
           state = state.copyWith(
-            isLoading: false,
             status: SignupStatus.initial,
             apiError: failure.message,
           );
@@ -49,7 +42,6 @@ class SignupController extends Notifier<SignupState> {
       );
     } catch (e) {
       state = state.copyWith(
-        isLoading: false,
         status: SignupStatus.initial,
         apiError: e.toString(),
       );
@@ -58,24 +50,15 @@ class SignupController extends Notifier<SignupState> {
 
   Future<void> resend() async {
     try {
-      state = state.copyWith(
-        isLoading: true,
-        apiError: null,
-        status: SignupStatus.initial,
-      );
-      final result = await ref
-          .read(authServiceProvider)
-          .signupResend(state.resendForm);
+      state = state.copyWith(apiError: null, status: SignupStatus.loading);
+      final form = SignupResendEntity(email: state.email);
+      final result = await ref.read(authServiceProvider).signupResend(form);
       result.when(
         (success) {
-          state = state.copyWith(
-            isLoading: false,
-            status: SignupStatus.resendSuccess,
-          );
+          state = state.copyWith(status: SignupStatus.resendSuccess);
         },
         (failure) {
           state = state.copyWith(
-            isLoading: false,
             status: SignupStatus.initial,
             apiError: failure.message,
           );
@@ -83,7 +66,6 @@ class SignupController extends Notifier<SignupState> {
       );
     } catch (e) {
       state = state.copyWith(
-        isLoading: false,
         status: SignupStatus.initial,
         apiError: e.toString(),
       );
@@ -94,27 +76,18 @@ class SignupController extends Notifier<SignupState> {
     try {
       //trang thai loading
       state = state.copyWith(
-        isLoading: true,
         apiError: null,
-        status: SignupStatus.initial,
-        verifyForm: SignupVerifyEntity(
-          email: state.registerForm.email,
-          otp: otp,
-        ),
+        status: SignupStatus.loading,
+        otp: otp,
       );
-      final result = await ref
-          .read(authServiceProvider)
-          .signupVerify(state.verifyForm);
+      final form = SignupVerifyEntity(email: state.email, otp: state.otp);
+      final result = await ref.read(authServiceProvider).signupVerify(form);
       result.when(
         (success) {
-          state = state.copyWith(
-            isLoading: false,
-            status: SignupStatus.verifySuccess,
-          );
+          state = state.copyWith(status: SignupStatus.verifySuccess);
         },
         (failure) {
           state = state.copyWith(
-            isLoading: false,
             status: SignupStatus.initial,
             apiError: failure.message,
           );
@@ -122,7 +95,6 @@ class SignupController extends Notifier<SignupState> {
       );
     } catch (e) {
       state = state.copyWith(
-        isLoading: false,
         status: SignupStatus.initial,
         apiError: e.toString(),
       );

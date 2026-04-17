@@ -20,7 +20,7 @@ class _CategoryApi implements CategoryApi {
   final ParseErrorLogger? errorLogger;
 
   @override
-  Future<BaseResponse<AddCategoryData>> add(
+  Future<DataResponse<AddCategoryData>> add(
     String token,
     AddCategoryReq addCategoryReq,
   ) async {
@@ -29,7 +29,7 @@ class _CategoryApi implements CategoryApi {
     final _headers = <String, dynamic>{r'Authorization': token};
     _headers.removeWhere((k, v) => v == null);
     final _data = addCategoryReq;
-    final _options = _setStreamType<BaseResponse<AddCategoryData>>(
+    final _options = _setStreamType<DataResponse<AddCategoryData>>(
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
@@ -40,9 +40,9 @@ class _CategoryApi implements CategoryApi {
           .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
     );
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late BaseResponse<AddCategoryData> _value;
+    late DataResponse<AddCategoryData> _value;
     try {
-      _value = BaseResponse<AddCategoryData>.fromJson(
+      _value = DataResponse<AddCategoryData>.fromJson(
         _result.data!,
         (json) => AddCategoryData.fromJson(json as Map<String, dynamic>),
       );
@@ -54,13 +54,13 @@ class _CategoryApi implements CategoryApi {
   }
 
   @override
-  Future<BaseResponse<BaseData>> delete(String token, String id) async {
+  Future<DataResponse<BaseData>> delete(String token, String id) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{r'Authorization': token};
     _headers.removeWhere((k, v) => v == null);
     const Map<String, dynamic>? _data = null;
-    final _options = _setStreamType<BaseResponse<BaseData>>(
+    final _options = _setStreamType<DataResponse<BaseData>>(
       Options(method: 'DELETE', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
@@ -71,9 +71,9 @@ class _CategoryApi implements CategoryApi {
           .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
     );
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late BaseResponse<BaseData> _value;
+    late DataResponse<BaseData> _value;
     try {
-      _value = BaseResponse<BaseData>.fromJson(
+      _value = DataResponse<BaseData>.fromJson(
         _result.data!,
         (json) => BaseData.fromJson(json as Map<String, dynamic>),
       );

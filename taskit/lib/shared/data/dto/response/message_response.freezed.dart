@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'default_result.dart';
+part of 'message_response.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -11,38 +11,41 @@ part of 'default_result.dart';
 
 // dart format off
 T _$identity<T>(T value) => value;
+
 /// @nodoc
-mixin _$DefaultResult {
+mixin _$MessageResponse {
 
  String get message;
-/// Create a copy of DefaultResult
+/// Create a copy of MessageResponse
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
-$DefaultResultCopyWith<DefaultResult> get copyWith => _$DefaultResultCopyWithImpl<DefaultResult>(this as DefaultResult, _$identity);
+$MessageResponseCopyWith<MessageResponse> get copyWith => _$MessageResponseCopyWithImpl<MessageResponse>(this as MessageResponse, _$identity);
 
+  /// Serializes this MessageResponse to a JSON map.
+  Map<String, dynamic> toJson();
 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is DefaultResult&&(identical(other.message, message) || other.message == message));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is MessageResponse&&(identical(other.message, message) || other.message == message));
 }
 
-
+@JsonKey(includeFromJson: false, includeToJson: false)
 @override
 int get hashCode => Object.hash(runtimeType,message);
 
 @override
 String toString() {
-  return 'DefaultResult(message: $message)';
+  return 'MessageResponse(message: $message)';
 }
 
 
 }
 
 /// @nodoc
-abstract mixin class $DefaultResultCopyWith<$Res>  {
-  factory $DefaultResultCopyWith(DefaultResult value, $Res Function(DefaultResult) _then) = _$DefaultResultCopyWithImpl;
+abstract mixin class $MessageResponseCopyWith<$Res>  {
+  factory $MessageResponseCopyWith(MessageResponse value, $Res Function(MessageResponse) _then) = _$MessageResponseCopyWithImpl;
 @useResult
 $Res call({
  String message
@@ -53,14 +56,14 @@ $Res call({
 
 }
 /// @nodoc
-class _$DefaultResultCopyWithImpl<$Res>
-    implements $DefaultResultCopyWith<$Res> {
-  _$DefaultResultCopyWithImpl(this._self, this._then);
+class _$MessageResponseCopyWithImpl<$Res>
+    implements $MessageResponseCopyWith<$Res> {
+  _$MessageResponseCopyWithImpl(this._self, this._then);
 
-  final DefaultResult _self;
-  final $Res Function(DefaultResult) _then;
+  final MessageResponse _self;
+  final $Res Function(MessageResponse) _then;
 
-/// Create a copy of DefaultResult
+/// Create a copy of MessageResponse
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? message = null,}) {
   return _then(_self.copyWith(
@@ -72,8 +75,8 @@ as String,
 }
 
 
-/// Adds pattern-matching-related methods to [DefaultResult].
-extension DefaultResultPatterns on DefaultResult {
+/// Adds pattern-matching-related methods to [MessageResponse].
+extension MessageResponsePatterns on MessageResponse {
 /// A variant of `map` that fallback to returning `orElse`.
 ///
 /// It is equivalent to doing:
@@ -86,10 +89,10 @@ extension DefaultResultPatterns on DefaultResult {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _DefaultResult value)?  $default,{required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _MessageResponse value)?  $default,{required TResult orElse(),}){
 final _that = this;
 switch (_that) {
-case _DefaultResult() when $default != null:
+case _MessageResponse() when $default != null:
 return $default(_that);case _:
   return orElse();
 
@@ -108,10 +111,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _DefaultResult value)  $default,){
+@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _MessageResponse value)  $default,){
 final _that = this;
 switch (_that) {
-case _DefaultResult():
+case _MessageResponse():
 return $default(_that);case _:
   throw StateError('Unexpected subclass');
 
@@ -129,10 +132,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _DefaultResult value)?  $default,){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _MessageResponse value)?  $default,){
 final _that = this;
 switch (_that) {
-case _DefaultResult() when $default != null:
+case _MessageResponse() when $default != null:
 return $default(_that);case _:
   return null;
 
@@ -152,7 +155,7 @@ return $default(_that);case _:
 
 @optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String message)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
-case _DefaultResult() when $default != null:
+case _MessageResponse() when $default != null:
 return $default(_that.message);case _:
   return orElse();
 
@@ -173,7 +176,7 @@ return $default(_that.message);case _:
 
 @optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String message)  $default,) {final _that = this;
 switch (_that) {
-case _DefaultResult():
+case _MessageResponse():
 return $default(_that.message);case _:
   throw StateError('Unexpected subclass');
 
@@ -193,7 +196,7 @@ return $default(_that.message);case _:
 
 @optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String message)?  $default,) {final _that = this;
 switch (_that) {
-case _DefaultResult() when $default != null:
+case _MessageResponse() when $default != null:
 return $default(_that.message);case _:
   return null;
 
@@ -203,42 +206,45 @@ return $default(_that.message);case _:
 }
 
 /// @nodoc
+@JsonSerializable()
 
-
-class _DefaultResult implements DefaultResult {
-  const _DefaultResult({required this.message});
-  
+class _MessageResponse implements MessageResponse {
+  const _MessageResponse({required this.message});
+  factory _MessageResponse.fromJson(Map<String, dynamic> json) => _$MessageResponseFromJson(json);
 
 @override final  String message;
 
-/// Create a copy of DefaultResult
+/// Create a copy of MessageResponse
 /// with the given fields replaced by the non-null parameter values.
 @override @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
-_$DefaultResultCopyWith<_DefaultResult> get copyWith => __$DefaultResultCopyWithImpl<_DefaultResult>(this, _$identity);
+_$MessageResponseCopyWith<_MessageResponse> get copyWith => __$MessageResponseCopyWithImpl<_MessageResponse>(this, _$identity);
 
-
+@override
+Map<String, dynamic> toJson() {
+  return _$MessageResponseToJson(this, );
+}
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _DefaultResult&&(identical(other.message, message) || other.message == message));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _MessageResponse&&(identical(other.message, message) || other.message == message));
 }
 
-
+@JsonKey(includeFromJson: false, includeToJson: false)
 @override
 int get hashCode => Object.hash(runtimeType,message);
 
 @override
 String toString() {
-  return 'DefaultResult(message: $message)';
+  return 'MessageResponse(message: $message)';
 }
 
 
 }
 
 /// @nodoc
-abstract mixin class _$DefaultResultCopyWith<$Res> implements $DefaultResultCopyWith<$Res> {
-  factory _$DefaultResultCopyWith(_DefaultResult value, $Res Function(_DefaultResult) _then) = __$DefaultResultCopyWithImpl;
+abstract mixin class _$MessageResponseCopyWith<$Res> implements $MessageResponseCopyWith<$Res> {
+  factory _$MessageResponseCopyWith(_MessageResponse value, $Res Function(_MessageResponse) _then) = __$MessageResponseCopyWithImpl;
 @override @useResult
 $Res call({
  String message
@@ -249,17 +255,17 @@ $Res call({
 
 }
 /// @nodoc
-class __$DefaultResultCopyWithImpl<$Res>
-    implements _$DefaultResultCopyWith<$Res> {
-  __$DefaultResultCopyWithImpl(this._self, this._then);
+class __$MessageResponseCopyWithImpl<$Res>
+    implements _$MessageResponseCopyWith<$Res> {
+  __$MessageResponseCopyWithImpl(this._self, this._then);
 
-  final _DefaultResult _self;
-  final $Res Function(_DefaultResult) _then;
+  final _MessageResponse _self;
+  final $Res Function(_MessageResponse) _then;
 
-/// Create a copy of DefaultResult
+/// Create a copy of MessageResponse
 /// with the given fields replaced by the non-null parameter values.
 @override @pragma('vm:prefer-inline') $Res call({Object? message = null,}) {
-  return _then(_DefaultResult(
+  return _then(_MessageResponse(
 message: null == message ? _self.message : message // ignore: cast_nullable_to_non_nullable
 as String,
   ));

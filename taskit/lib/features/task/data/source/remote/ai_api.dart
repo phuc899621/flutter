@@ -4,7 +4,7 @@ import 'package:retrofit/error_logger.dart';
 import 'package:retrofit/http.dart';
 import 'package:taskit/shared/data/source/remote/network/network_service.dart';
 
-import '../../../../../shared/data/dto/response/base_response.dart';
+import '../../../../../shared/data/dto/response/data_response.dart';
 import '../../dto/req/ai/ai_req.dart';
 import '../../dto/res/ai/ai_generate_task_data.dart';
 import '../../dto/res/ai/ai_question_data.dart';
@@ -21,13 +21,13 @@ abstract class AiApi {
   factory AiApi(Dio dio) => _AiApi(dio);
 
   @GET('/ai/task')
-  Future<BaseResponse<AiGenerateTaskData>> generate(
+  Future<DataResponse<AiGenerateTaskData>> generate(
     @Header('Authorization') String token,
     @Body() AiReq aiReq,
   );
 
   @GET('/ai/question')
-  Future<BaseResponse<AiQuestionData>> getAnswer(
+  Future<DataResponse<AiQuestionData>> getAnswer(
     @Header('Authorization') String token,
     @Body() AiReq aiReq,
   );

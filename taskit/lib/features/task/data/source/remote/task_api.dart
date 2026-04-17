@@ -9,7 +9,7 @@ import 'package:taskit/features/task/data/dto/res/task/update_task_data.dart';
 import 'package:taskit/shared/data/source/remote/network/network_service.dart';
 
 import '../../../../../shared/data/dto/response/base_data.dart';
-import '../../../../../shared/data/dto/response/base_response.dart';
+import '../../../../../shared/data/dto/response/data_response.dart';
 import '../../dto/req/ai_category/ai_category.dart';
 
 part 'task_api.g.dart';
@@ -24,26 +24,26 @@ abstract class TaskApi {
   factory TaskApi(Dio dio) => _TaskApi(dio);
 
   @GET('/ai/category')
-  Future<BaseResponse<List<String>>> getAiCategory(
+  Future<DataResponse<List<String>>> getAiCategory(
     @Header('Authorization') String token,
     @Body() AiCategoryReq categoryReq,
   );
 
   @POST('/task')
-  Future<BaseResponse<AddTaskData>> createTask(
+  Future<DataResponse<AddTaskData>> createTask(
     @Header('Authorization') String token,
     @Body() AddTaskReq addTaskReq,
   );
 
   @PATCH('/task/{id}')
-  Future<BaseResponse<UpdateTaskData>> updateTask(
+  Future<DataResponse<UpdateTaskData>> updateTask(
     @Header('Authorization') String token,
     @Path('id') String taskId,
     @Body() UpdateTaskReq updateTaskReq,
   );
 
   @DELETE('/task/{id}')
-  Future<BaseResponse<BaseData>> deleteTask(
+  Future<DataResponse<BaseData>> deleteTask(
     @Header('Authorization') String token,
     @Path('id') String taskId,
   );

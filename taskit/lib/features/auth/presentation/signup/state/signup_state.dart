@@ -9,11 +9,10 @@ part 'signup_state.freezed.dart';
 @freezed
 abstract class SignupState with _$SignupState {
   factory SignupState({
-    @Default(false) bool isLoading,
     String? apiError,
     @Default(SignupStatus.initial) SignupStatus status,
-    @Default(SignupEntity.initialRegister) SignupRegisterEntity registerForm,
-    @Default(SignupEntity.initialVerify) SignupVerifyEntity verifyForm,
-    @Default(SignupEntity.initialResend) SignupResendEntity resendForm,
+    @Default('') String email,
+    @Default('') String otp,
+    @Default('') String password,
   }) = _SignupState;
 }

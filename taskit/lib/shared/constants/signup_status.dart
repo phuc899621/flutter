@@ -4,4 +4,5 @@ enum SignupStatus {
   verifySuccess,
   resend,
   resendSuccess,
+  loading,
 }

@@ -8,7 +8,7 @@ import 'package:taskit/features/task/data/source/remote/subtask_api.dart';
 import 'package:taskit/features/task/data/source/remote/task_api.dart';
 
 import '../../../../../shared/data/dto/response/base_data.dart';
-import '../../../../../shared/data/dto/response/base_response.dart';
+import '../../../../../shared/data/dto/response/data_response.dart';
 import '../../../../../shared/exception/failure.dart';
 import '../../../../../shared/log/logger_provider.dart';
 import '../../../../../shared/data/source/remote/network/dio_exception_mapper.dart';
@@ -40,15 +40,21 @@ class TaskRemoteSource with DioExceptionMapper implements ITaskRemoteSource {
   final AiApi _aiApi;
 
   TaskRemoteSource(
-      this._taskApi, this._subtaskApi, this._categoryApi, this._aiApi);
+    this._taskApi,
+    this._subtaskApi,
+    this._categoryApi,
+    this._aiApi,
+  );
 
   //===========================================
   //================ Add Task =================
   //===========================================
   //region Add Task
   @override
-  Future<BaseResponse<AddTaskData>> addTask(
-      String token, AddTaskReq task) async {
+  Future<DataResponse<AddTaskData>> addTask(
+    String token,
+    AddTaskReq task,
+  ) async {
     try {
       final response = await _taskApi.createTask('Bearer $token', task);
       return response;
@@ -60,8 +66,11 @@ class TaskRemoteSource with DioExceptionMapper implements ITaskRemoteSource {
   }
 
   @override
-  Future<BaseResponse<List<AddSubtaskData>>> addSubTask(
-      String token, String taskId, AddSubtaskListReq subtask) async {
+  Future<DataResponse<List<AddSubtaskData>>> addSubTask(
+    String token,
+    String taskId,
+    AddSubtaskListReq subtask,
+  ) async {
     try {
       final response = await _subtaskApi.add('Bearer $token', taskId, subtask);
       return response;
@@ -73,8 +82,10 @@ class TaskRemoteSource with DioExceptionMapper implements ITaskRemoteSource {
   }
 
   @override
-  Future<BaseResponse<AddCategoryData>> addCategory(
-      String token, AddCategoryReq category) async {
+  Future<DataResponse<AddCategoryData>> addCategory(
+    String token,
+    AddCategoryReq category,
+  ) async {
     // TODO: implement addCategory
     try {
       logger.i('add category $token $category');
@@ -87,18 +98,24 @@ class TaskRemoteSource with DioExceptionMapper implements ITaskRemoteSource {
     }
   }
 
-//endregion
+  //endregion
 
-//=======================================
+  //=======================================
   //============= Update Task ================
   //========================================
   //region Update
   @override
-  Future<BaseResponse<UpdateTaskData>> updateTask(
-      String token, String taskId, UpdateTaskReq updateTaskReq) {
+  Future<DataResponse<UpdateTaskData>> updateTask(
+    String token,
+    String taskId,
+    UpdateTaskReq updateTaskReq,
+  ) {
     try {
-      final response =
-          _taskApi.updateTask('Bearer $token', taskId, updateTaskReq);
+      final response = _taskApi.updateTask(
+        'Bearer $token',
+        taskId,
+        updateTaskReq,
+      );
       return response;
     } on DioException catch (e, s) {
       throw mapDioExceptionToFailure(e, s);
@@ -108,8 +125,10 @@ class TaskRemoteSource with DioExceptionMapper implements ITaskRemoteSource {
   }
 
   @override
-  Future<BaseResponse<UpdateSubtaskData>> updateSubtask(
-      String token, UpdateSubtaskListReq updateList) {
+  Future<DataResponse<UpdateSubtaskData>> updateSubtask(
+    String token,
+    UpdateSubtaskListReq updateList,
+  ) {
     try {
       final response = _subtaskApi.update('Bearer $token', updateList);
       return response;
@@ -120,14 +139,14 @@ class TaskRemoteSource with DioExceptionMapper implements ITaskRemoteSource {
     }
   }
 
-//endregion
+  //endregion
   //=======================================
-//============= Delete Task ==============
-//========================================
+  //============= Delete Task ==============
+  //========================================
   //region Delete
 
   @override
-  Future<BaseResponse<BaseData>> deleteTask(String token, String taskId) {
+  Future<DataResponse<BaseData>> deleteTask(String token, String taskId) {
     try {
       final response = _taskApi.deleteTask('Bearer $token', taskId);
       return response;
@@ -139,7 +158,7 @@ class TaskRemoteSource with DioExceptionMapper implements ITaskRemoteSource {
   }
 
   @override
-  Future<BaseResponse<BaseData>> deleteCategory(String token, String id) {
+  Future<DataResponse<BaseData>> deleteCategory(String token, String id) {
     try {
       final response = _categoryApi.delete('Bearer $token', id);
       return response;
@@ -151,7 +170,7 @@ class TaskRemoteSource with DioExceptionMapper implements ITaskRemoteSource {
   }
 
   @override
-  Future<BaseResponse<BaseData>> deleteSubTask(String token, String subtaskId) {
+  Future<DataResponse<BaseData>> deleteSubTask(String token, String subtaskId) {
     try {
       final response = _subtaskApi.delete('Bearer $token', subtaskId);
       return response;
@@ -164,12 +183,14 @@ class TaskRemoteSource with DioExceptionMapper implements ITaskRemoteSource {
 
   //endregion
   //=======================================
-//============= AI ==============
-//========================================
+  //============= AI ==============
+  //========================================
   //region AI
   @override
-  Future<BaseResponse<AiGenerateTaskData>> generateTask(
-      String token, AiReq aiReq) {
+  Future<DataResponse<AiGenerateTaskData>> generateTask(
+    String token,
+    AiReq aiReq,
+  ) {
     try {
       return _aiApi.generate('Bearer $token', aiReq);
     } on DioException catch (e, s) {
@@ -180,7 +201,7 @@ class TaskRemoteSource with DioExceptionMapper implements ITaskRemoteSource {
   }
 
   @override
-  Future<BaseResponse<AiQuestionData>> getAnswer(String token, AiReq aiReq) {
+  Future<DataResponse<AiQuestionData>> getAnswer(String token, AiReq aiReq) {
     try {
       return _aiApi.getAnswer('Bearer $token', aiReq);
     } on DioException catch (e, s) {

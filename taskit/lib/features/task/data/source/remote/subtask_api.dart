@@ -8,7 +8,7 @@ import 'package:taskit/features/task/data/dto/res/subtask/update_subtask_data.da
 import 'package:taskit/shared/data/source/remote/network/network_service.dart';
 
 import '../../../../../shared/data/dto/response/base_data.dart';
-import '../../../../../shared/data/dto/response/base_response.dart';
+import '../../../../../shared/data/dto/response/data_response.dart';
 import '../../dto/req/subtask/add_subtask_list_req.dart';
 
 part 'subtask_api.g.dart';
@@ -23,20 +23,20 @@ abstract class SubtaskApi {
   factory SubtaskApi(Dio dio) => _SubtaskApi(dio);
 
   @PUT('/subtask')
-  Future<BaseResponse<UpdateSubtaskData>> update(
+  Future<DataResponse<UpdateSubtaskData>> update(
     @Header('Authorization') String token,
     @Body() UpdateSubtaskListReq updateList,
   );
 
   @POST('/task/{taskId}/subtask')
-  Future<BaseResponse<List<AddSubtaskData>>> add(
+  Future<DataResponse<List<AddSubtaskData>>> add(
     @Header('Authorization') String token,
     @Path('taskId') String taskId,
     @Body() AddSubtaskListReq addList,
   );
 
   @DELETE('/subtask/{id}')
-  Future<BaseResponse<BaseData>> delete(
+  Future<DataResponse<BaseData>> delete(
     @Header('Authorization') String token,
     @Path('id') String subtaskId,
   );

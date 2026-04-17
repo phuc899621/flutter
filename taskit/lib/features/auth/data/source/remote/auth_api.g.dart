@@ -22,12 +22,12 @@ class _AuthApi implements AuthApi {
   final ParseErrorLogger? errorLogger;
 
   @override
-  Future<BaseResponse<LoginData>> login(LoginRequest data) async {
+  Future<DataResponse<LoginData>> login(LoginRequest data) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = data;
-    final _options = _setStreamType<BaseResponse<LoginData>>(
+    final _options = _setStreamType<DataResponse<LoginData>>(
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
@@ -38,9 +38,9 @@ class _AuthApi implements AuthApi {
           .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
     );
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late BaseResponse<LoginData> _value;
+    late DataResponse<LoginData> _value;
     try {
-      _value = BaseResponse<LoginData>.fromJson(
+      _value = DataResponse<LoginData>.fromJson(
         _result.data!,
         (json) => LoginData.fromJson(json as Map<String, dynamic>),
       );
@@ -52,13 +52,13 @@ class _AuthApi implements AuthApi {
   }
 
   @override
-  Future<BaseResponse<LoginVerifyData>> checkLogin(String token) async {
+  Future<DataResponse<LoginVerifyData>> checkLogin(String token) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{r'Authorization': token};
     _headers.removeWhere((k, v) => v == null);
     const Map<String, dynamic>? _data = null;
-    final _options = _setStreamType<BaseResponse<LoginVerifyData>>(
+    final _options = _setStreamType<DataResponse<LoginVerifyData>>(
       Options(method: 'GET', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
@@ -69,9 +69,9 @@ class _AuthApi implements AuthApi {
           .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
     );
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late BaseResponse<LoginVerifyData> _value;
+    late DataResponse<LoginVerifyData> _value;
     try {
-      _value = BaseResponse<LoginVerifyData>.fromJson(
+      _value = DataResponse<LoginVerifyData>.fromJson(
         _result.data!,
         (json) => LoginVerifyData.fromJson(json as Map<String, dynamic>),
       );
@@ -83,12 +83,12 @@ class _AuthApi implements AuthApi {
   }
 
   @override
-  Future<BaseResponse<BaseData>> signup(SignupRequest data) async {
+  Future<MessageResponse> signup(SignupRequest data) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = data;
-    final _options = _setStreamType<BaseResponse<BaseData>>(
+    final _options = _setStreamType<MessageResponse>(
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
@@ -99,12 +99,9 @@ class _AuthApi implements AuthApi {
           .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
     );
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late BaseResponse<BaseData> _value;
+    late MessageResponse _value;
     try {
-      _value = BaseResponse<BaseData>.fromJson(
-        _result.data!,
-        (json) => BaseData.fromJson(json as Map<String, dynamic>),
-      );
+      _value = MessageResponse.fromJson(_result.data!);
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options, response: _result);
       rethrow;
@@ -113,12 +110,12 @@ class _AuthApi implements AuthApi {
   }
 
   @override
-  Future<BaseResponse<BaseData>> signupVerify(SignupRequest data) async {
+  Future<MessageResponse> signupVerify(SignupRequest data) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = data;
-    final _options = _setStreamType<BaseResponse<BaseData>>(
+    final _options = _setStreamType<MessageResponse>(
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
@@ -129,12 +126,9 @@ class _AuthApi implements AuthApi {
           .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
     );
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late BaseResponse<BaseData> _value;
+    late MessageResponse _value;
     try {
-      _value = BaseResponse<BaseData>.fromJson(
-        _result.data!,
-        (json) => BaseData.fromJson(json as Map<String, dynamic>),
-      );
+      _value = MessageResponse.fromJson(_result.data!);
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options, response: _result);
       rethrow;
@@ -143,12 +137,12 @@ class _AuthApi implements AuthApi {
   }
 
   @override
-  Future<BaseResponse<BaseData>> signupResend(SignupRequest data) async {
+  Future<MessageResponse> signupResend(SignupRequest data) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = data;
-    final _options = _setStreamType<BaseResponse<BaseData>>(
+    final _options = _setStreamType<MessageResponse>(
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
@@ -159,12 +153,9 @@ class _AuthApi implements AuthApi {
           .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
     );
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late BaseResponse<BaseData> _value;
+    late MessageResponse _value;
     try {
-      _value = BaseResponse<BaseData>.fromJson(
-        _result.data!,
-        (json) => BaseData.fromJson(json as Map<String, dynamic>),
-      );
+      _value = MessageResponse.fromJson(_result.data!);
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options, response: _result);
       rethrow;
@@ -173,12 +164,12 @@ class _AuthApi implements AuthApi {
   }
 
   @override
-  Future<BaseResponse<BaseData>> forgotPass(ForgotPassRequest data) async {
+  Future<MessageResponse> forgotPass(ForgotPassRequest data) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = data;
-    final _options = _setStreamType<BaseResponse<BaseData>>(
+    final _options = _setStreamType<MessageResponse>(
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
@@ -189,12 +180,9 @@ class _AuthApi implements AuthApi {
           .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
     );
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late BaseResponse<BaseData> _value;
+    late MessageResponse _value;
     try {
-      _value = BaseResponse<BaseData>.fromJson(
-        _result.data!,
-        (json) => BaseData.fromJson(json as Map<String, dynamic>),
-      );
+      _value = MessageResponse.fromJson(_result.data!);
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options, response: _result);
       rethrow;
@@ -203,14 +191,14 @@ class _AuthApi implements AuthApi {
   }
 
   @override
-  Future<BaseResponse<ForgotPassData>> forgotPassVerify(
-    ForgotPassVerifyRequest data,
+  Future<DataResponse<ForgotPassData>> forgotPassVerify(
+    ForgotPassRequest data,
   ) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = data;
-    final _options = _setStreamType<BaseResponse<ForgotPassData>>(
+    final _options = _setStreamType<DataResponse<ForgotPassData>>(
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
@@ -221,9 +209,9 @@ class _AuthApi implements AuthApi {
           .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
     );
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late BaseResponse<ForgotPassData> _value;
+    late DataResponse<ForgotPassData> _value;
     try {
-      _value = BaseResponse<ForgotPassData>.fromJson(
+      _value = DataResponse<ForgotPassData>.fromJson(
         _result.data!,
         (json) => ForgotPassData.fromJson(json as Map<String, dynamic>),
       );
@@ -235,16 +223,39 @@ class _AuthApi implements AuthApi {
   }
 
   @override
-  Future<BaseResponse<BaseData>> resetPass(
-    ResetPassRequest data,
-    String token,
-  ) async {
+  Future<MessageResponse> forgotPassResend(ForgotPassRequest data) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
-    final _headers = <String, dynamic>{r'Reset-Token': token};
-    _headers.removeWhere((k, v) => v == null);
+    final _headers = <String, dynamic>{};
     final _data = data;
-    final _options = _setStreamType<BaseResponse<BaseData>>(
+    final _options = _setStreamType<MessageResponse>(
+      Options(method: 'POST', headers: _headers, extra: _extra)
+          .compose(
+            _dio.options,
+            '/forgot-password/resend',
+            queryParameters: queryParameters,
+            data: _data,
+          )
+          .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
+    );
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    late MessageResponse _value;
+    try {
+      _value = MessageResponse.fromJson(_result.data!);
+    } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options, response: _result);
+      rethrow;
+    }
+    return _value;
+  }
+
+  @override
+  Future<MessageResponse> forgotPassReset(ForgotPassRequest data) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = data;
+    final _options = _setStreamType<MessageResponse>(
       Options(method: 'PUT', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
@@ -255,12 +266,9 @@ class _AuthApi implements AuthApi {
           .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
     );
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late BaseResponse<BaseData> _value;
+    late MessageResponse _value;
     try {
-      _value = BaseResponse<BaseData>.fromJson(
-        _result.data!,
-        (json) => BaseData.fromJson(json as Map<String, dynamic>),
-      );
+      _value = MessageResponse.fromJson(_result.data!);
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options, response: _result);
       rethrow;

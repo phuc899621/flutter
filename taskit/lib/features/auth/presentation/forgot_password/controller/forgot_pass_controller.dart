@@ -1,11 +1,9 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:taskit/features/auth/application/auth_service_impl.dart';
 import 'package:taskit/features/auth/presentation/forgot_password/state/forgot_pass_state.dart';
-import 'package:taskit/shared/log/logger_provider.dart';
+import 'package:taskit/shared/constants/forgot_pass_status.dart';
 
-import '../../../data/dto/req/forgot_pass/forgot_pass.dart';
-import '../../../data/dto/req/forgot_pass/forgot_pass_verify.dart';
-import '../../../data/dto/req/forgot_pass/reset_pass.dart';
+import '../../../domain/entities/forgot_pass/forgot_pass_entity.dart';
 
 final forgotPassControllerProvider =
     NotifierProvider.autoDispose<ForgotPassController, ForgotPassState>(
@@ -18,124 +16,115 @@ class ForgotPassController extends Notifier<ForgotPassState> {
     return ForgotPassState();
   }
 
-  Future<void> forgotPass() async {
+  Future<void> forgotPass(String email) async {
     try {
       //trang thai loading
       state = state.copyWith(
-        isLoading: true,
-        errorForgotPass: null,
-        isForgotPassSuccess: null,
+        status: ForgotPassStatus.loading,
+        apiError: null,
+        email: email,
       );
-      final formData = ForgotPassRequest(email: state.forgotPassForm['email']);
-      final result = await ref.read(authServiceProvider).forgotPass(formData);
-      result.when(
+      final form = ForgotPasswordEntity(email: email);
+      (await ref.read(authServiceProvider).forgotPass(form)).when(
         (success) {
-          state = state.copyWith(isLoading: false, isForgotPassSuccess: true);
+          state = state.copyWith(status: ForgotPassStatus.forgotSuccess);
         },
         (failure) {
           state = state.copyWith(
-            isLoading: false,
-            isForgotPassSuccess: null,
-            errorForgotPass: failure.message,
+            status: ForgotPassStatus.initial,
+            apiError: failure.message,
           );
         },
       );
     } catch (e) {
       state = state.copyWith(
-        isLoading: false,
-        isForgotPassSuccess: null,
-        errorForgotPass: e.toString(),
+        status: ForgotPassStatus.initial,
+        apiError: e.toString(),
       );
     }
   }
 
-  void setForgotPassForm(Map<String, dynamic> formData) {
-    state = state.copyWith(forgotPassForm: formData);
-  }
-
-  void setVerifyForm(Map<String, dynamic> formData) {
-    state = state.copyWith(verifyForm: formData);
-  }
-
-  void setResetForm(Map<String, dynamic> formData) {
-    state = state.copyWith(resetForm: formData);
-  }
-
-  Future<void> verify() async {
+  Future<void> verify(String otp) async {
     try {
       state = state.copyWith(
-        isLoading: true,
-        errorVerify: null,
-        isVerifySuccess: null,
+        status: ForgotPassStatus.loading,
+        apiError: null,
+        otp: otp,
       );
-      final formData = ForgotPassVerifyRequest(
-        email: state.forgotPassForm['email'],
-        otp: state.verifyForm['otp'],
+      final form = ForgotPasswordVerifyEntity(
+        email: state.email,
+        otp: state.otp,
       );
-      final result = await ref
-          .read(authServiceProvider)
-          .forgotPassVerify(formData);
-      result.when(
+      (await ref.read(authServiceProvider).forgotPassVerify(form)).when(
         (success) {
           state = state.copyWith(
-            isLoading: false,
-            isVerifySuccess: true,
+            status: ForgotPassStatus.verifySuccess,
             resetToken: success.resetToken,
           );
         },
         (failure) {
           state = state.copyWith(
-            isLoading: false,
-            isVerifySuccess: null,
-            errorVerify: failure.message,
+            status: ForgotPassStatus.initial,
+            apiError: failure.message,
           );
         },
       );
     } catch (e) {
       state = state.copyWith(
-        isLoading: false,
-        isVerifySuccess: null,
-        errorVerify: e.toString(),
+        status: ForgotPassStatus.initial,
+        apiError: e.toString(),
       );
     }
   }
 
-  Future<void> reset() async {
+  Future<void> resend() async {
     try {
-      state = state.copyWith(
-        isLoading: true,
-        errorReset: null,
-        isResetSuccess: null,
-      );
-      final formData = ResetPassRequest(
-        email: state.forgotPassForm['email'],
-        password: state.resetForm['password'],
-        passwordConfirm: state.resetForm['passwordConfirm'],
-      );
-      logger.i('$formData ${state.resetToken}');
-      final result = await ref
-          .read(authServiceProvider)
-          .resetPass(formData, state.resetToken!);
-
-      result.when(
+      state = state.copyWith(status: ForgotPassStatus.loading, apiError: null);
+      final form = ForgotPasswordResendEntity(email: state.email);
+      (await ref.read(authServiceProvider).forgotPassResend(form)).when(
         (success) {
-          state = state.copyWith(isLoading: false, isResetSuccess: true);
+          state = state.copyWith(status: ForgotPassStatus.resendSuccess);
         },
         (failure) {
-          logger.e(failure);
           state = state.copyWith(
-            isLoading: false,
-            isResetSuccess: null,
-            errorReset: failure.message,
+            status: ForgotPassStatus.initial,
+            apiError: failure.message,
           );
         },
       );
     } catch (e) {
-      logger.e(e);
       state = state.copyWith(
-        isLoading: false,
-        isResetSuccess: null,
-        errorReset: e.toString(),
+        status: ForgotPassStatus.initial,
+        apiError: e.toString(),
+      );
+    }
+  }
+
+  Future<void> reset(String password) async {
+    try {
+      state = state.copyWith(
+        status: ForgotPassStatus.loading,
+        password: password,
+      );
+      final form = ForgotPasswordResetEntity(
+        resetToken: state.resetToken!,
+        password: state.password,
+      );
+      (await ref.read(authServiceProvider).forgotPassReset(form)).when(
+        (success) {
+          state = state.copyWith(status: ForgotPassStatus.resetSuccess);
+        },
+        (failure) {
+          state = state.copyWith(
+            status: ForgotPassStatus.initial,
+            apiError: failure.message,
+          );
+        },
+      );
+    } catch (e) {
+      state = state.copyWith(
+        status: ForgotPassStatus.initial,
+        apiError: e.toString(),
       );
     }
   }
