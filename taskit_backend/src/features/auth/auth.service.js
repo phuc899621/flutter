@@ -212,7 +212,7 @@ class AuthService {
       const { userId } = await verifyForgotPasswordToken(resetToken);
       logger.info(`Reset password for ${userId}`);
       await UserService.updateUserPassword(userId, password);
-      markForgotPasswordTokenAsUsed(resetToken);
+      markForgotPasswordTokenAsUsed(resetToken, userId);
     } catch (e) {
       if (e instanceof BaseError) throw e;
       throw new ServerError(`Reset password error: ${e.message}`, 500);

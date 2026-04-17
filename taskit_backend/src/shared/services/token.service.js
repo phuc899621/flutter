@@ -47,10 +47,10 @@ export const verifyForgotPasswordToken = async (token) => {
     throw new AuthorizationError("Forgot password token expired");
   }
 };
-export const markForgotPasswordTokenAsUsed = async (token) => {
+export const markForgotPasswordTokenAsUsed = async (token, userId) => {
   try {
-    logger.info(`Mark forgot password token as used for ${token.email}`);
-    await saveUsedResetToken(token.token, token.userId);
+    logger.info(`Mark forgot password token as used for ${userId}`);
+    await saveUsedResetToken(token, userId);
   } catch (e) {
     if (e instanceof BaseError) throw e;
     throw new ServerError(`Redis error: ${e.message}`);
