@@ -3,6 +3,7 @@ import { AuthorizationError, BaseError, ServerError } from "../utils/error.js";
 import { OTP_PURPOSE } from "../constants/otpPurpose.js";
 import { signToken, verifyToken } from "../helpers/jwt.helper.js";
 import { JWT_CONFIG } from "../../config/jwt.config.js";
+import { isTokenResetUsed, saveUsedResetToken } from "./redis.service.js";
 export const generateAccessToken = (user) => {
   try {
     logger.info(`Generate access token for ${user.email}`);
@@ -39,9 +40,20 @@ export const verifyForgotPasswordToken = (token) => {
     const decoded = verifyToken(token, JWT_CONFIG.FORGOT_PASSWORD);
     if (decoded.purpose !== OTP_PURPOSE.FORGOT_PASSWORD)
       throw new AuthorizationError("Invalid forgot password token");
+    if (isTokenResetUsed(decoded))
+      throw new AuthorizationError("Forgot password token expired");
     return decoded;
   } catch (e) {
     throw new AuthorizationError("Forgot password token expired");
+  }
+};
+export const markForgotPasswordTokenAsUsed = async (token) => {
+  try {
+    logger.info(`Mark forgot password token as used for ${token.email}`);
+    await saveUsedResetToken(token.token, token.userId);
+  } catch (e) {
+    if (e instanceof BaseError) throw e;
+    throw new ServerError(`Redis error: ${e.message}`);
   }
 };
 export const verifyAccessToken = (token) => {
