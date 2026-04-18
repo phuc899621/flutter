@@ -127,6 +127,15 @@ class AuthService {
       throw new ServerError(`Login error: ${e.message}`);
     }
   }
+  static async fetchCurrentUser(userId) {
+    try {
+      const userDoc = await UserService.findById(userId);
+      return userDoc.toObject();
+    } catch (e) {
+      if (e instanceof BaseError) throw e;
+      throw new ServerError(`Fetch current user error: ${e.message}`);
+    }
+  }
   static async refreshToken(refreshToken) {
     try {
       const userId = await isRefreshTokenValid(refreshToken);
@@ -147,6 +156,7 @@ class AuthService {
       throw new ServerError(`Logout error: ${e.message}`);
     }
   }
+
   static async loginWithGoogle(token) {
     try {
       const payload = await verifyGoogleToken(token);

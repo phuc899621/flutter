@@ -1,6 +1,7 @@
 import express from "express";
 import * as AuthController from "./auth.controller.js";
 import * as AuthValidate from "./auth.validate.js";
+import { authMiddleware } from "../../middleware/auth.middleware.js";
 
 const router = express.Router();
 router.post("/signup", AuthValidate.signupValidate, AuthController.signup);
@@ -15,6 +16,7 @@ router.post(
   AuthController.resendSignupOtp,
 );
 router.post("/login", AuthValidate.loginValidate, AuthController.login);
+router.get("/me", authMiddleware, AuthController.fetchCurrentUser);
 router.post(
   "/google",
   AuthValidate.loginWithGoogleValidate,

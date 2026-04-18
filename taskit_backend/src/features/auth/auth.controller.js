@@ -46,6 +46,18 @@ export const login = async (req, res, next) => {
     next(e);
   }
 };
+export const fetchCurrentUser = async (req, res, next) => {
+  try {
+    const userId = req.user.userId;
+    const result = await AuthService.fetchCurrentUser(userId);
+    return res.status(200).json({
+      message: "Fetch current user successfully!",
+      data: result,
+    });
+  } catch (e) {
+    next(e);
+  }
+};
 export const loginWithGoogle = async (req, res, next) => {
   try {
     const { token } = req.body;
