@@ -1165,3 +1165,130 @@ Error: token must be a string
   "url": "/api/v1/auth/google",
   "status": 400
 }
+2026-04-18 14:33:26 [[31merror[39m]: [1;31mError Access denied. No authorization provided[0m
+Error: Access denied. No authorization provided
+    at authMiddleware (file:///C:/flutter/taskit_backend/src/middleware/auth.middleware.js:9:13)
+    at Layer.handle [as handle_request] (C:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\flutter\taskit_backend\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (C:\flutter\taskit_backend\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (C:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:284:15
+    at router.process_params (C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:346:12)
+    at next (C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:280:10)
+    at router.handle (C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:175:3)
+    at router (C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:47:12) {
+  "requestId": "d2a11e16-ba10-4cf0-808a-b3e90b52d094",
+  "method": "GET",
+  "url": "/api/v1/auth/me",
+  "status": 403
+}
+2026-04-18 14:41:21 [[31merror[39m]: [1;31mError Invalid refresh token[0m
+Error: Invalid refresh token
+    at AuthService.refreshToken (file:///C:/flutter/taskit_backend/src/features/auth/auth.service.js:142:26)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async refreshToken (file:///C:/flutter/taskit_backend/src/features/auth/auth.controller.js:75:20) {
+  "requestId": "ef1c96c1-30cf-4210-ab38-1b81cd2afe7a",
+  "method": "POST",
+  "url": "/api/v1/auth/refresh",
+  "status": 403
+}
+2026-04-18 14:41:24 [[31merror[39m]: [1;31mError Invalid refresh token[0m
+Error: Invalid refresh token
+    at AuthService.refreshToken (file:///C:/flutter/taskit_backend/src/features/auth/auth.service.js:142:26)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async refreshToken (file:///C:/flutter/taskit_backend/src/features/auth/auth.controller.js:75:20) {
+  "requestId": "9cf2464f-0225-4d52-bde5-949d2a6caed4",
+  "method": "POST",
+  "url": "/api/v1/auth/refresh",
+  "status": 403
+}
+2026-04-18 14:41:31 [[31merror[39m]: [1;31mError Invalid refresh token[0m
+Error: Invalid refresh token
+    at AuthService.refreshToken (file:///C:/flutter/taskit_backend/src/features/auth/auth.service.js:142:26)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async refreshToken (file:///C:/flutter/taskit_backend/src/features/auth/auth.controller.js:75:20) {
+  "requestId": "b05411a1-6d8c-4c80-bd8e-d193e7995540",
+  "method": "POST",
+  "url": "/api/v1/auth/refresh",
+  "status": 403
+}
+2026-04-18 14:41:58 [[31merror[39m]: [1;31mError Invalid refresh token[0m
+Error: Invalid refresh token
+    at AuthService.refreshToken (file:///C:/flutter/taskit_backend/src/features/auth/auth.service.js:142:26)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async refreshToken (file:///C:/flutter/taskit_backend/src/features/auth/auth.controller.js:75:20) {
+  "requestId": "a7ded7c8-b19c-4a8e-aca1-90227a7e9c0d",
+  "method": "POST",
+  "url": "/api/v1/auth/refresh",
+  "status": 403
+}
+2026-04-18 14:43:21 [[31merror[39m]: [1;31mError Invalid refresh token[0m
+Error: Invalid refresh token
+    at AuthService.refreshToken (file:///C:/flutter/taskit_backend/src/features/auth/auth.service.js:142:26)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async refreshToken (file:///C:/flutter/taskit_backend/src/features/auth/auth.controller.js:75:20) {
+  "requestId": "9fe159de-4e90-4070-8589-011a8a4e4450",
+  "method": "POST",
+  "url": "/api/v1/auth/refresh",
+  "status": 403
+}
+2026-04-18 14:43:55 [[31merror[39m]: [1;31mError Invalid refresh token[0m
+Error: Invalid refresh token
+    at AuthService.refreshToken (file:///C:/flutter/taskit_backend/src/features/auth/auth.service.js:143:26)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async refreshToken (file:///C:/flutter/taskit_backend/src/features/auth/auth.controller.js:75:20) {
+  "requestId": "fe0bf250-28f6-496e-a916-e3397c93836d",
+  "method": "POST",
+  "url": "/api/v1/auth/refresh",
+  "status": 403
+}
+2026-04-18 14:45:32 [[31merror[39m]: [1;31mError Invalid refresh token[0m
+Error: Invalid refresh token
+    at AuthService.refreshToken (file:///C:/flutter/taskit_backend/src/features/auth/auth.service.js:143:26)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async refreshToken (file:///C:/flutter/taskit_backend/src/features/auth/auth.controller.js:75:20) {
+  "requestId": "5859fd0b-8a75-404a-addc-4b0312b06ebe",
+  "method": "POST",
+  "url": "/api/v1/auth/refresh",
+  "status": 403
+}
+2026-04-18 14:47:22 [[31merror[39m]: [1;31mError Invalid refresh token[0m
+Error: Invalid refresh token
+    at AuthService.refreshToken (file:///C:/flutter/taskit_backend/src/features/auth/auth.service.js:141:26)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async refreshToken (file:///C:/flutter/taskit_backend/src/features/auth/auth.controller.js:75:20) {
+  "requestId": "1992c84e-a475-41f3-b82b-d6b96a71f083",
+  "method": "POST",
+  "url": "/api/v1/auth/refresh",
+  "status": 403
+}
+2026-04-18 14:48:48 [[31merror[39m]: [1;31mError Invalid refresh token[0m
+Error: Invalid refresh token
+    at AuthService.refreshToken (file:///C:/flutter/taskit_backend/src/features/auth/auth.service.js:141:26)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async refreshToken (file:///C:/flutter/taskit_backend/src/features/auth/auth.controller.js:75:20) {
+  "requestId": "a0d28fa5-6c17-4e67-b7f7-f4e6aadee300",
+  "method": "POST",
+  "url": "/api/v1/auth/refresh",
+  "status": 403
+}
+2026-04-18 14:49:38 [[31merror[39m]: [1;31mError Invalid refresh token[0m
+Error: Invalid refresh token
+    at AuthService.refreshToken (file:///C:/flutter/taskit_backend/src/features/auth/auth.service.js:141:26)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async refreshToken (file:///C:/flutter/taskit_backend/src/features/auth/auth.controller.js:76:20) {
+  "requestId": "4a07ee86-c099-44d6-ab7b-55f89eb534cb",
+  "method": "POST",
+  "url": "/api/v1/auth/refresh",
+  "status": 403
+}
+2026-04-18 14:53:02 [[31merror[39m]: [1;31mError Invalid refresh token[0m
+Error: Invalid refresh token
+    at AuthService.refreshToken (file:///C:/flutter/taskit_backend/src/features/auth/auth.service.js:141:26)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async refreshToken (file:///C:/flutter/taskit_backend/src/features/auth/auth.controller.js:76:20) {
+  "requestId": "0571117b-3eb3-401e-ab31-a08e531ea2a1",
+  "method": "POST",
+  "url": "/api/v1/auth/refresh",
+  "status": 403
+}

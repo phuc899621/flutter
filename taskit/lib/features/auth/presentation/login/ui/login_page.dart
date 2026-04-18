@@ -8,9 +8,11 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 //import 'package:google_sign_in/google_sign_in.dart';
 import 'package:http/http.dart' as http;
+import 'package:taskit/shared/utils/snack_bar_utils.dart';
 import 'package:taskit/shared/widget/text_field/taskit_outline_text_field.dart';
 import 'package:taskit/shared/widget/text_field/taskit_password_text_field.dart';
 
+import '../../../../../shared/constants/login_status.dart';
 import '../controller/login_controller.dart';
 
 class LoginPage extends ConsumerStatefulWidget {
@@ -42,30 +44,14 @@ class _LoginPageState extends ConsumerState<LoginPage> {
 
   void _listener() {
     final color = Theme.of(context).colorScheme;
-    ref.listen(loginControllerProvider.select((value) => value.error), (
+    ref.listen(loginControllerProvider.select((value) => value.apiError), (
       _,
       next,
     ) {
       if (next != null) {
-        final message = ScaffoldMessenger.of(context);
-        message.hideCurrentSnackBar();
-        message.showSnackBar(
-          SnackBar(
-            duration: const Duration(seconds: 5),
-            backgroundColor: color.error,
-            content: Text(next),
-          ),
-        );
+        SnackBarUtils.show(context, next, isError: true);
       }
     });
-    ref.listen(
-      loginControllerProvider.select((value) => value.isLoginSuccess),
-      (_, next) {
-        if (next != null && next) {
-          context.go('/home');
-        }
-      },
-    );
   }
 
   Future<void> _onLoginWithGoogle() async {
@@ -106,12 +92,9 @@ class _LoginPageState extends ConsumerState<LoginPage> {
   }
 
   void _onSummit() {
-    final formData = ({
-      'email': _emailController.text,
-      'password': _passwordController.text,
-    });
-    ref.read(loginControllerProvider.notifier).setLoginForm(formData);
-    ref.read(loginControllerProvider.notifier).login();
+    ref
+        .read(loginControllerProvider.notifier)
+        .login(_emailController.text, _passwordController.text);
   }
 
   //region MAIN
@@ -267,7 +250,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                     borderRadius: BorderRadius.circular(20.0),
                   ),
                 ),
-                child: state.isLoading
+                child: state.status == LoginStatus.loading
                     ? Center(
                         child: CircularProgressIndicator(
                           color: color.onPrimary,

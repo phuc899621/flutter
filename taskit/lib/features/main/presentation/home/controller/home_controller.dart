@@ -2,11 +2,11 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:taskit/features/auth/presentation/auth/controller/auth_controller.dart';
 import 'package:taskit/features/main/presentation/home/state/home_state.dart';
 import 'package:taskit/features/task/application/task_service.dart';
 import 'package:taskit/shared/extension/date_time.dart';
 
-import '../../../../../shared/application/token_service.dart';
 import '../../../../../shared/log/logger_provider.dart';
 import '../../../../task/domain/entities/task_entity.dart';
 import '../../../../user/application/user_service.dart';
@@ -45,8 +45,7 @@ class HomeController extends Notifier<HomeState> {
   }
 
   void logout() async {
-    await ref.read(tokenServiceProvider).deleteToken();
-    state = state.copyWith(isLogout: true);
+    await ref.read(authControllerProvider.notifier).logout();
   }
 
   void _restartListening() {

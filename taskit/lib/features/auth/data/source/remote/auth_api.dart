@@ -2,6 +2,10 @@ import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:retrofit/error_logger.dart';
 import 'package:retrofit/http.dart';
+import 'package:taskit/features/auth/data/dto/req/logout/logout_request.dart';
+import 'package:taskit/features/auth/data/dto/req/refresh_token/refresh_token_request.dart';
+import 'package:taskit/features/auth/data/dto/res/login/refresh_token_data.dart';
+import 'package:taskit/features/auth/data/dto/res/user/user_data.dart';
 import 'package:taskit/shared/data/dto/response/message_response.dart';
 
 import '../../../../../shared/config/app/app_config.dart';
@@ -17,7 +21,7 @@ import '../../dto/res/login/login_verify_data.dart';
 part 'auth_api.g.dart';
 
 final authApiProvider = Provider<AuthApi>((ref) {
-  final dio = ref.watch(networkServiceProvider);
+  final dio = ref.watch(basicDioProvider);
 
   return AuthApi(dio);
 });
@@ -36,6 +40,19 @@ sealed class AuthApi {
   Future<DataResponse<LoginVerifyData>> checkLogin(
     @Header('Authorization') String token,
   );
+
+  @GET('/me')
+  Future<DataResponse<UserData>> fetchUser(
+    @Header('Authorization') String accessToken,
+  );
+
+  @GET('/refresh')
+  Future<DataResponse<RefreshTokenData>> refreshToken(
+    @Body() RefreshTokenRequest request,
+  );
+
+  @POST('/logout')
+  Future<MessageResponse> logout(@Body() LogoutRequest request);
 
   @POST('/signup')
   /*

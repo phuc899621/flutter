@@ -2343,3 +2343,303 @@ Error: token must be a string
 2026-04-17 16:01:59 [[32minfo[39m]: [1;32mMongoDB connected![0m 
 2026-04-17 17:18:04 [[32minfo[39m]: [1;32mRedis client connected[0m 
 2026-04-17 17:18:04 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-04-18 14:30:15 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-04-18 14:30:16 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-04-18 14:32:57 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-04-18 14:32:58 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-04-18 14:33:23 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-04-18 14:33:24 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-04-18 14:33:26 [[31merror[39m]: [1;31mError Access denied. No authorization provided[0m
+Error: Access denied. No authorization provided
+    at authMiddleware (file:///C:/flutter/taskit_backend/src/middleware/auth.middleware.js:9:13)
+    at Layer.handle [as handle_request] (C:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\flutter\taskit_backend\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (C:\flutter\taskit_backend\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (C:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:284:15
+    at router.process_params (C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:346:12)
+    at next (C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:280:10)
+    at router.handle (C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:175:3)
+    at router (C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:47:12) {
+  "requestId": "d2a11e16-ba10-4cf0-808a-b3e90b52d094",
+  "method": "GET",
+  "url": "/api/v1/auth/me",
+  "status": 403
+}
+2026-04-18 14:33:26 [[33mwarn[39m]: [1;33mAPI Warning[0m {
+  "requestId": "d2a11e16-ba10-4cf0-808a-b3e90b52d094",
+  "method": "GET",
+  "url": "/api/v1/auth/me",
+  "status": 403,
+  "time": "7.50 ms",
+  "ip": "::1"
+}
+2026-04-18 14:34:58 [[32minfo[39m]: [1;32mVerify access token for undefined[0m 
+2026-04-18 14:34:58 [[32minfo[39m]: [1;32mAPI Request[0m {
+  "requestId": "0afd6714-5a25-4d26-8d9c-7a027c5c42df",
+  "method": "GET",
+  "url": "/api/v1/auth/me",
+  "status": 200,
+  "time": "57.12 ms",
+  "ip": "::1"
+}
+2026-04-18 14:41:21 [[31merror[39m]: [1;31mError Invalid refresh token[0m
+Error: Invalid refresh token
+    at AuthService.refreshToken (file:///C:/flutter/taskit_backend/src/features/auth/auth.service.js:142:26)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async refreshToken (file:///C:/flutter/taskit_backend/src/features/auth/auth.controller.js:75:20) {
+  "requestId": "ef1c96c1-30cf-4210-ab38-1b81cd2afe7a",
+  "method": "POST",
+  "url": "/api/v1/auth/refresh",
+  "status": 403
+}
+2026-04-18 14:41:21 [[33mwarn[39m]: [1;33mAPI Warning[0m {
+  "requestId": "ef1c96c1-30cf-4210-ab38-1b81cd2afe7a",
+  "method": "POST",
+  "url": "/api/v1/auth/refresh",
+  "status": 403,
+  "time": "148.48 ms",
+  "ip": "::1"
+}
+2026-04-18 14:41:24 [[31merror[39m]: [1;31mError Invalid refresh token[0m
+Error: Invalid refresh token
+    at AuthService.refreshToken (file:///C:/flutter/taskit_backend/src/features/auth/auth.service.js:142:26)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async refreshToken (file:///C:/flutter/taskit_backend/src/features/auth/auth.controller.js:75:20) {
+  "requestId": "9cf2464f-0225-4d52-bde5-949d2a6caed4",
+  "method": "POST",
+  "url": "/api/v1/auth/refresh",
+  "status": 403
+}
+2026-04-18 14:41:24 [[33mwarn[39m]: [1;33mAPI Warning[0m {
+  "requestId": "9cf2464f-0225-4d52-bde5-949d2a6caed4",
+  "method": "POST",
+  "url": "/api/v1/auth/refresh",
+  "status": 403,
+  "time": "4.47 ms",
+  "ip": "::1"
+}
+2026-04-18 14:41:31 [[31merror[39m]: [1;31mError Invalid refresh token[0m
+Error: Invalid refresh token
+    at AuthService.refreshToken (file:///C:/flutter/taskit_backend/src/features/auth/auth.service.js:142:26)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async refreshToken (file:///C:/flutter/taskit_backend/src/features/auth/auth.controller.js:75:20) {
+  "requestId": "b05411a1-6d8c-4c80-bd8e-d193e7995540",
+  "method": "POST",
+  "url": "/api/v1/auth/refresh",
+  "status": 403
+}
+2026-04-18 14:41:31 [[33mwarn[39m]: [1;33mAPI Warning[0m {
+  "requestId": "b05411a1-6d8c-4c80-bd8e-d193e7995540",
+  "method": "POST",
+  "url": "/api/v1/auth/refresh",
+  "status": 403,
+  "time": "1.58 ms",
+  "ip": "::1"
+}
+2026-04-18 14:41:58 [[31merror[39m]: [1;31mError Invalid refresh token[0m
+Error: Invalid refresh token
+    at AuthService.refreshToken (file:///C:/flutter/taskit_backend/src/features/auth/auth.service.js:142:26)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async refreshToken (file:///C:/flutter/taskit_backend/src/features/auth/auth.controller.js:75:20) {
+  "requestId": "a7ded7c8-b19c-4a8e-aca1-90227a7e9c0d",
+  "method": "POST",
+  "url": "/api/v1/auth/refresh",
+  "status": 403
+}
+2026-04-18 14:41:58 [[33mwarn[39m]: [1;33mAPI Warning[0m {
+  "requestId": "a7ded7c8-b19c-4a8e-aca1-90227a7e9c0d",
+  "method": "POST",
+  "url": "/api/v1/auth/refresh",
+  "status": 403,
+  "time": "1.48 ms",
+  "ip": "::1"
+}
+2026-04-18 14:43:07 [[32minfo[39m]: [1;32mGenerate access token for dinhlelytran1225@gmail.com[0m 
+2026-04-18 14:43:07 [[32minfo[39m]: [1;32mGenerate refresh token for dinhlelytran1225@gmail.com[0m 
+2026-04-18 14:43:07 [[32minfo[39m]: [1;32mRefresh token saved for 69c33eb35b296b051e47004b:604800:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWMzM2ViMzViMjk2YjA1MWU0NzAwNGIiLCJpYXQiOjE3NzY0OTgxODcsImV4cCI6MTc3NzEwMjk4N30.eMJ5gzZlruJ2y2sd2yxioIMqx3JmsyHjh-WMFM83oNw[0m 
+2026-04-18 14:43:07 [[32minfo[39m]: [1;32mLogin success for dinhlelytran1225@gmail.com[0m 
+2026-04-18 14:43:07 [[32minfo[39m]: [1;32mAccess token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWMzM2ViMzViMjk2YjA1MWU0NzAwNGIiLCJpYXQiOjE3NzY0OTgxODcsImV4cCI6MTc3NjQ5OTA4N30.RIyedu5zG4Xl3PbjbIDNSmcfL3OxTaxWul2w75onVCQ[0m 
+2026-04-18 14:43:07 [[32minfo[39m]: [1;32mRefresh token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWMzM2ViMzViMjk2YjA1MWU0NzAwNGIiLCJpYXQiOjE3NzY0OTgxODcsImV4cCI6MTc3NzEwMjk4N30.eMJ5gzZlruJ2y2sd2yxioIMqx3JmsyHjh-WMFM83oNw[0m 
+2026-04-18 14:43:07 [[32minfo[39m]: [1;32mAPI Request[0m {
+  "requestId": "116acd02-ac99-4596-a338-09a5e9c2ef1b",
+  "method": "POST",
+  "url": "/api/v1/auth/login",
+  "status": 200,
+  "time": "306.67 ms",
+  "ip": "::1"
+}
+2026-04-18 14:43:21 [[31merror[39m]: [1;31mError Invalid refresh token[0m
+Error: Invalid refresh token
+    at AuthService.refreshToken (file:///C:/flutter/taskit_backend/src/features/auth/auth.service.js:142:26)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async refreshToken (file:///C:/flutter/taskit_backend/src/features/auth/auth.controller.js:75:20) {
+  "requestId": "9fe159de-4e90-4070-8589-011a8a4e4450",
+  "method": "POST",
+  "url": "/api/v1/auth/refresh",
+  "status": 403
+}
+2026-04-18 14:43:21 [[33mwarn[39m]: [1;33mAPI Warning[0m {
+  "requestId": "9fe159de-4e90-4070-8589-011a8a4e4450",
+  "method": "POST",
+  "url": "/api/v1/auth/refresh",
+  "status": 403,
+  "time": "2.28 ms",
+  "ip": "::1"
+}
+2026-04-18 14:43:53 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-04-18 14:43:54 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-04-18 14:43:55 [[31merror[39m]: [1;31mError Invalid refresh token[0m
+Error: Invalid refresh token
+    at AuthService.refreshToken (file:///C:/flutter/taskit_backend/src/features/auth/auth.service.js:143:26)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async refreshToken (file:///C:/flutter/taskit_backend/src/features/auth/auth.controller.js:75:20) {
+  "requestId": "fe0bf250-28f6-496e-a916-e3397c93836d",
+  "method": "POST",
+  "url": "/api/v1/auth/refresh",
+  "status": 403
+}
+2026-04-18 14:43:55 [[33mwarn[39m]: [1;33mAPI Warning[0m {
+  "requestId": "fe0bf250-28f6-496e-a916-e3397c93836d",
+  "method": "POST",
+  "url": "/api/v1/auth/refresh",
+  "status": 403,
+  "time": "93.67 ms",
+  "ip": "::1"
+}
+2026-04-18 14:45:26 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-04-18 14:45:26 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-04-18 14:45:32 [[31merror[39m]: [1;31mError Invalid refresh token[0m
+Error: Invalid refresh token
+    at AuthService.refreshToken (file:///C:/flutter/taskit_backend/src/features/auth/auth.service.js:143:26)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async refreshToken (file:///C:/flutter/taskit_backend/src/features/auth/auth.controller.js:75:20) {
+  "requestId": "5859fd0b-8a75-404a-addc-4b0312b06ebe",
+  "method": "POST",
+  "url": "/api/v1/auth/refresh",
+  "status": 403
+}
+2026-04-18 14:45:32 [[33mwarn[39m]: [1;33mAPI Warning[0m {
+  "requestId": "5859fd0b-8a75-404a-addc-4b0312b06ebe",
+  "method": "POST",
+  "url": "/api/v1/auth/refresh",
+  "status": 403,
+  "time": "31.98 ms",
+  "ip": "::1"
+}
+2026-04-18 14:46:15 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-04-18 14:46:16 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-04-18 14:47:06 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-04-18 14:47:06 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-04-18 14:47:08 [[32minfo[39m]: [1;32mGenerate access token for dinhlelytran1225@gmail.com[0m 
+2026-04-18 14:47:08 [[32minfo[39m]: [1;32mGenerate refresh token for dinhlelytran1225@gmail.com[0m 
+2026-04-18 14:47:08 [[32minfo[39m]: [1;32mRefresh token saved for 69c33eb35b296b051e47004b:604800:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWMzM2ViMzViMjk2YjA1MWU0NzAwNGIiLCJpYXQiOjE3NzY0OTg0MjgsImV4cCI6MTc3NzEwMzIyOH0.01XoXGQXH2xY5rucTmZVKxglkjhCAPp9pgSFD2EMBa0[0m 
+2026-04-18 14:47:08 [[32minfo[39m]: [1;32mAPI Request[0m {
+  "requestId": "7db7ed4d-2e9c-4285-aad1-deac1e82dbc3",
+  "method": "POST",
+  "url": "/api/v1/auth/login",
+  "status": 200,
+  "time": "401.45 ms",
+  "ip": "::1"
+}
+2026-04-18 14:47:22 [[31merror[39m]: [1;31mError Invalid refresh token[0m
+Error: Invalid refresh token
+    at AuthService.refreshToken (file:///C:/flutter/taskit_backend/src/features/auth/auth.service.js:141:26)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async refreshToken (file:///C:/flutter/taskit_backend/src/features/auth/auth.controller.js:75:20) {
+  "requestId": "1992c84e-a475-41f3-b82b-d6b96a71f083",
+  "method": "POST",
+  "url": "/api/v1/auth/refresh",
+  "status": 403
+}
+2026-04-18 14:47:22 [[33mwarn[39m]: [1;33mAPI Warning[0m {
+  "requestId": "1992c84e-a475-41f3-b82b-d6b96a71f083",
+  "method": "POST",
+  "url": "/api/v1/auth/refresh",
+  "status": 403,
+  "time": "4.05 ms",
+  "ip": "::1"
+}
+2026-04-18 14:48:47 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-04-18 14:48:48 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-04-18 14:48:48 [[31merror[39m]: [1;31mError Invalid refresh token[0m
+Error: Invalid refresh token
+    at AuthService.refreshToken (file:///C:/flutter/taskit_backend/src/features/auth/auth.service.js:141:26)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async refreshToken (file:///C:/flutter/taskit_backend/src/features/auth/auth.controller.js:75:20) {
+  "requestId": "a0d28fa5-6c17-4e67-b7f7-f4e6aadee300",
+  "method": "POST",
+  "url": "/api/v1/auth/refresh",
+  "status": 403
+}
+2026-04-18 14:48:48 [[33mwarn[39m]: [1;33mAPI Warning[0m {
+  "requestId": "a0d28fa5-6c17-4e67-b7f7-f4e6aadee300",
+  "method": "POST",
+  "url": "/api/v1/auth/refresh",
+  "status": 403,
+  "time": "33.06 ms",
+  "ip": "::1"
+}
+2026-04-18 14:48:57 [[32minfo[39m]: [1;32mGenerate access token for dinhlelytran1225@gmail.com[0m 
+2026-04-18 14:48:57 [[32minfo[39m]: [1;32mGenerate refresh token for dinhlelytran1225@gmail.com[0m 
+2026-04-18 14:48:57 [[32minfo[39m]: [1;32mRefresh token saved for 69c33eb35b296b051e47004b:604800:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWMzM2ViMzViMjk2YjA1MWU0NzAwNGIiLCJpYXQiOjE3NzY0OTg1MzcsImV4cCI6MTc3NzEwMzMzN30.WTRb5bsn2e3dGYBYxg7MTAMIAVLTMStzxTKy0ocmfuM[0m 
+2026-04-18 14:48:57 [[32minfo[39m]: [1;32mAPI Request[0m {
+  "requestId": "4590f3bd-5c55-4cec-9278-fb42d8e9a628",
+  "method": "POST",
+  "url": "/api/v1/auth/login",
+  "status": 200,
+  "time": "274.63 ms",
+  "ip": "::1"
+}
+2026-04-18 14:49:36 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-04-18 14:49:37 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-04-18 14:49:38 [[31merror[39m]: [1;31mError Invalid refresh token[0m
+Error: Invalid refresh token
+    at AuthService.refreshToken (file:///C:/flutter/taskit_backend/src/features/auth/auth.service.js:141:26)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async refreshToken (file:///C:/flutter/taskit_backend/src/features/auth/auth.controller.js:76:20) {
+  "requestId": "4a07ee86-c099-44d6-ab7b-55f89eb534cb",
+  "method": "POST",
+  "url": "/api/v1/auth/refresh",
+  "status": 403
+}
+2026-04-18 14:49:38 [[33mwarn[39m]: [1;33mAPI Warning[0m {
+  "requestId": "4a07ee86-c099-44d6-ab7b-55f89eb534cb",
+  "method": "POST",
+  "url": "/api/v1/auth/refresh",
+  "status": 403,
+  "time": "35.26 ms",
+  "ip": "::1"
+}
+2026-04-18 14:52:59 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-04-18 14:53:00 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-04-18 14:53:02 [[31merror[39m]: [1;31mError Invalid refresh token[0m
+Error: Invalid refresh token
+    at AuthService.refreshToken (file:///C:/flutter/taskit_backend/src/features/auth/auth.service.js:141:26)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async refreshToken (file:///C:/flutter/taskit_backend/src/features/auth/auth.controller.js:76:20) {
+  "requestId": "0571117b-3eb3-401e-ab31-a08e531ea2a1",
+  "method": "POST",
+  "url": "/api/v1/auth/refresh",
+  "status": 403
+}
+2026-04-18 14:53:02 [[33mwarn[39m]: [1;33mAPI Warning[0m {
+  "requestId": "0571117b-3eb3-401e-ab31-a08e531ea2a1",
+  "method": "POST",
+  "url": "/api/v1/auth/refresh",
+  "status": 403,
+  "time": "31.97 ms",
+  "ip": "::1"
+}
+2026-04-18 14:53:32 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-04-18 14:53:32 [[32minfo[39m]: [1;32mVerify refresh token for undefined[0m 
+2026-04-18 14:53:32 [[32minfo[39m]: [1;32mGenerate access token for undefined[0m 
+2026-04-18 14:53:32 [[32minfo[39m]: [1;32mAPI Request[0m {
+  "requestId": "7c7390c9-e100-453d-8661-69696f6a7eea",
+  "method": "POST",
+  "url": "/api/v1/auth/refresh",
+  "status": 200,
+  "time": "72.06 ms",
+  "ip": "::1"
+}
+2026-04-18 14:53:32 [[32minfo[39m]: [1;32mMongoDB connected![0m 

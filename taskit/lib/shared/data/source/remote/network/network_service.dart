@@ -1,16 +1,26 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:taskit/features/auth/application/auth_service_impl.dart';
 import 'package:taskit/shared/data/source/remote/network/dio_options.dart';
 
-import 'network_service_interceptor.dart';
+import '../../../../application/token_service_impl.dart';
+import 'auth_interceptor.dart';
+import 'logging_interceptor.dart';
 
-final networkServiceProvider=Provider<Dio>(
-    (ref){
-      final options=buildBaseOptions();
-      final dio=Dio(options);
-      dio.interceptors.add(LoggingInterceptor());
-      return dio;
-    }
-);
+final basicDioProvider = Provider<Dio>((ref) {
+  final dio = Dio(buildBaseOptions());
+  dio.interceptors.add(LoggingInterceptor());
+  return dio;
+});
 
-
+final networkServiceProvider = Provider<Dio>((ref) {
+  final options = buildBaseOptions();
+  final dio = Dio(options);
+  final tokenService = ref.read(tokenServiceProvider);
+  final authService = ref.read(authServiceProvider);
+  dio.interceptors.addAll([
+    LoggingInterceptor(),
+    AuthInterceptor(tokenService, authService, dio, ref),
+  ]);
+  return dio;
+});

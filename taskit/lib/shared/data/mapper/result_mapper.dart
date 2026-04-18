@@ -7,6 +7,10 @@ extension DataResponseMapper<T> on DataResponse<T> {
   DataResult<E> toResult<E>(E entity) {
     return DataResult<E>(message: message, data: entity);
   }
+
+  MessageResult toMessage() {
+    return MessageResult(message: message);
+  }
 }
 
 extension MessageResponseMapper on MessageResponse {

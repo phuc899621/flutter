@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$LoginData {
 
- String get token; SettingData get settings; UserData get user; List<TaskData> get tasks; List<CategoryData> get categories;
+ String get accessToken; String get refreshToken;
 /// Create a copy of LoginData
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -28,16 +28,16 @@ $LoginDataCopyWith<LoginData> get copyWith => _$LoginDataCopyWithImpl<LoginData>
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is LoginData&&(identical(other.token, token) || other.token == token)&&(identical(other.settings, settings) || other.settings == settings)&&(identical(other.user, user) || other.user == user)&&const DeepCollectionEquality().equals(other.tasks, tasks)&&const DeepCollectionEquality().equals(other.categories, categories));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is LoginData&&(identical(other.accessToken, accessToken) || other.accessToken == accessToken)&&(identical(other.refreshToken, refreshToken) || other.refreshToken == refreshToken));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,token,settings,user,const DeepCollectionEquality().hash(tasks),const DeepCollectionEquality().hash(categories));
+int get hashCode => Object.hash(runtimeType,accessToken,refreshToken);
 
 @override
 String toString() {
-  return 'LoginData(token: $token, settings: $settings, user: $user, tasks: $tasks, categories: $categories)';
+  return 'LoginData(accessToken: $accessToken, refreshToken: $refreshToken)';
 }
 
 
@@ -48,11 +48,11 @@ abstract mixin class $LoginDataCopyWith<$Res>  {
   factory $LoginDataCopyWith(LoginData value, $Res Function(LoginData) _then) = _$LoginDataCopyWithImpl;
 @useResult
 $Res call({
- String token, SettingData settings, UserData user, List<TaskData> tasks, List<CategoryData> categories
+ String accessToken, String refreshToken
 });
 
 
-$SettingDataCopyWith<$Res> get settings;$UserDataCopyWith<$Res> get user;
+
 
 }
 /// @nodoc
@@ -65,35 +65,14 @@ class _$LoginDataCopyWithImpl<$Res>
 
 /// Create a copy of LoginData
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? token = null,Object? settings = null,Object? user = null,Object? tasks = null,Object? categories = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? accessToken = null,Object? refreshToken = null,}) {
   return _then(_self.copyWith(
-token: null == token ? _self.token : token // ignore: cast_nullable_to_non_nullable
-as String,settings: null == settings ? _self.settings : settings // ignore: cast_nullable_to_non_nullable
-as SettingData,user: null == user ? _self.user : user // ignore: cast_nullable_to_non_nullable
-as UserData,tasks: null == tasks ? _self.tasks : tasks // ignore: cast_nullable_to_non_nullable
-as List<TaskData>,categories: null == categories ? _self.categories : categories // ignore: cast_nullable_to_non_nullable
-as List<CategoryData>,
+accessToken: null == accessToken ? _self.accessToken : accessToken // ignore: cast_nullable_to_non_nullable
+as String,refreshToken: null == refreshToken ? _self.refreshToken : refreshToken // ignore: cast_nullable_to_non_nullable
+as String,
   ));
 }
-/// Create a copy of LoginData
-/// with the given fields replaced by the non-null parameter values.
-@override
-@pragma('vm:prefer-inline')
-$SettingDataCopyWith<$Res> get settings {
-  
-  return $SettingDataCopyWith<$Res>(_self.settings, (value) {
-    return _then(_self.copyWith(settings: value));
-  });
-}/// Create a copy of LoginData
-/// with the given fields replaced by the non-null parameter values.
-@override
-@pragma('vm:prefer-inline')
-$UserDataCopyWith<$Res> get user {
-  
-  return $UserDataCopyWith<$Res>(_self.user, (value) {
-    return _then(_self.copyWith(user: value));
-  });
-}
+
 }
 
 
@@ -175,10 +154,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String token,  SettingData settings,  UserData user,  List<TaskData> tasks,  List<CategoryData> categories)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String accessToken,  String refreshToken)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _LoginData() when $default != null:
-return $default(_that.token,_that.settings,_that.user,_that.tasks,_that.categories);case _:
+return $default(_that.accessToken,_that.refreshToken);case _:
   return orElse();
 
 }
@@ -196,10 +175,10 @@ return $default(_that.token,_that.settings,_that.user,_that.tasks,_that.categori
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String token,  SettingData settings,  UserData user,  List<TaskData> tasks,  List<CategoryData> categories)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String accessToken,  String refreshToken)  $default,) {final _that = this;
 switch (_that) {
 case _LoginData():
-return $default(_that.token,_that.settings,_that.user,_that.tasks,_that.categories);case _:
+return $default(_that.accessToken,_that.refreshToken);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -216,10 +195,10 @@ return $default(_that.token,_that.settings,_that.user,_that.tasks,_that.categori
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String token,  SettingData settings,  UserData user,  List<TaskData> tasks,  List<CategoryData> categories)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String accessToken,  String refreshToken)?  $default,) {final _that = this;
 switch (_that) {
 case _LoginData() when $default != null:
-return $default(_that.token,_that.settings,_that.user,_that.tasks,_that.categories);case _:
+return $default(_that.accessToken,_that.refreshToken);case _:
   return null;
 
 }
@@ -231,26 +210,11 @@ return $default(_that.token,_that.settings,_that.user,_that.tasks,_that.categori
 @JsonSerializable()
 
 class _LoginData implements LoginData {
-  const _LoginData({required this.token, required this.settings, required this.user, required final  List<TaskData> tasks, required final  List<CategoryData> categories}): _tasks = tasks,_categories = categories;
+  const _LoginData({required this.accessToken, required this.refreshToken});
   factory _LoginData.fromJson(Map<String, dynamic> json) => _$LoginDataFromJson(json);
 
-@override final  String token;
-@override final  SettingData settings;
-@override final  UserData user;
- final  List<TaskData> _tasks;
-@override List<TaskData> get tasks {
-  if (_tasks is EqualUnmodifiableListView) return _tasks;
-  // ignore: implicit_dynamic_type
-  return EqualUnmodifiableListView(_tasks);
-}
-
- final  List<CategoryData> _categories;
-@override List<CategoryData> get categories {
-  if (_categories is EqualUnmodifiableListView) return _categories;
-  // ignore: implicit_dynamic_type
-  return EqualUnmodifiableListView(_categories);
-}
-
+@override final  String accessToken;
+@override final  String refreshToken;
 
 /// Create a copy of LoginData
 /// with the given fields replaced by the non-null parameter values.
@@ -265,16 +229,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _LoginData&&(identical(other.token, token) || other.token == token)&&(identical(other.settings, settings) || other.settings == settings)&&(identical(other.user, user) || other.user == user)&&const DeepCollectionEquality().equals(other._tasks, _tasks)&&const DeepCollectionEquality().equals(other._categories, _categories));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _LoginData&&(identical(other.accessToken, accessToken) || other.accessToken == accessToken)&&(identical(other.refreshToken, refreshToken) || other.refreshToken == refreshToken));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,token,settings,user,const DeepCollectionEquality().hash(_tasks),const DeepCollectionEquality().hash(_categories));
+int get hashCode => Object.hash(runtimeType,accessToken,refreshToken);
 
 @override
 String toString() {
-  return 'LoginData(token: $token, settings: $settings, user: $user, tasks: $tasks, categories: $categories)';
+  return 'LoginData(accessToken: $accessToken, refreshToken: $refreshToken)';
 }
 
 
@@ -285,11 +249,11 @@ abstract mixin class _$LoginDataCopyWith<$Res> implements $LoginDataCopyWith<$Re
   factory _$LoginDataCopyWith(_LoginData value, $Res Function(_LoginData) _then) = __$LoginDataCopyWithImpl;
 @override @useResult
 $Res call({
- String token, SettingData settings, UserData user, List<TaskData> tasks, List<CategoryData> categories
+ String accessToken, String refreshToken
 });
 
 
-@override $SettingDataCopyWith<$Res> get settings;@override $UserDataCopyWith<$Res> get user;
+
 
 }
 /// @nodoc
@@ -302,36 +266,15 @@ class __$LoginDataCopyWithImpl<$Res>
 
 /// Create a copy of LoginData
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? token = null,Object? settings = null,Object? user = null,Object? tasks = null,Object? categories = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? accessToken = null,Object? refreshToken = null,}) {
   return _then(_LoginData(
-token: null == token ? _self.token : token // ignore: cast_nullable_to_non_nullable
-as String,settings: null == settings ? _self.settings : settings // ignore: cast_nullable_to_non_nullable
-as SettingData,user: null == user ? _self.user : user // ignore: cast_nullable_to_non_nullable
-as UserData,tasks: null == tasks ? _self._tasks : tasks // ignore: cast_nullable_to_non_nullable
-as List<TaskData>,categories: null == categories ? _self._categories : categories // ignore: cast_nullable_to_non_nullable
-as List<CategoryData>,
+accessToken: null == accessToken ? _self.accessToken : accessToken // ignore: cast_nullable_to_non_nullable
+as String,refreshToken: null == refreshToken ? _self.refreshToken : refreshToken // ignore: cast_nullable_to_non_nullable
+as String,
   ));
 }
 
-/// Create a copy of LoginData
-/// with the given fields replaced by the non-null parameter values.
-@override
-@pragma('vm:prefer-inline')
-$SettingDataCopyWith<$Res> get settings {
-  
-  return $SettingDataCopyWith<$Res>(_self.settings, (value) {
-    return _then(_self.copyWith(settings: value));
-  });
-}/// Create a copy of LoginData
-/// with the given fields replaced by the non-null parameter values.
-@override
-@pragma('vm:prefer-inline')
-$UserDataCopyWith<$Res> get user {
-  
-  return $UserDataCopyWith<$Res>(_self.user, (value) {
-    return _then(_self.copyWith(user: value));
-  });
-}
+
 }
 
 // dart format on

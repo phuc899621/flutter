@@ -14,7 +14,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$LoginState {
 
- bool get isLoading; bool? get isLoginSuccess; String? get error; Map<String, dynamic> get loginForm; bool get isPasswordVisibility;
+ LoginStatus get status; String? get apiError; String get email; String get password;
 /// Create a copy of LoginState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -25,16 +25,16 @@ $LoginStateCopyWith<LoginState> get copyWith => _$LoginStateCopyWithImpl<LoginSt
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is LoginState&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading)&&(identical(other.isLoginSuccess, isLoginSuccess) || other.isLoginSuccess == isLoginSuccess)&&(identical(other.error, error) || other.error == error)&&const DeepCollectionEquality().equals(other.loginForm, loginForm)&&(identical(other.isPasswordVisibility, isPasswordVisibility) || other.isPasswordVisibility == isPasswordVisibility));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is LoginState&&(identical(other.status, status) || other.status == status)&&(identical(other.apiError, apiError) || other.apiError == apiError)&&(identical(other.email, email) || other.email == email)&&(identical(other.password, password) || other.password == password));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,isLoading,isLoginSuccess,error,const DeepCollectionEquality().hash(loginForm),isPasswordVisibility);
+int get hashCode => Object.hash(runtimeType,status,apiError,email,password);
 
 @override
 String toString() {
-  return 'LoginState(isLoading: $isLoading, isLoginSuccess: $isLoginSuccess, error: $error, loginForm: $loginForm, isPasswordVisibility: $isPasswordVisibility)';
+  return 'LoginState(status: $status, apiError: $apiError, email: $email, password: $password)';
 }
 
 
@@ -45,7 +45,7 @@ abstract mixin class $LoginStateCopyWith<$Res>  {
   factory $LoginStateCopyWith(LoginState value, $Res Function(LoginState) _then) = _$LoginStateCopyWithImpl;
 @useResult
 $Res call({
- bool isLoading, bool? isLoginSuccess, String? error, Map<String, dynamic> loginForm, bool isPasswordVisibility
+ LoginStatus status, String? apiError, String email, String password
 });
 
 
@@ -62,14 +62,13 @@ class _$LoginStateCopyWithImpl<$Res>
 
 /// Create a copy of LoginState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? isLoading = null,Object? isLoginSuccess = freezed,Object? error = freezed,Object? loginForm = null,Object? isPasswordVisibility = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? status = null,Object? apiError = freezed,Object? email = null,Object? password = null,}) {
   return _then(_self.copyWith(
-isLoading: null == isLoading ? _self.isLoading : isLoading // ignore: cast_nullable_to_non_nullable
-as bool,isLoginSuccess: freezed == isLoginSuccess ? _self.isLoginSuccess : isLoginSuccess // ignore: cast_nullable_to_non_nullable
-as bool?,error: freezed == error ? _self.error : error // ignore: cast_nullable_to_non_nullable
-as String?,loginForm: null == loginForm ? _self.loginForm : loginForm // ignore: cast_nullable_to_non_nullable
-as Map<String, dynamic>,isPasswordVisibility: null == isPasswordVisibility ? _self.isPasswordVisibility : isPasswordVisibility // ignore: cast_nullable_to_non_nullable
-as bool,
+status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
+as LoginStatus,apiError: freezed == apiError ? _self.apiError : apiError // ignore: cast_nullable_to_non_nullable
+as String?,email: null == email ? _self.email : email // ignore: cast_nullable_to_non_nullable
+as String,password: null == password ? _self.password : password // ignore: cast_nullable_to_non_nullable
+as String,
   ));
 }
 
@@ -154,10 +153,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( bool isLoading,  bool? isLoginSuccess,  String? error,  Map<String, dynamic> loginForm,  bool isPasswordVisibility)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( LoginStatus status,  String? apiError,  String email,  String password)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _LoginState() when $default != null:
-return $default(_that.isLoading,_that.isLoginSuccess,_that.error,_that.loginForm,_that.isPasswordVisibility);case _:
+return $default(_that.status,_that.apiError,_that.email,_that.password);case _:
   return orElse();
 
 }
@@ -175,10 +174,10 @@ return $default(_that.isLoading,_that.isLoginSuccess,_that.error,_that.loginForm
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( bool isLoading,  bool? isLoginSuccess,  String? error,  Map<String, dynamic> loginForm,  bool isPasswordVisibility)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( LoginStatus status,  String? apiError,  String email,  String password)  $default,) {final _that = this;
 switch (_that) {
 case _LoginState():
-return $default(_that.isLoading,_that.isLoginSuccess,_that.error,_that.loginForm,_that.isPasswordVisibility);case _:
+return $default(_that.status,_that.apiError,_that.email,_that.password);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -195,10 +194,10 @@ return $default(_that.isLoading,_that.isLoginSuccess,_that.error,_that.loginForm
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( bool isLoading,  bool? isLoginSuccess,  String? error,  Map<String, dynamic> loginForm,  bool isPasswordVisibility)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( LoginStatus status,  String? apiError,  String email,  String password)?  $default,) {final _that = this;
 switch (_that) {
 case _LoginState() when $default != null:
-return $default(_that.isLoading,_that.isLoginSuccess,_that.error,_that.loginForm,_that.isPasswordVisibility);case _:
+return $default(_that.status,_that.apiError,_that.email,_that.password);case _:
   return null;
 
 }
@@ -210,20 +209,13 @@ return $default(_that.isLoading,_that.isLoginSuccess,_that.error,_that.loginForm
 
 
 class _LoginState implements LoginState {
-  const _LoginState({this.isLoading = false, this.isLoginSuccess, this.error, final  Map<String, dynamic> loginForm = const {}, this.isPasswordVisibility = false}): _loginForm = loginForm;
+  const _LoginState({this.status = LoginStatus.initial, this.apiError, this.email = '', this.password = ''});
   
 
-@override@JsonKey() final  bool isLoading;
-@override final  bool? isLoginSuccess;
-@override final  String? error;
- final  Map<String, dynamic> _loginForm;
-@override@JsonKey() Map<String, dynamic> get loginForm {
-  if (_loginForm is EqualUnmodifiableMapView) return _loginForm;
-  // ignore: implicit_dynamic_type
-  return EqualUnmodifiableMapView(_loginForm);
-}
-
-@override@JsonKey() final  bool isPasswordVisibility;
+@override@JsonKey() final  LoginStatus status;
+@override final  String? apiError;
+@override@JsonKey() final  String email;
+@override@JsonKey() final  String password;
 
 /// Create a copy of LoginState
 /// with the given fields replaced by the non-null parameter values.
@@ -235,16 +227,16 @@ _$LoginStateCopyWith<_LoginState> get copyWith => __$LoginStateCopyWithImpl<_Log
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _LoginState&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading)&&(identical(other.isLoginSuccess, isLoginSuccess) || other.isLoginSuccess == isLoginSuccess)&&(identical(other.error, error) || other.error == error)&&const DeepCollectionEquality().equals(other._loginForm, _loginForm)&&(identical(other.isPasswordVisibility, isPasswordVisibility) || other.isPasswordVisibility == isPasswordVisibility));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _LoginState&&(identical(other.status, status) || other.status == status)&&(identical(other.apiError, apiError) || other.apiError == apiError)&&(identical(other.email, email) || other.email == email)&&(identical(other.password, password) || other.password == password));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,isLoading,isLoginSuccess,error,const DeepCollectionEquality().hash(_loginForm),isPasswordVisibility);
+int get hashCode => Object.hash(runtimeType,status,apiError,email,password);
 
 @override
 String toString() {
-  return 'LoginState(isLoading: $isLoading, isLoginSuccess: $isLoginSuccess, error: $error, loginForm: $loginForm, isPasswordVisibility: $isPasswordVisibility)';
+  return 'LoginState(status: $status, apiError: $apiError, email: $email, password: $password)';
 }
 
 
@@ -255,7 +247,7 @@ abstract mixin class _$LoginStateCopyWith<$Res> implements $LoginStateCopyWith<$
   factory _$LoginStateCopyWith(_LoginState value, $Res Function(_LoginState) _then) = __$LoginStateCopyWithImpl;
 @override @useResult
 $Res call({
- bool isLoading, bool? isLoginSuccess, String? error, Map<String, dynamic> loginForm, bool isPasswordVisibility
+ LoginStatus status, String? apiError, String email, String password
 });
 
 
@@ -272,14 +264,13 @@ class __$LoginStateCopyWithImpl<$Res>
 
 /// Create a copy of LoginState
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? isLoading = null,Object? isLoginSuccess = freezed,Object? error = freezed,Object? loginForm = null,Object? isPasswordVisibility = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? status = null,Object? apiError = freezed,Object? email = null,Object? password = null,}) {
   return _then(_LoginState(
-isLoading: null == isLoading ? _self.isLoading : isLoading // ignore: cast_nullable_to_non_nullable
-as bool,isLoginSuccess: freezed == isLoginSuccess ? _self.isLoginSuccess : isLoginSuccess // ignore: cast_nullable_to_non_nullable
-as bool?,error: freezed == error ? _self.error : error // ignore: cast_nullable_to_non_nullable
-as String?,loginForm: null == loginForm ? _self._loginForm : loginForm // ignore: cast_nullable_to_non_nullable
-as Map<String, dynamic>,isPasswordVisibility: null == isPasswordVisibility ? _self.isPasswordVisibility : isPasswordVisibility // ignore: cast_nullable_to_non_nullable
-as bool,
+status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
+as LoginStatus,apiError: freezed == apiError ? _self.apiError : apiError // ignore: cast_nullable_to_non_nullable
+as String?,email: null == email ? _self.email : email // ignore: cast_nullable_to_non_nullable
+as String,password: null == password ? _self.password : password // ignore: cast_nullable_to_non_nullable
+as String,
   ));
 }
 

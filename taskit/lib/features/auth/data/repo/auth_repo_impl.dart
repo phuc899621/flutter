@@ -1,61 +1,103 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:taskit/features/auth/data/dto/req/login/login_request.dart';
-import 'package:taskit/features/auth/data/dto/res/login/login_data.dart';
+import 'package:taskit/features/auth/data/dto/req/logout/logout_request.dart';
 import 'package:taskit/features/auth/data/mapper/forgot_password_mapper.dart';
+import 'package:taskit/features/auth/data/mapper/login_mapper.dart';
 import 'package:taskit/features/auth/data/mapper/signup_mapper.dart';
 import 'package:taskit/features/auth/data/source/local/auth_local.dart';
+import 'package:taskit/features/auth/domain/entities/login/login_entity.dart';
 import 'package:taskit/features/auth/domain/entities/signup/signup_entity.dart';
 import 'package:taskit/features/auth/domain/repo/auth_repo.dart';
-import 'package:taskit/shared/application/itoken_service.dart';
+import 'package:taskit/features/user/domain/entity/user_entity.dart';
 import 'package:taskit/shared/application/token_service.dart';
-import 'package:taskit/shared/data/dto/response/data_response.dart';
+import 'package:taskit/shared/application/token_service_impl.dart';
 import 'package:taskit/shared/data/mapper/result_mapper.dart';
 import 'package:taskit/shared/data/source/remote/network/dio_exception_mapper.dart';
 import 'package:taskit/shared/domain/entities/data_result.dart';
 import 'package:taskit/shared/domain/entities/message_result.dart';
-import 'package:taskit/shared/helpers/base_response_helper.dart';
+import 'package:taskit/shared/log/logger_provider.dart';
 
 import '../../domain/entities/forgot_pass/forgot_pass_entity.dart';
-import '../dto/res/login/login_verify_data.dart';
-import '../source/local/auth_local_impl.dart';
+import '../dto/req/refresh_token/refresh_token_request.dart';
+import '../mapper/user_mapper.dart';
 import '../source/remote/auth_api.dart';
 
 final authRepoProvider = Provider<AuthRepo>((ref) {
   final authApi = ref.watch(authApiProvider);
-  final iTokenService = ref.watch(tokenServiceProvider);
+  final tokenService = ref.watch(tokenServiceProvider);
   final iAuthLocalDataSource = ref.watch(authLocalDataSourceProvider);
-  return AuthRepoImpl(authApi, iTokenService, iAuthLocalDataSource);
+  return AuthRepoImpl(authApi, tokenService, iAuthLocalDataSource);
 });
 
 class AuthRepoImpl with DioExceptionMapper implements AuthRepo {
   final AuthApi _authApi;
-  final ITokenService _iTokenService;
-  final AuthLocalDataSource _authLocalDataSource;
+  final TokenService _tokenService;
+  final AuthLocalDataSource _authLocal;
 
-  AuthRepoImpl(this._authApi, this._iTokenService, this._authLocalDataSource);
+  AuthRepoImpl(this._authApi, this._tokenService, this._authLocal);
 
   /*
   * Login
   * */
   //region LOGIN
   @override
-  Future<DataResponse<LoginData>> login(LoginRequest data) async {
+  Future<MessageResult> login(LoginEntity data) async {
     return callSafe(() async {
-      final response = await _authApi.login(data);
-      final responseData = BaseResponseHelper.requireData(response);
-      await _authLocalDataSource.cacheLogin(responseData);
-      return response;
+      final response = await _authApi.login(data.toDto());
+      await _tokenService.saveTokens(
+        response.data.accessToken,
+        response.data.refreshToken,
+      );
+      //await _authLocalDataSource.cacheLogin(response.data);
+      return response.toMessage();
     }, errorMessage: "An unexpected error occurred when login");
   }
 
   @override
-  Future<DataResponse<LoginVerifyData>> checkLogin() async {
-    final token = await _iTokenService.getToken();
-    return callSafe(
-      () async => await _authApi.checkLogin('Bearer $token'),
-      errorMessage: "An unexpected error occurred when verify login",
-    );
+  Future<UserEntity?> fetchUserLocal() async {
+    return callSafe(() async {
+      final user = await _authLocal.getUser();
+      return user?.toEntity();
+    }, errorMessage: "An unexpected error occurred when verify login");
   }
+
+  @override
+  Future<DataResult<UserEntity>> fetchUser() async => callSafe(() async {
+    final token = await _tokenService.getAccessToken();
+    return callSafe(() async {
+      final response = await _authApi.fetchUser('Bearer $token');
+      logger.w('🚀 AuthRepoImpl: fetchUser success. User: ${response.data}');
+      final userLocalData = await _authLocal.cacheUser(response.data);
+      return response.toResult(
+        UserEntity(
+          localId: userLocalData,
+          remoteId: response.data.id,
+          name: response.data.name,
+          email: response.data.email,
+          avatar: response.data.avatar,
+        ),
+      );
+    });
+  });
+
+  @override
+  Future<MessageResult> refreshToken() => callSafe(() async {
+    final token = await _tokenService.getRefreshToken();
+    return callSafe(() async {
+      final response = await _authApi.refreshToken(
+        RefreshTokenRequest(refreshToken: token!),
+      );
+      await _tokenService.saveTokens(response.data.accessToken, token);
+      return response.toMessage();
+    });
+  });
+
+  @override
+  Future<MessageResult> logout() async => callSafe(() async {
+    final token = await _tokenService.getRefreshToken();
+    final response = await _authApi.logout(LogoutRequest(refreshToken: token!));
+    await _tokenService.deleteTokens();
+    return response.toResult();
+  }, errorMessage: "An unexpected error occurred when logout");
 
   //endregion
 

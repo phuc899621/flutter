@@ -1,5 +1,169 @@
+import 'package:drift/drift.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:taskit/features/auth/data/dto/res/login/login_data.dart';
+import 'package:taskit/features/auth/data/dto/res/user/user_data.dart';
+import 'package:taskit/shared/data/source/local/drift/dao/category.dart';
+import 'package:taskit/shared/data/source/local/drift/dao/task.dart';
+import 'package:taskit/shared/data/source/local/drift/dao/user.dart';
+import 'package:taskit/shared/data/source/local/drift/database/database.dart';
 
-abstract class AuthLocalDataSource {
-  Future<void> cacheLogin(LoginData loginData);
+import '../../../../../shared/data/source/local/drift/dao/setting.dart';
+import '../../../../../shared/data/source/local/drift/dao/subtask.dart';
+
+final authLocalDataSourceProvider = Provider<AuthLocalDataSource>((ref) {
+  final userDao = ref.watch(userDaoProvider);
+  final settingDao = ref.watch(settingDaoProvider);
+  final taskDao = ref.watch(taskDaoProvider);
+  final categoryDao = ref.watch(categoryDaoProvider);
+  final subtaskDao = ref.watch(subtaskDaoProvider);
+  final db = ref.watch(appDatabaseProvider);
+  return AuthLocalDataSource(
+    db: db,
+    userDao: userDao,
+    settingDao: settingDao,
+    taskDao: taskDao,
+    categoryDao: categoryDao,
+    subtaskDao: subtaskDao,
+  );
+});
+
+class AuthLocalDataSource {
+  final UserDao userDao;
+  final SettingDao settingDao;
+  final TaskDao taskDao;
+  final CategoryDao categoryDao;
+  final SubtaskDao subtaskDao;
+  final AppDatabase db;
+
+  AuthLocalDataSource({
+    required this.db,
+    required this.userDao,
+    required this.settingDao,
+    required this.categoryDao,
+    required this.taskDao,
+    required this.subtaskDao,
+  });
+
+  Future<int> cacheUser(UserData data) async {
+    try {
+      return db.transaction(() async {
+        await userDao.deleteIfExist();
+        return await userDao.insertUser(
+          UserTableCompanion(
+            remoteId: Value(data.id),
+            name: Value(data.name),
+            email: Value(data.email),
+            avatar: Value(data.avatar),
+          ),
+        );
+      });
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
+
+  Future<UserTableData?> getUser() async {
+    try {
+      final user = await userDao.getUser();
+      return user;
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
+
+  Future<void> clearData() async {
+    try {
+      await db.transaction(() async {
+        await userDao.deleteIfExist();
+      });
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
+
+  Future<void> cacheLogin(LoginData loginData) async {
+    //try {
+    //   await db.transaction(() async {
+    //     await settingDao.insertSetting(
+    //       SettingTableCompanion(
+    //         remoteId: Value(loginData.settings.id),
+    //         userLocalId: Value(userLocalId),
+    //         isNotificationEnabled: Value(
+    //           loginData.settings.isNotificationEnabled,
+    //         ),
+    //         theme: Value(loginData.settings.theme),
+    //         language: Value(loginData.settings.language),
+    //         remindBefore: Value(loginData.settings.remindBefore),
+    //         isSynced: const Value(true),
+    //       ),
+    //     );
+    //     final categories = loginData.categories
+    //         .map(
+    //           (e) => CategoryTableCompanion(
+    //             remoteId: Value(e.id),
+    //             name: Value(e.name),
+    //             userLocalId: Value(userLocalId),
+    //             isSynced: const Value(true),
+    //             createdAt: Value(e.createdAt),
+    //             updatedAt: Value(e.updatedAt),
+    //           ),
+    //         )
+    //         .toList();
+    //     await categoryDao.insertAllCategories(categories);
+    //     final categoryTableDatas = await categoryDao.getCategories();
+    //     logger.i('categoryTableDatas:$categoryTableDatas');
+    //     final taskCompanions = loginData.tasks.map((e) {
+    //       final category = categoryTableDatas.firstWhere(
+    //         (element) => element.remoteId == e.categoryId,
+    //         orElse: () => categoryTableDatas.firstWhere(
+    //           (element) => element.name.toLowerCase() == 'any',
+    //         ),
+    //       );
+    //       return TaskTableCompanion(
+    //         remoteId: Value(e.id),
+    //         title: Value(e.title),
+    //         description: Value(e.description),
+    //         categoryLocalId: Value(category.localId),
+    //         priority: Value(e.priority),
+    //         userLocalId: Value(userLocalId),
+    //         status: Value(e.status),
+    //         dueDate: Value(e.dueDate?.toLocal()),
+    //         hasTime: Value(e.hasTime),
+    //         createdAt: Value(e.updatedAt),
+    //         updatedAt: Value(e.createdAt),
+    //         isSynced: const Value(true),
+    //       );
+    //     }).toList();
+    //
+    //     await taskDao.insertAllTasks(taskCompanions);
+    //     final subtaskCompanions = await Future.wait(
+    //       loginData.tasks.map((task) async {
+    //         final taskData = await taskDao.getTaskByRemoteId(task.id);
+    //         if (taskData == null) {
+    //           return const <SubtaskTableCompanion>[];
+    //         }
+    //         return task.subtasks
+    //             .map(
+    //               (e) => SubtaskTableCompanion(
+    //                 remoteId: Value(e.id),
+    //                 title: Value(e.title),
+    //                 isCompleted: Value(e.isCompleted),
+    //                 taskLocalId: Value(taskData.localId),
+    //                 isSynced: const Value(true),
+    //                 createdAt: Value(e.createdAt),
+    //                 updatedAt: Value(e.updatedAt),
+    //               ),
+    //             )
+    //             .toList();
+    //       }),
+    //     ).then((list) => list.expand((x) => x).toList());
+    //     await subtaskDao.insertAllSubtasks(subtaskCompanions);
+    //   });
+    //
+    //   return;
+    // } catch (e, s) {
+    //   debugPrint('error at cacheLogin:$e $s');
+    //   throw Exception(e);
+    //}
+  }
 }

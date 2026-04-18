@@ -16,21 +16,20 @@ import 'package:taskit/features/task/domain/entities/ai_task_entity.dart';
 import 'package:taskit/features/task/domain/entities/task_entity.dart';
 import 'package:taskit/features/task/domain/entities/task_priority_enum.dart';
 import 'package:taskit/features/user/data/source/local/iuser_local_source.dart';
-import 'package:taskit/shared/data/repository/itoken_repository.dart';
 import 'package:taskit/shared/data/repository/token_repository.dart';
+import 'package:taskit/shared/data/repository/token_repository_impl.dart';
 import 'package:taskit/shared/data/source/local/drift/database/database.dart';
 import 'package:taskit/shared/helpers/base_response_helper.dart';
 
+import '../../../../shared/data/source/remote/network/dio_exception_mapper.dart';
 import '../../../../shared/exception/failure.dart';
 import '../../../../shared/log/logger_provider.dart';
-import '../../../../shared/data/source/remote/network/dio_exception_mapper.dart';
 import '../../../user/data/source/local/user_local_source.dart';
 import '../../domain/entities/category_entity.dart';
 import '../../domain/entities/subtask_entity.dart';
 import '../../domain/entities/task_status_enum.dart';
 import '../dto/req/category/add_category_req.dart';
 import '../dto/req/update_task/update_task_req.dart';
-import '../dto/res/task/add_task_data.dart';
 import '../mapper/task_mapper.dart';
 import '../source/local/itask_local_source.dart';
 import '../source/local/task_local_source.dart';
@@ -45,8 +44,14 @@ final taskRepoProvider = Provider<ITaskRepo>((ref) {
   final iTokenRepo = ref.watch(tokenRepositoryProvider);
   final iTaskMapper = ref.watch(taskMapperProvider);
   final iTaskRemoteSource = ref.watch(taskRemoteSourceProvider);
-  return TaskRepo(taskApi, taskLocalSource, iTokenRepo, iTaskMapper,
-      iTaskRemoteSource, userLocalSource);
+  return TaskRepo(
+    taskApi,
+    taskLocalSource,
+    iTokenRepo,
+    iTaskMapper,
+    iTaskRemoteSource,
+    userLocalSource,
+  );
 });
 
 class TaskRepo with DioExceptionMapper implements ITaskRepo {
@@ -54,7 +59,7 @@ class TaskRepo with DioExceptionMapper implements ITaskRepo {
   final ITaskLocalSource _taskLocalSource;
   final ITaskRemoteSource _taskRemoteSource;
   final IUserLocalSource _userLocalSource;
-  final ITokenRepository _tokenService;
+  final TokenRepository _tokenService;
   final ITaskMapper _iTaskMapper;
   final Map<int, Timer> _syncTaskTitleTimers = {};
 
@@ -67,8 +72,14 @@ class TaskRepo with DioExceptionMapper implements ITaskRepo {
   final Map<int, Timer> _syncTaskDescriptionTimer = {};
   final Map<int, Timer> _syncSubtaskTitleTimer = {};
 
-  TaskRepo(this._taskApi, this._taskLocalSource, this._tokenService,
-      this._iTaskMapper, this._taskRemoteSource, this._userLocalSource);
+  TaskRepo(
+    this._taskApi,
+    this._taskLocalSource,
+    this._tokenService,
+    this._iTaskMapper,
+    this._taskRemoteSource,
+    this._userLocalSource,
+  );
 
   //=====================================
   //============= WATCH =================
@@ -80,15 +91,14 @@ class TaskRepo with DioExceptionMapper implements ITaskRepo {
     final subtaskStream = _taskLocalSource.watchAllSubtasks();
     final categoryStream = _taskLocalSource.watchAllCategories();
 
-    return Rx.combineLatest3<List<TaskTableData>, List<SubtaskTableData>,
-        List<CategoryTableData>, List<TaskEntity>>(
-      taskStream,
-      subtaskStream,
-      categoryStream,
-      (tasks, subtasks, categories) {
-        return _iTaskMapper.toTaskEntityList(tasks, subtasks, categories);
-      },
-    );
+    return Rx.combineLatest3<
+      List<TaskTableData>,
+      List<SubtaskTableData>,
+      List<CategoryTableData>,
+      List<TaskEntity>
+    >(taskStream, subtaskStream, categoryStream, (tasks, subtasks, categories) {
+      return _iTaskMapper.toTaskEntityList(tasks, subtasks, categories);
+    });
   }
 
   @override
@@ -188,8 +198,9 @@ class TaskRepo with DioExceptionMapper implements ITaskRepo {
     });
     final subtasks = await _taskLocalSource.getSubtaskByTaskLocalId(localId);
     if (subtasks.isEmpty) return;
-    final subtaskUncompletedList =
-        subtasks.where((s) => s.isCompleted == false).toList();
+    final subtaskUncompletedList = subtasks
+        .where((s) => s.isCompleted == false)
+        .toList();
     if (subtaskUncompletedList.isNotEmpty) return;
     _syncSubtaskStatusTimer[localId] = Timer(const Duration(seconds: 10), () {
       logger.i('update subtask status timer');
@@ -226,18 +237,21 @@ class TaskRepo with DioExceptionMapper implements ITaskRepo {
   @override
   Future<TaskEntity> getTaskById(int localId) async {
     final taskData = await _taskLocalSource.getTaskByLocalId(localId);
-    final subtasksData =
-        await _taskLocalSource.getSubtaskByTaskLocalId(localId);
-    final categoryData =
-        await _taskLocalSource.getCategoryByLocalId(taskData!.categoryLocalId);
+    final subtasksData = await _taskLocalSource.getSubtaskByTaskLocalId(
+      localId,
+    );
+    final categoryData = await _taskLocalSource.getCategoryByLocalId(
+      taskData!.categoryLocalId,
+    );
 
     return _iTaskMapper.toTaskEntity(taskData, subtasksData, categoryData!);
   }
 
   @override
   Future<List<SubtaskEntity>> getSubtaskByTaskLocalId(int taskLocalId) async {
-    final subtaskData =
-        await _taskLocalSource.getSubtaskByTaskLocalId(taskLocalId);
+    final subtaskData = await _taskLocalSource.getSubtaskByTaskLocalId(
+      taskLocalId,
+    );
     return _iTaskMapper.toSubtaskEntityList(subtaskData);
   }
 
@@ -245,12 +259,16 @@ class TaskRepo with DioExceptionMapper implements ITaskRepo {
   Future<List<CategoryEntity>> getAICategory(String title) async {
     try {
       final excludedCategories = await _taskLocalSource.getCategories();
-      final categoryReq = _iTaskMapper.toAiCategoryReq(title,
-          _iTaskMapper.categoryTableDataToStringList(excludedCategories));
-      final token = await _tokenService.getToken();
-      final categoryData =
-          await _taskApi.getAiCategory('Bearer $token', categoryReq);
-      return _iTaskMapper.stringListToCategoryEntity(categoryData.data??[]);
+      final categoryReq = _iTaskMapper.toAiCategoryReq(
+        title,
+        _iTaskMapper.categoryTableDataToStringList(excludedCategories),
+      );
+      final token = await _tokenService.getAccessToken();
+      final categoryData = await _taskApi.getAiCategory(
+        'Bearer $token',
+        categoryReq,
+      );
+      return _iTaskMapper.stringListToCategoryEntity(categoryData.data ?? []);
     } on DioException catch (e, s) {
       debugPrint(e.toString() + s.toString());
       throw mapDioExceptionToFailure(e, s);
@@ -288,8 +306,9 @@ class TaskRepo with DioExceptionMapper implements ITaskRepo {
   //region INSERT
   @override
   Future<int> insertCategory(CategoryEntity category) async {
-    final categoryLocalId = await _taskLocalSource
-        .insertCategory(_iTaskMapper.fromCategoryEntity(category));
+    final categoryLocalId = await _taskLocalSource.insertCategory(
+      _iTaskMapper.fromCategoryEntity(category),
+    );
     if (categoryLocalId == -1) return -1;
     logger.i('insert category with localId $categoryLocalId');
     insertRemoteCategory(categoryLocalId);
@@ -331,8 +350,9 @@ class TaskRepo with DioExceptionMapper implements ITaskRepo {
       isCompleted: false,
     );
     logger.i('insert subtask: $subtaskEntity');
-    int subtaskId = await _taskLocalSource
-        .insertSubtask(_iTaskMapper.fromSubtaskEntity(subtaskEntity));
+    int subtaskId = await _taskLocalSource.insertSubtask(
+      _iTaskMapper.fromSubtaskEntity(subtaskEntity),
+    );
     if (subtaskId == -1) return;
     insertRemoteSubtask(taskLocalId, subtaskId);
     updateRemoteTaskStatus(taskLocalId);
@@ -346,7 +366,7 @@ class TaskRepo with DioExceptionMapper implements ITaskRepo {
   @override
   Future<void> deleteTask(int localId) async {
     final task = await _taskLocalSource.getTaskByLocalId(localId);
-    final token = await _tokenService.getToken();
+    final token = await _tokenService.getAccessToken();
     logger.i('delete task with localId $localId');
     if (task == null || task.remoteId.isEmpty || token == null || token.isEmpty)
       return;
@@ -359,7 +379,7 @@ class TaskRepo with DioExceptionMapper implements ITaskRepo {
   @override
   Future<void> deleteSubtask(int localId) async {
     final subtask = await _taskLocalSource.getSubtaskByLocalId(localId);
-    final token = await _tokenService.getToken();
+    final token = await _tokenService.getAccessToken();
     await _taskLocalSource.deleteSubtaskByLocalId(localId);
     logger.i('delete subtask with localId $localId');
     if (subtask == null || token == null || subtask.remoteId.isEmpty) return;
@@ -372,7 +392,7 @@ class TaskRepo with DioExceptionMapper implements ITaskRepo {
     // TODO: implement deleteCategory
     final category = await _taskLocalSource.getCategoryByLocalId(localId);
     if (category == null || category.name.toLowerCase().trim() == 'any') return;
-    final token = await _tokenService.getToken();
+    final token = await _tokenService.getAccessToken();
     logger.i('delete category with localId $localId');
     if (token == null || category.remoteId.isEmpty) return;
     final categoryRemoteId = category.remoteId;
@@ -388,24 +408,31 @@ class TaskRepo with DioExceptionMapper implements ITaskRepo {
   @override
   Future<void> insertRemoteTask(int taskLocalId) async {
     try {
-      final token = await _tokenService.getToken();
+      final token = await _tokenService.getAccessToken();
       if (token == null) return;
       final taskTblData = await _taskLocalSource.getTaskByLocalId(taskLocalId);
       if (taskTblData == null) return;
-      final categoryTblData = await _taskLocalSource
-          .getCategoryByLocalId(taskTblData.categoryLocalId);
-      final subtasksTblData =
-          await _taskLocalSource.getSubtaskByTaskLocalId(taskLocalId);
+      final categoryTblData = await _taskLocalSource.getCategoryByLocalId(
+        taskTblData.categoryLocalId,
+      );
+      final subtasksTblData = await _taskLocalSource.getSubtaskByTaskLocalId(
+        taskLocalId,
+      );
       if (categoryTblData == null) return;
       final response = await _taskRemoteSource.addTask(
-          token,
-          _iTaskMapper.toAddTaskReq(
-              taskTblData, categoryTblData, subtasksTblData));
+        token,
+        _iTaskMapper.toAddTaskReq(
+          taskTblData,
+          categoryTblData,
+          subtasksTblData,
+        ),
+      );
       logger.i('add task response: \n $response');
       final responseData = BaseResponseHelper.requireData(response);
       _taskLocalSource.updateSyncAddTaskAndSubtask(
-          _iTaskMapper.toSyncTaskTableCompanion(responseData),
-          _iTaskMapper.toSyncListSubtaskTblCompanion(responseData.subtasks));
+        _iTaskMapper.toSyncTaskTableCompanion(responseData),
+        _iTaskMapper.toSyncListSubtaskTblCompanion(responseData.subtasks),
+      );
     } catch (e, s) {
       logger.e('add task error: \n $e \n $s');
     }
@@ -414,25 +441,32 @@ class TaskRepo with DioExceptionMapper implements ITaskRepo {
   @override
   Future<void> insertRemoteSubtask(int taskLocalId, int subtaskLocalId) async {
     try {
-      final token = await _tokenService.getToken();
+      final token = await _tokenService.getAccessToken();
       if (token == null) return;
       final taskTblData = await _taskLocalSource.getTaskByLocalId(taskLocalId);
       if (taskTblData == null) return;
-      final subtaskTblData =
-          await _taskLocalSource.getSubtaskByLocalId(subtaskLocalId);
+      final subtaskTblData = await _taskLocalSource.getSubtaskByLocalId(
+        subtaskLocalId,
+      );
       if (subtaskTblData == null) return;
-      final request = AddSubtaskListReq(subtasks: [
-        AddSubtaskReq(
-          localId: subtaskTblData.localId,
-          title: subtaskTblData.title,
-        )
-      ]);
+      final request = AddSubtaskListReq(
+        subtasks: [
+          AddSubtaskReq(
+            localId: subtaskTblData.localId,
+            title: subtaskTblData.title,
+          ),
+        ],
+      );
       logger.i('add subtask request: \n $request');
       final response = await _taskRemoteSource.addSubTask(
-          token, taskTblData.remoteId, request);
+        token,
+        taskTblData.remoteId,
+        request,
+      );
       final responseData = BaseResponseHelper.requireData(response);
       await _taskLocalSource.updateSyncSubtasksFromSubtasksTblCompanion(
-          _iTaskMapper.toSyncListSubtaskTblCompanion(responseData));
+        _iTaskMapper.toSyncListSubtaskTblCompanion(responseData),
+      );
     } catch (e, s) {
       logger.e('add subtasks error: \n $e \n $s');
     }
@@ -441,10 +475,11 @@ class TaskRepo with DioExceptionMapper implements ITaskRepo {
   @override
   Future<void> insertRemoteCategory(int categoryLocalId) async {
     try {
-      final token = await _tokenService.getToken();
+      final token = await _tokenService.getAccessToken();
       if (token == null) return;
-      final category =
-          await _taskLocalSource.getCategoryByLocalId(categoryLocalId);
+      final category = await _taskLocalSource.getCategoryByLocalId(
+        categoryLocalId,
+      );
       if (category == null) return;
       final request = AddCategoryReq(
         localId: category.localId,
@@ -456,7 +491,9 @@ class TaskRepo with DioExceptionMapper implements ITaskRepo {
       final categoryResData = BaseResponseHelper.requireData(categoryRes);
       logger.i('add category response: \n $categoryRes');
       await _taskLocalSource.updateSyncAddCategory(
-          categoryResData.localId, categoryResData.id);
+        categoryResData.localId,
+        categoryResData.id,
+      );
     } catch (e, s) {
       logger.e('add subtasks error: \n $e \n $s');
     }
@@ -464,13 +501,13 @@ class TaskRepo with DioExceptionMapper implements ITaskRepo {
 
   //endregion
   //=====================================
-//============= Update REMOTE =========
-//=====================================
-//region Update REmote
+  //============= Update REMOTE =========
+  //=====================================
+  //region Update REmote
   @override
   Future<void> updateRemoteTaskTitle(int taskLocalId) async {
     try {
-      final token = await _tokenService.getToken();
+      final token = await _tokenService.getAccessToken();
       if (token == null) return;
       final taskTblData = await _taskLocalSource.getTaskByLocalId(taskLocalId);
       if (taskTblData == null) return;
@@ -480,7 +517,10 @@ class TaskRepo with DioExceptionMapper implements ITaskRepo {
         title: taskTblData.title,
       );
       final response = await _taskRemoteSource.updateTask(
-          token, taskTblData.remoteId, request);
+        token,
+        taskTblData.remoteId,
+        request,
+      );
       final responseData = BaseResponseHelper.requireData(response);
       await _taskLocalSource.updateSyncTask(responseData.localId);
     } catch (e, s) {
@@ -491,7 +531,7 @@ class TaskRepo with DioExceptionMapper implements ITaskRepo {
   @override
   Future<void> updateRemoteTaskDescription(int taskLocalId) async {
     try {
-      final token = await _tokenService.getToken();
+      final token = await _tokenService.getAccessToken();
       if (token == null) return;
       final taskTblData = await _taskLocalSource.getTaskByLocalId(taskLocalId);
       if (taskTblData == null) return;
@@ -501,7 +541,10 @@ class TaskRepo with DioExceptionMapper implements ITaskRepo {
         description: taskTblData.description,
       );
       final response = await _taskRemoteSource.updateTask(
-          token, taskTblData.remoteId, request);
+        token,
+        taskTblData.remoteId,
+        request,
+      );
       final responseData = BaseResponseHelper.requireData(response);
       await _taskLocalSource.updateSyncTask(responseData.localId);
     } catch (e, s) {
@@ -512,15 +555,20 @@ class TaskRepo with DioExceptionMapper implements ITaskRepo {
   @override
   Future<void> updateRemoteTaskDueDate(int taskLocalId) async {
     try {
-      final token = await _tokenService.getToken();
+      final token = await _tokenService.getAccessToken();
       if (token == null) return;
       final taskTblData = await _taskLocalSource.getTaskByLocalId(taskLocalId);
       if (taskTblData == null) return;
       if (taskTblData.remoteId.isEmpty) return;
       final request = UpdateTaskReq.dueDateOnly(
-          localId: taskLocalId, dueDate: taskTblData.dueDate);
+        localId: taskLocalId,
+        dueDate: taskTblData.dueDate,
+      );
       final response = await _taskRemoteSource.updateTask(
-          token, taskTblData.remoteId, request);
+        token,
+        taskTblData.remoteId,
+        request,
+      );
       final responseData = BaseResponseHelper.requireData(response);
       await _taskLocalSource.updateSyncTask(responseData.localId);
     } catch (e, s) {
@@ -530,20 +578,28 @@ class TaskRepo with DioExceptionMapper implements ITaskRepo {
 
   @override
   Future<void> updateRemoteTaskCategory(
-      int taskLocalId, int categoryLocalId) async {
+    int taskLocalId,
+    int categoryLocalId,
+  ) async {
     try {
-      final token = await _tokenService.getToken();
+      final token = await _tokenService.getAccessToken();
       if (token == null) return;
       final taskTblData = await _taskLocalSource.getTaskByLocalId(taskLocalId);
       if (taskTblData == null || taskTblData.remoteId.isEmpty) return;
       if (taskTblData.remoteId.isEmpty) return;
-      final categoryTblData =
-          await _taskLocalSource.getCategoryByLocalId(categoryLocalId);
+      final categoryTblData = await _taskLocalSource.getCategoryByLocalId(
+        categoryLocalId,
+      );
       if (categoryTblData == null || categoryTblData.remoteId.isEmpty) return;
       final request = UpdateTaskReq.categoryIdOnly(
-          localId: taskLocalId, categoryId: categoryTblData.remoteId);
+        localId: taskLocalId,
+        categoryId: categoryTblData.remoteId,
+      );
       final response = await _taskRemoteSource.updateTask(
-          token, taskTblData.remoteId, request);
+        token,
+        taskTblData.remoteId,
+        request,
+      );
       final responseData = BaseResponseHelper.requireData(response);
       await _taskLocalSource.updateSyncTask(responseData.localId);
     } catch (e, s) {
@@ -554,15 +610,20 @@ class TaskRepo with DioExceptionMapper implements ITaskRepo {
   @override
   Future<void> updateRemoteTaskHasTime(int taskLocalId) async {
     try {
-      final token = await _tokenService.getToken();
+      final token = await _tokenService.getAccessToken();
       if (token == null) return;
       final taskTblData = await _taskLocalSource.getTaskByLocalId(taskLocalId);
       if (taskTblData == null) return;
       if (taskTblData.remoteId.isEmpty) return;
       final request = UpdateTaskReq.hasTimeOnly(
-          localId: taskLocalId, hasTime: taskTblData.hasTime);
+        localId: taskLocalId,
+        hasTime: taskTblData.hasTime,
+      );
       final response = await _taskRemoteSource.updateTask(
-          token, taskTblData.remoteId, request);
+        token,
+        taskTblData.remoteId,
+        request,
+      );
       final responseData = BaseResponseHelper.requireData(response);
       await _taskLocalSource.updateSyncTask(responseData.localId);
     } catch (e, s) {
@@ -573,15 +634,20 @@ class TaskRepo with DioExceptionMapper implements ITaskRepo {
   @override
   Future<void> updateRemoteTaskPriority(int taskLocalId) async {
     try {
-      final token = await _tokenService.getToken();
+      final token = await _tokenService.getAccessToken();
       if (token == null) return;
       final taskTblData = await _taskLocalSource.getTaskByLocalId(taskLocalId);
       if (taskTblData == null) return;
       if (taskTblData.remoteId.isEmpty) return;
       final request = UpdateTaskReq.priorityOnly(
-          localId: taskLocalId, priority: taskTblData.priority);
+        localId: taskLocalId,
+        priority: taskTblData.priority,
+      );
       final response = await _taskRemoteSource.updateTask(
-          token, taskTblData.remoteId, request);
+        token,
+        taskTblData.remoteId,
+        request,
+      );
       final responseData = BaseResponseHelper.requireData(response);
       await _taskLocalSource.updateSyncTask(responseData.localId);
     } catch (e, s) {
@@ -593,7 +659,7 @@ class TaskRepo with DioExceptionMapper implements ITaskRepo {
   Future<void> updateRemoteTaskStatus(int taskLocalId) async {
     try {
       logger.i('update task status starting');
-      final token = await _tokenService.getToken();
+      final token = await _tokenService.getAccessToken();
       if (token == null) return;
       logger.i('update task status has token');
       final taskTblData = await _taskLocalSource.getTaskByLocalId(taskLocalId);
@@ -602,9 +668,14 @@ class TaskRepo with DioExceptionMapper implements ITaskRepo {
       if (taskTblData.remoteId.isEmpty) return;
       logger.i('update task status has remoteId');
       final request = UpdateTaskReq.statusOnly(
-          localId: taskLocalId, status: taskTblData.status);
+        localId: taskLocalId,
+        status: taskTblData.status,
+      );
       final response = await _taskRemoteSource.updateTask(
-          token, taskTblData.remoteId, request);
+        token,
+        taskTblData.remoteId,
+        request,
+      );
       final responseData = BaseResponseHelper.requireData(response);
       await _taskLocalSource.updateSyncTask(responseData.localId);
     } catch (e, s) {
@@ -615,17 +686,21 @@ class TaskRepo with DioExceptionMapper implements ITaskRepo {
   @override
   Future<void> updateRemoteSubtaskStatus(int subtaskLocalId) async {
     try {
-      final subtask =
-          await _taskLocalSource.getSubtaskByLocalId(subtaskLocalId);
+      final subtask = await _taskLocalSource.getSubtaskByLocalId(
+        subtaskLocalId,
+      );
       if (subtask == null || subtask.remoteId.isEmpty) return;
-      final token = await _tokenService.getToken();
+      final token = await _tokenService.getAccessToken();
       if (token == null) return;
-      final request = UpdateSubtaskListReq(subtasks: [
-        UpdateSubtaskReq.statusOnly(
+      final request = UpdateSubtaskListReq(
+        subtasks: [
+          UpdateSubtaskReq.statusOnly(
             id: subtask.remoteId,
             isCompleted: subtask.isCompleted,
-            localId: subtask.localId)
-      ]);
+            localId: subtask.localId,
+          ),
+        ],
+      );
       logger.i('update subtask request: \n $request');
       final response = await _taskRemoteSource.updateSubtask(token, request);
       final responseData = BaseResponseHelper.requireData(response);
@@ -638,18 +713,23 @@ class TaskRepo with DioExceptionMapper implements ITaskRepo {
   @override
   Future<void> updateRemoteSubtaskStatusByTaskId(int taskLocalId) async {
     try {
-      final subtasks =
-          await _taskLocalSource.getSubtaskByTaskLocalId(taskLocalId);
+      final subtasks = await _taskLocalSource.getSubtaskByTaskLocalId(
+        taskLocalId,
+      );
       if (subtasks.isEmpty) return;
-      final token = await _tokenService.getToken();
+      final token = await _tokenService.getAccessToken();
       if (token == null) return;
       final request = UpdateSubtaskListReq(
-          subtasks: subtasks
-              .map((s) => UpdateSubtaskReq.statusOnly(
-                  id: s.remoteId,
-                  isCompleted: s.isCompleted,
-                  localId: s.localId))
-              .toList());
+        subtasks: subtasks
+            .map(
+              (s) => UpdateSubtaskReq.statusOnly(
+                id: s.remoteId,
+                isCompleted: s.isCompleted,
+                localId: s.localId,
+              ),
+            )
+            .toList(),
+      );
       logger.i('update subtask request: \n $request');
       final response = await _taskRemoteSource.updateSubtask(token, request);
       final responseData = BaseResponseHelper.requireData(response);
@@ -662,17 +742,21 @@ class TaskRepo with DioExceptionMapper implements ITaskRepo {
   @override
   Future<void> updateRemoteSubtaskTitle(int subtaskLocalId) async {
     try {
-      final subtask =
-          await _taskLocalSource.getSubtaskByLocalId(subtaskLocalId);
+      final subtask = await _taskLocalSource.getSubtaskByLocalId(
+        subtaskLocalId,
+      );
       if (subtask == null || subtask.remoteId.isEmpty) return;
-      final token = await _tokenService.getToken();
+      final token = await _tokenService.getAccessToken();
       if (token == null) return;
-      final request = UpdateSubtaskListReq(subtasks: [
-        UpdateSubtaskReq.titleOnly(
+      final request = UpdateSubtaskListReq(
+        subtasks: [
+          UpdateSubtaskReq.titleOnly(
             id: subtask.remoteId,
             title: subtask.title,
-            localId: subtask.localId)
-      ]);
+            localId: subtask.localId,
+          ),
+        ],
+      );
       logger.i('update subtask request: \n $request');
       final response = await _taskRemoteSource.updateSubtask(token, request);
       final responseData = BaseResponseHelper.requireData(response);
@@ -682,15 +766,15 @@ class TaskRepo with DioExceptionMapper implements ITaskRepo {
     }
   }
 
-//endregion
-//================================
-//========== DELETE REMOTE================
-//================================
-//region DELETE REMOTE
+  //endregion
+  //================================
+  //========== DELETE REMOTE================
+  //================================
+  //region DELETE REMOTE
   @override
   Future<void> deleteRemoteTask(String taskRemoteId) async {
     try {
-      final token = await _tokenService.getToken();
+      final token = await _tokenService.getAccessToken();
       if (token == null) return;
       await _taskRemoteSource.deleteTask(token, taskRemoteId);
     } catch (e, s) {
@@ -701,7 +785,7 @@ class TaskRepo with DioExceptionMapper implements ITaskRepo {
   @override
   Future<void> deleteRemoteSubtask(String subtaskRemoteId) async {
     try {
-      final token = await _tokenService.getToken();
+      final token = await _tokenService.getAccessToken();
       if (token == null) return;
       await _taskRemoteSource.deleteSubTask(token, subtaskRemoteId);
     } catch (e, s) {
@@ -713,7 +797,7 @@ class TaskRepo with DioExceptionMapper implements ITaskRepo {
   Future<void> deleteRemoteCategory(String categoryRemoteId) async {
     // TODO: implement deleteRemoteCategory
     try {
-      final token = await _tokenService.getToken();
+      final token = await _tokenService.getAccessToken();
       if (token == null) return;
       _taskRemoteSource.deleteCategory(token, categoryRemoteId);
     } catch (e, s) {
@@ -721,36 +805,47 @@ class TaskRepo with DioExceptionMapper implements ITaskRepo {
     }
   }
 
-//endregion
-//=====================================
-//============= AI ===================
-//=====================================
-//region AI
+  //endregion
+  //=====================================
+  //============= AI ===================
+  //=====================================
+  //region AI
   @override
   Future<Result<AiTaskEntity, Failure>> generateAiTask(
-      String text, String utcOffset) async {
+    String text,
+    String utcOffset,
+  ) async {
     try {
-      final token = await _tokenService.getToken();
+      final token = await _tokenService.getAccessToken();
       final request = AiReq.generate(text: text, utcOffset: utcOffset);
-      final response =
-          await _taskRemoteSource.generateTask(token ?? '', request);
+      final response = await _taskRemoteSource.generateTask(
+        token ?? '',
+        request,
+      );
       final responseData = BaseResponseHelper.requireData(response);
-      final category = await _taskLocalSource
-          .getCategoryByRemoteId(responseData.categoryId);
+      final category = await _taskLocalSource.getCategoryByRemoteId(
+        responseData.categoryId,
+      );
       final user = await _userLocalSource.getUser();
       if (category == null) {
         return const Error(
-            Failure(message: 'Category not found when generate task by ai'));
+          Failure(message: 'Category not found when generate task by ai'),
+        );
       }
       if (user == null) {
         return const Error(
-            Failure(message: 'User not found when generate task by ai'));
+          Failure(message: 'User not found when generate task by ai'),
+        );
       }
       logger.i('generate task local');
       final aiTask = _iTaskMapper.toAiTaskEntity(responseData);
       int localId = await _taskLocalSource.insertTaskFromAi(
-          _iTaskMapper.fromAiGenerateTaskData(
-              responseData, user.localId, category.localId));
+        _iTaskMapper.fromAiGenerateTaskData(
+          responseData,
+          user.localId,
+          category.localId,
+        ),
+      );
       if (localId == -1) {
         return const Error(Failure(message: 'Insert task error'));
       }
@@ -761,28 +856,34 @@ class TaskRepo with DioExceptionMapper implements ITaskRepo {
       return Error(e);
     } catch (e, s) {
       if (e is Exception) {
-        return Error(Failure(
-          message: e.toString(),
-          exception: e,
-          stackTrace: s,
-        ));
+        return Error(
+          Failure(message: e.toString(), exception: e, stackTrace: s),
+        );
       } else {
-        return Error(Failure(
-          message: e.toString(),
-          exception: Exception("Unknown error at generate AI Task"),
-          stackTrace: s,
-        ));
+        return Error(
+          Failure(
+            message: e.toString(),
+            exception: Exception("Unknown error at generate AI Task"),
+            stackTrace: s,
+          ),
+        );
       }
     }
   }
 
   @override
   Future<Result<String, Failure>> getAiAnswer(
-      String question, String utcOffset, String language) async {
+    String question,
+    String utcOffset,
+    String language,
+  ) async {
     try {
-      final token = await _tokenService.getToken();
+      final token = await _tokenService.getAccessToken();
       final request = AiReq.question(
-          text: question, utcOffset: utcOffset, language: language);
+        text: question,
+        utcOffset: utcOffset,
+        language: language,
+      );
       final response = await _taskRemoteSource.getAnswer(token ?? '', request);
       final responseData = BaseResponseHelper.requireData(response);
       return Success(responseData.answer);
@@ -790,19 +891,20 @@ class TaskRepo with DioExceptionMapper implements ITaskRepo {
       return Error(e);
     } catch (e, s) {
       if (e is Exception) {
-        return Error(Failure(
-          message: e.toString(),
-          exception: e,
-          stackTrace: s,
-        ));
+        return Error(
+          Failure(message: e.toString(), exception: e, stackTrace: s),
+        );
       } else {
-        return Error(Failure(
-          message: e.toString(),
-          exception: Exception("Unknown error at generate AI Task"),
-          stackTrace: s,
-        ));
+        return Error(
+          Failure(
+            message: e.toString(),
+            exception: Exception("Unknown error at generate AI Task"),
+            stackTrace: s,
+          ),
+        );
       }
     }
   }
-//endregion
+
+  //endregion
 }

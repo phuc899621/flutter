@@ -1,14 +1,21 @@
 import 'package:multiple_result/multiple_result.dart';
+import 'package:taskit/features/auth/domain/entities/login/login_entity.dart';
+import 'package:taskit/features/user/domain/entity/user_entity.dart';
 
-import '../../../../shared/exception/failure.dart';
-import '../../data/dto/req/login/login_request.dart';
-import '../entities/forgot_pass/forgot_pass_entity.dart';
-import '../entities/signup/signup_entity.dart';
+import '../../../shared/exception/failure.dart';
+import '../domain/entities/forgot_pass/forgot_pass_entity.dart';
+import '../domain/entities/signup/signup_entity.dart';
 
 abstract interface class AuthService {
-  Future<Result<void, Failure>> login(LoginRequest data);
+  Future<Result<void, Failure>> login(LoginEntity data);
 
-  Future<Result<void, Failure>> checkLogin();
+  Future<Result<UserEntity, Failure>> fetchUser();
+
+  Future<Result<UserEntity?, Failure>> fetchUserLocal();
+
+  Future<Result<void, Failure>> refreshToken();
+
+  Future<Result<void, Failure>> logout();
 
   Future<Result<void, Failure>> signup(SignupRegisterEntity data);
 

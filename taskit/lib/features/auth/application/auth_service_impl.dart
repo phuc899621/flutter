@@ -1,14 +1,15 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:multiple_result/multiple_result.dart';
-import 'package:taskit/features/auth/data/dto/req/login/login_request.dart';
+import 'package:taskit/features/auth/domain/entities/login/login_entity.dart';
 import 'package:taskit/features/auth/domain/entities/signup/signup_entity.dart';
 import 'package:taskit/features/auth/domain/repo/auth_repo.dart';
+import 'package:taskit/features/user/domain/entity/user_entity.dart';
 import 'package:taskit/shared/exception/failure.dart';
 import 'package:taskit/shared/utils/result_handler.dart';
 
 import '../data/repo/auth_repo_impl.dart';
 import '../domain/entities/forgot_pass/forgot_pass_entity.dart';
-import '../domain/service/auth_service.dart';
+import 'auth_service.dart';
 
 final authServiceProvider = Provider.autoDispose<AuthService>((ref) {
   final authRepo = ref.watch(authRepoProvider);
@@ -24,14 +25,28 @@ class AuthServiceImpl with ResultHandler implements AuthService {
   * Login
   * */
   @override
-  Future<Result<void, Failure>> login(LoginRequest data) async =>
+  Future<Result<void, Failure>> login(LoginEntity data) async =>
       runSafe(() async {
         await _authRepo.login(data);
       });
 
   @override
-  Future<Result<void, Failure>> checkLogin() async => runSafe(() async {
-    await _authRepo.checkLogin();
+  Future<Result<UserEntity, Failure>> fetchUser() async => runSafe(() async {
+    return (await _authRepo.fetchUser()).data;
+  });
+
+  @override
+  Future<Result<UserEntity?, Failure>> fetchUserLocal() =>
+      runSafe(() => _authRepo.fetchUserLocal());
+
+  @override
+  Future<Result<void, Failure>> refreshToken() async => runSafe(() async {
+    await _authRepo.refreshToken();
+  });
+
+  @override
+  Future<Result<void, Failure>> logout() async => runSafe(() async {
+    await _authRepo.logout();
   });
 
   /*

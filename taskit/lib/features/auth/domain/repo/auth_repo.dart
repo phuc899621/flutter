@@ -1,20 +1,26 @@
+import 'dart:async';
+
 import 'package:taskit/features/auth/domain/entities/forgot_pass/forgot_pass_entity.dart';
+import 'package:taskit/features/auth/domain/entities/login/login_entity.dart';
 import 'package:taskit/shared/domain/entities/data_result.dart';
 import 'package:taskit/shared/domain/entities/message_result.dart';
 
-import '../../../../shared/data/dto/response/data_response.dart';
-import '../../data/dto/req/login/login_request.dart';
-import '../../data/dto/res/login/login_data.dart';
-import '../../data/dto/res/login/login_verify_data.dart';
+import '../../../user/domain/entity/user_entity.dart';
 import '../entities/signup/signup_entity.dart';
 
 abstract interface class AuthRepo {
   /*
   * Login
   * */
-  Future<DataResponse<LoginData>> login(LoginRequest data);
+  Future<MessageResult> login(LoginEntity data);
 
-  Future<DataResponse<LoginVerifyData>> checkLogin();
+  Future<UserEntity?> fetchUserLocal();
+
+  Future<DataResult<UserEntity>> fetchUser();
+
+  Future<MessageResult> refreshToken();
+
+  Future<MessageResult> logout();
 
   /*
   * Sign up
