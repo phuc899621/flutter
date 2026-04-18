@@ -1,5 +1,5 @@
 import logger from "../utils/logger.js";
-import { AuthorizationError, BaseError, ServerError } from "../utils/error.js";
+import { AuthenticationError, BaseError, ServerError } from "../utils/error.js";
 import { OTP_PURPOSE } from "../constants/otpPurpose.js";
 import { signToken, verifyToken } from "../helpers/jwt.helper.js";
 import { JWT_CONFIG } from "../../config/jwt.config.js";
@@ -61,7 +61,7 @@ export const verifyAccessToken = (token) => {
     logger.info(`Verify access token for ${token.email}`);
     return verifyToken(token, JWT_CONFIG.ACCESS);
   } catch (e) {
-    throw new AuthorizationError("Access token expired");
+    throw new AuthenticationError("Access token expired");
   }
 };
 export const verifyRefreshToken = (token) => {
