@@ -114,10 +114,8 @@ class AuthService {
       const userDoc = await UserService.validateUserForLogin(email, password);
       const accessToken = generateAccessToken(userDoc);
       const refreshToken = generateRefreshToken(userDoc);
+      console.log(refreshToken);
       await saveRefreshToken(refreshToken, userDoc.id);
-      logger.info(`Login success for ${userDoc.email}`);
-      logger.info(`Access token: ${accessToken}`);
-      logger.info(`Refresh token: ${refreshToken}`);
       return {
         accessToken,
         refreshToken,
@@ -139,6 +137,7 @@ class AuthService {
   static async refreshToken(refreshToken) {
     try {
       const userId = await isRefreshTokenValid(refreshToken);
+      console.log(refreshToken);
       if (!userId) throw new AuthorizationError("Invalid refresh token");
       verifyRefreshToken(refreshToken);
       const accessToken = generateAccessToken(userId);

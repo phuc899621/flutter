@@ -72,7 +72,8 @@ export const loginWithGoogle = async (req, res, next) => {
 };
 export const refreshToken = async (req, res, next) => {
   try {
-    const result = await AuthService.refreshToken(req.refreshToken);
+    const result = await AuthService.refreshToken(req.body.refreshToken);
+
     return res.status(200).json({
       message: "Refresh token successfully!",
       data: result,

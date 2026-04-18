@@ -35,7 +35,7 @@ export const isTokenResetUsed = async (token) => {
 
 export const isRefreshTokenValid = async (token) => {
   const userId = await redisClient.get(`refresh_${token}`);
-  return userId || null;
+  return userId ?? null;
 };
 export const revokeRefreshToken = async (token) => {
   await redisClient.del(`refresh_${token}`);
