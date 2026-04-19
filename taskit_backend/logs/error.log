@@ -1292,3 +1292,67 @@ Error: Invalid refresh token
   "url": "/api/v1/auth/refresh",
   "status": 403
 }
+2026-04-19 21:19:28 [[31merror[39m]: [1;31mError Fetch current user error: Cannot read properties of null (reading 'toObject')[0m
+Error: Fetch current user error: Cannot read properties of null (reading 'toObject')
+    at AuthService.fetchCurrentUser (file:///C:/flutter/taskit_backend/src/features/auth/auth.service.js:135:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async fetchCurrentUser (file:///C:/flutter/taskit_backend/src/features/auth/auth.controller.js:52:20) {
+  "requestId": "1a75b360-e79f-4ef3-853d-ba55aff20606",
+  "method": "GET",
+  "url": "/api/v1/auth/me",
+  "status": 500
+}
+2026-04-19 21:19:28 [[31merror[39m]: [1;31mAPI Error[0m {
+  "requestId": "1a75b360-e79f-4ef3-853d-ba55aff20606",
+  "method": "GET",
+  "url": "/api/v1/auth/me",
+  "status": 500,
+  "time": "51.76 ms",
+  "ip": "::1"
+}
+2026-04-19 21:20:43 [[31merror[39m]: [1;31mError Fetch current user error: Cannot read properties of null (reading 'toObject')[0m
+Error: Fetch current user error: Cannot read properties of null (reading 'toObject')
+    at AuthService.fetchCurrentUser (file:///C:/flutter/taskit_backend/src/features/auth/auth.service.js:135:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async fetchCurrentUser (file:///C:/flutter/taskit_backend/src/features/auth/auth.controller.js:52:20) {
+  "requestId": "7407d516-45ba-4163-b832-cbe7b2f64543",
+  "method": "GET",
+  "url": "/api/v1/auth/me",
+  "status": 500
+}
+2026-04-19 21:20:43 [[31merror[39m]: [1;31mAPI Error[0m {
+  "requestId": "7407d516-45ba-4163-b832-cbe7b2f64543",
+  "method": "GET",
+  "url": "/api/v1/auth/me",
+  "status": 500,
+  "time": "56.53 ms",
+  "ip": "::1"
+}
+2026-04-19 21:25:02 [[31merror[39m]: [1;31mError Invalid refresh token[0m
+Error: Invalid refresh token
+    at AuthService.refreshToken (file:///C:/flutter/taskit_backend/src/features/auth/auth.service.js:142:26)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async refreshToken (file:///C:/flutter/taskit_backend/src/features/auth/auth.controller.js:76:20) {
+  "requestId": "fba8dd5d-1620-4174-af18-7338bf387d81",
+  "method": "POST",
+  "url": "/api/v1/auth/refresh",
+  "status": 403
+}
+2026-04-19 21:25:39 [[31merror[39m]: [1;31mError Fetch current user error: Cannot read properties of null (reading 'toObject')[0m
+Error: Fetch current user error: Cannot read properties of null (reading 'toObject')
+    at AuthService.fetchCurrentUser (file:///C:/flutter/taskit_backend/src/features/auth/auth.service.js:135:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async fetchCurrentUser (file:///C:/flutter/taskit_backend/src/features/auth/auth.controller.js:53:20) {
+  "requestId": "f8b9a11b-df21-4523-9e28-fb7a3ade3259",
+  "method": "GET",
+  "url": "/api/v1/auth/me",
+  "status": 500
+}
+2026-04-19 21:25:39 [[31merror[39m]: [1;31mAPI Error[0m {
+  "requestId": "f8b9a11b-df21-4523-9e28-fb7a3ade3259",
+  "method": "GET",
+  "url": "/api/v1/auth/me",
+  "status": 500,
+  "time": "54.05 ms",
+  "ip": "::1"
+}

@@ -122,7 +122,7 @@ class _AuthApi implements AuthApi {
     final _headers = <String, dynamic>{};
     final _data = request;
     final _options = _setStreamType<DataResponse<RefreshTokenData>>(
-      Options(method: 'GET', headers: _headers, extra: _extra)
+      Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
             '/refresh',

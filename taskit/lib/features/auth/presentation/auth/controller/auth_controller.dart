@@ -19,47 +19,49 @@ class AuthController extends Notifier<AuthState> {
   }
 
   Future<void> init() async {
+    logger.w('🚀 AuthController: init called');
     if (state.status == AuthStatus.authenticated) return;
+    logger.w('🚀 AuthController: init check token called');
     final token = await ref.read(tokenServiceProvider).getAccessToken();
+    logger.w('🚀 AuthController: init token: $token');
     if (token == null) {
       state = state.copyWith(status: AuthStatus.unauthenticated);
+      logger.w('🚀 AuthController: init token is null');
       return;
     }
-
+    logger.w('🚀 AuthController: init token is not null');
     final result = await ref.read(authServiceProvider).fetchUserLocal();
-    result.when((success) async {
-      if (success != null) {
-        state = state.copyWith(status: AuthStatus.authenticated, user: success);
-        logger.i(
-          '🚀 AuthController: fetchUserLocal success. User: ${success.name} and status is ${state.status}',
-        );
-      }
-    }, (failure) {});
-    final fetchResult = await ref.read(authServiceProvider).fetchUser();
-    fetchResult.when(
-      (success) {
-        logger.i('🚀 AuthController: fetchUser success. User: ${success.name}');
-        state = state.copyWith(status: AuthStatus.authenticated, user: success);
-      },
-      (failure) {
-        state = state.copyWith(status: AuthStatus.unauthenticated);
-      },
-    );
+    logger.w('🚀 AuthController: init fetchUserLocal result: $result');
+    UserEntity? localUser;
+    result.when((success) => localUser = success, (failure) {});
+    logger.w('🚀 AuthController: init localUser: $localUser');
+    if (localUser != null) {
+      logger.w('🚀 AuthController: init localUser is not null');
+      state = state.copyWith(status: AuthStatus.authenticated, user: localUser);
+      fetchUser();
+    } else {
+      logger.w('🚀 AuthController: init localUser is null');
+      state = state.copyWith(status: AuthStatus.unauthenticated);
+      fetchUser();
+    }
   }
 
   Future<void> fetchUser() async {
+    logger.i('🚀 AuthController: fetchUser called');
     final result = await ref.read(authServiceProvider).fetchUser();
-
+    logger.i('🚀 AuthController: fetchUser result: $result');
     result.when(
       (user) {
         state = state.copyWith(status: AuthStatus.authenticated, user: user);
         logger.w(
           '🚀 AuthController: fetchUser success. User: ${user.name} and status is ${state.status}',
         );
-        logger.i('user: ${user.name}');
       },
       (failure) {
-        state = state.copyWith(status: AuthStatus.unauthenticated);
+        if (state.status == AuthStatus.initial) {
+          state = state.copyWith(status: AuthStatus.unauthenticated);
+          logger.w('initial');
+        }
         logger.w(
           '🚀 AuthController: fetchUser failed. Error: ${failure.message} and status is ${state.status}',
         );
@@ -73,7 +75,9 @@ class AuthController extends Notifier<AuthState> {
   }
 
   Future<void> logout() async {
-    await ref.read(authServiceProvider).logout();
-    state = state.copyWith(status: AuthStatus.unauthenticated, user: null);
+    logger.i('🚀 AuthController: logout called');
+    //await ref.read(authServiceProvider).logout();
+    //state = state.copyWith(status: AuthStatus.unauthenticated, user: null);
+    state = state.copyWith(status: AuthStatus.unauthenticated);
   }
 }

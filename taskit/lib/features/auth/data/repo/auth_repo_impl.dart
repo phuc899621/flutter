@@ -23,17 +23,29 @@ import '../source/remote/auth_api.dart';
 
 final authRepoProvider = Provider<AuthRepo>((ref) {
   final authApi = ref.watch(authApiProvider);
+  final authRefreshApi = ref.watch(authRefreshApiProvider);
   final tokenService = ref.watch(tokenServiceProvider);
   final iAuthLocalDataSource = ref.watch(authLocalDataSourceProvider);
-  return AuthRepoImpl(authApi, tokenService, iAuthLocalDataSource);
+  return AuthRepoImpl(
+    authApi,
+    authRefreshApi,
+    tokenService,
+    iAuthLocalDataSource,
+  );
 });
 
 class AuthRepoImpl with DioExceptionMapper implements AuthRepo {
   final AuthApi _authApi;
+  final AuthApi _authRefreshApi;
   final TokenService _tokenService;
   final AuthLocalDataSource _authLocal;
 
-  AuthRepoImpl(this._authApi, this._tokenService, this._authLocal);
+  AuthRepoImpl(
+    this._authApi,
+    this._authRefreshApi,
+    this._tokenService,
+    this._authLocal,
+  );
 
   /*
   * Login
@@ -83,7 +95,7 @@ class AuthRepoImpl with DioExceptionMapper implements AuthRepo {
   Future<MessageResult> refreshToken() => callSafe(() async {
     final token = await _tokenService.getRefreshToken();
     return callSafe(() async {
-      final response = await _authApi.refreshToken(
+      final response = await _authRefreshApi.refreshToken(
         RefreshTokenRequest(refreshToken: token!),
       );
       await _tokenService.saveTokens(response.data.accessToken, token);

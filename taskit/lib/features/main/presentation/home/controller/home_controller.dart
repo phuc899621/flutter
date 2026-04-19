@@ -15,23 +15,35 @@ final homeControllerProvider =
     NotifierProvider.autoDispose<HomeController, HomeState>(HomeController.new);
 
 class HomeController extends Notifier<HomeState> {
-  late final StreamSubscription _todaySub;
-  late final StreamSubscription _tomorrowSub;
-  late final StreamSubscription _thisWeekSub;
-  late final StreamSubscription _todayOverDueSub;
-  late final StreamSubscription _thisWeekOverDueSub;
-  late final StreamSubscription _pendingSub;
-  late final StreamSubscription _completedTodaySub;
-  late final StreamSubscription _completedThisWeekSub;
+  StreamSubscription? _todaySub;
+  StreamSubscription? _tomorrowSub;
+  StreamSubscription? _thisWeekSub;
+  StreamSubscription? _todayOverDueSub;
+  StreamSubscription? _thisWeekOverDueSub;
+  StreamSubscription? _pendingSub;
+  StreamSubscription? _completedTodaySub;
+  StreamSubscription? _completedThisWeekSub;
 
-  late final StreamSubscription _userSub;
-  late final StreamSubscription _timeSub;
+  StreamSubscription? _userSub;
+  StreamSubscription? _timeSub;
 
   late final DateTime _lastCheckTime;
 
   @override
   HomeState build() {
     _lastCheckTime = DateTime.now().toStartOfDay();
+    ref.onDispose(() {
+      _todaySub?.cancel();
+      _tomorrowSub?.cancel();
+      _thisWeekSub?.cancel();
+      _todayOverDueSub?.cancel();
+      _thisWeekOverDueSub?.cancel();
+      _pendingSub?.cancel();
+      _completedTodaySub?.cancel();
+      _completedThisWeekSub?.cancel();
+      _userSub?.cancel();
+      _timeSub?.cancel();
+    });
     _startUserListening();
     _startTaskListening();
     return HomeState();
@@ -45,18 +57,19 @@ class HomeController extends Notifier<HomeState> {
   }
 
   void logout() async {
+    logger.i("Logout at home page");
     await ref.read(authControllerProvider.notifier).logout();
   }
 
   void _restartListening() {
-    _todaySub.cancel();
-    _tomorrowSub.cancel();
-    _thisWeekSub.cancel();
-    _todayOverDueSub.cancel();
-    _thisWeekOverDueSub.cancel();
-    _pendingSub.cancel();
-    _completedTodaySub.cancel();
-    _completedThisWeekSub.cancel();
+    _todaySub?.cancel();
+    _tomorrowSub?.cancel();
+    _thisWeekSub?.cancel();
+    _todayOverDueSub?.cancel();
+    _thisWeekOverDueSub?.cancel();
+    _pendingSub?.cancel();
+    _completedTodaySub?.cancel();
+    _completedThisWeekSub?.cancel();
     _startTaskListening();
   }
 

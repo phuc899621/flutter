@@ -55,10 +55,10 @@ class RouterNotifier extends ChangeNotifier {
   final Ref _ref;
 
   RouterNotifier(this._ref) {
-    // Lắng nghe authControllerProvider
     _ref.listen(authControllerProvider, (previous, next) {
-      // Khi status thay đổi, thông báo cho GoRouter chạy lại redirect
+      logger.w('RouterNotifier: authControllerProvider: $next');
       if (previous?.status != next.status) {
+        logger.w('RouterNotifier: authControllerProvider: status changed');
         notifyListeners();
       }
     });
@@ -81,12 +81,16 @@ final goRouterProvider = Provider<GoRouter>((ref) {
           state.matchedLocation.startsWith('/signup') ||
           state.matchedLocation.startsWith('/forgot_password');
       final status = authState.status;
+      logger.i('status1: $status');
       if (status == AuthStatus.initial) return null;
+      logger.i('status2: $status');
       if (status == AuthStatus.unauthenticated && !isAuthRoute) {
+        logger.i('status3: $status');
         return '/login';
       }
       if (status == AuthStatus.authenticated &&
           (isAuthRoute || state.matchedLocation == '/')) {
+        logger.i('status4: $status');
         return '/home';
       }
       return null;

@@ -21,8 +21,12 @@ import '../../dto/res/login/login_verify_data.dart';
 part 'auth_api.g.dart';
 
 final authApiProvider = Provider<AuthApi>((ref) {
-  final dio = ref.watch(basicDioProvider);
+  final dio = ref.watch(networkServiceProvider);
 
+  return AuthApi(dio);
+});
+final authRefreshApiProvider = Provider<AuthApi>((ref) {
+  final dio = ref.watch(basicDioProvider);
   return AuthApi(dio);
 });
 
@@ -46,7 +50,7 @@ sealed class AuthApi {
     @Header('Authorization') String accessToken,
   );
 
-  @GET('/refresh')
+  @POST('/refresh')
   Future<DataResponse<RefreshTokenData>> refreshToken(
     @Body() RefreshTokenRequest request,
   );

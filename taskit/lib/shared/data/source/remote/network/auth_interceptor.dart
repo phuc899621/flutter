@@ -1,17 +1,17 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:taskit/features/auth/application/auth_service.dart';
+import 'package:taskit/features/auth/data/dto/req/refresh_token/refresh_token_request.dart';
+import 'package:taskit/features/auth/data/source/remote/auth_api.dart';
 import 'package:taskit/features/auth/presentation/auth/controller/auth_controller.dart';
 
 import '../../../../application/token_service.dart';
 
 class AuthInterceptor extends Interceptor {
   final TokenService _tokenService;
-  final AuthService _authService;
   final Ref _ref;
   final Dio _dio;
 
-  AuthInterceptor(this._tokenService, this._authService, this._dio, this._ref);
+  AuthInterceptor(this._tokenService, this._dio, this._ref);
 
   @override
   void onRequest(
@@ -31,7 +31,14 @@ class AuthInterceptor extends Interceptor {
       final refreshToken = await _tokenService.getRefreshToken();
       if (refreshToken != null) {
         try {
-          await _authService.refreshToken();
+          final authRefreshApi = _ref.read(authRefreshApiProvider);
+          final refreshTokenResponse = await authRefreshApi.refreshToken(
+            RefreshTokenRequest(refreshToken: refreshToken),
+          );
+          await _tokenService.saveTokens(
+            refreshTokenResponse.data.accessToken,
+            refreshToken,
+          );
           final opts = err.requestOptions;
           final token = await _tokenService.getAccessToken();
           opts.headers['Authorization'] = 'Bearer $token';

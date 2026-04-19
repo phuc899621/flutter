@@ -2643,3 +2643,225 @@ Error: Invalid refresh token
   "ip": "::1"
 }
 2026-04-18 14:53:32 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-04-19 21:16:41 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-04-19 21:16:42 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-04-19 21:16:48 [[32minfo[39m]: [1;32mGenerate access token for dinhlelytran1225@gmail.com[0m 
+2026-04-19 21:16:48 [[32minfo[39m]: [1;32mGenerate refresh token for dinhlelytran1225@gmail.com[0m 
+2026-04-19 21:16:48 [[32minfo[39m]: [1;32mRefresh token saved for 69c33eb35b296b051e47004b:604800:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWMzM2ViMzViMjk2YjA1MWU0NzAwNGIiLCJpYXQiOjE3NzY2MDgyMDgsImV4cCI6MTc3NzIxMzAwOH0.nYLb_JbDZhl4pkm1mcN4d8HvAn_Q5JG2SkiZbKlNdF8[0m 
+2026-04-19 21:16:48 [[32minfo[39m]: [1;32mAPI Request[0m {
+  "requestId": "3d576022-c7eb-471c-b4a4-32845a7f818e",
+  "method": "POST",
+  "url": "/api/v1/auth/login",
+  "status": 200,
+  "time": "164.54 ms",
+  "ip": "::1"
+}
+2026-04-19 21:17:09 [[32minfo[39m]: [1;32mVerify access token for undefined[0m 
+2026-04-19 21:17:09 [[32minfo[39m]: [1;32mAPI Request[0m {
+  "requestId": "8af498f9-cbe1-47b6-8dd1-eee3de4782bb",
+  "method": "GET",
+  "url": "/api/v1/auth/me",
+  "status": 200,
+  "time": "54.30 ms",
+  "ip": "::1"
+}
+2026-04-19 21:19:07 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-04-19 21:19:08 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-04-19 21:19:15 [[32minfo[39m]: [1;32mVerify access token for undefined[0m 
+2026-04-19 21:19:15 [[32minfo[39m]: [1;32mAPI Request[0m {
+  "requestId": "bed3fa7e-26d3-44c4-a4ee-f416d2455d9d",
+  "method": "GET",
+  "url": "/api/v1/auth/me",
+  "status": 200,
+  "time": "62.70 ms",
+  "ip": "::1"
+}
+2026-04-19 21:19:28 [[32minfo[39m]: [1;32mVerify access token for undefined[0m 
+2026-04-19 21:19:28 [[31merror[39m]: [1;31mError Fetch current user error: Cannot read properties of null (reading 'toObject')[0m
+Error: Fetch current user error: Cannot read properties of null (reading 'toObject')
+    at AuthService.fetchCurrentUser (file:///C:/flutter/taskit_backend/src/features/auth/auth.service.js:135:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async fetchCurrentUser (file:///C:/flutter/taskit_backend/src/features/auth/auth.controller.js:52:20) {
+  "requestId": "1a75b360-e79f-4ef3-853d-ba55aff20606",
+  "method": "GET",
+  "url": "/api/v1/auth/me",
+  "status": 500
+}
+2026-04-19 21:19:28 [[31merror[39m]: [1;31mAPI Error[0m {
+  "requestId": "1a75b360-e79f-4ef3-853d-ba55aff20606",
+  "method": "GET",
+  "url": "/api/v1/auth/me",
+  "status": 500,
+  "time": "51.76 ms",
+  "ip": "::1"
+}
+2026-04-19 21:20:41 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-04-19 21:20:41 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-04-19 21:20:43 [[32minfo[39m]: [1;32mVerify access token for undefined[0m 
+2026-04-19 21:20:43 [[31merror[39m]: [1;31mError Fetch current user error: Cannot read properties of null (reading 'toObject')[0m
+Error: Fetch current user error: Cannot read properties of null (reading 'toObject')
+    at AuthService.fetchCurrentUser (file:///C:/flutter/taskit_backend/src/features/auth/auth.service.js:135:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async fetchCurrentUser (file:///C:/flutter/taskit_backend/src/features/auth/auth.controller.js:52:20) {
+  "requestId": "7407d516-45ba-4163-b832-cbe7b2f64543",
+  "method": "GET",
+  "url": "/api/v1/auth/me",
+  "status": 500
+}
+2026-04-19 21:20:43 [[31merror[39m]: [1;31mAPI Error[0m {
+  "requestId": "7407d516-45ba-4163-b832-cbe7b2f64543",
+  "method": "GET",
+  "url": "/api/v1/auth/me",
+  "status": 500,
+  "time": "56.53 ms",
+  "ip": "::1"
+}
+2026-04-19 21:22:02 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-04-19 21:22:03 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-04-19 21:22:06 [[32minfo[39m]: [1;32mGenerate access token for dinhlelytran1225@gmail.com[0m 
+2026-04-19 21:22:06 [[32minfo[39m]: [1;32mGenerate refresh token for dinhlelytran1225@gmail.com[0m 
+2026-04-19 21:22:06 [[32minfo[39m]: [1;32mRefresh token saved for 69c33eb35b296b051e47004b:604800:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWMzM2ViMzViMjk2YjA1MWU0NzAwNGIiLCJpYXQiOjE3NzY2MDg1MjYsImV4cCI6MTc3NzIxMzMyNn0.UGi9lgn4L27J3TMrF8Cikk_Zfj3cDtY7g-jEG6bd2Lk[0m 
+2026-04-19 21:22:06 [[32minfo[39m]: [1;32mAPI Request[0m {
+  "requestId": "92942764-a5b7-4a95-a3fa-5eddffb7ffce",
+  "method": "POST",
+  "url": "/api/v1/auth/login",
+  "status": 200,
+  "time": "165.49 ms",
+  "ip": "::1"
+}
+2026-04-19 21:22:31 [[32minfo[39m]: [1;32mVerify access token for undefined[0m 
+2026-04-19 21:22:31 [[32minfo[39m]: [1;32mAPI Request[0m {
+  "requestId": "f30c1975-777a-497a-b150-f9c3ae712ad6",
+  "method": "GET",
+  "url": "/api/v1/auth/me",
+  "status": 200,
+  "time": "51.86 ms",
+  "ip": "::1"
+}
+2026-04-19 21:23:24 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-04-19 21:23:24 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-04-19 21:23:25 [[32minfo[39m]: [1;32mVerify access token for undefined[0m 
+2026-04-19 21:23:25 [[32minfo[39m]: [1;32mAPI Request[0m {
+  "requestId": "0c933235-18a3-4fc4-9007-595c1baff607",
+  "method": "GET",
+  "url": "/api/v1/auth/me",
+  "status": 200,
+  "time": "221.79 ms",
+  "ip": "::1"
+}
+2026-04-19 21:24:17 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-04-19 21:24:18 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-04-19 21:24:23 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-04-19 21:24:23 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-04-19 21:25:02 [[31merror[39m]: [1;31mError Invalid refresh token[0m
+Error: Invalid refresh token
+    at AuthService.refreshToken (file:///C:/flutter/taskit_backend/src/features/auth/auth.service.js:142:26)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async refreshToken (file:///C:/flutter/taskit_backend/src/features/auth/auth.controller.js:76:20) {
+  "requestId": "fba8dd5d-1620-4174-af18-7338bf387d81",
+  "method": "POST",
+  "url": "/api/v1/auth/refresh",
+  "status": 403
+}
+2026-04-19 21:25:02 [[33mwarn[39m]: [1;33mAPI Warning[0m {
+  "requestId": "fba8dd5d-1620-4174-af18-7338bf387d81",
+  "method": "POST",
+  "url": "/api/v1/auth/refresh",
+  "status": 403,
+  "time": "23.84 ms",
+  "ip": "::1"
+}
+2026-04-19 21:25:19 [[32minfo[39m]: [1;32mVerify refresh token for undefined[0m 
+2026-04-19 21:25:19 [[32minfo[39m]: [1;32mGenerate access token for undefined[0m 
+2026-04-19 21:25:19 [[32minfo[39m]: [1;32mAPI Request[0m {
+  "requestId": "686de149-0942-40c4-8283-04d9bb08e9bb",
+  "method": "POST",
+  "url": "/api/v1/auth/refresh",
+  "status": 200,
+  "time": "7.68 ms",
+  "ip": "::1"
+}
+2026-04-19 21:25:39 [[32minfo[39m]: [1;32mVerify access token for undefined[0m 
+2026-04-19 21:25:39 [[31merror[39m]: [1;31mError Fetch current user error: Cannot read properties of null (reading 'toObject')[0m
+Error: Fetch current user error: Cannot read properties of null (reading 'toObject')
+    at AuthService.fetchCurrentUser (file:///C:/flutter/taskit_backend/src/features/auth/auth.service.js:135:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async fetchCurrentUser (file:///C:/flutter/taskit_backend/src/features/auth/auth.controller.js:53:20) {
+  "requestId": "f8b9a11b-df21-4523-9e28-fb7a3ade3259",
+  "method": "GET",
+  "url": "/api/v1/auth/me",
+  "status": 500
+}
+2026-04-19 21:25:39 [[31merror[39m]: [1;31mAPI Error[0m {
+  "requestId": "f8b9a11b-df21-4523-9e28-fb7a3ade3259",
+  "method": "GET",
+  "url": "/api/v1/auth/me",
+  "status": 500,
+  "time": "54.05 ms",
+  "ip": "::1"
+}
+2026-04-19 21:27:03 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-04-19 21:27:04 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-04-19 21:27:06 [[32minfo[39m]: [1;32mVerify refresh token for undefined[0m 
+2026-04-19 21:27:06 [[32minfo[39m]: [1;32mGenerate access token for undefined[0m 
+2026-04-19 21:27:06 [[32minfo[39m]: [1;32mAPI Request[0m {
+  "requestId": "aae624c8-0669-486a-8930-226d312213cf",
+  "method": "POST",
+  "url": "/api/v1/auth/refresh",
+  "status": 200,
+  "time": "23.41 ms",
+  "ip": "::1"
+}
+2026-04-19 21:28:46 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-04-19 21:28:46 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-04-19 21:29:04 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-04-19 21:29:05 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-04-19 21:29:47 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-04-19 21:29:48 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-04-19 21:30:29 [[32minfo[39m]: [1;32mRefresh token saved for 69c33eb35b296b051e47004b:604800:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWMzM2ViMzViMjk2YjA1MWU0NzAwNGIiLCJpYXQiOjE3NzY2MDkwMjksImV4cCI6MTc3NzIxMzgyOX0.UZwOr-1c2qK2mPjvUjguAJ4uCDc0Aa_uIpesQNSm_VA[0m 
+2026-04-19 21:30:29 [[32minfo[39m]: [1;32mAPI Request[0m {
+  "requestId": "377fbdc3-8728-4b0b-ab75-b52936d39e87",
+  "method": "POST",
+  "url": "/api/v1/auth/login",
+  "status": 200,
+  "time": "157.01 ms",
+  "ip": "::1"
+}
+2026-04-19 21:30:41 [[32minfo[39m]: [1;32mVerify refresh token for undefined[0m 
+2026-04-19 21:30:41 [[32minfo[39m]: [1;32mAPI Request[0m {
+  "requestId": "3778f42e-c298-4d7a-864d-b75477edb3f2",
+  "method": "POST",
+  "url": "/api/v1/auth/refresh",
+  "status": 200,
+  "time": "3.56 ms",
+  "ip": "::1"
+}
+2026-04-19 21:30:51 [[32minfo[39m]: [1;32mVerify access token for undefined[0m 
+2026-04-19 21:30:51 [[32minfo[39m]: [1;32mAPI Request[0m {
+  "requestId": "71a9bc1d-cd37-42c8-8fd3-6f43b214ac9c",
+  "method": "GET",
+  "url": "/api/v1/auth/me",
+  "status": 200,
+  "time": "52.61 ms",
+  "ip": "::1"
+}
+2026-04-19 21:30:57 [[32minfo[39m]: [1;32mVerify refresh token for undefined[0m 
+2026-04-19 21:30:57 [[32minfo[39m]: [1;32mAPI Request[0m {
+  "requestId": "64226827-eb36-44cc-af20-a1d36370a148",
+  "method": "POST",
+  "url": "/api/v1/auth/refresh",
+  "status": 200,
+  "time": "2.38 ms",
+  "ip": "::1"
+}
+2026-04-19 21:31:05 [[32minfo[39m]: [1;32mVerify access token for undefined[0m 
+2026-04-19 21:31:05 [[32minfo[39m]: [1;32mAPI Request[0m {
+  "requestId": "c90b0b6d-a2f8-469c-a427-0fb1b70ec3e3",
+  "method": "GET",
+  "url": "/api/v1/auth/me",
+  "status": 200,
+  "time": "48.55 ms",
+  "ip": "::1"
+}
+2026-04-19 21:31:26 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-04-19 21:31:26 [[32minfo[39m]: [1;32mMongoDB connected![0m 
