@@ -4,19 +4,17 @@ import { OTP_PURPOSE } from "../constants/otpPurpose.js";
 import { signToken, verifyToken } from "../helpers/jwt.helper.js";
 import { JWT_CONFIG } from "../../config/jwt.config.js";
 import { isTokenResetUsed, saveUsedResetToken } from "./redis.service.js";
-export const generateAccessToken = (user) => {
+export const generateAccessToken = (userId) => {
   try {
-    logger.info(`Generate access token for ${user.email}`);
-    return signToken({ userId: user.id }, JWT_CONFIG.ACCESS);
+    return signToken({ userId }, JWT_CONFIG.ACCESS);
   } catch (e) {
     if (e instanceof BaseError) throw e;
     throw new ServerError(`JWT error: ${e.message}`);
   }
 };
-export const generateRefreshToken = (user) => {
+export const generateRefreshToken = (userId) => {
   try {
-    logger.info(`Generate refresh token for ${user.email}`);
-    return signToken({ userId: user.id }, JWT_CONFIG.REFRESH);
+    return signToken({ userId }, JWT_CONFIG.REFRESH);
   } catch (e) {
     if (e instanceof BaseError) throw e;
     throw new ServerError(`JWT error: ${e.message}`);
@@ -59,6 +57,7 @@ export const markForgotPasswordTokenAsUsed = async (token, userId) => {
 export const verifyAccessToken = (token) => {
   try {
     logger.info(`Verify access token for ${token.email}`);
+    console.log(verifyToken(token, JWT_CONFIG.ACCESS));
     return verifyToken(token, JWT_CONFIG.ACCESS);
   } catch (e) {
     throw new AuthenticationError("Access token expired");

@@ -49,6 +49,7 @@ export const login = async (req, res, next) => {
 export const fetchCurrentUser = async (req, res, next) => {
   try {
     const userId = req.user.userId;
+    console.log(userId);
     const result = await AuthService.fetchCurrentUser(userId);
     return res.status(200).json({
       message: "Fetch current user successfully!",

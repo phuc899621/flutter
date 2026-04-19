@@ -9,6 +9,7 @@ export const authMiddleware = async (req, res, next) => {
       throw new AuthenticationError("Access denied. No authorization provided");
     }
     const decoded = verifyAccessToken(token);
+    console.log(decoded);
     req.user = decoded;
     next();
   } catch (err) {
