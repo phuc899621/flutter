@@ -4,6 +4,7 @@ import { OTP_PURPOSE } from "../constants/otpPurpose.js";
 import { signToken, verifyToken } from "../helpers/jwt.helper.js";
 import { JWT_CONFIG } from "../../config/jwt.config.js";
 import { isTokenResetUsed, saveUsedResetToken } from "./redis.service.js";
+import { v4 as uuid } from "uuid";
 export const generateAccessToken = (userId) => {
   try {
     return signToken({ userId }, JWT_CONFIG.ACCESS);
@@ -32,6 +33,7 @@ export const generateForgotPasswordToken = (user) => {
     throw new ServerError(`JWT error: ${e.message}`);
   }
 };
+export const generateSessionId = () => uuid();
 export const verifyForgotPasswordToken = async (token) => {
   try {
     logger.info(`Verify forgot password token for ${token.email}`);

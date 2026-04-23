@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "777272882892",
+    "project_id": "taskit--auth",
+    "storage_bucket": "taskit--auth.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:777272882892:android:b5b347df1bc70659f27469",
+        "android_client_info": {
+          "package_name": "com.example.taskit"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "777272882892-n804c1sm500uoqmkiqo4b5io1v3camfn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDZ15brE5QQ833QVZV4UMSHlrzsTd3zK6k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "777272882892-n804c1sm500uoqmkiqo4b5io1v3camfn.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

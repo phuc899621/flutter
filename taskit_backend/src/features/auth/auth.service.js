@@ -18,6 +18,7 @@ import {
   generateAccessToken,
   generateForgotPasswordToken,
   generateRefreshToken,
+  generateSessionId,
   markForgotPasswordTokenAsUsed,
   verifyForgotPasswordToken,
   verifyRefreshToken,
@@ -27,7 +28,9 @@ import {
   revokeRefreshToken,
   saveRefreshToken,
 } from "../../shared/services/redis.service.js";
-import { verifyGoogleToken } from "../../shared/services/auth.google.service.js";
+import GoogleService from "../../shared/services/auth.google.service.js";
+import { GOOGLE_AUTH_CASE } from "../../shared/constants/googleAuthCase.js";
+import ImageService from "../../shared/services/image.service.js";
 class AuthService {
   //#region signup flow
   static async signup(data) {
@@ -115,10 +118,12 @@ class AuthService {
       const accessToken = generateAccessToken(userDoc.id);
       const refreshToken = generateRefreshToken(userDoc.id);
       console.log(refreshToken);
-      await saveRefreshToken(refreshToken, userDoc.id);
+      const sessionId = generateSessionId();
+      await saveRefreshToken(refreshToken, sessionId, userDoc.id);
       return {
         accessToken,
         refreshToken,
+        sessionId,
       };
     } catch (e) {
       if (e instanceof BaseError) throw e;
@@ -135,9 +140,9 @@ class AuthService {
       throw new ServerError(`Fetch current user error: ${e.message}`);
     }
   }
-  static async refreshToken(refreshToken) {
+  static async refreshToken(refreshToken, sessionId) {
     try {
-      const userId = await isRefreshTokenValid(refreshToken);
+      const userId = await isRefreshTokenValid(refreshToken, sessionId);
       console.log(`User id: ${userId}`);
 
       if (!userId) throw new AuthorizationError("Invalid refresh token");
@@ -149,21 +154,80 @@ class AuthService {
       throw new ServerError(`Refresh token error: ${e.message}`);
     }
   }
-  static async logout(refreshToken) {
+  static async logout(refreshToken, sessionId) {
     try {
-      await revokeRefreshToken(refreshToken);
+      await revokeRefreshToken(refreshToken, sessionId);
     } catch (e) {
       if (e instanceof BaseError) throw e;
       throw new ServerError(`Logout error: ${e.message}`);
     }
   }
+  static async handleTokenReturn(userId) {
+    const accessToken = generateAccessToken(userId);
+    const refreshToken = generateRefreshToken(userId);
+    console.log(refreshToken);
+    const sessionId = generateSessionId();
+    await saveRefreshToken(refreshToken, sessionId, userId);
+    return {
+      accessToken,
+      refreshToken,
+      sessionId,
+    };
+  }
 
   static async loginWithGoogle(token) {
+    const session = await db.startSession();
+    session.startTransaction();
     try {
-      const payload = await verifyGoogleToken(token);
+      const payload = await GoogleService.verifyGoogleToken(token);
+      const { family_name, given_name, sub, email, picture } = payload;
+      const name = payload.family_name + " " + payload.given_name;
+      const { status, user } = await UserService.checkGoogleAuthCase({
+        email,
+        sub,
+      });
+      let userId = user?.id;
+      console.log(status);
+      switch (status) {
+        case GOOGLE_AUTH_CASE.EXIST_BY_SUB:
+          break;
+        case GOOGLE_AUTH_CASE.LINKED_BY_EMAIL:
+          await UserService.updateUserSub(
+            user.id,
+            {
+              sub,
+            },
+            session,
+          );
+          break;
+        case GOOGLE_AUTH_CASE.EMAIL_NOT_VERIFIED:
+          const avatarUrl = await ImageService.uploadFromUrl(picture);
+          await UserService.linkGoogleAccount(
+            user.id,
+            { name, sub, avatar: avatarUrl },
+            session,
+          );
+          break;
+        default:
+          const avatarUrl_new = await ImageService.uploadFromUrl(picture);
+          userId = await UserService.createGoogleUser(
+            { email, sub, avatar: avatarUrl_new, name },
+            session,
+          );
+          break;
+      }
+
+      console.log(payload);
+      console.log(userId);
+      await session.commitTransaction();
+      return await AuthService.handleTokenReturn(userId);
+      return payload;
     } catch (e) {
+      await session.abortTransaction();
       if (e instanceof BaseError) throw e;
       throw new ServerError(`Login with google error: ${e.message}`);
+    } finally {
+      session.endSession();
     }
   }
   //#endregion

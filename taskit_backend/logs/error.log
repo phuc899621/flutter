@@ -1356,3 +1356,423 @@ Error: Fetch current user error: Cannot read properties of null (reading 'toObje
   "time": "54.05 ms",
   "ip": "::1"
 }
+2026-04-21 17:49:43 [[31merror[39m]: [1;31mError Access token expired[0m
+Error: Access token expired
+    at verifyAccessToken (file:///C:/flutter/taskit_backend/src/shared/services/token.service.js:63:11)
+    at authMiddleware (file:///C:/flutter/taskit_backend/src/middleware/auth.middleware.js:11:21)
+    at Layer.handle [as handle_request] (C:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\flutter\taskit_backend\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (C:\flutter\taskit_backend\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (C:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:284:15
+    at router.process_params (C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:346:12)
+    at next (C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:280:10)
+    at router.handle (C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:175:3) {
+  "requestId": "bb832c5c-c4ca-4222-85e1-46fd59aae334",
+  "method": "GET",
+  "url": "/api/v1/auth/me",
+  "status": 401
+}
+2026-04-21 17:49:43 [[31merror[39m]: [1;31mError Invalid refresh token[0m
+Error: Invalid refresh token
+    at AuthService.refreshToken (file:///C:/flutter/taskit_backend/src/features/auth/auth.service.js:143:26)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async refreshToken (file:///C:/flutter/taskit_backend/src/features/auth/auth.controller.js:76:20) {
+  "requestId": "50240769-5f59-4d9e-9c47-7b6c1a1f472a",
+  "method": "POST",
+  "url": "/api/v1/auth/refresh",
+  "status": 403
+}
+2026-04-21 18:58:59 [[31merror[39m]: [1;31mError Email must not be empty[0m
+Error: Email must not be empty
+    at file:///C:/flutter/taskit_backend/src/middleware/validate.js:14:15
+    at Layer.handle [as handle_request] (C:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\flutter\taskit_backend\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (C:\flutter\taskit_backend\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (C:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:284:15
+    at router.process_params (C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:346:12)
+    at next (C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:280:10)
+    at router.handle (C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:175:3)
+    at router (C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:47:12) {
+  "requestId": "75830fed-0f17-4796-968b-a3048472bce8",
+  "method": "POST",
+  "url": "/api/v1/auth/login",
+  "status": 400
+}
+2026-04-22 08:42:30 [[31merror[39m]: [1;31mError Google token verification error: Invalid token signature: eyJhbGciOiJSUzI1NiIsImtpZCI6IjY0NzAxNGY5YTRhNGNiYmI2ZTlhYTFmOWUzMGVlNmNjNzBkYTc0MmEiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL2FjY291bnRzLmdvb2dsZS5jb20iLCJhenAiOiI4MjU1OTc2NjUxNDItcnZmYzN1ZG52bnFkZmlqbGduYWphbTIxY3EzOHRpZXEuYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJhdWQiOiI4MjU1OTc2NjUxNDItOTFzcWJjc2lpdTZoYmtoaGRpN2FhYjMyMmVwY3UxZmEuYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJzdWIiOiIxMTYzNjk0OTU0MjQ0MzUxMjAzOTkiLCJlbWFpbCI6InBodWM4OTk2MjFAZ21haWwuY29tIiwiZW1haWxfdmVyaWZpZWQiOnRydWUsIm5hbWUiOiJQaMO6YyBOZ3V54buFbiBIb8OgbmciLCJwaWN0dXJlIjoiaHR0cHM6Ly9saDMuZ29vZ2xldXNlcmNvbnRlbnQuY29tL2EvQUNnOG9jTG43cVplSXNrSHIzVXpMcmx5ZGVRaWZjUGJLbnJueENJQXhCS1lRc2kwTEhmLTRBWT1zOTYtYyIsImdpdmVuX25hbWUiOiJQaMO6YyIsImZhbWlseV9uYW1lIjoiTmd1eeG7hW4gSG_DoG5nIiwiaWF0IjoxNzc2ODIxNzYxLCJleHAiOjE3NzY4MjUzNjF9.sCFuJXYPyIvwhnIHr5YwI_WxqbtQjiznNM8rihSQdi6W5RGLYYFN0EifNWG8jskTW7wX4bUiqlT5G3E5dwcDHX_nPB5DHKADt8yXdvuyI4O8ZWJipjVe-jeqSHsYkPR-7do9uWNeqN1SyFROpyS9JtTCmWqoWx-d8W91puCgPBuNSQjnsqvXDPFtujJ[0m
+Error: Google token verification error: Invalid token signature: eyJhbGciOiJSUzI1NiIsImtpZCI6IjY0NzAxNGY5YTRhNGNiYmI2ZTlhYTFmOWUzMGVlNmNjNzBkYTc0MmEiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL2FjY291bnRzLmdvb2dsZS5jb20iLCJhenAiOiI4MjU1OTc2NjUxNDItcnZmYzN1ZG52bnFkZmlqbGduYWphbTIxY3EzOHRpZXEuYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJhdWQiOiI4MjU1OTc2NjUxNDItOTFzcWJjc2lpdTZoYmtoaGRpN2FhYjMyMmVwY3UxZmEuYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJzdWIiOiIxMTYzNjk0OTU0MjQ0MzUxMjAzOTkiLCJlbWFpbCI6InBodWM4OTk2MjFAZ21haWwuY29tIiwiZW1haWxfdmVyaWZpZWQiOnRydWUsIm5hbWUiOiJQaMO6YyBOZ3V54buFbiBIb8OgbmciLCJwaWN0dXJlIjoiaHR0cHM6Ly9saDMuZ29vZ2xldXNlcmNvbnRlbnQuY29tL2EvQUNnOG9jTG43cVplSXNrSHIzVXpMcmx5ZGVRaWZjUGJLbnJueENJQXhCS1lRc2kwTEhmLTRBWT1zOTYtYyIsImdpdmVuX25hbWUiOiJQaMO6YyIsImZhbWlseV9uYW1lIjoiTmd1eeG7hW4gSG_DoG5nIiwiaWF0IjoxNzc2ODIxNzYxLCJleHAiOjE3NzY4MjUzNjF9.sCFuJXYPyIvwhnIHr5YwI_WxqbtQjiznNM8rihSQdi6W5RGLYYFN0EifNWG8jskTW7wX4bUiqlT5G3E5dwcDHX_nPB5DHKADt8yXdvuyI4O8ZWJipjVe-jeqSHsYkPR-7do9uWNeqN1SyFROpyS9JtTCmWqoWx-d8W91puCgPBuNSQjnsqvXDPFtujJ
+    at GoogleService.verifyGoogleToken (file:///C:/flutter/taskit_backend/src/shared/services/auth.google.service.js:18:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async AuthService.loginWithGoogle (file:///C:/flutter/taskit_backend/src/features/auth/auth.service.js:163:23)
+    at async loginWithGoogle (file:///C:/flutter/taskit_backend/src/features/auth/auth.controller.js:65:20) {
+  "requestId": "9a09ee85-9ed3-449d-af7d-0d87b8f75e93",
+  "method": "POST",
+  "url": "/api/v1/auth/google",
+  "status": 500
+}
+2026-04-22 08:42:30 [[31merror[39m]: [1;31mAPI Error[0m {
+  "requestId": "9a09ee85-9ed3-449d-af7d-0d87b8f75e93",
+  "method": "POST",
+  "url": "/api/v1/auth/google",
+  "status": 500,
+  "time": "106.93 ms",
+  "ip": "::1"
+}
+2026-04-22 08:42:55 [[31merror[39m]: [1;31mError Google token verification error: Invalid token signature: eyJhbGciOiJSUzI1NiIsImtpZCI6IjY0NzAxNGY5YTRhNGNiYmI2ZTlhYTFmOWUzMGVlNmNjNzBkYTc0MmEiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL2FjY291bnRzLmdvb2dsZS5jb20iLCJhenAiOiI4MjU1OTc2NjUxNDItcnZmYzN1ZG52bnFkZmlqbGduYWphbTIxY3EzOHRpZXEuYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJhdWQiOiI4MjU1OTc2NjUxNDItOTFzcWJjc2lpdTZoYmtoaGRpN2FhYjMyMmVwY3UxZmEuYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJzdWIiOiIxMTYzNjk0OTU0MjQ0MzUxMjAzOTkiLCJlbWFpbCI6InBodWM4OTk2MjFAZ21haWwuY29tIiwiZW1haWxfdmVyaWZpZWQiOnRydWUsIm5hbWUiOiJQaMO6YyBOZ3V54buFbiBIb8OgbmciLCJwaWN0dXJlIjoiaHR0cHM6Ly9saDMuZ29vZ2xldXNlcmNvbnRlbnQuY29tL2EvQUNnOG9jTG43cVplSXNrSHIzVXpMcmx5ZGVRaWZjUGJLbnJueENJQXhCS1lRc2kwTEhmLTRBWT1zOTYtYyIsImdpdmVuX25hbWUiOiJQaMO6YyIsImZhbWlseV9uYW1lIjoiTmd1eeG7hW4gSG_DoG5nIiwiaWF0IjoxNzc2ODIxNzYxLCJleHAiOjE3NzY4MjUzNjF9.sCFuJXYPyIvwhnIHr5YwI_WxqbtQjiznNM8rihSQdi6W5RGLYYFN0EifNWG8jskTW7wX4bUiqlT5G3E5dwcDHX_nPB5DHKADt8yXdvuyI4O8ZWJipjVe-jeqSHsYkPR-7do9uWNeqN1SyFROpyS9JtTCmWqoWx-d8W91puCgPBuNSQjnsqvXDPFtujJ[0m
+Error: Google token verification error: Invalid token signature: eyJhbGciOiJSUzI1NiIsImtpZCI6IjY0NzAxNGY5YTRhNGNiYmI2ZTlhYTFmOWUzMGVlNmNjNzBkYTc0MmEiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL2FjY291bnRzLmdvb2dsZS5jb20iLCJhenAiOiI4MjU1OTc2NjUxNDItcnZmYzN1ZG52bnFkZmlqbGduYWphbTIxY3EzOHRpZXEuYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJhdWQiOiI4MjU1OTc2NjUxNDItOTFzcWJjc2lpdTZoYmtoaGRpN2FhYjMyMmVwY3UxZmEuYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJzdWIiOiIxMTYzNjk0OTU0MjQ0MzUxMjAzOTkiLCJlbWFpbCI6InBodWM4OTk2MjFAZ21haWwuY29tIiwiZW1haWxfdmVyaWZpZWQiOnRydWUsIm5hbWUiOiJQaMO6YyBOZ3V54buFbiBIb8OgbmciLCJwaWN0dXJlIjoiaHR0cHM6Ly9saDMuZ29vZ2xldXNlcmNvbnRlbnQuY29tL2EvQUNnOG9jTG43cVplSXNrSHIzVXpMcmx5ZGVRaWZjUGJLbnJueENJQXhCS1lRc2kwTEhmLTRBWT1zOTYtYyIsImdpdmVuX25hbWUiOiJQaMO6YyIsImZhbWlseV9uYW1lIjoiTmd1eeG7hW4gSG_DoG5nIiwiaWF0IjoxNzc2ODIxNzYxLCJleHAiOjE3NzY4MjUzNjF9.sCFuJXYPyIvwhnIHr5YwI_WxqbtQjiznNM8rihSQdi6W5RGLYYFN0EifNWG8jskTW7wX4bUiqlT5G3E5dwcDHX_nPB5DHKADt8yXdvuyI4O8ZWJipjVe-jeqSHsYkPR-7do9uWNeqN1SyFROpyS9JtTCmWqoWx-d8W91puCgPBuNSQjnsqvXDPFtujJ
+    at GoogleService.verifyGoogleToken (file:///C:/flutter/taskit_backend/src/shared/services/auth.google.service.js:18:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async AuthService.loginWithGoogle (file:///C:/flutter/taskit_backend/src/features/auth/auth.service.js:163:23)
+    at async loginWithGoogle (file:///C:/flutter/taskit_backend/src/features/auth/auth.controller.js:65:20) {
+  "requestId": "ebaacd1a-6ddf-436c-83dc-a78d5381102d",
+  "method": "POST",
+  "url": "/api/v1/auth/google",
+  "status": 500
+}
+2026-04-22 08:42:55 [[31merror[39m]: [1;31mAPI Error[0m {
+  "requestId": "ebaacd1a-6ddf-436c-83dc-a78d5381102d",
+  "method": "POST",
+  "url": "/api/v1/auth/google",
+  "status": 500,
+  "time": "8.26 ms",
+  "ip": "::1"
+}
+2026-04-22 17:22:24 [[31merror[39m]: [1;31mError Email is already in use[0m
+Error: Email is already in use
+    at UserService.validateUserForLogin (file:///C:/flutter/taskit_backend/src/features/user/user.service.js:53:15)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async AuthService.login (file:///C:/flutter/taskit_backend/src/features/auth/auth.service.js:115:23)
+    at async login (file:///C:/flutter/taskit_backend/src/features/auth/auth.controller.js:40:20) {
+  "requestId": "d547fef6-928c-4b75-8b42-73b136d62845",
+  "method": "POST",
+  "url": "/api/v1/auth/login",
+  "status": 400
+}
+2026-04-22 17:25:59 [[31merror[39m]: [1;31mError Invalid password[0m
+Error: Invalid password
+    at UserService.validateUserForLogin (file:///C:/flutter/taskit_backend/src/features/user/user.service.js:56:15)
+    at async AuthService.login (file:///C:/flutter/taskit_backend/src/features/auth/auth.service.js:115:23)
+    at async login (file:///C:/flutter/taskit_backend/src/features/auth/auth.controller.js:40:20) {
+  "requestId": "d29ce9b9-6b15-4a7d-bae5-edcdb3ae5f04",
+  "method": "POST",
+  "url": "/api/v1/auth/login",
+  "status": 400
+}
+2026-04-22 17:33:28 [[31merror[39m]: [1;31mError Access token expired[0m
+Error: Access token expired
+    at verifyAccessToken (file:///C:/flutter/taskit_backend/src/shared/services/token.service.js:65:11)
+    at authMiddleware (file:///C:/flutter/taskit_backend/src/middleware/auth.middleware.js:11:21)
+    at Layer.handle [as handle_request] (C:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\flutter\taskit_backend\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (C:\flutter\taskit_backend\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (C:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:284:15
+    at router.process_params (C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:346:12)
+    at next (C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:280:10)
+    at router.handle (C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:175:3) {
+  "requestId": "ac738921-f1fa-4ec8-a4af-4afa8a94da41",
+  "method": "GET",
+  "url": "/api/v1/auth/me",
+  "status": 401
+}
+2026-04-22 17:33:52 [[31merror[39m]: [1;31mError Session id is required[0m
+Error: Session id is required
+    at file:///C:/flutter/taskit_backend/src/middleware/validate.js:14:15
+    at Layer.handle [as handle_request] (C:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\flutter\taskit_backend\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (C:\flutter\taskit_backend\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (C:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:284:15
+    at router.process_params (C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:346:12)
+    at next (C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:280:10)
+    at router.handle (C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:175:3)
+    at router (C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:47:12) {
+  "requestId": "fb675212-33c8-418f-bca7-b73c54bb6d18",
+  "method": "POST",
+  "url": "/api/v1/auth/refresh",
+  "status": 400
+}
+2026-04-23 11:45:59 [[31merror[39m]: [1;31mError Login with google error: GOOGLE_AUTH_CASE is not defined[0m
+Error: Login with google error: GOOGLE_AUTH_CASE is not defined
+    at AuthService.loginWithGoogle (file:///C:/flutter/taskit_backend/src/features/auth/auth.service.js:226:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async loginWithGoogle (file:///C:/flutter/taskit_backend/src/features/auth/auth.controller.js:65:20) {
+  "requestId": "92fac261-cb6b-4a18-92a1-4169b643f82a",
+  "method": "POST",
+  "url": "/api/v1/auth/login/google",
+  "status": 500
+}
+2026-04-23 11:45:59 [[31merror[39m]: [1;31mAPI Error[0m {
+  "requestId": "92fac261-cb6b-4a18-92a1-4169b643f82a",
+  "method": "POST",
+  "url": "/api/v1/auth/login/google",
+  "status": 500,
+  "time": "602.77 ms",
+  "ip": "::ffff:192.168.1.9"
+}
+2026-04-23 11:47:52 [[31merror[39m]: [1;31mError Login with google error: GOOGLE_AUTH_CASE is not defined[0m
+Error: Login with google error: GOOGLE_AUTH_CASE is not defined
+    at AuthService.loginWithGoogle (file:///C:/flutter/taskit_backend/src/features/auth/auth.service.js:227:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async loginWithGoogle (file:///C:/flutter/taskit_backend/src/features/auth/auth.controller.js:65:20) {
+  "requestId": "3e170a04-d06e-49e9-a7ae-58284bec154c",
+  "method": "POST",
+  "url": "/api/v1/auth/login/google",
+  "status": 500
+}
+2026-04-23 11:47:52 [[31merror[39m]: [1;31mAPI Error[0m {
+  "requestId": "3e170a04-d06e-49e9-a7ae-58284bec154c",
+  "method": "POST",
+  "url": "/api/v1/auth/login/google",
+  "status": 500,
+  "time": "408.49 ms",
+  "ip": "::ffff:192.168.1.9"
+}
+2026-04-23 11:48:21 [[31merror[39m]: [1;31mError Login with google error: GOOGLE_AUTH_CASE is not defined[0m
+Error: Login with google error: GOOGLE_AUTH_CASE is not defined
+    at AuthService.loginWithGoogle (file:///C:/flutter/taskit_backend/src/features/auth/auth.service.js:227:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async loginWithGoogle (file:///C:/flutter/taskit_backend/src/features/auth/auth.controller.js:65:20) {
+  "requestId": "1f2f11e3-6b1b-4752-a746-03faf3080f3e",
+  "method": "POST",
+  "url": "/api/v1/auth/login/google",
+  "status": 500
+}
+2026-04-23 11:48:21 [[31merror[39m]: [1;31mAPI Error[0m {
+  "requestId": "1f2f11e3-6b1b-4752-a746-03faf3080f3e",
+  "method": "POST",
+  "url": "/api/v1/auth/login/google",
+  "status": 500,
+  "time": "95.58 ms",
+  "ip": "::ffff:192.168.1.9"
+}
+2026-04-23 11:49:41 [[31merror[39m]: [1;31mError Login with google error: ImageService is not defined[0m
+Error: Login with google error: ImageService is not defined
+    at AuthService.loginWithGoogle (file:///C:/flutter/taskit_backend/src/features/auth/auth.service.js:227:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async loginWithGoogle (file:///C:/flutter/taskit_backend/src/features/auth/auth.controller.js:65:20) {
+  "requestId": "210ca29b-d706-43b4-8f81-c5cab65417d9",
+  "method": "POST",
+  "url": "/api/v1/auth/login/google",
+  "status": 500
+}
+2026-04-23 11:49:41 [[31merror[39m]: [1;31mAPI Error[0m {
+  "requestId": "210ca29b-d706-43b4-8f81-c5cab65417d9",
+  "method": "POST",
+  "url": "/api/v1/auth/login/google",
+  "status": 500,
+  "time": "362.41 ms",
+  "ip": "::ffff:192.168.1.9"
+}
+2026-04-23 11:51:14 [[31merror[39m]: [1;31mError Create google user error: password is not defined[0m
+Error: Create google user error: password is not defined
+    at UserService.createGoogleUser (file:///C:/flutter/taskit_backend/src/features/user/user.service.js:222:13)
+    at AuthService.loginWithGoogle (file:///C:/flutter/taskit_backend/src/features/auth/auth.service.js:214:29)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async loginWithGoogle (file:///C:/flutter/taskit_backend/src/features/auth/auth.controller.js:65:20) {
+  "requestId": "f0ded52f-8e04-465b-8ef3-e4062877a4ab",
+  "method": "POST",
+  "url": "/api/v1/auth/login/google",
+  "status": 500
+}
+2026-04-23 11:51:14 [[31merror[39m]: [1;31mAPI Error[0m {
+  "requestId": "f0ded52f-8e04-465b-8ef3-e4062877a4ab",
+  "method": "POST",
+  "url": "/api/v1/auth/login/google",
+  "status": 500,
+  "time": "1036.46 ms",
+  "ip": "::ffff:192.168.1.9"
+}
+2026-04-23 11:55:11 [[31merror[39m]: [1;31mError Create google user error: password is not defined[0m
+Error: Create google user error: password is not defined
+    at UserService.createGoogleUser (file:///C:/flutter/taskit_backend/src/features/user/user.service.js:221:13)
+    at AuthService.loginWithGoogle (file:///C:/flutter/taskit_backend/src/features/auth/auth.service.js:214:29)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async loginWithGoogle (file:///C:/flutter/taskit_backend/src/features/auth/auth.controller.js:65:20) {
+  "requestId": "27ae719d-32dc-4587-8966-f45233e24a84",
+  "method": "POST",
+  "url": "/api/v1/auth/login/google",
+  "status": 500
+}
+2026-04-23 11:55:11 [[31merror[39m]: [1;31mAPI Error[0m {
+  "requestId": "27ae719d-32dc-4587-8966-f45233e24a84",
+  "method": "POST",
+  "url": "/api/v1/auth/login/google",
+  "status": 500,
+  "time": "1006.00 ms",
+  "ip": "::ffff:192.168.1.9"
+}
+2026-04-23 11:56:01 [[31merror[39m]: [1;31mError Create google user error: password is not defined[0m
+Error: Create google user error: password is not defined
+    at UserService.createGoogleUser (file:///C:/flutter/taskit_backend/src/features/user/user.service.js:221:13)
+    at AuthService.loginWithGoogle (file:///C:/flutter/taskit_backend/src/features/auth/auth.service.js:214:29)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async loginWithGoogle (file:///C:/flutter/taskit_backend/src/features/auth/auth.controller.js:65:20) {
+  "requestId": "448faa5e-9d28-4ed3-94ec-4682165c7267",
+  "method": "POST",
+  "url": "/api/v1/auth/login/google",
+  "status": 500
+}
+2026-04-23 11:56:01 [[31merror[39m]: [1;31mAPI Error[0m {
+  "requestId": "448faa5e-9d28-4ed3-94ec-4682165c7267",
+  "method": "POST",
+  "url": "/api/v1/auth/login/google",
+  "status": 500,
+  "time": "597.07 ms",
+  "ip": "::ffff:192.168.1.9"
+}
+2026-04-23 11:58:05 [[31merror[39m]: [1;31mError Login with google error: userId is not defined[0m
+Error: Login with google error: userId is not defined
+    at AuthService.loginWithGoogle (file:///C:/flutter/taskit_backend/src/features/auth/auth.service.js:228:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async loginWithGoogle (file:///C:/flutter/taskit_backend/src/features/auth/auth.controller.js:65:20) {
+  "requestId": "459be06e-1f0d-4b7b-a116-12f4c2bd67d1",
+  "method": "POST",
+  "url": "/api/v1/auth/login/google",
+  "status": 500
+}
+2026-04-23 11:58:05 [[31merror[39m]: [1;31mAPI Error[0m {
+  "requestId": "459be06e-1f0d-4b7b-a116-12f4c2bd67d1",
+  "method": "POST",
+  "url": "/api/v1/auth/login/google",
+  "status": 500,
+  "time": "735.76 ms",
+  "ip": "::ffff:192.168.1.9"
+}
+2026-04-23 12:12:06 [[31merror[39m]: [1;31mError Fetch current user error: Cannot read properties of null (reading 'toObject')[0m
+Error: Fetch current user error: Cannot read properties of null (reading 'toObject')
+    at AuthService.fetchCurrentUser (file:///C:/flutter/taskit_backend/src/features/auth/auth.service.js:140:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async fetchCurrentUser (file:///C:/flutter/taskit_backend/src/features/auth/auth.controller.js:53:20) {
+  "requestId": "f0883409-a2ec-423a-a24a-593477357e2d",
+  "method": "GET",
+  "url": "/api/v1/auth/me",
+  "status": 500
+}
+2026-04-23 12:12:06 [[31merror[39m]: [1;31mAPI Error[0m {
+  "requestId": "f0883409-a2ec-423a-a24a-593477357e2d",
+  "method": "GET",
+  "url": "/api/v1/auth/me",
+  "status": 500,
+  "time": "406.20 ms",
+  "ip": "::ffff:192.168.1.9"
+}
+2026-04-23 12:12:28 [[31merror[39m]: [1;31mError Fetch current user error: Cannot read properties of null (reading 'toObject')[0m
+Error: Fetch current user error: Cannot read properties of null (reading 'toObject')
+    at AuthService.fetchCurrentUser (file:///C:/flutter/taskit_backend/src/features/auth/auth.service.js:140:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async fetchCurrentUser (file:///C:/flutter/taskit_backend/src/features/auth/auth.controller.js:53:20) {
+  "requestId": "67d56138-9e7f-4048-989e-b9c4e4bd4332",
+  "method": "GET",
+  "url": "/api/v1/auth/me",
+  "status": 500
+}
+2026-04-23 12:12:28 [[31merror[39m]: [1;31mAPI Error[0m {
+  "requestId": "67d56138-9e7f-4048-989e-b9c4e4bd4332",
+  "method": "GET",
+  "url": "/api/v1/auth/me",
+  "status": 500,
+  "time": "55.15 ms",
+  "ip": "::ffff:192.168.1.9"
+}
+2026-04-23 12:14:34 [[31merror[39m]: [1;31mError Fetch current user error: Cannot read properties of null (reading 'toObject')[0m
+Error: Fetch current user error: Cannot read properties of null (reading 'toObject')
+    at AuthService.fetchCurrentUser (file:///C:/flutter/taskit_backend/src/features/auth/auth.service.js:140:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async fetchCurrentUser (file:///C:/flutter/taskit_backend/src/features/auth/auth.controller.js:53:20) {
+  "requestId": "f0a63b8b-1403-441f-ad44-5a3f678d0a6f",
+  "method": "GET",
+  "url": "/api/v1/auth/me",
+  "status": 500
+}
+2026-04-23 12:14:34 [[31merror[39m]: [1;31mAPI Error[0m {
+  "requestId": "f0a63b8b-1403-441f-ad44-5a3f678d0a6f",
+  "method": "GET",
+  "url": "/api/v1/auth/me",
+  "status": 500,
+  "time": "60.18 ms",
+  "ip": "::ffff:192.168.1.9"
+}
+2026-04-23 12:16:03 [[31merror[39m]: [1;31mError Fetch current user error: Cannot read properties of null (reading 'toObject')[0m
+Error: Fetch current user error: Cannot read properties of null (reading 'toObject')
+    at AuthService.fetchCurrentUser (file:///C:/flutter/taskit_backend/src/features/auth/auth.service.js:140:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async fetchCurrentUser (file:///C:/flutter/taskit_backend/src/features/auth/auth.controller.js:53:20) {
+  "requestId": "ea53f2bb-54ae-424e-b6f5-f07e7bc5e278",
+  "method": "GET",
+  "url": "/api/v1/auth/me",
+  "status": 500
+}
+2026-04-23 12:16:03 [[31merror[39m]: [1;31mAPI Error[0m {
+  "requestId": "ea53f2bb-54ae-424e-b6f5-f07e7bc5e278",
+  "method": "GET",
+  "url": "/api/v1/auth/me",
+  "status": 500,
+  "time": "49.61 ms",
+  "ip": "::ffff:192.168.1.9"
+}
+2026-04-23 12:24:16 [[31merror[39m]: [1;31mError Login with google error: Cannot read properties of null (reading 'id')[0m
+Error: Login with google error: Cannot read properties of null (reading 'id')
+    at AuthService.loginWithGoogle (file:///C:/flutter/taskit_backend/src/features/auth/auth.service.js:226:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async loginWithGoogle (file:///C:/flutter/taskit_backend/src/features/auth/auth.controller.js:65:20) {
+  "requestId": "ec91a0ef-df7c-49ef-8eda-8438d0a118b9",
+  "method": "POST",
+  "url": "/api/v1/auth/login/google",
+  "status": 500
+}
+2026-04-23 12:24:16 [[31merror[39m]: [1;31mAPI Error[0m {
+  "requestId": "ec91a0ef-df7c-49ef-8eda-8438d0a118b9",
+  "method": "POST",
+  "url": "/api/v1/auth/login/google",
+  "status": 500,
+  "time": "429.14 ms",
+  "ip": "::ffff:192.168.1.9"
+}
+2026-04-23 12:26:40 [[31merror[39m]: [1;31mError Login with google error: Cannot read properties of null (reading 'id')[0m
+Error: Login with google error: Cannot read properties of null (reading 'id')
+    at AuthService.loginWithGoogle (file:///C:/flutter/taskit_backend/src/features/auth/auth.service.js:227:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async loginWithGoogle (file:///C:/flutter/taskit_backend/src/features/auth/auth.controller.js:65:20) {
+  "requestId": "5997a020-66bd-4bc8-84ff-3c4ba2f29624",
+  "method": "POST",
+  "url": "/api/v1/auth/login/google",
+  "status": 500
+}
+2026-04-23 12:26:40 [[31merror[39m]: [1;31mAPI Error[0m {
+  "requestId": "5997a020-66bd-4bc8-84ff-3c4ba2f29624",
+  "method": "POST",
+  "url": "/api/v1/auth/login/google",
+  "status": 500,
+  "time": "361.31 ms",
+  "ip": "::ffff:192.168.1.9"
+}
+2026-04-23 12:29:55 [[31merror[39m]: [1;31mError Password must be at lest 8 characters[0m
+Error: Password must be at lest 8 characters
+    at file:///C:/flutter/taskit_backend/src/middleware/validate.js:14:15
+    at Layer.handle [as handle_request] (C:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\flutter\taskit_backend\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (C:\flutter\taskit_backend\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (C:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:284:15
+    at router.process_params (C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:346:12)
+    at next (C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:280:10)
+    at router.handle (C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:175:3)
+    at router (C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:47:12) {
+  "requestId": "6652d2e1-81e6-40d9-8d0f-669e3717aaf0",
+  "method": "POST",
+  "url": "/api/v1/auth/login",
+  "status": 400
+}
+2026-04-23 12:29:59 [[31merror[39m]: [1;31mError Email is already in use[0m
+Error: Email is already in use
+    at UserService.validateUserForLogin (file:///C:/flutter/taskit_backend/src/features/user/user.service.js:54:15)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async AuthService.login (file:///C:/flutter/taskit_backend/src/features/auth/auth.service.js:117:23)
+    at async login (file:///C:/flutter/taskit_backend/src/features/auth/auth.controller.js:40:20) {
+  "requestId": "c5a0b813-144b-4e14-ab46-d02efb5e0e14",
+  "method": "POST",
+  "url": "/api/v1/auth/login",
+  "status": 400
+}

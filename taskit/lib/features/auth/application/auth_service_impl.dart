@@ -25,10 +25,15 @@ class AuthServiceImpl with ResultHandler implements AuthService {
   * Login
   * */
   @override
-  Future<Result<void, Failure>> login(LoginEntity data) async =>
+  Future<Result<void, Failure>> login(CredentialsLoginEntity data) async =>
       runSafe(() async {
         await _authRepo.login(data);
       });
+
+  @override
+  Future<Result<void, Failure>> loginWithGoogle() async => runSafe(() async {
+    await _authRepo.loginWithGoogle();
+  });
 
   @override
   Future<Result<UserEntity, Failure>> fetchUser() async => runSafe(() async {

@@ -16,13 +16,23 @@ router.post(
   AuthController.resendSignupOtp,
 );
 router.post("/login", AuthValidate.loginValidate, AuthController.login);
+router.post(
+  "/login/google",
+  AuthValidate.loginWithGoogleValidate,
+  AuthController.loginWithGoogle,
+);
 router.get("/me", authMiddleware, AuthController.fetchCurrentUser);
 router.post(
   "/google",
   AuthValidate.loginWithGoogleValidate,
   AuthController.loginWithGoogle,
 );
-router.post("/logout", AuthValidate.logoutValidate, AuthController.logout);
+router.post(
+  "/logout",
+  authMiddleware,
+  AuthValidate.logoutValidate,
+  AuthController.logout,
+);
 router.post(
   "/refresh",
   AuthValidate.refreshTokenValidate,

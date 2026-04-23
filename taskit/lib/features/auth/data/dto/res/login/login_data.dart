@@ -8,6 +8,7 @@ abstract class LoginData with _$LoginData {
   const factory LoginData({
     required String accessToken,
     required String refreshToken,
+    required String sessionId,
   }) = _LoginData;
 
   factory LoginData.fromJson(Map<String, dynamic> json) =>

@@ -12,7 +12,9 @@ abstract interface class AuthRepo {
   /*
   * Login
   * */
-  Future<MessageResult> login(LoginEntity data);
+  Future<MessageResult> login(CredentialsLoginEntity data);
+
+  Future<MessageResult> loginWithGoogle();
 
   Future<UserEntity?> fetchUserLocal();
 

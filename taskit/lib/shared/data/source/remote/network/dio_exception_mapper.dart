@@ -2,14 +2,19 @@ import 'package:dio/dio.dart';
 import 'package:taskit/shared/extension/string_hardcoded.dart';
 
 import '../../../../exception/failure.dart';
+import '../../../../log/logger_provider.dart';
 
 mixin DioExceptionMapper {
-  Future<T> callSafe<T>(Future<T> Function() call, {String? errorMessage}) async {
+  Future<T> callSafe<T>(
+    Future<T> Function() call, {
+    String? errorMessage,
+  }) async {
     try {
       return await call();
     } on DioException catch (e, s) {
       throw mapDioExceptionToFailure(e, s);
     } catch (e, s) {
+      logger.e(e.toString());
       throw Failure(
         message: errorMessage ?? e.toString(),
         exception: e is Exception ? e : Exception(e.toString()),
@@ -30,16 +35,16 @@ mixin DioExceptionMapper {
       case DioExceptionType.sendTimeout:
         return Failure(
           message:
-          "Send timeout with API server. Check your internet connection and try again"
-              .hardcoded,
+              "Send timeout with API server. Check your internet connection and try again"
+                  .hardcoded,
           exception: e,
           stackTrace: stackTrace,
         );
       case DioExceptionType.receiveTimeout:
         return Failure(
           message:
-          "Receive timeout with API server. Check your internet connection and try again"
-              .hardcoded,
+              "Receive timeout with API server. Check your internet connection and try again"
+                  .hardcoded,
           exception: e,
           stackTrace: stackTrace,
         );
@@ -51,9 +56,9 @@ mixin DioExceptionMapper {
           stackTrace: stackTrace,
         );
       case DioExceptionType.badResponse:
-        final response=e.response?.data;
-        final statusCode=e.response?.statusCode;
-        String message=_getErrorMessageForStatusCode(statusCode);
+        final response = e.response?.data;
+        final statusCode = e.response?.statusCode;
+        String message = _getErrorMessageForStatusCode(statusCode);
         if (response is Map<String, dynamic>) {
           final dynamic msg = response['message'];
           if (msg is String && msg.isNotEmpty) {
@@ -61,11 +66,7 @@ mixin DioExceptionMapper {
           }
         }
 
-        return Failure(
-          message: message,
-          exception: e,
-          stackTrace: stackTrace,
-        );
+        return Failure(message: message, exception: e, stackTrace: stackTrace);
       case DioExceptionType.cancel:
         return Failure(
           message: "Request to API server was cancelled".hardcoded,

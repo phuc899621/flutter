@@ -73,7 +73,8 @@ export const loginWithGoogle = async (req, res, next) => {
 };
 export const refreshToken = async (req, res, next) => {
   try {
-    const result = await AuthService.refreshToken(req.body.refreshToken);
+    const { refreshToken, sessionId } = req.body;
+    const result = await AuthService.refreshToken(refreshToken, sessionId);
 
     return res.status(200).json({
       message: "Refresh token successfully!",
@@ -85,7 +86,8 @@ export const refreshToken = async (req, res, next) => {
 };
 export const logout = async (req, res, next) => {
   try {
-    const result = await AuthService.logout(req.refreshToken);
+    const { refreshToken, sessionId } = req.body;
+    const result = await AuthService.logout(refreshToken, sessionId);
     return res.status(200).json({
       message: "Logout successfully!",
       data: result,

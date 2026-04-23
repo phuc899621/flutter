@@ -9,7 +9,9 @@ import 'package:taskit/shared/data/source/local/drift/dao/subtask.dart';
 import 'package:taskit/shared/data/source/local/drift/dao/task.dart';
 import 'package:taskit/shared/data/source/local/drift/dao/user.dart';
 import 'package:taskit/shared/data/source/local/drift/database/database.dart';
+import 'package:taskit/shared/data/source/remote/google_sign_in.dart';
 import 'package:taskit/shared/log/logger_provider.dart';
+
 final languageCodeProvider = Provider<String>((ref) {
   final locale = WidgetsBinding.instance.platformDispatcher.locale;
   return locale.languageCode;
@@ -27,6 +29,7 @@ class MainWidget extends ConsumerWidget {
     final taskDao = ref.watch(taskDaoProvider);
     final categoryDao = ref.watch(categoryDaoProvider);
     final subtaskDao = ref.watch(subtaskDaoProvider);
+    final googleInit = ref.watch(googleInitProvider);
     SystemChrome.setSystemUIOverlayStyle(
       SystemUiOverlayStyle(
         statusBarColor: AppColor.primary, // iOS
@@ -51,16 +54,22 @@ class MainWidget extends ConsumerWidget {
       theme: ThemeData(
         useMaterial3: true,
         fontFamily: 'Quicksand',
-//primary
+        //primary
         primaryColor: AppColor.primary,
         scaffoldBackgroundColor: AppColor.surface,
         textTheme: const TextTheme(
           headlineMedium: TextStyle(
-              color: AppColor.onPrimary, fontWeight: FontWeight.w700),
+            color: AppColor.onPrimary,
+            fontWeight: FontWeight.w700,
+          ),
           headlineSmall: TextStyle(
-              color: AppColor.onPrimary, fontWeight: FontWeight.w700),
+            color: AppColor.onPrimary,
+            fontWeight: FontWeight.w700,
+          ),
           headlineLarge: TextStyle(
-              color: AppColor.onPrimary, fontWeight: FontWeight.w700),
+            color: AppColor.onPrimary,
+            fontWeight: FontWeight.w700,
+          ),
           titleLarge: TextStyle(fontWeight: FontWeight.w500),
           titleMedium: TextStyle(fontWeight: FontWeight.w500),
           labelMedium: TextStyle(fontWeight: FontWeight.w500),
@@ -70,14 +79,20 @@ class MainWidget extends ConsumerWidget {
           bodyMedium: TextStyle(fontWeight: FontWeight.w500),
           bodySmall: TextStyle(fontWeight: FontWeight.w500),
           displayLarge: TextStyle(
-              fontWeight: FontWeight.w600, color: AppColor.onPrimary),
+            fontWeight: FontWeight.w600,
+            color: AppColor.onPrimary,
+          ),
           displayMedium: TextStyle(
-              fontWeight: FontWeight.w600, color: AppColor.onPrimary),
+            fontWeight: FontWeight.w600,
+            color: AppColor.onPrimary,
+          ),
           displaySmall: TextStyle(
-              fontWeight: FontWeight.w600, color: AppColor.onPrimary),
+            fontWeight: FontWeight.w600,
+            color: AppColor.onPrimary,
+          ),
         ),
 
-//text
+        //text
         colorScheme: const ColorScheme.light(
           primary: AppColor.primary,
           onPrimary: AppColor.onPrimary,
@@ -119,15 +134,12 @@ class MainWidget extends ConsumerWidget {
           ),
         ),
         bottomNavigationBarTheme: const BottomNavigationBarThemeData(
-            backgroundColor: AppColor.surfaceContainer,
-            selectedItemColor: AppColor.primaryContainer,
-            unselectedItemColor: AppColor.surfaceContainer,
-            selectedIconTheme: IconThemeData(
-              color: AppColor.onPrimaryContainer,
-            ),
-            unselectedIconTheme: IconThemeData(
-              color: AppColor.onSurfaceVariant,
-            )),
+          backgroundColor: AppColor.surfaceContainer,
+          selectedItemColor: AppColor.primaryContainer,
+          unselectedItemColor: AppColor.surfaceContainer,
+          selectedIconTheme: IconThemeData(color: AppColor.onPrimaryContainer),
+          unselectedIconTheme: IconThemeData(color: AppColor.onSurfaceVariant),
+        ),
         floatingActionButtonTheme: const FloatingActionButtonThemeData(
           backgroundColor: AppColor.primary,
           foregroundColor: AppColor.onPrimary,

@@ -1,4 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:taskit/features/auth/data/dto/req/login/login_request.dart';
 import 'package:taskit/features/auth/data/dto/req/logout/logout_request.dart';
 import 'package:taskit/features/auth/data/mapper/forgot_password_mapper.dart';
 import 'package:taskit/features/auth/data/mapper/login_mapper.dart';
@@ -16,6 +18,7 @@ import 'package:taskit/shared/domain/entities/data_result.dart';
 import 'package:taskit/shared/domain/entities/message_result.dart';
 import 'package:taskit/shared/log/logger_provider.dart';
 
+import '../../../../shared/data/source/remote/google_sign_in.dart';
 import '../../domain/entities/forgot_pass/forgot_pass_entity.dart';
 import '../dto/req/refresh_token/refresh_token_request.dart';
 import '../mapper/user_mapper.dart';
@@ -25,12 +28,14 @@ final authRepoProvider = Provider<AuthRepo>((ref) {
   final authApi = ref.watch(authApiProvider);
   final authRefreshApi = ref.watch(authRefreshApiProvider);
   final tokenService = ref.watch(tokenServiceProvider);
-  final iAuthLocalDataSource = ref.watch(authLocalDataSourceProvider);
+  final authLocalDataSource = ref.watch(authLocalDataSourceProvider);
+  final googleSignIn = ref.watch(googleSignInProvider);
   return AuthRepoImpl(
     authApi,
     authRefreshApi,
     tokenService,
-    iAuthLocalDataSource,
+    authLocalDataSource,
+    googleSignIn,
   );
 });
 
@@ -39,12 +44,14 @@ class AuthRepoImpl with DioExceptionMapper implements AuthRepo {
   final AuthApi _authRefreshApi;
   final TokenService _tokenService;
   final AuthLocalDataSource _authLocal;
+  final GoogleSignIn _googleSignIn;
 
   AuthRepoImpl(
     this._authApi,
     this._authRefreshApi,
     this._tokenService,
     this._authLocal,
+    this._googleSignIn,
   );
 
   /*
@@ -52,14 +59,50 @@ class AuthRepoImpl with DioExceptionMapper implements AuthRepo {
   * */
   //region LOGIN
   @override
-  Future<MessageResult> login(LoginEntity data) async {
+  Future<MessageResult> login(CredentialsLoginEntity data) async {
     return callSafe(() async {
       final response = await _authApi.login(data.toDto());
       await _tokenService.saveTokens(
         response.data.accessToken,
         response.data.refreshToken,
+        response.data.sessionId,
       );
       //await _authLocalDataSource.cacheLogin(response.data);
+      return response.toMessage();
+    }, errorMessage: "An unexpected error occurred when login");
+  }
+
+  @override
+  Future<MessageResult> loginWithGoogle() {
+    return callSafe(() async {
+      try {
+        await _googleSignIn.signOut();
+      } catch (e) {
+        logger.e(e.toString());
+      }
+      final GoogleSignInAccount account;
+      if (_googleSignIn.supportsAuthenticate()) {
+        try {
+          account = await _googleSignIn.authenticate();
+        } catch (e) {
+          throw Exception(e.toString());
+        }
+      } else {
+        throw Exception('Google sign in not supported');
+      }
+
+      final idToken = account.authentication.idToken;
+      if (idToken == null) {
+        throw Exception('idToken is null');
+      }
+      final response = await _authApi.loginWithGoogle(
+        GoogleLoginRequest(token: idToken),
+      );
+      await _tokenService.saveTokens(
+        response.data.accessToken,
+        response.data.refreshToken,
+        response.data.sessionId,
+      );
       return response.toMessage();
     }, errorMessage: "An unexpected error occurred when login");
   }
@@ -74,9 +117,8 @@ class AuthRepoImpl with DioExceptionMapper implements AuthRepo {
 
   @override
   Future<DataResult<UserEntity>> fetchUser() async => callSafe(() async {
-    final token = await _tokenService.getAccessToken();
     return callSafe(() async {
-      final response = await _authApi.fetchUser('Bearer $token');
+      final response = await _authApi.fetchUser();
       logger.w('🚀 AuthRepoImpl: fetchUser success. User: ${response.data}');
       final userLocalData = await _authLocal.cacheUser(response.data);
       return response.toResult(
@@ -94,11 +136,16 @@ class AuthRepoImpl with DioExceptionMapper implements AuthRepo {
   @override
   Future<MessageResult> refreshToken() => callSafe(() async {
     final token = await _tokenService.getRefreshToken();
+    final sessionId = await _tokenService.getSessionId();
     return callSafe(() async {
       final response = await _authRefreshApi.refreshToken(
-        RefreshTokenRequest(refreshToken: token!),
+        RefreshTokenRequest(refreshToken: token!, sessionId: sessionId!),
       );
-      await _tokenService.saveTokens(response.data.accessToken, token);
+      await _tokenService.saveTokens(
+        response.data.accessToken,
+        token,
+        sessionId,
+      );
       return response.toMessage();
     });
   });
@@ -106,7 +153,10 @@ class AuthRepoImpl with DioExceptionMapper implements AuthRepo {
   @override
   Future<MessageResult> logout() async => callSafe(() async {
     final token = await _tokenService.getRefreshToken();
-    final response = await _authApi.logout(LogoutRequest(refreshToken: token!));
+    final sessionId = await _tokenService.getSessionId();
+    final response = await _authApi.logout(
+      LogoutRequest(refreshToken: token!, sessionId: sessionId!),
+    );
     await _tokenService.deleteTokens();
     return response.toResult();
   }, errorMessage: "An unexpected error occurred when logout");

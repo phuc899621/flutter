@@ -1,0 +1,1 @@
+enum AuthExtra { requireAuth, refresh }

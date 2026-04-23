@@ -23,6 +23,9 @@ class TokenServiceImpl implements TokenService {
   Future<String?> getRefreshToken() => _tokenRepository.getRefreshToken();
 
   @override
-  Future<void> saveTokens(String access, String refresh) =>
-      _tokenRepository.saveTokens(access, refresh);
+  Future<String?> getSessionId() => _tokenRepository.getSessionId();
+
+  @override
+  Future<void> saveTokens(String access, String refresh, String sessionId) =>
+      _tokenRepository.saveTokens(access, refresh, sessionId);
 }

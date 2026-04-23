@@ -18,6 +18,35 @@ class LoginController extends Notifier<LoginState> {
     return LoginState();
   }
 
+  Future<void> loginWithGoogle() async {
+    try {
+      state = state.copyWith(apiError: null, status: LoginStatus.loading);
+      final authService = ref.read(authServiceProvider);
+      final result = await authService.loginWithGoogle();
+      final authController = ref.read(authControllerProvider.notifier);
+      logger.w('Login with google flow started');
+      result.when(
+        (_) async {
+          await authController.fetchUser();
+          state = state.copyWith(status: LoginStatus.success);
+        },
+        (failure) {
+          logger.e('Login failed: ${failure.message}');
+          state = state.copyWith(
+            apiError: failure.message,
+            status: LoginStatus.initial,
+          );
+        },
+      );
+    } catch (e) {
+      logger.e('Unexpected error during login with google: $e');
+      state = state.copyWith(
+        apiError: e.toString(),
+        status: LoginStatus.initial,
+      );
+    }
+  }
+
   Future<void> login(String email, String password) async {
     try {
       state = state.copyWith(
@@ -27,7 +56,10 @@ class LoginController extends Notifier<LoginState> {
         password: password,
       );
 
-      final form = LoginEntity(email: state.email, password: state.password);
+      final form = CredentialsLoginEntity(
+        email: state.email,
+        password: state.password,
+      );
       final result = await ref.read(authServiceProvider).login(form);
       logger.w('🚀 Login flow started');
       await result.when(

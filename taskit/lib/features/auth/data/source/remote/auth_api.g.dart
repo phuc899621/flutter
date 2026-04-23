@@ -23,7 +23,7 @@ class _AuthApi implements AuthApi {
 
   @override
   Future<DataResponse<LoginData>> login(LoginRequest data) async {
-    final _extra = <String, dynamic>{};
+    final _extra = <String, dynamic>{'refresh': false};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = data;
@@ -52,28 +52,27 @@ class _AuthApi implements AuthApi {
   }
 
   @override
-  Future<DataResponse<LoginVerifyData>> checkLogin(String token) async {
-    final _extra = <String, dynamic>{};
+  Future<DataResponse<LoginData>> loginWithGoogle(LoginRequest data) async {
+    final _extra = <String, dynamic>{'refresh': false};
     final queryParameters = <String, dynamic>{};
-    final _headers = <String, dynamic>{r'Authorization': token};
-    _headers.removeWhere((k, v) => v == null);
-    const Map<String, dynamic>? _data = null;
-    final _options = _setStreamType<DataResponse<LoginVerifyData>>(
-      Options(method: 'GET', headers: _headers, extra: _extra)
+    final _headers = <String, dynamic>{};
+    final _data = data;
+    final _options = _setStreamType<DataResponse<LoginData>>(
+      Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            '/login/verify',
+            '/login/google',
             queryParameters: queryParameters,
             data: _data,
           )
           .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
     );
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late DataResponse<LoginVerifyData> _value;
+    late DataResponse<LoginData> _value;
     try {
-      _value = DataResponse<LoginVerifyData>.fromJson(
+      _value = DataResponse<LoginData>.fromJson(
         _result.data!,
-        (json) => LoginVerifyData.fromJson(json as Map<String, dynamic>),
+        (json) => LoginData.fromJson(json as Map<String, dynamic>),
       );
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options, response: _result);
@@ -83,11 +82,10 @@ class _AuthApi implements AuthApi {
   }
 
   @override
-  Future<DataResponse<UserData>> fetchUser(String accessToken) async {
-    final _extra = <String, dynamic>{};
+  Future<DataResponse<UserData>> fetchUser() async {
+    final _extra = <String, dynamic>{'requireAuth': true};
     final queryParameters = <String, dynamic>{};
-    final _headers = <String, dynamic>{r'Authorization': accessToken};
-    _headers.removeWhere((k, v) => v == null);
+    final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
     final _options = _setStreamType<DataResponse<UserData>>(
       Options(method: 'GET', headers: _headers, extra: _extra)
@@ -117,7 +115,7 @@ class _AuthApi implements AuthApi {
   Future<DataResponse<RefreshTokenData>> refreshToken(
     RefreshTokenRequest request,
   ) async {
-    final _extra = <String, dynamic>{};
+    final _extra = <String, dynamic>{'refresh': false};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = request;
@@ -147,7 +145,7 @@ class _AuthApi implements AuthApi {
 
   @override
   Future<MessageResponse> logout(LogoutRequest request) async {
-    final _extra = <String, dynamic>{};
+    final _extra = <String, dynamic>{'requireAuth': true};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = request;
@@ -174,7 +172,7 @@ class _AuthApi implements AuthApi {
 
   @override
   Future<MessageResponse> signup(SignupRequest data) async {
-    final _extra = <String, dynamic>{};
+    final _extra = <String, dynamic>{'refresh': false};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = data;
@@ -201,7 +199,7 @@ class _AuthApi implements AuthApi {
 
   @override
   Future<MessageResponse> signupVerify(SignupRequest data) async {
-    final _extra = <String, dynamic>{};
+    final _extra = <String, dynamic>{'refresh': false};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = data;
@@ -228,7 +226,7 @@ class _AuthApi implements AuthApi {
 
   @override
   Future<MessageResponse> signupResend(SignupRequest data) async {
-    final _extra = <String, dynamic>{};
+    final _extra = <String, dynamic>{'refresh': false};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = data;
@@ -255,7 +253,7 @@ class _AuthApi implements AuthApi {
 
   @override
   Future<MessageResponse> forgotPass(ForgotPassRequest data) async {
-    final _extra = <String, dynamic>{};
+    final _extra = <String, dynamic>{'refresh': false};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = data;
@@ -284,7 +282,7 @@ class _AuthApi implements AuthApi {
   Future<DataResponse<ForgotPassData>> forgotPassVerify(
     ForgotPassRequest data,
   ) async {
-    final _extra = <String, dynamic>{};
+    final _extra = <String, dynamic>{'refresh': false};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = data;
@@ -314,7 +312,7 @@ class _AuthApi implements AuthApi {
 
   @override
   Future<MessageResponse> forgotPassResend(ForgotPassRequest data) async {
-    final _extra = <String, dynamic>{};
+    final _extra = <String, dynamic>{'refresh': false};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = data;
@@ -341,7 +339,7 @@ class _AuthApi implements AuthApi {
 
   @override
   Future<MessageResponse> forgotPassReset(ForgotPassRequest data) async {
-    final _extra = <String, dynamic>{};
+    final _extra = <String, dynamic>{'refresh': false};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = data;

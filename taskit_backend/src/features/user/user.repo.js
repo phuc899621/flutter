@@ -6,17 +6,31 @@ class UserRepository {
     if (status) query.status = status;
     return UserModel.findOne(query).session(session);
   }
+  static findBySub(sub, options = {}, session) {
+    const { status } = options;
+    const query = { "auth.google.sub": sub };
+    if (status) query.status = status;
+    return UserModel.findOne(query).session(session);
+  }
   static findById(id, options = {}, session) {
     const { status } = options;
     const query = { _id: id };
     if (status) query.status = status;
     return UserModel.findOne(query).session(session);
   }
-  static async upsertByEmail({ email, name, password, status }, session) {
+  static async upsertByEmail(
+    { email, name, password, sub, status, avatar },
+    session,
+  ) {
+    if (password) {
+      password = await HashHelper.hash(password);
+    }
     const updateData = {
       name,
-      password,
       status,
+      "auth.local.password": password,
+      "auth.google.sub": sub,
+      avatar,
       updatedAt: new Date(),
     };
 
@@ -39,6 +53,14 @@ class UserRepository {
     return user.toObject();
   }
   static async updateById(userId, updateData, session) {
+    if (updateData.password) {
+      updateData["auth.local.password"] = updateData.password;
+      delete updateData.password;
+    }
+    if (updateData.sub) {
+      updateData["auth.google.sub"] = updateData.sub;
+      delete updateData.sub;
+    }
     return UserModel.findByIdAndUpdate(
       userId,
       { $set: updateData },

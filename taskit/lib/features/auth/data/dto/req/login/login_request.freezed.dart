@@ -11,16 +11,34 @@ part of 'login_request.dart';
 
 // dart format off
 T _$identity<T>(T value) => value;
+LoginRequest _$LoginRequestFromJson(
+  Map<String, dynamic> json
+) {
+        switch (json['runtimeType']) {
+                  case 'credentials':
+          return CredentialsLoginRequest.fromJson(
+            json
+          );
+                case 'google':
+          return GoogleLoginRequest.fromJson(
+            json
+          );
+        
+          default:
+            throw CheckedFromJsonException(
+  json,
+  'runtimeType',
+  'LoginRequest',
+  'Invalid union type "${json['runtimeType']}"!'
+);
+        }
+      
+}
 
 /// @nodoc
 mixin _$LoginRequest {
 
- String get email; String get password;
-/// Create a copy of LoginRequest
-/// with the given fields replaced by the non-null parameter values.
-@JsonKey(includeFromJson: false, includeToJson: false)
-@pragma('vm:prefer-inline')
-$LoginRequestCopyWith<LoginRequest> get copyWith => _$LoginRequestCopyWithImpl<LoginRequest>(this as LoginRequest, _$identity);
+
 
   /// Serializes this LoginRequest to a JSON map.
   Map<String, dynamic> toJson();
@@ -28,51 +46,24 @@ $LoginRequestCopyWith<LoginRequest> get copyWith => _$LoginRequestCopyWithImpl<L
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is LoginRequest&&(identical(other.email, email) || other.email == email)&&(identical(other.password, password) || other.password == password));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is LoginRequest);
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,email,password);
+int get hashCode => runtimeType.hashCode;
 
 @override
 String toString() {
-  return 'LoginRequest(email: $email, password: $password)';
+  return 'LoginRequest()';
 }
 
 
 }
 
 /// @nodoc
-abstract mixin class $LoginRequestCopyWith<$Res>  {
-  factory $LoginRequestCopyWith(LoginRequest value, $Res Function(LoginRequest) _then) = _$LoginRequestCopyWithImpl;
-@useResult
-$Res call({
- String email, String password
-});
-
-
-
-
-}
-/// @nodoc
-class _$LoginRequestCopyWithImpl<$Res>
-    implements $LoginRequestCopyWith<$Res> {
-  _$LoginRequestCopyWithImpl(this._self, this._then);
-
-  final LoginRequest _self;
-  final $Res Function(LoginRequest) _then;
-
-/// Create a copy of LoginRequest
-/// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? email = null,Object? password = null,}) {
-  return _then(_self.copyWith(
-email: null == email ? _self.email : email // ignore: cast_nullable_to_non_nullable
-as String,password: null == password ? _self.password : password // ignore: cast_nullable_to_non_nullable
-as String,
-  ));
-}
-
+class $LoginRequestCopyWith<$Res>  {
+$LoginRequestCopyWith(LoginRequest _, $Res Function(LoginRequest) __);
 }
 
 
@@ -90,11 +81,12 @@ extension LoginRequestPatterns on LoginRequest {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _LoginRequest value)?  $default,{required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( CredentialsLoginRequest value)?  credentials,TResult Function( GoogleLoginRequest value)?  google,required TResult orElse(),}){
 final _that = this;
 switch (_that) {
-case _LoginRequest() when $default != null:
-return $default(_that);case _:
+case CredentialsLoginRequest() when credentials != null:
+return credentials(_that);case GoogleLoginRequest() when google != null:
+return google(_that);case _:
   return orElse();
 
 }
@@ -112,11 +104,12 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _LoginRequest value)  $default,){
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( CredentialsLoginRequest value)  credentials,required TResult Function( GoogleLoginRequest value)  google,}){
 final _that = this;
 switch (_that) {
-case _LoginRequest():
-return $default(_that);case _:
+case CredentialsLoginRequest():
+return credentials(_that);case GoogleLoginRequest():
+return google(_that);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -133,11 +126,12 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _LoginRequest value)?  $default,){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( CredentialsLoginRequest value)?  credentials,TResult? Function( GoogleLoginRequest value)?  google,}){
 final _that = this;
 switch (_that) {
-case _LoginRequest() when $default != null:
-return $default(_that);case _:
+case CredentialsLoginRequest() when credentials != null:
+return credentials(_that);case GoogleLoginRequest() when google != null:
+return google(_that);case _:
   return null;
 
 }
@@ -154,10 +148,11 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String email,  String password)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( String email,  String password)?  credentials,TResult Function( String token)?  google,required TResult orElse(),}) {final _that = this;
 switch (_that) {
-case _LoginRequest() when $default != null:
-return $default(_that.email,_that.password);case _:
+case CredentialsLoginRequest() when credentials != null:
+return credentials(_that.email,_that.password);case GoogleLoginRequest() when google != null:
+return google(_that.token);case _:
   return orElse();
 
 }
@@ -175,10 +170,11 @@ return $default(_that.email,_that.password);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String email,  String password)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( String email,  String password)  credentials,required TResult Function( String token)  google,}) {final _that = this;
 switch (_that) {
-case _LoginRequest():
-return $default(_that.email,_that.password);case _:
+case CredentialsLoginRequest():
+return credentials(_that.email,_that.password);case GoogleLoginRequest():
+return google(_that.token);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -195,10 +191,11 @@ return $default(_that.email,_that.password);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String email,  String password)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( String email,  String password)?  credentials,TResult? Function( String token)?  google,}) {final _that = this;
 switch (_that) {
-case _LoginRequest() when $default != null:
-return $default(_that.email,_that.password);case _:
+case CredentialsLoginRequest() when credentials != null:
+return credentials(_that.email,_that.password);case GoogleLoginRequest() when google != null:
+return google(_that.token);case _:
   return null;
 
 }
@@ -209,27 +206,31 @@ return $default(_that.email,_that.password);case _:
 /// @nodoc
 @JsonSerializable()
 
-class _LoginRequest implements LoginRequest {
-  const _LoginRequest({required this.email, required this.password});
-  factory _LoginRequest.fromJson(Map<String, dynamic> json) => _$LoginRequestFromJson(json);
+class CredentialsLoginRequest implements LoginRequest {
+  const CredentialsLoginRequest({required this.email, required this.password, final  String? $type}): $type = $type ?? 'credentials';
+  factory CredentialsLoginRequest.fromJson(Map<String, dynamic> json) => _$CredentialsLoginRequestFromJson(json);
 
-@override final  String email;
-@override final  String password;
+ final  String email;
+ final  String password;
+
+@JsonKey(name: 'runtimeType')
+final String $type;
+
 
 /// Create a copy of LoginRequest
 /// with the given fields replaced by the non-null parameter values.
-@override @JsonKey(includeFromJson: false, includeToJson: false)
+@JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
-_$LoginRequestCopyWith<_LoginRequest> get copyWith => __$LoginRequestCopyWithImpl<_LoginRequest>(this, _$identity);
+$CredentialsLoginRequestCopyWith<CredentialsLoginRequest> get copyWith => _$CredentialsLoginRequestCopyWithImpl<CredentialsLoginRequest>(this, _$identity);
 
 @override
 Map<String, dynamic> toJson() {
-  return _$LoginRequestToJson(this, );
+  return _$CredentialsLoginRequestToJson(this, );
 }
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _LoginRequest&&(identical(other.email, email) || other.email == email)&&(identical(other.password, password) || other.password == password));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is CredentialsLoginRequest&&(identical(other.email, email) || other.email == email)&&(identical(other.password, password) || other.password == password));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -238,16 +239,16 @@ int get hashCode => Object.hash(runtimeType,email,password);
 
 @override
 String toString() {
-  return 'LoginRequest(email: $email, password: $password)';
+  return 'LoginRequest.credentials(email: $email, password: $password)';
 }
 
 
 }
 
 /// @nodoc
-abstract mixin class _$LoginRequestCopyWith<$Res> implements $LoginRequestCopyWith<$Res> {
-  factory _$LoginRequestCopyWith(_LoginRequest value, $Res Function(_LoginRequest) _then) = __$LoginRequestCopyWithImpl;
-@override @useResult
+abstract mixin class $CredentialsLoginRequestCopyWith<$Res> implements $LoginRequestCopyWith<$Res> {
+  factory $CredentialsLoginRequestCopyWith(CredentialsLoginRequest value, $Res Function(CredentialsLoginRequest) _then) = _$CredentialsLoginRequestCopyWithImpl;
+@useResult
 $Res call({
  String email, String password
 });
@@ -257,19 +258,92 @@ $Res call({
 
 }
 /// @nodoc
-class __$LoginRequestCopyWithImpl<$Res>
-    implements _$LoginRequestCopyWith<$Res> {
-  __$LoginRequestCopyWithImpl(this._self, this._then);
+class _$CredentialsLoginRequestCopyWithImpl<$Res>
+    implements $CredentialsLoginRequestCopyWith<$Res> {
+  _$CredentialsLoginRequestCopyWithImpl(this._self, this._then);
 
-  final _LoginRequest _self;
-  final $Res Function(_LoginRequest) _then;
+  final CredentialsLoginRequest _self;
+  final $Res Function(CredentialsLoginRequest) _then;
 
 /// Create a copy of LoginRequest
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? email = null,Object? password = null,}) {
-  return _then(_LoginRequest(
+@pragma('vm:prefer-inline') $Res call({Object? email = null,Object? password = null,}) {
+  return _then(CredentialsLoginRequest(
 email: null == email ? _self.email : email // ignore: cast_nullable_to_non_nullable
 as String,password: null == password ? _self.password : password // ignore: cast_nullable_to_non_nullable
+as String,
+  ));
+}
+
+
+}
+
+/// @nodoc
+@JsonSerializable()
+
+class GoogleLoginRequest implements LoginRequest {
+  const GoogleLoginRequest({required this.token, final  String? $type}): $type = $type ?? 'google';
+  factory GoogleLoginRequest.fromJson(Map<String, dynamic> json) => _$GoogleLoginRequestFromJson(json);
+
+ final  String token;
+
+@JsonKey(name: 'runtimeType')
+final String $type;
+
+
+/// Create a copy of LoginRequest
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$GoogleLoginRequestCopyWith<GoogleLoginRequest> get copyWith => _$GoogleLoginRequestCopyWithImpl<GoogleLoginRequest>(this, _$identity);
+
+@override
+Map<String, dynamic> toJson() {
+  return _$GoogleLoginRequestToJson(this, );
+}
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is GoogleLoginRequest&&(identical(other.token, token) || other.token == token));
+}
+
+@JsonKey(includeFromJson: false, includeToJson: false)
+@override
+int get hashCode => Object.hash(runtimeType,token);
+
+@override
+String toString() {
+  return 'LoginRequest.google(token: $token)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class $GoogleLoginRequestCopyWith<$Res> implements $LoginRequestCopyWith<$Res> {
+  factory $GoogleLoginRequestCopyWith(GoogleLoginRequest value, $Res Function(GoogleLoginRequest) _then) = _$GoogleLoginRequestCopyWithImpl;
+@useResult
+$Res call({
+ String token
+});
+
+
+
+
+}
+/// @nodoc
+class _$GoogleLoginRequestCopyWithImpl<$Res>
+    implements $GoogleLoginRequestCopyWith<$Res> {
+  _$GoogleLoginRequestCopyWithImpl(this._self, this._then);
+
+  final GoogleLoginRequest _self;
+  final $Res Function(GoogleLoginRequest) _then;
+
+/// Create a copy of LoginRequest
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') $Res call({Object? token = null,}) {
+  return _then(GoogleLoginRequest(
+token: null == token ? _self.token : token // ignore: cast_nullable_to_non_nullable
 as String,
   ));
 }

@@ -7,7 +7,9 @@ import '../domain/entities/forgot_pass/forgot_pass_entity.dart';
 import '../domain/entities/signup/signup_entity.dart';
 
 abstract interface class AuthService {
-  Future<Result<void, Failure>> login(LoginEntity data);
+  Future<Result<void, Failure>> login(CredentialsLoginEntity data);
+
+  Future<Result<void, Failure>> loginWithGoogle();
 
   Future<Result<UserEntity, Failure>> fetchUser();
 

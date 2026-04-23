@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:retrofit/dio.dart';
 import 'package:retrofit/error_logger.dart';
 import 'package:retrofit/http.dart';
 import 'package:taskit/features/auth/data/dto/req/logout/logout_request.dart';
@@ -16,7 +17,6 @@ import '../../dto/req/login/login_request.dart';
 import '../../dto/req/signup/signup_request.dart';
 import '../../dto/res/forgot_pass/verify.dart';
 import '../../dto/res/login/login_data.dart';
-import '../../dto/res/login/login_verify_data.dart';
 
 part 'auth_api.g.dart';
 
@@ -38,52 +38,60 @@ sealed class AuthApi {
   * Login
   * */
   @POST('/login')
+  @Extra({'refresh': false})
   Future<DataResponse<LoginData>> login(@Body() LoginRequest data);
 
-  @GET('/login/verify')
-  Future<DataResponse<LoginVerifyData>> checkLogin(
-    @Header('Authorization') String token,
-  );
+  @POST('/login/google')
+  @Extra({'refresh': false})
+  Future<DataResponse<LoginData>> loginWithGoogle(@Body() LoginRequest data);
 
   @GET('/me')
-  Future<DataResponse<UserData>> fetchUser(
-    @Header('Authorization') String accessToken,
-  );
+  @Extra({'requireAuth': true})
+  Future<DataResponse<UserData>> fetchUser();
 
   @POST('/refresh')
+  @Extra({'refresh': false})
   Future<DataResponse<RefreshTokenData>> refreshToken(
     @Body() RefreshTokenRequest request,
   );
 
   @POST('/logout')
+  @Extra({'requireAuth': true})
   Future<MessageResponse> logout(@Body() LogoutRequest request);
 
-  @POST('/signup')
   /*
   * Signup
   * */
+  @POST('/signup')
+  @Extra({'refresh': false})
   Future<MessageResponse> signup(@Body() SignupRequest data);
 
   @POST('/signup/verify')
+  @Extra({'refresh': false})
   Future<MessageResponse> signupVerify(@Body() SignupRequest data);
 
   @POST('/signup/resend')
+  @Extra({'refresh': false})
   Future<MessageResponse> signupResend(@Body() SignupRequest data);
 
-  @POST('/forgot-password')
   /*
   * Forgot Password
   * */
+  @POST('/forgot-password')
+  @Extra({'refresh': false})
   Future<MessageResponse> forgotPass(@Body() ForgotPassRequest data);
 
   @POST('/forgot-password/verify')
+  @Extra({'refresh': false})
   Future<DataResponse<ForgotPassData>> forgotPassVerify(
     @Body() ForgotPassRequest data,
   );
 
   @POST('/forgot-password/resend')
+  @Extra({'refresh': false})
   Future<MessageResponse> forgotPassResend(@Body() ForgotPassRequest data);
 
   @PUT('/forgot-password/reset')
+  @Extra({'refresh': false})
   Future<MessageResponse> forgotPassReset(@Body() ForgotPassRequest data);
 }

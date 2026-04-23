@@ -17,24 +17,23 @@ const userSchema = new mongoose.Schema(
       enum: ["pending", "verified", "deleted"],
       default: "pending",
     },
-    provider: {
-      type: String,
-      enum: ["local", "google"],
-      default: "local",
-    },
-    providerId: {
-      type: String,
-      unique: true,
-      sparse: true,
-      default: null,
-    },
-    password: {
-      type: String,
-      required: true,
+    auth: {
+      local: {
+        password: {
+          type: String,
+          default: null,
+        },
+      },
+      google: {
+        sub: {
+          type: String,
+          default: null,
+        },
+      },
     },
     avatar: {
       type: String,
-      default: "uploads/default.jpg",
+      default: "/uploads/default.jpg",
     },
   },
   {
@@ -42,7 +41,7 @@ const userSchema = new mongoose.Schema(
     toJSON: {
       virtuals: true,
       transform: function (doc, ret) {
-        const { _id, password, __v, ...rest } = ret;
+        const { _id, auth, __v, ...rest } = ret;
         return {
           id: _id,
           ...rest,
@@ -52,7 +51,7 @@ const userSchema = new mongoose.Schema(
     toObject: {
       virtuals: true,
       transform: function (doc, ret) {
-        const { _id, password, __v, ...rest } = ret;
+        const { _id, auth, __v, ...rest } = ret;
         return {
           id: _id,
           ...rest,

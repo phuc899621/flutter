@@ -1,13 +1,9 @@
-import 'dart:convert';
-
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
-//import 'package:google_sign_in/google_sign_in.dart';
-import 'package:http/http.dart' as http;
 import 'package:taskit/shared/utils/snack_bar_utils.dart';
 import 'package:taskit/shared/widget/text_field/taskit_outline_text_field.dart';
 import 'package:taskit/shared/widget/text_field/taskit_password_text_field.dart';
@@ -26,8 +22,6 @@ class _LoginPageState extends ConsumerState<LoginPage> {
   late TextEditingController _emailController;
   late TextEditingController _passwordController;
 
-  // final GoogleSignIn _googleSignIn = GoogleSignIn.instance;
-
   @override
   void initState() {
     super.initState();
@@ -43,7 +37,6 @@ class _LoginPageState extends ConsumerState<LoginPage> {
   }
 
   void _listener() {
-    final color = Theme.of(context).colorScheme;
     ref.listen(loginControllerProvider.select((value) => value.apiError), (
       _,
       next,
@@ -54,47 +47,14 @@ class _LoginPageState extends ConsumerState<LoginPage> {
     });
   }
 
-  Future<void> _onLoginWithGoogle() async {
-    /*try {
-      final account = await _googleSignIn.authenticate();
-      if (account == null) debugPrint('fail');
-      final List<String> scopes = ['email', 'profile'];
-      final GoogleSignInServerAuthorization? auth = await account
-          .authorizationClient
-          .authorizeServer(scopes);
-      final String? serverAuthCode = auth?.serverAuthCode;
-      if (serverAuthCode != null) {
-        debugPrint('Server auth code: $serverAuthCode');
-        await _sendServerAuthCodeToBackend(serverAuthCode);
-      }
-    } catch (e) {
-      debugPrint('Error: $e');
-    }*/
-  }
-
-  Future<void> _sendServerAuthCodeToBackend(String code) async {
-    final url = Uri.parse('http://192.168.1.7:8080/api/v1/auth/google');
-    try {
-      final response = await http.post(
-        url,
-        headers: {'Content-Type': 'application/json'},
-        body: jsonEncode({'serverAuthCode': code}),
-      );
-
-      if (response.statusCode == 200) {
-        debugPrint('Backend verified token successfully');
-      } else {
-        debugPrint('Backend verification failed: ${response.body}');
-      }
-    } catch (e) {
-      debugPrint('Error sending code to backend: $e');
-    }
-  }
-
   void _onSummit() {
     ref
         .read(loginControllerProvider.notifier)
         .login(_emailController.text, _passwordController.text);
+  }
+
+  void _onLoginWithGoogle() {
+    ref.read(loginControllerProvider.notifier).loginWithGoogle();
   }
 
   //region MAIN

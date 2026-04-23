@@ -18,6 +18,7 @@ import logger from "../../shared/utils/logger.js";
 import UserRepository from "./user.repo.js";
 import { USER_STATUS } from "../../shared/constants/userStatus.js";
 import { HashHelper } from "../../shared/helpers/hash.helper.js";
+import { GOOGLE_AUTH_CASE } from "../../shared/constants/googleAuthCase.js";
 
 class UserService {
   //#region validate user status
@@ -28,6 +29,11 @@ class UserService {
   static ensureUserNotVerified(user) {
     if (user && user.status == USER_STATUS.VERIFIED)
       throw new BadRequestError("This account already exists");
+  }
+  static async isUserExists(email) {
+    const user = await UserRepository.findByEmail(email);
+    if (user) return true;
+    return false;
   }
   static async validateEmailForSignup(email) {
     try {
@@ -42,8 +48,55 @@ class UserService {
   static async validateUserForLogin(email, password) {
     try {
       const user = await UserRepository.findByEmail(email);
+      if (!user) throw new BadRequestError("User account does not exist");
+      const userPassword = user.auth?.local?.password;
+      if (userPassword == null)
+        throw new BadRequestError("Email is already in use");
       this.ensureUserVerified(user);
-      if (!(await HashHelper.compare(password, user.password)))
+      if (!(await HashHelper.compare(password, userPassword)))
+        throw new BadRequestError("Invalid password");
+      return user.toObject();
+    } catch (e) {
+      if (e instanceof BaseError) throw e;
+      throw new ServerError(`Validate email for login error: ${e.message}`);
+    }
+  }
+  static async checkGoogleAuthCase({ email, sub }) {
+    console.log(email, sub);
+    const userSub = await UserRepository.findBySub(sub);
+    if (userSub)
+      return {
+        status: GOOGLE_AUTH_CASE.EXIST_BY_SUB,
+        user: userSub,
+      };
+    const userByEmail = await UserRepository.findByEmail(email);
+    if (userByEmail) {
+      if (userByEmail.status != USER_STATUS.VERIFIED) {
+        return {
+          status: GOOGLE_AUTH_CASE.EMAIL_NOT_VERIFIED,
+          user: userByEmail,
+        };
+      }
+      return {
+        status: GOOGLE_AUTH_CASE.LINKED_BY_EMAIL,
+        user: userByEmail,
+      };
+    }
+
+    return {
+      status: GOOGLE_AUTH_CASE.NEW_USER,
+      user: null,
+    };
+  }
+  static async validateUserForGoogleLogin(email) {
+    try {
+      const user = await UserRepository.findByEmail(email);
+      if (!user) return null;
+
+      if (userPassword == null)
+        throw new BadRequestError("Email is already in use");
+      this.ensureUserVerified(user);
+      if (!(await HashHelper.compare(password, userPassword)))
         throw new BadRequestError("Invalid password");
       return user.toObject();
     } catch (e) {
@@ -120,6 +173,52 @@ class UserService {
     } catch (e) {
       if (e instanceof BaseError) throw e;
       throw new ServerError(`Reset password error: ${e.message}`);
+    }
+  }
+  static async updateUserSub(userId, sub, session) {
+    try {
+      const updateData = { "auth.google.sub": sub };
+      await UserRepository.updateById(userId, updateData, session);
+    } catch (e) {
+      if (e instanceof BaseError) throw e;
+      throw new ServerError(`Update user sub error: ${e.message}`);
+    }
+  }
+  static async linkGoogleAccount(userId, { name, sub, avatar }, session) {
+    try {
+      await UserRepository.updateById(
+        userId,
+        {
+          "auth.google.sub": sub,
+          "auth.local.password": null,
+          name,
+          status: USER_STATUS.VERIFIED,
+          avatar,
+        },
+        session,
+      );
+    } catch (e) {
+      if (e instanceof BaseError) throw e;
+      throw new ServerError(`Update google user error: ${e.message}`);
+    }
+  }
+  static async createGoogleUser({ email, sub, avatar, name }, session) {
+    try {
+      const user = await UserRepository.upsertByEmail(
+        {
+          email,
+          name,
+          sub,
+          avatar,
+          status: USER_STATUS.VERIFIED,
+        },
+        session,
+      );
+      logger.info(`User ${user.id} created`);
+      return user.id;
+    } catch (e) {
+      if (e instanceof BaseError) throw e;
+      throw new ServerError(`Create google user error: ${e.message}`);
     }
   }
 

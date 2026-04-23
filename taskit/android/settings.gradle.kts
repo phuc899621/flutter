@@ -22,6 +22,7 @@ plugins {
     id("com.android.application") version "9.1.0" apply false
     id("org.jetbrains.kotlin.android") version "2.2.20" apply false
     id("org.gradle.toolchains.foojay-resolver-convention") version "1.0.0"
+
 }
 
 include(":app")

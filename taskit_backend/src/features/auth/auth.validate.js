@@ -59,11 +59,13 @@ export const loginValidate = validate({
 export const refreshTokenValidate = validate({
   body: Joi.object({
     refreshToken: Joi.string().required().messages(joiMsg("Refresh token")),
+    sessionId: Joi.string().required().messages(joiMsg("Session id")),
   }),
 });
 export const logoutValidate = validate({
   body: Joi.object({
     refreshToken: Joi.string().required().messages(joiMsg("Refresh token")),
+    sessionId: Joi.string().required().messages(joiMsg("Session id")),
   }),
 });
 

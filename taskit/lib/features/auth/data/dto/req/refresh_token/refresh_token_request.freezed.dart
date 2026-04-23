@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$RefreshTokenRequest {
 
- String get refreshToken;
+ String get refreshToken; String get sessionId;
 /// Create a copy of RefreshTokenRequest
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -28,16 +28,16 @@ $RefreshTokenRequestCopyWith<RefreshTokenRequest> get copyWith => _$RefreshToken
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is RefreshTokenRequest&&(identical(other.refreshToken, refreshToken) || other.refreshToken == refreshToken));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is RefreshTokenRequest&&(identical(other.refreshToken, refreshToken) || other.refreshToken == refreshToken)&&(identical(other.sessionId, sessionId) || other.sessionId == sessionId));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,refreshToken);
+int get hashCode => Object.hash(runtimeType,refreshToken,sessionId);
 
 @override
 String toString() {
-  return 'RefreshTokenRequest(refreshToken: $refreshToken)';
+  return 'RefreshTokenRequest(refreshToken: $refreshToken, sessionId: $sessionId)';
 }
 
 
@@ -48,7 +48,7 @@ abstract mixin class $RefreshTokenRequestCopyWith<$Res>  {
   factory $RefreshTokenRequestCopyWith(RefreshTokenRequest value, $Res Function(RefreshTokenRequest) _then) = _$RefreshTokenRequestCopyWithImpl;
 @useResult
 $Res call({
- String refreshToken
+ String refreshToken, String sessionId
 });
 
 
@@ -65,9 +65,10 @@ class _$RefreshTokenRequestCopyWithImpl<$Res>
 
 /// Create a copy of RefreshTokenRequest
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? refreshToken = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? refreshToken = null,Object? sessionId = null,}) {
   return _then(_self.copyWith(
 refreshToken: null == refreshToken ? _self.refreshToken : refreshToken // ignore: cast_nullable_to_non_nullable
+as String,sessionId: null == sessionId ? _self.sessionId : sessionId // ignore: cast_nullable_to_non_nullable
 as String,
   ));
 }
@@ -153,10 +154,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String refreshToken)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String refreshToken,  String sessionId)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _RefreshTokenRequest() when $default != null:
-return $default(_that.refreshToken);case _:
+return $default(_that.refreshToken,_that.sessionId);case _:
   return orElse();
 
 }
@@ -174,10 +175,10 @@ return $default(_that.refreshToken);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String refreshToken)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String refreshToken,  String sessionId)  $default,) {final _that = this;
 switch (_that) {
 case _RefreshTokenRequest():
-return $default(_that.refreshToken);case _:
+return $default(_that.refreshToken,_that.sessionId);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -194,10 +195,10 @@ return $default(_that.refreshToken);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String refreshToken)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String refreshToken,  String sessionId)?  $default,) {final _that = this;
 switch (_that) {
 case _RefreshTokenRequest() when $default != null:
-return $default(_that.refreshToken);case _:
+return $default(_that.refreshToken,_that.sessionId);case _:
   return null;
 
 }
@@ -209,10 +210,11 @@ return $default(_that.refreshToken);case _:
 @JsonSerializable()
 
 class _RefreshTokenRequest implements RefreshTokenRequest {
-  const _RefreshTokenRequest({required this.refreshToken});
+  const _RefreshTokenRequest({required this.refreshToken, required this.sessionId});
   factory _RefreshTokenRequest.fromJson(Map<String, dynamic> json) => _$RefreshTokenRequestFromJson(json);
 
 @override final  String refreshToken;
+@override final  String sessionId;
 
 /// Create a copy of RefreshTokenRequest
 /// with the given fields replaced by the non-null parameter values.
@@ -227,16 +229,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _RefreshTokenRequest&&(identical(other.refreshToken, refreshToken) || other.refreshToken == refreshToken));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _RefreshTokenRequest&&(identical(other.refreshToken, refreshToken) || other.refreshToken == refreshToken)&&(identical(other.sessionId, sessionId) || other.sessionId == sessionId));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,refreshToken);
+int get hashCode => Object.hash(runtimeType,refreshToken,sessionId);
 
 @override
 String toString() {
-  return 'RefreshTokenRequest(refreshToken: $refreshToken)';
+  return 'RefreshTokenRequest(refreshToken: $refreshToken, sessionId: $sessionId)';
 }
 
 
@@ -247,7 +249,7 @@ abstract mixin class _$RefreshTokenRequestCopyWith<$Res> implements $RefreshToke
   factory _$RefreshTokenRequestCopyWith(_RefreshTokenRequest value, $Res Function(_RefreshTokenRequest) _then) = __$RefreshTokenRequestCopyWithImpl;
 @override @useResult
 $Res call({
- String refreshToken
+ String refreshToken, String sessionId
 });
 
 
@@ -264,9 +266,10 @@ class __$RefreshTokenRequestCopyWithImpl<$Res>
 
 /// Create a copy of RefreshTokenRequest
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? refreshToken = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? refreshToken = null,Object? sessionId = null,}) {
   return _then(_RefreshTokenRequest(
 refreshToken: null == refreshToken ? _self.refreshToken : refreshToken // ignore: cast_nullable_to_non_nullable
+as String,sessionId: null == sessionId ? _self.sessionId : sessionId // ignore: cast_nullable_to_non_nullable
 as String,
   ));
 }

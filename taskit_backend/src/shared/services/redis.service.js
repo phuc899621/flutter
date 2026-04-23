@@ -3,8 +3,8 @@ import redisClient from "../utils/redis.client.js";
 import "dotenv/config";
 const expiresInSeconds = process.env.REFRESH_TTL_SECONDS || 60 * 60 * 24 * 7;
 const expiresForForgotPassword = 60 * 15;
-export const saveRefreshToken = async (token, userId) => {
-  await redisClient.set(`refresh_${token}`, userId, {
+export const saveRefreshToken = async (token, sessionId, userId) => {
+  await redisClient.set(`refresh_${sessionId}_${token}`, userId, {
     EX: parseInt(expiresInSeconds),
   });
   logger.info(`Refresh token saved for ${userId}:${expiresInSeconds}:${token}`);
@@ -33,10 +33,10 @@ export const isTokenResetUsed = async (token) => {
   return userId != null;
 };
 
-export const isRefreshTokenValid = async (token) => {
-  const userId = await redisClient.get(`refresh_${token}`);
+export const isRefreshTokenValid = async (token, sessionId) => {
+  const userId = await redisClient.get(`refresh_${sessionId}_${token}`);
   return userId ?? null;
 };
-export const revokeRefreshToken = async (token) => {
-  await redisClient.del(`refresh_${token}`);
+export const revokeRefreshToken = async (token, sessionId) => {
+  await redisClient.del(`refresh_${sessionId}_${token}`);
 };

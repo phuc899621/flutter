@@ -14,62 +14,30 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$LoginEntity {
 
- String get email; String get password;
-/// Create a copy of LoginEntity
-/// with the given fields replaced by the non-null parameter values.
-@JsonKey(includeFromJson: false, includeToJson: false)
-@pragma('vm:prefer-inline')
-$LoginEntityCopyWith<LoginEntity> get copyWith => _$LoginEntityCopyWithImpl<LoginEntity>(this as LoginEntity, _$identity);
+
 
 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is LoginEntity&&(identical(other.email, email) || other.email == email)&&(identical(other.password, password) || other.password == password));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is LoginEntity);
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,email,password);
+int get hashCode => runtimeType.hashCode;
 
 @override
 String toString() {
-  return 'LoginEntity(email: $email, password: $password)';
+  return 'LoginEntity()';
 }
 
 
 }
 
 /// @nodoc
-abstract mixin class $LoginEntityCopyWith<$Res>  {
-  factory $LoginEntityCopyWith(LoginEntity value, $Res Function(LoginEntity) _then) = _$LoginEntityCopyWithImpl;
-@useResult
-$Res call({
- String email, String password
-});
-
-
-
-
-}
-/// @nodoc
-class _$LoginEntityCopyWithImpl<$Res>
-    implements $LoginEntityCopyWith<$Res> {
-  _$LoginEntityCopyWithImpl(this._self, this._then);
-
-  final LoginEntity _self;
-  final $Res Function(LoginEntity) _then;
-
-/// Create a copy of LoginEntity
-/// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? email = null,Object? password = null,}) {
-  return _then(_self.copyWith(
-email: null == email ? _self.email : email // ignore: cast_nullable_to_non_nullable
-as String,password: null == password ? _self.password : password // ignore: cast_nullable_to_non_nullable
-as String,
-  ));
-}
-
+class $LoginEntityCopyWith<$Res>  {
+$LoginEntityCopyWith(LoginEntity _, $Res Function(LoginEntity) __);
 }
 
 
@@ -87,11 +55,12 @@ extension LoginEntityPatterns on LoginEntity {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _LoginEntity value)?  $default,{required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( CredentialsLoginEntity value)?  credentials,TResult Function( GoogleLoginEntity value)?  google,required TResult orElse(),}){
 final _that = this;
 switch (_that) {
-case _LoginEntity() when $default != null:
-return $default(_that);case _:
+case CredentialsLoginEntity() when credentials != null:
+return credentials(_that);case GoogleLoginEntity() when google != null:
+return google(_that);case _:
   return orElse();
 
 }
@@ -109,11 +78,12 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _LoginEntity value)  $default,){
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( CredentialsLoginEntity value)  credentials,required TResult Function( GoogleLoginEntity value)  google,}){
 final _that = this;
 switch (_that) {
-case _LoginEntity():
-return $default(_that);case _:
+case CredentialsLoginEntity():
+return credentials(_that);case GoogleLoginEntity():
+return google(_that);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -130,11 +100,12 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _LoginEntity value)?  $default,){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( CredentialsLoginEntity value)?  credentials,TResult? Function( GoogleLoginEntity value)?  google,}){
 final _that = this;
 switch (_that) {
-case _LoginEntity() when $default != null:
-return $default(_that);case _:
+case CredentialsLoginEntity() when credentials != null:
+return credentials(_that);case GoogleLoginEntity() when google != null:
+return google(_that);case _:
   return null;
 
 }
@@ -151,10 +122,11 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String email,  String password)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( String email,  String password)?  credentials,TResult Function( String token)?  google,required TResult orElse(),}) {final _that = this;
 switch (_that) {
-case _LoginEntity() when $default != null:
-return $default(_that.email,_that.password);case _:
+case CredentialsLoginEntity() when credentials != null:
+return credentials(_that.email,_that.password);case GoogleLoginEntity() when google != null:
+return google(_that.token);case _:
   return orElse();
 
 }
@@ -172,10 +144,11 @@ return $default(_that.email,_that.password);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String email,  String password)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( String email,  String password)  credentials,required TResult Function( String token)  google,}) {final _that = this;
 switch (_that) {
-case _LoginEntity():
-return $default(_that.email,_that.password);case _:
+case CredentialsLoginEntity():
+return credentials(_that.email,_that.password);case GoogleLoginEntity():
+return google(_that.token);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -192,10 +165,11 @@ return $default(_that.email,_that.password);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String email,  String password)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( String email,  String password)?  credentials,TResult? Function( String token)?  google,}) {final _that = this;
 switch (_that) {
-case _LoginEntity() when $default != null:
-return $default(_that.email,_that.password);case _:
+case CredentialsLoginEntity() when credentials != null:
+return credentials(_that.email,_that.password);case GoogleLoginEntity() when google != null:
+return google(_that.token);case _:
   return null;
 
 }
@@ -206,24 +180,24 @@ return $default(_that.email,_that.password);case _:
 /// @nodoc
 
 
-class _LoginEntity implements LoginEntity {
-  const _LoginEntity({required this.email, required this.password});
+class CredentialsLoginEntity implements LoginEntity {
+  const CredentialsLoginEntity({required this.email, required this.password});
   
 
-@override final  String email;
-@override final  String password;
+ final  String email;
+ final  String password;
 
 /// Create a copy of LoginEntity
 /// with the given fields replaced by the non-null parameter values.
-@override @JsonKey(includeFromJson: false, includeToJson: false)
+@JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
-_$LoginEntityCopyWith<_LoginEntity> get copyWith => __$LoginEntityCopyWithImpl<_LoginEntity>(this, _$identity);
+$CredentialsLoginEntityCopyWith<CredentialsLoginEntity> get copyWith => _$CredentialsLoginEntityCopyWithImpl<CredentialsLoginEntity>(this, _$identity);
 
 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _LoginEntity&&(identical(other.email, email) || other.email == email)&&(identical(other.password, password) || other.password == password));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is CredentialsLoginEntity&&(identical(other.email, email) || other.email == email)&&(identical(other.password, password) || other.password == password));
 }
 
 
@@ -232,16 +206,16 @@ int get hashCode => Object.hash(runtimeType,email,password);
 
 @override
 String toString() {
-  return 'LoginEntity(email: $email, password: $password)';
+  return 'LoginEntity.credentials(email: $email, password: $password)';
 }
 
 
 }
 
 /// @nodoc
-abstract mixin class _$LoginEntityCopyWith<$Res> implements $LoginEntityCopyWith<$Res> {
-  factory _$LoginEntityCopyWith(_LoginEntity value, $Res Function(_LoginEntity) _then) = __$LoginEntityCopyWithImpl;
-@override @useResult
+abstract mixin class $CredentialsLoginEntityCopyWith<$Res> implements $LoginEntityCopyWith<$Res> {
+  factory $CredentialsLoginEntityCopyWith(CredentialsLoginEntity value, $Res Function(CredentialsLoginEntity) _then) = _$CredentialsLoginEntityCopyWithImpl;
+@useResult
 $Res call({
  String email, String password
 });
@@ -251,19 +225,85 @@ $Res call({
 
 }
 /// @nodoc
-class __$LoginEntityCopyWithImpl<$Res>
-    implements _$LoginEntityCopyWith<$Res> {
-  __$LoginEntityCopyWithImpl(this._self, this._then);
+class _$CredentialsLoginEntityCopyWithImpl<$Res>
+    implements $CredentialsLoginEntityCopyWith<$Res> {
+  _$CredentialsLoginEntityCopyWithImpl(this._self, this._then);
 
-  final _LoginEntity _self;
-  final $Res Function(_LoginEntity) _then;
+  final CredentialsLoginEntity _self;
+  final $Res Function(CredentialsLoginEntity) _then;
 
 /// Create a copy of LoginEntity
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? email = null,Object? password = null,}) {
-  return _then(_LoginEntity(
+@pragma('vm:prefer-inline') $Res call({Object? email = null,Object? password = null,}) {
+  return _then(CredentialsLoginEntity(
 email: null == email ? _self.email : email // ignore: cast_nullable_to_non_nullable
 as String,password: null == password ? _self.password : password // ignore: cast_nullable_to_non_nullable
+as String,
+  ));
+}
+
+
+}
+
+/// @nodoc
+
+
+class GoogleLoginEntity implements LoginEntity {
+  const GoogleLoginEntity({required this.token});
+  
+
+ final  String token;
+
+/// Create a copy of LoginEntity
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$GoogleLoginEntityCopyWith<GoogleLoginEntity> get copyWith => _$GoogleLoginEntityCopyWithImpl<GoogleLoginEntity>(this, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is GoogleLoginEntity&&(identical(other.token, token) || other.token == token));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,token);
+
+@override
+String toString() {
+  return 'LoginEntity.google(token: $token)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class $GoogleLoginEntityCopyWith<$Res> implements $LoginEntityCopyWith<$Res> {
+  factory $GoogleLoginEntityCopyWith(GoogleLoginEntity value, $Res Function(GoogleLoginEntity) _then) = _$GoogleLoginEntityCopyWithImpl;
+@useResult
+$Res call({
+ String token
+});
+
+
+
+
+}
+/// @nodoc
+class _$GoogleLoginEntityCopyWithImpl<$Res>
+    implements $GoogleLoginEntityCopyWith<$Res> {
+  _$GoogleLoginEntityCopyWithImpl(this._self, this._then);
+
+  final GoogleLoginEntity _self;
+  final $Res Function(GoogleLoginEntity) _then;
+
+/// Create a copy of LoginEntity
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') $Res call({Object? token = null,}) {
+  return _then(GoogleLoginEntity(
+token: null == token ? _self.token : token // ignore: cast_nullable_to_non_nullable
 as String,
   ));
 }
