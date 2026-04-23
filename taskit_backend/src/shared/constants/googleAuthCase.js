@@ -1,0 +1,6 @@
+export const GOOGLE_AUTH_CASE = {
+  EXIST_BY_SUB: 1,
+  LINKED_BY_EMAIL: 2,
+  CREATE_NEW: 3,
+  EMAIL_NOT_VERIFIED: 4,
+};
