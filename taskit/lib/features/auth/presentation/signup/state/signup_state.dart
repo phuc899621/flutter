@@ -1,7 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:taskit/shared/constants/signup_status.dart';
 
-import '../../../domain/entities/signup/signup_entity.dart';
 
 part 'signup_state.freezed.dart';
 

@@ -384,8 +384,9 @@ class TaskRepo with DioExceptionMapper implements ITaskRepo {
     final task = await _taskLocalSource.getTaskByLocalId(localId);
     final token = await _tokenService.getAccessToken();
     logger.i('delete task with localId $localId');
-    if (task == null || task.remoteId.isEmpty || token == null || token.isEmpty)
+    if (task == null || task.remoteId.isEmpty || token == null || token.isEmpty) {
       return;
+    }
     logger.i('delete task with remoteId ${task.remoteId}');
     final taskRemoteId = task.remoteId;
     await _taskLocalSource.deleteTaskByLocalId(localId);

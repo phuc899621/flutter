@@ -1,6 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:taskit/features/task/data/dto/req/subtask/add_subtask.dart';
-import 'package:taskit/features/task/data/dto/req/subtask/subtask.dart';
 
 part 'add_task.freezed.dart';
 part 'add_task.g.dart';

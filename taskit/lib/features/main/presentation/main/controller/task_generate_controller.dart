@@ -70,7 +70,7 @@ class TaskGenerateController extends Notifier<TaskGenerateState> {
           state = state.copyWith(error: error.message, isGenerating: false);
         },
       );
-    } catch (e, s) {
+    } catch (e) {
       logger.e(e);
       state = state.copyWith(error: e.toString(), isGenerating: false);
     }
