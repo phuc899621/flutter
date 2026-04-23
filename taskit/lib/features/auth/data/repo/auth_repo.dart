@@ -6,7 +6,7 @@ import 'package:taskit/shared/domain/entities/data_result.dart';
 import 'package:taskit/shared/domain/entities/message_result.dart';
 
 import '../../../user/domain/entity/user_entity.dart';
-import '../entities/signup/signup_entity.dart';
+import '../../domain/entities/signup/signup_entity.dart';
 
 abstract interface class AuthRepo {
   /*

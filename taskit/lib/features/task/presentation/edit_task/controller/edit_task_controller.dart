@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../auth/presentation/auth/controller/auth_controller.dart';
 import '../../../application/task_service.dart';
 import '../../../domain/entities/category_entity.dart';
 import '../../../domain/entities/task_priority_enum.dart';
@@ -17,14 +18,30 @@ class EditTaskController extends Notifier<EditTaskState> {
   StreamSubscription? _taskSub;
   late StreamSubscription _categorySub;
   late StreamSubscription _subtaskSub;
+  late final ProviderSubscription _authSub;
 
   @override
   EditTaskState build() {
-    _fetchCategory();
+    _authSub = ref.listen(
+      authControllerProvider.select((value) => value.user),
+      (_, next) {
+        if (next == null) {
+          _taskSub?.cancel();
+          _categorySub.cancel();
+          _subtaskSub.cancel();
+        } else {
+          _fetchCategory(next.localId);
+        }
+      },
+    );
+    ref.onDispose(() {
+      dispose();
+    });
     return EditTaskState();
   }
 
   void dispose() {
+    _authSub.close();
     _taskSub?.cancel();
     _categorySub.cancel();
     _subtaskSub.cancel();
@@ -42,9 +59,13 @@ class EditTaskController extends Notifier<EditTaskState> {
       .read(taskServiceProvider)
       .updateTaskPriority(state.task?.localId ?? -1, priority);
 
-  void updateCategory(CategoryEntity category) => ref
-      .read(taskServiceProvider)
-      .updateTaskCategory(state.task?.localId ?? -1, category.localId);
+  void updateCategory(CategoryEntity category) {
+    final userLocalId = ref.read(authControllerProvider.select((value)=>value.user?.localId));
+    if (userLocalId == null) return;
+    ref
+        .read(taskServiceProvider)
+        .updateTaskCategory(state.task?.localId ?? -1, category.localId, userLocalId);
+  }
 
   void updateDueDate(DateTime? dueDate) => ref
       .read(taskServiceProvider)
@@ -92,16 +113,17 @@ class EditTaskController extends Notifier<EditTaskState> {
   }
 
   void fetchTask(int localId) {
-    if (_taskSub != null) return;
-    _taskSub = ref.read(taskServiceProvider).watchTaskByLocalId(localId).listen(
+    final userLocalId = ref.read(authControllerProvider.select((value)=>value.user?.localId));
+    if (_taskSub != null || userLocalId == null) return;
+    _taskSub = ref.read(taskServiceProvider).watchTaskByLocalId(localId, userLocalId ).listen(
       (task) {
         state = state.copyWith(task: task);
       },
     );
   }
 
-  void _fetchCategory() {
-    _categorySub = ref.read(taskServiceProvider).watchAllCategories().listen((
+  void _fetchCategory(int userLocalId) {
+    _categorySub = ref.read(taskServiceProvider).watchAllCategories(userLocalId).listen((
       categories,
     ) {
       state = state.copyWith(categories: categories);

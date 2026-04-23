@@ -31,13 +31,13 @@ class TaskService implements ITaskService {
   //================================
   //region WATCH
   @override
-  Stream<List<TaskEntity>> watchAllTasks() {
-    return _iTaskRepo.watchAllTasks();
+  Stream<List<TaskEntity>> watchAllTasks(int userLocalId) {
+    return _iTaskRepo.watchAllTasks(userLocalId);
   }
 
   @override
-  Stream<List<TaskEntity>> watchTodayTask() {
-    return watchAllTasks().map((tasks) {
+  Stream<List<TaskEntity>> watchTodayTask(int userLocalId) {
+    return watchAllTasks(userLocalId).map((tasks) {
       return tasks.where((task) {
         final due = task.dueDate;
         final completed = task.completedAt;
@@ -52,8 +52,8 @@ class TaskService implements ITaskService {
   }
 
   @override
-  Stream<List<TaskEntity>> watchTomorrowTask() {
-    return watchAllTasks().map((tasks) {
+  Stream<List<TaskEntity>> watchTomorrowTask(int userLocalId) {
+    return watchAllTasks(userLocalId).map((tasks) {
       return tasks.where((task) {
         final due = task.dueDate;
         final status = task.status;
@@ -68,8 +68,8 @@ class TaskService implements ITaskService {
   }
 
   @override
-  Stream<List<TaskEntity>> watchThisWeekTask() {
-    return watchAllTasks().map((tasks) {
+  Stream<List<TaskEntity>> watchThisWeekTask(int userLocalId) {
+    return watchAllTasks(userLocalId).map((tasks) {
       return tasks.where((task) {
         final due = task.dueDate;
         final status = task.status;
@@ -85,8 +85,8 @@ class TaskService implements ITaskService {
   }
 
   @override
-  Stream<List<TaskEntity>> watchPendingTask() {
-    return watchAllTasks().map((tasks) {
+  Stream<List<TaskEntity>> watchPendingTask(int userLocalId) {
+    return watchAllTasks(userLocalId).map((tasks) {
       return tasks.where((task) {
         return task.status == TaskStatus.pending;
       }).toList();
@@ -94,8 +94,8 @@ class TaskService implements ITaskService {
   }
 
   @override
-  Stream<List<TaskEntity>> watchCompletedTodayTask() {
-    return watchAllTasks().map((tasks) {
+  Stream<List<TaskEntity>> watchCompletedTodayTask(int userLocalId) {
+    return watchAllTasks(userLocalId).map((tasks) {
       return tasks.where((task) {
         final completed = task.completedAt;
         final due = task.dueDate;
@@ -110,8 +110,8 @@ class TaskService implements ITaskService {
   }
 
   @override
-  Stream<List<TaskEntity>> watchCompletedThisWeekTask() {
-    return watchAllTasks().map((tasks) {
+  Stream<List<TaskEntity>> watchCompletedThisWeekTask(int userLocalId) {
+    return watchAllTasks(userLocalId).map((tasks) {
       return tasks.where((task) {
         final completed = task.completedAt;
         final status = task.status;
@@ -125,8 +125,8 @@ class TaskService implements ITaskService {
   }
 
   @override
-  Stream<List<TaskEntity>> watchThisWeekOverDueTask() {
-    return watchAllTasks().map((tasks) {
+  Stream<List<TaskEntity>> watchThisWeekOverDueTask(int userLocalId) {
+    return watchAllTasks(userLocalId).map((tasks) {
       return tasks.where((task) {
         final due = task.dueDate;
         final completed = task.completedAt;
@@ -142,8 +142,8 @@ class TaskService implements ITaskService {
   }
 
   @override
-  Stream<List<TaskEntity>> watchTodayOverDueTask() {
-    return watchAllTasks().map((tasks) {
+  Stream<List<TaskEntity>> watchTodayOverDueTask(int userLocalId) {
+    return watchAllTasks(userLocalId).map((tasks) {
       return tasks.where((task) {
         final due = task.dueDate;
         final completed = task.completedAt;
@@ -156,12 +156,14 @@ class TaskService implements ITaskService {
   }
 
   @override
-  Stream<List<CategoryEntity>> watchAllCategories() {
-    return _iTaskRepo.watchAllCategories().map((categories) {
+  Stream<List<CategoryEntity>> watchAllCategories(int userLocalId) {
+    return _iTaskRepo.watchAllCategories(userLocalId).map((categories) {
       final callCategories = categories.firstWhere(
-          (element) => element.name.toLowerCase() == "any", orElse: () {
-        return CategoryEntity(name: "Any", localId: -1, userLocalId: -1);
-      });
+        (element) => element.name.toLowerCase() == "any",
+        orElse: () {
+          return CategoryEntity(name: "Any", localId: -1, userLocalId: -1);
+        },
+      );
       final restCategories = categories
           .where((element) => element.name.toLowerCase() != "any")
           .toList();
@@ -170,10 +172,13 @@ class TaskService implements ITaskService {
   }
 
   @override
-  Stream<TaskEntity?> watchTaskByLocalId(int localId) =>
-      _iTaskRepo.watchAllTasks().map((tasks) => tasks.firstWhereOrNull(
-            (element) => element.localId == localId,
-          ));
+  Stream<TaskEntity?> watchTaskByLocalId(int localId, int userLocalId) =>
+      _iTaskRepo
+          .watchAllTasks(userLocalId)
+          .map(
+            (tasks) =>
+                tasks.firstWhereOrNull((element) => element.localId == localId),
+          );
 
   @override
   Stream<List<SubtaskEntity>> watchSubtasksByTaskLocalId(int localId) =>
@@ -184,12 +189,14 @@ class TaskService implements ITaskService {
       });
 
   @override
-  Stream<List<TaskEntity>> watchTaskByDueDate(DateTime dueDate) =>
-      watchAllTasks().map((tasks) {
-        return tasks
-            .where((element) => element.dueDate?.isSameDay(dueDate) ?? false)
-            .toList();
-      });
+  Stream<List<TaskEntity>> watchTaskByDueDate(
+    DateTime dueDate,
+    int userLocalId,
+  ) => watchAllTasks(userLocalId).map((tasks) {
+    return tasks
+        .where((element) => element.dueDate?.isSameDay(dueDate) ?? false)
+        .toList();
+  });
 
   //endregion
 
@@ -198,8 +205,8 @@ class TaskService implements ITaskService {
   //================================
   //region UPDATE
   @override
-  Future<void> updateTaskStatus(int localId) async {
-    final task = await _iTaskRepo.getTaskById(localId);
+  Future<void> updateTaskStatus(int localId, int userLocalId) async {
+    final task = await _iTaskRepo.getTaskById(localId, userLocalId);
     if (task.status != TaskStatus.completed) {
       return _iTaskRepo.updateTaskStatus(localId, TaskStatus.completed);
     }
@@ -226,8 +233,11 @@ class TaskService implements ITaskService {
       _iTaskRepo.updateTaskPriority(localId, priority);
 
   @override
-  Future<void> updateTaskCategory(int localId, int categoryLocalId) =>
-      _iTaskRepo.updateTaskCategory(localId, categoryLocalId);
+  Future<void> updateTaskCategory(
+    int localId,
+    int categoryLocalId,
+    int userLocalId,
+  ) => _iTaskRepo.updateTaskCategory(localId, categoryLocalId, userLocalId);
 
   @override
   Future<void> updateTaskDueDate(int localId, DateTime? dueDate) =>
@@ -249,32 +259,36 @@ class TaskService implements ITaskService {
   //region READ
   @override
   Future<Result<List<CategoryEntity>, Failure>> getAICategory(
-      String title) async {
+    String title,
+    int userLocalId,
+  ) async {
     try {
-      final result = await _iTaskRepo.getAICategory(title);
+      final result = await _iTaskRepo.getAICategory(title, userLocalId);
       return Success(result);
     } on Failure catch (e) {
       return Error(e);
     } catch (e, s) {
       if (e is Exception) {
-        return Error(Failure(
-          message: e.toString(),
-          exception: e,
-          stackTrace: s,
-        ));
+        return Error(
+          Failure(message: e.toString(), exception: e, stackTrace: s),
+        );
       } else {
-        return Error(Failure(
-          message: e.toString(),
-          exception: Exception("Unknown error at category AI"),
-          stackTrace: s,
-        ));
+        return Error(
+          Failure(
+            message: e.toString(),
+            exception: Exception("Unknown error at category AI"),
+            stackTrace: s,
+          ),
+        );
       }
     }
   }
 
   @override
-  Future<CategoryEntity?> getCategoryByName(String name) async =>
-      await _iTaskRepo.getCategoryByName(name);
+  Future<CategoryEntity?> getCategoryByName(
+    String name,
+    int userLocalId,
+  ) async => await _iTaskRepo.getCategoryByName(name, userLocalId);
 
   //endregion
 
@@ -313,30 +327,36 @@ class TaskService implements ITaskService {
   Future<void> deleteSubtask(int localId) => _iTaskRepo.deleteSubtask(localId);
 
   @override
-  Future<void> deleteCategory(int localId) =>
-      _iTaskRepo.deleteCategory(localId);
+  Future<void> deleteCategory(int localId, int userLocalId) =>
+      _iTaskRepo.deleteCategory(localId, userLocalId);
 
-//endregion
+  //endregion
 
-//================================
-//========== AI  ================
-//================================
+  //================================
+  //========== AI  ================
+  //================================
   //region AI
   @override
-  Future<Result<AiTaskEntity, Failure>> generateAiTask(String text) {
+  Future<Result<AiTaskEntity, Failure>> generateAiTask(
+    String text,
+    int userLocalId,
+  ) {
     final offset = DateTime.now().timeZoneOffset;
     final sign = offset.isNegative ? '-' : '+';
     final utcOffset = '$sign$offset';
-    return _iTaskRepo.generateAiTask(text, utcOffset);
+    return _iTaskRepo.generateAiTask(text, utcOffset, userLocalId);
   }
 
   @override
   Future<Result<String, Failure>> getAiAnswer(
-      String question, String language) {
+    String question,
+    String language,
+  ) {
     final offset = DateTime.now().timeZoneOffset;
     final sign = offset.isNegative ? '-' : '+';
     final utcOffset = '$sign$offset';
     return _iTaskRepo.getAiAnswer(question, utcOffset, language);
   }
-//endregion
+
+  //endregion
 }

@@ -18,6 +18,10 @@ class UserLocalSource implements IUserLocalSource {
   @override
   Stream<UserTableData> watchUser() => userDao.watchUser();
 
+  @override
+  Future<UserTableData?> getUserByLocalId(int localId) =>
+      userDao.getUserByLocalId(localId);
+
   //endregion
   //region READ
   @override
@@ -25,5 +29,5 @@ class UserLocalSource implements IUserLocalSource {
 
   @override
   Future<UserTableData?> getUser() => userDao.getUser();
-//endregion
+  //endregion
 }

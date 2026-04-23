@@ -42,8 +42,6 @@ class MainWidget extends ConsumerWidget {
       debugPrint("$setting\n");
       final tasks = await taskDao.getAllTasks();
       debugPrint("$tasks\n");
-      final categories = await categoryDao.getCategories();
-      debugPrint("$categories\n");
       final subtasks = await subtaskDao.fetchSubtasks();
       debugPrint("$subtasks\n");
     });

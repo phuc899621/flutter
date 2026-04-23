@@ -36,8 +36,8 @@ class TaskLocalSource implements ITaskLocalSource {
       _subtaskDao.watchAllSubtasks();
 
   @override
-  Stream<List<CategoryTableData>> watchAllCategories() =>
-      _categoryDao.watchAllCategories();
+  Stream<List<CategoryTableData>> watchAllCategories(int userLocalId) =>
+      _categoryDao.watchAllCategories(userLocalId);
 
   @override
   Stream<TaskTableData?> watchTaskByLocalId(int localId) =>
@@ -100,7 +100,9 @@ class TaskLocalSource implements ITaskLocalSource {
           await _subtaskDao.updateToUncompletedSubtasks(localId);
         }
         return await _taskDao.updateTaskStatusWithoutSync(
-            localId, statusUpdate);
+          localId,
+          statusUpdate,
+        );
       });
     } catch (e, s) {
       logger.e('Update task error: $e, $s');
@@ -154,7 +156,9 @@ class TaskLocalSource implements ITaskLocalSource {
             : (task.dueDate != null ? 'scheduled' : 'pending');
         if (task.status != newTaskStatus) {
           await _taskDao.updateTaskStatusWithoutSync(
-              subtask.taskLocalId, newTaskStatus);
+            subtask.taskLocalId,
+            newTaskStatus,
+          );
         }
       });
     } catch (e, s) {
@@ -176,8 +180,9 @@ class TaskLocalSource implements ITaskLocalSource {
 
   @override
   Future<void> updateTaskDescriptionWithoutSync(
-          int localId, String description) =>
-      _taskDao.updateTaskDescriptionWithoutSync(localId, description);
+    int localId,
+    String description,
+  ) => _taskDao.updateTaskDescriptionWithoutSync(localId, description);
 
   @override
   Future<void> updateTaskPriority(int localId, String priority) =>
@@ -193,8 +198,9 @@ class TaskLocalSource implements ITaskLocalSource {
 
   @override
   Future<void> updateTaskCategoryWithoutSync(
-          int localId, int categoryLocalId) =>
-      _taskDao.updateTaskCategoryWithoutSync(localId, categoryLocalId);
+    int localId,
+    int categoryLocalId,
+  ) => _taskDao.updateTaskCategoryWithoutSync(localId, categoryLocalId);
 
   @override
   Future<void> updateTaskDueDate(int localId, DateTime? dueDate) async {
@@ -210,7 +216,9 @@ class TaskLocalSource implements ITaskLocalSource {
 
   @override
   Future<void> updateTaskDueDateWithoutSync(
-      int localId, DateTime? dueDate) async {
+    int localId,
+    DateTime? dueDate,
+  ) async {
     final task = await _taskDao.getTaskByLocalId(localId);
     logger.i('task status: $task');
     if (task == null) return;
@@ -251,28 +259,32 @@ class TaskLocalSource implements ITaskLocalSource {
       _taskDao.getTaskByLocalId(localId);
 
   @override
-  Future<CategoryTableData?> getCategoryByLocalId(int localId) =>
-      _categoryDao.getCategoryByLocalId(localId);
+  Future<CategoryTableData?> getCategoryByLocalId(
+    int localId,
+    int userLocalId,
+  ) => _categoryDao.getCategoryByLocalId(localId, userLocalId);
 
   @override
-  Future<List<CategoryTableData>> getCategories() =>
-      _categoryDao.getCategories();
+  Future<List<CategoryTableData>> getCategories(int userLocalId) =>
+      _categoryDao.getCategories(userLocalId);
 
   @override
   Future<List<SubtaskTableData>> getSubtaskByTaskLocalId(int taskLocalId) =>
       _subtaskDao.findSubtasksByTaskLocalId(taskLocalId);
 
   @override
-  Future<CategoryTableData?> getCategoryByName(String name) =>
-      _categoryDao.findByName(name);
+  Future<CategoryTableData?> getCategoryByName(String name, int userLocalId) =>
+      _categoryDao.findByName(name, userLocalId);
 
   @override
   Future<SubtaskTableData?> getSubtaskByLocalId(int localId) =>
       _subtaskDao.getSubtasksByLocalId(localId);
 
   @override
-  Future<CategoryTableData?> getCategoryByRemoteId(String remoteId) =>
-      _categoryDao.getCategoryByRemoteId(remoteId);
+  Future<CategoryTableData?> getCategoryByRemoteId(
+    String remoteId,
+    int userLocalId,
+  ) => _categoryDao.getCategoryByRemoteId(remoteId, userLocalId);
 
   //endregion
 
@@ -284,8 +296,10 @@ class TaskLocalSource implements ITaskLocalSource {
   Future<int> insertCategory(CategoryTableCompanion category) async {
     try {
       logger.i('Insert category: $category');
-      final categoryWithSameName =
-          await _categoryDao.findByName(category.name.value);
+      final categoryWithSameName = await _categoryDao.findByName(
+        category.name.value,
+        category.userLocalId.value,
+      );
       if (categoryWithSameName != null) return -1;
       logger.i('Insert category 2, not null: $category');
       return _categoryDao.insertCategory(category);
@@ -297,33 +311,48 @@ class TaskLocalSource implements ITaskLocalSource {
 
   @override
   Future<int> insertTask(
-      TaskTableCompanion task,
-      List<SubtaskTableCompanion> subtasks,
-      CategoryTableCompanion category) async {
+    TaskTableCompanion task,
+    List<SubtaskTableCompanion> subtasks,
+    CategoryTableCompanion category,
+  ) async {
     try {
       return await _db.transaction(() async {
         //find and add category Id for task
         if (task.categoryLocalId.value < 0) {
           if (category.name.value.toLowerCase() != 'any') {
             task = task.copyWith(
-                categoryLocalId: Value(await _categoryDao.insertCategory(
-                    category.copyWith(localId: Value.absent()))));
+              categoryLocalId: Value(
+                await _categoryDao.insertCategory(
+                  category.copyWith(localId: Value.absent()),
+                ),
+              ),
+            );
           } else {
-            final categoryAnyId = await _categoryDao.findByName('any');
+            final categoryAnyId = await _categoryDao.findByName(
+              'any',
+              category.userLocalId.value,
+            );
             if (categoryAnyId == null) {
               task = task.copyWith(
-                  categoryLocalId: Value(await _categoryDao.insertCategory(
-                      category.copyWith(localId: Value.absent()))));
+                categoryLocalId: Value(
+                  await _categoryDao.insertCategory(
+                    category.copyWith(localId: Value.absent()),
+                  ),
+                ),
+              );
             } else {
-              task =
-                  task.copyWith(categoryLocalId: Value(categoryAnyId.localId));
+              task = task.copyWith(
+                categoryLocalId: Value(categoryAnyId.localId),
+              );
             }
           }
         }
         final taskLocalId = await _taskDao.insertTask(task);
-        await _subtaskDao.insertAllSubtasks(subtasks
-            .map((e) => e.copyWith(taskLocalId: Value(taskLocalId)))
-            .toList());
+        await _subtaskDao.insertAllSubtasks(
+          subtasks
+              .map((e) => e.copyWith(taskLocalId: Value(taskLocalId)))
+              .toList(),
+        );
         return taskLocalId;
       });
     } catch (e) {
@@ -349,8 +378,9 @@ class TaskLocalSource implements ITaskLocalSource {
       return await _db.transaction(() async {
         logger.e('Insert subtask: $subtask');
         final subtaskLocalId = await _subtaskDao.insertSubtask(subtask);
-        final subtaskTbl =
-            await _subtaskDao.getSubtasksByLocalId(subtaskLocalId);
+        final subtaskTbl = await _subtaskDao.getSubtasksByLocalId(
+          subtaskLocalId,
+        );
         logger.i('subtask table $subtaskTbl');
         if (subtaskTbl == null) throw Exception('Subtask not found');
         logger.i('subtask inserted');
@@ -359,8 +389,8 @@ class TaskLocalSource implements ITaskLocalSource {
         if (task == null) {
           throw Exception('Task not found, cannot insert subtask');
         }
-        final uncompletedSubtaskList =
-            await _subtaskDao.findUncompletedSubtaskByTaskLocalId(task.localId);
+        final uncompletedSubtaskList = await _subtaskDao
+            .findUncompletedSubtaskByTaskLocalId(task.localId);
         logger.i('uncompletedSubtaskList: $uncompletedSubtaskList');
         final newTaskStatus = uncompletedSubtaskList.isEmpty
             ? 'completed'
@@ -392,18 +422,20 @@ class TaskLocalSource implements ITaskLocalSource {
       _subtaskDao.deleteSubtaskById(id);
 
   @override
-  Future<void> deleteCategoryByLocalId(int id) =>
-      _categoryDao.deleteCategoryById(id);
+  Future<void> deleteCategoryByLocalId(int id, int userLocalId) =>
+      _categoryDao.deleteCategoryById(id, userLocalId);
 
-//endregion
+  //endregion
 
-// ================================
-// ========== SYNC ==============
-// ================================
-//region SYNC Task
+  // ================================
+  // ========== SYNC ==============
+  // ================================
+  //region SYNC Task
   @override
   Future<void> updateSyncAddTaskAndSubtask(
-      TaskTableCompanion task, List<SubtaskTableCompanion> subtask) async {
+    TaskTableCompanion task,
+    List<SubtaskTableCompanion> subtask,
+  ) async {
     try {
       return await _db.transaction(() async {
         await _taskDao.updateTask(task);
@@ -436,7 +468,8 @@ class TaskLocalSource implements ITaskLocalSource {
 
   @override
   Future<void> updateSyncSubtasksFromSubtasksTblCompanion(
-      List<SubtaskTableCompanion> subtasks) async {
+    List<SubtaskTableCompanion> subtasks,
+  ) async {
     try {
       logger.i('updateSyncSubtask $subtasks');
       return _subtaskDao.updateListSubtask(subtasks);
@@ -446,14 +479,19 @@ class TaskLocalSource implements ITaskLocalSource {
   }
 
   @override
-  Future<void> updateSyncAddCategory(int localId, String remoteId) {
+  Future<void> updateSyncAddCategory(
+    int localId,
+    String remoteId,
+    int userLocalId,
+  ) {
     try {
       logger.i('updateSyncCategory $localId');
-      return _categoryDao.updateSyncAddCategory(localId, remoteId);
+      return _categoryDao.updateSyncAddCategory(localId, remoteId, userLocalId);
     } catch (e) {
       logger.e('Sync task error: $e');
       return Future.value();
     }
   }
-//endregion
+
+  //endregion
 }

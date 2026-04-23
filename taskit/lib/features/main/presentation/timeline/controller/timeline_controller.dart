@@ -7,32 +7,51 @@ import 'package:taskit/features/task/domain/entities/task_entity.dart';
 import 'package:taskit/shared/extension/date_time.dart';
 import 'package:taskit/shared/log/logger_provider.dart';
 
+import '../../../../auth/presentation/auth/controller/auth_controller.dart';
+
 final timelineControllerProvider =
     NotifierProvider<TimelineController, TimelineState>(TimelineController.new);
 
 class TimelineController extends Notifier<TimelineState> {
   late StreamSubscription _taskSubscription;
+  late final ProviderSubscription _authSub;
 
   @override
   TimelineState build() {
-    startListener();
+    _authSub = ref.listen(
+      authControllerProvider.select((value) => value.user),
+      (_, next) {
+        if (next == null) {
+          _taskSubscription.cancel();
+        } else {
+          startListener(next.localId);
+        }
+      },
+    );
+
     return TimelineState();
   }
 
-  void startListener() {
-    _taskSubscription =
-        ref.watch(taskServiceProvider).watchAllTasks().listen((tasks) {
-      state = state.copyWith(
-        allTasks: tasks,
-        tasks: _getTaskByDate(state.focusDate ?? DateTime.now(), tasks),
-      );
-      logger.i('dates $tasks');
-    });
+  void startListener(int userLocalId) {
+    _taskSubscription = ref
+        .watch(taskServiceProvider)
+        .watchAllTasks(userLocalId)
+        .listen((tasks) {
+          state = state.copyWith(
+            allTasks: tasks,
+            tasks: _getTaskByDate(state.focusDate ?? DateTime.now(), tasks),
+          );
+          logger.i('dates $tasks');
+        });
   }
 
   void onCheck(int localId) {
     logger.i("Check $localId");
-    ref.read(taskServiceProvider).updateTaskStatus(localId);
+    final userLocalId = ref.read(
+      authControllerProvider.select((value) => value.user?.localId),
+    );
+    if (userLocalId == null) return;
+    ref.read(taskServiceProvider).updateTaskStatus(localId, userLocalId);
   }
 
   void onSubtaskCheck(int localId) =>
@@ -52,7 +71,9 @@ class TimelineController extends Notifier<TimelineState> {
   }
 
   List<TaskEntity> _getTaskByDate(
-      DateTime focusDate, List<TaskEntity> allTasks) {
+    DateTime focusDate,
+    List<TaskEntity> allTasks,
+  ) {
     final tasks = allTasks.where((task) {
       final dueDate = task.dueDate;
       logger.i('date $dueDate');

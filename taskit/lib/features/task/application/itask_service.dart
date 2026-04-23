@@ -11,36 +11,39 @@ abstract interface class ITaskService {
   //================================
   //========== WATCH ===============
   //================================
-  Stream<List<TaskEntity>> watchAllTasks();
+  Stream<List<TaskEntity>> watchAllTasks(int userLocalId);
 
-  Stream<List<TaskEntity>> watchTodayTask();
+  Stream<List<TaskEntity>> watchTodayTask(int userLocalId);
 
-  Stream<List<TaskEntity>> watchTomorrowTask();
+  Stream<List<TaskEntity>> watchTomorrowTask(int userLocalId);
 
-  Stream<List<TaskEntity>> watchThisWeekTask();
+  Stream<List<TaskEntity>> watchThisWeekTask(int userLocalId);
 
-  Stream<List<TaskEntity>> watchPendingTask();
+  Stream<List<TaskEntity>> watchPendingTask(int userLocalId);
 
-  Stream<List<TaskEntity>> watchCompletedTodayTask();
+  Stream<List<TaskEntity>> watchCompletedTodayTask(int userLocalId);
 
-  Stream<List<TaskEntity>> watchCompletedThisWeekTask();
+  Stream<List<TaskEntity>> watchCompletedThisWeekTask(int userLocalId);
 
-  Stream<List<TaskEntity>> watchThisWeekOverDueTask();
+  Stream<List<TaskEntity>> watchThisWeekOverDueTask(int userLocalId);
 
-  Stream<List<TaskEntity>> watchTodayOverDueTask();
+  Stream<List<TaskEntity>> watchTodayOverDueTask(int userLocalId);
 
-  Stream<List<CategoryEntity>> watchAllCategories();
+  Stream<List<CategoryEntity>> watchAllCategories(int userLocalId);
 
-  Stream<TaskEntity?> watchTaskByLocalId(int localId);
+  Stream<TaskEntity?> watchTaskByLocalId(int localId, int userLocalId);
 
   Stream<List<SubtaskEntity>> watchSubtasksByTaskLocalId(int localId);
 
-  Stream<List<TaskEntity>> watchTaskByDueDate(DateTime dueDate);
+  Stream<List<TaskEntity>> watchTaskByDueDate(
+    DateTime dueDate,
+    int userLocalId,
+  );
 
   //================================
   //========== UPDATE =============
   //================================
-  Future<void> updateTaskStatus(int localId);
+  Future<void> updateTaskStatus(int localId, int userLocalId);
 
   Future<void> updateSubtaskStatus(int localId);
 
@@ -50,7 +53,11 @@ abstract interface class ITaskService {
 
   Future<void> updateTaskPriority(int localId, TaskPriority priority);
 
-  Future<void> updateTaskCategory(int localId, int categoryLocalId);
+  Future<void> updateTaskCategory(
+    int localId,
+    int categoryLocalId,
+    int userLocalId,
+  );
 
   Future<void> updateTaskDueDate(int localId, DateTime? dueDate);
 
@@ -61,9 +68,12 @@ abstract interface class ITaskService {
   //================================
   //========== READ ==============
   //================================
-  Future<Result<List<CategoryEntity>, Failure>> getAICategory(String title);
+  Future<Result<List<CategoryEntity>, Failure>> getAICategory(
+    String title,
+    int userLocalId,
+  );
 
-  Future<CategoryEntity?> getCategoryByName(String name);
+  Future<CategoryEntity?> getCategoryByName(String name, int userLocalId);
 
   //================================
   //========== INSERT ==============
@@ -79,13 +89,16 @@ abstract interface class ITaskService {
 
   Future<void> deleteSubtask(int localId);
 
-  Future<void> deleteCategory(int localId);
+  Future<void> deleteCategory(int localId, int userLocalId);
 
   //================================
-//========== AI  ================
-//================================
+  //========== AI  ================
+  //================================
 
-  Future<Result<AiTaskEntity, Failure>> generateAiTask(String text);
+  Future<Result<AiTaskEntity, Failure>> generateAiTask(
+    String text,
+    int userLocalId,
+  );
 
   Future<Result<String, Failure>> getAiAnswer(String question, String language);
 }

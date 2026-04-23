@@ -86,10 +86,10 @@ class TaskRepo with DioExceptionMapper implements ITaskRepo {
   //=====================================
   //region WATCH
   @override
-  Stream<List<TaskEntity>> watchAllTasks() {
+  Stream<List<TaskEntity>> watchAllTasks(int userLocalId) {
     final taskStream = _taskLocalSource.watchAllTasks();
     final subtaskStream = _taskLocalSource.watchAllSubtasks();
-    final categoryStream = _taskLocalSource.watchAllCategories();
+    final categoryStream = _taskLocalSource.watchAllCategories(userLocalId);
 
     return Rx.combineLatest3<
       List<TaskTableData>,
@@ -102,8 +102,8 @@ class TaskRepo with DioExceptionMapper implements ITaskRepo {
   }
 
   @override
-  Stream<List<CategoryEntity>> watchAllCategories() {
-    final categoryStream = _taskLocalSource.watchAllCategories();
+  Stream<List<CategoryEntity>> watchAllCategories(int userLocalId) {
+    final categoryStream = _taskLocalSource.watchAllCategories(userLocalId);
     return categoryStream.map(_iTaskMapper.toCategoryEntityList);
   }
 
@@ -175,12 +175,16 @@ class TaskRepo with DioExceptionMapper implements ITaskRepo {
   }
 
   @override
-  Future<void> updateTaskCategory(int localId, int categoryLocalId) async {
+  Future<void> updateTaskCategory(
+    int localId,
+    int categoryLocalId,
+    int userLocalId,
+  ) async {
     _taskLocalSource.updateTaskCategoryWithoutSync(localId, categoryLocalId);
     _syncTaskCategoryTimer[localId]?.cancel();
     _syncTaskCategoryTimer[localId] = Timer(const Duration(seconds: 10), () {
       logger.i('update task category timer');
-      updateRemoteTaskCategory(localId, categoryLocalId);
+      updateRemoteTaskCategory(localId, categoryLocalId, userLocalId);
     });
   }
 
@@ -235,13 +239,14 @@ class TaskRepo with DioExceptionMapper implements ITaskRepo {
   //====================================
   //region READ
   @override
-  Future<TaskEntity> getTaskById(int localId) async {
+  Future<TaskEntity> getTaskById(int localId, int userLocalId) async {
     final taskData = await _taskLocalSource.getTaskByLocalId(localId);
     final subtasksData = await _taskLocalSource.getSubtaskByTaskLocalId(
       localId,
     );
     final categoryData = await _taskLocalSource.getCategoryByLocalId(
       taskData!.categoryLocalId,
+      userLocalId,
     );
 
     return _iTaskMapper.toTaskEntity(taskData, subtasksData, categoryData!);
@@ -256,9 +261,14 @@ class TaskRepo with DioExceptionMapper implements ITaskRepo {
   }
 
   @override
-  Future<List<CategoryEntity>> getAICategory(String title) async {
+  Future<List<CategoryEntity>> getAICategory(
+    String title,
+    int userLocalId,
+  ) async {
     try {
-      final excludedCategories = await _taskLocalSource.getCategories();
+      final excludedCategories = await _taskLocalSource.getCategories(
+        userLocalId,
+      );
       final categoryReq = _iTaskMapper.toAiCategoryReq(
         title,
         _iTaskMapper.categoryTableDataToStringList(excludedCategories),
@@ -291,8 +301,14 @@ class TaskRepo with DioExceptionMapper implements ITaskRepo {
   }
 
   @override
-  Future<CategoryEntity?> getCategoryByName(String name) async {
-    final categoryData = await _taskLocalSource.getCategoryByName(name);
+  Future<CategoryEntity?> getCategoryByName(
+    String name,
+    int userLocalId,
+  ) async {
+    final categoryData = await _taskLocalSource.getCategoryByName(
+      name,
+      userLocalId,
+    );
     return categoryData == null
         ? null
         : _iTaskMapper.toCategoryEntity(categoryData);
@@ -311,7 +327,7 @@ class TaskRepo with DioExceptionMapper implements ITaskRepo {
     );
     if (categoryLocalId == -1) return -1;
     logger.i('insert category with localId $categoryLocalId');
-    insertRemoteCategory(categoryLocalId);
+    insertRemoteCategory(categoryLocalId, category.userLocalId);
     return categoryLocalId;
   }
 
@@ -328,7 +344,7 @@ class TaskRepo with DioExceptionMapper implements ITaskRepo {
       subtaskCompanion,
       categoryCompanion,
     );
-    insertRemoteTask(taskLocalId);
+    insertRemoteTask(taskLocalId, task.userLocalId);
 
     return taskLocalId;
   }
@@ -337,7 +353,7 @@ class TaskRepo with DioExceptionMapper implements ITaskRepo {
   Future<int> insertTaskFromAi(TaskTableCompanion task) async {
     int taskLocalId = await _taskLocalSource.insertTaskFromAi(task);
     if (taskLocalId == -1) return -1;
-    insertRemoteTask(taskLocalId);
+    insertRemoteTask(taskLocalId, taskLocalId);
     return taskLocalId;
   }
 
@@ -388,15 +404,18 @@ class TaskRepo with DioExceptionMapper implements ITaskRepo {
   }
 
   @override
-  Future<void> deleteCategory(int localId) async {
+  Future<void> deleteCategory(int localId, int userLocalId) async {
     // TODO: implement deleteCategory
-    final category = await _taskLocalSource.getCategoryByLocalId(localId);
+    final category = await _taskLocalSource.getCategoryByLocalId(
+      localId,
+      userLocalId,
+    );
     if (category == null || category.name.toLowerCase().trim() == 'any') return;
     final token = await _tokenService.getAccessToken();
     logger.i('delete category with localId $localId');
     if (token == null || category.remoteId.isEmpty) return;
     final categoryRemoteId = category.remoteId;
-    await _taskLocalSource.deleteCategoryByLocalId(localId);
+    await _taskLocalSource.deleteCategoryByLocalId(localId, userLocalId);
     deleteRemoteCategory(categoryRemoteId);
   }
 
@@ -406,7 +425,7 @@ class TaskRepo with DioExceptionMapper implements ITaskRepo {
   //=====================================
   //region INSERT REMOTE
   @override
-  Future<void> insertRemoteTask(int taskLocalId) async {
+  Future<void> insertRemoteTask(int taskLocalId, int userLocalId) async {
     try {
       final token = await _tokenService.getAccessToken();
       if (token == null) return;
@@ -414,6 +433,7 @@ class TaskRepo with DioExceptionMapper implements ITaskRepo {
       if (taskTblData == null) return;
       final categoryTblData = await _taskLocalSource.getCategoryByLocalId(
         taskTblData.categoryLocalId,
+        userLocalId,
       );
       final subtasksTblData = await _taskLocalSource.getSubtaskByTaskLocalId(
         taskLocalId,
@@ -473,12 +493,16 @@ class TaskRepo with DioExceptionMapper implements ITaskRepo {
   }
 
   @override
-  Future<void> insertRemoteCategory(int categoryLocalId) async {
+  Future<void> insertRemoteCategory(
+    int categoryLocalId,
+    int userLocalId,
+  ) async {
     try {
       final token = await _tokenService.getAccessToken();
       if (token == null) return;
       final category = await _taskLocalSource.getCategoryByLocalId(
         categoryLocalId,
+        userLocalId,
       );
       if (category == null) return;
       final request = AddCategoryReq(
@@ -493,6 +517,7 @@ class TaskRepo with DioExceptionMapper implements ITaskRepo {
       await _taskLocalSource.updateSyncAddCategory(
         categoryResData.localId,
         categoryResData.id,
+        userLocalId,
       );
     } catch (e, s) {
       logger.e('add subtasks error: \n $e \n $s');
@@ -580,6 +605,7 @@ class TaskRepo with DioExceptionMapper implements ITaskRepo {
   Future<void> updateRemoteTaskCategory(
     int taskLocalId,
     int categoryLocalId,
+    int userLocalId,
   ) async {
     try {
       final token = await _tokenService.getAccessToken();
@@ -589,6 +615,7 @@ class TaskRepo with DioExceptionMapper implements ITaskRepo {
       if (taskTblData.remoteId.isEmpty) return;
       final categoryTblData = await _taskLocalSource.getCategoryByLocalId(
         categoryLocalId,
+        userLocalId,
       );
       if (categoryTblData == null || categoryTblData.remoteId.isEmpty) return;
       final request = UpdateTaskReq.categoryIdOnly(
@@ -814,6 +841,7 @@ class TaskRepo with DioExceptionMapper implements ITaskRepo {
   Future<Result<AiTaskEntity, Failure>> generateAiTask(
     String text,
     String utcOffset,
+    int userLocalId,
   ) async {
     try {
       final token = await _tokenService.getAccessToken();
@@ -825,8 +853,9 @@ class TaskRepo with DioExceptionMapper implements ITaskRepo {
       final responseData = BaseResponseHelper.requireData(response);
       final category = await _taskLocalSource.getCategoryByRemoteId(
         responseData.categoryId,
+        userLocalId,
       );
-      final user = await _userLocalSource.getUser();
+      final user = await _userLocalSource.getUserByLocalId(userLocalId);
       if (category == null) {
         return const Error(
           Failure(message: 'Category not found when generate task by ai'),
@@ -849,7 +878,7 @@ class TaskRepo with DioExceptionMapper implements ITaskRepo {
       if (localId == -1) {
         return const Error(Failure(message: 'Insert task error'));
       }
-      insertRemoteTask(localId);
+      insertRemoteTask(localId, userLocalId);
       logger.i('generate task local success $localId');
       return Success(aiTask);
     } on Failure catch (e) {

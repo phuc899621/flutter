@@ -25,6 +25,14 @@ class UserDao extends DatabaseAccessor<AppDatabase> with _$UserDaoMixin {
   Future<int> getUserLocalId() =>
       select(userTable).getSingle().then((value) => value.localId);
 
+  Future<UserTableData?> getUserByLocalId(int localId) => (select(
+    userTable,
+  )..where((tbl) => tbl.localId.equals(localId))).getSingleOrNull();
+
+  Future<UserTableData?> getUserByRemoteId(String remoteId) => (select(
+    userTable,
+  )..where((tbl) => tbl.remoteId.equals(remoteId))).getSingleOrNull();
+
   /*
   * Insert
   * */

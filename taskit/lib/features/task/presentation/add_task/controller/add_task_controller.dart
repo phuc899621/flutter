@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:taskit/features/auth/presentation/auth/controller/auth_controller.dart';
 import 'package:taskit/features/task/domain/entities/subtask_entity.dart';
 import 'package:taskit/features/task/domain/entities/task_priority_enum.dart';
 import 'package:taskit/shared/log/logger_provider.dart';
@@ -20,10 +21,24 @@ final addTaskControllerProvider =
 
 class AddTaskController extends Notifier<AddTaskState> {
   late final StreamSubscription _categorySub;
+  late final ProviderSubscription _authSub;
 
   @override
   AddTaskState build() {
-    _startListening();
+    _authSub = ref.listen(
+      authControllerProvider.select((value) => value.user),
+      (_, next) {
+        if (next == null) {
+          _categorySub.cancel();
+        } else {
+          _startListening(next.localId);
+        }
+      },
+    );
+    ref.onDispose(() {
+      _authSub.close();
+      _categorySub.cancel();
+    });
     return const AddTaskState();
   }
 
@@ -116,10 +131,13 @@ class AddTaskController extends Notifier<AddTaskState> {
 
   Future<void> updateAiCategory(String title) async {
     debugPrintStack(stackTrace: StackTrace.current, label: 'aiCategories');
+    final userLocalId = ref.read(
+      authControllerProvider.select((value) => value.user?.localId),
+    );
+    if (userLocalId == null) return;
     state = state.copyWith(isCategoriesLoading: true);
     final taskService = ref.read(taskServiceProvider);
-    final result = await taskService.getAICategory(title);
-    final userLocalId = await ref.read(userServiceProvider).getUserLocalId();
+    final result = await taskService.getAICategory(title, userLocalId);
     result.when(
       (aiCategories) {
         debugPrintStack(stackTrace: StackTrace.current, label: 'aiCategories');
@@ -147,10 +165,12 @@ class AddTaskController extends Notifier<AddTaskState> {
     state = state.copyWith(isTimeSelected: false);
   }
 
-  void _startListening() {
+  void _startListening(int userLocalId) {
     logger.i('Category._startListening');
     final taskService = ref.watch(taskServiceProvider);
-    _categorySub = taskService.watchAllCategories().listen((categories) {
+    _categorySub = taskService.watchAllCategories(userLocalId).listen((
+      categories,
+    ) {
       state = state.copyWith(isCategoriesLoading: true);
       state = state.copyWith(categories: categories);
       if (state.selectedCategory == null) {

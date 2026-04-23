@@ -13,9 +13,9 @@ abstract interface class ITaskRepo {
   //================================
   //========== WATCH ================
   //================================
-  Stream<List<TaskEntity>> watchAllTasks();
+  Stream<List<TaskEntity>> watchAllTasks(int userLocalId);
 
-  Stream<List<CategoryEntity>> watchAllCategories();
+  Stream<List<CategoryEntity>> watchAllCategories(int userLocalId);
 
   Stream<List<SubtaskEntity>> watchAllSubtasks();
 
@@ -32,7 +32,11 @@ abstract interface class ITaskRepo {
 
   Future<void> updateTaskPriority(int localId, TaskPriority priority);
 
-  Future<void> updateTaskCategory(int localId, int categoryLocalId);
+  Future<void> updateTaskCategory(
+    int localId,
+    int categoryLocalId,
+    int userLocalId,
+  );
 
   Future<void> updateTaskDueDate(int localId, DateTime? dueDate);
 
@@ -43,13 +47,13 @@ abstract interface class ITaskRepo {
   //================================
   //========== READ ================
   //================================
-  Future<TaskEntity> getTaskById(int localId);
+  Future<TaskEntity> getTaskById(int localId, int userLocalId);
 
   Future<List<SubtaskEntity>> getSubtaskByTaskLocalId(int taskLocalId);
 
-  Future<List<CategoryEntity>> getAICategory(String title);
+  Future<List<CategoryEntity>> getAICategory(String title, int userLocalId);
 
-  Future<CategoryEntity?> getCategoryByName(String name);
+  Future<CategoryEntity?> getCategoryByName(String name, int userLocalId);
 
   //================================
   //========== INSERT ================
@@ -69,17 +73,17 @@ abstract interface class ITaskRepo {
 
   Future<void> deleteSubtask(int localId);
 
-  Future<void> deleteCategory(int localId);
+  Future<void> deleteCategory(int localId, int userLocalId);
 
   //================================
   //========== INSERT REMOTE =======
   //================================
 
-  Future<void> insertRemoteTask(int taskLocalId);
+  Future<void> insertRemoteTask(int taskLocalId, int userLocalId);
 
   Future<void> insertRemoteSubtask(int taskLocalId, int subtaskLocalId);
 
-  Future<void> insertRemoteCategory(int categoryLocalId);
+  Future<void> insertRemoteCategory(int categoryLocalId, int userLocalId);
 
   //================================
   //========== Update REMOTE =======
@@ -97,7 +101,11 @@ abstract interface class ITaskRepo {
 
   Future<void> updateRemoteTaskPriority(int taskLocalId);
 
-  Future<void> updateRemoteTaskCategory(int taskLocalId, int categoryLocalId);
+  Future<void> updateRemoteTaskCategory(
+    int taskLocalId,
+    int categoryLocalId,
+    int userLocalId,
+  );
 
   Future<void> updateRemoteTaskDueDate(int taskLocalId);
 
@@ -105,9 +113,9 @@ abstract interface class ITaskRepo {
 
   Future<void> updateRemoteSubtaskTitle(int subtaskLocalId);
 
-//================================
-//========== DELETE REMOTE================
-//================================
+  //================================
+  //========== DELETE REMOTE================
+  //================================
 
   Future<void> deleteRemoteTask(String taskRemoteId);
 
@@ -115,13 +123,19 @@ abstract interface class ITaskRepo {
 
   Future<void> deleteRemoteCategory(String categoryRemoteId);
 
-//================================
-//========== AI  ================
-//================================
+  //================================
+  //========== AI  ================
+  //================================
 
   Future<Result<AiTaskEntity, Failure>> generateAiTask(
-      String text, String utcOffset);
+    String text,
+    String utcOffset,
+    int userLocalId,
+  );
 
   Future<Result<String, Failure>> getAiAnswer(
-      String question, String utcOffset, String language);
+    String question,
+    String utcOffset,
+    String language,
+  );
 }

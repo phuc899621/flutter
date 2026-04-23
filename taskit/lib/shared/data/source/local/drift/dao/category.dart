@@ -20,8 +20,10 @@ class CategoryDao extends DatabaseAccessor<AppDatabase>
   //========== WATCH ===============
   //================================
   //region WATCH
-  Stream<List<CategoryTableData>> watchAllCategories() =>
-      select(categoryTable).watch();
+  Stream<List<CategoryTableData>> watchAllCategories(int userLocalId) =>
+      (select(
+        categoryTable,
+      )..where((tbl) => tbl.userLocalId.equals(userLocalId))).watch();
 
   //endregion
 
@@ -29,20 +31,39 @@ class CategoryDao extends DatabaseAccessor<AppDatabase>
   //========== READ ===============
   //================================
   //region READ
-  Future<List<CategoryTableData>> getCategories() =>
-      select(categoryTable).get();
+  Future<List<CategoryTableData>> getCategories(int userLocalId) => (select(
+    categoryTable,
+  )..where((tbl) => tbl.userLocalId.equals(userLocalId))).get();
 
-  Future<CategoryTableData?> getCategoryByLocalId(int localId) =>
-      (select(categoryTable)..where((tbl) => tbl.localId.equals(localId)))
+  Future<CategoryTableData?> getCategoryByLocalId(
+    int localId,
+    int userLocalId,
+  ) =>
+      (select(categoryTable)..where(
+            (tbl) =>
+                tbl.localId.equals(localId) &
+                tbl.userLocalId.equals(userLocalId),
+          ))
           .getSingleOrNull();
 
-  Future<CategoryTableData?> getCategoryByRemoteId(String remoteId) =>
-      (select(categoryTable)..where((tbl) => tbl.remoteId.equals(remoteId)))
+  Future<CategoryTableData?> getCategoryByRemoteId(
+    String remoteId,
+    int userLocalId,
+  ) =>
+      (select(categoryTable)..where(
+            (tbl) =>
+                tbl.remoteId.equals(remoteId) &
+                tbl.userLocalId.equals(userLocalId),
+          ))
           .getSingleOrNull();
 
-  Future<CategoryTableData?> findByName(String name) => (select(categoryTable)
-        ..where((tbl) => tbl.name.lower().equals(name.toLowerCase())))
-      .getSingleOrNull();
+  Future<CategoryTableData?> findByName(String name, int userLocalId) =>
+      (select(categoryTable)..where(
+            (tbl) =>
+                tbl.name.lower().equals(name.toLowerCase()) &
+                tbl.userLocalId.equals(userLocalId),
+          ))
+          .getSingleOrNull();
 
   //endregion
 
@@ -73,14 +94,30 @@ class CategoryDao extends DatabaseAccessor<AppDatabase>
   Future<bool> updateCategoryWithoutSync(CategoryTableCompanion category) =>
       update(categoryTable).replace(category);
 
-  Future<void> updateSyncCategory(int localId) =>
-      (update(categoryTable)..where((item) => item.localId.equals(localId)))
+  Future<void> updateSyncCategory(int localId, int userLocalId) =>
+      (update(categoryTable)..where(
+            (item) =>
+                item.localId.equals(localId) &
+                item.userLocalId.equals(userLocalId),
+          ))
           .write(CategoryTableCompanion(isSynced: Value(true)));
 
-  Future<void> updateSyncAddCategory(int localId, String remoteId) =>
-      (update(categoryTable)..where((item) => item.localId.equals(localId)))
-          .write(CategoryTableCompanion(
-              isSynced: Value(true), remoteId: Value(remoteId)));
+  Future<void> updateSyncAddCategory(
+    int localId,
+    String remoteId,
+    int userLocalId,
+  ) =>
+      (update(categoryTable)..where(
+            (item) =>
+                item.localId.equals(localId) &
+                item.userLocalId.equals(userLocalId),
+          ))
+          .write(
+            CategoryTableCompanion(
+              isSynced: Value(true),
+              remoteId: Value(remoteId),
+            ),
+          );
 
   //endregion
 
@@ -88,10 +125,18 @@ class CategoryDao extends DatabaseAccessor<AppDatabase>
   //========== DELETE ===============
   //================================
   //region DELETE
-  Future<int> deleteCategoryById(int id) =>
-      (delete(categoryTable)..where((item) => item.localId.equals(id))).go();
+  Future<int> deleteCategoryById(int id, int userLocalId) =>
+      (delete(categoryTable)..where(
+            (item) =>
+                item.localId.equals(id) & item.userLocalId.equals(userLocalId),
+          ))
+          .go();
 
-  Future<int> deleteCategoryByName(String name) =>
-      (delete(categoryTable)..where((item) => item.name.equals(name))).go();
-//endregion
+  Future<int> deleteCategoryByName(String name, int userLocalId) =>
+      (delete(categoryTable)..where(
+            (item) =>
+                item.name.equals(name) & item.userLocalId.equals(userLocalId),
+          ))
+          .go();
+  //endregion
 }

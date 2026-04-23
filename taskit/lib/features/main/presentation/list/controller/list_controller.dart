@@ -11,6 +11,7 @@ import 'package:taskit/shared/extension/date_time.dart';
 import 'package:taskit/shared/extension/string.dart';
 import 'package:taskit/shared/log/logger_provider.dart';
 
+import '../../../../auth/presentation/auth/controller/auth_controller.dart';
 import '../../../../task/application/task_service.dart';
 import '../../../../task/domain/entities/order_option_enum.dart';
 import '../../../../task/domain/entities/task_entity.dart';
@@ -22,31 +23,52 @@ final shouldFocusSearchTextFieldProvider = StateProvider<bool>((ref) => false);
 
 class ListController extends Notifier<ListState> {
   late StreamSubscription _taskSub;
+  late final ProviderSubscription _authSub;
   ValueChanged<bool>? onFiltering;
 
   @override
   ListState build() {
-    _startTaskListener();
+    _authSub = ref.listen(
+      authControllerProvider.select((value) => value.user),
+      (_, next) {
+        if (next == null) {
+          _taskSub.cancel();
+        } else {
+          _startTaskListener(next.localId);
+        }
+      },
+    );
+    ref.onDispose(() {
+      _authSub.close();
+      _taskSub.cancel();
+    });
     return const ListState();
   }
 
-  void _startTaskListener() {
-    _taskSub = ref.watch(taskServiceProvider).watchAllTasks().listen((tasks) {
-      state = state.copyWith(
-        filteringTask: _filteringTasks(tasks),
-        allTask: tasks,
-        filteringPendingTask: _filteringPendingTasks(tasks),
-        filteringCompletedTask: _filteringCompletedTasks(tasks),
-        filteringScheduledTask: _filteringScheduledTasks(tasks),
-      );
-    });
+  void _startTaskListener(int userLocalId) {
+    _taskSub = ref.watch(taskServiceProvider).watchAllTasks(userLocalId).listen(
+      (tasks) {
+        state = state.copyWith(
+          filteringTask: _filteringTasks(tasks),
+          allTask: tasks,
+          filteringPendingTask: _filteringPendingTasks(tasks),
+          filteringCompletedTask: _filteringCompletedTasks(tasks),
+          filteringScheduledTask: _filteringScheduledTasks(tasks),
+        );
+      },
+    );
   }
 
   void setFilteringCallback(ValueChanged<bool> callback) =>
       onFiltering = callback;
 
-  void onCheck(int localId) =>
-      ref.read(taskServiceProvider).updateTaskStatus(localId);
+  void onCheck(int localId) {
+    final userLocalId = ref.read(
+      authControllerProvider.select((value) => value.user?.localId),
+    );
+    if (userLocalId == null) return;
+    ref.read(taskServiceProvider).updateTaskStatus(localId, userLocalId);
+  }
 
   void onSubtaskCheck(int localId) =>
       ref.read(taskServiceProvider).updateSubtaskStatus(localId);

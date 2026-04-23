@@ -9,6 +9,8 @@ import 'package:taskit/features/task/domain/entities/task_priority_enum.dart';
 import 'package:taskit/features/task/presentation/filter_task/state/filter_state.dart';
 import 'package:taskit/shared/log/logger_provider.dart';
 
+import '../../../../auth/presentation/auth/controller/auth_controller.dart';
+
 final filterControllerProvider =
     NotifierProvider.autoDispose<FilterController, FilterState>(
       FilterController.new,
@@ -16,10 +18,23 @@ final filterControllerProvider =
 
 class FilterController extends Notifier<FilterState> {
   late StreamSubscription _categorySub;
+  late final ProviderSubscription _authSub;
 
   @override
   FilterState build() {
-    _startListening();
+    _authSub = ref.listen(
+      authControllerProvider.select((value) => value.user),
+      (_, next) {
+        if (next == null) {
+          _categorySub.cancel();
+        } else {
+          _startListening(next.localId);
+        }
+      });
+    ref.onDispose(() {
+      _authSub.close();
+      _categorySub.cancel();
+    });
     return FilterState();
   }
 
@@ -28,8 +43,8 @@ class FilterController extends Notifier<FilterState> {
   //==============================================
   //region LISTENING
   //endregion
-  void _startListening() {
-    _categorySub = ref.read(taskServiceProvider).watchAllCategories().listen((
+  void _startListening(int userLocalId) {
+    _categorySub = ref.read(taskServiceProvider).watchAllCategories(userLocalId).listen((
       categories,
     ) {
       state = state.copyWith(categories: categories);

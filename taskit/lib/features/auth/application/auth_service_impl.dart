@@ -1,8 +1,8 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:multiple_result/multiple_result.dart';
+import 'package:taskit/features/auth/data/repo/auth_repo.dart';
 import 'package:taskit/features/auth/domain/entities/login/login_entity.dart';
 import 'package:taskit/features/auth/domain/entities/signup/signup_entity.dart';
-import 'package:taskit/features/auth/domain/repo/auth_repo.dart';
 import 'package:taskit/features/user/domain/entity/user_entity.dart';
 import 'package:taskit/shared/exception/failure.dart';
 import 'package:taskit/shared/utils/result_handler.dart';

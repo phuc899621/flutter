@@ -47,15 +47,26 @@ class AuthLocalDataSource {
   Future<int> cacheUser(UserData data) async {
     try {
       return db.transaction(() async {
-        await userDao.deleteIfExist();
-        return await userDao.insertUser(
-          UserTableCompanion(
-            remoteId: Value(data.id),
-            name: Value(data.name),
-            email: Value(data.email),
-            avatar: Value(data.avatar),
-          ),
-        );
+        final userTableData = await userDao.getUserByRemoteId(data.id);
+        if (userTableData != null) {
+          await userDao.updateUser(
+            UserTableCompanion(
+              name: Value(data.name),
+              email: Value(data.email),
+              avatar: Value(data.avatar),
+            ),
+          );
+          return userTableData.localId;
+        } else {
+          return await userDao.insertUser(
+            UserTableCompanion(
+              remoteId: Value(data.id),
+              name: Value(data.name),
+              email: Value(data.email),
+              avatar: Value(data.avatar),
+            ),
+          );
+        }
       });
     } catch (e) {
       throw Exception(e);

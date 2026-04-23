@@ -4,6 +4,7 @@ import 'package:taskit/features/main/presentation/main/state/task_generate_state
 import 'package:taskit/features/task/application/task_service.dart';
 
 import '../../../../../shared/log/logger_provider.dart';
+import '../../../../auth/presentation/auth/controller/auth_controller.dart';
 
 final taskGenerateControllerProvider =
     NotifierProvider.autoDispose<TaskGenerateController, TaskGenerateState>(
@@ -11,6 +12,8 @@ final taskGenerateControllerProvider =
     );
 
 class TaskGenerateController extends Notifier<TaskGenerateState> {
+  late final ProviderSubscription _aiSub;
+
   @override
   TaskGenerateState build() {
     return TaskGenerateState();
@@ -38,6 +41,10 @@ class TaskGenerateController extends Notifier<TaskGenerateState> {
   void generateTask() async {
     try {
       final aiService = ref.read(taskServiceProvider);
+      final userLocalId = ref.read(
+        authControllerProvider.select((value) => value.user?.localId),
+      );
+      if (userLocalId == null) return;
       state = state.copyWith(
         isGenerating: true,
         error: null,
@@ -47,7 +54,7 @@ class TaskGenerateController extends Notifier<TaskGenerateState> {
         state = state.copyWith(isGenerating: false, error: 'Text is empty');
         return;
       }
-      final result = await aiService.generateAiTask(state.text);
+      final result = await aiService.generateAiTask(state.text, userLocalId);
       result.when(
         (success) {
           final text =

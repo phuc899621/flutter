@@ -8,6 +8,8 @@ abstract interface class IUserLocalSource {
   //region READ
   Future<int> getUserLocalId();
 
+  Future<UserTableData?> getUserByLocalId(int localId);
+
   Future<UserTableData?> getUser();
-//endregion
+  //endregion
 }

@@ -26,27 +26,42 @@ class HomeController extends Notifier<HomeState> {
 
   StreamSubscription? _userSub;
   StreamSubscription? _timeSub;
+  late final ProviderSubscription _authSub;
 
   late final DateTime _lastCheckTime;
 
   @override
   HomeState build() {
     _lastCheckTime = DateTime.now().toStartOfDay();
+    _authSub = ref.listen(
+      authControllerProvider.select((value) => value.user),
+      (_, next) {
+        if (next == null) {
+          _cancelStreams();
+        } else {
+          _startUserListening();
+          _startTaskListening(next.localId);
+        }
+      },
+    );
     ref.onDispose(() {
-      _todaySub?.cancel();
-      _tomorrowSub?.cancel();
-      _thisWeekSub?.cancel();
-      _todayOverDueSub?.cancel();
-      _thisWeekOverDueSub?.cancel();
-      _pendingSub?.cancel();
-      _completedTodaySub?.cancel();
-      _completedThisWeekSub?.cancel();
-      _userSub?.cancel();
-      _timeSub?.cancel();
+      _authSub.close();
+      _cancelStreams();
     });
-    _startUserListening();
-    _startTaskListening();
     return HomeState();
+  }
+
+  void _cancelStreams() {
+    _todaySub?.cancel();
+    _tomorrowSub?.cancel();
+    _thisWeekSub?.cancel();
+    _todayOverDueSub?.cancel();
+    _thisWeekOverDueSub?.cancel();
+    _pendingSub?.cancel();
+    _completedTodaySub?.cancel();
+    _completedThisWeekSub?.cancel();
+    _userSub?.cancel();
+    _timeSub?.cancel();
   }
 
   void _startUserListening() {
@@ -61,7 +76,7 @@ class HomeController extends Notifier<HomeState> {
     await ref.read(authControllerProvider.notifier).logout();
   }
 
-  void _restartListening() {
+  void _restartListening(int userLocalId) {
     _todaySub?.cancel();
     _tomorrowSub?.cancel();
     _thisWeekSub?.cancel();
@@ -70,19 +85,27 @@ class HomeController extends Notifier<HomeState> {
     _pendingSub?.cancel();
     _completedTodaySub?.cancel();
     _completedThisWeekSub?.cancel();
-    _startTaskListening();
+    _startTaskListening(userLocalId);
   }
 
   void onTimeChecker(DateTime now) {
     if (!now.isSameDay(_lastCheckTime)) {
       _lastCheckTime = now.toStartOfDay();
-      _restartListening();
+      final userLocalId = ref.read(
+        authControllerProvider.select((value) => value.user?.localId),
+      );
+      if (userLocalId == null) return;
+      _restartListening(userLocalId);
     }
   }
 
   void onCheck(int localId) {
     logger.i("Check $localId");
-    ref.read(taskServiceProvider).updateTaskStatus(localId);
+    final userLocalId = ref.read(
+      authControllerProvider.select((value) => value.user?.localId),
+    );
+    if (userLocalId == null) return;
+    ref.read(taskServiceProvider).updateTaskStatus(localId, userLocalId);
   }
 
   void onSubtaskCheck(int localId) =>
@@ -97,44 +120,47 @@ class HomeController extends Notifier<HomeState> {
   void setSelectedTask(TaskEntity task) =>
       state = state.copyWith(selectedTask: task);
 
-  void _startTaskListening() {
+  void _startTaskListening(int userLocalId) {
     final taskService = ref.watch(taskServiceProvider);
-    final user = ref.watch(userServiceProvider);
-    _todaySub = taskService.watchTodayTask().listen((tasks) {
+    _todaySub = taskService.watchTodayTask(userLocalId).listen((tasks) {
       logger.i("Today Task: $tasks");
       state = state.copyWith(todayTasks: tasks);
     });
-    _tomorrowSub = taskService.watchTomorrowTask().listen((tasks) {
+    _tomorrowSub = taskService.watchTomorrowTask(userLocalId).listen((tasks) {
       debugPrint("Tomorrow: $tasks");
       state = state.copyWith(tomorrowTasks: tasks);
     });
-    _thisWeekSub = taskService.watchThisWeekTask().listen((tasks) {
+    _thisWeekSub = taskService.watchThisWeekTask(userLocalId).listen((tasks) {
       debugPrint("This Week: $tasks");
       state = state.copyWith(thisWeekTasks: tasks);
     });
-    _todayOverDueSub = taskService.watchTodayOverDueTask().listen((tasks) {
+    _todayOverDueSub = taskService.watchTodayOverDueTask(userLocalId).listen((
+      tasks,
+    ) {
       debugPrint("Over Due: $tasks");
       state = state.copyWith(todayOverDueTasks: tasks);
     });
-    _thisWeekOverDueSub = taskService.watchThisWeekOverDueTask().listen((
-      tasks,
-    ) {
-      debugPrint("Over Due: $tasks");
-      state = state.copyWith(thisWeekOverDueTasks: tasks);
-    });
-    _pendingSub = taskService.watchPendingTask().listen((tasks) {
+    _thisWeekOverDueSub = taskService
+        .watchThisWeekOverDueTask(userLocalId)
+        .listen((tasks) {
+          debugPrint("Over Due: $tasks");
+          state = state.copyWith(thisWeekOverDueTasks: tasks);
+        });
+    _pendingSub = taskService.watchPendingTask(userLocalId).listen((tasks) {
       debugPrint("Pending: $tasks");
       state = state.copyWith(pendingTasks: tasks);
     });
-    _completedTodaySub = taskService.watchCompletedTodayTask().listen((tasks) {
-      debugPrint("Completed Today: $tasks");
-      state = state.copyWith(todayCompletedTasks: tasks);
-    });
-    _completedThisWeekSub = taskService.watchCompletedThisWeekTask().listen((
-      tasks,
-    ) {
-      debugPrint("Completed This Week: $tasks");
-      state = state.copyWith(thisWeekCompletedTasks: tasks);
-    });
+    _completedTodaySub = taskService
+        .watchCompletedTodayTask(userLocalId)
+        .listen((tasks) {
+          debugPrint("Completed Today: $tasks");
+          state = state.copyWith(todayCompletedTasks: tasks);
+        });
+    _completedThisWeekSub = taskService
+        .watchCompletedThisWeekTask(userLocalId)
+        .listen((tasks) {
+          debugPrint("Completed This Week: $tasks");
+          state = state.copyWith(thisWeekCompletedTasks: tasks);
+        });
   }
 }
