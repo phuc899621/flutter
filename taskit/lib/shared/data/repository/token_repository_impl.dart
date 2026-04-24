@@ -17,6 +17,7 @@ class TokenRepositoryImpl implements TokenRepository {
   static final String _access = 'ACCESS_TOKEN'.hardcoded;
   static final String _refresh = 'REFRESH_TOKEN'.hardcoded;
   static final String _sessionId = 'SESSION_ID'.hardcoded;
+  static final String _activeUserId = 'ACTIVE_USER_ID'.hardcoded;
 
   TokenRepositoryImpl(this._storage);
 
@@ -30,6 +31,19 @@ class TokenRepositoryImpl implements TokenRepository {
     await _storage.write(key: _refresh, value: refresh);
     await _storage.write(key: _sessionId, value: sessionId);
   }
+
+  @override
+  Future<void> saveActiveUserId(int id) async {
+    await _storage.write(key: _activeUserId, value: id.toString());
+  }
+
+  @override
+  Future<void> deleteActiveUserId() => _storage.delete(key: _activeUserId);
+
+  @override
+  Future<int?> getActiveUserId() => _storage
+      .read(key: _activeUserId)
+      .then((value) => int.tryParse(value ?? ''));
 
   @override
   Future<String?> getAccessToken() => _storage.read(key: _access);

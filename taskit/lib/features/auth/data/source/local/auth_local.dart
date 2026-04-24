@@ -51,6 +51,8 @@ class AuthLocalDataSource {
         if (userTableData != null) {
           await userDao.updateUser(
             UserTableCompanion(
+              localId: Value(userTableData.localId),
+              remoteId: Value(data.id),
               name: Value(data.name),
               email: Value(data.email),
               avatar: Value(data.avatar),

@@ -17,28 +17,26 @@ final userRepoProvider = Provider<IUserRepo>((ref) {
 class UserRepo with DioExceptionMapper implements IUserMapper, IUserRepo {
   final IUserLocalSource _iUserLocalSource;
 
-  UserRepo(
-    this._iUserLocalSource,
-  );
+  UserRepo(this._iUserLocalSource);
 
   //region Mapper
   @override
   UserEntity toUserEntity(UserTableData data) => UserEntity(
-        remoteId: data.remoteId,
-        localId: data.localId,
-        name: data.name,
-        email: data.email,
-        avatar: data.avatar,
-      );
+    remoteId: data.remoteId,
+    localId: data.localId,
+    name: data.name,
+    email: data.email,
+    avatar: data.avatar,
+  );
 
   @override
   UserTableData toUserTableData(UserEntity entity) => UserTableData(
-        remoteId: entity.remoteId,
-        localId: entity.localId,
-        name: entity.name,
-        email: entity.email,
-        avatar: entity.avatar,
-      );
+    remoteId: entity.remoteId,
+    localId: entity.localId,
+    name: entity.name,
+    email: entity.email,
+    avatar: entity.avatar,
+  );
 
   @override
   UserTableCompanion toUserTableCompanion(UserEntity entity) =>
@@ -59,17 +57,11 @@ class UserRepo with DioExceptionMapper implements IUserMapper, IUserRepo {
   Future<UserEntity> getUser() async {
     final result = await _iUserLocalSource.getUser();
     return result == null
-        ? UserEntity(
-            localId: -1,
-            remoteId: '',
-            name: '',
-            email: '',
-            avatar: '',
-          )
+        ? UserEntity(localId: -1, remoteId: '', name: '', email: '', avatar: '')
         : toUserEntity(result);
   }
 
   @override
-  Stream<UserEntity> watchUser() =>
-      _iUserLocalSource.watchUser().map(toUserEntity);
+  Stream<UserEntity> watchUserByLocalId(int localId) =>
+      _iUserLocalSource.watchUserByLocalId(localId).map(toUserEntity);
 }

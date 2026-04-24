@@ -29,6 +29,7 @@ class AuthController extends Notifier<AuthState> {
     localResult.when((u) => localUser = u, (f) {});
 
     if (localUser != null) {
+      await ref.read(tokenServiceProvider).saveActiveUserId(localUser!.localId);
       state = state.copyWith(status: AuthStatus.authenticated, user: localUser);
       fetchUser();
     } else {

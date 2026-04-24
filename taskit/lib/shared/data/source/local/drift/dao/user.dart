@@ -15,7 +15,9 @@ final userDaoProvider = Provider<UserDao>((ref) {
 class UserDao extends DatabaseAccessor<AppDatabase> with _$UserDaoMixin {
   UserDao(super.db);
 
-  Stream<UserTableData> watchUser() => select(userTable).watchSingle();
+  Stream<UserTableData> watchUserByLocalId(int localId) => (select(
+    userTable,
+  )..where((tbl) => tbl.localId.equals(localId))).watchSingle();
 
   /*
   * Read

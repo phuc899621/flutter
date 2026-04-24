@@ -2,7 +2,7 @@ import '../../../../../shared/data/source/local/drift/database/database.dart';
 
 abstract interface class IUserLocalSource {
   //region WATCH
-  Stream<UserTableData> watchUser();
+  Stream<UserTableData> watchUserByLocalId(int localId);
 
   //endregion
   //region READ

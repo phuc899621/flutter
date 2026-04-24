@@ -16,7 +16,8 @@ class UserLocalSource implements IUserLocalSource {
 
   //region WATCH
   @override
-  Stream<UserTableData> watchUser() => userDao.watchUser();
+  Stream<UserTableData> watchUserByLocalId(int localId) =>
+      userDao.watchUserByLocalId(localId);
 
   @override
   Future<UserTableData?> getUserByLocalId(int localId) =>

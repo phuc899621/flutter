@@ -120,10 +120,11 @@ class AuthRepoImpl with DioExceptionMapper implements AuthRepo {
     return callSafe(() async {
       final response = await _authApi.fetchUser();
       logger.w('🚀 AuthRepoImpl: fetchUser success. User: ${response.data}');
-      final userLocalData = await _authLocal.cacheUser(response.data);
+      final userLocalId = await _authLocal.cacheUser(response.data);
+      await _tokenService.saveActiveUserId(userLocalId);
       return response.toResult(
         UserEntity(
-          localId: userLocalData,
+          localId: userLocalId,
           remoteId: response.data.id,
           name: response.data.name,
           email: response.data.email,

@@ -14,6 +14,16 @@ class TokenServiceImpl implements TokenService {
   TokenServiceImpl(this._tokenRepository);
 
   @override
+  Future<int?> getActiveUserId() => _tokenRepository.getActiveUserId();
+
+  @override
+  Future<void> deleteActiveUserId() => _tokenRepository.deleteActiveUserId();
+
+  @override
+  Future<void> saveActiveUserId(int id) =>
+      _tokenRepository.saveActiveUserId(id);
+
+  @override
   Future<void> deleteTokens() => _tokenRepository.deleteTokens();
 
   @override

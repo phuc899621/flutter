@@ -81,6 +81,7 @@ dependencies:
   path: ^1.9.1
   font_awesome_flutter: ^11.0.0
   shared_preferences: ^2.5.5
+  shimmer_text: ^0.0.2
 
 dev_dependencies:
   flutter_test:

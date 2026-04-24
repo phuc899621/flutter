@@ -16,7 +16,8 @@ class UserService implements IUserService {
   UserService(this._iUserRepo);
 
   @override
-  Stream<UserEntity> watchUser() => _iUserRepo.watchUser();
+  Stream<UserEntity> watchUserByLocalId(int localId) =>
+      _iUserRepo.watchUserByLocalId(localId);
 
   @override
   Future<int> getUserLocalId() => _iUserRepo.getUserLocalId();

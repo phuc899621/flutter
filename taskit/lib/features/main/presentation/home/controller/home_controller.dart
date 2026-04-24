@@ -39,7 +39,7 @@ class HomeController extends Notifier<HomeState> {
         if (next == null) {
           _cancelStreams();
         } else {
-          _startUserListening();
+          _startUserListening(next.localId);
           _startTaskListening(next.localId);
         }
       },
@@ -64,9 +64,9 @@ class HomeController extends Notifier<HomeState> {
     _timeSub?.cancel();
   }
 
-  void _startUserListening() {
+  void _startUserListening(int localId) {
     final user = ref.watch(userServiceProvider);
-    _userSub = user.watchUser().listen((user) {
+    _userSub = user.watchUserByLocalId(localId).listen((user) {
       state = state.copyWith(userName: user.name);
     });
   }
