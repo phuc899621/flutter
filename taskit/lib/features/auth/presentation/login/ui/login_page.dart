@@ -61,8 +61,6 @@ class _LoginPageState extends ConsumerState<LoginPage> {
   @override
   Widget build(BuildContext context) {
     _listener();
-    final state = ref.watch(loginControllerProvider);
-    final text = Theme.of(context).textTheme;
     final color = Theme.of(context).colorScheme;
     return SafeArea(
       top: true,

@@ -15,7 +15,7 @@ import 'package:taskit/features/task/data/source/remote/itask_remote_source.dart
 import 'package:taskit/features/task/domain/entities/ai_task_entity.dart';
 import 'package:taskit/features/task/domain/entities/task_entity.dart';
 import 'package:taskit/features/task/domain/entities/task_priority_enum.dart';
-import 'package:taskit/features/user/data/source/local/iuser_local_source.dart';
+import 'package:taskit/features/user/data/source/local/user_local_source.dart';
 import 'package:taskit/shared/data/repository/token_repository.dart';
 import 'package:taskit/shared/data/repository/token_repository_impl.dart';
 import 'package:taskit/shared/data/source/local/drift/database/database.dart';
@@ -24,7 +24,7 @@ import 'package:taskit/shared/helpers/base_response_helper.dart';
 import '../../../../shared/data/source/remote/network/dio_exception_mapper.dart';
 import '../../../../shared/exception/failure.dart';
 import '../../../../shared/log/logger_provider.dart';
-import '../../../user/data/source/local/user_local_source.dart';
+import '../../../user/data/source/local/user_local_source_impl.dart';
 import '../../domain/entities/category_entity.dart';
 import '../../domain/entities/subtask_entity.dart';
 import '../../domain/entities/task_status_enum.dart';
@@ -58,7 +58,7 @@ class TaskRepo with DioExceptionMapper implements ITaskRepo {
   final TaskApi _taskApi;
   final ITaskLocalSource _taskLocalSource;
   final ITaskRemoteSource _taskRemoteSource;
-  final IUserLocalSource _userLocalSource;
+  final UserLocalSource _userLocalSource;
   final TokenRepository _tokenService;
   final ITaskMapper _iTaskMapper;
   final Map<int, Timer> _syncTaskTitleTimers = {};
@@ -384,7 +384,10 @@ class TaskRepo with DioExceptionMapper implements ITaskRepo {
     final task = await _taskLocalSource.getTaskByLocalId(localId);
     final token = await _tokenService.getAccessToken();
     logger.i('delete task with localId $localId');
-    if (task == null || task.remoteId.isEmpty || token == null || token.isEmpty) {
+    if (task == null ||
+        task.remoteId.isEmpty ||
+        token == null ||
+        token.isEmpty) {
       return;
     }
     logger.i('delete task with remoteId ${task.remoteId}');

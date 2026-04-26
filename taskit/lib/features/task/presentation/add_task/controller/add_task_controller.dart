@@ -5,9 +5,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:taskit/features/auth/presentation/auth/controller/auth_controller.dart';
 import 'package:taskit/features/task/domain/entities/subtask_entity.dart';
 import 'package:taskit/features/task/domain/entities/task_priority_enum.dart';
+import 'package:taskit/features/user/domain/usecase/watch_user_by_local_id_use_case.dart';
 import 'package:taskit/shared/log/logger_provider.dart';
 
-import '../../../../user/application/user_service.dart';
 import '../../../application/task_service.dart';
 import '../../../domain/entities/category_entity.dart';
 import '../../../domain/entities/task_entity.dart';
@@ -120,10 +120,12 @@ class AddTaskController extends Notifier<AddTaskState> {
   void setAddTaskForm() {}
 
   void onAddCategory() async {
+    final user = ref.read(currentUserProvider).value;
+    if (user == null) return;
     final category = CategoryEntity(
       localId: -1,
       name: state.addCategory,
-      userLocalId: await ref.read(userServiceProvider).getUserLocalId(),
+      userLocalId: user.localId,
     );
     ref.read(taskServiceProvider).insertCategory(category);
     state = state.copyWith(addCategory: '');
@@ -192,8 +194,10 @@ class AddTaskController extends Notifier<AddTaskState> {
           .where((element) => element.title.isNotEmpty)
           .toList(),
     );
+    final user = ref.read(currentUserProvider).value;
+    if (user == null) return;
     final taskService = ref.read(taskServiceProvider);
-    final userLocalId = await ref.read(userServiceProvider).getUserLocalId();
+    final userLocalId = user.localId;
 
     final task = TaskEntity(
       localId: -1,

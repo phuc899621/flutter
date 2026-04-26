@@ -5,11 +5,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:taskit/features/auth/presentation/auth/controller/auth_controller.dart';
 import 'package:taskit/features/main/presentation/home/state/home_state.dart';
 import 'package:taskit/features/task/application/task_service.dart';
+import 'package:taskit/features/user/domain/usecase/watch_user_by_local_id_use_case.dart';
 import 'package:taskit/shared/extension/date_time.dart';
 
 import '../../../../../shared/log/logger_provider.dart';
 import '../../../../task/domain/entities/task_entity.dart';
-import '../../../../user/application/user_service.dart';
 
 final homeControllerProvider =
     NotifierProvider.autoDispose<HomeController, HomeState>(HomeController.new);
@@ -65,10 +65,14 @@ class HomeController extends Notifier<HomeState> {
   }
 
   void _startUserListening(int localId) {
-    final user = ref.watch(userServiceProvider);
-    _userSub = user.watchUserByLocalId(localId).listen((user) {
-      state = state.copyWith(userName: user.name);
-    });
+    _userSub = ref
+        .watch(watchUserByLocalIdUseCaseProvider)
+        .call(localId)
+        .listen((user) {
+          if (user != null) {
+            state = state.copyWith(userName: user.name);
+          }
+        });
   }
 
   void logout() async {

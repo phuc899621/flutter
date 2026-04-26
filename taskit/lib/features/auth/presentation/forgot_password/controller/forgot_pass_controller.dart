@@ -1,9 +1,12 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:taskit/features/auth/application/auth_service_impl.dart';
+import 'package:taskit/features/auth/domain/usecases/forgot_password/forgot_password_resend_usecase.dart';
+import 'package:taskit/features/auth/domain/usecases/forgot_password/forgot_password_reset_usecase.dart';
+import 'package:taskit/features/auth/domain/usecases/forgot_password/forgot_password_verify_usecase.dart';
+import 'package:taskit/features/auth/domain/usecases/params/forgot_password_params.dart';
 import 'package:taskit/features/auth/presentation/forgot_password/state/forgot_pass_state.dart';
 import 'package:taskit/shared/constants/forgot_pass_status.dart';
 
-import '../../../domain/entities/forgot_pass/forgot_pass_entity.dart';
+import '../../../domain/usecases/forgot_password/forgot_password_usecase.dart';
 
 final forgotPassControllerProvider =
     NotifierProvider.autoDispose<ForgotPassController, ForgotPassState>(
@@ -24,8 +27,8 @@ class ForgotPassController extends Notifier<ForgotPassState> {
         apiError: null,
         email: email,
       );
-      final form = ForgotPasswordEntity(email: email);
-      (await ref.read(authServiceProvider).forgotPass(form)).when(
+      final form = ForgotPasswordParams(email: email);
+      (await ref.read(forgotPasswordUseCaseProvider).call(form)).when(
         (success) {
           state = state.copyWith(status: ForgotPassStatus.forgotSuccess);
         },
@@ -51,11 +54,11 @@ class ForgotPassController extends Notifier<ForgotPassState> {
         apiError: null,
         otp: otp,
       );
-      final form = ForgotPasswordVerifyEntity(
+      final form = ForgotPasswordVerifyParams(
         email: state.email,
         otp: state.otp,
       );
-      (await ref.read(authServiceProvider).forgotPassVerify(form)).when(
+      (await ref.read(forgotPasswordVerifyUseCaseProvider).call(form)).when(
         (success) {
           state = state.copyWith(
             status: ForgotPassStatus.verifySuccess,
@@ -80,8 +83,8 @@ class ForgotPassController extends Notifier<ForgotPassState> {
   Future<void> resend() async {
     try {
       state = state.copyWith(status: ForgotPassStatus.loading, apiError: null);
-      final form = ForgotPasswordResendEntity(email: state.email);
-      (await ref.read(authServiceProvider).forgotPassResend(form)).when(
+      final form = ForgotPasswordResendParams(email: state.email);
+      (await ref.read(forgotPasswordResendUseCaseProvider).call(form)).when(
         (success) {
           state = state.copyWith(status: ForgotPassStatus.resendSuccess);
         },
@@ -106,11 +109,11 @@ class ForgotPassController extends Notifier<ForgotPassState> {
         status: ForgotPassStatus.loading,
         password: password,
       );
-      final form = ForgotPasswordResetEntity(
+      final form = ForgotPasswordResetParams(
         resetToken: state.resetToken!,
         password: state.password,
       );
-      (await ref.read(authServiceProvider).forgotPassReset(form)).when(
+      (await ref.read(forgotPasswordResetUseCaseProvider).call(form)).when(
         (success) {
           state = state.copyWith(status: ForgotPassStatus.resetSuccess);
         },

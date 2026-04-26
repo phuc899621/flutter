@@ -1,8 +1,8 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:taskit/features/auth/domain/usecases/params/signup_params.dart';
-import 'package:taskit/features/auth/domain/usecases/signup_resend_usecase.dart';
-import 'package:taskit/features/auth/domain/usecases/signup_usecase.dart';
-import 'package:taskit/features/auth/domain/usecases/signup_verify_usecase.dart';
+import 'package:taskit/features/auth/domain/usecases/signup/signup_resend_usecase.dart';
+import 'package:taskit/features/auth/domain/usecases/signup/signup_usecase.dart';
+import 'package:taskit/features/auth/domain/usecases/signup/signup_verify_usecase.dart';
 import 'package:taskit/shared/constants/signup_status.dart';
 
 import '../state/signup_state.dart';

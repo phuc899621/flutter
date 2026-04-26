@@ -34,9 +34,6 @@ final authRefreshApiProvider = Provider<AuthApi>((ref) {
 sealed class AuthApi {
   factory AuthApi(Dio dio) => _AuthApi(dio);
 
-  /*
-  * Login
-  * */
   @POST('/login')
   @Extra({'refresh': false})
   Future<DataResponse<LoginData>> login(@Body() LoginRequest data);
@@ -44,10 +41,6 @@ sealed class AuthApi {
   @POST('/login/google')
   @Extra({'refresh': false})
   Future<DataResponse<LoginData>> loginWithGoogle(@Body() LoginRequest data);
-
-  @GET('/me')
-  @Extra({'requireAuth': true})
-  Future<DataResponse<UserData>> fetchUser();
 
   @POST('/refresh')
   @Extra({'refresh': false})
@@ -58,40 +51,4 @@ sealed class AuthApi {
   @POST('/logout')
   @Extra({'requireAuth': true})
   Future<MessageResponse> logout(@Body() LogoutRequest request);
-
-  /*
-  * Signup
-  * */
-  @POST('/signup')
-  @Extra({'refresh': false})
-  Future<MessageResponse> signup(@Body() SignupRequest data);
-
-  @POST('/signup/verify')
-  @Extra({'refresh': false})
-  Future<MessageResponse> signupVerify(@Body() SignupRequest data);
-
-  @POST('/signup/resend')
-  @Extra({'refresh': false})
-  Future<MessageResponse> signupResend(@Body() SignupRequest data);
-
-  /*
-  * Forgot Password
-  * */
-  @POST('/forgot-password')
-  @Extra({'refresh': false})
-  Future<MessageResponse> forgotPass(@Body() ForgotPassRequest data);
-
-  @POST('/forgot-password/verify')
-  @Extra({'refresh': false})
-  Future<DataResponse<ForgotPassData>> forgotPassVerify(
-    @Body() ForgotPassRequest data,
-  );
-
-  @POST('/forgot-password/resend')
-  @Extra({'refresh': false})
-  Future<MessageResponse> forgotPassResend(@Body() ForgotPassRequest data);
-
-  @PUT('/forgot-password/reset')
-  @Extra({'refresh': false})
-  Future<MessageResponse> forgotPassReset(@Body() ForgotPassRequest data);
 }

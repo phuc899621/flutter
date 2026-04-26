@@ -1,34 +1,11 @@
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:taskit/shared/data/source/local/drift/database/database.dart';
+import 'package:taskit/features/auth/data/dto/res/user/user_data.dart';
 
-import '../../../../../shared/data/source/local/drift/dao/user.dart';
-import 'iuser_local_source.dart';
+import '../../../../../shared/data/source/local/drift/database/database.dart';
 
-final userLocalSourceProvider = Provider<IUserLocalSource>((ref) {
-  final userDao = ref.watch(userDaoProvider);
-  return UserLocalSource(userDao);
-});
+abstract interface class UserLocalSource {
+  Stream<UserTableData> watchUserByLocalId(int localId);
 
-class UserLocalSource implements IUserLocalSource {
-  final UserDao userDao;
+  Future<UserTableData?> getUserByLocalId(int localId);
 
-  UserLocalSource(this.userDao);
-
-  //region WATCH
-  @override
-  Stream<UserTableData> watchUserByLocalId(int localId) =>
-      userDao.watchUserByLocalId(localId);
-
-  @override
-  Future<UserTableData?> getUserByLocalId(int localId) =>
-      userDao.getUserByLocalId(localId);
-
-  //endregion
-  //region READ
-  @override
-  Future<int> getUserLocalId() => userDao.getUserLocalId();
-
-  @override
-  Future<UserTableData?> getUser() => userDao.getUser();
-  //endregion
+  Future<int> cacheUser(UserData data);
 }

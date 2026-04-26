@@ -4,8 +4,8 @@ import 'package:taskit/features/auth/data/repo/signup_repo_impl.dart';
 import 'package:taskit/features/auth/domain/usecases/params/signup_params.dart';
 import 'package:taskit/shared/domain/usecase/usecase.dart';
 
-import '../../../../shared/exception/failure.dart';
-import '../../data/repo/signup_repo.dart';
+import '../../../../../shared/exception/failure.dart';
+import '../../../data/repo/signup_repo.dart';
 
 final signupUseCaseProvider = Provider((ref) {
   final signupRepo = ref.watch(signupRepoProvider);

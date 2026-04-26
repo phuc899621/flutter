@@ -3,9 +3,9 @@ import 'package:multiple_result/multiple_result.dart';
 import 'package:taskit/features/auth/data/repo/signup_repo.dart';
 import 'package:taskit/features/auth/domain/usecases/params/signup_params.dart';
 
-import '../../../../shared/domain/usecase/usecase.dart';
-import '../../../../shared/exception/failure.dart';
-import '../../data/repo/signup_repo_impl.dart';
+import '../../../../../shared/domain/usecase/usecase.dart';
+import '../../../../../shared/exception/failure.dart';
+import '../../../data/repo/signup_repo_impl.dart';
 
 final signupVerifyUseCaseProvider = Provider((ref) {
   final signupRepo = ref.watch(signupRepoProvider);
