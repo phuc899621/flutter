@@ -22,9 +22,6 @@ class UserRepository {
     { email, name, password, sub, status, avatar },
     session,
   ) {
-    if (password) {
-      password = await HashHelper.hash(password);
-    }
     const updateData = {
       name,
       status,
