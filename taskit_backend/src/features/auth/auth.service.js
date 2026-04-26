@@ -192,13 +192,7 @@ class AuthService {
         case GOOGLE_AUTH_CASE.EXIST_BY_SUB:
           break;
         case GOOGLE_AUTH_CASE.LINKED_BY_EMAIL:
-          await UserService.updateUserSub(
-            user.id,
-            {
-              sub,
-            },
-            session,
-          );
+          await UserService.updateUserSub(user.id, sub, session);
           break;
         case GOOGLE_AUTH_CASE.EMAIL_NOT_VERIFIED:
           const avatarUrl = await ImageService.uploadFromUrl(picture);
