@@ -11,9 +11,7 @@ part of 'signup_api.dart';
 // ignore_for_file: unnecessary_brace_in_string_interps,no_leading_underscores_for_local_identifiers,unused_element,unnecessary_string_interpolations,unused_element_parameter,avoid_unused_constructor_parameters,unreachable_from_main
 
 class _SignupApi implements SignupApi {
-  _SignupApi(this._dio, {this.baseUrl, this.errorLogger}) {
-    baseUrl ??= '/auth/signup';
-  }
+  _SignupApi(this._dio, {this.baseUrl, this.errorLogger});
 
   final Dio _dio;
 
@@ -30,11 +28,11 @@ class _SignupApi implements SignupApi {
     final _options = _setStreamType<MessageResponse>(
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
-        _dio.options,
-        '/signup',
-        queryParameters: queryParameters,
-        data: _data,
-      )
+            _dio.options,
+            'auth/signup',
+            queryParameters: queryParameters,
+            data: _data,
+          )
           .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
     );
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
@@ -57,11 +55,11 @@ class _SignupApi implements SignupApi {
     final _options = _setStreamType<MessageResponse>(
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
-        _dio.options,
-        '/signup/verify',
-        queryParameters: queryParameters,
-        data: _data,
-      )
+            _dio.options,
+            'auth/signup/verify',
+            queryParameters: queryParameters,
+            data: _data,
+          )
           .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
     );
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
@@ -84,11 +82,11 @@ class _SignupApi implements SignupApi {
     final _options = _setStreamType<MessageResponse>(
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
-        _dio.options,
-        '/signup/resend',
-        queryParameters: queryParameters,
-        data: _data,
-      )
+            _dio.options,
+            'auth/signup/resend',
+            queryParameters: queryParameters,
+            data: _data,
+          )
           .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
     );
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
@@ -116,9 +114,7 @@ class _SignupApi implements SignupApi {
   }
 
   String _combineBaseUrls(String dioBaseUrl, String? baseUrl) {
-    if (baseUrl == null || baseUrl
-        .trim()
-        .isEmpty) {
+    if (baseUrl == null || baseUrl.trim().isEmpty) {
       return dioBaseUrl;
     }
 

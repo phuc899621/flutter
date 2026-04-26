@@ -241,8 +241,9 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                 ),
                 child: state.status == LoginStatus.googleLoading
                     ? Center(
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
+                        child: SizedBox(
+                          width: 20,
+                          height: 20,
                           child: CircularProgressIndicator(
                             color: color.primary,
                           ),

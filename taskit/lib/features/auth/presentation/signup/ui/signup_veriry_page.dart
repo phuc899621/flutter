@@ -188,8 +188,12 @@ class _SignupVerifyPageState extends ConsumerState<SignupVerifyPage> {
                 ),
                 child: state.status == SignupStatus.loading
                     ? Center(
-                        child: CircularProgressIndicator(
-                          color: color.onPrimary,
+                        child: SizedBox(
+                          width: 20,
+                          height: 20,
+                          child: CircularProgressIndicator(
+                            color: color.onPrimary,
+                          ),
                         ),
                       )
                     : Text(

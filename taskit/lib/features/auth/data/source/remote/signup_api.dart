@@ -5,7 +5,6 @@ import 'package:retrofit/error_logger.dart';
 import 'package:retrofit/http.dart';
 import 'package:taskit/shared/data/dto/response/message_response.dart';
 
-import '../../../../../shared/config/app/app_config.dart';
 import '../../../../../shared/data/source/remote/network/network_service.dart';
 import '../../dto/req/signup/signup_request.dart';
 
@@ -16,19 +15,19 @@ final signupApiProvider = Provider<SignupApi>((ref) {
   return SignupApi(dio);
 });
 
-@RestApi(baseUrl: AppConfigs.signup)
+@RestApi()
 sealed class SignupApi {
   factory SignupApi(Dio dio) => _SignupApi(dio);
 
-  @POST('/signup')
+  @POST('auth/signup')
   @Extra({'refresh': false})
   Future<MessageResponse> signup(@Body() SignupRequest data);
 
-  @POST('/signup/verify')
+  @POST('auth/signup/verify')
   @Extra({'refresh': false})
   Future<MessageResponse> signupVerify(@Body() SignupRequest data);
 
-  @POST('/signup/resend')
+  @POST('auth/signup/resend')
   @Extra({'refresh': false})
   Future<MessageResponse> signupResend(@Body() SignupRequest data);
 }

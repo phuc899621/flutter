@@ -145,8 +145,12 @@ class _ForgotPasswordPageState extends ConsumerState<ForgotPasswordPage> {
                   ),
                   child: state.status == ForgotPassStatus.loading
                       ? Center(
-                          child: CircularProgressIndicator(
-                            color: color.onPrimary,
+                          child: SizedBox(
+                            width: 20,
+                            height: 20,
+                            child: CircularProgressIndicator(
+                              color: color.onPrimary,
+                            ),
                           ),
                         )
                       : Text(
