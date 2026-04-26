@@ -212,8 +212,12 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                 ),
                 child: state.status == LoginStatus.loading
                     ? Center(
-                        child: CircularProgressIndicator(
-                          color: color.onPrimary,
+                        child: SizedBox(
+                          width: 20,
+                          height: 20,
+                          child: CircularProgressIndicator(
+                            color: color.onPrimary,
+                          ),
                         ),
                       )
                     : Text(
@@ -235,20 +239,32 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                     borderRadius: BorderRadius.circular(20.0),
                   ),
                 ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  spacing: 15.0,
-                  children: [
-                    FaIcon(FontAwesomeIcons.google, color: color.onSurface),
-                    Text(
-                      'Login with Google',
-                      style: text.titleMedium?.copyWith(
-                        color: color.onSurface,
-                        fontWeight: FontWeight.w600,
+                child: state.status == LoginStatus.googleLoading
+                    ? Center(
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: CircularProgressIndicator(
+                            color: color.primary,
+                          ),
+                        ),
+                      )
+                    : Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        spacing: 15.0,
+                        children: [
+                          FaIcon(
+                            FontAwesomeIcons.google,
+                            color: color.onSurface,
+                          ),
+                          Text(
+                            'Login with Google',
+                            style: text.titleMedium?.copyWith(
+                              color: color.onSurface,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ],
                       ),
-                    ),
-                  ],
-                ),
               ),
             ),
             SizedBox(

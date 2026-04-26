@@ -20,7 +20,7 @@ class LoginController extends Notifier<LoginState> {
 
   Future<void> loginWithGoogle() async {
     try {
-      state = state.copyWith(apiError: null, status: LoginStatus.loading);
+      state = state.copyWith(apiError: null, status: LoginStatus.googleLoading);
       final authService = ref.read(authServiceProvider);
       final result = await authService.loginWithGoogle();
       final authController = ref.read(authControllerProvider.notifier);

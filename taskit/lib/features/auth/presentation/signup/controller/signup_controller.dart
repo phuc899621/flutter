@@ -1,8 +1,10 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:taskit/features/auth/domain/usecases/params/signup_params.dart';
+import 'package:taskit/features/auth/domain/usecases/signup_resend_usecase.dart';
+import 'package:taskit/features/auth/domain/usecases/signup_usecase.dart';
+import 'package:taskit/features/auth/domain/usecases/signup_verify_usecase.dart';
 import 'package:taskit/shared/constants/signup_status.dart';
 
-import '../../../application/auth_service_impl.dart';
-import '../../../domain/entities/signup/signup_entity.dart';
 import '../state/signup_state.dart';
 
 final signupControllerProvider =
@@ -24,11 +26,11 @@ class SignupController extends Notifier<SignupState> {
         email: email,
         password: password,
       );
-      final form = SignupRegisterEntity(
+      final form = SignupRegisterParams(
         email: state.email,
         password: state.password,
       );
-      final result = await ref.read(authServiceProvider).signup(form);
+      final result = await ref.read(signupUseCaseProvider).call(form);
       result.when(
         (success) {
           state = state.copyWith(status: SignupStatus.signupSuccess);
@@ -51,8 +53,8 @@ class SignupController extends Notifier<SignupState> {
   Future<void> resend() async {
     try {
       state = state.copyWith(apiError: null, status: SignupStatus.loading);
-      final form = SignupResendEntity(email: state.email);
-      final result = await ref.read(authServiceProvider).signupResend(form);
+      final form = SignupResendParams(email: state.email);
+      final result = await ref.read(signupResendUseCaseProvider).call(form);
       result.when(
         (success) {
           state = state.copyWith(status: SignupStatus.resendSuccess);
@@ -80,8 +82,8 @@ class SignupController extends Notifier<SignupState> {
         status: SignupStatus.loading,
         otp: otp,
       );
-      final form = SignupVerifyEntity(email: state.email, otp: state.otp);
-      final result = await ref.read(authServiceProvider).signupVerify(form);
+      final form = SignupVerifyParams(email: state.email, otp: state.otp);
+      final result = await ref.read(signupVerifyUseCaseProvider).call(form);
       result.when(
         (success) {
           state = state.copyWith(status: SignupStatus.verifySuccess);

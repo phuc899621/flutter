@@ -1,6 +1,7 @@
 class AppConfigs {
-  static const String baseUrl = 'https://taskit-api.id.vn/api/v1/';
-  static const String auth = 'auth';
+  static const String baseUrl = 'https://taskit-api.id.vn/api/v1';
+  static const String auth = '/auth';
+  static const String signup = '$auth/signup';
 
   static String imageUrl(String path) => '$baseUrl/uploads/$path';
 }

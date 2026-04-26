@@ -4,7 +4,6 @@ import 'package:taskit/features/user/domain/entity/user_entity.dart';
 
 import '../../../shared/exception/failure.dart';
 import '../domain/entities/forgot_pass/forgot_pass_entity.dart';
-import '../domain/entities/signup/signup_entity.dart';
 
 abstract interface class AuthService {
   Future<Result<void, Failure>> login(CredentialsLoginEntity data);
@@ -18,12 +17,6 @@ abstract interface class AuthService {
   Future<Result<void, Failure>> refreshToken();
 
   Future<Result<void, Failure>> logout();
-
-  Future<Result<void, Failure>> signup(SignupRegisterEntity data);
-
-  Future<Result<void, Failure>> signupVerify(SignupVerifyEntity data);
-
-  Future<Result<void, Failure>> signupResend(SignupResendEntity data);
 
   Future<Result<void, Failure>> forgotPass(ForgotPasswordEntity data);
 

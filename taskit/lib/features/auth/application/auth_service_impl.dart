@@ -2,7 +2,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:multiple_result/multiple_result.dart';
 import 'package:taskit/features/auth/data/repo/auth_repo.dart';
 import 'package:taskit/features/auth/domain/entities/login/login_entity.dart';
-import 'package:taskit/features/auth/domain/entities/signup/signup_entity.dart';
 import 'package:taskit/features/user/domain/entity/user_entity.dart';
 import 'package:taskit/shared/exception/failure.dart';
 import 'package:taskit/shared/utils/result_handler.dart';
@@ -53,27 +52,6 @@ class AuthServiceImpl with ResultHandler implements AuthService {
   Future<Result<void, Failure>> logout() async => runSafe(() async {
     await _authRepo.logout();
   });
-
-  /*
-  * Sign Up
-  * */
-  @override
-  Future<Result<void, Failure>> signup(SignupRegisterEntity data) async =>
-      runSafe(() async {
-        await _authRepo.signup(data);
-      });
-
-  @override
-  Future<Result<void, Failure>> signupVerify(SignupVerifyEntity data) async =>
-      runSafe(() async {
-        await _authRepo.signupVerify(data);
-      });
-
-  @override
-  Future<Result<void, Failure>> signupResend(SignupResendEntity data) async =>
-      runSafe(() async {
-        await _authRepo.signupResend(data);
-      });
 
   /*
   * Forgot Password

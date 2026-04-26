@@ -1,1 +1,1 @@
-enum LoginStatus { initial, loading, success }
+enum LoginStatus { initial, loading, success, googleLoading }
