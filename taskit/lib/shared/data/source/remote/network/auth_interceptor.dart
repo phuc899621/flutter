@@ -1,12 +1,12 @@
 import 'dart:ui';
 
 import 'package:dio/dio.dart';
+import 'package:taskit/shared/application/credential_service.dart';
 
-import '../../../../application/token_service.dart';
 import '../../../../constants/auth_extra.dart';
 
 class AuthInterceptor extends Interceptor {
-  final TokenService _tokenService;
+  final CredentialService _storage;
   final Dio _dio;
   final Future<void> Function(String refreshToken, String sessionId)
   onRefreshToken;
@@ -14,7 +14,7 @@ class AuthInterceptor extends Interceptor {
   Future<void>? _refreshFuture;
 
   AuthInterceptor(
-    this._tokenService,
+    this._storage,
     this._dio, {
     required this.onRefreshToken,
     required this.onAuthExpired,
@@ -27,7 +27,7 @@ class AuthInterceptor extends Interceptor {
   ) async {
     final requireAuth = options.extra[AuthExtra.requireAuth.name] ?? false;
     if (requireAuth) {
-      final token = await _tokenService.getAccessToken();
+      final token = await _storage.getAccessToken();
       options.headers['Authorization'] = 'Bearer $token';
     }
     handler.next(options);
@@ -40,8 +40,8 @@ class AuthInterceptor extends Interceptor {
     if (err.type == DioExceptionType.badResponse &&
         err.response?.statusCode == 401 &&
         autoRefresh) {
-      final refreshToken = await _tokenService.getRefreshToken();
-      final sessionId = await _tokenService.getSessionId();
+      final refreshToken = await _storage.getRefreshToken();
+      final sessionId = await _storage.getSessionId();
       if (refreshToken == null || sessionId == null) {
         onAuthExpired();
         return handler.next(err);
@@ -52,7 +52,7 @@ class AuthInterceptor extends Interceptor {
         _refreshFuture = null;
 
         final opts = err.requestOptions;
-        final token = await _tokenService.getAccessToken();
+        final token = await _storage.getAccessToken();
         opts.headers['Authorization'] = 'Bearer $token';
         final response = await _dio.fetch(opts);
         return handler.resolve(response);

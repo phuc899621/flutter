@@ -1,16 +1,11 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_expandable_fab/flutter_expandable_fab.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:taskit/features/main/presentation/home/controller/home_controller.dart';
 import 'package:taskit/features/main/presentation/home/ui/widget/home_app_bar.dart';
 import 'package:taskit/features/main/presentation/home/ui/widget/home_task_view.dart';
-import 'package:taskit/features/main/presentation/list/controller/list_controller.dart';
 import 'package:taskit/shared/application/time_service.dart';
-import 'package:taskit/shared/extension/date_time.dart';
-
-import '../../../../../shared/config/routers/router_provider.dart';
 
 class HomePage extends ConsumerStatefulWidget {
   const HomePage({super.key});
@@ -140,148 +135,6 @@ class _HomePageState extends ConsumerState<HomePage>
       ),
     );
   }
-
-  //endregion
-
-  //region FAB
-  Widget _fabAddTask() {
-    final color = Theme.of(context).colorScheme;
-    return ExpandableFab(
-      distance: 70,
-      type: ExpandableFabType.up,
-      openButtonBuilder: RotateFloatingActionButtonBuilder(
-        child: const Icon(Icons.add),
-        fabSize: ExpandableFabSize.regular,
-        foregroundColor: color.onPrimaryContainer,
-        backgroundColor: color.primaryContainer,
-        shape: const CircleBorder(),
-      ),
-      closeButtonBuilder: DefaultFloatingActionButtonBuilder(
-        child: const Icon(Icons.close),
-        fabSize: ExpandableFabSize.regular,
-        foregroundColor: color.surface,
-        backgroundColor: color.onSurface,
-        shape: const CircleBorder(),
-      ),
-      children: [
-        FloatingActionButton(
-          heroTag: 'Add Task',
-          shape: CircleBorder(),
-          foregroundColor: color.onPrimaryContainer,
-          splashColor: color.primary,
-          backgroundColor: color.primaryContainer,
-          child: Icon(Icons.note_alt_outlined, size: 30),
-          onPressed: () => context.push('/add_task'),
-        ),
-        FloatingActionButton(
-          heroTag: 'Add Task Using Voice',
-          shape: CircleBorder(),
-          foregroundColor: color.onPrimaryContainer,
-          splashColor: color.primary,
-          backgroundColor: color.primaryContainer,
-          onPressed: () => context.push('/voice'),
-          child: Icon(Icons.mic, size: 30),
-        ),
-      ],
-    );
-  }
-
-  //endregion
-  //region Expand TopAppBar Widget
-  Widget _expandTopAppBar() {
-    final text = Theme.of(context).textTheme;
-    final color = Theme.of(context).colorScheme;
-    final state = ref.watch(homeControllerProvider);
-    return FlexibleSpaceBar(
-      background: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 14),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Text(
-                    'Hello, ${state.userName} ',
-                    style: text.headlineMedium,
-                    softWrap: true,
-                  ),
-                  Text(
-                    DateTime.now().toDisplayFullFormatDate(),
-                    style: text.titleMedium?.copyWith(color: color.onPrimary),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  //endregion
-  //region Collapsed TopAppBar Widget
-  Widget _collapseAppBar() {
-    final text = Theme.of(context).textTheme;
-
-    return FlexibleSpaceBar(
-      titlePadding: EdgeInsets.symmetric(vertical: 12, horizontal: 14),
-      centerTitle: false,
-      title: Text('Home', style: text.headlineMedium),
-    );
-  }
-
-  //endregion
-  //region Search And Logout Icon
-
-  Widget _searchIconButton() {
-    final color = Theme.of(context).colorScheme;
-    final shouldFocus = ref.read(shouldFocusSearchTextFieldProvider.notifier);
-    final navigationShell = ref.read(navigationShellProvider);
-    return Material(
-      color: Colors.transparent,
-      clipBehavior: Clip.hardEdge,
-      shape: CircleBorder(),
-      elevation: 2,
-      child: IconButton.filledTonal(
-        iconSize: 30,
-        style: ButtonStyle(
-          backgroundColor: WidgetStatePropertyAll(color.primaryContainer),
-        ),
-        onPressed: () {
-          shouldFocus.state = true;
-          navigationShell.goBranch(1);
-        },
-        color: color.onPrimaryContainer,
-        icon: Icon(Icons.search_rounded),
-      ),
-    );
-  }
-
-  Widget _logoutIconButton() {
-    final color = Theme.of(context).colorScheme;
-    return Material(
-      color: Colors.transparent,
-      clipBehavior: Clip.hardEdge,
-      shape: CircleBorder(),
-      elevation: 2,
-      child: IconButton.filledTonal(
-        iconSize: 30,
-        style: ButtonStyle(
-          backgroundColor: WidgetStatePropertyAll(color.error),
-        ),
-        onPressed: _showLogoutDialog,
-        color: color.onError,
-        icon: Icon(Icons.logout),
-      ),
-    );
-  }
-
-  //endregion
 
   //region TAB BAR
   Widget _tabBar() {

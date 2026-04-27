@@ -1,13 +1,12 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:taskit/features/auth/domain/usecases/auth/logout_usecase.dart';
-import 'package:taskit/features/user/domain/usecase/get_current_user_usecase.dart';
 import 'package:taskit/features/user/domain/usecase/sync_user_usecase.dart';
 
-import '../../../../../shared/application/token_service_impl.dart';
 import '../../../../../shared/constants/auth_status.dart';
 import '../../../../../shared/domain/usecase/usecase.dart';
 import '../../../../../shared/log/logger_provider.dart';
 import '../../../../user/domain/entity/user_entity.dart';
+import '../../../domain/usecases/auth/check_auth_state_use_case.dart';
 import '../state/auth_state.dart';
 
 final authControllerProvider = NotifierProvider<AuthController, AuthState>(
@@ -25,26 +24,25 @@ class AuthController extends Notifier<AuthState> {
   Future<void> init() async {
     logger.i('[AuthController] init');
     if (state.status == AuthStatus.authenticated) return;
-    final refreshToken = await ref.read(tokenServiceProvider).getRefreshToken();
-    if (refreshToken == null) {
-      logger.i('[AuthController] init: user is not authenticated');
-      state = state.copyWith(status: AuthStatus.unauthenticated);
-      return;
-    }
-    final localResult = await ref
-        .read(getCurrentUserUseCaseProvider)
+    final result = await ref
+        .read(checkAuthStateUseCaseProvider)
         .call(NoParam());
-    UserEntity? localUser;
-    localResult.when((u) => localUser = u, (f) {});
-
-    if (localUser != null) {
-      await ref.read(tokenServiceProvider).saveActiveUserId(localUser!.localId);
-      logger.i('[AuthController] init: user is authenticated');
-      state = state.copyWith(status: AuthStatus.authenticated, user: localUser);
-      fetchUser();
-    } else {
-      await fetchUser();
-    }
+    result.when(
+      (user) {
+        if (user != null) {
+          logger.i('[AuthController] fetchUser success');
+          state = state.copyWith(status: AuthStatus.authenticated, user: user);
+        } else if (state.status == AuthStatus.initial) {
+          state = state.copyWith(status: AuthStatus.unauthenticated);
+        }
+      },
+      (failure) {
+        logger.e('[AuthController] fetchUser failed: ${failure.message}');
+        if (state.status == AuthStatus.initial) {
+          state = state.copyWith(status: AuthStatus.unauthenticated);
+        }
+      },
+    );
   }
 
   Future<void> fetchUser() async {

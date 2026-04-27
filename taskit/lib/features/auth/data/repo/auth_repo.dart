@@ -9,7 +9,7 @@ abstract interface class AuthRepo {
   * */
   Future<MessageResult> login(CredentialsLoginEntity data);
 
-  Future<MessageResult> loginWithGoogle();
+  Future<MessageResult> loginWithGoogle(String idToken);
 
   Future<MessageResult> refreshToken();
 

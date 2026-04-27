@@ -1,11 +1,11 @@
-abstract interface class TokenService {
+abstract interface class CredentialStorage {
   Future<void> saveTokens(String access, String refresh, String sessionId);
 
-  Future<int?> getActiveUserId();
+  Future<void> saveAccessToken(String access);
 
-  Future<void> deleteActiveUserId();
+  Future<void> saveRefreshToken(String refresh);
 
-  Future<void> saveActiveUserId(int id);
+  Future<void> saveSessionId(String sessionId);
 
   Future<String?> getAccessToken();
 
