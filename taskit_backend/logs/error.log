@@ -2094,3 +2094,20 @@ Error: Cannot delete default category
   "url": "/api/v1/categories/69f036d862ec72922ed01a4e",
   "status": 409
 }
+2026-04-28 14:33:29 [[31merror[39m]: [1;31mError Access token expired[0m
+Error: Access token expired
+    at verifyAccessToken (file:///C:/flutter/taskit_backend/src/shared/services/token.service.js:65:11)
+    at authMiddleware (file:///C:/flutter/taskit_backend/src/middleware/auth.middleware.js:11:21)
+    at Layer.handle [as handle_request] (C:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\flutter\taskit_backend\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (C:\flutter\taskit_backend\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (C:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:284:15
+    at param (C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:365:14)
+    at param (C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:376:14)
+    at router.process_params (C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:421:3) {
+  "requestId": "33a8f936-3961-4ffe-9496-321417a6d662",
+  "method": "DELETE",
+  "url": "/api/v1/categories/69f05a716f090b93ed7dd6eb",
+  "status": 401
+}
