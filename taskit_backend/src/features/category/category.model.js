@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 import db from "../../shared/utils/db.js";
-import { ServerError } from "../../shared/utils/error.js";
+import { ConflictError } from "../../shared/utils/error.js";
 const categorySchema = new mongoose.Schema(
   {
     name: {
@@ -13,7 +13,11 @@ const categorySchema = new mongoose.Schema(
       ref: "user",
       required: true,
     },
-    isDefault: {
+    default: {
+      type: Boolean,
+      default: false,
+    },
+    deleted: {
       type: Boolean,
       default: false,
     },
@@ -23,10 +27,9 @@ const categorySchema = new mongoose.Schema(
     toJSON: {
       virtuals: true,
       transform: function (doc, ret) {
-        const { _id, __v, userId, ...rest } = ret;
+        const { _id, __v, ...rest } = ret;
         return {
           id: _id.toHexString(),
-          userId,
           ...rest,
         };
       },
@@ -34,41 +37,14 @@ const categorySchema = new mongoose.Schema(
     toObject: {
       virtuals: true,
       transform: function (doc, ret) {
-        const { _id, __v, userId, ...rest } = ret;
+        const { _id, __v, ...rest } = ret;
         return {
           id: _id.toHexString(),
-          userId,
           ...rest,
         };
       },
     },
   },
 );
-categorySchema.index({ name: 1, userId: 1 }, { unique: true });
-categorySchema.pre(
-  "deleteOne",
-  { document: true, query: false },
-  function (next) {
-    if (this.isDefault) {
-      return next(new ServerError("Cannot delete default category", 400));
-    }
-    next();
-  },
-);
-categorySchema.index({ userId: 1, name: 1 }, { unique: true });
-
-categorySchema.pre(
-  "deleteOne",
-  { document: false, query: true },
-  async function (next) {
-    const filter = this.getFilter();
-    const category = await this.model.findOne(filter);
-    if (category && category.isDefault) {
-      return next(new ServerError("Cannot delete default category", 400));
-    }
-    next();
-  },
-);
-
 const Category = db.model("category", categorySchema);
 export default Category;

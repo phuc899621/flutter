@@ -4044,3 +4044,868 @@ Error: Email is already in use
   "time": "50.38 ms",
   "ip": "::ffff:192.168.1.9"
 }
+2026-04-28 11:02:04 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-04-28 11:02:04 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-04-28 11:04:57 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-04-28 11:04:58 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-04-28 11:06:41 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-04-28 11:06:41 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-04-28 11:07:36 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-04-28 11:07:37 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-04-28 11:07:49 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-04-28 11:07:49 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-04-28 11:13:40 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-04-28 11:13:41 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-04-28 11:17:04 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-04-28 11:17:05 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-04-28 11:17:57 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-04-28 11:17:58 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-04-28 11:18:05 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-04-28 11:18:06 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-04-28 11:18:33 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-04-28 11:18:33 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-04-28 11:19:45 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-04-28 11:19:46 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-04-28 11:20:56 [[33mwarn[39m]: [1;33mAPI Warning[0m {
+  "requestId": "59123b9c-5ad6-42c5-a196-46e024242763",
+  "method": "GET",
+  "url": "/api/categories",
+  "status": 404,
+  "time": "23.98 ms",
+  "ip": "::1"
+}
+2026-04-28 11:21:06 [[32minfo[39m]: [1;32mVerify access token for undefined[0m 
+2026-04-28 11:21:06 [[31merror[39m]: [1;31mError Access token expired[0m
+Error: Access token expired
+    at verifyAccessToken (file:///C:/flutter/taskit_backend/src/shared/services/token.service.js:65:11)
+    at authMiddleware (file:///C:/flutter/taskit_backend/src/middleware/auth.middleware.js:11:21)
+    at Layer.handle [as handle_request] (C:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\flutter\taskit_backend\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (C:\flutter\taskit_backend\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (C:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:284:15
+    at router.process_params (C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:346:12)
+    at next (C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:280:10)
+    at router.handle (C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:175:3) {
+  "requestId": "a17b44d4-de69-41d3-846f-7d1fd4be21fa",
+  "method": "GET",
+  "url": "/api/v1/categories",
+  "status": 401
+}
+2026-04-28 11:21:06 [[33mwarn[39m]: [1;33mAPI Warning[0m {
+  "requestId": "a17b44d4-de69-41d3-846f-7d1fd4be21fa",
+  "method": "GET",
+  "url": "/api/v1/categories",
+  "status": 401,
+  "time": "13.92 ms",
+  "ip": "::1"
+}
+2026-04-28 11:21:12 [[32minfo[39m]: [1;32mRefresh token saved for 69e8a20a62ec72922ecf3c0b:604800:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWU4YTIwYTYyZWM3MjkyMmVjZjNjMGIiLCJpYXQiOjE3NzczNTAwNzIsImV4cCI6MTc3Nzk1NDg3Mn0.iT_q_ngMMiBIRlqhlsCaWCb2YC1iK4VoBSFH4lNcnLk[0m 
+2026-04-28 11:21:12 [[32minfo[39m]: [1;32mAPI Request[0m {
+  "requestId": "b177b5eb-6517-4814-b989-0c4d5c7944a2",
+  "method": "POST",
+  "url": "/api/v1/auth/login",
+  "status": 200,
+  "time": "250.68 ms",
+  "ip": "::1"
+}
+2026-04-28 11:21:32 [[32minfo[39m]: [1;32mVerify access token for undefined[0m 
+2026-04-28 11:21:33 [[32minfo[39m]: [1;32mAPI Request[0m {
+  "requestId": "316d4bf4-6bab-4711-aceb-6b199253c78c",
+  "method": "GET",
+  "url": "/api/v1/categories",
+  "status": 200,
+  "time": "187.80 ms",
+  "ip": "::1"
+}
+2026-04-28 11:24:46 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-04-28 11:24:47 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-04-28 11:25:42 [[31merror[39m]: [1;31mError User account does not exist[0m
+Error: User account does not exist
+    at UserService.validateUserForLogin (file:///C:/flutter/taskit_backend/src/features/user/user.service.js:50:24)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async AuthService.login (file:///C:/flutter/taskit_backend/src/features/auth/auth.service.js:117:23)
+    at async login (file:///C:/flutter/taskit_backend/src/features/auth/auth.controller.js:40:20) {
+  "requestId": "42935939-d1c9-4898-b7ec-ed8421422558",
+  "method": "POST",
+  "url": "/api/v1/auth/login",
+  "status": 400
+}
+2026-04-28 11:25:42 [[33mwarn[39m]: [1;33mAPI Warning[0m {
+  "requestId": "42935939-d1c9-4898-b7ec-ed8421422558",
+  "method": "POST",
+  "url": "/api/v1/auth/login",
+  "status": 400,
+  "time": "90.21 ms",
+  "ip": "::1"
+}
+2026-04-28 11:25:58 [[32minfo[39m]: [1;32mUser 69f036d862ec72922ed01a49 created[0m 
+2026-04-28 11:25:58 [[32minfo[39m]: [1;32mOTP is: 3641. This OTP only last 30 minutes.[0m 
+2026-04-28 11:25:58 [[32minfo[39m]: [1;32mEmail sent to dinhlelytran1225@gmail.com[0m 
+2026-04-28 11:25:58 [[32minfo[39m]: [1;32mAPI Request[0m {
+  "requestId": "8da7a9e6-674a-4576-a0b8-e5f15ce61bae",
+  "method": "POST",
+  "url": "/api/v1/auth/signup",
+  "status": 201,
+  "time": "588.05 ms",
+  "ip": "::1"
+}
+2026-04-28 11:26:21 [[32minfo[39m]: [1;32mOTP document for 69f036d862ec72922ed01a49: {
+  _id: new ObjectId('69f036d862ec72922ed01a4f'),
+  userId: new ObjectId('69f036d862ec72922ed01a49'),
+  purpose: 'signup',
+  __v: 0,
+  createdAt: 2026-04-28T04:25:58.580Z,
+  otp: '$2b$10$arcv67DPTowrJUVZsUfvXuYyOJPXjRJQsOyC5rppbMM0LBhXqiZ/q',
+  updatedAt: 2026-04-28T04:25:58.580Z
+}[0m 
+2026-04-28 11:26:21 [[32minfo[39m]: [1;32mAccount activated for dinhlelytran1225@gmail.com[0m 
+2026-04-28 11:26:21 [[32minfo[39m]: [1;32mAPI Request[0m {
+  "requestId": "779d04b6-3b66-490a-9dad-c0373e7b6550",
+  "method": "POST",
+  "url": "/api/v1/auth/signup/verify",
+  "status": 200,
+  "time": "355.76 ms",
+  "ip": "::1"
+}
+2026-04-28 11:26:35 [[32minfo[39m]: [1;32mRefresh token saved for 69f036d862ec72922ed01a49:604800:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWYwMzZkODYyZWM3MjkyMmVkMDFhNDkiLCJpYXQiOjE3NzczNTAzOTUsImV4cCI6MTc3Nzk1NTE5NX0.Mb5fvt_3EvqTp_vsRPsrFnDfRajR3ZafVntIE0cc3jg[0m 
+2026-04-28 11:26:35 [[32minfo[39m]: [1;32mAPI Request[0m {
+  "requestId": "480478d4-50bf-4217-9822-006b81ac7305",
+  "method": "POST",
+  "url": "/api/v1/auth/login",
+  "status": 200,
+  "time": "150.28 ms",
+  "ip": "::1"
+}
+2026-04-28 11:26:53 [[32minfo[39m]: [1;32mVerify access token for undefined[0m 
+2026-04-28 11:26:53 [[32minfo[39m]: [1;32mAPI Request[0m {
+  "requestId": "8636fbaa-8a8d-4f59-a898-48a428d1a310",
+  "method": "GET",
+  "url": "/api/v1/categories",
+  "status": 200,
+  "time": "45.96 ms",
+  "ip": "::1"
+}
+2026-04-28 13:11:20 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-04-28 13:11:20 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-04-28 13:11:30 [[32minfo[39m]: [1;32mRefresh token saved for 69f036d862ec72922ed01a49:604800:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWYwMzZkODYyZWM3MjkyMmVkMDFhNDkiLCJpYXQiOjE3NzczNTY2OTAsImV4cCI6MTc3Nzk2MTQ5MH0.oPv9FGfEQlIH4023OlbC2yJqs_AUDpciR-cVzL-qxCw[0m 
+2026-04-28 13:11:30 [[32minfo[39m]: [1;32mAPI Request[0m {
+  "requestId": "80314ca7-8352-4338-9864-4d28004c2d1d",
+  "method": "POST",
+  "url": "/api/v1/auth/login",
+  "status": 200,
+  "time": "194.38 ms",
+  "ip": "::1"
+}
+2026-04-28 13:12:21 [[32minfo[39m]: [1;32mVerify access token for undefined[0m 
+2026-04-28 13:12:21 [[31merror[39m]: [1;31mError Access token expired[0m
+Error: Access token expired
+    at verifyAccessToken (file:///C:/flutter/taskit_backend/src/shared/services/token.service.js:65:11)
+    at authMiddleware (file:///C:/flutter/taskit_backend/src/middleware/auth.middleware.js:11:21)
+    at Layer.handle [as handle_request] (C:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\flutter\taskit_backend\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (C:\flutter\taskit_backend\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (C:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:284:15
+    at router.process_params (C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:346:12)
+    at next (C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:280:10)
+    at router.handle (C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:175:3) {
+  "requestId": "2f4a69ac-08c9-42f2-9d94-dabc21ae9ea9",
+  "method": "GET",
+  "url": "/api/v1/categories",
+  "status": 401
+}
+2026-04-28 13:12:21 [[33mwarn[39m]: [1;33mAPI Warning[0m {
+  "requestId": "2f4a69ac-08c9-42f2-9d94-dabc21ae9ea9",
+  "method": "GET",
+  "url": "/api/v1/categories",
+  "status": 401,
+  "time": "3.34 ms",
+  "ip": "::1"
+}
+2026-04-28 13:12:29 [[32minfo[39m]: [1;32mRefresh token saved for 69f036d862ec72922ed01a49:604800:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWYwMzZkODYyZWM3MjkyMmVkMDFhNDkiLCJpYXQiOjE3NzczNTY3NDksImV4cCI6MTc3Nzk2MTU0OX0.M82mypKq-PO9RPPufhFYR1hLrb3RHeS0VolIpcEUiGc[0m 
+2026-04-28 13:12:29 [[32minfo[39m]: [1;32mAPI Request[0m {
+  "requestId": "ebb6d249-01b0-42bf-9261-2160473fec27",
+  "method": "POST",
+  "url": "/api/v1/auth/login",
+  "status": 200,
+  "time": "107.06 ms",
+  "ip": "::1"
+}
+2026-04-28 13:12:41 [[32minfo[39m]: [1;32mVerify access token for undefined[0m 
+2026-04-28 13:12:41 [[32minfo[39m]: [1;32mAPI Request[0m {
+  "requestId": "cd166b93-7e71-41aa-9d74-84adcdc24850",
+  "method": "GET",
+  "url": "/api/v1/categories",
+  "status": 200,
+  "time": "42.14 ms",
+  "ip": "::1"
+}
+2026-04-28 13:14:05 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-04-28 13:14:05 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-04-28 13:14:19 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-04-28 13:14:19 [[32minfo[39m]: [1;32mVerify access token for undefined[0m 
+2026-04-28 13:14:19 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-04-28 13:14:19 [[32minfo[39m]: [1;32mAPI Request[0m {
+  "requestId": "a0b14e44-e661-492b-b337-32fc7fa6910d",
+  "method": "GET",
+  "url": "/api/v1/categories",
+  "status": 200,
+  "time": "73.71 ms",
+  "ip": "::1"
+}
+2026-04-28 13:15:06 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-04-28 13:15:07 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-04-28 13:15:07 [[32minfo[39m]: [1;32mVerify access token for undefined[0m 
+2026-04-28 13:15:07 [[32minfo[39m]: [1;32mAPI Request[0m {
+  "requestId": "eaae8fb3-ca55-4a55-bdda-c4ad045036cc",
+  "method": "GET",
+  "url": "/api/v1/categories",
+  "status": 200,
+  "time": "204.68 ms",
+  "ip": "::1"
+}
+2026-04-28 13:15:47 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-04-28 13:15:48 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-04-28 13:15:50 [[32minfo[39m]: [1;32mVerify access token for undefined[0m 
+2026-04-28 13:15:50 [[32minfo[39m]: [1;32mAPI Request[0m {
+  "requestId": "c488df05-7289-43a1-93a2-b703aa7476f9",
+  "method": "GET",
+  "url": "/api/v1/categories",
+  "status": 200,
+  "time": "47.79 ms",
+  "ip": "::1"
+}
+2026-04-28 13:16:20 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-04-28 13:16:20 [[32minfo[39m]: [1;32mVerify access token for undefined[0m 
+2026-04-28 13:16:20 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-04-28 13:16:20 [[32minfo[39m]: [1;32mAPI Request[0m {
+  "requestId": "a818820a-842c-4ba9-9636-b895d22fc025",
+  "method": "GET",
+  "url": "/api/v1/categories",
+  "status": 200,
+  "time": "202.55 ms",
+  "ip": "::1"
+}
+2026-04-28 13:17:01 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-04-28 13:17:01 [[32minfo[39m]: [1;32mVerify access token for undefined[0m 
+2026-04-28 13:17:01 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-04-28 13:17:01 [[32minfo[39m]: [1;32mAPI Request[0m {
+  "requestId": "d54dcbd2-172f-455c-93e2-879bae5108ef",
+  "method": "GET",
+  "url": "/api/v1/categories",
+  "status": 200,
+  "time": "56.82 ms",
+  "ip": "::1"
+}
+2026-04-28 13:17:21 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-04-28 13:17:21 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-04-28 13:17:21 [[32minfo[39m]: [1;32mVerify access token for undefined[0m 
+2026-04-28 13:17:22 [[32minfo[39m]: [1;32mAPI Request[0m {
+  "requestId": "010a0a96-93b6-4d01-a75b-36c3304c80a8",
+  "method": "GET",
+  "url": "/api/v1/categories",
+  "status": 200,
+  "time": "388.65 ms",
+  "ip": "::1"
+}
+2026-04-28 13:18:00 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-04-28 13:18:01 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-04-28 13:18:02 [[32minfo[39m]: [1;32mVerify access token for undefined[0m 
+2026-04-28 13:18:02 [[32minfo[39m]: [1;32mAPI Request[0m {
+  "requestId": "357c508d-d7ba-4887-9a0b-e11aece7cbd4",
+  "method": "GET",
+  "url": "/api/v1/categories",
+  "status": 200,
+  "time": "53.66 ms",
+  "ip": "::1"
+}
+2026-04-28 13:18:33 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-04-28 13:18:34 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-04-28 13:21:04 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-04-28 13:21:04 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-04-28 13:22:16 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-04-28 13:22:16 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-04-28 13:22:44 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-04-28 13:22:45 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-04-28 13:23:55 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-04-28 13:23:56 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-04-28 13:24:29 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-04-28 13:24:29 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-04-28 13:27:48 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-04-28 13:27:48 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-04-28 13:32:00 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-04-28 13:33:23 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-04-28 13:33:32 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-04-28 13:33:54 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-04-28 13:34:16 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-04-28 13:34:20 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-04-28 13:35:58 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-04-28 13:36:07 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-04-28 13:36:42 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-04-28 13:36:43 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-04-28 13:38:56 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-04-28 13:38:56 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-04-28 13:39:39 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-04-28 13:39:39 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-04-28 13:40:02 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-04-28 13:40:02 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-04-28 13:42:09 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-04-28 13:42:09 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-04-28 13:43:28 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-04-28 13:43:29 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-04-28 13:43:58 [[32minfo[39m]: [1;32mVerify access token for undefined[0m 
+2026-04-28 13:43:58 [[31merror[39m]: [1;31mError Access token expired[0m
+Error: Access token expired
+    at verifyAccessToken (file:///C:/flutter/taskit_backend/src/shared/services/token.service.js:65:11)
+    at authMiddleware (file:///C:/flutter/taskit_backend/src/middleware/auth.middleware.js:11:21)
+    at Layer.handle [as handle_request] (C:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\flutter\taskit_backend\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (C:\flutter\taskit_backend\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (C:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:284:15
+    at router.process_params (C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:346:12)
+    at next (C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:280:10)
+    at router.handle (C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:175:3) {
+  "requestId": "367974ce-4d58-4e54-956c-bde11c6b0cba",
+  "method": "GET",
+  "url": "/api/v1/categories",
+  "status": 401
+}
+2026-04-28 13:43:58 [[33mwarn[39m]: [1;33mAPI Warning[0m {
+  "requestId": "367974ce-4d58-4e54-956c-bde11c6b0cba",
+  "method": "GET",
+  "url": "/api/v1/categories",
+  "status": 401,
+  "time": "16.04 ms",
+  "ip": "::1"
+}
+2026-04-28 13:44:20 [[32minfo[39m]: [1;32mRefresh token saved for 69f036d862ec72922ed01a49:604800:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWYwMzZkODYyZWM3MjkyMmVkMDFhNDkiLCJpYXQiOjE3NzczNTg2NjAsImV4cCI6MTc3Nzk2MzQ2MH0.PN8aYPaHF-NAPTkIIQTTj9jGRtLwBOkGI_x7Gg3XcIw[0m 
+2026-04-28 13:44:20 [[32minfo[39m]: [1;32mAPI Request[0m {
+  "requestId": "3e1be643-cdbf-4f23-ae21-14a3362e1ee1",
+  "method": "POST",
+  "url": "/api/v1/auth/login",
+  "status": 200,
+  "time": "142.14 ms",
+  "ip": "::1"
+}
+2026-04-28 13:44:33 [[32minfo[39m]: [1;32mVerify access token for undefined[0m 
+2026-04-28 13:44:33 [[32minfo[39m]: [1;32mAPI Request[0m {
+  "requestId": "161f10ae-04cf-45cb-bf92-b0032ae09498",
+  "method": "GET",
+  "url": "/api/v1/categories",
+  "status": 200,
+  "time": "85.99 ms",
+  "ip": "::1"
+}
+2026-04-28 13:44:52 [[32minfo[39m]: [1;32mVerify access token for undefined[0m 
+2026-04-28 13:44:52 [[33mwarn[39m]: [1;33mAPI Warning[0m {
+  "requestId": "a384b705-4629-4466-8ad0-feb3c15ee511",
+  "method": "GET",
+  "url": "/api/v1/categories/69f036d862ec72922ed01a4e",
+  "status": 400,
+  "time": "35.30 ms",
+  "ip": "::1"
+}
+2026-04-28 13:45:48 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-04-28 13:45:49 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-04-28 13:45:52 [[32minfo[39m]: [1;32mVerify access token for undefined[0m 
+2026-04-28 13:45:52 [[32minfo[39m]: [1;32mAPI Request[0m {
+  "requestId": "65b8e5e7-ecbf-4b5e-bc32-c437ada4dc5e",
+  "method": "GET",
+  "url": "/api/v1/categories/69f036d862ec72922ed01a4e",
+  "status": 200,
+  "time": "79.99 ms",
+  "ip": "::1"
+}
+2026-04-28 13:46:06 [[33mwarn[39m]: [1;33mAPI Warning[0m {
+  "requestId": "c41ffa47-ca38-4580-8409-966ff9a653ab",
+  "method": "POST",
+  "url": "/categories",
+  "status": 404,
+  "time": "10.56 ms",
+  "ip": "::1"
+}
+2026-04-28 13:46:21 [[32minfo[39m]: [1;32mVerify access token for undefined[0m 
+2026-04-28 13:46:21 [[31merror[39m]: [1;31mError Access token expired[0m
+Error: Access token expired
+    at verifyAccessToken (file:///C:/flutter/taskit_backend/src/shared/services/token.service.js:65:11)
+    at authMiddleware (file:///C:/flutter/taskit_backend/src/middleware/auth.middleware.js:11:21)
+    at Layer.handle [as handle_request] (C:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\flutter\taskit_backend\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (C:\flutter\taskit_backend\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (C:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:284:15
+    at router.process_params (C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:346:12)
+    at next (C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:280:10)
+    at router.handle (C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:175:3) {
+  "requestId": "496f3dc3-7d64-42c6-970c-32158973ac30",
+  "method": "POST",
+  "url": "/api/v1/categories",
+  "status": 401
+}
+2026-04-28 13:46:21 [[33mwarn[39m]: [1;33mAPI Warning[0m {
+  "requestId": "496f3dc3-7d64-42c6-970c-32158973ac30",
+  "method": "POST",
+  "url": "/api/v1/categories",
+  "status": 401,
+  "time": "2.05 ms",
+  "ip": "::1"
+}
+2026-04-28 13:46:49 [[32minfo[39m]: [1;32mVerify access token for undefined[0m 
+2026-04-28 13:46:49 [[31merror[39m]: [1;31mError Name must be at lest 3 characters[0m
+Error: Name must be at lest 3 characters
+    at file:///C:/flutter/taskit_backend/src/middleware/validate.js:14:15
+    at Layer.handle [as handle_request] (C:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\flutter\taskit_backend\node_modules\express\lib\router\route.js:149:13)
+    at authMiddleware (file:///C:/flutter/taskit_backend/src/middleware/auth.middleware.js:15:5)
+    at Layer.handle [as handle_request] (C:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\flutter\taskit_backend\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (C:\flutter\taskit_backend\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (C:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:284:15
+    at router.process_params (C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:346:12) {
+  "requestId": "8bc4ed63-c9a4-4bd5-b554-d40b65c2f965",
+  "method": "POST",
+  "url": "/api/v1/categories",
+  "status": 400
+}
+2026-04-28 13:46:49 [[33mwarn[39m]: [1;33mAPI Warning[0m {
+  "requestId": "8bc4ed63-c9a4-4bd5-b554-d40b65c2f965",
+  "method": "POST",
+  "url": "/api/v1/categories",
+  "status": 400,
+  "time": "4.18 ms",
+  "ip": "::1"
+}
+2026-04-28 13:47:07 [[32minfo[39m]: [1;32mVerify access token for undefined[0m 
+2026-04-28 13:47:07 [[33mwarn[39m]: [1;33mAPI Warning[0m {
+  "requestId": "c1dbdd6e-4547-438d-b5ce-ea13f970e21a",
+  "method": "POST",
+  "url": "/api/v1/categories",
+  "status": 400,
+  "time": "33.83 ms",
+  "ip": "::1"
+}
+2026-04-28 13:48:53 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-04-28 13:48:53 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-04-28 13:48:57 [[32minfo[39m]: [1;32mVerify access token for undefined[0m 
+2026-04-28 13:48:57 [[32minfo[39m]: [1;32mAPI Request[0m {
+  "requestId": "cbe92fb5-5eb9-44f9-ab8f-8e51ca488606",
+  "method": "POST",
+  "url": "/api/v1/categories",
+  "status": 201,
+  "time": "99.85 ms",
+  "ip": "::1"
+}
+2026-04-28 13:49:05 [[32minfo[39m]: [1;32mVerify access token for undefined[0m 
+2026-04-28 13:49:05 [[31merror[39m]: [1;31mAPI Error[0m {
+  "requestId": "4b45e393-696c-4cd9-a2ac-ddc1290d7302",
+  "method": "POST",
+  "url": "/api/v1/categories",
+  "status": 500,
+  "time": "67.37 ms",
+  "ip": "::1"
+}
+2026-04-28 13:49:16 [[32minfo[39m]: [1;32mVerify access token for undefined[0m 
+2026-04-28 13:49:16 [[32minfo[39m]: [1;32mAPI Request[0m {
+  "requestId": "f43dc944-9b93-4228-9fc9-28ab84045c2e",
+  "method": "POST",
+  "url": "/api/v1/categories",
+  "status": 201,
+  "time": "69.65 ms",
+  "ip": "::1"
+}
+2026-04-28 13:51:11 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-04-28 13:51:11 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-04-28 13:51:13 [[32minfo[39m]: [1;32mVerify access token for undefined[0m 
+2026-04-28 13:51:13 [[31merror[39m]: [1;31mAPI Error[0m {
+  "requestId": "7f92e566-246a-449a-a276-cbcd31e760b9",
+  "method": "POST",
+  "url": "/api/v1/categories",
+  "status": 500,
+  "time": "154.00 ms",
+  "ip": "::1"
+}
+2026-04-28 13:52:12 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-04-28 13:52:12 [[32minfo[39m]: [1;32mVerify access token for undefined[0m 
+2026-04-28 13:52:12 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-04-28 13:52:12 [[31merror[39m]: [1;31mAPI Error[0m {
+  "requestId": "d6acfde2-8326-4cd4-8dfe-004c8fc88ed3",
+  "method": "POST",
+  "url": "/api/v1/categories",
+  "status": 500,
+  "time": "493.22 ms",
+  "ip": "::1"
+}
+2026-04-28 13:52:44 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-04-28 13:52:44 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-04-28 13:52:46 [[32minfo[39m]: [1;32mVerify access token for undefined[0m 
+2026-04-28 13:54:06 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-04-28 13:54:07 [[32minfo[39m]: [1;32mVerify access token for undefined[0m 
+2026-04-28 13:54:07 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-04-28 13:54:07 [[31merror[39m]: [1;31mError Category name already exists status code (no body)[0m
+Error: Category name already exists status code (no body)
+    at CategoryService.createCategory (file:///C:/flutter/taskit_backend/src/features/category/category.services.js:26:15)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async createCategory (file:///C:/flutter/taskit_backend/src/features/category/category.controller.js:6:20) {
+  "requestId": "722d2df3-d4ab-4d3f-a700-7c85b82b7fbd",
+  "method": "POST",
+  "url": "/api/v1/categories",
+  "status": 500
+}
+2026-04-28 13:54:07 [[31merror[39m]: [1;31mAPI Error[0m {
+  "requestId": "722d2df3-d4ab-4d3f-a700-7c85b82b7fbd",
+  "method": "POST",
+  "url": "/api/v1/categories",
+  "status": 500,
+  "time": "282.43 ms",
+  "ip": "::1"
+}
+2026-04-28 13:55:42 [[32minfo[39m]: [1;32mVerify access token for undefined[0m 
+2026-04-28 13:55:42 [[32minfo[39m]: [1;32mAPI Request[0m {
+  "requestId": "744b84bd-ef57-40aa-a038-25d434f0bbfe",
+  "method": "POST",
+  "url": "/api/v1/categories",
+  "status": 201,
+  "time": "92.75 ms",
+  "ip": "::1"
+}
+2026-04-28 13:56:22 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-04-28 13:56:22 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-04-28 13:56:23 [[32minfo[39m]: [1;32mVerify access token for undefined[0m 
+2026-04-28 13:56:23 [[32minfo[39m]: [1;32mAPI Request[0m {
+  "requestId": "c3a74de3-c1ac-4a9f-b5a4-da4476d0af35",
+  "method": "POST",
+  "url": "/api/v1/categories",
+  "status": 201,
+  "time": "110.31 ms",
+  "ip": "::1"
+}
+2026-04-28 13:57:45 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-04-28 13:57:45 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-04-28 13:57:53 [[32minfo[39m]: [1;32mVerify access token for undefined[0m 
+2026-04-28 13:57:53 [[32minfo[39m]: [1;32mAPI Request[0m {
+  "requestId": "3f6ee99c-1ef2-4d6c-bda9-7f432f8e77ad",
+  "method": "POST",
+  "url": "/api/v1/categories",
+  "status": 201,
+  "time": "131.32 ms",
+  "ip": "::1"
+}
+2026-04-28 13:58:25 [[32minfo[39m]: [1;32mVerify access token for undefined[0m 
+2026-04-28 13:58:25 [[32minfo[39m]: [1;32mAPI Request[0m {
+  "requestId": "3014fa12-a166-48d9-9b48-ad6957065600",
+  "method": "GET",
+  "url": "/api/v1/categories/69f036d862ec72922ed01a4e",
+  "status": 200,
+  "time": "76.79 ms",
+  "ip": "::1"
+}
+2026-04-28 14:00:10 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-04-28 14:00:10 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-04-28 14:00:31 [[32minfo[39m]: [1;32mVerify access token for undefined[0m 
+2026-04-28 14:00:31 [[31merror[39m]: [1;31mError Access token expired[0m
+Error: Access token expired
+    at verifyAccessToken (file:///C:/flutter/taskit_backend/src/shared/services/token.service.js:65:11)
+    at authMiddleware (file:///C:/flutter/taskit_backend/src/middleware/auth.middleware.js:11:21)
+    at Layer.handle [as handle_request] (C:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\flutter\taskit_backend\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (C:\flutter\taskit_backend\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (C:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:284:15
+    at param (C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:365:14)
+    at param (C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:376:14)
+    at router.process_params (C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:421:3) {
+  "requestId": "5241d4f3-a1cb-4225-b2da-6f2df69e8bc7",
+  "method": "PUT",
+  "url": "/api/v1/categories/684252d4a9e53cf5c3478b58",
+  "status": 401
+}
+2026-04-28 14:00:31 [[33mwarn[39m]: [1;33mAPI Warning[0m {
+  "requestId": "5241d4f3-a1cb-4225-b2da-6f2df69e8bc7",
+  "method": "PUT",
+  "url": "/api/v1/categories/684252d4a9e53cf5c3478b58",
+  "status": 401,
+  "time": "12.64 ms",
+  "ip": "::1"
+}
+2026-04-28 14:00:37 [[32minfo[39m]: [1;32mRefresh token saved for 69f036d862ec72922ed01a49:604800:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWYwMzZkODYyZWM3MjkyMmVkMDFhNDkiLCJpYXQiOjE3NzczNTk2MzcsImV4cCI6MTc3Nzk2NDQzN30.2TppT07xyT33xw6bCrZDyR3nWoJ_mRl1HtqypSWYy4o[0m 
+2026-04-28 14:00:37 [[32minfo[39m]: [1;32mAPI Request[0m {
+  "requestId": "987baecc-c32b-4c7f-bf33-64588b8df631",
+  "method": "POST",
+  "url": "/api/v1/auth/login",
+  "status": 200,
+  "time": "132.96 ms",
+  "ip": "::1"
+}
+2026-04-28 14:01:15 [[32minfo[39m]: [1;32mVerify access token for undefined[0m 
+2026-04-28 14:01:15 [[31merror[39m]: [1;31mError Access token expired[0m
+Error: Access token expired
+    at verifyAccessToken (file:///C:/flutter/taskit_backend/src/shared/services/token.service.js:65:11)
+    at authMiddleware (file:///C:/flutter/taskit_backend/src/middleware/auth.middleware.js:11:21)
+    at Layer.handle [as handle_request] (C:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\flutter\taskit_backend\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (C:\flutter\taskit_backend\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (C:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:284:15
+    at param (C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:365:14)
+    at param (C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:376:14)
+    at router.process_params (C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:421:3) {
+  "requestId": "4502fdbb-d61f-415e-b8a5-3504d1435e77",
+  "method": "GET",
+  "url": "/api/v1/categories/69f036d862ec72922ed01a4e",
+  "status": 401
+}
+2026-04-28 14:01:15 [[33mwarn[39m]: [1;33mAPI Warning[0m {
+  "requestId": "4502fdbb-d61f-415e-b8a5-3504d1435e77",
+  "method": "GET",
+  "url": "/api/v1/categories/69f036d862ec72922ed01a4e",
+  "status": 401,
+  "time": "3.12 ms",
+  "ip": "::1"
+}
+2026-04-28 14:01:23 [[32minfo[39m]: [1;32mVerify access token for undefined[0m 
+2026-04-28 14:01:23 [[32minfo[39m]: [1;32mAPI Request[0m {
+  "requestId": "55de5ec8-2b6c-425c-8a4c-e805683e9805",
+  "method": "GET",
+  "url": "/api/v1/categories/69f036d862ec72922ed01a4e",
+  "status": 200,
+  "time": "68.23 ms",
+  "ip": "::1"
+}
+2026-04-28 14:01:35 [[32minfo[39m]: [1;32mVerify access token for undefined[0m 
+2026-04-28 14:01:35 [[31merror[39m]: [1;31mError err is not defined[0m
+ReferenceError: err is not defined
+    at CategoryService.updateCategoryFull (file:///C:/flutter/taskit_backend/src/features/category/category.services.js:134:7)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async updateCategoryFull (file:///C:/flutter/taskit_backend/src/features/category/category.controller.js:55:20) {
+  "requestId": "5a2874d5-41ce-44ce-9e1c-5273f34ce3d7",
+  "method": "PUT",
+  "url": "/api/v1/categories/69f036d862ec72922ed01a4e",
+  "status": 500
+}
+2026-04-28 14:01:35 [[31merror[39m]: [1;31mAPI Error[0m {
+  "requestId": "5a2874d5-41ce-44ce-9e1c-5273f34ce3d7",
+  "method": "PUT",
+  "url": "/api/v1/categories/69f036d862ec72922ed01a4e",
+  "status": 500,
+  "time": "85.67 ms",
+  "ip": "::1"
+}
+2026-04-28 14:01:47 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-04-28 14:01:47 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-04-28 14:02:01 [[32minfo[39m]: [1;32mVerify access token for undefined[0m 
+2026-04-28 14:02:01 [[31merror[39m]: [1;31mError Category not found[0m
+Error: Category not found
+    at CategoryService.updateCategoryFull (file:///C:/flutter/taskit_backend/src/features/category/category.services.js:130:15)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async updateCategoryFull (file:///C:/flutter/taskit_backend/src/features/category/category.controller.js:55:20) {
+  "requestId": "9c5f4635-b44c-4deb-9005-1efa57023285",
+  "method": "PUT",
+  "url": "/api/v1/categories/69f036d862ec72922ed01a4e",
+  "status": 404
+}
+2026-04-28 14:02:01 [[33mwarn[39m]: [1;33mAPI Warning[0m {
+  "requestId": "9c5f4635-b44c-4deb-9005-1efa57023285",
+  "method": "PUT",
+  "url": "/api/v1/categories/69f036d862ec72922ed01a4e",
+  "status": 404,
+  "time": "89.57 ms",
+  "ip": "::1"
+}
+2026-04-28 14:02:54 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-04-28 14:02:54 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-04-28 14:03:10 [[32minfo[39m]: [1;32mVerify access token for undefined[0m 
+2026-04-28 14:03:10 [[32minfo[39m]: [1;32mAPI Request[0m {
+  "requestId": "036c98dd-e23f-447d-9f30-147611bd360b",
+  "method": "GET",
+  "url": "/api/v1/categories",
+  "status": 200,
+  "time": "98.68 ms",
+  "ip": "::1"
+}
+2026-04-28 14:03:24 [[32minfo[39m]: [1;32mVerify access token for undefined[0m 
+2026-04-28 14:03:24 [[32minfo[39m]: [1;32mAPI Request[0m {
+  "requestId": "20064311-0763-4203-bfdf-c0c538f65c82",
+  "method": "PUT",
+  "url": "/api/v1/categories/69f036d862ec72922ed01a4a",
+  "status": 200,
+  "time": "85.62 ms",
+  "ip": "::1"
+}
+2026-04-28 14:03:28 [[32minfo[39m]: [1;32mVerify access token for undefined[0m 
+2026-04-28 14:03:28 [[32minfo[39m]: [1;32mAPI Request[0m {
+  "requestId": "c285c60c-bb39-4f99-b693-5019b3fe237c",
+  "method": "GET",
+  "url": "/api/v1/categories",
+  "status": 200,
+  "time": "70.77 ms",
+  "ip": "::1"
+}
+2026-04-28 14:04:00 [[32minfo[39m]: [1;32mVerify access token for undefined[0m 
+2026-04-28 14:04:00 [[31merror[39m]: [1;31mError Access token expired[0m
+Error: Access token expired
+    at verifyAccessToken (file:///C:/flutter/taskit_backend/src/shared/services/token.service.js:65:11)
+    at authMiddleware (file:///C:/flutter/taskit_backend/src/middleware/auth.middleware.js:11:21)
+    at Layer.handle [as handle_request] (C:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\flutter\taskit_backend\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (C:\flutter\taskit_backend\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (C:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:284:15
+    at param (C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:365:14)
+    at param (C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:376:14)
+    at router.process_params (C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:421:3) {
+  "requestId": "5ee276a3-cd98-4b86-b47f-8531cf669384",
+  "method": "DELETE",
+  "url": "/api/v1/categories/69f036d862ec72922ed01a4e",
+  "status": 401
+}
+2026-04-28 14:04:00 [[33mwarn[39m]: [1;33mAPI Warning[0m {
+  "requestId": "5ee276a3-cd98-4b86-b47f-8531cf669384",
+  "method": "DELETE",
+  "url": "/api/v1/categories/69f036d862ec72922ed01a4e",
+  "status": 401,
+  "time": "2.15 ms",
+  "ip": "::1"
+}
+2026-04-28 14:04:20 [[32minfo[39m]: [1;32mVerify access token for undefined[0m 
+2026-04-28 14:04:20 [[31merror[39m]: [1;31mError No transaction started[0m
+MongoTransactionError: No transaction started
+    at ClientSession.abortTransaction (C:\flutter\taskit_backend\node_modules\mongoose\node_modules\mongodb\lib\sessions.js:364:19)
+    at CategoryService.deleteOne (file:///C:/flutter/taskit_backend/src/features/category/category.services.js:111:21)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async deleteCategory (file:///C:/flutter/taskit_backend/src/features/category/category.controller.js:92:20) {
+  "requestId": "c76c537c-5bb9-46be-a7dd-a76b9959d2d3",
+  "method": "DELETE",
+  "url": "/api/v1/categories/69f036d862ec72922ed01a4e",
+  "status": 500
+}
+2026-04-28 14:04:20 [[31merror[39m]: [1;31mAPI Error[0m {
+  "requestId": "c76c537c-5bb9-46be-a7dd-a76b9959d2d3",
+  "method": "DELETE",
+  "url": "/api/v1/categories/69f036d862ec72922ed01a4e",
+  "status": 500,
+  "time": "69.40 ms",
+  "ip": "::1"
+}
+2026-04-28 14:05:03 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-04-28 14:05:03 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-04-28 14:05:04 [[32minfo[39m]: [1;32mVerify access token for undefined[0m 
+2026-04-28 14:05:04 [[31merror[39m]: [1;31mError Delete category ServerError: Cannot delete default category status code (no body)[0m
+Error: Delete category ServerError: Cannot delete default category status code (no body)
+    at CategoryService.deleteOne (file:///C:/flutter/taskit_backend/src/features/category/category.services.js:114:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async deleteCategory (file:///C:/flutter/taskit_backend/src/features/category/category.controller.js:92:20) {
+  "requestId": "76e603a3-696f-47b5-878e-7c432f040e36",
+  "method": "DELETE",
+  "url": "/api/v1/categories/69f036d862ec72922ed01a4e",
+  "status": 500
+}
+2026-04-28 14:05:04 [[31merror[39m]: [1;31mAPI Error[0m {
+  "requestId": "76e603a3-696f-47b5-878e-7c432f040e36",
+  "method": "DELETE",
+  "url": "/api/v1/categories/69f036d862ec72922ed01a4e",
+  "status": 500,
+  "time": "80.68 ms",
+  "ip": "::1"
+}
+2026-04-28 14:07:03 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-04-28 14:07:04 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-04-28 14:07:14 [[32minfo[39m]: [1;32mVerify access token for undefined[0m 
+2026-04-28 14:07:14 [[31merror[39m]: [1;31mError Delete category error: Cannot delete default category status code (no body)[0m
+Error: Delete category error: Cannot delete default category status code (no body)
+    at CategoryService.deleteOne (file:///C:/flutter/taskit_backend/src/features/category/category.services.js:111:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async deleteCategory (file:///C:/flutter/taskit_backend/src/features/category/category.controller.js:92:20) {
+  "requestId": "c1fbef0f-1e3a-4e98-823d-6b53ae60b781",
+  "method": "DELETE",
+  "url": "/api/v1/categories/69f036d862ec72922ed01a4e",
+  "status": 500
+}
+2026-04-28 14:07:14 [[31merror[39m]: [1;31mAPI Error[0m {
+  "requestId": "c1fbef0f-1e3a-4e98-823d-6b53ae60b781",
+  "method": "DELETE",
+  "url": "/api/v1/categories/69f036d862ec72922ed01a4e",
+  "status": 500,
+  "time": "82.41 ms",
+  "ip": "::1"
+}
+2026-04-28 14:10:00 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-04-28 14:10:01 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-04-28 14:10:01 [[32minfo[39m]: [1;32mVerify access token for undefined[0m 
+2026-04-28 14:10:02 [[31merror[39m]: [1;31mError Delete category error: Cannot delete default category status code (no body)[0m
+Error: Delete category error: Cannot delete default category status code (no body)
+    at CategoryService.deleteOne (file:///C:/flutter/taskit_backend/src/features/category/category.services.js:111:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async deleteCategory (file:///C:/flutter/taskit_backend/src/features/category/category.controller.js:92:20) {
+  "requestId": "b3065a65-6d7a-4e3f-b11b-353907050706",
+  "method": "DELETE",
+  "url": "/api/v1/categories/69f036d862ec72922ed01a4e",
+  "status": 500
+}
+2026-04-28 14:10:02 [[31merror[39m]: [1;31mAPI Error[0m {
+  "requestId": "b3065a65-6d7a-4e3f-b11b-353907050706",
+  "method": "DELETE",
+  "url": "/api/v1/categories/69f036d862ec72922ed01a4e",
+  "status": 500,
+  "time": "83.43 ms",
+  "ip": "::1"
+}
+2026-04-28 14:10:05 [[32minfo[39m]: [1;32mVerify access token for undefined[0m 
+2026-04-28 14:10:05 [[31merror[39m]: [1;31mError Delete category error: Cannot delete default category status code (no body)[0m
+Error: Delete category error: Cannot delete default category status code (no body)
+    at CategoryService.deleteOne (file:///C:/flutter/taskit_backend/src/features/category/category.services.js:111:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async deleteCategory (file:///C:/flutter/taskit_backend/src/features/category/category.controller.js:92:20) {
+  "requestId": "c127ed39-494d-49e3-b28a-13eab24fe4b9",
+  "method": "DELETE",
+  "url": "/api/v1/categories/69f036d862ec72922ed01a4e",
+  "status": 500
+}
+2026-04-28 14:10:05 [[31merror[39m]: [1;31mAPI Error[0m {
+  "requestId": "c127ed39-494d-49e3-b28a-13eab24fe4b9",
+  "method": "DELETE",
+  "url": "/api/v1/categories/69f036d862ec72922ed01a4e",
+  "status": 500,
+  "time": "71.68 ms",
+  "ip": "::1"
+}
+2026-04-28 14:10:20 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-04-28 14:10:21 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-04-28 14:12:12 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-04-28 14:12:13 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-04-28 14:12:14 [[32minfo[39m]: [1;32mVerify access token for undefined[0m 
+2026-04-28 14:12:14 [[31merror[39m]: [1;31mError Cannot delete default category[0m
+Error: Cannot delete default category
+    at CategoryService.deleteOne (file:///C:/flutter/taskit_backend/src/features/category/category.services.js:80:15)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async deleteCategory (file:///C:/flutter/taskit_backend/src/features/category/category.controller.js:92:20) {
+  "requestId": "65673d2e-85b2-44ec-9ca3-b68a1f52b66c",
+  "method": "DELETE",
+  "url": "/api/v1/categories/69f036d862ec72922ed01a4e",
+  "status": 409
+}
+2026-04-28 14:12:14 [[33mwarn[39m]: [1;33mAPI Warning[0m {
+  "requestId": "65673d2e-85b2-44ec-9ca3-b68a1f52b66c",
+  "method": "DELETE",
+  "url": "/api/v1/categories/69f036d862ec72922ed01a4e",
+  "status": 409,
+  "time": "84.95 ms",
+  "ip": "::1"
+}
+2026-04-28 14:12:29 [[32minfo[39m]: [1;32mVerify access token for undefined[0m 
+2026-04-28 14:12:29 [[32minfo[39m]: [1;32mAPI Request[0m {
+  "requestId": "90b3a188-b83d-4e1b-9f3b-4b05ed6cb745",
+  "method": "DELETE",
+  "url": "/api/v1/categories/69f05a716f090b93ed7dd6eb",
+  "status": 200,
+  "time": "211.60 ms",
+  "ip": "::1"
+}
+2026-04-28 14:14:38 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-04-28 14:14:39 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-04-28 14:14:46 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-04-28 14:14:47 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-04-28 14:14:52 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-04-28 14:14:53 [[32minfo[39m]: [1;32mMongoDB connected![0m 

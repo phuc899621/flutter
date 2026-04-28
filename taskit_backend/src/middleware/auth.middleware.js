@@ -11,6 +11,7 @@ export const authMiddleware = async (req, res, next) => {
     const decoded = verifyAccessToken(token);
     console.log(decoded);
     req.user = decoded;
+    console.log(req.user);
     next();
   } catch (err) {
     next(err);

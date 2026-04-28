@@ -1776,3 +1776,321 @@ Error: Email is already in use
   "url": "/api/v1/auth/login",
   "status": 400
 }
+2026-04-28 11:21:06 [[31merror[39m]: [1;31mError Access token expired[0m
+Error: Access token expired
+    at verifyAccessToken (file:///C:/flutter/taskit_backend/src/shared/services/token.service.js:65:11)
+    at authMiddleware (file:///C:/flutter/taskit_backend/src/middleware/auth.middleware.js:11:21)
+    at Layer.handle [as handle_request] (C:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\flutter\taskit_backend\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (C:\flutter\taskit_backend\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (C:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:284:15
+    at router.process_params (C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:346:12)
+    at next (C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:280:10)
+    at router.handle (C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:175:3) {
+  "requestId": "a17b44d4-de69-41d3-846f-7d1fd4be21fa",
+  "method": "GET",
+  "url": "/api/v1/categories",
+  "status": 401
+}
+2026-04-28 11:25:42 [[31merror[39m]: [1;31mError User account does not exist[0m
+Error: User account does not exist
+    at UserService.validateUserForLogin (file:///C:/flutter/taskit_backend/src/features/user/user.service.js:50:24)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async AuthService.login (file:///C:/flutter/taskit_backend/src/features/auth/auth.service.js:117:23)
+    at async login (file:///C:/flutter/taskit_backend/src/features/auth/auth.controller.js:40:20) {
+  "requestId": "42935939-d1c9-4898-b7ec-ed8421422558",
+  "method": "POST",
+  "url": "/api/v1/auth/login",
+  "status": 400
+}
+2026-04-28 13:12:21 [[31merror[39m]: [1;31mError Access token expired[0m
+Error: Access token expired
+    at verifyAccessToken (file:///C:/flutter/taskit_backend/src/shared/services/token.service.js:65:11)
+    at authMiddleware (file:///C:/flutter/taskit_backend/src/middleware/auth.middleware.js:11:21)
+    at Layer.handle [as handle_request] (C:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\flutter\taskit_backend\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (C:\flutter\taskit_backend\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (C:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:284:15
+    at router.process_params (C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:346:12)
+    at next (C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:280:10)
+    at router.handle (C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:175:3) {
+  "requestId": "2f4a69ac-08c9-42f2-9d94-dabc21ae9ea9",
+  "method": "GET",
+  "url": "/api/v1/categories",
+  "status": 401
+}
+2026-04-28 13:43:58 [[31merror[39m]: [1;31mError Access token expired[0m
+Error: Access token expired
+    at verifyAccessToken (file:///C:/flutter/taskit_backend/src/shared/services/token.service.js:65:11)
+    at authMiddleware (file:///C:/flutter/taskit_backend/src/middleware/auth.middleware.js:11:21)
+    at Layer.handle [as handle_request] (C:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\flutter\taskit_backend\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (C:\flutter\taskit_backend\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (C:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:284:15
+    at router.process_params (C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:346:12)
+    at next (C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:280:10)
+    at router.handle (C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:175:3) {
+  "requestId": "367974ce-4d58-4e54-956c-bde11c6b0cba",
+  "method": "GET",
+  "url": "/api/v1/categories",
+  "status": 401
+}
+2026-04-28 13:46:21 [[31merror[39m]: [1;31mError Access token expired[0m
+Error: Access token expired
+    at verifyAccessToken (file:///C:/flutter/taskit_backend/src/shared/services/token.service.js:65:11)
+    at authMiddleware (file:///C:/flutter/taskit_backend/src/middleware/auth.middleware.js:11:21)
+    at Layer.handle [as handle_request] (C:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\flutter\taskit_backend\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (C:\flutter\taskit_backend\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (C:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:284:15
+    at router.process_params (C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:346:12)
+    at next (C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:280:10)
+    at router.handle (C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:175:3) {
+  "requestId": "496f3dc3-7d64-42c6-970c-32158973ac30",
+  "method": "POST",
+  "url": "/api/v1/categories",
+  "status": 401
+}
+2026-04-28 13:46:49 [[31merror[39m]: [1;31mError Name must be at lest 3 characters[0m
+Error: Name must be at lest 3 characters
+    at file:///C:/flutter/taskit_backend/src/middleware/validate.js:14:15
+    at Layer.handle [as handle_request] (C:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\flutter\taskit_backend\node_modules\express\lib\router\route.js:149:13)
+    at authMiddleware (file:///C:/flutter/taskit_backend/src/middleware/auth.middleware.js:15:5)
+    at Layer.handle [as handle_request] (C:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\flutter\taskit_backend\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (C:\flutter\taskit_backend\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (C:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:284:15
+    at router.process_params (C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:346:12) {
+  "requestId": "8bc4ed63-c9a4-4bd5-b554-d40b65c2f965",
+  "method": "POST",
+  "url": "/api/v1/categories",
+  "status": 400
+}
+2026-04-28 13:49:05 [[31merror[39m]: [1;31mAPI Error[0m {
+  "requestId": "4b45e393-696c-4cd9-a2ac-ddc1290d7302",
+  "method": "POST",
+  "url": "/api/v1/categories",
+  "status": 500,
+  "time": "67.37 ms",
+  "ip": "::1"
+}
+2026-04-28 13:51:13 [[31merror[39m]: [1;31mAPI Error[0m {
+  "requestId": "7f92e566-246a-449a-a276-cbcd31e760b9",
+  "method": "POST",
+  "url": "/api/v1/categories",
+  "status": 500,
+  "time": "154.00 ms",
+  "ip": "::1"
+}
+2026-04-28 13:52:12 [[31merror[39m]: [1;31mAPI Error[0m {
+  "requestId": "d6acfde2-8326-4cd4-8dfe-004c8fc88ed3",
+  "method": "POST",
+  "url": "/api/v1/categories",
+  "status": 500,
+  "time": "493.22 ms",
+  "ip": "::1"
+}
+2026-04-28 13:54:07 [[31merror[39m]: [1;31mError Category name already exists status code (no body)[0m
+Error: Category name already exists status code (no body)
+    at CategoryService.createCategory (file:///C:/flutter/taskit_backend/src/features/category/category.services.js:26:15)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async createCategory (file:///C:/flutter/taskit_backend/src/features/category/category.controller.js:6:20) {
+  "requestId": "722d2df3-d4ab-4d3f-a700-7c85b82b7fbd",
+  "method": "POST",
+  "url": "/api/v1/categories",
+  "status": 500
+}
+2026-04-28 13:54:07 [[31merror[39m]: [1;31mAPI Error[0m {
+  "requestId": "722d2df3-d4ab-4d3f-a700-7c85b82b7fbd",
+  "method": "POST",
+  "url": "/api/v1/categories",
+  "status": 500,
+  "time": "282.43 ms",
+  "ip": "::1"
+}
+2026-04-28 14:00:31 [[31merror[39m]: [1;31mError Access token expired[0m
+Error: Access token expired
+    at verifyAccessToken (file:///C:/flutter/taskit_backend/src/shared/services/token.service.js:65:11)
+    at authMiddleware (file:///C:/flutter/taskit_backend/src/middleware/auth.middleware.js:11:21)
+    at Layer.handle [as handle_request] (C:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\flutter\taskit_backend\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (C:\flutter\taskit_backend\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (C:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:284:15
+    at param (C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:365:14)
+    at param (C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:376:14)
+    at router.process_params (C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:421:3) {
+  "requestId": "5241d4f3-a1cb-4225-b2da-6f2df69e8bc7",
+  "method": "PUT",
+  "url": "/api/v1/categories/684252d4a9e53cf5c3478b58",
+  "status": 401
+}
+2026-04-28 14:01:15 [[31merror[39m]: [1;31mError Access token expired[0m
+Error: Access token expired
+    at verifyAccessToken (file:///C:/flutter/taskit_backend/src/shared/services/token.service.js:65:11)
+    at authMiddleware (file:///C:/flutter/taskit_backend/src/middleware/auth.middleware.js:11:21)
+    at Layer.handle [as handle_request] (C:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\flutter\taskit_backend\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (C:\flutter\taskit_backend\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (C:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:284:15
+    at param (C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:365:14)
+    at param (C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:376:14)
+    at router.process_params (C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:421:3) {
+  "requestId": "4502fdbb-d61f-415e-b8a5-3504d1435e77",
+  "method": "GET",
+  "url": "/api/v1/categories/69f036d862ec72922ed01a4e",
+  "status": 401
+}
+2026-04-28 14:01:35 [[31merror[39m]: [1;31mError err is not defined[0m
+ReferenceError: err is not defined
+    at CategoryService.updateCategoryFull (file:///C:/flutter/taskit_backend/src/features/category/category.services.js:134:7)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async updateCategoryFull (file:///C:/flutter/taskit_backend/src/features/category/category.controller.js:55:20) {
+  "requestId": "5a2874d5-41ce-44ce-9e1c-5273f34ce3d7",
+  "method": "PUT",
+  "url": "/api/v1/categories/69f036d862ec72922ed01a4e",
+  "status": 500
+}
+2026-04-28 14:01:35 [[31merror[39m]: [1;31mAPI Error[0m {
+  "requestId": "5a2874d5-41ce-44ce-9e1c-5273f34ce3d7",
+  "method": "PUT",
+  "url": "/api/v1/categories/69f036d862ec72922ed01a4e",
+  "status": 500,
+  "time": "85.67 ms",
+  "ip": "::1"
+}
+2026-04-28 14:02:01 [[31merror[39m]: [1;31mError Category not found[0m
+Error: Category not found
+    at CategoryService.updateCategoryFull (file:///C:/flutter/taskit_backend/src/features/category/category.services.js:130:15)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async updateCategoryFull (file:///C:/flutter/taskit_backend/src/features/category/category.controller.js:55:20) {
+  "requestId": "9c5f4635-b44c-4deb-9005-1efa57023285",
+  "method": "PUT",
+  "url": "/api/v1/categories/69f036d862ec72922ed01a4e",
+  "status": 404
+}
+2026-04-28 14:04:00 [[31merror[39m]: [1;31mError Access token expired[0m
+Error: Access token expired
+    at verifyAccessToken (file:///C:/flutter/taskit_backend/src/shared/services/token.service.js:65:11)
+    at authMiddleware (file:///C:/flutter/taskit_backend/src/middleware/auth.middleware.js:11:21)
+    at Layer.handle [as handle_request] (C:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\flutter\taskit_backend\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (C:\flutter\taskit_backend\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (C:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:284:15
+    at param (C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:365:14)
+    at param (C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:376:14)
+    at router.process_params (C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:421:3) {
+  "requestId": "5ee276a3-cd98-4b86-b47f-8531cf669384",
+  "method": "DELETE",
+  "url": "/api/v1/categories/69f036d862ec72922ed01a4e",
+  "status": 401
+}
+2026-04-28 14:04:20 [[31merror[39m]: [1;31mError No transaction started[0m
+MongoTransactionError: No transaction started
+    at ClientSession.abortTransaction (C:\flutter\taskit_backend\node_modules\mongoose\node_modules\mongodb\lib\sessions.js:364:19)
+    at CategoryService.deleteOne (file:///C:/flutter/taskit_backend/src/features/category/category.services.js:111:21)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async deleteCategory (file:///C:/flutter/taskit_backend/src/features/category/category.controller.js:92:20) {
+  "requestId": "c76c537c-5bb9-46be-a7dd-a76b9959d2d3",
+  "method": "DELETE",
+  "url": "/api/v1/categories/69f036d862ec72922ed01a4e",
+  "status": 500
+}
+2026-04-28 14:04:20 [[31merror[39m]: [1;31mAPI Error[0m {
+  "requestId": "c76c537c-5bb9-46be-a7dd-a76b9959d2d3",
+  "method": "DELETE",
+  "url": "/api/v1/categories/69f036d862ec72922ed01a4e",
+  "status": 500,
+  "time": "69.40 ms",
+  "ip": "::1"
+}
+2026-04-28 14:05:04 [[31merror[39m]: [1;31mError Delete category ServerError: Cannot delete default category status code (no body)[0m
+Error: Delete category ServerError: Cannot delete default category status code (no body)
+    at CategoryService.deleteOne (file:///C:/flutter/taskit_backend/src/features/category/category.services.js:114:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async deleteCategory (file:///C:/flutter/taskit_backend/src/features/category/category.controller.js:92:20) {
+  "requestId": "76e603a3-696f-47b5-878e-7c432f040e36",
+  "method": "DELETE",
+  "url": "/api/v1/categories/69f036d862ec72922ed01a4e",
+  "status": 500
+}
+2026-04-28 14:05:04 [[31merror[39m]: [1;31mAPI Error[0m {
+  "requestId": "76e603a3-696f-47b5-878e-7c432f040e36",
+  "method": "DELETE",
+  "url": "/api/v1/categories/69f036d862ec72922ed01a4e",
+  "status": 500,
+  "time": "80.68 ms",
+  "ip": "::1"
+}
+2026-04-28 14:07:14 [[31merror[39m]: [1;31mError Delete category error: Cannot delete default category status code (no body)[0m
+Error: Delete category error: Cannot delete default category status code (no body)
+    at CategoryService.deleteOne (file:///C:/flutter/taskit_backend/src/features/category/category.services.js:111:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async deleteCategory (file:///C:/flutter/taskit_backend/src/features/category/category.controller.js:92:20) {
+  "requestId": "c1fbef0f-1e3a-4e98-823d-6b53ae60b781",
+  "method": "DELETE",
+  "url": "/api/v1/categories/69f036d862ec72922ed01a4e",
+  "status": 500
+}
+2026-04-28 14:07:14 [[31merror[39m]: [1;31mAPI Error[0m {
+  "requestId": "c1fbef0f-1e3a-4e98-823d-6b53ae60b781",
+  "method": "DELETE",
+  "url": "/api/v1/categories/69f036d862ec72922ed01a4e",
+  "status": 500,
+  "time": "82.41 ms",
+  "ip": "::1"
+}
+2026-04-28 14:10:02 [[31merror[39m]: [1;31mError Delete category error: Cannot delete default category status code (no body)[0m
+Error: Delete category error: Cannot delete default category status code (no body)
+    at CategoryService.deleteOne (file:///C:/flutter/taskit_backend/src/features/category/category.services.js:111:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async deleteCategory (file:///C:/flutter/taskit_backend/src/features/category/category.controller.js:92:20) {
+  "requestId": "b3065a65-6d7a-4e3f-b11b-353907050706",
+  "method": "DELETE",
+  "url": "/api/v1/categories/69f036d862ec72922ed01a4e",
+  "status": 500
+}
+2026-04-28 14:10:02 [[31merror[39m]: [1;31mAPI Error[0m {
+  "requestId": "b3065a65-6d7a-4e3f-b11b-353907050706",
+  "method": "DELETE",
+  "url": "/api/v1/categories/69f036d862ec72922ed01a4e",
+  "status": 500,
+  "time": "83.43 ms",
+  "ip": "::1"
+}
+2026-04-28 14:10:05 [[31merror[39m]: [1;31mError Delete category error: Cannot delete default category status code (no body)[0m
+Error: Delete category error: Cannot delete default category status code (no body)
+    at CategoryService.deleteOne (file:///C:/flutter/taskit_backend/src/features/category/category.services.js:111:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async deleteCategory (file:///C:/flutter/taskit_backend/src/features/category/category.controller.js:92:20) {
+  "requestId": "c127ed39-494d-49e3-b28a-13eab24fe4b9",
+  "method": "DELETE",
+  "url": "/api/v1/categories/69f036d862ec72922ed01a4e",
+  "status": 500
+}
+2026-04-28 14:10:05 [[31merror[39m]: [1;31mAPI Error[0m {
+  "requestId": "c127ed39-494d-49e3-b28a-13eab24fe4b9",
+  "method": "DELETE",
+  "url": "/api/v1/categories/69f036d862ec72922ed01a4e",
+  "status": 500,
+  "time": "71.68 ms",
+  "ip": "::1"
+}
+2026-04-28 14:12:14 [[31merror[39m]: [1;31mError Cannot delete default category[0m
+Error: Cannot delete default category
+    at CategoryService.deleteOne (file:///C:/flutter/taskit_backend/src/features/category/category.services.js:80:15)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async deleteCategory (file:///C:/flutter/taskit_backend/src/features/category/category.controller.js:92:20) {
+  "requestId": "65673d2e-85b2-44ec-9ca3-b68a1f52b66c",
+  "method": "DELETE",
+  "url": "/api/v1/categories/69f036d862ec72922ed01a4e",
+  "status": 409
+}

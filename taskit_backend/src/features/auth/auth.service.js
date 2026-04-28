@@ -39,13 +39,13 @@ class AuthService {
     session.startTransaction();
     try {
       //check user exists and verified
-      await UserService.validateEmailForSignup(email);
-      logger.info(`User ${email} exists`);
+      const user = await UserService.findUserByEmail(email, session);
+      await UserService.ensureUserNotVerified(user);
       const name = email.split("@")[0];
-      const userId = await UserService.createOrUpdateUser(
-        { email, password, name },
-        session,
-      );
+      const userId = user
+        ? await UserService.updateUser({ email, password, name }, session)
+        : await UserService.createUser({ email, password, name }, session);
+
       logger.info(`User ${userId} created`);
 
       const otp = await VerificationService.createSignupOTP(userId, session);

@@ -5,7 +5,6 @@ import SettingServices from "../setting/setting.services.js";
 import bcrypt from "bcryptjs";
 import CategoryModel from "../category/category.model.js";
 import db from "../../shared/utils/db.js";
-import OtpEmailServices from "../auth/otp.email.services.js";
 import TaskModel from "../task/task.model.js";
 import SubtaskModel from "../task/subtask.model.js";
 import {
@@ -13,7 +12,7 @@ import {
   BaseError,
   ServerError,
 } from "../../shared/utils/error.js";
-import CategoryServices from "../category/category.services.js";
+import CategoryService from "../category/category.services.js";
 import logger from "../../shared/utils/logger.js";
 import UserRepository from "./user.repo.js";
 import { USER_STATUS } from "../../shared/constants/userStatus.js";
@@ -34,6 +33,10 @@ class UserService {
     const user = await UserRepository.findByEmail(email);
     if (user) return true;
     return false;
+  }
+  static async ensureUserExistsById(id) {
+    const user = await UserRepository.findById(id);
+    if (!user) throw new BadRequestError("User account does not exist");
   }
   static async validateEmailForSignup(email) {
     try {
@@ -146,20 +149,31 @@ class UserService {
       session,
     );
   }
-  static async createOrUpdateUser({ email, password, name }, session = null) {
+  static async createUser({ email, password, name }, session = null) {
     try {
       const hashPassword = await HashHelper.hash(password);
       const user = await UserRepository.upsertByEmail(
         { email, name, password: hashPassword, status: USER_STATUS.PENDING },
         session,
       );
-      logger.info(`User ${user.id} created`);
-      await CategoryServices.createDefaultCategories(user.id, session);
-      await SettingServices.createSetting(user.id, session);
+      await CategoryService.createDefaultCategories(user.id, session);
       return user.id;
     } catch (e) {
       if (e instanceof BaseError) throw e;
       throw new ServerError(`Create user error: ${e.message}`);
+    }
+  }
+  static async updateUser({ email, password, name }, session = null) {
+    try {
+      const hashPassword = await HashHelper.hash(password);
+      const user = await UserRepository.upsertByEmail(
+        { email, name, password: hashPassword, status: USER_STATUS.PENDING },
+        session,
+      );
+      return user.id;
+    } catch (e) {
+      if (e instanceof BaseError) throw e;
+      throw new ServerError(`Update user error: ${e.message}`);
     }
   }
   static async updateUserPassword(userId, password, session) {
@@ -214,6 +228,7 @@ class UserService {
         },
         session,
       );
+      await CategoryService.createDefaultCategories(user.id, session);
       logger.info(`User ${user.id} created`);
       return user.id;
     } catch (e) {

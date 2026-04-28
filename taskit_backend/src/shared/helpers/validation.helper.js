@@ -6,11 +6,13 @@ export const joiMsg = (
     email = null,
     required = true,
     exactly = null,
+    date = null,
   } = {},
 ) => {
   return {
     ...(required && { "string.empty": `${label} must not be empty` }),
     ...(required && { "any.required": `${label} is required` }),
+    ...(date && { "string.isoDate": `${label} must be a valid date` }),
     ...(email && { "string.email": `Must be a valid email` }),
     ...(exactly && {
       "string.length": `${label} must be exactly ${exactly} characters`,

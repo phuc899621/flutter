@@ -20,6 +20,7 @@ class GoogleAuthServiceImpl implements GoogleAuthService {
   Future<Result<String, Failure>> getGoogleIdToken() async {
     try {
       await _googleSignIn.signOut();
+      await Future.delayed(const Duration(milliseconds: 100));
 
       final GoogleSignInAccount? account;
       if (_googleSignIn.supportsAuthenticate()) {
