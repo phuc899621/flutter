@@ -6,6 +6,8 @@ import 'package:taskit/features/auth/domain/usecases/params/forgot_password_para
 import 'package:taskit/features/auth/presentation/forgot_password/state/forgot_pass_state.dart';
 import 'package:taskit/shared/constants/forgot_pass_status.dart';
 
+import '../../../../../shared/application/network_status_provider.dart';
+import '../../../../../shared/constants/network_status.dart';
 import '../../../domain/usecases/forgot_password/forgot_password_usecase.dart';
 
 final forgotPassControllerProvider =
@@ -19,9 +21,21 @@ class ForgotPassController extends Notifier<ForgotPassState> {
     return ForgotPassState();
   }
 
+  bool checkConnection() {
+    final networkStatus = ref.read(networkStatusProvider).value;
+    if (networkStatus == NetworkStatus.offline) {
+      state = state.copyWith(
+        status: ForgotPassStatus.initial,
+        apiError: 'Please check your internet connection',
+      );
+      return false;
+    }
+    return true;
+  }
+
   Future<void> forgotPass(String email) async {
     try {
-      //trang thai loading
+      if (!checkConnection()) return;
       state = state.copyWith(
         status: ForgotPassStatus.loading,
         apiError: null,
@@ -49,6 +63,7 @@ class ForgotPassController extends Notifier<ForgotPassState> {
 
   Future<void> verify(String otp) async {
     try {
+      if (!checkConnection()) return;
       state = state.copyWith(
         status: ForgotPassStatus.loading,
         apiError: null,
@@ -82,6 +97,7 @@ class ForgotPassController extends Notifier<ForgotPassState> {
 
   Future<void> resend() async {
     try {
+      if (!checkConnection()) return;
       state = state.copyWith(status: ForgotPassStatus.loading, apiError: null);
       final form = ForgotPasswordResendParams(email: state.email);
       (await ref.read(forgotPasswordResendUseCaseProvider).call(form)).when(
@@ -105,6 +121,7 @@ class ForgotPassController extends Notifier<ForgotPassState> {
 
   Future<void> reset(String password) async {
     try {
+      if (!checkConnection()) return;
       state = state.copyWith(
         status: ForgotPassStatus.loading,
         password: password,

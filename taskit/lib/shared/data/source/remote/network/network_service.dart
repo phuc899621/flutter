@@ -6,6 +6,8 @@ import 'package:taskit/shared/application/credential_service.dart';
 import 'package:taskit/shared/data/source/remote/network/dio_options.dart';
 
 import '../../../../../features/auth/data/dto/req/refresh_token/refresh_token_request.dart';
+import '../../../../application/network_status_provider.dart';
+import '../../../../constants/network_status.dart';
 import 'auth_interceptor.dart';
 import 'logging_interceptor.dart';
 
@@ -38,6 +40,8 @@ final networkServiceProvider = Provider<Dio>((ref) {
       onAuthExpired: () {
         ref.read(authControllerProvider.notifier).logout();
       },
+      onInternetChecker: () =>
+          ref.read(networkStatusProvider).value == NetworkStatus.online,
     ),
   ]);
   return dio;

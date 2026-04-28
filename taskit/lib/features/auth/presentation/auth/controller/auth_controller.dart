@@ -2,7 +2,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:taskit/features/auth/domain/usecases/auth/logout_usecase.dart';
 import 'package:taskit/features/user/domain/usecase/sync_user_usecase.dart';
 
+import '../../../../../shared/application/network_status_provider.dart';
 import '../../../../../shared/constants/auth_status.dart';
+import '../../../../../shared/constants/network_status.dart';
 import '../../../../../shared/domain/usecase/usecase.dart';
 import '../../../../../shared/log/logger_provider.dart';
 import '../../../../user/domain/entity/user_entity.dart';
@@ -17,6 +19,13 @@ class AuthController extends Notifier<AuthState> {
   @override
   AuthState build() {
     logger.i('[AuthController] build');
+    ref.listen(networkStatusProvider, (previous, next) {
+      if (next.value == NetworkStatus.offline) {
+        logger.w('[AuthController] Offline');
+      } else if (next.value == NetworkStatus.online) {
+        logger.i('[AuthController] Online');
+      }
+    });
     Future.microtask(() => init());
     return const AuthState(status: AuthStatus.initial);
   }

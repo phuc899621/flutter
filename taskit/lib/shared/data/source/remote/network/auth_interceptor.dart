@@ -10,6 +10,7 @@ class AuthInterceptor extends Interceptor {
   final Dio _dio;
   final Future<void> Function(String refreshToken, String sessionId)
   onRefreshToken;
+  final bool Function() onInternetChecker;
   final VoidCallback onAuthExpired;
   Future<void>? _refreshFuture;
 
@@ -18,6 +19,7 @@ class AuthInterceptor extends Interceptor {
     this._dio, {
     required this.onRefreshToken,
     required this.onAuthExpired,
+    required this.onInternetChecker,
   });
 
   @override
@@ -25,6 +27,15 @@ class AuthInterceptor extends Interceptor {
     RequestOptions options,
     RequestInterceptorHandler handler,
   ) async {
+    if (!onInternetChecker()) {
+      return handler.reject(
+        DioException(
+          requestOptions: options,
+          error: 'No internet connection',
+          type: DioExceptionType.connectionError,
+        ),
+      );
+    }
     final requireAuth = options.extra[AuthExtra.requireAuth.name] ?? false;
     if (requireAuth) {
       final token = await _storage.getAccessToken();
@@ -40,6 +51,9 @@ class AuthInterceptor extends Interceptor {
     if (err.type == DioExceptionType.badResponse &&
         err.response?.statusCode == 401 &&
         autoRefresh) {
+      if (!onInternetChecker()) {
+        return handler.next(err);
+      }
       final refreshToken = await _storage.getRefreshToken();
       final sessionId = await _storage.getSessionId();
       if (refreshToken == null || sessionId == null) {

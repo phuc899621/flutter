@@ -4,8 +4,10 @@ import 'package:taskit/features/auth/domain/usecases/auth/login_with_google_usec
 import 'package:taskit/features/auth/domain/usecases/params/login_params.dart';
 import 'package:taskit/features/auth/presentation/auth/controller/auth_controller.dart';
 import 'package:taskit/features/auth/presentation/login/state/login_state.dart';
+import 'package:taskit/shared/application/network_status_provider.dart';
 
 import '../../../../../shared/constants/login_status.dart';
+import '../../../../../shared/constants/network_status.dart';
 import '../../../../../shared/domain/usecase/usecase.dart';
 
 final loginControllerProvider =
@@ -19,8 +21,21 @@ class LoginController extends Notifier<LoginState> {
     return LoginState();
   }
 
+  bool checkConnection() {
+    final networkStatus = ref.read(networkStatusProvider).value;
+    if (networkStatus == NetworkStatus.offline) {
+      state = state.copyWith(
+        status: LoginStatus.initial,
+        apiError: 'Please check your internet connection',
+      );
+      return false;
+    }
+    return true;
+  }
+
   Future<void> loginWithGoogle() async {
     try {
+      if (!checkConnection()) return;
       state = state.copyWith(apiError: null, status: LoginStatus.googleLoading);
       final result = await ref
           .read(loginWithGoogleUseCaseProvider)
@@ -48,6 +63,7 @@ class LoginController extends Notifier<LoginState> {
 
   Future<void> login(String email, String password) async {
     try {
+      if (!checkConnection()) return;
       state = state.copyWith(
         apiError: null,
         status: LoginStatus.loading,
