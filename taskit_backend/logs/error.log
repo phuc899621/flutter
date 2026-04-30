@@ -2111,3 +2111,287 @@ Error: Access token expired
   "url": "/api/v1/categories/69f05a716f090b93ed7dd6eb",
   "status": 401
 }
+2026-04-29 14:26:26 [[31merror[39m]: [1;31mverifyAccessToken is not defined[0m
+ReferenceError: [1;31mverifyAccessToken is not defined[0m
+    at Array.socketAuth (file:///C:/flutter/taskit_backend/src/middleware/socket.middleware.js:14:5)
+    at run (C:\flutter\taskit_backend\node_modules\socket.io\dist\namespace.js:133:19)
+    at Namespace.run (C:\flutter\taskit_backend\node_modules\socket.io\dist\namespace.js:144:9)
+    at Namespace._add (C:\flutter\taskit_backend\node_modules\socket.io\dist\namespace.js:221:14)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5) 
+2026-04-29 14:27:06 [[31merror[39m]: [1;31mverifyAccessToken is not defined[0m
+ReferenceError: [1;31mverifyAccessToken is not defined[0m
+    at Array.socketAuth (file:///C:/flutter/taskit_backend/src/middleware/socket.middleware.js:14:5)
+    at run (C:\flutter\taskit_backend\node_modules\socket.io\dist\namespace.js:133:19)
+    at Namespace.run (C:\flutter\taskit_backend\node_modules\socket.io\dist\namespace.js:144:9)
+    at Namespace._add (C:\flutter\taskit_backend\node_modules\socket.io\dist\namespace.js:221:14)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5) 
+2026-04-29 14:27:28 [[31merror[39m]: [1;31mAccess token expired[0m
+Error: [1;31mAccess token expired[0m
+    at verifyAccessToken (file:///C:/flutter/taskit_backend/src/shared/services/token.service.js:65:11)
+    at Array.socketAuth (file:///C:/flutter/taskit_backend/src/middleware/socket.middleware.js:15:19)
+    at run (C:\flutter\taskit_backend\node_modules\socket.io\dist\namespace.js:133:19)
+    at Namespace.run (C:\flutter\taskit_backend\node_modules\socket.io\dist\namespace.js:144:9)
+    at Namespace._add (C:\flutter\taskit_backend\node_modules\socket.io\dist\namespace.js:221:14)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5) {
+  "statusCode": 401,
+  "type": "AuthenticationError"
+}
+2026-04-30 13:42:21 [[31merror[39m]: [1;31mError Password must be at lest 8 characters[0m
+Error: Password must be at lest 8 characters
+    at file:///C:/flutter/taskit_backend/src/middleware/validate.js:14:15
+    at Layer.handle [as handle_request] (C:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\flutter\taskit_backend\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (C:\flutter\taskit_backend\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (C:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:284:15
+    at router.process_params (C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:346:12)
+    at next (C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:280:10)
+    at router.handle (C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:175:3)
+    at router (C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:47:12) {
+  "requestId": "ae8dc4ae-8bcb-4277-83f6-920c5fda15d7",
+  "method": "POST",
+  "url": "/api/v1/auth/login",
+  "status": 400
+}
+2026-04-30 13:43:02 [[31merror[39m]: [1;31mError Password must be at lest 8 characters[0m
+Error: Password must be at lest 8 characters
+    at file:///C:/flutter/taskit_backend/src/middleware/validate.js:14:15
+    at Layer.handle [as handle_request] (C:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\flutter\taskit_backend\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (C:\flutter\taskit_backend\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (C:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:284:15
+    at router.process_params (C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:346:12)
+    at next (C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:280:10)
+    at router.handle (C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:175:3)
+    at router (C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:47:12) {
+  "requestId": "a4385ec8-1025-48e9-9fc8-d2d5068c1bd2",
+  "method": "POST",
+  "url": "/api/v1/auth/login",
+  "status": 400
+}
+2026-04-30 13:43:28 [[31merror[39m]: [1;31mError Password must be at lest 8 characters[0m
+Error: Password must be at lest 8 characters
+    at file:///C:/flutter/taskit_backend/src/middleware/validate.js:14:15
+    at Layer.handle [as handle_request] (C:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\flutter\taskit_backend\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (C:\flutter\taskit_backend\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (C:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:284:15
+    at router.process_params (C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:346:12)
+    at next (C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:280:10)
+    at router.handle (C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:175:3)
+    at router (C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:47:12) {
+  "requestId": "685097e1-115b-4f41-9ce4-10ad00c85be9",
+  "method": "POST",
+  "url": "/api/v1/auth/login",
+  "status": 400
+}
+2026-04-30 13:46:12 [[31merror[39m]: [1;31mError Password must be at lest 8 characters[0m
+Error: Password must be at lest 8 characters
+    at file:///C:/flutter/taskit_backend/src/middleware/validate.js:14:15
+    at Layer.handle [as handle_request] (C:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\flutter\taskit_backend\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (C:\flutter\taskit_backend\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (C:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:284:15
+    at router.process_params (C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:346:12)
+    at next (C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:280:10)
+    at router.handle (C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:175:3)
+    at router (C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:47:12) {
+  "requestId": "0d634326-db3f-4093-a4f2-f06074df9417",
+  "method": "POST",
+  "url": "/api/v1/auth/login",
+  "status": 400
+}
+2026-04-30 13:46:48 [[31merror[39m]: [1;31mError Email is required[0m
+Error: Email is required
+    at file:///C:/flutter/taskit_backend/src/middleware/validate.js:14:15
+    at Layer.handle [as handle_request] (C:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\flutter\taskit_backend\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (C:\flutter\taskit_backend\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (C:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:284:15
+    at router.process_params (C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:346:12)
+    at next (C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:280:10)
+    at router.handle (C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:175:3)
+    at router (C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:47:12) {
+  "requestId": "c89cf786-6781-475e-b78e-4cea1ee0b8c3",
+  "method": "POST",
+  "url": "/api/v1/auth/login",
+  "status": 400
+}
+2026-04-30 13:50:29 [[31merror[39m]: [1;31mError Email is required[0m
+Error: Email is required
+    at file:///C:/flutter/taskit_backend/src/middleware/validate.js:14:15
+    at Layer.handle [as handle_request] (C:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\flutter\taskit_backend\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (C:\flutter\taskit_backend\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (C:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:284:15
+    at router.process_params (C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:346:12)
+    at next (C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:280:10)
+    at router.handle (C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:175:3)
+    at router (C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:47:12) {
+  "requestId": "05200900-f9f8-4f4d-b442-03d72a12f3c1",
+  "method": "POST",
+  "url": "/api/v1/auth/login",
+  "status": 400
+}
+2026-04-30 13:53:13 [[31merror[39m]: [1;31mError Invalid password[0m
+Error: Invalid password
+    at UserService.validateUserForLogin (file:///C:/flutter/taskit_backend/src/features/user/user.service.js:60:15)
+    at async AuthService.login (file:///C:/flutter/taskit_backend/src/features/auth/auth.service.js:117:23)
+    at async login (file:///C:/flutter/taskit_backend/src/features/auth/auth.controller.js:40:20) {
+  "requestId": "98380f1d-51ed-411b-aacc-3829da2e6fa9",
+  "method": "POST",
+  "url": "/api/v1/auth/login",
+  "status": 400
+}
+2026-04-30 13:55:24 [[31merror[39m]: [1;31mError Invalid password[0m
+Error: Invalid password
+    at UserService.validateUserForLogin (file:///C:/flutter/taskit_backend/src/features/user/user.service.js:60:15)
+    at async AuthService.login (file:///C:/flutter/taskit_backend/src/features/auth/auth.service.js:117:23)
+    at async login (file:///C:/flutter/taskit_backend/src/features/auth/auth.controller.js:40:20) {
+  "requestId": "94e18b60-d77e-40cb-a956-9722e960ae2d",
+  "method": "POST",
+  "url": "/api/v1/auth/login",
+  "status": 400
+}
+2026-04-30 14:16:53 [[31merror[39m]: [1;31mError Access denied. No authorization provided[0m
+Error: Access denied. No authorization provided
+    at authMiddleware (file:///C:/flutter/taskit_backend/src/middleware/auth.middleware.js:9:13)
+    at Layer.handle [as handle_request] (C:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\flutter\taskit_backend\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (C:\flutter\taskit_backend\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (C:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:284:15
+    at router.process_params (C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:346:12)
+    at next (C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:280:10)
+    at router.handle (C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:175:3)
+    at router (C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:47:12) {
+  "requestId": "68366155-c399-4e92-a29e-a0381962207a",
+  "method": "POST",
+  "url": "/api/v1/categories/sync",
+  "status": 401
+}
+2026-04-30 14:18:22 [[31merror[39m]: [1;31mError Categories is required[0m
+Error: Categories is required
+    at file:///C:/flutter/taskit_backend/src/middleware/validate.js:14:15
+    at Layer.handle [as handle_request] (C:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\flutter\taskit_backend\node_modules\express\lib\router\route.js:149:13)
+    at authMiddleware (file:///C:/flutter/taskit_backend/src/middleware/auth.middleware.js:15:5)
+    at Layer.handle [as handle_request] (C:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\flutter\taskit_backend\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (C:\flutter\taskit_backend\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (C:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:284:15
+    at router.process_params (C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:346:12) {
+  "requestId": "e65ccd5b-6cea-4339-9e75-cfe44934b1c4",
+  "method": "POST",
+  "url": "/api/v1/categories/sync",
+  "status": 400
+}
+2026-04-30 15:41:26 [[31merror[39m]: [1;31mError Expected property name or '}' in JSON at position 1 (line 1 column 2)[0m
+SyntaxError: Expected property name or '}' in JSON at position 1 (line 1 column 2)
+    at JSON.parse (<anonymous>)
+    at parse (C:\flutter\taskit_backend\node_modules\body-parser\lib\types\json.js:92:19)
+    at C:\flutter\taskit_backend\node_modules\body-parser\lib\read.js:128:18
+    at AsyncResource.runInAsyncScope (node:async_hooks:213:14)
+    at invokeCallback (C:\flutter\taskit_backend\node_modules\raw-body\index.js:238:16)
+    at done (C:\flutter\taskit_backend\node_modules\raw-body\index.js:227:7)
+    at IncomingMessage.onEnd (C:\flutter\taskit_backend\node_modules\raw-body\index.js:287:7)
+    at IncomingMessage.emit (node:events:508:28)
+    at endReadableNT (node:internal/streams/readable:1701:12)
+    at process.processTicksAndRejections (node:internal/process/task_queues:89:21) {
+  "requestId": "e6d288ee-d9af-411e-a6d6-14408845faaf",
+  "method": "POST",
+  "url": "/api/v1/auth/login",
+  "status": 400
+}
+2026-04-30 15:42:57 [[31merror[39m]: [1;31mError Access denied. No authorization provided[0m
+Error: Access denied. No authorization provided
+    at authMiddleware (file:///C:/flutter/taskit_backend/src/middleware/auth.middleware.js:9:13)
+    at Layer.handle [as handle_request] (C:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\flutter\taskit_backend\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (C:\flutter\taskit_backend\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (C:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:284:15
+    at router.process_params (C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:346:12)
+    at next (C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:280:10)
+    at router.handle (C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:175:3)
+    at router (C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:47:12) {
+  "requestId": "f0d3284e-4037-448b-82f5-cf7e6e32e1da",
+  "method": "POST",
+  "url": "/api/v1/categories",
+  "status": 401
+}
+2026-04-30 15:43:04 [[31merror[39m]: [1;31mError Name is required[0m
+Error: Name is required
+    at file:///C:/flutter/taskit_backend/src/middleware/validate.js:14:15
+    at Layer.handle [as handle_request] (C:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\flutter\taskit_backend\node_modules\express\lib\router\route.js:149:13)
+    at authMiddleware (file:///C:/flutter/taskit_backend/src/middleware/auth.middleware.js:15:5)
+    at Layer.handle [as handle_request] (C:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\flutter\taskit_backend\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (C:\flutter\taskit_backend\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (C:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:284:15
+    at router.process_params (C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:346:12) {
+  "requestId": "073f0ab7-8930-42c5-9f54-93acb814045a",
+  "method": "POST",
+  "url": "/api/v1/categories",
+  "status": 400
+}
+2026-04-30 15:44:29 [[31merror[39m]: [1;31mError Name is required[0m
+Error: Name is required
+    at file:///C:/flutter/taskit_backend/src/middleware/validate.js:14:15
+    at Layer.handle [as handle_request] (C:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\flutter\taskit_backend\node_modules\express\lib\router\route.js:149:13)
+    at authMiddleware (file:///C:/flutter/taskit_backend/src/middleware/auth.middleware.js:15:5)
+    at Layer.handle [as handle_request] (C:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\flutter\taskit_backend\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (C:\flutter\taskit_backend\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (C:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:284:15
+    at router.process_params (C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:346:12) {
+  "requestId": "237674e7-ae56-4570-b259-3022b1760f25",
+  "method": "POST",
+  "url": "/api/v1/categories/sync",
+  "status": 400
+}
+2026-04-30 15:44:59 [[31merror[39m]: [1;31mError update bulk categories ServerError: operations is not defined[0m
+Error: update bulk categories ServerError: operations is not defined
+    at CategoryService.syncCategories (file:///C:/flutter/taskit_backend/src/features/category/category.services.js:174:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async syncCategories (file:///C:/flutter/taskit_backend/src/features/category/category.controller.js:91:20) {
+  "requestId": "7cd947e3-a6a6-4823-a092-57560cbad1e3",
+  "method": "POST",
+  "url": "/api/v1/categories/sync",
+  "status": 500
+}
+2026-04-30 15:44:59 [[31merror[39m]: [1;31mAPI Error[0m {
+  "requestId": "7cd947e3-a6a6-4823-a092-57560cbad1e3",
+  "method": "POST",
+  "url": "/api/v1/categories/sync",
+  "status": 500,
+  "time": "35.60 ms",
+  "ip": "::1"
+}
+2026-04-30 16:04:26 [[31merror[39m]: [1;31mError Access denied. No authorization provided[0m
+Error: Access denied. No authorization provided
+    at authMiddleware (file:///C:/flutter/taskit_backend/src/middleware/auth.middleware.js:9:13)
+    at Layer.handle [as handle_request] (C:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\flutter\taskit_backend\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (C:\flutter\taskit_backend\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (C:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:284:15
+    at router.process_params (C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:346:12)
+    at next (C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:280:10)
+    at router.handle (C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:175:3)
+    at router (C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:47:12) {
+  "requestId": "88982f2d-b5c8-420d-8055-805df9d737e2",
+  "method": "DELETE",
+  "url": "/api/v1/categories/sync",
+  "status": 401
+}

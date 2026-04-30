@@ -45,6 +45,46 @@ export const updateCategoryValidate = validate({
       .messages(joiMsg("Name", { required: true, min: 3 })),
   }),
 });
+export const syncCategoriesValidate = validate({
+  body: Joi.object({
+    categories: Joi.array()
+      .items(
+        Joi.object({
+          id: Joi.string()
+            .trim()
+            .allow("")
+            .messages(joiMsg("Id", { string: true })),
+          localId: Joi.number()
+            .required()
+            .messages(joiMsg("Local id", { number: true })),
+          name: Joi.string()
+            .trim()
+            .required()
+            .messages(joiMsg("Name", { required: true })),
+        }),
+      )
+      .required()
+      .messages(joiMsg("Categories", { required: true, array: true })),
+  }),
+});
+export const syncDeletedValidate = validate({
+  body: Joi.object({
+    categories: Joi.array()
+      .items(
+        Joi.object({
+          id: Joi.string()
+            .trim()
+            .required()
+            .messages(joiMsg("Id", { string: true, required: true })),
+          localId: Joi.number()
+            .required()
+            .messages(joiMsg("Local id", { number: true })),
+        }),
+      )
+      .required()
+      .messages(joiMsg("Categories", { required: true, array: true })),
+  }),
+});
 export const deleteCategoryValidate = validate({
   params: Joi.object({
     id: Joi.string()

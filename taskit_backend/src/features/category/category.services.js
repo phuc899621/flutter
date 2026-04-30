@@ -9,6 +9,7 @@ import {
   ServerError,
 } from "../../shared/utils/error.js";
 import UserService from "../user/user.service.js";
+import CategorySyncService from "./category.sync.service.js";
 
 class CategoryService {
   //#region CREATE
@@ -135,6 +136,74 @@ class CategoryService {
       }
       if (e instanceof BaseError) throw e;
       throw new ServerError(`Update category ServerError: ${e.message}`);
+    }
+  }
+
+  static async syncCategories(userId, categories) {
+    try {
+      await UserService.ensureUserExistsById(userId);
+      const operations = categories.map((category) => {
+        const { id, localId, ...rest } = category;
+        if (id) {
+          return {
+            updateOne: {
+              filter: { _id: id, userId },
+              update: {
+                $set: {
+                  ...rest,
+                  updatedAt: new Date(),
+                },
+              },
+            },
+          };
+        } else {
+          return {
+            insertOne: {
+              document: { userId, ...rest, updatedAt: new Date() },
+            },
+          };
+        }
+      });
+      const result = await CategoryModel.bulkWrite(operations);
+
+      const synced = categories.map((category, index) => ({
+        localId: category.localId,
+        id: category.id || result.insertedIds[index],
+        name: category.name,
+      }));
+      CategorySyncService.notifyBulkSync(userId, synced);
+      return synced;
+    } catch (e) {
+      throw new ServerError(`update bulk categories ServerError: ${e.message}`);
+    }
+  }
+  static async syncDeletedCategories(userId, categories) {
+    try {
+      await UserService.ensureUserExistsById(userId);
+      const operations = categories.map((category) => {
+        const { id, localId } = category;
+        return {
+          updateOne: {
+            filter: { _id: id, userId },
+            update: {
+              $set: {
+                deleted: true,
+                updatedAt: new Date(),
+              },
+            },
+          },
+        };
+      });
+      const result = await CategoryModel.bulkWrite(operations);
+      console.log(result);
+      const synced = categories.map((category, index) => ({
+        localId: category.localId,
+        id: category.id,
+      }));
+      CategorySyncService.notifyBulkDelete(userId, synced);
+      return synced;
+    } catch (e) {
+      throw new ServerError(`update bulk categories ServerError: ${e.message}`);
     }
   }
   static async updateCategoryPartial(userId, id, updateData) {

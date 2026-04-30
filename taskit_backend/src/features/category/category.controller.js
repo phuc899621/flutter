@@ -1,10 +1,12 @@
 import CategoryServices from "./category.services.js";
+import CategorySyncService from "./category.sync.service.js";
 //#region CREATE
 export const createCategory = async (req, res, next) => {
   try {
     const userId = req.user.userId;
     console.log(userId, req.body);
     const result = await CategoryServices.createCategory(userId, req.body);
+    CategorySyncService.notifyCreate(userId, result);
     return res.status(201).json({
       message: "Category created successfully",
       data: result,
@@ -76,6 +78,35 @@ export const updateCategoryPartial = async (req, res, next) => {
     );
     return res.status(200).json({
       message: "Category updated successfully",
+      data: result,
+    });
+  } catch (e) {
+    next(e);
+  }
+};
+export const syncCategories = async (req, res, next) => {
+  try {
+    const { categories } = req.body;
+    const userId = req.user.userId;
+    const result = await CategoryServices.syncCategories(userId, categories);
+    return res.status(200).json({
+      message: "Category synced successfully",
+      data: result,
+    });
+  } catch (e) {
+    next(e);
+  }
+};
+export const syncDeletedCategories = async (req, res, next) => {
+  try {
+    const { categories } = req.body;
+    const userId = req.user.userId;
+    const result = await CategoryServices.syncDeletedCategories(
+      userId,
+      categories,
+    );
+    return res.status(200).json({
+      message: "Deleted category synced successfully",
       data: result,
     });
   } catch (e) {

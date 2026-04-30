@@ -7,9 +7,11 @@ export const joiMsg = (
     required = true,
     exactly = null,
     date = null,
+    array = null,
   } = {},
 ) => {
   return {
+    ...(array && { "array.base": `${label} must be an array` }),
     ...(required && { "string.empty": `${label} must not be empty` }),
     ...(required && { "any.required": `${label} is required` }),
     ...(date && { "string.isoDate": `${label} must be a valid date` }),

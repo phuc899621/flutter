@@ -21,6 +21,18 @@ router.post(
   CategoryValidate.createCategoryValidate,
   CategoryController.createCategory,
 );
+router.post(
+  "/sync",
+  authMiddleware,
+  CategoryValidate.syncCategoriesValidate,
+  CategoryController.syncCategories,
+);
+router.delete(
+  "/sync",
+  authMiddleware,
+  CategoryValidate.syncDeletedValidate,
+  CategoryController.syncDeletedCategories,
+);
 router.put(
   "/:id",
   authMiddleware,
