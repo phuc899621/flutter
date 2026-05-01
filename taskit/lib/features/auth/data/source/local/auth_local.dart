@@ -84,16 +84,6 @@ class AuthLocalDataSource {
     }
   }
 
-  Future<void> clearData() async {
-    try {
-      await db.transaction(() async {
-        await userDao.deleteIfExist();
-      });
-    } catch (e) {
-      throw Exception(e);
-    }
-  }
-
   Future<void> cacheLogin(LoginData loginData) async {
     //try {
     //   await db.transaction(() async {

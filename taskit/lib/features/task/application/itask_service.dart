@@ -3,8 +3,8 @@ import 'package:taskit/features/task/domain/entities/task_entity.dart';
 import 'package:taskit/features/task/domain/entities/task_priority_enum.dart';
 
 import '../../../shared/exception/failure.dart';
+import '../../category/domain/entities/category_entity.dart';
 import '../domain/entities/ai_task_entity.dart';
-import '../domain/entities/category_entity.dart';
 import '../domain/entities/subtask_entity.dart';
 
 abstract interface class ITaskService {
@@ -28,8 +28,6 @@ abstract interface class ITaskService {
   Stream<List<TaskEntity>> watchThisWeekOverDueTask(int userLocalId);
 
   Stream<List<TaskEntity>> watchTodayOverDueTask(int userLocalId);
-
-  Stream<List<CategoryEntity>> watchAllCategories(int userLocalId);
 
   Stream<TaskEntity?> watchTaskByLocalId(int localId, int userLocalId);
 
@@ -73,12 +71,9 @@ abstract interface class ITaskService {
     int userLocalId,
   );
 
-  Future<CategoryEntity?> getCategoryByName(String name, int userLocalId);
-
   //================================
   //========== INSERT ==============
   //================================/*
-  Future<int> insertCategory(CategoryEntity category); //return localId
   Future<Result<int, Failure>> insertTask(TaskEntity task); //return localId
   Future<void> insertSubtask(int taskLocalId);
 
@@ -88,8 +83,6 @@ abstract interface class ITaskService {
   Future<void> deleteTask(int localId);
 
   Future<void> deleteSubtask(int localId);
-
-  Future<void> deleteCategory(int localId, int userLocalId);
 
   //================================
   //========== AI  ================

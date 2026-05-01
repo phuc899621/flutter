@@ -6,7 +6,7 @@ import 'package:taskit/features/task/domain/entities/task_status_enum.dart';
 import 'package:taskit/shared/data/source/local/drift/database/database.dart';
 import 'package:taskit/shared/exception/failure.dart';
 
-import '../../domain/entities/category_entity.dart';
+import '../../../category/domain/entities/category_entity.dart';
 import '../../domain/entities/subtask_entity.dart';
 
 abstract interface class ITaskRepo {
@@ -14,8 +14,6 @@ abstract interface class ITaskRepo {
   //========== WATCH ================
   //================================
   Stream<List<TaskEntity>> watchAllTasks(int userLocalId);
-
-  Stream<List<CategoryEntity>> watchAllCategories(int userLocalId);
 
   Stream<List<SubtaskEntity>> watchAllSubtasks();
 
@@ -53,13 +51,9 @@ abstract interface class ITaskRepo {
 
   Future<List<CategoryEntity>> getAICategory(String title, int userLocalId);
 
-  Future<CategoryEntity?> getCategoryByName(String name, int userLocalId);
-
   //================================
   //========== INSERT ================
   //================================
-  Future<int> insertCategory(CategoryEntity category);
-
   Future<int> insertTask(TaskEntity task);
 
   Future<void> insertSubtask(int taskLocalId);
@@ -73,8 +67,6 @@ abstract interface class ITaskRepo {
 
   Future<void> deleteSubtask(int localId);
 
-  Future<void> deleteCategory(int localId, int userLocalId);
-
   //================================
   //========== INSERT REMOTE =======
   //================================
@@ -82,8 +74,6 @@ abstract interface class ITaskRepo {
   Future<void> insertRemoteTask(int taskLocalId, int userLocalId);
 
   Future<void> insertRemoteSubtask(int taskLocalId, int subtaskLocalId);
-
-  Future<void> insertRemoteCategory(int categoryLocalId, int userLocalId);
 
   //================================
   //========== Update REMOTE =======
@@ -120,8 +110,6 @@ abstract interface class ITaskRepo {
   Future<void> deleteRemoteTask(String taskRemoteId);
 
   Future<void> deleteRemoteSubtask(String subtaskRemoteId);
-
-  Future<void> deleteRemoteCategory(String categoryRemoteId);
 
   //================================
   //========== AI  ================

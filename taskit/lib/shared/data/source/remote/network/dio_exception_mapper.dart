@@ -14,7 +14,7 @@ mixin DioExceptionMapper {
     } on DioException catch (e, s) {
       throw mapDioExceptionToFailure(e, s);
     } catch (e, s) {
-      logger.e(e.toString());
+      logger.e(e, stackTrace: s);
       throw Failure(
         message: errorMessage ?? e.toString(),
         exception: e is Exception ? e : Exception(e.toString()),

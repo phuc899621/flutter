@@ -21,9 +21,11 @@ class CategoryDao extends DatabaseAccessor<AppDatabase>
   //================================
   //region WATCH
   Stream<List<CategoryTableData>> watchAllCategories(int userLocalId) =>
-      (select(
-        categoryTable,
-      )..where((tbl) => tbl.userLocalId.equals(userLocalId))).watch();
+      (select(categoryTable)..where(
+            (tbl) =>
+                tbl.userLocalId.equals(userLocalId) & tbl.deleted.equals(false),
+          ))
+          .watch();
 
   //endregion
 
@@ -31,9 +33,21 @@ class CategoryDao extends DatabaseAccessor<AppDatabase>
   //========== READ ===============
   //================================
   //region READ
-  Future<List<CategoryTableData>> getCategories(int userLocalId) => (select(
-    categoryTable,
-  )..where((tbl) => tbl.userLocalId.equals(userLocalId))).get();
+  Future<List<CategoryTableData>> getCategories(int userLocalId) =>
+      (select(categoryTable)..where(
+            (tbl) =>
+                tbl.userLocalId.equals(userLocalId) & tbl.deleted.equals(false),
+          ))
+          .get();
+
+  Future<CategoryTableData?> getDefaultCategory(int userLocalId) =>
+      (select(categoryTable)..where(
+            (tbl) =>
+                tbl.userLocalId.equals(userLocalId) &
+                tbl.deleted.equals(false) &
+                tbl.isDefault.equals(true),
+          ))
+          .getSingleOrNull();
 
   Future<CategoryTableData?> getCategoryByLocalId(
     int localId,
@@ -57,13 +71,33 @@ class CategoryDao extends DatabaseAccessor<AppDatabase>
           ))
           .getSingleOrNull();
 
-  Future<CategoryTableData?> findByName(String name, int userLocalId) =>
+  Future<CategoryTableData?> getCategoryByName(String name, int userLocalId) =>
       (select(categoryTable)..where(
             (tbl) =>
                 tbl.name.lower().equals(name.toLowerCase()) &
                 tbl.userLocalId.equals(userLocalId),
           ))
           .getSingleOrNull();
+
+  Future<List<CategoryTableData>> getUnsyncedCategories(int userLocalId) =>
+      (select(categoryTable)..where(
+            (tbl) =>
+                tbl.userLocalId.equals(userLocalId) &
+                tbl.deleted.equals(false) &
+                tbl.synced.equals(false),
+          ))
+          .get();
+
+  Future<List<CategoryTableData>> getUnsyncedDeletedCategories(
+    int userLocalId,
+  ) =>
+      (select(categoryTable)..where(
+            (tbl) =>
+                tbl.userLocalId.equals(userLocalId) &
+                tbl.deleted.equals(true) &
+                tbl.synced.equals(false),
+          ))
+          .get();
 
   //endregion
 
@@ -74,50 +108,23 @@ class CategoryDao extends DatabaseAccessor<AppDatabase>
   Future<int> insertCategory(CategoryTableCompanion category) =>
       into(categoryTable).insert(category);
 
-  Future<int> insertCategoryWithoutSync(CategoryTableCompanion category) =>
-      into(categoryTable).insert(category.copyWith(isSynced: Value(false)));
-
-  Future<void> insertAllCategories(List<CategoryTableCompanion> categories) =>
-      batch((batch) {
-        batch.insertAll(categoryTable, categories);
-      });
-
   //endregion
 
   //================================
   //========== UPDATE ===============
   //================================
   //region UPDATE
-  Future<bool> updateCategory(CategoryTableCompanion category) =>
-      update(categoryTable).replace(category);
-
-  Future<bool> updateCategoryWithoutSync(CategoryTableCompanion category) =>
-      update(categoryTable).replace(category);
-
-  Future<void> updateSyncCategory(int localId, int userLocalId) =>
-      (update(categoryTable)..where(
-            (item) =>
-                item.localId.equals(localId) &
-                item.userLocalId.equals(userLocalId),
-          ))
-          .write(CategoryTableCompanion(isSynced: Value(true)));
-
-  Future<void> updateSyncAddCategory(
+  Future<int> updateCategoryByLocalId(
     int localId,
-    String remoteId,
     int userLocalId,
+    CategoryTableCompanion category,
   ) =>
       (update(categoryTable)..where(
-            (item) =>
-                item.localId.equals(localId) &
-                item.userLocalId.equals(userLocalId),
+            (tbl) =>
+                tbl.localId.equals(localId) &
+                tbl.userLocalId.equals(userLocalId),
           ))
-          .write(
-            CategoryTableCompanion(
-              isSynced: Value(true),
-              remoteId: Value(remoteId),
-            ),
-          );
+          .write(category);
 
   //endregion
 
@@ -125,17 +132,80 @@ class CategoryDao extends DatabaseAccessor<AppDatabase>
   //========== DELETE ===============
   //================================
   //region DELETE
-  Future<int> deleteCategoryById(int id, int userLocalId) =>
+  Future<int> deleteCategoryByLocalId(int localId, int userLocalId) =>
       (delete(categoryTable)..where(
             (item) =>
-                item.localId.equals(id) & item.userLocalId.equals(userLocalId),
+                item.localId.equals(localId) &
+                item.userLocalId.equals(userLocalId),
           ))
           .go();
+
+  Future<void> reconcileCategories({
+    required int userLocalId,
+    required List<CategoryTableCompanion> categories,
+  }) async {
+    final upsertCategories = categories
+        .where((e) => !(e.deleted.value))
+        .toList();
+
+    final deleteCategoryIds = categories
+        .where((e) => e.deleted.value)
+        .map((e) => e.remoteId.value)
+        .whereType<String>()
+        .toList();
+
+    await transaction(() async {
+      if (upsertCategories.isNotEmpty) {
+        await batch((batch) {
+          batch.insertAll(
+            categoryTable,
+            upsertCategories,
+            mode: InsertMode.insertOrReplace,
+          );
+        });
+      }
+
+      if (deleteCategoryIds.isNotEmpty) {
+        await (delete(categoryTable)..where(
+              (tbl) =>
+                  tbl.userLocalId.equals(userLocalId) &
+                  tbl.remoteId.isIn(deleteCategoryIds),
+            ))
+            .go();
+      }
+    });
+  }
+
+  Future<void> updateCategories(
+    List<int> localIds,
+    CategoryTableCompanion category,
+    int userLocalId,
+  ) => batch((b) {
+    for (final id in localIds) {
+      b.update(
+        categoryTable,
+        category,
+        where: (tbl) =>
+            tbl.userLocalId.equals(userLocalId) & tbl.localId.equals(id),
+      );
+    }
+  });
 
   Future<int> deleteCategoryByName(String name, int userLocalId) =>
       (delete(categoryTable)..where(
             (item) =>
                 item.name.equals(name) & item.userLocalId.equals(userLocalId),
+          ))
+          .go();
+
+  Future<void> deleteCategoriesByLocalIds(
+    int userLocalId,
+    List<int> localIds,
+  ) =>
+      (delete(categoryTable)..where(
+            (item) =>
+                item.userLocalId.equals(userLocalId) &
+                item.localId.isIn(localIds),
           ))
           .go();
   //endregion

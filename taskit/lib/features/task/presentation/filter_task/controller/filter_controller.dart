@@ -1,9 +1,9 @@
 import 'dart:async';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:taskit/features/category/domain/entities/category_entity.dart';
+import 'package:taskit/features/category/domain/usecases/watch_categories_usecase.dart';
 import 'package:taskit/features/main/presentation/list/controller/list_controller.dart';
-import 'package:taskit/features/task/application/task_service.dart';
-import 'package:taskit/features/task/domain/entities/category_entity.dart';
 import 'package:taskit/features/task/domain/entities/filter_date_option_enum.dart';
 import 'package:taskit/features/task/domain/entities/task_priority_enum.dart';
 import 'package:taskit/features/task/presentation/filter_task/state/filter_state.dart';
@@ -30,7 +30,8 @@ class FilterController extends Notifier<FilterState> {
         } else {
           _startListening(next.localId);
         }
-      });
+      },
+    );
     ref.onDispose(() {
       _authSub.close();
       _categorySub.cancel();
@@ -44,11 +45,12 @@ class FilterController extends Notifier<FilterState> {
   //region LISTENING
   //endregion
   void _startListening(int userLocalId) {
-    _categorySub = ref.read(taskServiceProvider).watchAllCategories(userLocalId).listen((
-      categories,
-    ) {
-      state = state.copyWith(categories: categories);
-    });
+    _categorySub = ref
+        .read(watchCategoriesUseCaseProvider)
+        .call(userLocalId)
+        .listen((categories) {
+          state = state.copyWith(categories: categories);
+        });
   }
 
   //==============================================

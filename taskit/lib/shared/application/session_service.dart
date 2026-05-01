@@ -17,4 +17,10 @@ class SessionService {
   Future<void> deleteActiveUserId() => _storage.deleteActiveUserId();
 
   Future<void> saveActiveUserId(int id) => _storage.saveActiveUserId(id);
+
+  Future<void> saveLastSyncTime(String time) => _storage.saveLastSyncTime(time);
+
+  String? getLastSyncTime() => _storage.getLastSyncTime();
+
+  Future<void> deleteLastSyncTime() => _storage.deleteLastSyncTime();
 }

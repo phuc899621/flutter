@@ -2,10 +2,11 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:taskit/features/category/domain/usecases/watch_categories_usecase.dart';
 
 import '../../../../auth/presentation/auth/controller/auth_controller.dart';
+import '../../../../category/domain/entities/category_entity.dart';
 import '../../../application/task_service.dart';
-import '../../../domain/entities/category_entity.dart';
 import '../../../domain/entities/task_priority_enum.dart';
 import '../state/edit_task_state.dart';
 
@@ -60,11 +61,17 @@ class EditTaskController extends Notifier<EditTaskState> {
       .updateTaskPriority(state.task?.localId ?? -1, priority);
 
   void updateCategory(CategoryEntity category) {
-    final userLocalId = ref.read(authControllerProvider.select((value)=>value.user?.localId));
+    final userLocalId = ref.read(
+      authControllerProvider.select((value) => value.user?.localId),
+    );
     if (userLocalId == null) return;
     ref
         .read(taskServiceProvider)
-        .updateTaskCategory(state.task?.localId ?? -1, category.localId, userLocalId);
+        .updateTaskCategory(
+          state.task?.localId ?? -1,
+          category.localId,
+          userLocalId,
+        );
   }
 
   void updateDueDate(DateTime? dueDate) => ref
@@ -113,20 +120,24 @@ class EditTaskController extends Notifier<EditTaskState> {
   }
 
   void fetchTask(int localId) {
-    final userLocalId = ref.read(authControllerProvider.select((value)=>value.user?.localId));
-    if (_taskSub != null || userLocalId == null) return;
-    _taskSub = ref.read(taskServiceProvider).watchTaskByLocalId(localId, userLocalId ).listen(
-      (task) {
-        state = state.copyWith(task: task);
-      },
+    final userLocalId = ref.read(
+      authControllerProvider.select((value) => value.user?.localId),
     );
+    if (_taskSub != null || userLocalId == null) return;
+    _taskSub = ref
+        .read(taskServiceProvider)
+        .watchTaskByLocalId(localId, userLocalId)
+        .listen((task) {
+          state = state.copyWith(task: task);
+        });
   }
 
   void _fetchCategory(int userLocalId) {
-    _categorySub = ref.read(taskServiceProvider).watchAllCategories(userLocalId).listen((
-      categories,
-    ) {
-      state = state.copyWith(categories: categories);
-    });
+    _categorySub = ref
+        .read(watchCategoriesUseCaseProvider)
+        .call(userLocalId)
+        .listen((categories) {
+          state = state.copyWith(categories: categories);
+        });
   }
 }

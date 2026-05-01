@@ -1,11 +1,14 @@
 import 'package:taskit/features/auth/data/dto/res/user/user_data.dart';
-
-import '../../../../../shared/data/source/local/drift/database/database.dart';
+import 'package:taskit/features/user/domain/entity/user_entity.dart';
 
 abstract interface class UserLocalSource {
-  Stream<UserTableData> watchUserByLocalId(int localId);
+  Stream<UserEntity> watchUserByLocalId(int localId);
 
-  Future<UserTableData?> getUserByLocalId(int localId);
+  Future<UserEntity?> getUserByLocalId(int localId);
 
   Future<int> cacheUser(UserData data);
+
+  Future<UserEntity?> getPreviousUser();
+
+  Future<void> deleteLocalUser(int localId);
 }

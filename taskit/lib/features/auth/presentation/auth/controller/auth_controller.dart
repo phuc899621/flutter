@@ -1,13 +1,17 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:taskit/features/auth/domain/usecases/auth/logout_usecase.dart';
+import 'package:taskit/features/category/domain/usecases/pull_categories_usecase.dart';
+import 'package:taskit/features/user/domain/params/reconcile_user_param.dart';
+import 'package:taskit/features/user/domain/usecase/get_previous_user_usecase.dart';
+import 'package:taskit/features/user/domain/usecase/reconcile_user_sync_usecase.dart';
 import 'package:taskit/features/user/domain/usecase/sync_user_usecase.dart';
+import 'package:taskit/shared/extension/result_return.dart';
 
 import '../../../../../shared/application/network_status_provider.dart';
 import '../../../../../shared/constants/auth_status.dart';
 import '../../../../../shared/constants/network_status.dart';
 import '../../../../../shared/domain/usecase/usecase.dart';
 import '../../../../../shared/log/logger_provider.dart';
-import '../../../../user/domain/entity/user_entity.dart';
 import '../../../domain/usecases/auth/check_auth_state_use_case.dart';
 import '../state/auth_state.dart';
 
@@ -41,6 +45,7 @@ class AuthController extends Notifier<AuthState> {
         if (user != null) {
           logger.i('[AuthController] fetchUser success');
           state = state.copyWith(status: AuthStatus.authenticated, user: user);
+          ref.read(pullCategoriesUseCaseProvider).call(user.localId);
         } else if (state.status == AuthStatus.initial) {
           state = state.copyWith(status: AuthStatus.unauthenticated);
         }
@@ -54,13 +59,27 @@ class AuthController extends Notifier<AuthState> {
     );
   }
 
+  void onSessionExpired() {
+    logger.w(
+      '[AuthController] Session expired - User needs to re-authenticate',
+    );
+    state = state.copyWith(status: AuthStatus.sessionExpired);
+  }
+
   Future<void> fetchUser() async {
     logger.i('[AuthController] fetchUser');
+    final oldUser =
+        (await ref.read(getPreviousUserUseCaseProvider).call(NoParam()))
+            .dataOrNull();
     final result = await ref.read(syncUserUseCaseProvider).call(NoParam());
     await result.when(
-      (user) {
+      (user) async {
+        await ref
+            .read(reconcileUserSyncUseCaseProvider)
+            .call(ReconcileUserParam(newUser: user, oldUser: oldUser));
         logger.i('[AuthController] fetchUser: user fetched successfully');
         state = state.copyWith(status: AuthStatus.authenticated, user: user);
+        await ref.read(pullCategoriesUseCaseProvider).call(user.localId);
         return;
       },
       (failure) async {
@@ -69,11 +88,6 @@ class AuthController extends Notifier<AuthState> {
         state = state.copyWith(status: AuthStatus.unauthenticated);
       },
     );
-  }
-
-  void onUserLoggedIn(UserEntity user) {
-    logger.i('[AuthController] onUserLoggedIn');
-    state = state.copyWith(status: AuthStatus.authenticated, user: user);
   }
 
   Future<void> logout() async {

@@ -4,4 +4,10 @@ abstract class SessionStorage {
   int? getActiveUserId();
 
   Future<void> deleteActiveUserId();
+
+  Future<void> saveLastSyncTime(String time);
+
+  String? getLastSyncTime();
+
+  Future<void> deleteLastSyncTime();
 }

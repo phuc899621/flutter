@@ -40,6 +40,7 @@ dependencies:
   flutter_riverpod: ^3.3.1
   connectivity_plus: ^7.1.1
   internet_connection_checker_plus: ^2.9.1+2
+  rxdart: ^0.28.0
   dio: ^5.9.2
   lottie: ^3.3.2
   dio_http_formatter: ^3.3.1
@@ -71,7 +72,7 @@ dependencies:
   #call api
   retrofit: ^4.9.2
 
-  smooth_sheets: ^0.17.0
+  smooth_sheets: ^1.0.2
   cached_network_image: ^3.4.1
   #database:
   drift: ^2.32.1
@@ -84,6 +85,7 @@ dependencies:
   font_awesome_flutter: ^11.0.0
   shared_preferences: ^2.5.5
   shimmer_text: ^0.0.2
+  sqlite3_flutter_libs: ^0.6.0+eol
 
 dev_dependencies:
   flutter_test:

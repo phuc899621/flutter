@@ -13,6 +13,7 @@ final sessionStorageProvider = Provider<SessionStorage>((ref) {
 class SessionStorageImpl implements SessionStorage {
   final SharedPreferences _storage;
   static final String _activeUserId = 'ACTIVE_USER_ID'.hardcoded;
+  static final String _lastSyncTime = 'LAST_SYNC_TIME'.hardcoded;
 
   SessionStorageImpl(this._storage);
 
@@ -22,8 +23,19 @@ class SessionStorageImpl implements SessionStorage {
   }
 
   @override
+  Future<void> saveLastSyncTime(String time) async {
+    await _storage.setString(_lastSyncTime, time);
+  }
+
+  @override
   Future<void> deleteActiveUserId() => _storage.remove(_activeUserId);
 
   @override
+  Future<void> deleteLastSyncTime() => _storage.remove(_lastSyncTime);
+
+  @override
   int? getActiveUserId() => _storage.getInt(_activeUserId);
+
+  @override
+  String? getLastSyncTime() => _storage.getString(_lastSyncTime);
 }

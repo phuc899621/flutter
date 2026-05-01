@@ -4,15 +4,17 @@ import '../../../../shared/data/source/local/drift/database/database.dart';
 import '../../domain/entity/user_entity.dart';
 
 extension UserEntityMapper on UserEntity {
-  UserTableData toTableData() => UserTableData(
+  UserTableData toData() => UserTableData(
     remoteId: remoteId,
     localId: localId,
     name: name,
     email: email,
     avatar: avatar,
+    updatedAt: DateTime.now(),
+    createdAt: DateTime.now(),
   );
 
-  UserTableCompanion toTableCompanion() => UserTableCompanion(
+  UserTableCompanion toCompanion() => UserTableCompanion(
     remoteId: Value(remoteId),
     localId: Value(localId),
     name: Value(name),

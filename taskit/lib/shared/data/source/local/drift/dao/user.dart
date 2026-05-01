@@ -35,6 +35,17 @@ class UserDao extends DatabaseAccessor<AppDatabase> with _$UserDaoMixin {
     userTable,
   )..where((tbl) => tbl.remoteId.equals(remoteId))).getSingleOrNull();
 
+  Future<UserTableData?> getPreviousUser() =>
+      (select(userTable)
+            ..orderBy([
+              (t) => OrderingTerm(
+                expression: t.updatedAt,
+                mode: OrderingMode.desc,
+              ),
+            ])
+            ..limit(1))
+          .getSingleOrNull();
+
   /*
   * Insert
   * */
@@ -50,13 +61,6 @@ class UserDao extends DatabaseAccessor<AppDatabase> with _$UserDaoMixin {
   /*
   * Delete
   * */
-  Future<int> deleteUser() => delete(userTable).go();
-
-  //delete user if exist
-  Future<void> deleteIfExist() async {
-    final user = await getUser();
-    if (user != null) {
-      await deleteUser();
-    }
-  }
+  Future<int> deleteUser(int localId) =>
+      (delete(userTable)..where((tbl) => tbl.localId.equals(localId))).go();
 }

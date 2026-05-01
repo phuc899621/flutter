@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$CategoryData {
 
-@JsonKey(name: '_id') String get id; String get name; DateTime get createdAt; DateTime get updatedAt; String get userId;
+ String get id; String get name;@JsonKey(name: 'default') bool get isDefault; bool get deleted; DateTime get createdAt; DateTime get updatedAt; String get userId;
 /// Create a copy of CategoryData
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -28,16 +28,16 @@ $CategoryDataCopyWith<CategoryData> get copyWith => _$CategoryDataCopyWithImpl<C
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is CategoryData&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt)&&(identical(other.userId, userId) || other.userId == userId));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is CategoryData&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.isDefault, isDefault) || other.isDefault == isDefault)&&(identical(other.deleted, deleted) || other.deleted == deleted)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt)&&(identical(other.userId, userId) || other.userId == userId));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,name,createdAt,updatedAt,userId);
+int get hashCode => Object.hash(runtimeType,id,name,isDefault,deleted,createdAt,updatedAt,userId);
 
 @override
 String toString() {
-  return 'CategoryData(id: $id, name: $name, createdAt: $createdAt, updatedAt: $updatedAt, userId: $userId)';
+  return 'CategoryData(id: $id, name: $name, isDefault: $isDefault, deleted: $deleted, createdAt: $createdAt, updatedAt: $updatedAt, userId: $userId)';
 }
 
 
@@ -48,7 +48,7 @@ abstract mixin class $CategoryDataCopyWith<$Res>  {
   factory $CategoryDataCopyWith(CategoryData value, $Res Function(CategoryData) _then) = _$CategoryDataCopyWithImpl;
 @useResult
 $Res call({
-@JsonKey(name: '_id') String id, String name, DateTime createdAt, DateTime updatedAt, String userId
+ String id, String name,@JsonKey(name: 'default') bool isDefault, bool deleted, DateTime createdAt, DateTime updatedAt, String userId
 });
 
 
@@ -65,11 +65,13 @@ class _$CategoryDataCopyWithImpl<$Res>
 
 /// Create a copy of CategoryData
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? name = null,Object? createdAt = null,Object? updatedAt = null,Object? userId = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? name = null,Object? isDefault = null,Object? deleted = null,Object? createdAt = null,Object? updatedAt = null,Object? userId = null,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
-as String,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
+as String,isDefault: null == isDefault ? _self.isDefault : isDefault // ignore: cast_nullable_to_non_nullable
+as bool,deleted: null == deleted ? _self.deleted : deleted // ignore: cast_nullable_to_non_nullable
+as bool,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
 as DateTime,updatedAt: null == updatedAt ? _self.updatedAt : updatedAt // ignore: cast_nullable_to_non_nullable
 as DateTime,userId: null == userId ? _self.userId : userId // ignore: cast_nullable_to_non_nullable
 as String,
@@ -157,10 +159,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function(@JsonKey(name: '_id')  String id,  String name,  DateTime createdAt,  DateTime updatedAt,  String userId)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String name, @JsonKey(name: 'default')  bool isDefault,  bool deleted,  DateTime createdAt,  DateTime updatedAt,  String userId)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _CategoryData() when $default != null:
-return $default(_that.id,_that.name,_that.createdAt,_that.updatedAt,_that.userId);case _:
+return $default(_that.id,_that.name,_that.isDefault,_that.deleted,_that.createdAt,_that.updatedAt,_that.userId);case _:
   return orElse();
 
 }
@@ -178,10 +180,10 @@ return $default(_that.id,_that.name,_that.createdAt,_that.updatedAt,_that.userId
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function(@JsonKey(name: '_id')  String id,  String name,  DateTime createdAt,  DateTime updatedAt,  String userId)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String name, @JsonKey(name: 'default')  bool isDefault,  bool deleted,  DateTime createdAt,  DateTime updatedAt,  String userId)  $default,) {final _that = this;
 switch (_that) {
 case _CategoryData():
-return $default(_that.id,_that.name,_that.createdAt,_that.updatedAt,_that.userId);case _:
+return $default(_that.id,_that.name,_that.isDefault,_that.deleted,_that.createdAt,_that.updatedAt,_that.userId);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -198,10 +200,10 @@ return $default(_that.id,_that.name,_that.createdAt,_that.updatedAt,_that.userId
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function(@JsonKey(name: '_id')  String id,  String name,  DateTime createdAt,  DateTime updatedAt,  String userId)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String name, @JsonKey(name: 'default')  bool isDefault,  bool deleted,  DateTime createdAt,  DateTime updatedAt,  String userId)?  $default,) {final _that = this;
 switch (_that) {
 case _CategoryData() when $default != null:
-return $default(_that.id,_that.name,_that.createdAt,_that.updatedAt,_that.userId);case _:
+return $default(_that.id,_that.name,_that.isDefault,_that.deleted,_that.createdAt,_that.updatedAt,_that.userId);case _:
   return null;
 
 }
@@ -213,11 +215,13 @@ return $default(_that.id,_that.name,_that.createdAt,_that.updatedAt,_that.userId
 @JsonSerializable()
 
 class _CategoryData implements CategoryData {
-  const _CategoryData({@JsonKey(name: '_id') required this.id, required this.name, required this.createdAt, required this.updatedAt, required this.userId});
+  const _CategoryData({required this.id, required this.name, @JsonKey(name: 'default') required this.isDefault, required this.deleted, required this.createdAt, required this.updatedAt, required this.userId});
   factory _CategoryData.fromJson(Map<String, dynamic> json) => _$CategoryDataFromJson(json);
 
-@override@JsonKey(name: '_id') final  String id;
+@override final  String id;
 @override final  String name;
+@override@JsonKey(name: 'default') final  bool isDefault;
+@override final  bool deleted;
 @override final  DateTime createdAt;
 @override final  DateTime updatedAt;
 @override final  String userId;
@@ -235,16 +239,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _CategoryData&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt)&&(identical(other.userId, userId) || other.userId == userId));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _CategoryData&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.isDefault, isDefault) || other.isDefault == isDefault)&&(identical(other.deleted, deleted) || other.deleted == deleted)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt)&&(identical(other.userId, userId) || other.userId == userId));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,name,createdAt,updatedAt,userId);
+int get hashCode => Object.hash(runtimeType,id,name,isDefault,deleted,createdAt,updatedAt,userId);
 
 @override
 String toString() {
-  return 'CategoryData(id: $id, name: $name, createdAt: $createdAt, updatedAt: $updatedAt, userId: $userId)';
+  return 'CategoryData(id: $id, name: $name, isDefault: $isDefault, deleted: $deleted, createdAt: $createdAt, updatedAt: $updatedAt, userId: $userId)';
 }
 
 
@@ -255,7 +259,7 @@ abstract mixin class _$CategoryDataCopyWith<$Res> implements $CategoryDataCopyWi
   factory _$CategoryDataCopyWith(_CategoryData value, $Res Function(_CategoryData) _then) = __$CategoryDataCopyWithImpl;
 @override @useResult
 $Res call({
-@JsonKey(name: '_id') String id, String name, DateTime createdAt, DateTime updatedAt, String userId
+ String id, String name,@JsonKey(name: 'default') bool isDefault, bool deleted, DateTime createdAt, DateTime updatedAt, String userId
 });
 
 
@@ -272,11 +276,13 @@ class __$CategoryDataCopyWithImpl<$Res>
 
 /// Create a copy of CategoryData
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? name = null,Object? createdAt = null,Object? updatedAt = null,Object? userId = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? name = null,Object? isDefault = null,Object? deleted = null,Object? createdAt = null,Object? updatedAt = null,Object? userId = null,}) {
   return _then(_CategoryData(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
-as String,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
+as String,isDefault: null == isDefault ? _self.isDefault : isDefault // ignore: cast_nullable_to_non_nullable
+as bool,deleted: null == deleted ? _self.deleted : deleted // ignore: cast_nullable_to_non_nullable
+as bool,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
 as DateTime,updatedAt: null == updatedAt ? _self.updatedAt : updatedAt // ignore: cast_nullable_to_non_nullable
 as DateTime,userId: null == userId ? _self.userId : userId // ignore: cast_nullable_to_non_nullable
 as String,

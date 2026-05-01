@@ -20,18 +20,18 @@ final basicDioProvider = Provider<Dio>((ref) {
 final networkServiceProvider = Provider<Dio>((ref) {
   final options = buildBaseOptions();
   final dio = Dio(options);
-  final _storage = ref.read(credentialServiceProvider);
+  final storage = ref.read(credentialServiceProvider);
   dio.interceptors.addAll([
     LoggingInterceptor(),
     AuthInterceptor(
-      _storage,
+      storage,
       dio,
       onRefreshToken: (refreshToken, sessionId) async {
         final authApi = ref.read(authRefreshApiProvider);
         final result = await authApi.refreshToken(
           RefreshTokenRequest(refreshToken: refreshToken, sessionId: sessionId),
         );
-        await _storage.saveTokens(
+        await storage.saveTokens(
           result.data.accessToken,
           refreshToken,
           sessionId,

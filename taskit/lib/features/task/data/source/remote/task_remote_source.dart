@@ -9,42 +9,31 @@ import 'package:taskit/features/task/data/source/remote/task_api.dart';
 
 import '../../../../../shared/data/dto/response/base_data.dart';
 import '../../../../../shared/data/dto/response/data_response.dart';
-import '../../../../../shared/exception/failure.dart';
-import '../../../../../shared/log/logger_provider.dart';
 import '../../../../../shared/data/source/remote/network/dio_exception_mapper.dart';
+import '../../../../../shared/exception/failure.dart';
 import '../../dto/req/ai/ai_req.dart';
-import '../../dto/req/category/add_category_req.dart';
 import '../../dto/req/update_task/update_task_req.dart';
 import '../../dto/res/ai/ai_generate_task_data.dart';
 import '../../dto/res/ai/ai_question_data.dart';
-import '../../dto/res/category/add_category_data.dart';
 import '../../dto/res/subtask/add_subtask_data.dart';
 import '../../dto/res/subtask/update_subtask_data.dart';
 import '../../dto/res/task/add_task_data.dart';
 import '../../dto/res/task/update_task_data.dart';
 import 'ai_api.dart';
-import 'category_api.dart';
 
 final taskRemoteSourceProvider = Provider<ITaskRemoteSource>((ref) {
   final taskApi = ref.watch(taskApiProvider);
   final subtaskApi = ref.watch(subtaskApiProvider);
-  final categoryApi = ref.watch(categoryApiProvider);
   final aiApi = ref.watch(aiApiProvider);
-  return TaskRemoteSource(taskApi, subtaskApi, categoryApi, aiApi);
+  return TaskRemoteSource(taskApi, subtaskApi, aiApi);
 });
 
 class TaskRemoteSource with DioExceptionMapper implements ITaskRemoteSource {
   final TaskApi _taskApi;
   final SubtaskApi _subtaskApi;
-  final CategoryApi _categoryApi;
   final AiApi _aiApi;
 
-  TaskRemoteSource(
-    this._taskApi,
-    this._subtaskApi,
-    this._categoryApi,
-    this._aiApi,
-  );
+  TaskRemoteSource(this._taskApi, this._subtaskApi, this._aiApi);
 
   //===========================================
   //================ Add Task =================
@@ -73,23 +62,6 @@ class TaskRemoteSource with DioExceptionMapper implements ITaskRemoteSource {
   ) async {
     try {
       final response = await _subtaskApi.add('Bearer $token', taskId, subtask);
-      return response;
-    } on DioException catch (e, s) {
-      throw mapDioExceptionToFailure(e, s);
-    } catch (e, s) {
-      throw _mapToFailure(e, s);
-    }
-  }
-
-  @override
-  Future<DataResponse<AddCategoryData>> addCategory(
-    String token,
-    AddCategoryReq category,
-  ) async {
-    // TODO: implement addCategory
-    try {
-      logger.i('add category $token $category');
-      final response = await _categoryApi.add('Bearer $token', category);
       return response;
     } on DioException catch (e, s) {
       throw mapDioExceptionToFailure(e, s);
@@ -149,18 +121,6 @@ class TaskRemoteSource with DioExceptionMapper implements ITaskRemoteSource {
   Future<DataResponse<BaseData>> deleteTask(String token, String taskId) {
     try {
       final response = _taskApi.deleteTask('Bearer $token', taskId);
-      return response;
-    } on DioException catch (e, s) {
-      throw mapDioExceptionToFailure(e, s);
-    } catch (e, s) {
-      throw _mapToFailure(e, s);
-    }
-  }
-
-  @override
-  Future<DataResponse<BaseData>> deleteCategory(String token, String id) {
-    try {
-      final response = _categoryApi.delete('Bearer $token', id);
       return response;
     } on DioException catch (e, s) {
       throw mapDioExceptionToFailure(e, s);

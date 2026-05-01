@@ -28,8 +28,9 @@ final appDatabaseProvider = Provider<AppDatabase>((ref) {
 });
 
 @DriftDatabase(
-    tables: [TaskTable, SubtaskTable, UserTable, SettingTable, CategoryTable],
-    daos: [TaskDao, UserDao, SubtaskDao, SettingDao, CategoryDao])
+  tables: [TaskTable, SubtaskTable, UserTable, SettingTable, CategoryTable],
+  daos: [TaskDao, UserDao, SubtaskDao, SettingDao, CategoryDao],
+)
 class AppDatabase extends _$AppDatabase {
   AppDatabase([QueryExecutor? executor]) : super(executor ?? _openConnection());
 
@@ -38,10 +39,10 @@ class AppDatabase extends _$AppDatabase {
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
-        beforeOpen: (details) async {
-          await customStatement('PRAGMA foreign_keys = ON;');
-        },
-      );
+    beforeOpen: (details) async {
+      await customStatement('PRAGMA foreign_keys = ON;');
+    },
+  );
 
   static QueryExecutor _openConnection() {
     return LazyDatabase(() async {
@@ -59,8 +60,10 @@ class AppDatabase extends _$AppDatabase {
   }
 
   static void _startInspector(QueryExecutor realDb) async {
-    final driver =
-        StorageServerDriver(bundleId: 'com.example.taskit_local', icon: '...');
+    final driver = StorageServerDriver(
+      bundleId: 'com.example.taskit_local',
+      icon: '...',
+    );
     final driftDb = AppDatabase.forInspector(realDb);
 
     final sqlServer = DriftSQLDatabaseServer(
@@ -77,7 +80,7 @@ class AppDatabase extends _$AppDatabase {
 
   AppDatabase.forInspector(super.executor);
 
-/*static QueryExecutor _openConnection() {
+  /*static QueryExecutor _openConnection() {
     return driftDatabase(
       name: 'db',
       native: const DriftNativeOptions(

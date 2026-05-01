@@ -8,8 +8,6 @@ abstract interface class ITaskLocalSource {
 
   Stream<List<SubtaskTableData>> watchAllSubtasks();
 
-  Stream<List<CategoryTableData>> watchAllCategories(int userLocalId);
-
   Stream<TaskTableData?> watchTaskByLocalId(int localId);
 
   // ================================
@@ -67,36 +65,19 @@ abstract interface class ITaskLocalSource {
     List<SubtaskTableCompanion> subtask,
   );
 
-  Future<void> updateSyncAddCategory(
-    int localId,
-    String remoteId,
-    int userLocalId,
-  );
-
   // ================================
   // ========== READ ==============
   // ================================
-  Future<List<CategoryTableData>> getCategories(int userLocalId);
 
   Future<TaskTableData?> getTaskByLocalId(int localId);
 
-  Future<CategoryTableData?> getCategoryByLocalId(int localId, int userLocalId);
-
   Future<List<SubtaskTableData>> getSubtaskByTaskLocalId(int taskLocalId);
 
-  Future<CategoryTableData?> getCategoryByName(String name, int userLocalId);
-
   Future<SubtaskTableData?> getSubtaskByLocalId(int localId);
-
-  Future<CategoryTableData?> getCategoryByRemoteId(
-    String remoteId,
-    int userLocalId,
-  );
 
   // ================================
   // ========== INSERT ==============
   // ================================
-  Future<int> insertCategory(CategoryTableCompanion category);
 
   Future<int> insertTask(
     TaskTableCompanion task,
@@ -114,6 +95,4 @@ abstract interface class ITaskLocalSource {
   Future<void> deleteTaskByLocalId(int id);
 
   Future<void> deleteSubtaskByLocalId(int id);
-
-  Future<void> deleteCategoryByLocalId(int id, int userLocalId);
 }

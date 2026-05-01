@@ -6,7 +6,6 @@ import 'package:taskit/features/task/domain/entities/task_entity.dart';
 import 'package:taskit/shared/data/source/local/drift/database/database.dart';
 
 import '../../domain/entities/ai_task_entity.dart';
-import '../../domain/entities/category_entity.dart';
 import '../../domain/entities/subtask_entity.dart';
 import '../dto/req/add_task/add_task.dart';
 
@@ -14,11 +13,17 @@ abstract interface class ITaskMapper {
   //================================
   //========== TASK ==================
   //================================
-  List<TaskEntity> toTaskEntityList(List<TaskTableData> data,
-      List<SubtaskTableData> subtasks, List<CategoryTableData> categories);
+  List<TaskEntity> toTaskEntityList(
+    List<TaskTableData> data,
+    List<SubtaskTableData> subtasks,
+    List<CategoryTableData> categories,
+  );
 
-  TaskEntity toTaskEntity(TaskTableData data, List<SubtaskTableData> subtasks,
-      CategoryTableData category);
+  TaskEntity toTaskEntity(
+    TaskTableData data,
+    List<SubtaskTableData> subtasks,
+    CategoryTableData category,
+  );
 
   TaskTableCompanion fromTaskEntity(TaskEntity data);
 
@@ -36,35 +41,33 @@ abstract interface class ITaskMapper {
   //================================
   //========== CATEGORY ==============
   //================================
-  CategoryEntity toCategoryEntity(CategoryTableData data);
-
-  List<CategoryEntity> stringListToCategoryEntity(List<String> data);
-
-  List<CategoryEntity> toCategoryEntityList(List<CategoryTableData> data);
-
-  CategoryTableCompanion fromCategoryEntity(CategoryEntity data);
 
   AiCategoryReq toAiCategoryReq(String title, List<String> excludedCategories);
 
-  List<String> categoryTableDataToStringList(List<CategoryTableData> data);
-
-//================================
-//========== TASK REMOTE ========
-//================================
-  AddTaskReq toAddTaskReq(TaskTableData task, CategoryTableData category,
-      List<SubtaskTableData> subtasks);
+  //================================
+  //========== TASK REMOTE ========
+  //================================
+  AddTaskReq toAddTaskReq(
+    TaskTableData task,
+    CategoryTableData category,
+    List<SubtaskTableData> subtasks,
+  );
 
   TaskTableCompanion toSyncTaskTableCompanion(AddTaskData data);
 
   List<SubtaskTableCompanion> toSyncListSubtaskTblCompanion(
-      List<AddSubtaskData> data);
+    List<AddSubtaskData> data,
+  );
 
-//================================
-//========== AI  ========
-//================================
+  //================================
+  //========== AI  ========
+  //================================
 
   AiTaskEntity toAiTaskEntity(AiGenerateTaskData data);
 
   TaskTableCompanion fromAiGenerateTaskData(
-      AiGenerateTaskData data, int userLocalId, int categoryLocalId);
+    AiGenerateTaskData data,
+    int userLocalId,
+    int categoryLocalId,
+  );
 }

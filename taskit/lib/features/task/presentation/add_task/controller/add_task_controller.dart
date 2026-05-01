@@ -3,13 +3,15 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:taskit/features/auth/presentation/auth/controller/auth_controller.dart';
+import 'package:taskit/features/category/domain/usecases/create_category_usecase.dart';
+import 'package:taskit/features/category/presentation/ui/category_list_provider.dart';
 import 'package:taskit/features/task/domain/entities/subtask_entity.dart';
 import 'package:taskit/features/task/domain/entities/task_priority_enum.dart';
 import 'package:taskit/features/user/domain/usecase/watch_user_by_local_id_use_case.dart';
 import 'package:taskit/shared/log/logger_provider.dart';
 
+import '../../../../category/domain/entities/category_entity.dart';
 import '../../../application/task_service.dart';
-import '../../../domain/entities/category_entity.dart';
 import '../../../domain/entities/task_entity.dart';
 import '../../../domain/entities/task_status_enum.dart';
 import '../state/add_task_state.dart';
@@ -20,24 +22,28 @@ final addTaskControllerProvider =
     );
 
 class AddTaskController extends Notifier<AddTaskState> {
-  late final StreamSubscription _categorySub;
   late final ProviderSubscription _authSub;
 
   @override
   AddTaskState build() {
-    _authSub = ref.listen(
-      authControllerProvider.select((value) => value.user),
-      (_, next) {
-        if (next == null) {
-          _categorySub.cancel();
-        } else {
-          _startListening(next.localId);
+    ref.listen(categoryListProvider, (_, next) {
+      next.whenData((categories) {
+        if (categories.isEmpty) return;
+        state = state.copyWith(
+          categories: categories,
+          isCategoriesLoading: false,
+        );
+        if (state.selectedCategory == null) {
+          final defaultCategories = categories.firstWhere(
+            (e) => e.isDefault,
+            orElse: () => categories.first,
+          );
+          state = state.copyWith(selectedCategory: defaultCategories);
         }
-      },
-    );
+      });
+    });
     ref.onDispose(() {
       _authSub.close();
-      _categorySub.cancel();
     });
     return const AddTaskState();
   }
@@ -122,12 +128,11 @@ class AddTaskController extends Notifier<AddTaskState> {
   void onAddCategory() async {
     final user = ref.read(currentUserProvider).value;
     if (user == null) return;
-    final category = CategoryEntity(
-      localId: -1,
+    final category = CategoryEntity.create(
       name: state.addCategory,
       userLocalId: user.localId,
     );
-    ref.read(taskServiceProvider).insertCategory(category);
+    ref.read(createCategoryUseCaseProvider).call(category);
     state = state.copyWith(addCategory: '');
   }
 
@@ -167,26 +172,6 @@ class AddTaskController extends Notifier<AddTaskState> {
     state = state.copyWith(isTimeSelected: false);
   }
 
-  void _startListening(int userLocalId) {
-    logger.i('Category._startListening');
-    final taskService = ref.watch(taskServiceProvider);
-    _categorySub = taskService.watchAllCategories(userLocalId).listen((
-      categories,
-    ) {
-      state = state.copyWith(isCategoriesLoading: true);
-      state = state.copyWith(categories: categories);
-      if (state.selectedCategory == null) {
-        state = state.copyWith(
-          selectedCategory: categories
-              .where((element) => element.name.toLowerCase() == 'any')
-              .first,
-        );
-      }
-      Duration(seconds: 1);
-      state = state.copyWith(isCategoriesLoading: false);
-    });
-  }
-
   Future<void> addTask() async {
     state = state.copyWith(
       isLoading: true,
@@ -205,7 +190,17 @@ class AddTaskController extends Notifier<AddTaskState> {
       description: state.description,
       category:
           state.selectedCategory ??
-          CategoryEntity(localId: -1, name: 'any', userLocalId: userLocalId),
+          CategoryEntity(
+            localId: -1,
+            name: 'any',
+            userLocalId: userLocalId,
+            remoteId: '',
+            isDefault: false,
+            synced: false,
+            deleted: false,
+            createdAt: DateTime.now(),
+            updatedAt: DateTime.now(),
+          ),
       priority: state.selectedPriority,
       status: state.selectedDate == null
           ? TaskStatus.pending

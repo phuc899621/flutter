@@ -7,10 +7,10 @@ import 'package:taskit/shared/extension/date_time.dart';
 
 import '../../../shared/exception/failure.dart';
 import '../../../shared/log/logger_provider.dart';
+import '../../category/domain/entities/category_entity.dart';
 import '../data/repo/itask_repo.dart';
 import '../data/repo/task_repo.dart';
 import '../domain/entities/ai_task_entity.dart';
-import '../domain/entities/category_entity.dart';
 import '../domain/entities/subtask_entity.dart';
 import '../domain/entities/task_entity.dart';
 import '../domain/entities/task_status_enum.dart';
@@ -156,22 +156,6 @@ class TaskService implements ITaskService {
   }
 
   @override
-  Stream<List<CategoryEntity>> watchAllCategories(int userLocalId) {
-    return _iTaskRepo.watchAllCategories(userLocalId).map((categories) {
-      final callCategories = categories.firstWhere(
-        (element) => element.name.toLowerCase() == "any",
-        orElse: () {
-          return CategoryEntity(name: "Any", localId: -1, userLocalId: -1);
-        },
-      );
-      final restCategories = categories
-          .where((element) => element.name.toLowerCase() != "any")
-          .toList();
-      return [callCategories, ...restCategories];
-    });
-  }
-
-  @override
   Stream<TaskEntity?> watchTaskByLocalId(int localId, int userLocalId) =>
       _iTaskRepo
           .watchAllTasks(userLocalId)
@@ -284,22 +268,12 @@ class TaskService implements ITaskService {
     }
   }
 
-  @override
-  Future<CategoryEntity?> getCategoryByName(
-    String name,
-    int userLocalId,
-  ) async => await _iTaskRepo.getCategoryByName(name, userLocalId);
-
   //endregion
 
   //================================
   //========== INSERT ==============
   //================================
   //region INSERT
-  @override
-  Future<int> insertCategory(CategoryEntity category) async =>
-      await _iTaskRepo.insertCategory(category);
-
   @override
   Future<Result<int, Failure>> insertTask(TaskEntity task) async {
     try {
@@ -325,10 +299,6 @@ class TaskService implements ITaskService {
 
   @override
   Future<void> deleteSubtask(int localId) => _iTaskRepo.deleteSubtask(localId);
-
-  @override
-  Future<void> deleteCategory(int localId, int userLocalId) =>
-      _iTaskRepo.deleteCategory(localId, userLocalId);
 
   //endregion
 

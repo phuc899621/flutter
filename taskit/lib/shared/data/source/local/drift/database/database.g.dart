@@ -63,6 +63,30 @@ class $UserTableTable extends UserTable
     type: DriftSqlType.string,
     requiredDuringInsert: true,
   );
+  static const VerificationMeta _createdAtMeta = const VerificationMeta(
+    'createdAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
+    'created_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+    defaultValue: currentDateAndTime,
+  );
+  static const VerificationMeta _updatedAtMeta = const VerificationMeta(
+    'updatedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> updatedAt = GeneratedColumn<DateTime>(
+    'updated_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+    defaultValue: currentDateAndTime,
+  );
   @override
   List<GeneratedColumn> get $columns => [
     localId,
@@ -70,6 +94,8 @@ class $UserTableTable extends UserTable
     email,
     name,
     avatar,
+    createdAt,
+    updatedAt,
   ];
   @override
   String get aliasedName => _alias ?? actualTableName;
@@ -119,6 +145,18 @@ class $UserTableTable extends UserTable
     } else if (isInserting) {
       context.missing(_avatarMeta);
     }
+    if (data.containsKey('created_at')) {
+      context.handle(
+        _createdAtMeta,
+        createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
+      );
+    }
+    if (data.containsKey('updated_at')) {
+      context.handle(
+        _updatedAtMeta,
+        updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta),
+      );
+    }
     return context;
   }
 
@@ -148,6 +186,14 @@ class $UserTableTable extends UserTable
         DriftSqlType.string,
         data['${effectivePrefix}avatar'],
       )!,
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}created_at'],
+      )!,
+      updatedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}updated_at'],
+      )!,
     );
   }
 
@@ -163,12 +209,16 @@ class UserTableData extends DataClass implements Insertable<UserTableData> {
   final String email;
   final String name;
   final String avatar;
+  final DateTime createdAt;
+  final DateTime updatedAt;
   const UserTableData({
     required this.localId,
     required this.remoteId,
     required this.email,
     required this.name,
     required this.avatar,
+    required this.createdAt,
+    required this.updatedAt,
   });
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
@@ -178,6 +228,8 @@ class UserTableData extends DataClass implements Insertable<UserTableData> {
     map['email'] = Variable<String>(email);
     map['name'] = Variable<String>(name);
     map['avatar'] = Variable<String>(avatar);
+    map['created_at'] = Variable<DateTime>(createdAt);
+    map['updated_at'] = Variable<DateTime>(updatedAt);
     return map;
   }
 
@@ -188,6 +240,8 @@ class UserTableData extends DataClass implements Insertable<UserTableData> {
       email: Value(email),
       name: Value(name),
       avatar: Value(avatar),
+      createdAt: Value(createdAt),
+      updatedAt: Value(updatedAt),
     );
   }
 
@@ -202,6 +256,8 @@ class UserTableData extends DataClass implements Insertable<UserTableData> {
       email: serializer.fromJson<String>(json['email']),
       name: serializer.fromJson<String>(json['name']),
       avatar: serializer.fromJson<String>(json['avatar']),
+      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
+      updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
     );
   }
   @override
@@ -213,6 +269,8 @@ class UserTableData extends DataClass implements Insertable<UserTableData> {
       'email': serializer.toJson<String>(email),
       'name': serializer.toJson<String>(name),
       'avatar': serializer.toJson<String>(avatar),
+      'createdAt': serializer.toJson<DateTime>(createdAt),
+      'updatedAt': serializer.toJson<DateTime>(updatedAt),
     };
   }
 
@@ -222,12 +280,16 @@ class UserTableData extends DataClass implements Insertable<UserTableData> {
     String? email,
     String? name,
     String? avatar,
+    DateTime? createdAt,
+    DateTime? updatedAt,
   }) => UserTableData(
     localId: localId ?? this.localId,
     remoteId: remoteId ?? this.remoteId,
     email: email ?? this.email,
     name: name ?? this.name,
     avatar: avatar ?? this.avatar,
+    createdAt: createdAt ?? this.createdAt,
+    updatedAt: updatedAt ?? this.updatedAt,
   );
   UserTableData copyWithCompanion(UserTableCompanion data) {
     return UserTableData(
@@ -236,6 +298,8 @@ class UserTableData extends DataClass implements Insertable<UserTableData> {
       email: data.email.present ? data.email.value : this.email,
       name: data.name.present ? data.name.value : this.name,
       avatar: data.avatar.present ? data.avatar.value : this.avatar,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
     );
   }
 
@@ -246,13 +310,16 @@ class UserTableData extends DataClass implements Insertable<UserTableData> {
           ..write('remoteId: $remoteId, ')
           ..write('email: $email, ')
           ..write('name: $name, ')
-          ..write('avatar: $avatar')
+          ..write('avatar: $avatar, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode => Object.hash(localId, remoteId, email, name, avatar);
+  int get hashCode =>
+      Object.hash(localId, remoteId, email, name, avatar, createdAt, updatedAt);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -261,7 +328,9 @@ class UserTableData extends DataClass implements Insertable<UserTableData> {
           other.remoteId == this.remoteId &&
           other.email == this.email &&
           other.name == this.name &&
-          other.avatar == this.avatar);
+          other.avatar == this.avatar &&
+          other.createdAt == this.createdAt &&
+          other.updatedAt == this.updatedAt);
 }
 
 class UserTableCompanion extends UpdateCompanion<UserTableData> {
@@ -270,12 +339,16 @@ class UserTableCompanion extends UpdateCompanion<UserTableData> {
   final Value<String> email;
   final Value<String> name;
   final Value<String> avatar;
+  final Value<DateTime> createdAt;
+  final Value<DateTime> updatedAt;
   const UserTableCompanion({
     this.localId = const Value.absent(),
     this.remoteId = const Value.absent(),
     this.email = const Value.absent(),
     this.name = const Value.absent(),
     this.avatar = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
   });
   UserTableCompanion.insert({
     this.localId = const Value.absent(),
@@ -283,6 +356,8 @@ class UserTableCompanion extends UpdateCompanion<UserTableData> {
     required String email,
     required String name,
     required String avatar,
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
   }) : email = Value(email),
        name = Value(name),
        avatar = Value(avatar);
@@ -292,6 +367,8 @@ class UserTableCompanion extends UpdateCompanion<UserTableData> {
     Expression<String>? email,
     Expression<String>? name,
     Expression<String>? avatar,
+    Expression<DateTime>? createdAt,
+    Expression<DateTime>? updatedAt,
   }) {
     return RawValuesInsertable({
       if (localId != null) 'local_id': localId,
@@ -299,6 +376,8 @@ class UserTableCompanion extends UpdateCompanion<UserTableData> {
       if (email != null) 'email': email,
       if (name != null) 'name': name,
       if (avatar != null) 'avatar': avatar,
+      if (createdAt != null) 'created_at': createdAt,
+      if (updatedAt != null) 'updated_at': updatedAt,
     });
   }
 
@@ -308,6 +387,8 @@ class UserTableCompanion extends UpdateCompanion<UserTableData> {
     Value<String>? email,
     Value<String>? name,
     Value<String>? avatar,
+    Value<DateTime>? createdAt,
+    Value<DateTime>? updatedAt,
   }) {
     return UserTableCompanion(
       localId: localId ?? this.localId,
@@ -315,6 +396,8 @@ class UserTableCompanion extends UpdateCompanion<UserTableData> {
       email: email ?? this.email,
       name: name ?? this.name,
       avatar: avatar ?? this.avatar,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
     );
   }
 
@@ -336,6 +419,12 @@ class UserTableCompanion extends UpdateCompanion<UserTableData> {
     if (avatar.present) {
       map['avatar'] = Variable<String>(avatar.value);
     }
+    if (createdAt.present) {
+      map['created_at'] = Variable<DateTime>(createdAt.value);
+    }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<DateTime>(updatedAt.value);
+    }
     return map;
   }
 
@@ -346,7 +435,9 @@ class UserTableCompanion extends UpdateCompanion<UserTableData> {
           ..write('remoteId: $remoteId, ')
           ..write('email: $email, ')
           ..write('name: $name, ')
-          ..write('avatar: $avatar')
+          ..write('avatar: $avatar, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt')
           ..write(')'))
         .toString();
   }
@@ -380,10 +471,11 @@ class $CategoryTableTable extends CategoryTable
   late final GeneratedColumn<String> remoteId = GeneratedColumn<String>(
     'remote_id',
     aliasedName,
-    false,
+    true,
     type: DriftSqlType.string,
     requiredDuringInsert: false,
-    defaultValue: const Constant(''),
+    defaultConstraints: GeneratedColumn.constraintIsAlways('UNIQUE'),
+    defaultValue: const Constant(null),
   );
   static const VerificationMeta _nameMeta = const VerificationMeta('name');
   @override
@@ -394,18 +486,46 @@ class $CategoryTableTable extends CategoryTable
     type: DriftSqlType.string,
     requiredDuringInsert: true,
   );
-  static const VerificationMeta _isSyncedMeta = const VerificationMeta(
-    'isSynced',
-  );
+  static const VerificationMeta _syncedMeta = const VerificationMeta('synced');
   @override
-  late final GeneratedColumn<bool> isSynced = GeneratedColumn<bool>(
-    'is_synced',
+  late final GeneratedColumn<bool> synced = GeneratedColumn<bool>(
+    'synced',
     aliasedName,
     false,
     type: DriftSqlType.bool,
     requiredDuringInsert: false,
     defaultConstraints: GeneratedColumn.constraintIsAlways(
-      'CHECK ("is_synced" IN (0, 1))',
+      'CHECK ("synced" IN (0, 1))',
+    ),
+    defaultValue: const Constant(false),
+  );
+  static const VerificationMeta _deletedMeta = const VerificationMeta(
+    'deleted',
+  );
+  @override
+  late final GeneratedColumn<bool> deleted = GeneratedColumn<bool>(
+    'deleted',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("deleted" IN (0, 1))',
+    ),
+    defaultValue: const Constant(false),
+  );
+  static const VerificationMeta _isDefaultMeta = const VerificationMeta(
+    'isDefault',
+  );
+  @override
+  late final GeneratedColumn<bool> isDefault = GeneratedColumn<bool>(
+    'is_default',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("is_default" IN (0, 1))',
     ),
     defaultValue: const Constant(false),
   );
@@ -452,7 +572,9 @@ class $CategoryTableTable extends CategoryTable
     localId,
     remoteId,
     name,
-    isSynced,
+    synced,
+    deleted,
+    isDefault,
     userLocalId,
     createdAt,
     updatedAt,
@@ -489,10 +611,22 @@ class $CategoryTableTable extends CategoryTable
     } else if (isInserting) {
       context.missing(_nameMeta);
     }
-    if (data.containsKey('is_synced')) {
+    if (data.containsKey('synced')) {
       context.handle(
-        _isSyncedMeta,
-        isSynced.isAcceptableOrUnknown(data['is_synced']!, _isSyncedMeta),
+        _syncedMeta,
+        synced.isAcceptableOrUnknown(data['synced']!, _syncedMeta),
+      );
+    }
+    if (data.containsKey('deleted')) {
+      context.handle(
+        _deletedMeta,
+        deleted.isAcceptableOrUnknown(data['deleted']!, _deletedMeta),
+      );
+    }
+    if (data.containsKey('is_default')) {
+      context.handle(
+        _isDefaultMeta,
+        isDefault.isAcceptableOrUnknown(data['is_default']!, _isDefaultMeta),
       );
     }
     if (data.containsKey('user_local_id')) {
@@ -534,14 +668,22 @@ class $CategoryTableTable extends CategoryTable
       remoteId: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
         data['${effectivePrefix}remote_id'],
-      )!,
+      ),
       name: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
         data['${effectivePrefix}name'],
       )!,
-      isSynced: attachedDatabase.typeMapping.read(
+      synced: attachedDatabase.typeMapping.read(
         DriftSqlType.bool,
-        data['${effectivePrefix}is_synced'],
+        data['${effectivePrefix}synced'],
+      )!,
+      deleted: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}deleted'],
+      )!,
+      isDefault: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}is_default'],
       )!,
       userLocalId: attachedDatabase.typeMapping.read(
         DriftSqlType.int,
@@ -567,17 +709,21 @@ class $CategoryTableTable extends CategoryTable
 class CategoryTableData extends DataClass
     implements Insertable<CategoryTableData> {
   final int localId;
-  final String remoteId;
+  final String? remoteId;
   final String name;
-  final bool isSynced;
+  final bool synced;
+  final bool deleted;
+  final bool isDefault;
   final int userLocalId;
   final DateTime createdAt;
   final DateTime updatedAt;
   const CategoryTableData({
     required this.localId,
-    required this.remoteId,
+    this.remoteId,
     required this.name,
-    required this.isSynced,
+    required this.synced,
+    required this.deleted,
+    required this.isDefault,
     required this.userLocalId,
     required this.createdAt,
     required this.updatedAt,
@@ -586,9 +732,13 @@ class CategoryTableData extends DataClass
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
     map['local_id'] = Variable<int>(localId);
-    map['remote_id'] = Variable<String>(remoteId);
+    if (!nullToAbsent || remoteId != null) {
+      map['remote_id'] = Variable<String>(remoteId);
+    }
     map['name'] = Variable<String>(name);
-    map['is_synced'] = Variable<bool>(isSynced);
+    map['synced'] = Variable<bool>(synced);
+    map['deleted'] = Variable<bool>(deleted);
+    map['is_default'] = Variable<bool>(isDefault);
     map['user_local_id'] = Variable<int>(userLocalId);
     map['created_at'] = Variable<DateTime>(createdAt);
     map['updated_at'] = Variable<DateTime>(updatedAt);
@@ -598,9 +748,13 @@ class CategoryTableData extends DataClass
   CategoryTableCompanion toCompanion(bool nullToAbsent) {
     return CategoryTableCompanion(
       localId: Value(localId),
-      remoteId: Value(remoteId),
+      remoteId: remoteId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(remoteId),
       name: Value(name),
-      isSynced: Value(isSynced),
+      synced: Value(synced),
+      deleted: Value(deleted),
+      isDefault: Value(isDefault),
       userLocalId: Value(userLocalId),
       createdAt: Value(createdAt),
       updatedAt: Value(updatedAt),
@@ -614,9 +768,11 @@ class CategoryTableData extends DataClass
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return CategoryTableData(
       localId: serializer.fromJson<int>(json['localId']),
-      remoteId: serializer.fromJson<String>(json['remoteId']),
+      remoteId: serializer.fromJson<String?>(json['remoteId']),
       name: serializer.fromJson<String>(json['name']),
-      isSynced: serializer.fromJson<bool>(json['isSynced']),
+      synced: serializer.fromJson<bool>(json['synced']),
+      deleted: serializer.fromJson<bool>(json['deleted']),
+      isDefault: serializer.fromJson<bool>(json['isDefault']),
       userLocalId: serializer.fromJson<int>(json['userLocalId']),
       createdAt: serializer.fromJson<DateTime>(json['createdAt']),
       updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
@@ -627,9 +783,11 @@ class CategoryTableData extends DataClass
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
       'localId': serializer.toJson<int>(localId),
-      'remoteId': serializer.toJson<String>(remoteId),
+      'remoteId': serializer.toJson<String?>(remoteId),
       'name': serializer.toJson<String>(name),
-      'isSynced': serializer.toJson<bool>(isSynced),
+      'synced': serializer.toJson<bool>(synced),
+      'deleted': serializer.toJson<bool>(deleted),
+      'isDefault': serializer.toJson<bool>(isDefault),
       'userLocalId': serializer.toJson<int>(userLocalId),
       'createdAt': serializer.toJson<DateTime>(createdAt),
       'updatedAt': serializer.toJson<DateTime>(updatedAt),
@@ -638,17 +796,21 @@ class CategoryTableData extends DataClass
 
   CategoryTableData copyWith({
     int? localId,
-    String? remoteId,
+    Value<String?> remoteId = const Value.absent(),
     String? name,
-    bool? isSynced,
+    bool? synced,
+    bool? deleted,
+    bool? isDefault,
     int? userLocalId,
     DateTime? createdAt,
     DateTime? updatedAt,
   }) => CategoryTableData(
     localId: localId ?? this.localId,
-    remoteId: remoteId ?? this.remoteId,
+    remoteId: remoteId.present ? remoteId.value : this.remoteId,
     name: name ?? this.name,
-    isSynced: isSynced ?? this.isSynced,
+    synced: synced ?? this.synced,
+    deleted: deleted ?? this.deleted,
+    isDefault: isDefault ?? this.isDefault,
     userLocalId: userLocalId ?? this.userLocalId,
     createdAt: createdAt ?? this.createdAt,
     updatedAt: updatedAt ?? this.updatedAt,
@@ -658,7 +820,9 @@ class CategoryTableData extends DataClass
       localId: data.localId.present ? data.localId.value : this.localId,
       remoteId: data.remoteId.present ? data.remoteId.value : this.remoteId,
       name: data.name.present ? data.name.value : this.name,
-      isSynced: data.isSynced.present ? data.isSynced.value : this.isSynced,
+      synced: data.synced.present ? data.synced.value : this.synced,
+      deleted: data.deleted.present ? data.deleted.value : this.deleted,
+      isDefault: data.isDefault.present ? data.isDefault.value : this.isDefault,
       userLocalId: data.userLocalId.present
           ? data.userLocalId.value
           : this.userLocalId,
@@ -673,7 +837,9 @@ class CategoryTableData extends DataClass
           ..write('localId: $localId, ')
           ..write('remoteId: $remoteId, ')
           ..write('name: $name, ')
-          ..write('isSynced: $isSynced, ')
+          ..write('synced: $synced, ')
+          ..write('deleted: $deleted, ')
+          ..write('isDefault: $isDefault, ')
           ..write('userLocalId: $userLocalId, ')
           ..write('createdAt: $createdAt, ')
           ..write('updatedAt: $updatedAt')
@@ -686,7 +852,9 @@ class CategoryTableData extends DataClass
     localId,
     remoteId,
     name,
-    isSynced,
+    synced,
+    deleted,
+    isDefault,
     userLocalId,
     createdAt,
     updatedAt,
@@ -698,7 +866,9 @@ class CategoryTableData extends DataClass
           other.localId == this.localId &&
           other.remoteId == this.remoteId &&
           other.name == this.name &&
-          other.isSynced == this.isSynced &&
+          other.synced == this.synced &&
+          other.deleted == this.deleted &&
+          other.isDefault == this.isDefault &&
           other.userLocalId == this.userLocalId &&
           other.createdAt == this.createdAt &&
           other.updatedAt == this.updatedAt);
@@ -706,9 +876,11 @@ class CategoryTableData extends DataClass
 
 class CategoryTableCompanion extends UpdateCompanion<CategoryTableData> {
   final Value<int> localId;
-  final Value<String> remoteId;
+  final Value<String?> remoteId;
   final Value<String> name;
-  final Value<bool> isSynced;
+  final Value<bool> synced;
+  final Value<bool> deleted;
+  final Value<bool> isDefault;
   final Value<int> userLocalId;
   final Value<DateTime> createdAt;
   final Value<DateTime> updatedAt;
@@ -716,7 +888,9 @@ class CategoryTableCompanion extends UpdateCompanion<CategoryTableData> {
     this.localId = const Value.absent(),
     this.remoteId = const Value.absent(),
     this.name = const Value.absent(),
-    this.isSynced = const Value.absent(),
+    this.synced = const Value.absent(),
+    this.deleted = const Value.absent(),
+    this.isDefault = const Value.absent(),
     this.userLocalId = const Value.absent(),
     this.createdAt = const Value.absent(),
     this.updatedAt = const Value.absent(),
@@ -725,7 +899,9 @@ class CategoryTableCompanion extends UpdateCompanion<CategoryTableData> {
     this.localId = const Value.absent(),
     this.remoteId = const Value.absent(),
     required String name,
-    this.isSynced = const Value.absent(),
+    this.synced = const Value.absent(),
+    this.deleted = const Value.absent(),
+    this.isDefault = const Value.absent(),
     required int userLocalId,
     this.createdAt = const Value.absent(),
     this.updatedAt = const Value.absent(),
@@ -735,7 +911,9 @@ class CategoryTableCompanion extends UpdateCompanion<CategoryTableData> {
     Expression<int>? localId,
     Expression<String>? remoteId,
     Expression<String>? name,
-    Expression<bool>? isSynced,
+    Expression<bool>? synced,
+    Expression<bool>? deleted,
+    Expression<bool>? isDefault,
     Expression<int>? userLocalId,
     Expression<DateTime>? createdAt,
     Expression<DateTime>? updatedAt,
@@ -744,7 +922,9 @@ class CategoryTableCompanion extends UpdateCompanion<CategoryTableData> {
       if (localId != null) 'local_id': localId,
       if (remoteId != null) 'remote_id': remoteId,
       if (name != null) 'name': name,
-      if (isSynced != null) 'is_synced': isSynced,
+      if (synced != null) 'synced': synced,
+      if (deleted != null) 'deleted': deleted,
+      if (isDefault != null) 'is_default': isDefault,
       if (userLocalId != null) 'user_local_id': userLocalId,
       if (createdAt != null) 'created_at': createdAt,
       if (updatedAt != null) 'updated_at': updatedAt,
@@ -753,9 +933,11 @@ class CategoryTableCompanion extends UpdateCompanion<CategoryTableData> {
 
   CategoryTableCompanion copyWith({
     Value<int>? localId,
-    Value<String>? remoteId,
+    Value<String?>? remoteId,
     Value<String>? name,
-    Value<bool>? isSynced,
+    Value<bool>? synced,
+    Value<bool>? deleted,
+    Value<bool>? isDefault,
     Value<int>? userLocalId,
     Value<DateTime>? createdAt,
     Value<DateTime>? updatedAt,
@@ -764,7 +946,9 @@ class CategoryTableCompanion extends UpdateCompanion<CategoryTableData> {
       localId: localId ?? this.localId,
       remoteId: remoteId ?? this.remoteId,
       name: name ?? this.name,
-      isSynced: isSynced ?? this.isSynced,
+      synced: synced ?? this.synced,
+      deleted: deleted ?? this.deleted,
+      isDefault: isDefault ?? this.isDefault,
       userLocalId: userLocalId ?? this.userLocalId,
       createdAt: createdAt ?? this.createdAt,
       updatedAt: updatedAt ?? this.updatedAt,
@@ -783,8 +967,14 @@ class CategoryTableCompanion extends UpdateCompanion<CategoryTableData> {
     if (name.present) {
       map['name'] = Variable<String>(name.value);
     }
-    if (isSynced.present) {
-      map['is_synced'] = Variable<bool>(isSynced.value);
+    if (synced.present) {
+      map['synced'] = Variable<bool>(synced.value);
+    }
+    if (deleted.present) {
+      map['deleted'] = Variable<bool>(deleted.value);
+    }
+    if (isDefault.present) {
+      map['is_default'] = Variable<bool>(isDefault.value);
     }
     if (userLocalId.present) {
       map['user_local_id'] = Variable<int>(userLocalId.value);
@@ -804,7 +994,9 @@ class CategoryTableCompanion extends UpdateCompanion<CategoryTableData> {
           ..write('localId: $localId, ')
           ..write('remoteId: $remoteId, ')
           ..write('name: $name, ')
-          ..write('isSynced: $isSynced, ')
+          ..write('synced: $synced, ')
+          ..write('deleted: $deleted, ')
+          ..write('isDefault: $isDefault, ')
           ..write('userLocalId: $userLocalId, ')
           ..write('createdAt: $createdAt, ')
           ..write('updatedAt: $updatedAt')
@@ -2787,6 +2979,8 @@ typedef $$UserTableTableCreateCompanionBuilder =
       required String email,
       required String name,
       required String avatar,
+      Value<DateTime> createdAt,
+      Value<DateTime> updatedAt,
     });
 typedef $$UserTableTableUpdateCompanionBuilder =
     UserTableCompanion Function({
@@ -2795,6 +2989,8 @@ typedef $$UserTableTableUpdateCompanionBuilder =
       Value<String> email,
       Value<String> name,
       Value<String> avatar,
+      Value<DateTime> createdAt,
+      Value<DateTime> updatedAt,
     });
 
 final class $$UserTableTableReferences
@@ -2897,6 +3093,16 @@ class $$UserTableTableFilterComposer
 
   ColumnFilters<String> get avatar => $composableBuilder(
     column: $table.avatar,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
     builder: (column) => ColumnFilters(column),
   );
 
@@ -3009,6 +3215,16 @@ class $$UserTableTableOrderingComposer
     column: $table.avatar,
     builder: (column) => ColumnOrderings(column),
   );
+
+  ColumnOrderings<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
 }
 
 class $$UserTableTableAnnotationComposer
@@ -3034,6 +3250,12 @@ class $$UserTableTableAnnotationComposer
 
   GeneratedColumn<String> get avatar =>
       $composableBuilder(column: $table.avatar, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get createdAt =>
+      $composableBuilder(column: $table.createdAt, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get updatedAt =>
+      $composableBuilder(column: $table.updatedAt, builder: (column) => column);
 
   Expression<T> categoryTableRefs<T extends Object>(
     Expression<T> Function($$CategoryTableTableAnnotationComposer a) f,
@@ -3148,12 +3370,16 @@ class $$UserTableTableTableManager
                 Value<String> email = const Value.absent(),
                 Value<String> name = const Value.absent(),
                 Value<String> avatar = const Value.absent(),
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<DateTime> updatedAt = const Value.absent(),
               }) => UserTableCompanion(
                 localId: localId,
                 remoteId: remoteId,
                 email: email,
                 name: name,
                 avatar: avatar,
+                createdAt: createdAt,
+                updatedAt: updatedAt,
               ),
           createCompanionCallback:
               ({
@@ -3162,12 +3388,16 @@ class $$UserTableTableTableManager
                 required String email,
                 required String name,
                 required String avatar,
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<DateTime> updatedAt = const Value.absent(),
               }) => UserTableCompanion.insert(
                 localId: localId,
                 remoteId: remoteId,
                 email: email,
                 name: name,
                 avatar: avatar,
+                createdAt: createdAt,
+                updatedAt: updatedAt,
               ),
           withReferenceMapper: (p0) => p0
               .map(
@@ -3285,9 +3515,11 @@ typedef $$UserTableTableProcessedTableManager =
 typedef $$CategoryTableTableCreateCompanionBuilder =
     CategoryTableCompanion Function({
       Value<int> localId,
-      Value<String> remoteId,
+      Value<String?> remoteId,
       required String name,
-      Value<bool> isSynced,
+      Value<bool> synced,
+      Value<bool> deleted,
+      Value<bool> isDefault,
       required int userLocalId,
       Value<DateTime> createdAt,
       Value<DateTime> updatedAt,
@@ -3295,9 +3527,11 @@ typedef $$CategoryTableTableCreateCompanionBuilder =
 typedef $$CategoryTableTableUpdateCompanionBuilder =
     CategoryTableCompanion Function({
       Value<int> localId,
-      Value<String> remoteId,
+      Value<String?> remoteId,
       Value<String> name,
-      Value<bool> isSynced,
+      Value<bool> synced,
+      Value<bool> deleted,
+      Value<bool> isDefault,
       Value<int> userLocalId,
       Value<DateTime> createdAt,
       Value<DateTime> updatedAt,
@@ -3380,8 +3614,18 @@ class $$CategoryTableTableFilterComposer
     builder: (column) => ColumnFilters(column),
   );
 
-  ColumnFilters<bool> get isSynced => $composableBuilder(
-    column: $table.isSynced,
+  ColumnFilters<bool> get synced => $composableBuilder(
+    column: $table.synced,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get deleted => $composableBuilder(
+    column: $table.deleted,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get isDefault => $composableBuilder(
+    column: $table.isDefault,
     builder: (column) => ColumnFilters(column),
   );
 
@@ -3468,8 +3712,18 @@ class $$CategoryTableTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
-  ColumnOrderings<bool> get isSynced => $composableBuilder(
-    column: $table.isSynced,
+  ColumnOrderings<bool> get synced => $composableBuilder(
+    column: $table.synced,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get deleted => $composableBuilder(
+    column: $table.deleted,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get isDefault => $composableBuilder(
+    column: $table.isDefault,
     builder: (column) => ColumnOrderings(column),
   );
 
@@ -3525,8 +3779,14 @@ class $$CategoryTableTableAnnotationComposer
   GeneratedColumn<String> get name =>
       $composableBuilder(column: $table.name, builder: (column) => column);
 
-  GeneratedColumn<bool> get isSynced =>
-      $composableBuilder(column: $table.isSynced, builder: (column) => column);
+  GeneratedColumn<bool> get synced =>
+      $composableBuilder(column: $table.synced, builder: (column) => column);
+
+  GeneratedColumn<bool> get deleted =>
+      $composableBuilder(column: $table.deleted, builder: (column) => column);
+
+  GeneratedColumn<bool> get isDefault =>
+      $composableBuilder(column: $table.isDefault, builder: (column) => column);
 
   GeneratedColumn<DateTime> get createdAt =>
       $composableBuilder(column: $table.createdAt, builder: (column) => column);
@@ -3612,9 +3872,11 @@ class $$CategoryTableTableTableManager
           updateCompanionCallback:
               ({
                 Value<int> localId = const Value.absent(),
-                Value<String> remoteId = const Value.absent(),
+                Value<String?> remoteId = const Value.absent(),
                 Value<String> name = const Value.absent(),
-                Value<bool> isSynced = const Value.absent(),
+                Value<bool> synced = const Value.absent(),
+                Value<bool> deleted = const Value.absent(),
+                Value<bool> isDefault = const Value.absent(),
                 Value<int> userLocalId = const Value.absent(),
                 Value<DateTime> createdAt = const Value.absent(),
                 Value<DateTime> updatedAt = const Value.absent(),
@@ -3622,7 +3884,9 @@ class $$CategoryTableTableTableManager
                 localId: localId,
                 remoteId: remoteId,
                 name: name,
-                isSynced: isSynced,
+                synced: synced,
+                deleted: deleted,
+                isDefault: isDefault,
                 userLocalId: userLocalId,
                 createdAt: createdAt,
                 updatedAt: updatedAt,
@@ -3630,9 +3894,11 @@ class $$CategoryTableTableTableManager
           createCompanionCallback:
               ({
                 Value<int> localId = const Value.absent(),
-                Value<String> remoteId = const Value.absent(),
+                Value<String?> remoteId = const Value.absent(),
                 required String name,
-                Value<bool> isSynced = const Value.absent(),
+                Value<bool> synced = const Value.absent(),
+                Value<bool> deleted = const Value.absent(),
+                Value<bool> isDefault = const Value.absent(),
                 required int userLocalId,
                 Value<DateTime> createdAt = const Value.absent(),
                 Value<DateTime> updatedAt = const Value.absent(),
@@ -3640,7 +3906,9 @@ class $$CategoryTableTableTableManager
                 localId: localId,
                 remoteId: remoteId,
                 name: name,
-                isSynced: isSynced,
+                synced: synced,
+                deleted: deleted,
+                isDefault: isDefault,
                 userLocalId: userLocalId,
                 createdAt: createdAt,
                 updatedAt: updatedAt,

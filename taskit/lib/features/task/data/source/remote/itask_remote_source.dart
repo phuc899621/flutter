@@ -1,9 +1,7 @@
-import 'package:taskit/features/task/data/dto/req/category/add_category_req.dart';
 import 'package:taskit/features/task/data/dto/req/subtask/add_subtask_list_req.dart';
 import 'package:taskit/features/task/data/dto/req/subtask/update_subtask_list_req.dart';
 import 'package:taskit/features/task/data/dto/req/update_task/update_task_req.dart';
 import 'package:taskit/features/task/data/dto/res/ai/ai_generate_task_data.dart';
-import 'package:taskit/features/task/data/dto/res/category/add_category_data.dart';
 import 'package:taskit/features/task/data/dto/res/subtask/add_subtask_data.dart';
 import 'package:taskit/features/task/data/dto/res/subtask/update_subtask_data.dart';
 import 'package:taskit/features/task/data/dto/res/task/add_task_data.dart';
@@ -27,11 +25,6 @@ abstract interface class ITaskRemoteSource {
     AddSubtaskListReq task,
   );
 
-  Future<DataResponse<AddCategoryData>> addCategory(
-    String token,
-    AddCategoryReq category,
-  );
-
   //=======================================
   //============= Update Task ================
   //========================================
@@ -52,8 +45,6 @@ abstract interface class ITaskRemoteSource {
   Future<DataResponse<BaseData>> deleteTask(String token, String taskId);
 
   Future<DataResponse<BaseData>> deleteSubTask(String token, String subTaskId);
-
-  Future<DataResponse<BaseData>> deleteCategory(String token, String id);
 
   //=======================================
   //============= AI  ==============
