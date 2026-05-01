@@ -10,6 +10,13 @@ export const getCategoriesValidate = validate({
       .messages(joiMsg("Last sync time", { date: true })),
   }),
 });
+export const pullCategoriesValidate = validate({
+  query: Joi.object({
+    lastSyncTime: Joi.date()
+      .optional()
+      .messages(joiMsg("Last sync time", { date: true })),
+  }),
+});
 export const getCategoryValidate = validate({
   params: Joi.object({
     id: Joi.string()

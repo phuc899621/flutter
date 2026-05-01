@@ -48,6 +48,21 @@ class CategoryService {
       throw new ServerError(`Get all categories ServerError: ${e.message}`);
     }
   }
+  static async pullCategories(userId, lastSyncTime = null) {
+    try {
+      await UserService.ensureUserExistsById(userId);
+      const query = lastSyncTime
+        ? { userId, updatedAt: { $gt: lastSyncTime } }
+        : { userId };
+      console.log(query, userId);
+      const categories = await CategoryModel.find(query);
+      return categories?.length != 0
+        ? categories.map((category) => category.toObject())
+        : [];
+    } catch (e) {
+      throw new ServerError(`Get all categories ServerError: ${e.message}`);
+    }
+  }
   static async getCategory(userId, id) {
     try {
       await UserService.ensureUserExistsById(userId);

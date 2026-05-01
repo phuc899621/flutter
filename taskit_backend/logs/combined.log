@@ -5833,3 +5833,43 @@ Error: Access denied. No authorization provided
   "time": "75.21 ms",
   "ip": "::1"
 }
+2026-05-01 14:02:58 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-05-01 14:02:58 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-05-01 14:03:35 [[32minfo[39m]: [1;32mRefresh token saved for 69f036d862ec72922ed01a49:604800:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWYwMzZkODYyZWM3MjkyMmVkMDFhNDkiLCJpYXQiOjE3Nzc2MTkwMTUsImV4cCI6MTc3ODIyMzgxNX0.VxnpTrx1gSPpUNvGOEqGF7Z8WaqTdj9KzzALjoGOVMg[0m 
+2026-05-01 14:03:35 [[32minfo[39m]: [1;32mAPI Request[0m {
+  "requestId": "24190178-4163-4604-aed3-f121ab19f431",
+  "method": "POST",
+  "url": "/api/v1/auth/login",
+  "status": 200,
+  "time": "396.87 ms",
+  "ip": "::1"
+}
+2026-05-01 14:03:54 [[32minfo[39m]: [1;32mVerify access token for undefined[0m 
+2026-05-01 14:03:54 [[32minfo[39m]: [1;32mAPI Request[0m {
+  "requestId": "5243d0ac-0d98-4886-9249-8bbe081ae87a",
+  "method": "GET",
+  "url": "/api/v1/categories/pull?lastSyncTime=2026-04-29T08:45:29.886Z",
+  "status": 200,
+  "time": "100.83 ms",
+  "ip": "::1"
+}
+2026-05-01 14:04:02 [[32minfo[39m]: [1;32mVerify access token for undefined[0m 
+2026-05-01 14:04:02 [[32minfo[39m]: [1;32mAPI Request[0m {
+  "requestId": "84a5479a-96d7-447f-a092-5707851028b3",
+  "method": "GET",
+  "url": "/api/v1/categories/pull",
+  "status": 200,
+  "time": "94.96 ms",
+  "ip": "::1"
+}
+2026-05-01 14:05:45 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-05-01 14:05:46 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-05-01 14:05:46 [[32minfo[39m]: [1;32mVerify access token for undefined[0m 
+2026-05-01 14:05:47 [[32minfo[39m]: [1;32mAPI Request[0m {
+  "requestId": "65c5a8ad-ffdd-4134-a081-5b664d818acd",
+  "method": "GET",
+  "url": "/api/v1/categories/pull",
+  "status": 200,
+  "time": "490.85 ms",
+  "ip": "::1"
+}

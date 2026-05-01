@@ -35,6 +35,23 @@ export const getCategories = async (req, res, next) => {
     next(e);
   }
 };
+export const pullCategories = async (req, res, next) => {
+  try {
+    const userId = req.user.userId;
+    const lastSyncTime = req.query.lastSyncTime;
+    console.log(userId, lastSyncTime);
+    const categories = await CategoryServices.pullCategories(
+      userId,
+      lastSyncTime,
+    );
+    return res.status(200).json({
+      message: "Categories pull successfully",
+      data: categories,
+    });
+  } catch (e) {
+    next(e);
+  }
+};
 export const getCategory = async (req, res, next) => {
   try {
     const { id } = req.params;

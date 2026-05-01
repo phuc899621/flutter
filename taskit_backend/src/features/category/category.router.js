@@ -10,6 +10,12 @@ router.get(
   CategoryController.getCategories,
 );
 router.get(
+  "/pull",
+  authMiddleware,
+  CategoryValidate.pullCategoriesValidate,
+  CategoryController.pullCategories,
+);
+router.get(
   "/:id",
   authMiddleware,
   CategoryValidate.getCategoryValidate,
