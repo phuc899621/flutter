@@ -59,6 +59,7 @@ export const syncCategoriesValidate = validate({
         Joi.object({
           id: Joi.string()
             .trim()
+            .allow(null)
             .optional()
             .messages(joiMsg("Id", { string: true })),
           localId: Joi.number()
@@ -70,6 +71,7 @@ export const syncCategoriesValidate = validate({
             .messages(joiMsg("Name", { required: true })),
           updatedAt: Joi.date()
             .optional()
+            .allow(null)
             .messages(joiMsg("Updated at", { date: true })),
         }),
       )
