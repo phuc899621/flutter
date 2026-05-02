@@ -68,6 +68,9 @@ export const syncCategoriesValidate = validate({
             .trim()
             .required()
             .messages(joiMsg("Name", { required: true })),
+          updatedAt: Joi.date()
+            .optional()
+            .messages(joiMsg("Updated at", { date: true })),
         }),
       )
       .required()

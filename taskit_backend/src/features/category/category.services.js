@@ -158,15 +158,28 @@ class CategoryService {
     try {
       await UserService.ensureUserExistsById(userId);
       const operations = categories.map((category) => {
-        const { id, localId, ...rest } = category;
+        const { id, localId, updatedAt, ...rest } = category;
+        const clientUpdatedAt = updatedAt ? new Date(updatedAt) : null;
         if (id) {
+          const filter = {
+            _id: id,
+            userId,
+          };
+          if (clientUpdatedAt) {
+            filter.$or = [
+              { updatedAt: null },
+              { updatedAt: { $lt: clientUpdatedAt } },
+            ];
+          } else {
+            filter.updatedAt = null;
+          }
           return {
             updateOne: {
-              filter: { _id: id, userId },
+              filter,
               update: {
                 $set: {
                   ...rest,
-                  updatedAt: new Date(),
+                  updatedAt: clientUpdatedAt ?? new Date(),
                 },
               },
             },
