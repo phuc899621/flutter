@@ -251,19 +251,20 @@ class CategoryService {
 
         delete item.type;
       }
-      const acceptedIds = accept.map((item) => item.id);
-      const acceptedCategories = acceptedIds.length
+      const affectedIds = accept.map((i) => i.id).filter(Boolean);
+
+      const freshCategories = affectedIds.length
         ? await CategoryModel.find({
-            _id: { $in: acceptedIds },
+            _id: { $in: affectedIds },
             userId,
           })
         : [];
-      const acceptedMap = new Map(
-        acceptedCategories.map((c) => [c._id.toString(), c]),
-      );
 
+      const freshMap = new Map(
+        freshCategories.map((c) => [c._id.toString(), c]),
+      );
       const finalAccept = accept.map((item) => {
-        const doc = acceptedMap.get(item.id.toString());
+        const doc = freshMap.get(item.id?.toString());
 
         return {
           localId: item.localId,
@@ -288,10 +289,21 @@ class CategoryService {
 
       const finalReject = reject.map((item) => {
         const doc = item.id ? rejectedMap.get(item.id.toString()) : null;
-
+        const obj = doc ? doc.toObject() : { id: null };
+        const { id, ...rest } = obj;
+        if (obj.id) {
+          return {
+            localId: item.localId,
+            id: obj.id,
+            serverData: {
+              ...rest,
+            },
+          };
+        }
         return {
           localId: item.localId,
-          ...(doc ? doc.toObject() : { id: null }),
+          id: null,
+          serverData: null,
         };
       });
 

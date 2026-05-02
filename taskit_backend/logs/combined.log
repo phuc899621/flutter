@@ -6063,3 +6063,32 @@ Error: update bulk categories ServerError: CategoryModel.find(...).toObject is n
   "time": "409.48 ms",
   "ip": "::1"
 }
+2026-05-02 11:59:23 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-05-02 11:59:24 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-05-02 11:59:40 [[32minfo[39m]: [1;32mRefresh token saved for 69f036d862ec72922ed01a49:604800:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWYwMzZkODYyZWM3MjkyMmVkMDFhNDkiLCJpYXQiOjE3Nzc2OTc5ODAsImV4cCI6MTc3ODMwMjc4MH0.SQDeVG955uMLdJh6oAJdFD33WVk1M_1qkyJ9fjYcyqU[0m 
+2026-05-02 11:59:40 [[32minfo[39m]: [1;32mAPI Request[0m {
+  "requestId": "04b6bece-d1f5-4126-99fe-ae1f21aaa8af",
+  "method": "POST",
+  "url": "/api/v1/auth/login",
+  "status": 200,
+  "time": "165.57 ms",
+  "ip": "::1"
+}
+2026-05-02 11:59:49 [[32minfo[39m]: [1;32mVerify access token for undefined[0m 
+2026-05-02 11:59:49 [[32minfo[39m]: [1;32mAPI Request[0m {
+  "requestId": "4607cac3-ffda-4cfa-9ce9-e3444ce85ad5",
+  "method": "POST",
+  "url": "/api/v1/categories/sync",
+  "status": 200,
+  "time": "276.85 ms",
+  "ip": "::1"
+}
+2026-05-02 12:00:05 [[32minfo[39m]: [1;32mVerify access token for undefined[0m 
+2026-05-02 12:00:05 [[32minfo[39m]: [1;32mAPI Request[0m {
+  "requestId": "0c7e928b-3ab7-430d-a96c-1c96f69d3f59",
+  "method": "POST",
+  "url": "/api/v1/categories/sync",
+  "status": 200,
+  "time": "145.02 ms",
+  "ip": "::1"
+}
