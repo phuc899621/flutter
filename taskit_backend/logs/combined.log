@@ -6092,3 +6092,65 @@ Error: update bulk categories ServerError: CategoryModel.find(...).toObject is n
   "time": "145.02 ms",
   "ip": "::1"
 }
+2026-05-02 14:22:44 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-05-02 14:22:45 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-05-02 14:22:45 [[32minfo[39m]: [1;32mRefresh token saved for 69f036d862ec72922ed01a49:604800:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWYwMzZkODYyZWM3MjkyMmVkMDFhNDkiLCJpYXQiOjE3Nzc3MDY1NjUsImV4cCI6MTc3ODMxMTM2NX0.DDQrNU9asS38ilP311KdPNGIvvLXZR6XWYE6_LmnjIQ[0m 
+2026-05-02 14:22:45 [[32minfo[39m]: [1;32mAPI Request[0m {
+  "requestId": "7b4ad467-a237-4463-840f-db85b0f3ecc6",
+  "method": "POST",
+  "url": "/api/v1/auth/login",
+  "status": 200,
+  "time": "263.47 ms",
+  "ip": "::1"
+}
+2026-05-02 14:22:59 [[32minfo[39m]: [1;32mVerify access token for undefined[0m 
+2026-05-02 14:22:59 [[32minfo[39m]: [1;32mAPI Request[0m {
+  "requestId": "05df84c2-c97f-4019-bfa2-59cfec64bc5a",
+  "method": "POST",
+  "url": "/api/v1/categories/sync",
+  "status": 200,
+  "time": "163.74 ms",
+  "ip": "::1"
+}
+2026-05-02 14:24:18 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-05-02 14:24:19 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-05-02 14:24:19 [[32minfo[39m]: [1;32mVerify access token for undefined[0m 
+2026-05-02 14:24:19 [[32minfo[39m]: [1;32mAPI Request[0m {
+  "requestId": "42acefa0-bdb0-4a2b-90fa-7284f26359c7",
+  "method": "POST",
+  "url": "/api/v1/categories/sync",
+  "status": 200,
+  "time": "194.57 ms",
+  "ip": "::1"
+}
+2026-05-02 14:25:03 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-05-02 14:25:03 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-05-02 14:25:05 [[32minfo[39m]: [1;32mVerify access token for undefined[0m 
+2026-05-02 14:25:05 [[32minfo[39m]: [1;32mAPI Request[0m {
+  "requestId": "b674c0fb-f959-426a-b260-12b2774fb34e",
+  "method": "POST",
+  "url": "/api/v1/categories/sync",
+  "status": 200,
+  "time": "206.36 ms",
+  "ip": "::1"
+}
+2026-05-02 14:30:09 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-05-02 14:30:09 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-05-02 14:30:10 [[32minfo[39m]: [1;32mVerify access token for undefined[0m 
+2026-05-02 14:30:10 [[32minfo[39m]: [1;32mAPI Request[0m {
+  "requestId": "a4c9775e-e2a7-46c9-bfe5-0d483ca2bcee",
+  "method": "POST",
+  "url": "/api/v1/categories/sync",
+  "status": 200,
+  "time": "537.60 ms",
+  "ip": "::1"
+}
+2026-05-02 14:30:17 [[32minfo[39m]: [1;32mVerify access token for undefined[0m 
+2026-05-02 14:30:17 [[32minfo[39m]: [1;32mAPI Request[0m {
+  "requestId": "07cd8a44-5c4b-48ca-823e-df8081657e23",
+  "method": "POST",
+  "url": "/api/v1/categories/sync",
+  "status": 200,
+  "time": "193.27 ms",
+  "ip": "::1"
+}

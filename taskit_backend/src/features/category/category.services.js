@@ -161,7 +161,7 @@ class CategoryService {
       const reject = [];
       const operations = [];
       const ids = categories.filter((c) => c.id).map((c) => c.id);
-
+      let insertIndex = 0;
       const existingCategories = await CategoryModel.find({
         _id: { $in: ids },
         userId,
@@ -175,7 +175,7 @@ class CategoryService {
         const clientUpdatedAt = updatedAt ? new Date(updatedAt) : null;
 
         if (!id) {
-          const operationsIndex = operations.length;
+          const currentInsertIndex = insertIndex++;
           operations.push({
             insertOne: {
               document: {
@@ -189,7 +189,7 @@ class CategoryService {
           accept.push({
             type: "insert",
             localId,
-            operationsIndex,
+            insertIndex: currentInsertIndex,
           });
 
           continue;
@@ -245,24 +245,26 @@ class CategoryService {
 
       for (const item of accept) {
         if (item.type === "insert") {
-          item.id = result?.insertedIds?.[item.operationIndex] ?? null;
-          delete item.operationIndex;
+          const insertedId = result?.insertedIds?.[item.insertIndex];
+          item.id = insertedId ? insertedId.toString() : null;
+          delete item.insertIndex;
         }
 
         delete item.type;
       }
       const affectedIds = accept.map((i) => i.id).filter(Boolean);
-
+      console.log("affectedIds", affectedIds);
       const freshCategories = affectedIds.length
         ? await CategoryModel.find({
             _id: { $in: affectedIds },
             userId,
           })
         : [];
-
+      console.log("freshCategories", freshCategories);
       const freshMap = new Map(
         freshCategories.map((c) => [c._id.toString(), c]),
       );
+      console.log("freshMap", freshMap);
       const finalAccept = accept.map((item) => {
         const doc = freshMap.get(item.id?.toString());
 
