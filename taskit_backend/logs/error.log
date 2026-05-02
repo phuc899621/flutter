@@ -2395,3 +2395,56 @@ Error: Access denied. No authorization provided
   "url": "/api/v1/categories/sync",
   "status": 401
 }
+2026-05-02 10:37:51 [[31merror[39m]: [1;31mError Access token expired[0m
+Error: Access token expired
+    at verifyAccessToken (file:///C:/flutter/taskit_backend/src/shared/services/token.service.js:65:11)
+    at authMiddleware (file:///C:/flutter/taskit_backend/src/middleware/auth.middleware.js:11:21)
+    at Layer.handle [as handle_request] (C:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\flutter\taskit_backend\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (C:\flutter\taskit_backend\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (C:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:284:15
+    at router.process_params (C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:346:12)
+    at next (C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:280:10)
+    at router.handle (C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:175:3) {
+  "requestId": "5efa093f-0494-4895-996b-68b0b8384052",
+  "method": "POST",
+  "url": "/api/v1/categories/sync",
+  "status": 401
+}
+2026-05-02 10:48:38 [[31merror[39m]: [1;31mError update bulk categories ServerError: doc.toObject is not a function[0m
+Error: update bulk categories ServerError: doc.toObject is not a function
+    at CategoryService.syncCategories (file:///C:/flutter/taskit_backend/src/features/category/category.services.js:308:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async syncCategories (file:///C:/flutter/taskit_backend/src/features/category/category.controller.js:108:20) {
+  "requestId": "5d6459ca-42c3-40ae-8f6d-3b4180f3f490",
+  "method": "POST",
+  "url": "/api/v1/categories/sync",
+  "status": 500
+}
+2026-05-02 10:48:38 [[31merror[39m]: [1;31mAPI Error[0m {
+  "requestId": "5d6459ca-42c3-40ae-8f6d-3b4180f3f490",
+  "method": "POST",
+  "url": "/api/v1/categories/sync",
+  "status": 500,
+  "time": "179.64 ms",
+  "ip": "::1"
+}
+2026-05-02 10:49:50 [[31merror[39m]: [1;31mError update bulk categories ServerError: CategoryModel.find(...).toObject is not a function[0m
+Error: update bulk categories ServerError: CategoryModel.find(...).toObject is not a function
+    at CategoryService.syncCategories (file:///C:/flutter/taskit_backend/src/features/category/category.services.js:308:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async syncCategories (file:///C:/flutter/taskit_backend/src/features/category/category.controller.js:108:20) {
+  "requestId": "db8e9fad-da23-4d62-b498-c446292cfdc5",
+  "method": "POST",
+  "url": "/api/v1/categories/sync",
+  "status": 500
+}
+2026-05-02 10:49:50 [[31merror[39m]: [1;31mAPI Error[0m {
+  "requestId": "db8e9fad-da23-4d62-b498-c446292cfdc5",
+  "method": "POST",
+  "url": "/api/v1/categories/sync",
+  "status": 500,
+  "time": "151.40 ms",
+  "ip": "::1"
+}

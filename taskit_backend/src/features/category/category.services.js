@@ -157,25 +157,67 @@ class CategoryService {
   static async syncCategories(userId, categories) {
     try {
       await UserService.ensureUserExistsById(userId);
-      const operations = categories.map((category) => {
+      const accept = [];
+      const reject = [];
+      const operations = [];
+      const ids = categories.filter((c) => c.id).map((c) => c.id);
+
+      const existingCategories = await CategoryModel.find({
+        _id: { $in: ids },
+        userId,
+      });
+
+      const existingMap = new Map(
+        existingCategories.map((c) => [c._id.toString(), c]),
+      );
+      for (const category of categories) {
         const { id, localId, updatedAt, ...rest } = category;
         const clientUpdatedAt = updatedAt ? new Date(updatedAt) : null;
-        if (id) {
-          const filter = {
-            _id: id,
-            userId,
-          };
-          if (clientUpdatedAt) {
-            filter.$or = [
-              { updatedAt: null },
-              { updatedAt: { $lt: clientUpdatedAt } },
-            ];
-          } else {
-            filter.updatedAt = null;
-          }
-          return {
+
+        if (!id) {
+          const operationsIndex = operations.length;
+          operations.push({
+            insertOne: {
+              document: {
+                userId,
+                ...rest,
+                updatedAt: clientUpdatedAt ?? new Date(),
+              },
+            },
+          });
+
+          accept.push({
+            type: "insert",
+            localId,
+            operationsIndex,
+          });
+
+          continue;
+        }
+        const existing = existingMap.get(id);
+        if (!existing) {
+          reject.push({
+            localId,
+            id: null,
+          });
+          continue;
+        }
+
+        const serverUpdatedAt = existing.updatedAt
+          ? new Date(existing.updatedAt)
+          : null;
+
+        const shouldUpdate =
+          !serverUpdatedAt ||
+          (clientUpdatedAt && serverUpdatedAt < clientUpdatedAt);
+
+        if (shouldUpdate) {
+          operations.push({
             updateOne: {
-              filter,
+              filter: {
+                _id: id,
+                userId,
+              },
               update: {
                 $set: {
                   ...rest,
@@ -183,24 +225,85 @@ class CategoryService {
                 },
               },
             },
-          };
-        } else {
-          return {
-            insertOne: {
-              document: { userId, ...rest, updatedAt: new Date() },
-            },
-          };
-        }
-      });
-      const result = await CategoryModel.bulkWrite(operations);
+          });
 
-      const synced = categories.map((category, index) => ({
-        localId: category.localId,
-        id: category.id || result.insertedIds[index],
-        name: category.name,
-      }));
-      CategorySyncService.notifyBulkSync(userId, synced);
-      return synced;
+          accept.push({
+            type: "update",
+            localId,
+            id,
+          });
+        } else {
+          reject.push({
+            localId,
+            id: existing._id,
+          });
+        }
+      }
+      const result = operations.length
+        ? await CategoryModel.bulkWrite(operations)
+        : null;
+
+      for (const item of accept) {
+        if (item.type === "insert") {
+          item.id = result?.insertedIds?.[item.operationIndex] ?? null;
+          delete item.operationIndex;
+        }
+
+        delete item.type;
+      }
+      const acceptedIds = accept.map((item) => item.id);
+      const acceptedCategories = acceptedIds.length
+        ? await CategoryModel.find({
+            _id: { $in: acceptedIds },
+            userId,
+          })
+        : [];
+      const acceptedMap = new Map(
+        acceptedCategories.map((c) => [c._id.toString(), c]),
+      );
+
+      const finalAccept = accept.map((item) => {
+        const doc = acceptedMap.get(item.id.toString());
+
+        return {
+          localId: item.localId,
+          ...(doc ? doc.toObject() : {}),
+        };
+      });
+
+      const rejectedIds = reject
+        .filter((item) => item.id)
+        .map((item) => item.id);
+
+      const rejectedCategories = rejectedIds.length
+        ? await CategoryModel.find({
+            _id: { $in: rejectedIds },
+            userId,
+          })
+        : [];
+
+      const rejectedMap = new Map(
+        rejectedCategories.map((c) => [c._id.toString(), c]),
+      );
+
+      const finalReject = reject.map((item) => {
+        const doc = item.id ? rejectedMap.get(item.id.toString()) : null;
+
+        return {
+          localId: item.localId,
+          ...(doc ? doc.toObject() : { id: null }),
+        };
+      });
+
+      CategorySyncService.notifyBulkSync(userId, {
+        accept: finalAccept,
+        reject: finalReject,
+      });
+
+      return {
+        accept: finalAccept,
+        reject: finalReject,
+      };
     } catch (e) {
       throw new ServerError(`update bulk categories ServerError: ${e.message}`);
     }

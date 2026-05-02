@@ -5875,3 +5875,162 @@ Error: Access denied. No authorization provided
 }
 2026-05-01 15:53:08 [[32minfo[39m]: [1;32mRedis client connected[0m 
 2026-05-01 15:53:08 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-05-02 10:01:12 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-05-02 10:01:12 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-05-02 10:03:36 [[32minfo[39m]: [1;32mRefresh token saved for 69f036d862ec72922ed01a49:604800:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWYwMzZkODYyZWM3MjkyMmVkMDFhNDkiLCJpYXQiOjE3Nzc2OTEwMTYsImV4cCI6MTc3ODI5NTgxNn0.5blfTZv2LxvQE-wjNPu2nz5aiNhwoGQlmifwGJlflWI[0m 
+2026-05-02 10:03:36 [[32minfo[39m]: [1;32mAPI Request[0m {
+  "requestId": "ee6b05a0-85e0-4213-ab73-e9be217691b2",
+  "method": "POST",
+  "url": "/api/v1/auth/login",
+  "status": 200,
+  "time": "578.82 ms",
+  "ip": "::1"
+}
+2026-05-02 10:04:02 [[32minfo[39m]: [1;32mVerify access token for undefined[0m 
+2026-05-02 10:04:02 [[32minfo[39m]: [1;32mAPI Request[0m {
+  "requestId": "ca9b4f7a-bc59-4139-851f-e02ce4353b7e",
+  "method": "GET",
+  "url": "/api/v1/categories",
+  "status": 200,
+  "time": "132.37 ms",
+  "ip": "::1"
+}
+2026-05-02 10:06:27 [[32minfo[39m]: [1;32mVerify access token for undefined[0m 
+2026-05-02 10:06:27 [[32minfo[39m]: [1;32mAPI Request[0m {
+  "requestId": "c9b6a5b9-1655-4ec6-91d4-f580ee51672f",
+  "method": "POST",
+  "url": "/api/v1/categories/sync",
+  "status": 200,
+  "time": "147.43 ms",
+  "ip": "::1"
+}
+2026-05-02 10:06:43 [[32minfo[39m]: [1;32mVerify access token for undefined[0m 
+2026-05-02 10:06:43 [[32minfo[39m]: [1;32mAPI Request[0m {
+  "requestId": "95f5f449-ebde-4b0d-a9a9-09955ef5f941",
+  "method": "GET",
+  "url": "/api/v1/categories",
+  "status": 200,
+  "time": "108.58 ms",
+  "ip": "::1"
+}
+2026-05-02 10:14:48 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-05-02 10:14:49 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-05-02 10:17:19 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-05-02 10:17:20 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-05-02 10:23:47 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-05-02 10:23:47 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-05-02 10:24:30 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-05-02 10:24:31 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-05-02 10:29:47 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-05-02 10:29:47 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-05-02 10:31:01 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-05-02 10:31:02 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-05-02 10:36:16 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-05-02 10:36:17 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-05-02 10:36:55 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-05-02 10:36:55 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-05-02 10:37:13 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-05-02 10:37:14 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-05-02 10:37:35 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-05-02 10:37:35 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-05-02 10:37:51 [[32minfo[39m]: [1;32mVerify access token for undefined[0m 
+2026-05-02 10:37:51 [[31merror[39m]: [1;31mError Access token expired[0m
+Error: Access token expired
+    at verifyAccessToken (file:///C:/flutter/taskit_backend/src/shared/services/token.service.js:65:11)
+    at authMiddleware (file:///C:/flutter/taskit_backend/src/middleware/auth.middleware.js:11:21)
+    at Layer.handle [as handle_request] (C:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\flutter\taskit_backend\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (C:\flutter\taskit_backend\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (C:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:284:15
+    at router.process_params (C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:346:12)
+    at next (C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:280:10)
+    at router.handle (C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:175:3) {
+  "requestId": "5efa093f-0494-4895-996b-68b0b8384052",
+  "method": "POST",
+  "url": "/api/v1/categories/sync",
+  "status": 401
+}
+2026-05-02 10:37:51 [[33mwarn[39m]: [1;33mAPI Warning[0m {
+  "requestId": "5efa093f-0494-4895-996b-68b0b8384052",
+  "method": "POST",
+  "url": "/api/v1/categories/sync",
+  "status": 401,
+  "time": "28.87 ms",
+  "ip": "::1"
+}
+2026-05-02 10:37:56 [[32minfo[39m]: [1;32mRefresh token saved for 69f036d862ec72922ed01a49:604800:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWYwMzZkODYyZWM3MjkyMmVkMDFhNDkiLCJpYXQiOjE3Nzc2OTMwNzYsImV4cCI6MTc3ODI5Nzg3Nn0.Mtj3WIae2BcY9WSkjnC95_MC7shTM767HI2vmRUbq9Y[0m 
+2026-05-02 10:37:56 [[32minfo[39m]: [1;32mAPI Request[0m {
+  "requestId": "dd0802f2-3ab0-4ed3-8637-759c5c3b2873",
+  "method": "POST",
+  "url": "/api/v1/auth/login",
+  "status": 200,
+  "time": "157.40 ms",
+  "ip": "::1"
+}
+2026-05-02 10:38:08 [[32minfo[39m]: [1;32mVerify access token for undefined[0m 
+2026-05-02 10:38:09 [[32minfo[39m]: [1;32mAPI Request[0m {
+  "requestId": "97d41d5b-9929-4c6c-a3c0-526150d4fa85",
+  "method": "POST",
+  "url": "/api/v1/categories/sync",
+  "status": 200,
+  "time": "346.62 ms",
+  "ip": "::1"
+}
+2026-05-02 10:43:57 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-05-02 10:43:57 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-05-02 10:45:37 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-05-02 10:45:37 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-05-02 10:48:04 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-05-02 10:48:04 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-05-02 10:48:29 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-05-02 10:48:30 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-05-02 10:48:37 [[32minfo[39m]: [1;32mVerify access token for undefined[0m 
+2026-05-02 10:48:38 [[31merror[39m]: [1;31mError update bulk categories ServerError: doc.toObject is not a function[0m
+Error: update bulk categories ServerError: doc.toObject is not a function
+    at CategoryService.syncCategories (file:///C:/flutter/taskit_backend/src/features/category/category.services.js:308:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async syncCategories (file:///C:/flutter/taskit_backend/src/features/category/category.controller.js:108:20) {
+  "requestId": "5d6459ca-42c3-40ae-8f6d-3b4180f3f490",
+  "method": "POST",
+  "url": "/api/v1/categories/sync",
+  "status": 500
+}
+2026-05-02 10:48:38 [[31merror[39m]: [1;31mAPI Error[0m {
+  "requestId": "5d6459ca-42c3-40ae-8f6d-3b4180f3f490",
+  "method": "POST",
+  "url": "/api/v1/categories/sync",
+  "status": 500,
+  "time": "179.64 ms",
+  "ip": "::1"
+}
+2026-05-02 10:49:30 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-05-02 10:49:30 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-05-02 10:49:32 [[32minfo[39m]: [1;32mVerify access token for undefined[0m 
+2026-05-02 10:49:32 [[32minfo[39m]: [1;32mAPI Request[0m {
+  "requestId": "5f3e2125-386d-4240-a18f-23a9ff453d45",
+  "method": "POST",
+  "url": "/api/v1/categories/sync",
+  "status": 200,
+  "time": "178.47 ms",
+  "ip": "::1"
+}
+2026-05-02 10:49:50 [[32minfo[39m]: [1;32mVerify access token for undefined[0m 
+2026-05-02 10:49:50 [[31merror[39m]: [1;31mError update bulk categories ServerError: CategoryModel.find(...).toObject is not a function[0m
+Error: update bulk categories ServerError: CategoryModel.find(...).toObject is not a function
+    at CategoryService.syncCategories (file:///C:/flutter/taskit_backend/src/features/category/category.services.js:308:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async syncCategories (file:///C:/flutter/taskit_backend/src/features/category/category.controller.js:108:20) {
+  "requestId": "db8e9fad-da23-4d62-b498-c446292cfdc5",
+  "method": "POST",
+  "url": "/api/v1/categories/sync",
+  "status": 500
+}
+2026-05-02 10:49:50 [[31merror[39m]: [1;31mAPI Error[0m {
+  "requestId": "db8e9fad-da23-4d62-b498-c446292cfdc5",
+  "method": "POST",
+  "url": "/api/v1/categories/sync",
+  "status": 500,
+  "time": "151.40 ms",
+  "ip": "::1"
+}
