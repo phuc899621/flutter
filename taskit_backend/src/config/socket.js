@@ -14,8 +14,11 @@ export const initSocket = (server) => {
   io.use(socketAuth);
   io.on("connection", (socket) => {
     const userId = socket.user.userId;
+    const sessionId = socket.sessionId;
+    logger.info(`User ${userId} connected with session ${sessionId}`);
     logger.info(`User ${userId} connected`);
     socket.join(userId);
+    socket.join(sessionId);
     socket.on("disconnect", () => {
       console.log(`User ${userId} disconnected`);
     });

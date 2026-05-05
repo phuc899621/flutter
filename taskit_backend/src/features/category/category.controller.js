@@ -4,8 +4,13 @@ import CategorySyncService from "./category.sync.service.js";
 export const createCategory = async (req, res, next) => {
   try {
     const userId = req.user.userId;
-    console.log(userId, req.body);
-    const result = await CategoryServices.createCategory(userId, req.body);
+    const sessionId = req.sessionId;
+    console.log(userId, req.body, sessionId);
+    const result = await CategoryServices.createCategory(
+      userId,
+      sessionId,
+      req.body,
+    );
     CategorySyncService.notifyCreate(userId, result);
     return res.status(201).json({
       message: "Category created successfully",
@@ -71,8 +76,10 @@ export const updateCategoryFull = async (req, res, next) => {
   try {
     const { id } = req.params;
     const userId = req.user.userId;
+    const sessionId = req.sessionId;
     const result = await CategoryServices.updateCategoryFull(
       userId,
+      sessionId,
       id,
       req.body,
     );
@@ -105,7 +112,12 @@ export const syncCategories = async (req, res, next) => {
   try {
     const { categories } = req.body;
     const userId = req.user.userId;
-    const result = await CategoryServices.syncCategories(userId, categories);
+    const sessionId = req.sessionId;
+    const result = await CategoryServices.syncCategories(
+      userId,
+      sessionId,
+      categories,
+    );
     return res.status(200).json({
       message: "Category synced successfully",
       data: result,
@@ -118,8 +130,10 @@ export const syncDeletedCategories = async (req, res, next) => {
   try {
     const { categories } = req.body;
     const userId = req.user.userId;
+    const sessionId = req.sessionId;
     const result = await CategoryServices.syncDeletedCategories(
       userId,
+      sessionId,
       categories,
     );
     return res.status(200).json({
@@ -137,7 +151,8 @@ export const deleteCategory = async (req, res, next) => {
   try {
     const { id } = req.params;
     const userId = req.user.userId;
-    const result = await CategoryServices.deleteOne(userId, id);
+    const sessionId = req.sessionId;
+    const result = await CategoryServices.deleteOne(userId, sessionId, id);
     return res.status(200).json({
       message: "Category deleted successfully",
     });

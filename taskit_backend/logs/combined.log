@@ -6154,3 +6154,47 @@ Error: update bulk categories ServerError: CategoryModel.find(...).toObject is n
   "time": "193.27 ms",
   "ip": "::1"
 }
+2026-05-05 17:23:52 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-05-05 17:23:52 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-05-05 17:24:31 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-05-05 17:24:32 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-05-05 17:24:55 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-05-05 17:24:55 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-05-05 17:25:30 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-05-05 17:25:31 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-05-05 17:26:25 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-05-05 17:26:26 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-05-05 17:27:14 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-05-05 17:27:14 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-05-05 17:28:18 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-05-05 17:28:18 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-05-05 17:28:27 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-05-05 17:28:27 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-05-05 17:28:36 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-05-05 17:28:37 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-05-05 17:28:57 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-05-05 17:28:58 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-05-05 17:29:43 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-05-05 17:29:44 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-05-05 17:30:21 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-05-05 17:30:22 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-05-05 17:30:59 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-05-05 17:31:00 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-05-05 17:31:23 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-05-05 17:31:23 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-05-05 17:33:42 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-05-05 17:33:42 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-05-05 17:33:48 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-05-05 17:33:49 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-05-05 17:34:04 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-05-05 17:34:05 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-05-05 17:34:58 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-05-05 17:34:59 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-05-05 17:35:19 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-05-05 17:35:20 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-05-05 17:36:30 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-05-05 17:36:30 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-05-05 17:37:21 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-05-05 17:37:22 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-05-05 17:37:57 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-05-05 17:37:57 [[32minfo[39m]: [1;32mMongoDB connected![0m 

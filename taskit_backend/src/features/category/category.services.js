@@ -13,11 +13,12 @@ import CategorySyncService from "./category.sync.service.js";
 
 class CategoryService {
   //#region CREATE
-  static async createCategory(userId, data) {
+  static async createCategory(userId, sessionId, data) {
     try {
       await UserService.ensureUserExistsById(userId);
       const created = await CategoryModel.create({ ...data, userId });
       console.log(data);
+      CategorySyncService.notifyCreate(userId, sessionId, created);
       return {
         localId: parseInt(data.localId, 10),
         ...created.toObject(),
@@ -83,7 +84,7 @@ class CategoryService {
 
   //#region DELETE
 
-  static async deleteOne(userId, id) {
+  static async deleteOne(userId, sessionId, id) {
     const session = await db.startSession();
     session.startTransaction();
     try {
@@ -119,6 +120,7 @@ class CategoryService {
         { $set: { deleted: true } },
         { session },
       );
+      CategorySyncService.notifyDelete(userId, sessionId, id);
       await session.commitTransaction();
     } catch (e) {
       await session.abortTransaction();
@@ -131,7 +133,7 @@ class CategoryService {
   //#endregion
 
   //#region UPDATE
-  static async updateCategoryFull(userId, id, updateData) {
+  static async updateCategoryFull(userId, sessionId, id, updateData) {
     try {
       await UserService.ensureUserExistsById(userId);
       const category = await CategoryModel.findOneAndUpdate(
@@ -144,6 +146,7 @@ class CategoryService {
           "Can not update category that does not exist or is default",
         );
       }
+      CategorySyncService.notifyUpdate(userId, sessionId, category.toObject());
       return category.toObject();
     } catch (e) {
       if (e.code === 11000) {
@@ -154,7 +157,7 @@ class CategoryService {
     }
   }
 
-  static async syncCategories(userId, categories) {
+  static async syncCategories(userId, sessionId, categories) {
     try {
       await UserService.ensureUserExistsById(userId);
       const accept = [];
@@ -309,9 +312,8 @@ class CategoryService {
         };
       });
 
-      CategorySyncService.notifyBulkSync(userId, {
-        accept: finalAccept,
-        reject: finalReject,
+      CategorySyncService.notifyBulkSync(userId, sessionId, {
+        categories: finalAccept,
       });
 
       return {
@@ -319,10 +321,10 @@ class CategoryService {
         reject: finalReject,
       };
     } catch (e) {
-      throw new ServerError(`update bulk categories ServerError: ${e.message}`);
+      throw new ServerError(`update bulk categories error: ${e.message}`);
     }
   }
-  static async syncDeletedCategories(userId, categories) {
+  static async syncDeletedCategories(userId, sessionId, categories) {
     try {
       await UserService.ensureUserExistsById(userId);
       const operations = categories.map((category) => {
@@ -345,7 +347,11 @@ class CategoryService {
         localId: category.localId,
         id: category.id,
       }));
-      CategorySyncService.notifyBulkDelete(userId, synced);
+      CategorySyncService.notifyBulkDelete(
+        userId,
+        sessionId,
+        synced.map((c) => c.id),
+      );
       return synced;
     } catch (e) {
       throw new ServerError(`update bulk categories ServerError: ${e.message}`);

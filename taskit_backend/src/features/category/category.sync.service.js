@@ -1,34 +1,36 @@
 import { getIO } from "../../config/socket.js";
 
 export default class CategorySyncService {
-  static _emit(userId, action, data) {
+  static _emit(userId, sessionId, action, data) {
     try {
       const io = getIO();
-      io.to(userId.toString()).emit("category_changed", {
-        action,
-        data,
-        serverTime: new Date().toISOString(),
-      });
+      io.to(userId.toString())
+        .except(sessionId.toString())
+        .emit("category_changed", {
+          action,
+          data,
+          serverTime: new Date().toISOString(),
+        });
     } catch (error) {
       console.error("Eror socket send:", error);
     }
   }
 
-  static notifyCreate(userId, category) {
-    this._emit(userId, "CREATE", category);
+  static notifyCreate(userId, sessionId, category) {
+    this._emit(userId, sessionId, "CREATE", category);
   }
 
-  static notifyUpdate(userId, category) {
-    this._emit(userId, "UPDATE", category);
+  static notifyUpdate(userId, sessionId, category) {
+    this._emit(userId, sessionId, "UPDATE", category);
   }
 
-  static notifyDelete(userId, categoryId) {
-    this._emit(userId, "DELETE", { id: categoryId });
+  static notifyDelete(userId, sessionId, categoryId) {
+    this._emit(userId, sessionId, "DELETE", { id: categoryId });
   }
-  static notifyBulkSync(userId, categories) {
-    this._emit(userId, "BULK_SYNC", categories);
+  static notifyBulkSync(userId, sessionId, categories) {
+    this._emit(userId, sessionId, "BULK_SYNC", categories);
   }
-  static notifyBulkDelete(userId, categories) {
-    this._emit(userId, "BULK_DELETE", categories);
+  static notifyBulkDelete(userId, sessionId, categories) {
+    this._emit(userId, sessionId, "BULK_DELETE", categories);
   }
 }

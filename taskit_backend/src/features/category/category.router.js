@@ -2,6 +2,7 @@ import express from "express";
 import * as CategoryController from "./category.controller.js";
 import { authMiddleware } from "../../middleware/auth.middleware.js";
 import * as CategoryValidate from "./category.validate.js";
+import { sessionMiddleware } from "../../middleware/session.middleware.js";
 const router = express.Router();
 router.get(
   "/",
@@ -23,32 +24,32 @@ router.get(
 );
 router.post(
   "/",
-  authMiddleware,
+  sessionMiddleware,
   CategoryValidate.createCategoryValidate,
   CategoryController.createCategory,
 );
 router.post(
   "/sync",
-  authMiddleware,
+  sessionMiddleware,
   CategoryValidate.syncCategoriesValidate,
   CategoryController.syncCategories,
 );
 router.delete(
   "/sync",
-  authMiddleware,
+  sessionMiddleware,
   CategoryValidate.syncDeletedValidate,
   CategoryController.syncDeletedCategories,
 );
 router.put(
   "/:id",
-  authMiddleware,
+  sessionMiddleware,
   CategoryValidate.updateCategoryValidate,
   CategoryController.updateCategoryFull,
 );
 
 router.delete(
   "/:id",
-  authMiddleware,
+  sessionMiddleware,
   CategoryValidate.deleteCategoryValidate,
   CategoryController.deleteCategory,
 );
