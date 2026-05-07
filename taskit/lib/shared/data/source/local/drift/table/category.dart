@@ -18,9 +18,13 @@ class CategoryTable extends Table {
   IntColumn get userLocalId =>
       integer().references(UserTable, #localId, onDelete: KeyAction.cascade)();
 
-  DateTimeColumn get createdAt => dateTime().withDefault(currentDateAndTime)();
+  DateTimeColumn get createdAt => dateTime().withDefault(
+    currentDateAndTime.modify(DateTimeModifier.utc()),
+  )();
 
-  DateTimeColumn get updatedAt => dateTime().withDefault(currentDateAndTime)();
+  DateTimeColumn get updatedAt => dateTime().withDefault(
+    currentDateAndTime.modify(DateTimeModifier.utc()),
+  )();
 
   @override
   String get tableName => 'category';

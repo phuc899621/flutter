@@ -1,5 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widget_previews.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:taskit/features/main/presentation/home/controller/home_controller.dart';
@@ -8,6 +9,7 @@ import 'package:taskit/features/main/presentation/home/ui/widget/home_task_view.
 import 'package:taskit/shared/application/time_service.dart';
 
 class HomePage extends ConsumerStatefulWidget {
+  @Preview()
   const HomePage({super.key});
 
   @override

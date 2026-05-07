@@ -8,6 +8,7 @@ import 'package:taskit/shared/constants/forgot_pass_status.dart';
 
 import '../../../../../shared/application/network_status_provider.dart';
 import '../../../../../shared/constants/network_status.dart';
+import '../../../../../shared/log/logger_provider.dart';
 import '../../../domain/usecases/forgot_password/forgot_password_usecase.dart';
 
 final forgotPassControllerProvider =
@@ -35,7 +36,12 @@ class ForgotPassController extends Notifier<ForgotPassState> {
 
   Future<void> forgotPass(String email) async {
     try {
-      if (!checkConnection()) return;
+      if (!checkConnection()) {
+        logger.e(
+          '[ForgotPassController] No internet connection, forgot password aborted',
+        );
+        return;
+      }
       state = state.copyWith(
         status: ForgotPassStatus.loading,
         apiError: null,
@@ -44,9 +50,13 @@ class ForgotPassController extends Notifier<ForgotPassState> {
       final form = ForgotPasswordParams(email: email);
       (await ref.read(forgotPasswordUseCaseProvider).call(form)).when(
         (success) {
+          logger.d('[ForgotPassController] Forgot password successful');
           state = state.copyWith(status: ForgotPassStatus.forgotSuccess);
         },
         (failure) {
+          logger.e(
+            '[ForgotPassController] Forgot password failed: ${failure.message}',
+          );
           state = state.copyWith(
             status: ForgotPassStatus.initial,
             apiError: failure.message,
@@ -54,6 +64,9 @@ class ForgotPassController extends Notifier<ForgotPassState> {
         },
       );
     } catch (e) {
+      logger.e(
+        '[ForgotPassController] Forgot password failed: ${e.toString()}',
+      );
       state = state.copyWith(
         status: ForgotPassStatus.initial,
         apiError: e.toString(),
@@ -63,7 +76,11 @@ class ForgotPassController extends Notifier<ForgotPassState> {
 
   Future<void> verify(String otp) async {
     try {
-      if (!checkConnection()) return;
+      if (!checkConnection()) {
+        logger.e(
+          '[ForgotPassController] No internet connection, forgot password verify aborted',
+        );
+      }
       state = state.copyWith(
         status: ForgotPassStatus.loading,
         apiError: null,
@@ -75,12 +92,16 @@ class ForgotPassController extends Notifier<ForgotPassState> {
       );
       (await ref.read(forgotPasswordVerifyUseCaseProvider).call(form)).when(
         (success) {
+          logger.d('[ForgotPassController] Forgot password verify successful');
           state = state.copyWith(
             status: ForgotPassStatus.verifySuccess,
             resetToken: success.resetToken,
           );
         },
         (failure) {
+          logger.e(
+            '[ForgotPassController] Forgot password verify failed: ${failure.message}',
+          );
           state = state.copyWith(
             status: ForgotPassStatus.initial,
             apiError: failure.message,
@@ -88,6 +109,9 @@ class ForgotPassController extends Notifier<ForgotPassState> {
         },
       );
     } catch (e) {
+      logger.e(
+        '[ForgotPassController] Forgot password verify failed: ${e.toString()}',
+      );
       state = state.copyWith(
         status: ForgotPassStatus.initial,
         apiError: e.toString(),
@@ -97,14 +121,21 @@ class ForgotPassController extends Notifier<ForgotPassState> {
 
   Future<void> resend() async {
     try {
-      if (!checkConnection()) return;
+      if (!checkConnection()) {
+        logger.e(
+          '[ForgotPassController] No internet connection, forgot password resend aborted',
+        );
+        return;
+      }
       state = state.copyWith(status: ForgotPassStatus.loading, apiError: null);
       final form = ForgotPasswordResendParams(email: state.email);
       (await ref.read(forgotPasswordResendUseCaseProvider).call(form)).when(
         (success) {
+          logger.d('[ForgotPassController] resend successful');
           state = state.copyWith(status: ForgotPassStatus.resendSuccess);
         },
         (failure) {
+          logger.e('[ForgotPassController] resend failed: ${failure.message}');
           state = state.copyWith(
             status: ForgotPassStatus.initial,
             apiError: failure.message,
@@ -112,6 +143,7 @@ class ForgotPassController extends Notifier<ForgotPassState> {
         },
       );
     } catch (e) {
+      logger.e('[ForgotPassController] resend failed: ${e.toString()}');
       state = state.copyWith(
         status: ForgotPassStatus.initial,
         apiError: e.toString(),

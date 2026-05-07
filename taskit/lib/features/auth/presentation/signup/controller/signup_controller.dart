@@ -7,6 +7,7 @@ import 'package:taskit/shared/constants/signup_status.dart';
 
 import '../../../../../shared/application/network_status_provider.dart';
 import '../../../../../shared/constants/network_status.dart';
+import '../../../../../shared/log/logger_provider.dart';
 import '../state/signup_state.dart';
 
 final signupControllerProvider =
@@ -33,8 +34,12 @@ class SignupController extends Notifier<SignupState> {
   }
 
   Future<void> signup(String email, String password) async {
+    logger.i("[SignupController] Starting signup flow for $email");
     try {
-      if (!checkConnection()) return;
+      if (!checkConnection()) {
+        logger.w("[SignupController] No internet connection, signup aborted");
+        return;
+      }
       state = state.copyWith(
         apiError: null,
         status: SignupStatus.loading,
@@ -48,9 +53,11 @@ class SignupController extends Notifier<SignupState> {
       final result = await ref.read(signupUseCaseProvider).call(form);
       result.when(
         (success) {
+          logger.d("[SignupController] Signup success");
           state = state.copyWith(status: SignupStatus.signupSuccess);
         },
         (failure) {
+          logger.e("[SignupController] Signup failed: ${failure.message}");
           state = state.copyWith(
             status: SignupStatus.initial,
             apiError: failure.message,
@@ -58,6 +65,7 @@ class SignupController extends Notifier<SignupState> {
         },
       );
     } catch (e) {
+      logger.e("[SignupController] Signup failed: ${e.toString()}");
       state = state.copyWith(
         status: SignupStatus.initial,
         apiError: e.toString(),
@@ -66,16 +74,22 @@ class SignupController extends Notifier<SignupState> {
   }
 
   Future<void> resend() async {
+    logger.i("[SignupController] Starting resend flow for ${state.email}");
     try {
-      if (!checkConnection()) return;
+      if (!checkConnection()) {
+        logger.w("[SignupController] No internet connection, resend aborted");
+        return;
+      }
       state = state.copyWith(apiError: null, status: SignupStatus.loading);
       final form = SignupResendParams(email: state.email);
       final result = await ref.read(signupResendUseCaseProvider).call(form);
       result.when(
         (success) {
+          logger.d('[SignupController] Resend successful');
           state = state.copyWith(status: SignupStatus.resendSuccess);
         },
         (failure) {
+          logger.e('[SignupController] Resend failed: ${failure.message}');
           state = state.copyWith(
             status: SignupStatus.initial,
             apiError: failure.message,
@@ -83,6 +97,7 @@ class SignupController extends Notifier<SignupState> {
         },
       );
     } catch (e) {
+      logger.e('[SignupController] Resend failed: ${e.toString()}');
       state = state.copyWith(
         status: SignupStatus.initial,
         apiError: e.toString(),
@@ -92,7 +107,10 @@ class SignupController extends Notifier<SignupState> {
 
   Future<void> verify(String otp) async {
     try {
-      if (!checkConnection()) return;
+      if (!checkConnection()) {
+        logger.w('[SignupController] No internet connection, verify aborted');
+        return;
+      }
       state = state.copyWith(
         apiError: null,
         status: SignupStatus.loading,
@@ -102,9 +120,11 @@ class SignupController extends Notifier<SignupState> {
       final result = await ref.read(signupVerifyUseCaseProvider).call(form);
       result.when(
         (success) {
+          logger.d('[SignupController] Verify successful');
           state = state.copyWith(status: SignupStatus.verifySuccess);
         },
         (failure) {
+          logger.e('[SignupController] Verify failed: ${failure.message}');
           state = state.copyWith(
             status: SignupStatus.initial,
             apiError: failure.message,
@@ -112,6 +132,7 @@ class SignupController extends Notifier<SignupState> {
         },
       );
     } catch (e) {
+      logger.e('[SignupController] Verify failed: ${e.toString()}');
       state = state.copyWith(
         status: SignupStatus.initial,
         apiError: e.toString(),

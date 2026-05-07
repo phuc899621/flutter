@@ -86,6 +86,11 @@ dependencies:
   shared_preferences: ^2.5.5
   shimmer_text: ^0.0.2
   sqlite3_flutter_libs: ^0.6.0+eol
+  pubviz: ^4.1.1
+  widgetbook: ^3.22.0
+  sqlite3: ^3.3.1
+  ffi: ^2.2.0
+  socket_io_client: ^3.1.4
 
 dev_dependencies:
   flutter_test:

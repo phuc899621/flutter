@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$CategoriesSyncReq {
 
- List<CategoriesSyncReqData> get categories;
+ List<CategorySyncReqEntry> get categories;
 /// Create a copy of CategoriesSyncReq
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -48,7 +48,7 @@ abstract mixin class $CategoriesSyncReqCopyWith<$Res>  {
   factory $CategoriesSyncReqCopyWith(CategoriesSyncReq value, $Res Function(CategoriesSyncReq) _then) = _$CategoriesSyncReqCopyWithImpl;
 @useResult
 $Res call({
- List<CategoriesSyncReqData> categories
+ List<CategorySyncReqEntry> categories
 });
 
 
@@ -68,7 +68,7 @@ class _$CategoriesSyncReqCopyWithImpl<$Res>
 @pragma('vm:prefer-inline') @override $Res call({Object? categories = null,}) {
   return _then(_self.copyWith(
 categories: null == categories ? _self.categories : categories // ignore: cast_nullable_to_non_nullable
-as List<CategoriesSyncReqData>,
+as List<CategorySyncReqEntry>,
   ));
 }
 
@@ -115,10 +115,7 @@ return $default(_that);case _:
 final _that = this;
 switch (_that) {
 case _CategoriesSyncReq():
-return $default(_that);case _:
-  throw StateError('Unexpected subclass');
-
-}
+return $default(_that);}
 }
 /// A variant of `map` that fallback to returning `null`.
 ///
@@ -153,7 +150,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( List<CategoriesSyncReqData> categories)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( List<CategorySyncReqEntry> categories)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _CategoriesSyncReq() when $default != null:
 return $default(_that.categories);case _:
@@ -174,13 +171,10 @@ return $default(_that.categories);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( List<CategoriesSyncReqData> categories)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( List<CategorySyncReqEntry> categories)  $default,) {final _that = this;
 switch (_that) {
 case _CategoriesSyncReq():
-return $default(_that.categories);case _:
-  throw StateError('Unexpected subclass');
-
-}
+return $default(_that.categories);}
 }
 /// A variant of `when` that fallback to returning `null`
 ///
@@ -194,7 +188,7 @@ return $default(_that.categories);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( List<CategoriesSyncReqData> categories)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( List<CategorySyncReqEntry> categories)?  $default,) {final _that = this;
 switch (_that) {
 case _CategoriesSyncReq() when $default != null:
 return $default(_that.categories);case _:
@@ -209,11 +203,11 @@ return $default(_that.categories);case _:
 @JsonSerializable()
 
 class _CategoriesSyncReq implements CategoriesSyncReq {
-  const _CategoriesSyncReq({required final  List<CategoriesSyncReqData> categories}): _categories = categories;
+  const _CategoriesSyncReq({required final  List<CategorySyncReqEntry> categories}): _categories = categories;
   factory _CategoriesSyncReq.fromJson(Map<String, dynamic> json) => _$CategoriesSyncReqFromJson(json);
 
- final  List<CategoriesSyncReqData> _categories;
-@override List<CategoriesSyncReqData> get categories {
+ final  List<CategorySyncReqEntry> _categories;
+@override List<CategorySyncReqEntry> get categories {
   if (_categories is EqualUnmodifiableListView) return _categories;
   // ignore: implicit_dynamic_type
   return EqualUnmodifiableListView(_categories);
@@ -253,7 +247,7 @@ abstract mixin class _$CategoriesSyncReqCopyWith<$Res> implements $CategoriesSyn
   factory _$CategoriesSyncReqCopyWith(_CategoriesSyncReq value, $Res Function(_CategoriesSyncReq) _then) = __$CategoriesSyncReqCopyWithImpl;
 @override @useResult
 $Res call({
- List<CategoriesSyncReqData> categories
+ List<CategorySyncReqEntry> categories
 });
 
 
@@ -273,7 +267,7 @@ class __$CategoriesSyncReqCopyWithImpl<$Res>
 @override @pragma('vm:prefer-inline') $Res call({Object? categories = null,}) {
   return _then(_CategoriesSyncReq(
 categories: null == categories ? _self._categories : categories // ignore: cast_nullable_to_non_nullable
-as List<CategoriesSyncReqData>,
+as List<CategorySyncReqEntry>,
   ));
 }
 
@@ -282,42 +276,42 @@ as List<CategoriesSyncReqData>,
 
 
 /// @nodoc
-mixin _$CategoriesSyncReqData {
+mixin _$CategorySyncReqEntry {
 
- String? get id; int get localId; String get name;
-/// Create a copy of CategoriesSyncReqData
+ String? get id; int get localId; String get name; DateTime get updatedAt;
+/// Create a copy of CategorySyncReqEntry
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
-$CategoriesSyncReqDataCopyWith<CategoriesSyncReqData> get copyWith => _$CategoriesSyncReqDataCopyWithImpl<CategoriesSyncReqData>(this as CategoriesSyncReqData, _$identity);
+$CategorySyncReqEntryCopyWith<CategorySyncReqEntry> get copyWith => _$CategorySyncReqEntryCopyWithImpl<CategorySyncReqEntry>(this as CategorySyncReqEntry, _$identity);
 
-  /// Serializes this CategoriesSyncReqData to a JSON map.
+  /// Serializes this CategorySyncReqEntry to a JSON map.
   Map<String, dynamic> toJson();
 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is CategoriesSyncReqData&&(identical(other.id, id) || other.id == id)&&(identical(other.localId, localId) || other.localId == localId)&&(identical(other.name, name) || other.name == name));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is CategorySyncReqEntry&&(identical(other.id, id) || other.id == id)&&(identical(other.localId, localId) || other.localId == localId)&&(identical(other.name, name) || other.name == name)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,localId,name);
+int get hashCode => Object.hash(runtimeType,id,localId,name,updatedAt);
 
 @override
 String toString() {
-  return 'CategoriesSyncReqData(id: $id, localId: $localId, name: $name)';
+  return 'CategorySyncReqEntry(id: $id, localId: $localId, name: $name, updatedAt: $updatedAt)';
 }
 
 
 }
 
 /// @nodoc
-abstract mixin class $CategoriesSyncReqDataCopyWith<$Res>  {
-  factory $CategoriesSyncReqDataCopyWith(CategoriesSyncReqData value, $Res Function(CategoriesSyncReqData) _then) = _$CategoriesSyncReqDataCopyWithImpl;
+abstract mixin class $CategorySyncReqEntryCopyWith<$Res>  {
+  factory $CategorySyncReqEntryCopyWith(CategorySyncReqEntry value, $Res Function(CategorySyncReqEntry) _then) = _$CategorySyncReqEntryCopyWithImpl;
 @useResult
 $Res call({
- String? id, int localId, String name
+ String? id, int localId, String name, DateTime updatedAt
 });
 
 
@@ -325,29 +319,30 @@ $Res call({
 
 }
 /// @nodoc
-class _$CategoriesSyncReqDataCopyWithImpl<$Res>
-    implements $CategoriesSyncReqDataCopyWith<$Res> {
-  _$CategoriesSyncReqDataCopyWithImpl(this._self, this._then);
+class _$CategorySyncReqEntryCopyWithImpl<$Res>
+    implements $CategorySyncReqEntryCopyWith<$Res> {
+  _$CategorySyncReqEntryCopyWithImpl(this._self, this._then);
 
-  final CategoriesSyncReqData _self;
-  final $Res Function(CategoriesSyncReqData) _then;
+  final CategorySyncReqEntry _self;
+  final $Res Function(CategorySyncReqEntry) _then;
 
-/// Create a copy of CategoriesSyncReqData
+/// Create a copy of CategorySyncReqEntry
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = freezed,Object? localId = null,Object? name = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = freezed,Object? localId = null,Object? name = null,Object? updatedAt = null,}) {
   return _then(_self.copyWith(
 id: freezed == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String?,localId: null == localId ? _self.localId : localId // ignore: cast_nullable_to_non_nullable
 as int,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
-as String,
+as String,updatedAt: null == updatedAt ? _self.updatedAt : updatedAt // ignore: cast_nullable_to_non_nullable
+as DateTime,
   ));
 }
 
 }
 
 
-/// Adds pattern-matching-related methods to [CategoriesSyncReqData].
-extension CategoriesSyncReqDataPatterns on CategoriesSyncReqData {
+/// Adds pattern-matching-related methods to [CategorySyncReqEntry].
+extension CategorySyncReqEntryPatterns on CategorySyncReqEntry {
 /// A variant of `map` that fallback to returning `orElse`.
 ///
 /// It is equivalent to doing:
@@ -360,10 +355,10 @@ extension CategoriesSyncReqDataPatterns on CategoriesSyncReqData {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _CategoriesSyncReqData value)?  $default,{required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _CategorySyncReqEntry value)?  $default,{required TResult orElse(),}){
 final _that = this;
 switch (_that) {
-case _CategoriesSyncReqData() when $default != null:
+case _CategorySyncReqEntry() when $default != null:
 return $default(_that);case _:
   return orElse();
 
@@ -382,14 +377,11 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _CategoriesSyncReqData value)  $default,){
+@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _CategorySyncReqEntry value)  $default,){
 final _that = this;
 switch (_that) {
-case _CategoriesSyncReqData():
-return $default(_that);case _:
-  throw StateError('Unexpected subclass');
-
-}
+case _CategorySyncReqEntry():
+return $default(_that);}
 }
 /// A variant of `map` that fallback to returning `null`.
 ///
@@ -403,10 +395,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _CategoriesSyncReqData value)?  $default,){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _CategorySyncReqEntry value)?  $default,){
 final _that = this;
 switch (_that) {
-case _CategoriesSyncReqData() when $default != null:
+case _CategorySyncReqEntry() when $default != null:
 return $default(_that);case _:
   return null;
 
@@ -424,10 +416,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String? id,  int localId,  String name)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String? id,  int localId,  String name,  DateTime updatedAt)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
-case _CategoriesSyncReqData() when $default != null:
-return $default(_that.id,_that.localId,_that.name);case _:
+case _CategorySyncReqEntry() when $default != null:
+return $default(_that.id,_that.localId,_that.name,_that.updatedAt);case _:
   return orElse();
 
 }
@@ -445,13 +437,10 @@ return $default(_that.id,_that.localId,_that.name);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String? id,  int localId,  String name)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String? id,  int localId,  String name,  DateTime updatedAt)  $default,) {final _that = this;
 switch (_that) {
-case _CategoriesSyncReqData():
-return $default(_that.id,_that.localId,_that.name);case _:
-  throw StateError('Unexpected subclass');
-
-}
+case _CategorySyncReqEntry():
+return $default(_that.id,_that.localId,_that.name,_that.updatedAt);}
 }
 /// A variant of `when` that fallback to returning `null`
 ///
@@ -465,10 +454,10 @@ return $default(_that.id,_that.localId,_that.name);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String? id,  int localId,  String name)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String? id,  int localId,  String name,  DateTime updatedAt)?  $default,) {final _that = this;
 switch (_that) {
-case _CategoriesSyncReqData() when $default != null:
-return $default(_that.id,_that.localId,_that.name);case _:
+case _CategorySyncReqEntry() when $default != null:
+return $default(_that.id,_that.localId,_that.name,_that.updatedAt);case _:
   return null;
 
 }
@@ -479,48 +468,49 @@ return $default(_that.id,_that.localId,_that.name);case _:
 /// @nodoc
 @JsonSerializable()
 
-class _CategoriesSyncReqData implements CategoriesSyncReqData {
-  const _CategoriesSyncReqData({this.id, required this.localId, required this.name});
-  factory _CategoriesSyncReqData.fromJson(Map<String, dynamic> json) => _$CategoriesSyncReqDataFromJson(json);
+class _CategorySyncReqEntry implements CategorySyncReqEntry {
+  const _CategorySyncReqEntry({this.id, required this.localId, required this.name, required this.updatedAt});
+  factory _CategorySyncReqEntry.fromJson(Map<String, dynamic> json) => _$CategorySyncReqEntryFromJson(json);
 
 @override final  String? id;
 @override final  int localId;
 @override final  String name;
+@override final  DateTime updatedAt;
 
-/// Create a copy of CategoriesSyncReqData
+/// Create a copy of CategorySyncReqEntry
 /// with the given fields replaced by the non-null parameter values.
 @override @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
-_$CategoriesSyncReqDataCopyWith<_CategoriesSyncReqData> get copyWith => __$CategoriesSyncReqDataCopyWithImpl<_CategoriesSyncReqData>(this, _$identity);
+_$CategorySyncReqEntryCopyWith<_CategorySyncReqEntry> get copyWith => __$CategorySyncReqEntryCopyWithImpl<_CategorySyncReqEntry>(this, _$identity);
 
 @override
 Map<String, dynamic> toJson() {
-  return _$CategoriesSyncReqDataToJson(this, );
+  return _$CategorySyncReqEntryToJson(this, );
 }
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _CategoriesSyncReqData&&(identical(other.id, id) || other.id == id)&&(identical(other.localId, localId) || other.localId == localId)&&(identical(other.name, name) || other.name == name));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _CategorySyncReqEntry&&(identical(other.id, id) || other.id == id)&&(identical(other.localId, localId) || other.localId == localId)&&(identical(other.name, name) || other.name == name)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,localId,name);
+int get hashCode => Object.hash(runtimeType,id,localId,name,updatedAt);
 
 @override
 String toString() {
-  return 'CategoriesSyncReqData(id: $id, localId: $localId, name: $name)';
+  return 'CategorySyncReqEntry(id: $id, localId: $localId, name: $name, updatedAt: $updatedAt)';
 }
 
 
 }
 
 /// @nodoc
-abstract mixin class _$CategoriesSyncReqDataCopyWith<$Res> implements $CategoriesSyncReqDataCopyWith<$Res> {
-  factory _$CategoriesSyncReqDataCopyWith(_CategoriesSyncReqData value, $Res Function(_CategoriesSyncReqData) _then) = __$CategoriesSyncReqDataCopyWithImpl;
+abstract mixin class _$CategorySyncReqEntryCopyWith<$Res> implements $CategorySyncReqEntryCopyWith<$Res> {
+  factory _$CategorySyncReqEntryCopyWith(_CategorySyncReqEntry value, $Res Function(_CategorySyncReqEntry) _then) = __$CategorySyncReqEntryCopyWithImpl;
 @override @useResult
 $Res call({
- String? id, int localId, String name
+ String? id, int localId, String name, DateTime updatedAt
 });
 
 
@@ -528,21 +518,22 @@ $Res call({
 
 }
 /// @nodoc
-class __$CategoriesSyncReqDataCopyWithImpl<$Res>
-    implements _$CategoriesSyncReqDataCopyWith<$Res> {
-  __$CategoriesSyncReqDataCopyWithImpl(this._self, this._then);
+class __$CategorySyncReqEntryCopyWithImpl<$Res>
+    implements _$CategorySyncReqEntryCopyWith<$Res> {
+  __$CategorySyncReqEntryCopyWithImpl(this._self, this._then);
 
-  final _CategoriesSyncReqData _self;
-  final $Res Function(_CategoriesSyncReqData) _then;
+  final _CategorySyncReqEntry _self;
+  final $Res Function(_CategorySyncReqEntry) _then;
 
-/// Create a copy of CategoriesSyncReqData
+/// Create a copy of CategorySyncReqEntry
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = freezed,Object? localId = null,Object? name = null,}) {
-  return _then(_CategoriesSyncReqData(
+@override @pragma('vm:prefer-inline') $Res call({Object? id = freezed,Object? localId = null,Object? name = null,Object? updatedAt = null,}) {
+  return _then(_CategorySyncReqEntry(
 id: freezed == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String?,localId: null == localId ? _self.localId : localId // ignore: cast_nullable_to_non_nullable
 as int,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
-as String,
+as String,updatedAt: null == updatedAt ? _self.updatedAt : updatedAt // ignore: cast_nullable_to_non_nullable
+as DateTime,
   ));
 }
 

@@ -1,11 +1,11 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-part 'category_data.freezed.dart';
-part 'category_data.g.dart';
+part 'category_res.freezed.dart';
+part 'category_res.g.dart';
 
 @freezed
-abstract class CategoryData with _$CategoryData {
-  const factory CategoryData({
+sealed class CategoryRes with _$CategoryRes {
+  const factory CategoryRes({
     required String id,
     required String name,
     @JsonKey(name: 'default') required bool isDefault,
@@ -13,8 +13,8 @@ abstract class CategoryData with _$CategoryData {
     required DateTime createdAt,
     required DateTime updatedAt,
     required String userId,
-  }) = _CategoryData;
+  }) = _CategoryRes;
 
-  factory CategoryData.fromJson(Map<String, dynamic> json) =>
-      _$CategoryDataFromJson(json);
+  factory CategoryRes.fromJson(Map<String, dynamic> json) =>
+      _$CategoryResFromJson(json);
 }

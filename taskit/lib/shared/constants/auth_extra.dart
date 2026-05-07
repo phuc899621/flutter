@@ -1,1 +1,1 @@
-enum AuthExtra { requireAuth, refresh }
+enum AuthExtra { requireAuth, refresh, requireSession }

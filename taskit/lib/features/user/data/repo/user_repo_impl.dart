@@ -22,39 +22,48 @@ class UserRepoImpl with DioExceptionMapper implements UserRepo {
 
   @override
   Future<UserEntity?> getCurrentUser() => callSafe(() async {
+    logger.i("[UserRepoImpl] Getting current user");
     final userActiveId = _storage.getActiveUserId();
-    if (userActiveId == null) return null;
+    if (userActiveId == null) {
+      logger.d("[UserRepoImpl] No active user found");
+      return null;
+    }
     final user = await _localSource.getUserByLocalId(userActiveId);
+    logger.d("[UserRepoImpl] User found: $user");
     return user;
-  }, errorMessage: "Failed to get current user");
+  }, errorMessage: "Get current user failed");
 
   @override
-  Future<UserEntity?> getPreviousUser() => callSafe(
-    () => _localSource.getPreviousUser(),
-    errorMessage: "Failed to get previous user",
-  );
+  Future<UserEntity?> getPreviousUser() => callSafe(() async {
+    final result = await _localSource.getPreviousUser();
+    logger.d("[UserRepoImpl] Previous user found: $result");
+    return result;
+  }, errorMessage: "Get previous user failed");
 
   @override
   Future<void> deleteLocalUser(int localId) => callSafe(() async {
     await _localSource.deleteLocalUser(localId);
+    logger.d("[UserRepoImpl] User deleted: $localId");
   });
 
   @override
   Future<DataResult<UserEntity>> syncUser() => callSafe(() async {
-    return callSafe(() async {
-      final response = await _api.syncUser();
-      logger.i(response);
-      final userLocalId = await _localSource.cacheUser(response.data);
-      await _storage.saveActiveUserId(userLocalId);
-      return response.toResult(
-        UserEntity(
-          localId: userLocalId,
-          remoteId: response.data.id,
-          name: response.data.name,
-          email: response.data.email,
-          avatar: response.data.avatar,
-        ),
-      );
-    });
-  });
+    logger.i("[UserRepoImpl] Syncing user");
+    final response = await _api.syncUser();
+    logger.i("[UserRepoImpl] User synced: $response");
+    final userLocalId = await _localSource.cacheUser(response.data);
+    logger.i("[UserRepoImpl] User cached: $userLocalId");
+    await _storage.saveActiveUserId(userLocalId);
+    logger.i("[UserRepoImpl] User saved: $userLocalId");
+    logger.d("[UserRepoImpl] User synced successfully");
+    return response.toResult(
+      UserEntity(
+        localId: userLocalId,
+        remoteId: response.data.id,
+        name: response.data.name,
+        email: response.data.email,
+        avatar: response.data.avatar,
+      ),
+    );
+  }, errorMessage: "Sync user failed");
 }

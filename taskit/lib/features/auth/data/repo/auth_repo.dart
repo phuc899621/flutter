@@ -13,5 +13,5 @@ abstract interface class AuthRepo {
 
   Future<MessageResult> refreshToken();
 
-  Future<MessageResult> logout();
+  Future<void> logout();
 }

@@ -1,45 +1,49 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:multiple_result/multiple_result.dart';
+import 'package:taskit/features/category/application/category_sync_service.dart';
 import 'package:taskit/features/user/domain/params/reconcile_user_param.dart';
 import 'package:taskit/features/user/domain/usecase/wipe_user_usecase.dart';
 
 import '../../../../shared/domain/usecase/usecase.dart';
 import '../../../../shared/exception/failure.dart';
 import '../../../../shared/log/logger_provider.dart';
-import '../../../category/domain/usecases/push_unsynced_categories_usecase.dart';
 
 final reconcileUserSyncUseCaseProvider = Provider<ReconcileUserSyncUseCase>((
   ref,
 ) {
-  final pushCategories = ref.read(pushUnsyncedCategoriesUseCaseProvider);
+  final syncCategories = ref.watch(categorySyncServiceProvider);
   final wipeUser = ref.read(wipeUserUseCaseProvider);
-  return ReconcileUserSyncUseCase(pushCategories, wipeUser);
+  return ReconcileUserSyncUseCase(syncCategories, wipeUser);
 });
 
 class ReconcileUserSyncUseCase extends UseCase<void, ReconcileUserParam> {
-  final PushUnsyncedCategoriesUseCase _pushCategories;
+  final CategorySyncService _syncCategories;
   final WipeUserUseCase _wipeUser;
 
-  ReconcileUserSyncUseCase(this._pushCategories, this._wipeUser);
+  ReconcileUserSyncUseCase(this._syncCategories, this._wipeUser);
 
   @override
-  Future<Result<void, Failure>> call(ReconcileUserParam param) =>
-      runSafe(() async {
-        {
-          logger.i('ReconcileUser call');
-          final oldUser = param.oldUser;
-          final newUser = param.newUser;
-          logger.i('previousUser $oldUser');
-          logger.i('newUser $newUser');
-          if (oldUser != null) {
-            if (oldUser.remoteId != newUser.remoteId) {
-              await _wipeUser.call(oldUser.localId);
-              logger.i('WipeUSer');
-            } else {
-              logger.i('PushCategories');
-              await _pushCategories.call(newUser.localId);
-            }
-          }
+  Future<Result<void, Failure>> call(
+    ReconcileUserParam param,
+  ) => runSafe(() async {
+    {
+      logger.i('[ReconcileUserSync] Starting reconcileUser process');
+      final oldUser = param.oldUser;
+      final newUser = param.newUser;
+      logger.i('[ReconcileUserSync] oldUser: $oldUser, newUser: $newUser');
+      if (oldUser != null) {
+        if (oldUser.remoteId != newUser.remoteId) {
+          await _wipeUser.call(oldUser.localId);
+          logger.i('[ReconcileUserSync] User wiped: ${oldUser.localId}');
+        } else {
+          logger.i(
+            '[ReconcileUserSync] User not wiped: ${newUser.localId}. Calling sync data',
+          );
+          await _syncCategories.syncAll(newUser.localId);
+
+          logger.i('[ReconcileUserSync] Categories pushed: ${newUser.localId}');
         }
-      });
+      }
+    }
+  });
 }

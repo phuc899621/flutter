@@ -73,7 +73,9 @@ class $UserTableTable extends UserTable
     false,
     type: DriftSqlType.dateTime,
     requiredDuringInsert: false,
-    defaultValue: currentDateAndTime,
+    defaultValue: DateTimeExpressions(
+      currentDateAndTime,
+    ).modify(DateTimeModifier.utc()),
   );
   static const VerificationMeta _updatedAtMeta = const VerificationMeta(
     'updatedAt',
@@ -85,7 +87,9 @@ class $UserTableTable extends UserTable
     false,
     type: DriftSqlType.dateTime,
     requiredDuringInsert: false,
-    defaultValue: currentDateAndTime,
+    defaultValue: DateTimeExpressions(
+      currentDateAndTime,
+    ).modify(DateTimeModifier.utc()),
   );
   @override
   List<GeneratedColumn> get $columns => [
@@ -553,7 +557,9 @@ class $CategoryTableTable extends CategoryTable
     false,
     type: DriftSqlType.dateTime,
     requiredDuringInsert: false,
-    defaultValue: currentDateAndTime,
+    defaultValue: DateTimeExpressions(
+      currentDateAndTime,
+    ).modify(DateTimeModifier.utc()),
   );
   static const VerificationMeta _updatedAtMeta = const VerificationMeta(
     'updatedAt',
@@ -565,7 +571,9 @@ class $CategoryTableTable extends CategoryTable
     false,
     type: DriftSqlType.dateTime,
     requiredDuringInsert: false,
-    defaultValue: currentDateAndTime,
+    defaultValue: DateTimeExpressions(
+      currentDateAndTime,
+    ).modify(DateTimeModifier.utc()),
   );
   @override
   List<GeneratedColumn> get $columns => [

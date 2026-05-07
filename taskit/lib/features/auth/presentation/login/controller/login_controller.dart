@@ -9,6 +9,7 @@ import 'package:taskit/shared/application/network_status_provider.dart';
 import '../../../../../shared/constants/login_status.dart';
 import '../../../../../shared/constants/network_status.dart';
 import '../../../../../shared/domain/usecase/usecase.dart';
+import '../../../../../shared/log/logger_provider.dart';
 
 final loginControllerProvider =
     NotifierProvider.autoDispose<LoginController, LoginState>(
@@ -35,7 +36,12 @@ class LoginController extends Notifier<LoginState> {
 
   Future<void> loginWithGoogle() async {
     try {
-      if (!checkConnection()) return;
+      if (!checkConnection()) {
+        logger.e(
+          '[LoginController] No internet connection, login with Google aborted',
+        );
+        return;
+      }
       state = state.copyWith(apiError: null, status: LoginStatus.googleLoading);
       final result = await ref
           .read(loginWithGoogleUseCaseProvider)
@@ -43,10 +49,14 @@ class LoginController extends Notifier<LoginState> {
       final authController = ref.read(authControllerProvider.notifier);
       result.when(
         (_) async {
+          logger.d('[LoginController] Login with Google successful');
           await authController.fetchUser();
           state = state.copyWith(status: LoginStatus.success);
         },
         (failure) {
+          logger.e(
+            '[LoginController] Login with Google failed: ${failure.message}',
+          );
           state = state.copyWith(
             apiError: failure.message,
             status: LoginStatus.initial,
@@ -54,6 +64,7 @@ class LoginController extends Notifier<LoginState> {
         },
       );
     } catch (e) {
+      logger.e('[LoginController] Login with Google failed: ${e.toString()}');
       state = state.copyWith(
         apiError: e.toString(),
         status: LoginStatus.initial,
@@ -63,7 +74,10 @@ class LoginController extends Notifier<LoginState> {
 
   Future<void> login(String email, String password) async {
     try {
-      if (!checkConnection()) return;
+      if (!checkConnection()) {
+        logger.e('[LoginController] No internet connection, login aborted');
+        return;
+      }
       state = state.copyWith(
         apiError: null,
         status: LoginStatus.loading,
@@ -78,10 +92,12 @@ class LoginController extends Notifier<LoginState> {
       final result = await ref.read(loginUseCaseProvider).call(form);
       await result.when(
         (success) async {
+          logger.d('[LoginController] Login successful');
           await ref.read(authControllerProvider.notifier).fetchUser();
           state = state.copyWith(status: LoginStatus.success);
         },
         (failure) {
+          logger.e('[LoginController] Login failed: ${failure.message}');
           state = state.copyWith(
             apiError: failure.message,
             status: LoginStatus.initial,
@@ -89,6 +105,7 @@ class LoginController extends Notifier<LoginState> {
         },
       );
     } catch (e) {
+      logger.e('[LoginController] Login failed: ${e.toString()}');
       state = state.copyWith(
         apiError: e.toString(),
         status: LoginStatus.initial,

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter/widget_previews.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:taskit/shared/config/app/theme/app_color.dart';
 import 'package:taskit/shared/config/routers/router_provider.dart';
@@ -12,12 +13,15 @@ import 'package:taskit/shared/data/source/local/drift/database/database.dart';
 import 'package:taskit/shared/data/source/remote/google_sign_in.dart';
 import 'package:taskit/shared/log/logger_provider.dart';
 
+import 'features/category/application/category_sync_service.dart';
+
 final languageCodeProvider = Provider<String>((ref) {
   final locale = WidgetsBinding.instance.platformDispatcher.locale;
   return locale.languageCode;
 });
 
 class MainWidget extends ConsumerWidget {
+  @Preview()
   const MainWidget({super.key});
 
   @override
@@ -30,21 +34,12 @@ class MainWidget extends ConsumerWidget {
     final categoryDao = ref.watch(categoryDaoProvider);
     final subtaskDao = ref.watch(subtaskDaoProvider);
     final googleInit = ref.watch(googleInitProvider);
+    final categorySyncService = ref.watch(categorySyncServiceProvider);
     SystemChrome.setSystemUIOverlayStyle(
       SystemUiOverlayStyle(
         statusBarColor: AppColor.primary, // iOS
       ),
     );
-    db.transaction(() async {
-      final user = await userDao.getUser();
-      debugPrint("$user\n");
-      final setting = await settingDao.getSetting();
-      debugPrint("$setting\n");
-      final tasks = await taskDao.getAllTasks();
-      debugPrint("$tasks\n");
-      final subtasks = await subtaskDao.fetchSubtasks();
-      debugPrint("$subtasks\n");
-    });
     final languageCode = ref.read(languageCodeProvider);
     logger.i(languageCode);
     return MaterialApp.router(

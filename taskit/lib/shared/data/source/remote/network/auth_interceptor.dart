@@ -37,9 +37,15 @@ class AuthInterceptor extends Interceptor {
       );
     }
     final requireAuth = options.extra[AuthExtra.requireAuth.name] ?? false;
+    final requireSession =
+        options.extra[AuthExtra.requireSession.name] ?? false;
     if (requireAuth) {
       final token = await _storage.getAccessToken();
       options.headers['Authorization'] = 'Bearer $token';
+    }
+    if (requireSession) {
+      final sessionId = await _storage.getSessionId();
+      options.headers['x-session-id'] = sessionId;
     }
     handler.next(options);
   }

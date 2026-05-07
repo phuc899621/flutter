@@ -10,6 +10,7 @@ import 'package:taskit/shared/data/mapper/result_mapper.dart';
 import 'package:taskit/shared/data/source/remote/network/dio_exception_mapper.dart';
 import 'package:taskit/shared/domain/entities/message_result.dart';
 
+import '../../../../shared/log/logger_provider.dart';
 import '../dto/req/refresh_token/refresh_token_request.dart';
 import '../source/remote/auth_api.dart';
 
@@ -39,21 +40,25 @@ class AuthRepoImpl with DioExceptionMapper implements AuthRepo {
   * */
   //region LOGIN
   @override
-  Future<MessageResult> login(CredentialsLoginEntity data) async {
-    return callSafe(() async {
-      final response = await _authApi.login(data.toDto());
-      await _storage.saveTokens(
-        response.data.accessToken,
-        response.data.refreshToken,
-        response.data.sessionId,
-      );
-      return response.toMessage();
-    }, errorMessage: "An unexpected error occurred when login");
-  }
+  Future<MessageResult> login(CredentialsLoginEntity data) =>
+      callSafe(() async {
+        logger.i('[AuthRepo] initial login for user ${data.email}');
+        final response = await _authApi.login(data.toDto());
+        await _storage.saveTokens(
+          response.data.accessToken,
+          response.data.refreshToken,
+          response.data.sessionId,
+        );
+        logger.d('[AuthRepo]: Login successful, tokens persisted locally.');
+        return response.toMessage();
+      }, errorMessage: "Login failed");
 
   @override
   Future<MessageResult> loginWithGoogle(String idToken) {
     return callSafe(() async {
+      logger.i(
+        '[AuthRepo] initial login with google for user with idToken $idToken',
+      );
       final response = await _authApi.loginWithGoogle(
         GoogleLoginRequest(token: idToken),
       );
@@ -62,35 +67,51 @@ class AuthRepoImpl with DioExceptionMapper implements AuthRepo {
         response.data.refreshToken,
         response.data.sessionId,
       );
+      logger.d('[AuthRepo]: Login successful, tokens persisted locally.');
       return response.toMessage();
-    }, errorMessage: "An unexpected error occurred when login");
+    }, errorMessage: "Login with Google failed");
   }
 
   @override
   Future<MessageResult> refreshToken() => callSafe(() async {
+    logger.i('[AuthRepo] refreshing token');
     final token = await _storage.getRefreshToken();
     final sessionId = await _storage.getSessionId();
-    return callSafe(() async {
-      final response = await _authRefreshApi.refreshToken(
-        RefreshTokenRequest(refreshToken: token!, sessionId: sessionId!),
+    if (token == null || sessionId == null) {
+      logger.w(
+        '[AuthRepo]: Refresh Token aborting, no refresh token or session id found\n'
+        'Token: $token\n'
+        'SessionId: $sessionId',
       );
-      await _storage.saveTokens(response.data.accessToken, token, sessionId);
-      return response.toMessage();
-    });
+      throw Exception('No refresh token or session id found');
+    }
+    final response = await _authRefreshApi.refreshToken(
+      RefreshTokenRequest(refreshToken: token, sessionId: sessionId),
+    );
+    await _storage.saveTokens(response.data.accessToken, token, sessionId);
+    logger.d('[AuthRepo]: Token refreshed, tokens persisted locally.');
+    return response.toMessage();
   });
 
   @override
-  Future<MessageResult> logout() async => callSafe(() async {
+  Future<void> logout() async => callSafe(() async {
+    logger.i('[AuthRepo] logging out');
     final token = await _storage.getRefreshToken();
     final sessionId = await _storage.getSessionId();
-    final response = await _authApi.logout(
-      LogoutRequest(refreshToken: token!, sessionId: sessionId!),
-    );
+    if (token != null && sessionId != null) {
+      try {
+        await _authApi.logout(
+          LogoutRequest(refreshToken: token!, sessionId: sessionId!),
+        );
+        logger.d('[AuthRepo]: Logout successful, tokens deleted locally.');
+      } catch (e) {
+        logger.e('[AuthRepo]: Logout failed, tokens not deleted locally.');
+      }
+    }
     await _storage.deleteTokens();
     await _sessionStorage.deleteActiveUserId();
     await _sessionStorage.deleteLastSyncTime();
-    return response.toResult();
-  }, errorMessage: "An unexpected error occurred when logout");
+  }, errorMessage: "Logout failed");
 
   //endregion
 }

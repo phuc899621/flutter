@@ -4,8 +4,7 @@ part 'deleted_categories_sync_req.freezed.dart';
 part 'deleted_categories_sync_req.g.dart';
 
 @freezed
-abstract class DeletedCategoriesSyncReqData
-    with _$DeletedCategoriesSyncReqData {
+sealed class DeletedCategoriesSyncReqData with _$DeletedCategoriesSyncReqData {
   const factory DeletedCategoriesSyncReqData({
     String? id,
     required int localId,
@@ -16,7 +15,7 @@ abstract class DeletedCategoriesSyncReqData
 }
 
 @freezed
-abstract class DeletedCategoriesSyncReq with _$DeletedCategoriesSyncReq {
+sealed class DeletedCategoriesSyncReq with _$DeletedCategoriesSyncReq {
   const factory DeletedCategoriesSyncReq({
     required List<DeletedCategoriesSyncReqData> categories,
   }) = _DeletedCategoriesSyncReq;

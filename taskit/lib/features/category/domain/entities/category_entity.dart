@@ -28,7 +28,7 @@ abstract class CategoryEntity with _$CategoryEntity {
       localId: -1,
       name: name,
       userLocalId: userLocalId,
-      remoteId: '',
+      remoteId: null,
       isDefault: false,
       synced: false,
       deleted: false,
@@ -36,4 +36,16 @@ abstract class CategoryEntity with _$CategoryEntity {
       updatedAt: now,
     );
   }
+
+  factory CategoryEntity.fromMap(Map<String, dynamic> data, int userLocalId) =>
+      CategoryEntity(
+        name: data['name'],
+        localId: data['localId'] ?? -1,
+        userLocalId: userLocalId,
+        isDefault: data['default'],
+        synced: true,
+        deleted: data['deleted'],
+        createdAt: data['createdAt'],
+        updatedAt: data['updatedAt'],
+      );
 }

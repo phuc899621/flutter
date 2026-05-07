@@ -3,7 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:taskit/features/auth/data/dto/res/user/user_data.dart';
 import 'package:taskit/features/auth/data/mapper/user_mapper.dart';
 import 'package:taskit/shared/data/source/local/drift/database/database.dart';
-import 'package:taskit/shared/log/logger_provider.dart';
 
 import '../../../../../shared/data/source/local/drift/dao/user.dart';
 import '../../../domain/entity/user_entity.dart';
@@ -20,41 +19,38 @@ class UserLocalSourceImpl implements UserLocalSource {
   UserLocalSourceImpl(this.userDao);
 
   @override
-  Stream<UserEntity> watchUserByLocalId(int localId) =>
-      (userDao.watchUserByLocalId(
-        localId,
-      )).where((e) => e.localId == localId).map((e) => e.toEntity());
+  Stream<UserEntity> watchUserByLocalId(int localId) => (userDao.watchById(
+    localId,
+  )).where((e) => e.localId == localId).map((e) => e.toEntity());
 
   @override
   Future<UserEntity?> getUserByLocalId(int localId) async =>
-      (await userDao.getUserByLocalId(localId))?.toEntity();
+      (await userDao.findById(localId))?.toEntity();
 
   @override
   Future<UserEntity?> getPreviousUser() async =>
-      (await userDao.getPreviousUser())?.toEntity();
+      (await userDao.findPrevious())?.toEntity();
 
   @override
-  Future<void> deleteLocalUser(int localId) async =>
-      userDao.deleteUser(localId);
+  Future<void> deleteLocalUser(int localId) async => userDao.deleteOne(localId);
 
   @override
   Future<int> cacheUser(UserData data) async {
-    final userTableData = await userDao.getUserByRemoteId(data.id);
-    logger.i(userTableData);
+    final userTableData = await userDao.findByRemoteId(data.id);
     if (userTableData != null) {
-      await userDao.updateUser(
+      await userDao.updateOne(
         UserTableCompanion(
           localId: Value(userTableData.localId),
           remoteId: Value(data.id),
           name: Value(data.name),
           email: Value(data.email),
           avatar: Value(data.avatar),
-          updatedAt: Value(DateTime.now()),
+          updatedAt: Value(DateTime.now().toUtc()),
         ),
       );
       return userTableData.localId;
     } else {
-      return await userDao.insertUser(
+      return await userDao.insertOne(
         UserTableCompanion(
           remoteId: Value(data.id),
           name: Value(data.name),

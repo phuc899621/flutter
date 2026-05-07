@@ -4,7 +4,6 @@ import 'package:taskit/features/user/data/repo/user_repo.dart';
 import 'package:taskit/shared/domain/usecase/usecase.dart';
 import 'package:taskit/shared/exception/failure.dart';
 
-import '../../data/repo/user_repo_impl.dart';
 import '../entity/user_entity.dart';
 
 final syncUserUseCaseProvider = Provider<SyncUserUseCase>(

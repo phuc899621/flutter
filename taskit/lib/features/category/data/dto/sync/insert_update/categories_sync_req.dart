@@ -4,9 +4,9 @@ part 'categories_sync_req.freezed.dart';
 part 'categories_sync_req.g.dart';
 
 @freezed
-abstract class CategoriesSyncReq with _$CategoriesSyncReq {
+sealed class CategoriesSyncReq with _$CategoriesSyncReq {
   const factory CategoriesSyncReq({
-    required List<CategoriesSyncReqData> categories,
+    required List<CategorySyncReqEntry> categories,
   }) = _CategoriesSyncReq;
 
   factory CategoriesSyncReq.fromJson(Map<String, dynamic> json) =>
@@ -14,13 +14,14 @@ abstract class CategoriesSyncReq with _$CategoriesSyncReq {
 }
 
 @freezed
-abstract class CategoriesSyncReqData with _$CategoriesSyncReqData {
-  const factory CategoriesSyncReqData({
+sealed class CategorySyncReqEntry with _$CategorySyncReqEntry {
+  const factory CategorySyncReqEntry({
     String? id,
     required int localId,
     required String name,
-  }) = _CategoriesSyncReqData;
+    required DateTime updatedAt,
+  }) = _CategorySyncReqEntry;
 
-  factory CategoriesSyncReqData.fromJson(Map<String, dynamic> json) =>
-      _$CategoriesSyncReqDataFromJson(json);
+  factory CategorySyncReqEntry.fromJson(Map<String, dynamic> json) =>
+      _$CategorySyncReqEntryFromJson(json);
 }

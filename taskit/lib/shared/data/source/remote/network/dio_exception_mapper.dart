@@ -14,7 +14,11 @@ mixin DioExceptionMapper {
     } on DioException catch (e, s) {
       throw mapDioExceptionToFailure(e, s);
     } catch (e, s) {
-      logger.e(e, stackTrace: s);
+      logger.e(
+        '[DioExceptionMapper] Unexpected error in callSafe<$T>',
+        stackTrace: s,
+        error: e,
+      );
       throw Failure(
         message: errorMessage ?? e.toString(),
         exception: e is Exception ? e : Exception(e.toString()),

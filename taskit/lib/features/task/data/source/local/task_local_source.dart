@@ -279,22 +279,22 @@ class TaskLocalSource implements ITaskLocalSource {
       return await _db.transaction(() async {
         //find and add category Id for task
         if (task.categoryLocalId.value < 0) {
-          if (category.name.value.toLowerCase() != 'any') {
+          if (!(category.isDefault.value)) {
             task = task.copyWith(
               categoryLocalId: Value(
-                await _categoryDao.insertCategory(
+                await _categoryDao.insertOne(
                   category.copyWith(localId: Value.absent()),
                 ),
               ),
             );
           } else {
-            final defaultCategory = await _categoryDao.getDefaultCategory(
+            final defaultCategory = await _categoryDao.findDefault(
               category.userLocalId.value,
             );
             if (defaultCategory == null) {
               task = task.copyWith(
                 categoryLocalId: Value(
-                  await _categoryDao.insertCategory(
+                  await _categoryDao.insertOne(
                     category.copyWith(localId: Value.absent()),
                   ),
                 ),

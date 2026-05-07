@@ -116,10 +116,7 @@ return $default(_that);case _:
 final _that = this;
 switch (_that) {
 case _DeletedCategoriesSyncReqData():
-return $default(_that);case _:
-  throw StateError('Unexpected subclass');
-
-}
+return $default(_that);}
 }
 /// A variant of `map` that fallback to returning `null`.
 ///
@@ -178,10 +175,7 @@ return $default(_that.id,_that.localId);case _:
 @optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String? id,  int localId)  $default,) {final _that = this;
 switch (_that) {
 case _DeletedCategoriesSyncReqData():
-return $default(_that.id,_that.localId);case _:
-  throw StateError('Unexpected subclass');
-
-}
+return $default(_that.id,_that.localId);}
 }
 /// A variant of `when` that fallback to returning `null`
 ///
@@ -381,10 +375,7 @@ return $default(_that);case _:
 final _that = this;
 switch (_that) {
 case _DeletedCategoriesSyncReq():
-return $default(_that);case _:
-  throw StateError('Unexpected subclass');
-
-}
+return $default(_that);}
 }
 /// A variant of `map` that fallback to returning `null`.
 ///
@@ -443,10 +434,7 @@ return $default(_that.categories);case _:
 @optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( List<DeletedCategoriesSyncReqData> categories)  $default,) {final _that = this;
 switch (_that) {
 case _DeletedCategoriesSyncReq():
-return $default(_that.categories);case _:
-  throw StateError('Unexpected subclass');
-
-}
+return $default(_that.categories);}
 }
 /// A variant of `when` that fallback to returning `null`
 ///

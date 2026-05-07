@@ -20,12 +20,12 @@ class _CategoryApi implements CategoryApi {
   final ParseErrorLogger? errorLogger;
 
   @override
-  Future<DataResponse<List<CategoryData>>> getAll(String syncTime) async {
+  Future<DataResponse<List<CategoryRes>>> fetch(String syncTime) async {
     final _extra = <String, dynamic>{'requireAuth': true};
     final queryParameters = <String, dynamic>{r'lastSyncTime': syncTime};
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
-    final _options = _setStreamType<DataResponse<List<CategoryData>>>(
+    final _options = _setStreamType<DataResponse<List<CategoryRes>>>(
       Options(method: 'GET', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
@@ -36,14 +36,14 @@ class _CategoryApi implements CategoryApi {
           .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
     );
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late DataResponse<List<CategoryData>> _value;
+    late DataResponse<List<CategoryRes>> _value;
     try {
-      _value = DataResponse<List<CategoryData>>.fromJson(
+      _value = DataResponse<List<CategoryRes>>.fromJson(
         _result.data!,
         (json) => json is List<dynamic>
             ? json
-                  .map<CategoryData>(
-                    (i) => CategoryData.fromJson(i as Map<String, dynamic>),
+                  .map<CategoryRes>(
+                    (i) => CategoryRes.fromJson(i as Map<String, dynamic>),
                   )
                   .toList()
             : List.empty(),
@@ -56,14 +56,17 @@ class _CategoryApi implements CategoryApi {
   }
 
   @override
-  Future<DataResponse<AddCategoryData>> create(
+  Future<DataResponse<AddCategoryRes>> create(
     AddCategoryReq addCategoryReq,
   ) async {
-    final _extra = <String, dynamic>{'requireAuth': true};
+    final _extra = <String, dynamic>{
+      'requireAuth': true,
+      'requireSession': true,
+    };
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = addCategoryReq;
-    final _options = _setStreamType<DataResponse<AddCategoryData>>(
+    final _options = _setStreamType<DataResponse<AddCategoryRes>>(
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
@@ -74,11 +77,11 @@ class _CategoryApi implements CategoryApi {
           .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
     );
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late DataResponse<AddCategoryData> _value;
+    late DataResponse<AddCategoryRes> _value;
     try {
-      _value = DataResponse<AddCategoryData>.fromJson(
+      _value = DataResponse<AddCategoryRes>.fromJson(
         _result.data!,
-        (json) => AddCategoryData.fromJson(json as Map<String, dynamic>),
+        (json) => AddCategoryRes.fromJson(json as Map<String, dynamic>),
       );
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options, response: _result);
@@ -89,7 +92,10 @@ class _CategoryApi implements CategoryApi {
 
   @override
   Future<DataResponse<BaseData>> delete(String id) async {
-    final _extra = <String, dynamic>{'requireAuth': true};
+    final _extra = <String, dynamic>{
+      'requireAuth': true,
+      'requireSession': true,
+    };
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
@@ -118,14 +124,17 @@ class _CategoryApi implements CategoryApi {
   }
 
   @override
-  Future<DataResponse<List<CategoriesSyncData>>> syncCategories(
+  Future<DataResponse<CategoriesSyncRes>> syncCategories(
     CategoriesSyncReq categories,
   ) async {
-    final _extra = <String, dynamic>{'requireAuth': true};
+    final _extra = <String, dynamic>{
+      'requireAuth': true,
+      'requireSession': true,
+    };
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = categories;
-    final _options = _setStreamType<DataResponse<List<CategoriesSyncData>>>(
+    final _options = _setStreamType<DataResponse<CategoriesSyncRes>>(
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
@@ -136,18 +145,11 @@ class _CategoryApi implements CategoryApi {
           .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
     );
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late DataResponse<List<CategoriesSyncData>> _value;
+    late DataResponse<CategoriesSyncRes> _value;
     try {
-      _value = DataResponse<List<CategoriesSyncData>>.fromJson(
+      _value = DataResponse<CategoriesSyncRes>.fromJson(
         _result.data!,
-        (json) => json is List<dynamic>
-            ? json
-                  .map<CategoriesSyncData>(
-                    (i) =>
-                        CategoriesSyncData.fromJson(i as Map<String, dynamic>),
-                  )
-                  .toList()
-            : List.empty(),
+        (json) => CategoriesSyncRes.fromJson(json as Map<String, dynamic>),
       );
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options, response: _result);
@@ -157,15 +159,18 @@ class _CategoryApi implements CategoryApi {
   }
 
   @override
-  Future<DataResponse<List<DeletedCategoriesSyncData>>> syncDeleteCategories(
+  Future<DataResponse<List<DeletedCategoriesSyncRes>>> syncDeleteCategories(
     DeletedCategoriesSyncReq categories,
   ) async {
-    final _extra = <String, dynamic>{'requireAuth': true};
+    final _extra = <String, dynamic>{
+      'requireAuth': true,
+      'requireSession': true,
+    };
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = categories;
     final _options =
-        _setStreamType<DataResponse<List<DeletedCategoriesSyncData>>>(
+        _setStreamType<DataResponse<List<DeletedCategoriesSyncRes>>>(
           Options(method: 'DELETE', headers: _headers, extra: _extra)
               .compose(
                 _dio.options,
@@ -178,14 +183,14 @@ class _CategoryApi implements CategoryApi {
               ),
         );
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late DataResponse<List<DeletedCategoriesSyncData>> _value;
+    late DataResponse<List<DeletedCategoriesSyncRes>> _value;
     try {
-      _value = DataResponse<List<DeletedCategoriesSyncData>>.fromJson(
+      _value = DataResponse<List<DeletedCategoriesSyncRes>>.fromJson(
         _result.data!,
         (json) => json is List<dynamic>
             ? json
-                  .map<DeletedCategoriesSyncData>(
-                    (i) => DeletedCategoriesSyncData.fromJson(
+                  .map<DeletedCategoriesSyncRes>(
+                    (i) => DeletedCategoriesSyncRes.fromJson(
                       i as Map<String, dynamic>,
                     ),
                   )
@@ -200,7 +205,7 @@ class _CategoryApi implements CategoryApi {
   }
 
   @override
-  Future<DataResponse<List<CategoryData>>> pullCategories(
+  Future<DataResponse<List<CategoryRes>>> pullCategories(
     String? lastSyncTime,
   ) async {
     final _extra = <String, dynamic>{'requireAuth': true};
@@ -208,7 +213,7 @@ class _CategoryApi implements CategoryApi {
     queryParameters.removeWhere((k, v) => v == null);
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
-    final _options = _setStreamType<DataResponse<List<CategoryData>>>(
+    final _options = _setStreamType<DataResponse<List<CategoryRes>>>(
       Options(method: 'GET', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
@@ -219,14 +224,14 @@ class _CategoryApi implements CategoryApi {
           .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
     );
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late DataResponse<List<CategoryData>> _value;
+    late DataResponse<List<CategoryRes>> _value;
     try {
-      _value = DataResponse<List<CategoryData>>.fromJson(
+      _value = DataResponse<List<CategoryRes>>.fromJson(
         _result.data!,
         (json) => json is List<dynamic>
             ? json
-                  .map<CategoryData>(
-                    (i) => CategoryData.fromJson(i as Map<String, dynamic>),
+                  .map<CategoryRes>(
+                    (i) => CategoryRes.fromJson(i as Map<String, dynamic>),
                   )
                   .toList()
             : List.empty(),

@@ -7,6 +7,7 @@ import 'package:taskit/shared/data/source/remote/network/dio_exception_mapper.da
 
 import '../../../../shared/domain/entities/data_result.dart';
 import '../../../../shared/domain/entities/message_result.dart';
+import '../../../../shared/log/logger_provider.dart';
 import '../../domain/entities/forgot_pass/forgot_pass_entity.dart';
 
 final forgotPasswordRepoProvider = Provider<ForgotPasswordRepo>((ref) {
@@ -23,38 +24,40 @@ class ForgotPasswordRepoImpl
 
   @override
   Future<MessageResult> forgotPassword(ForgotPasswordEntity data) async =>
-      callSafe(
-        () async => (await _api.forgotPassword(data.toDto())).toResult(),
-        errorMessage:
-            "An unexpected error occurred when sending forgot password",
-      );
+      callSafe(() async {
+        logger.i('[ForgotPasswordRepo] sending forgot password request');
+        final result = await _api.forgotPassword(data.toDto());
+        logger.d('[ForgotPasswordRepo] forgot password request sent');
+        return result.toResult();
+      }, errorMessage: "Forgot password failed");
 
   @override
   Future<MessageResult> forgotPasswordReset(
     ForgotPasswordResetEntity data,
-  ) async => callSafe(
-    () async => (await _api.forgotPasswordReset(data.toDto())).toResult(),
-    errorMessage: "An unexpected error occurred when reset password",
-  );
+  ) async => callSafe(() async {
+    logger.i('[ForgotPasswordRepo] sending forgot password reset request');
+    final result = await _api.forgotPasswordReset(data.toDto());
+    logger.d('[ForgotPasswordRepo] forgot password reset request sent');
+    return result.toResult();
+  }, errorMessage: "Forgot password reset failed");
 
   @override
   Future<DataResult<ForgotPasswordVerifyResultEntity>> forgotPasswordVerify(
     ForgotPasswordVerifyEntity data,
-  ) async => callSafe(
-    () async {
-      final response = await _api.forgotPasswordVerify(data.toDto());
-      return response.toResult(response.data.toEntity());
-    },
-    errorMessage:
-        "An unexpected error occurred when verify for forgot password",
-  );
+  ) async => callSafe(() async {
+    logger.i('[ForgotPasswordRepo] sending forgot password verify request');
+    final result = await _api.forgotPasswordVerify(data.toDto());
+    logger.d('[ForgotPasswordRepo] forgot password verify request sent');
+    return result.toResult(result.data.toEntity());
+  }, errorMessage: "Forgot password verify failed");
 
   @override
   Future<MessageResult> forgotPasswordResend(
     ForgotPasswordResendEntity data,
-  ) async => callSafe(
-    () async => (await _api.forgotPasswordResend(data.toDto())).toResult(),
-    errorMessage:
-        "An unexpected error occurred when resend otp for forgot password",
-  );
+  ) async => callSafe(() async {
+    logger.i('[ForgotPasswordRepo] sending forgot password resend request');
+    final result = await _api.forgotPasswordResend(data.toDto());
+    logger.d('[ForgotPasswordRepo] forgot password resend request sent');
+    return result.toResult();
+  }, errorMessage: "Forgot password resend failed");
 }

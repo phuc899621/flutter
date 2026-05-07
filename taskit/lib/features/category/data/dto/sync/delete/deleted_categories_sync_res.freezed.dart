@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'deleted_categories_sync_data.dart';
+part of 'deleted_categories_sync_res.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -13,22 +13,22 @@ part of 'deleted_categories_sync_data.dart';
 T _$identity<T>(T value) => value;
 
 /// @nodoc
-mixin _$DeletedCategoriesSyncData {
+mixin _$DeletedCategoriesSyncRes {
 
  int get localId; String get id;
-/// Create a copy of DeletedCategoriesSyncData
+/// Create a copy of DeletedCategoriesSyncRes
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
-$DeletedCategoriesSyncDataCopyWith<DeletedCategoriesSyncData> get copyWith => _$DeletedCategoriesSyncDataCopyWithImpl<DeletedCategoriesSyncData>(this as DeletedCategoriesSyncData, _$identity);
+$DeletedCategoriesSyncResCopyWith<DeletedCategoriesSyncRes> get copyWith => _$DeletedCategoriesSyncResCopyWithImpl<DeletedCategoriesSyncRes>(this as DeletedCategoriesSyncRes, _$identity);
 
-  /// Serializes this DeletedCategoriesSyncData to a JSON map.
+  /// Serializes this DeletedCategoriesSyncRes to a JSON map.
   Map<String, dynamic> toJson();
 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is DeletedCategoriesSyncData&&(identical(other.localId, localId) || other.localId == localId)&&(identical(other.id, id) || other.id == id));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is DeletedCategoriesSyncRes&&(identical(other.localId, localId) || other.localId == localId)&&(identical(other.id, id) || other.id == id));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -37,15 +37,15 @@ int get hashCode => Object.hash(runtimeType,localId,id);
 
 @override
 String toString() {
-  return 'DeletedCategoriesSyncData(localId: $localId, id: $id)';
+  return 'DeletedCategoriesSyncRes(localId: $localId, id: $id)';
 }
 
 
 }
 
 /// @nodoc
-abstract mixin class $DeletedCategoriesSyncDataCopyWith<$Res>  {
-  factory $DeletedCategoriesSyncDataCopyWith(DeletedCategoriesSyncData value, $Res Function(DeletedCategoriesSyncData) _then) = _$DeletedCategoriesSyncDataCopyWithImpl;
+abstract mixin class $DeletedCategoriesSyncResCopyWith<$Res>  {
+  factory $DeletedCategoriesSyncResCopyWith(DeletedCategoriesSyncRes value, $Res Function(DeletedCategoriesSyncRes) _then) = _$DeletedCategoriesSyncResCopyWithImpl;
 @useResult
 $Res call({
  int localId, String id
@@ -56,14 +56,14 @@ $Res call({
 
 }
 /// @nodoc
-class _$DeletedCategoriesSyncDataCopyWithImpl<$Res>
-    implements $DeletedCategoriesSyncDataCopyWith<$Res> {
-  _$DeletedCategoriesSyncDataCopyWithImpl(this._self, this._then);
+class _$DeletedCategoriesSyncResCopyWithImpl<$Res>
+    implements $DeletedCategoriesSyncResCopyWith<$Res> {
+  _$DeletedCategoriesSyncResCopyWithImpl(this._self, this._then);
 
-  final DeletedCategoriesSyncData _self;
-  final $Res Function(DeletedCategoriesSyncData) _then;
+  final DeletedCategoriesSyncRes _self;
+  final $Res Function(DeletedCategoriesSyncRes) _then;
 
-/// Create a copy of DeletedCategoriesSyncData
+/// Create a copy of DeletedCategoriesSyncRes
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? localId = null,Object? id = null,}) {
   return _then(_self.copyWith(
@@ -76,8 +76,8 @@ as String,
 }
 
 
-/// Adds pattern-matching-related methods to [DeletedCategoriesSyncData].
-extension DeletedCategoriesSyncDataPatterns on DeletedCategoriesSyncData {
+/// Adds pattern-matching-related methods to [DeletedCategoriesSyncRes].
+extension DeletedCategoriesSyncResPatterns on DeletedCategoriesSyncRes {
 /// A variant of `map` that fallback to returning `orElse`.
 ///
 /// It is equivalent to doing:
@@ -90,10 +90,10 @@ extension DeletedCategoriesSyncDataPatterns on DeletedCategoriesSyncData {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _DeletedCategoriesSyncData value)?  $default,{required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _DeletedCategoriesSyncRes value)?  $default,{required TResult orElse(),}){
 final _that = this;
 switch (_that) {
-case _DeletedCategoriesSyncData() when $default != null:
+case _DeletedCategoriesSyncRes() when $default != null:
 return $default(_that);case _:
   return orElse();
 
@@ -112,14 +112,11 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _DeletedCategoriesSyncData value)  $default,){
+@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _DeletedCategoriesSyncRes value)  $default,){
 final _that = this;
 switch (_that) {
-case _DeletedCategoriesSyncData():
-return $default(_that);case _:
-  throw StateError('Unexpected subclass');
-
-}
+case _DeletedCategoriesSyncRes():
+return $default(_that);}
 }
 /// A variant of `map` that fallback to returning `null`.
 ///
@@ -133,10 +130,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _DeletedCategoriesSyncData value)?  $default,){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _DeletedCategoriesSyncRes value)?  $default,){
 final _that = this;
 switch (_that) {
-case _DeletedCategoriesSyncData() when $default != null:
+case _DeletedCategoriesSyncRes() when $default != null:
 return $default(_that);case _:
   return null;
 
@@ -156,7 +153,7 @@ return $default(_that);case _:
 
 @optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int localId,  String id)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
-case _DeletedCategoriesSyncData() when $default != null:
+case _DeletedCategoriesSyncRes() when $default != null:
 return $default(_that.localId,_that.id);case _:
   return orElse();
 
@@ -177,11 +174,8 @@ return $default(_that.localId,_that.id);case _:
 
 @optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int localId,  String id)  $default,) {final _that = this;
 switch (_that) {
-case _DeletedCategoriesSyncData():
-return $default(_that.localId,_that.id);case _:
-  throw StateError('Unexpected subclass');
-
-}
+case _DeletedCategoriesSyncRes():
+return $default(_that.localId,_that.id);}
 }
 /// A variant of `when` that fallback to returning `null`
 ///
@@ -197,7 +191,7 @@ return $default(_that.localId,_that.id);case _:
 
 @optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int localId,  String id)?  $default,) {final _that = this;
 switch (_that) {
-case _DeletedCategoriesSyncData() when $default != null:
+case _DeletedCategoriesSyncRes() when $default != null:
 return $default(_that.localId,_that.id);case _:
   return null;
 
@@ -209,27 +203,27 @@ return $default(_that.localId,_that.id);case _:
 /// @nodoc
 @JsonSerializable()
 
-class _DeletedCategoriesSyncData implements DeletedCategoriesSyncData {
-  const _DeletedCategoriesSyncData({required this.localId, required this.id});
-  factory _DeletedCategoriesSyncData.fromJson(Map<String, dynamic> json) => _$DeletedCategoriesSyncDataFromJson(json);
+class _DeletedCategoriesSyncRes implements DeletedCategoriesSyncRes {
+  const _DeletedCategoriesSyncRes({required this.localId, required this.id});
+  factory _DeletedCategoriesSyncRes.fromJson(Map<String, dynamic> json) => _$DeletedCategoriesSyncResFromJson(json);
 
 @override final  int localId;
 @override final  String id;
 
-/// Create a copy of DeletedCategoriesSyncData
+/// Create a copy of DeletedCategoriesSyncRes
 /// with the given fields replaced by the non-null parameter values.
 @override @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
-_$DeletedCategoriesSyncDataCopyWith<_DeletedCategoriesSyncData> get copyWith => __$DeletedCategoriesSyncDataCopyWithImpl<_DeletedCategoriesSyncData>(this, _$identity);
+_$DeletedCategoriesSyncResCopyWith<_DeletedCategoriesSyncRes> get copyWith => __$DeletedCategoriesSyncResCopyWithImpl<_DeletedCategoriesSyncRes>(this, _$identity);
 
 @override
 Map<String, dynamic> toJson() {
-  return _$DeletedCategoriesSyncDataToJson(this, );
+  return _$DeletedCategoriesSyncResToJson(this, );
 }
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _DeletedCategoriesSyncData&&(identical(other.localId, localId) || other.localId == localId)&&(identical(other.id, id) || other.id == id));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _DeletedCategoriesSyncRes&&(identical(other.localId, localId) || other.localId == localId)&&(identical(other.id, id) || other.id == id));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -238,15 +232,15 @@ int get hashCode => Object.hash(runtimeType,localId,id);
 
 @override
 String toString() {
-  return 'DeletedCategoriesSyncData(localId: $localId, id: $id)';
+  return 'DeletedCategoriesSyncRes(localId: $localId, id: $id)';
 }
 
 
 }
 
 /// @nodoc
-abstract mixin class _$DeletedCategoriesSyncDataCopyWith<$Res> implements $DeletedCategoriesSyncDataCopyWith<$Res> {
-  factory _$DeletedCategoriesSyncDataCopyWith(_DeletedCategoriesSyncData value, $Res Function(_DeletedCategoriesSyncData) _then) = __$DeletedCategoriesSyncDataCopyWithImpl;
+abstract mixin class _$DeletedCategoriesSyncResCopyWith<$Res> implements $DeletedCategoriesSyncResCopyWith<$Res> {
+  factory _$DeletedCategoriesSyncResCopyWith(_DeletedCategoriesSyncRes value, $Res Function(_DeletedCategoriesSyncRes) _then) = __$DeletedCategoriesSyncResCopyWithImpl;
 @override @useResult
 $Res call({
  int localId, String id
@@ -257,17 +251,17 @@ $Res call({
 
 }
 /// @nodoc
-class __$DeletedCategoriesSyncDataCopyWithImpl<$Res>
-    implements _$DeletedCategoriesSyncDataCopyWith<$Res> {
-  __$DeletedCategoriesSyncDataCopyWithImpl(this._self, this._then);
+class __$DeletedCategoriesSyncResCopyWithImpl<$Res>
+    implements _$DeletedCategoriesSyncResCopyWith<$Res> {
+  __$DeletedCategoriesSyncResCopyWithImpl(this._self, this._then);
 
-  final _DeletedCategoriesSyncData _self;
-  final $Res Function(_DeletedCategoriesSyncData) _then;
+  final _DeletedCategoriesSyncRes _self;
+  final $Res Function(_DeletedCategoriesSyncRes) _then;
 
-/// Create a copy of DeletedCategoriesSyncData
+/// Create a copy of DeletedCategoriesSyncRes
 /// with the given fields replaced by the non-null parameter values.
 @override @pragma('vm:prefer-inline') $Res call({Object? localId = null,Object? id = null,}) {
-  return _then(_DeletedCategoriesSyncData(
+  return _then(_DeletedCategoriesSyncRes(
 localId: null == localId ? _self.localId : localId // ignore: cast_nullable_to_non_nullable
 as int,id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,

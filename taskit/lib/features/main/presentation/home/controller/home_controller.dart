@@ -5,11 +5,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:taskit/features/auth/presentation/auth/controller/auth_controller.dart';
 import 'package:taskit/features/main/presentation/home/state/home_state.dart';
 import 'package:taskit/features/task/application/task_service.dart';
-import 'package:taskit/features/user/domain/usecase/watch_user_by_local_id_use_case.dart';
 import 'package:taskit/shared/extension/date_time.dart';
 
 import '../../../../../shared/log/logger_provider.dart';
 import '../../../../task/domain/entities/task_entity.dart';
+import '../../../../user/presentation/providers/user_provider.dart';
 
 final homeControllerProvider =
     NotifierProvider.autoDispose<HomeController, HomeState>(HomeController.new);
@@ -33,13 +33,18 @@ class HomeController extends Notifier<HomeState> {
   @override
   HomeState build() {
     _lastCheckTime = DateTime.now().toStartOfDay();
+    ref.listen(currentUserProvider, (previous, next) {
+      next.whenData((user) {
+        logger.d("[HomeController] User name: ${user?.name}");
+        state = state.copyWith(userName: user?.name ?? 'User');
+      });
+    });
     _authSub = ref.listen(
       authControllerProvider.select((value) => value.user),
       (_, next) {
         if (next == null) {
           _cancelStreams();
         } else {
-          _startUserListening(next.localId);
           _startTaskListening(next.localId);
         }
       },
@@ -60,19 +65,7 @@ class HomeController extends Notifier<HomeState> {
     _pendingSub?.cancel();
     _completedTodaySub?.cancel();
     _completedThisWeekSub?.cancel();
-    _userSub?.cancel();
     _timeSub?.cancel();
-  }
-
-  void _startUserListening(int localId) {
-    _userSub = ref
-        .watch(watchUserByLocalIdUseCaseProvider)
-        .call(localId)
-        .listen((user) {
-          if (user != null) {
-            state = state.copyWith(userName: user.name);
-          }
-        });
   }
 
   void logout() async {

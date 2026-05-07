@@ -13,19 +13,6 @@ abstract class CategoryRepo {
 
   Future<void> insertRemoteCategory(int categoryLocalId, int userLocalId);
 
-  Future<void> markCategoriesAsSynced(
-    int userLocalId,
-    List<CategoryEntity> categories,
-  );
-
-  Future<List<CategoryEntity>> syncCategories(List<CategoryEntity> categories);
-
-  Future<List<CategoryEntity>> syncDeletedCategories(
-    List<CategoryEntity> categories,
-  );
-
-  Future<void> deleteCategoriesByLocalIds(int userLocalId, List<int> localIds);
-
   Future<void> deleteCategory(int localId, int userLocalId);
 
   Future<void> deleteRemoteCategory(
@@ -35,4 +22,17 @@ abstract class CategoryRepo {
   );
 
   Future<void> pullCategories(int userLocalId);
+
+  Future<void> pushAllUnsynced(int userLocalId);
+
+  //remote
+  Future<void> handleRemoteInsert(Map<String, dynamic> data, int userLocalId);
+
+  Future<void> handleRemoteUpdate(Map<String, dynamic> data, int userLocalId);
+
+  Future<void> handleRemoteDelete(String? remoteId, int userLocalId);
+
+  Future<void> handleRemoteBulkSync(Map<String, dynamic> data, int userLocalId);
+
+  Future<void> handleRemoteBulkDelete(List<dynamic> data, int userLocalId);
 }

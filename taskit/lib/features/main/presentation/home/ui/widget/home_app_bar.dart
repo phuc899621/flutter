@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shimmer_text/shimmer_text.dart';
-import 'package:taskit/features/user/domain/usecase/watch_user_by_local_id_use_case.dart';
+import 'package:taskit/features/user/presentation/providers/user_provider.dart';
 
 import '../../../../../../shared/config/routers/router_provider.dart';
 import '../../../../../../shared/extension/date_time.dart';

@@ -4,14 +4,13 @@ import 'package:taskit/shared/domain/usecase/usecase.dart';
 
 import '../../../../shared/exception/failure.dart';
 import '../../data/repo/user_repo.dart';
-import '../../data/repo/user_repo_impl.dart';
 import '../entity/user_entity.dart';
 
 final getCurrentUserUseCaseProvider = Provider<GetCurrentUserUseCase>(
   (ref) => GetCurrentUserUseCase(ref.read(userRepoProvider)),
 );
 
-class GetCurrentUserUseCase extends UseCase<void, NoParam> {
+class GetCurrentUserUseCase extends UseCase<UserEntity?, NoParam> {
   final UserRepo _repo;
 
   GetCurrentUserUseCase(this._repo);

@@ -7,7 +7,7 @@ import 'package:taskit/features/category/domain/usecases/create_category_usecase
 import 'package:taskit/features/category/presentation/ui/category_list_provider.dart';
 import 'package:taskit/features/task/domain/entities/subtask_entity.dart';
 import 'package:taskit/features/task/domain/entities/task_priority_enum.dart';
-import 'package:taskit/features/user/domain/usecase/watch_user_by_local_id_use_case.dart';
+import 'package:taskit/features/user/presentation/providers/user_provider.dart';
 import 'package:taskit/shared/log/logger_provider.dart';
 
 import '../../../../category/domain/entities/category_entity.dart';

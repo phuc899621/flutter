@@ -1,4 +1,5 @@
 import 'package:taskit/features/category/domain/entities/category_entity.dart';
+import 'package:taskit/shared/data/source/local/drift/database/database.dart';
 
 abstract class CategoryLocalSource {
   Stream<List<CategoryEntity>> watchAllCategories(int userLocalId);
@@ -29,15 +30,35 @@ abstract class CategoryLocalSource {
 
   Future<void> updateDeleteCategory(int localId, int userLocalId);
 
-  Future<void> updateSyncCreateCategory(
+  Future<void> updateCategoryById(
     int localId,
-    String remoteId,
+    int userLocalId,
+    CategoryTableCompanion companion,
+  );
+
+  Future<void> updateSyncCategories(
+    List<CategoryTableCompanion> category,
     int userLocalId,
   );
 
-  Future<void> markCategoriesAsSynced(int userLocalId, List<int> localIds);
+  Future<void> upsertCategories(List<CategoryTableCompanion> companions);
+
+  Future<void> markAsSynced(int userLocalId, List<int> localIds);
 
   Future<void> deleteCategoryByLocalId(int localId, int userLocalId);
 
+  Future<void> deleteCategoryByRemoteId(String remoteId, int userLocalId);
+
   Future<void> deleteCategoriesByLocalIds(int userLocalId, List<int> localIds);
+
+  Future<void> deleteCategoriesByRemoteIds(
+    int userLocalId,
+    List<String> remoteIds,
+  );
+
+  Future<void> updateCategoryByRemoteId(
+    String remoteId,
+    int userLocalId,
+    CategoryTableCompanion companion,
+  );
 }
