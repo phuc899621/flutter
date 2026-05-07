@@ -58,7 +58,7 @@ export const markForgotPasswordTokenAsUsed = async (token, userId) => {
 };
 export const verifyAccessToken = (token) => {
   try {
-    logger.info(`Verify access token for ${token.email}`);
+    logger.info(`Verify access token for ${token}`);
     console.log(verifyToken(token, JWT_CONFIG.ACCESS));
     return verifyToken(token, JWT_CONFIG.ACCESS);
   } catch (e) {
@@ -67,7 +67,7 @@ export const verifyAccessToken = (token) => {
 };
 export const verifyRefreshToken = (token) => {
   try {
-    logger.info(`Verify refresh token for ${token.email}`);
+    logger.info(`Verify refresh token for ${token}`);
     return verifyToken(token, JWT_CONFIG.REFRESH);
   } catch (e) {
     throw new AuthorizationError("Invalid refresh token");
