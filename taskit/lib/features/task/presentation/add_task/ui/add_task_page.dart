@@ -4,14 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
+import 'package:taskit/features/category/presentation/ui/widgets/category_form_dialog.dart';
 import 'package:taskit/features/task/domain/entities/task_priority_enum.dart';
 import 'package:taskit/features/task/presentation/add_task/controller/add_task_controller.dart';
 import 'package:taskit/shared/extension/color.dart';
 import 'package:taskit/shared/extension/date_time.dart';
 import 'package:taskit/shared/extension/string.dart';
 import 'package:taskit/shared/log/logger_provider.dart';
-
-import '../../../../../shared/config/app/theme/app_color.dart';
 
 class AddTaskPage extends ConsumerStatefulWidget {
   const AddTaskPage({super.key});
@@ -74,107 +73,13 @@ class _AddTaskPageState extends ConsumerState<AddTaskPage> {
     final controller = ref.read(addTaskControllerProvider.notifier);
     showDialog(
       context: context,
-      builder: (context) => AlertDialog(
-        backgroundColor: color.surface,
-        titleTextStyle: text.titleLarge?.copyWith(
-          color: color.onSurface,
-          fontWeight: FontWeight.w600,
-        ),
-        title: Text('Add category'),
-        content: Form(
-          key: _categoryFormState,
-          child: TextFormField(
-            textCapitalization: TextCapitalization.sentences,
-            controller: _categoryController,
-            maxLines: 1,
-            maxLength: 20,
-            autofocus: false,
-            onTapOutside: (event) => FocusScope.of(context).unfocus(),
-            style: text.bodyMedium?.copyWith(
-              color: color.onSurface,
-              fontWeight: FontWeight.w500,
-            ),
-            validator: (value) {
-              if (value == null || value.isEmpty) {
-                return 'Please enter category';
-              }
-              if (value.length < 3) {
-                return '3 characters at least';
-              }
-              if (state.categories.any(
-                (element) =>
-                    element.name.toLowerCase().trim() ==
-                    value.toLowerCase().trim(),
-              )) {
-                return 'Category already exists';
-              }
-              return null;
-            },
-            onChanged: (_) =>
-                controller.setAddCategory(_categoryController.text),
-            decoration: InputDecoration(
-              counterText: '',
-              errorStyle: TextStyle(
-                color: color.onError,
-                fontWeight: FontWeight.w600,
-              ),
-              suffixIcon: state.addCategory.isNotEmpty
-                  ? IconButton(
-                      onPressed: _categoryController.clear,
-                      icon: Icon(
-                        Icons.clear_rounded,
-                        color: color.onSurfaceVariant,
-                      ),
-                    )
-                  : null,
-              hintText: 'Enter category:',
-              hintStyle: text.bodyMedium?.copyWith(
-                color: color.onSurfaceVariant,
-                fontWeight: FontWeight.w500,
-              ),
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(10),
-              ),
-            ),
-          ),
-        ),
-        actionsPadding: EdgeInsets.symmetric(horizontal: 25, vertical: 10),
-        actions: [
-          FilledButton.tonal(
-            onPressed: () => Navigator.pop(context),
-            style: ButtonStyle(
-              backgroundColor: WidgetStateProperty.all(
-                color.outlineVariant.withAlpha(50),
-              ),
-            ),
-            child: Text(
-              'Cancel',
-              style: text.titleSmall?.copyWith(
-                color: AppColor.onSurfaceVariant,
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-          ),
-          FilledButton.tonal(
-            style: ButtonStyle(
-              backgroundColor: WidgetStateProperty.all(color.primaryContainer),
-            ),
-            onPressed: () {
-              if (_categoryFormState.currentState?.validate() ?? false) {
-                controller.onAddCategory();
-                _categoryController.clear();
-                Navigator.pop(context);
-              }
-            },
-            child: Text(
-              'Add',
-              style: text.titleSmall?.copyWith(
-                color: AppColor.onPrimaryContainer,
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-          ),
-        ],
+      builder: (context) => CategoryFormDialog(
+        title: 'Add Category',
+        validator: (value) {
+          final inputCategory = value?.trim() ?? '';
+          return controller.validateCategoryInput(inputCategory);
+        },
+        onConfirm: controller.onAddCategory,
       ),
     );
   }

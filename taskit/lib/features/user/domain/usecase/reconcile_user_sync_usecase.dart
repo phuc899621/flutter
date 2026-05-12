@@ -4,7 +4,7 @@ import 'package:taskit/features/category/application/category_sync_service.dart'
 import 'package:taskit/features/user/domain/params/reconcile_user_param.dart';
 import 'package:taskit/features/user/domain/usecase/wipe_user_usecase.dart';
 
-import '../../../../shared/domain/usecase/usecase.dart';
+import '../../../../shared/domain/usecase/future_usecase.dart';
 import '../../../../shared/exception/failure.dart';
 import '../../../../shared/log/logger_provider.dart';
 
@@ -16,7 +16,7 @@ final reconcileUserSyncUseCaseProvider = Provider<ReconcileUserSyncUseCase>((
   return ReconcileUserSyncUseCase(syncCategories, wipeUser);
 });
 
-class ReconcileUserSyncUseCase extends UseCase<void, ReconcileUserParam> {
+class ReconcileUserSyncUseCase extends FutureUseCase<void, ReconcileUserParam> {
   final CategorySyncService _syncCategories;
   final WipeUserUseCase _wipeUser;
 

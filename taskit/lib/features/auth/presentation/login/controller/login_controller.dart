@@ -8,7 +8,7 @@ import 'package:taskit/shared/application/network_status_provider.dart';
 
 import '../../../../../shared/constants/login_status.dart';
 import '../../../../../shared/constants/network_status.dart';
-import '../../../../../shared/domain/usecase/usecase.dart';
+import '../../../../../shared/domain/usecase/future_usecase.dart';
 import '../../../../../shared/log/logger_provider.dart';
 
 final loginControllerProvider =

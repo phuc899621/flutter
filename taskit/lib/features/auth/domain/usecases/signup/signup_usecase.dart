@@ -2,7 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:multiple_result/multiple_result.dart';
 import 'package:taskit/features/auth/data/repo/signup_repo_impl.dart';
 import 'package:taskit/features/auth/domain/usecases/params/signup_params.dart';
-import 'package:taskit/shared/domain/usecase/usecase.dart';
+import 'package:taskit/shared/domain/usecase/future_usecase.dart';
 
 import '../../../../../shared/exception/failure.dart';
 import '../../../data/repo/signup_repo.dart';
@@ -12,7 +12,7 @@ final signupUseCaseProvider = Provider((ref) {
   return SignupUseCase(signupRepo);
 });
 
-class SignupUseCase extends UseCase<void, SignupRegisterParams> {
+class SignupUseCase extends FutureUseCase<void, SignupRegisterParams> {
   final SignupRepo _api;
 
   SignupUseCase(this._api);

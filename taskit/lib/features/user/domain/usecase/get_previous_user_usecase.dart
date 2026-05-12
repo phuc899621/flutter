@@ -1,7 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:multiple_result/multiple_result.dart';
 
-import '../../../../shared/domain/usecase/usecase.dart';
+import '../../../../shared/domain/usecase/future_usecase.dart';
 import '../../../../shared/exception/failure.dart';
 import '../../data/repo/user_repo.dart';
 import '../entity/user_entity.dart';
@@ -11,7 +11,7 @@ final getPreviousUserUseCaseProvider = Provider<GetPreviousUserUseCase>((ref) {
   return GetPreviousUserUseCase(userRepo);
 });
 
-class GetPreviousUserUseCase extends UseCase<UserEntity?, NoParam> {
+class GetPreviousUserUseCase extends FutureUseCase<UserEntity?, NoParam> {
   final UserRepo _userRepo;
 
   GetPreviousUserUseCase(this._userRepo);

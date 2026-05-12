@@ -1,8 +1,9 @@
 import 'package:drift/drift.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../database/database.dart';
-import '../table/category.dart';
+import '../../../../../shared/data/source/local/drift/database/database.dart';
+import '../../../../../shared/data/source/local/drift/table/category.dart';
+import '../../../../../shared/data/source/local/drift/table/task.dart';
 
 part 'category.g.dart';
 
@@ -11,7 +12,14 @@ final categoryDaoProvider = Provider<CategoryDao>((ref) {
   return CategoryDao(db);
 });
 
-@DriftAccessor(tables: [CategoryTable])
+class CategoryWithCount {
+  final CategoryTableData category;
+  final int taskCount;
+
+  CategoryWithCount({required this.category, required this.taskCount});
+}
+
+@DriftAccessor(tables: [CategoryTable, TaskTable])
 class CategoryDao extends DatabaseAccessor<AppDatabase>
     with _$CategoryDaoMixin {
   CategoryDao(super.db);
@@ -23,6 +31,36 @@ class CategoryDao extends DatabaseAccessor<AppDatabase>
                 tbl.userLocalId.equals(userLocalId) & tbl.deleted.equals(false),
           ))
           .watch();
+
+  Stream<List<CategoryWithCount>> watchWithTaskCount(int userLocalId) {
+    final countAmount = taskTable.localId.count();
+
+    final query = select(categoryTable).join([
+      leftOuterJoin(
+        taskTable,
+        taskTable.categoryLocalId.equalsExp(categoryTable.localId) &
+            taskTable.userLocalId.equals(userLocalId),
+        useColumns: false,
+      ),
+    ]);
+
+    query.where(
+      categoryTable.userLocalId.equals(userLocalId) &
+          categoryTable.deleted.equals(false),
+    );
+
+    query.groupBy([categoryTable.localId]);
+    query.addColumns([countAmount]);
+
+    return query.watch().map((rows) {
+      return rows.map((row) {
+        return CategoryWithCount(
+          category: row.readTable(categoryTable),
+          taskCount: row.read(countAmount) ?? 0,
+        );
+      }).toList();
+    });
+  }
 
   //endregion
   //region READ
@@ -152,6 +190,13 @@ class CategoryDao extends DatabaseAccessor<AppDatabase>
         );
       }
     });
+  }
+
+  Future<void> upsertOne(CategoryTableCompanion companion) async {
+    await into(categoryTable).insert(
+      companion,
+      onConflict: DoUpdate((_) => companion, target: [categoryTable.remoteId]),
+    );
   }
 
   Future<void> updateMultipleSame(

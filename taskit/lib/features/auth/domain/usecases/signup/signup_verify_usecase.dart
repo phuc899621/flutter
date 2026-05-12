@@ -3,7 +3,7 @@ import 'package:multiple_result/multiple_result.dart';
 import 'package:taskit/features/auth/data/repo/signup_repo.dart';
 import 'package:taskit/features/auth/domain/usecases/params/signup_params.dart';
 
-import '../../../../../shared/domain/usecase/usecase.dart';
+import '../../../../../shared/domain/usecase/future_usecase.dart';
 import '../../../../../shared/exception/failure.dart';
 import '../../../data/repo/signup_repo_impl.dart';
 
@@ -12,7 +12,7 @@ final signupVerifyUseCaseProvider = Provider((ref) {
   return SignupVerifyUseCase(signupRepo);
 });
 
-class SignupVerifyUseCase extends UseCase<void, SignupVerifyParams> {
+class SignupVerifyUseCase extends FutureUseCase<void, SignupVerifyParams> {
   final SignupRepo _repo;
 
   SignupVerifyUseCase(this._repo);

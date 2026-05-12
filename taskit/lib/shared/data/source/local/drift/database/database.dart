@@ -10,7 +10,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:storage_inspector/storage_inspector.dart';
 import 'package:taskit/shared/log/logger_provider.dart';
 
-import '../dao/category.dart';
+import '../../../../../../features/category/data/source/local/category.dart';
 import '../dao/setting.dart';
 import '../dao/subtask.dart';
 import '../dao/task.dart';

@@ -34,9 +34,7 @@ class _ListPageState extends ConsumerState<ListPage>
     _tabController = TabController(length: 4, vsync: this);
     _tabController.addListener(() {
       logger.i('_tabController.index: ${_tabController.index}');
-      ref
-          .read(tabSelectedIndexProvider.notifier)
-          .state = _tabController.index;
+      ref.read(tabSelectedIndexProvider.notifier).state = _tabController.index;
     });
   }
 
@@ -45,59 +43,50 @@ class _ListPageState extends ConsumerState<ListPage>
   }
 
   void _showDialogConfirmDeleteTask(int localId) {
-    final color = Theme
-        .of(context)
-        .colorScheme;
-    final text = Theme
-        .of(context)
-        .textTheme;
+    final color = Theme.of(context).colorScheme;
+    final text = Theme.of(context).textTheme;
     final controller = ref.read(listControllerProvider.notifier);
     showDialog(
       context: context,
-      builder: (context) =>
-          AlertDialog(
-            titleTextStyle: text.titleLarge?.copyWith(
-              color: color.onSurface,
-              fontWeight: FontWeight.bold,
+      builder: (context) => AlertDialog(
+        titleTextStyle: text.titleLarge?.copyWith(
+          color: color.onSurface,
+          fontWeight: FontWeight.bold,
+        ),
+        title: Text('Delete task'),
+        content: const Text('Are you sure you want to delete this task?'),
+        actions: [
+          TextButton(
+            onPressed: context.pop,
+            child: Text(
+              'Cancel',
+              style: text.labelLarge?.copyWith(color: color.primary),
             ),
-            title: Text('Delete task'),
-            content: const Text('Are you sure you want to delete this task?'),
-            actions: [
-              TextButton(
-                onPressed: context.pop,
-                child: Text(
-                  'Cancel',
-                  style: text.labelLarge?.copyWith(color: color.primary),
-                ),
-              ),
-              TextButton(
-                onPressed: () {
-                  controller.onDelete(localId);
-                  context.pop();
-                },
-                child: Text(
-                  'Delete',
-                  style: text.labelLarge?.copyWith(color: color.onError),
-                ),
-              ),
-            ],
           ),
+          TextButton(
+            onPressed: () {
+              controller.onDelete(localId);
+              context.pop();
+            },
+            child: Text(
+              'Delete',
+              style: text.labelLarge?.copyWith(color: color.onError),
+            ),
+          ),
+        ],
+      ),
     );
   }
 
   //region MAIN
   @override
   Widget build(BuildContext context) {
-    final color = Theme
-        .of(context)
-        .colorScheme;
+    final color = Theme.of(context).colorScheme;
     final refs = ref.watch(shouldFocusSearchTextFieldProvider);
     if (refs) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         _searchFocusNode.requestFocus();
-        ref
-            .read(shouldFocusSearchTextFieldProvider.notifier)
-            .state = false;
+        ref.read(shouldFocusSearchTextFieldProvider.notifier).state = false;
       });
     }
     return Scaffold(
@@ -105,8 +94,7 @@ class _ListPageState extends ConsumerState<ListPage>
       body: SafeArea(
         top: true,
         child: NestedScrollView(
-          headerSliverBuilder: (context, innerBoxIsScrolled) =>
-          [
+          headerSliverBuilder: (context, innerBoxIsScrolled) => [
             _topAppBar(),
             _searchAppBar(),
             _tabBar(),
@@ -128,9 +116,7 @@ class _ListPageState extends ConsumerState<ListPage>
   //endregion
   //region FAB
   Widget _fabAddTask() {
-    final color = Theme
-        .of(context)
-        .colorScheme;
+    final color = Theme.of(context).colorScheme;
     return ExpandableFab(
       distance: 70,
       type: ExpandableFabType.up,
@@ -174,12 +160,8 @@ class _ListPageState extends ConsumerState<ListPage>
   //endregion
   //region Top APPBAR
   Widget _topAppBar() {
-    final color = Theme
-        .of(context)
-        .colorScheme;
-    final text = Theme
-        .of(context)
-        .textTheme;
+    final color = Theme.of(context).colorScheme;
+    final text = Theme.of(context).textTheme;
     final state = ref.watch(listControllerProvider);
     final filterTextBtn = Text(
       'Filter ${state.isFiltering ? 'On' : 'Off'}',
@@ -235,33 +217,32 @@ class _ListPageState extends ConsumerState<ListPage>
               ),
             ),
             MenuItemButton(
-                leadingIcon: Icon(
-                  Icons.tune_outlined,
-                  size: 18,
+              leadingIcon: Icon(
+                Icons.tune_outlined,
+                size: 18,
+                color: color.onSurfaceVariant,
+              ),
+              onPressed: () => context.push('/category'),
+              child: Text(
+                'Category Management',
+                style: text.labelMedium?.copyWith(
                   color: color.onSurfaceVariant,
                 ),
-                onPressed: () => context.push('/category'),
-                child: Text(
-                  'Custom category',
-                  style: text.labelMedium?.copyWith(
-                    color: color.onSurfaceVariant,
-                  ),
-                ))
-          ],
-          builder: (context, controller, child) =>
-              IconButton.filledTonal(
-                style: ButtonStyle(
-                  elevation: WidgetStatePropertyAll(2),
-                  backgroundColor: WidgetStatePropertyAll(
-                      color.primaryContainer),
-                ),
-                onPressed: () =>
-                controller.isOpen ? controller.close() : controller.open(),
-                icon: Icon(
-                  Icons.more_vert_rounded,
-                  color: color.onPrimaryContainer,
-                ),
               ),
+            ),
+          ],
+          builder: (context, controller, child) => IconButton.filledTonal(
+            style: ButtonStyle(
+              elevation: WidgetStatePropertyAll(2),
+              backgroundColor: WidgetStatePropertyAll(color.primaryContainer),
+            ),
+            onPressed: () =>
+                controller.isOpen ? controller.close() : controller.open(),
+            icon: Icon(
+              Icons.more_vert_rounded,
+              color: color.onPrimaryContainer,
+            ),
+          ),
         ),
       ],
     );
@@ -273,24 +254,17 @@ class _ListPageState extends ConsumerState<ListPage>
   Widget _searchAppBar() {
     final textController = ref.watch(searchControllerProvider);
     final controller = ref.watch(listControllerProvider.notifier);
-    final color = Theme
-        .of(context)
-        .colorScheme;
-    final text = Theme
-        .of(context)
-        .textTheme;
-    final suffixIcon = textController
-        .getOrCreateController()
-        .text
-        .isNotEmpty
+    final color = Theme.of(context).colorScheme;
+    final text = Theme.of(context).textTheme;
+    final suffixIcon = textController.getOrCreateController().text.isNotEmpty
         ? IconButton(
-      onPressed: () {
-        textController.clear();
-        controller.setSearchText('');
-        controller.callUpdateFilteringTask();
-      },
-      icon: Icon(Icons.clear_rounded),
-    )
+            onPressed: () {
+              textController.clear();
+              controller.setSearchText('');
+              controller.callUpdateFilteringTask();
+            },
+            icon: Icon(Icons.clear_rounded),
+          )
         : null;
     return SliverAppBar(
       toolbarHeight: 70,
@@ -351,12 +325,8 @@ class _ListPageState extends ConsumerState<ListPage>
   //endregion
   //region TabBar
   Widget _tabBar() {
-    final color = Theme
-        .of(context)
-        .colorScheme;
-    final text = Theme
-        .of(context)
-        .textTheme;
+    final color = Theme.of(context).colorScheme;
+    final text = Theme.of(context).textTheme;
     final state = ref.watch(listControllerProvider);
     return SliverAppBar(
       pinned: true,
@@ -405,11 +375,11 @@ class _ListPageState extends ConsumerState<ListPage>
                     Tab(text: 'Pending (${state.filteringPendingTask.length})'),
                     Tab(
                       text:
-                      'Scheduled (${state.filteringScheduledTask.length})',
+                          'Scheduled (${state.filteringScheduledTask.length})',
                     ),
                     Tab(
                       text:
-                      'Completed (${state.filteringCompletedTask.length})',
+                          'Completed (${state.filteringCompletedTask.length})',
                     ),
                   ],
                 ),
@@ -425,12 +395,8 @@ class _ListPageState extends ConsumerState<ListPage>
   //endregion
   //region Ordering DropDown
   Widget _dropDownOrdering() {
-    final color = Theme
-        .of(context)
-        .colorScheme;
-    final text = Theme
-        .of(context)
-        .textTheme;
+    final color = Theme.of(context).colorScheme;
+    final text = Theme.of(context).textTheme;
     final state = ref.watch(listControllerProvider);
     final controller = ref.read(listControllerProvider.notifier);
     return Container(
@@ -443,37 +409,35 @@ class _ListPageState extends ConsumerState<ListPage>
           alignmentOffset: Offset(0, 0),
           menuChildren: [
             ...OrderByOption.values.map(
-                  (option) =>
-                  MenuItemButton(
-                    leadingIcon: Icon(
-                      Icons.filter_list,
-                      color: color.onSurfaceVariant,
-                    ),
-                    onPressed: () => controller.setOrderByOption(option),
-                    child: Text(
-                      option.optionString,
-                      style: text.labelMedium?.copyWith(
-                        color: color.onSurfaceVariant,
-                      ),
-                    ),
-                  ),
-            ),
-          ],
-          builder: (context, controller, child) =>
-              ActionChip(
-                elevation: 5,
-                onPressed: () =>
-                controller.isOpen ? controller.close() : controller.open(),
-                avatar: Icon(Icons.filter_list, color: color.onSurfaceVariant),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
-                  side: BorderSide(color: color.onSurfaceVariant),
+              (option) => MenuItemButton(
+                leadingIcon: Icon(
+                  Icons.filter_list,
+                  color: color.onSurfaceVariant,
                 ),
-                label: Text(
-                  state.orderByOption.optionString,
-                  style: text.labelMedium?.copyWith(color: color.onSurface),
+                onPressed: () => controller.setOrderByOption(option),
+                child: Text(
+                  option.optionString,
+                  style: text.labelMedium?.copyWith(
+                    color: color.onSurfaceVariant,
+                  ),
                 ),
               ),
+            ),
+          ],
+          builder: (context, controller, child) => ActionChip(
+            elevation: 5,
+            onPressed: () =>
+                controller.isOpen ? controller.close() : controller.open(),
+            avatar: Icon(Icons.filter_list, color: color.onSurfaceVariant),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12),
+              side: BorderSide(color: color.onSurfaceVariant),
+            ),
+            label: Text(
+              state.orderByOption.optionString,
+              style: text.labelMedium?.copyWith(color: color.onSurface),
+            ),
+          ),
         ),
       ),
     );
@@ -490,19 +454,17 @@ class _ListPageState extends ConsumerState<ListPage>
         SliverList(
           delegate: SliverChildBuilderDelegate(
             childCount: state.filteringTask.length,
-                (context, index) =>
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                      vertical: 6, horizontal: 16),
-                  child: TaskItem(
-                    task: state.filteringTask[index],
-                    onDelete: _showDialogConfirmDeleteTask,
-                    onCheck: controller.onCheck,
-                    onEdit: _showBottomSheetEditTask,
-                    onSubtaskCheck: controller.onSubtaskCheck,
-                    onSubtaskDelete: controller.onSubtaskDelete,
-                  ),
-                ),
+            (context, index) => Padding(
+              padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 16),
+              child: TaskItem(
+                task: state.filteringTask[index],
+                onDelete: _showDialogConfirmDeleteTask,
+                onCheck: controller.onCheck,
+                onEdit: _showBottomSheetEditTask,
+                onSubtaskCheck: controller.onSubtaskCheck,
+                onSubtaskDelete: controller.onSubtaskDelete,
+              ),
+            ),
           ),
         ),
       ],
@@ -520,19 +482,17 @@ class _ListPageState extends ConsumerState<ListPage>
         SliverList(
           delegate: SliverChildBuilderDelegate(
             childCount: state.filteringPendingTask.length,
-                (context, index) =>
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                      vertical: 6, horizontal: 16),
-                  child: TaskItem(
-                    task: state.filteringPendingTask[index],
-                    onDelete: _showDialogConfirmDeleteTask,
-                    onCheck: controller.onCheck,
-                    onEdit: _showBottomSheetEditTask,
-                    onSubtaskCheck: controller.onSubtaskCheck,
-                    onSubtaskDelete: controller.onSubtaskDelete,
-                  ),
-                ),
+            (context, index) => Padding(
+              padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 16),
+              child: TaskItem(
+                task: state.filteringPendingTask[index],
+                onDelete: _showDialogConfirmDeleteTask,
+                onCheck: controller.onCheck,
+                onEdit: _showBottomSheetEditTask,
+                onSubtaskCheck: controller.onSubtaskCheck,
+                onSubtaskDelete: controller.onSubtaskDelete,
+              ),
+            ),
           ),
         ),
       ],
@@ -550,19 +510,17 @@ class _ListPageState extends ConsumerState<ListPage>
         SliverList(
           delegate: SliverChildBuilderDelegate(
             childCount: state.filteringScheduledTask.length,
-                (context, index) =>
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                      vertical: 6, horizontal: 16),
-                  child: TaskItem(
-                    task: state.filteringScheduledTask[index],
-                    onDelete: _showDialogConfirmDeleteTask,
-                    onCheck: controller.onCheck,
-                    onEdit: _showBottomSheetEditTask,
-                    onSubtaskCheck: controller.onSubtaskCheck,
-                    onSubtaskDelete: controller.onSubtaskDelete,
-                  ),
-                ),
+            (context, index) => Padding(
+              padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 16),
+              child: TaskItem(
+                task: state.filteringScheduledTask[index],
+                onDelete: _showDialogConfirmDeleteTask,
+                onCheck: controller.onCheck,
+                onEdit: _showBottomSheetEditTask,
+                onSubtaskCheck: controller.onSubtaskCheck,
+                onSubtaskDelete: controller.onSubtaskDelete,
+              ),
+            ),
           ),
         ),
       ],
@@ -580,24 +538,22 @@ class _ListPageState extends ConsumerState<ListPage>
         SliverList(
           delegate: SliverChildBuilderDelegate(
             childCount: state.filteringCompletedTask.length,
-                (context, index) =>
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                      vertical: 6, horizontal: 16),
-                  child: TaskItem(
-                    task: state.filteringCompletedTask[index],
-                    onDelete: _showDialogConfirmDeleteTask,
-                    onCheck: controller.onCheck,
-                    onEdit: _showBottomSheetEditTask,
-                    onSubtaskCheck: controller.onSubtaskCheck,
-                    onSubtaskDelete: controller.onSubtaskDelete,
-                  ),
-                ),
+            (context, index) => Padding(
+              padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 16),
+              child: TaskItem(
+                task: state.filteringCompletedTask[index],
+                onDelete: _showDialogConfirmDeleteTask,
+                onCheck: controller.onCheck,
+                onEdit: _showBottomSheetEditTask,
+                onSubtaskCheck: controller.onSubtaskCheck,
+                onSubtaskDelete: controller.onSubtaskDelete,
+              ),
+            ),
           ),
         ),
       ],
     );
   }
 
-//endregion
+  //endregion
 }

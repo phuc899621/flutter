@@ -1,12 +1,11 @@
-import 'package:drift/drift.dart';
 import 'package:taskit/features/category/domain/entities/category_entity.dart';
 
-import '../../../../shared/data/source/local/drift/database/database.dart';
 import '../dto/fetch/category_res.dart';
 import '../dto/sync/delete/deleted_categories_sync_req.dart';
 import '../dto/sync/delete/deleted_categories_sync_res.dart';
 import '../dto/sync/insert_update/categories_sync_req.dart';
 import '../dto/sync/insert_update/categories_sync_res.dart';
+import '../dto/update/update_category_req.dart';
 
 extension CategoryEntityRemoteMapper on CategoryEntity {
   CategorySyncReqEntry toSyncReqEntry() => CategorySyncReqEntry(
@@ -15,6 +14,8 @@ extension CategoryEntityRemoteMapper on CategoryEntity {
     name: name,
     updatedAt: updatedAt.toUtc(),
   );
+
+  UpdateCategoryReq toUpdateReq() => UpdateCategoryReq(name: name);
 
   DeletedCategoriesSyncReqData toDeletedSyncReqData() =>
       DeletedCategoriesSyncReqData(id: remoteId, localId: localId);
@@ -35,26 +36,25 @@ extension CategoryResMapper on CategoryRes {
 }
 
 extension AcceptCategorySyncDataMapper on AcceptCategorySyncRes {
-  CategoryTableCompanion toCompanion() => CategoryTableCompanion(
-    name: Value(name),
-    localId: Value(localId),
-    remoteId: Value(id),
-  );
+  CategoryEntity toEntity(int userLocalId) => CategoryEntity.create(
+    name: name,
+    userLocalId: userLocalId,
+  ).copyWith(remoteId: id, localId: localId);
 }
 
 extension RejectCategorySyncDataMapper on RejectCategorySyncRes {
-  CategoryTableCompanion? toCompanion() {
-    if (serverData == null) {
-      return null;
-    }
-    return CategoryTableCompanion(
-      name: Value(serverData!.name),
-      localId: Value(localId),
-      remoteId: Value(id),
-      synced: Value(true),
-      deleted: Value(false),
-      createdAt: Value(serverData!.updatedAt.toLocal()),
-      updatedAt: Value(serverData!.updatedAt.toLocal()),
+  CategoryEntity? toEntity() {
+    if (serverData == null) return null;
+    return CategoryEntity(
+      name: serverData!.name,
+      localId: localId,
+      remoteId: id,
+      synced: true,
+      userLocalId: -1,
+      isDefault: false,
+      deleted: false,
+      createdAt: serverData!.updatedAt,
+      updatedAt: serverData!.updatedAt,
     );
   }
 }

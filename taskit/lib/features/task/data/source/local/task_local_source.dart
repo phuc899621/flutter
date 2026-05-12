@@ -1,7 +1,7 @@
 import 'package:drift/drift.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:taskit/features/category/data/source/local/category.dart';
 import 'package:taskit/features/task/data/source/local/itask_local_source.dart';
-import 'package:taskit/shared/data/source/local/drift/dao/category.dart';
 import 'package:taskit/shared/log/logger_provider.dart';
 
 import '../../../../../shared/data/source/local/drift/dao/subtask.dart';

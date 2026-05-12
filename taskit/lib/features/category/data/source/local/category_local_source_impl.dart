@@ -1,16 +1,10 @@
 import 'package:drift/drift.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:taskit/features/category/data/mapper/category_local_mapper.dart';
-import 'package:taskit/shared/data/source/local/drift/dao/category.dart';
+import 'package:taskit/features/category/data/source/local/category.dart';
 import 'package:taskit/shared/data/source/local/drift/database/database.dart';
 
 import '../../../domain/entities/category_entity.dart';
 import 'category_local_source.dart';
-
-final categoryLocalSourceProvider = Provider<CategoryLocalSource>((ref) {
-  final categoryDao = ref.watch(categoryDaoProvider);
-  return CategoryLocalSourceImpl(categoryDao);
-});
 
 class CategoryLocalSourceImpl implements CategoryLocalSource {
   final CategoryDao _categoryDao;
@@ -24,7 +18,21 @@ class CategoryLocalSourceImpl implements CategoryLocalSource {
           .watchAll(userLocalId)
           .map((data) => data.map((e) => e.toEntity()).toList());
 
+  @override
+  Stream<List<CategoryEntity>> watchWithTaskCount(int userLocalId) =>
+      _categoryDao
+          .watchWithTaskCount(userLocalId)
+          .map((data) => data.map((e) => e.toEntity()).toList());
+
   //endregion
+
+  //region INSERT
+  @override
+  Future<int> insertCategory(CategoryEntity category) =>
+      _categoryDao.insertOne(category.toInsertCompanion());
+
+  //endregion
+
   //region READ
   @override
   Future<List<CategoryEntity>> getCategories(int userLocalId) async =>
@@ -52,14 +60,12 @@ class CategoryLocalSourceImpl implements CategoryLocalSource {
   ) async =>
       (await _categoryDao.findByRemoteId(remoteId, userLocalId))?.toEntity();
 
-  //remove
   @override
   Future<List<CategoryEntity>> getUnsyncedCategories(int userLocalId) async =>
       (await _categoryDao.findUnsynced(
         userLocalId,
       )).map((e) => e.toEntity()).toList();
 
-  //remove
   @override
   Future<List<CategoryEntity>> getUnsyncedDeletedCategories(
     int userLocalId,
@@ -69,12 +75,6 @@ class CategoryLocalSourceImpl implements CategoryLocalSource {
 
   //endregion
 
-  //region DELETE
-  @override
-  Future<void> deleteCategoryByLocalId(int localId, int userLocalId) =>
-      _categoryDao.deleteById(localId, userLocalId);
-
-  //endregion
   //region UPDATE
   @override
   Future<void> updateCategoryName(String name, int localId, int userLocalId) =>
@@ -84,44 +84,21 @@ class CategoryLocalSourceImpl implements CategoryLocalSource {
         CategoryTableCompanion(
           name: Value(name),
           synced: Value(false),
-          updatedAt: Value(DateTime.now()),
+          updatedAt: Value(_utcNow),
         ),
       );
 
   @override
-  Future<void> updateDeleteCategory(int localId, int userLocalId) =>
+  Future<void> updateCategoryDelete(int localId, int userLocalId) =>
       _categoryDao.updateById(
         localId,
         userLocalId,
         CategoryTableCompanion(
           deleted: Value(true),
           synced: Value(false),
-          updatedAt: Value(DateTime.now()),
+          updatedAt: Value(_utcNow),
         ),
       );
-
-  @override
-  Future<void> updateCategoryById(
-    int localId,
-    int userLocalId,
-    CategoryTableCompanion companion,
-  ) => _categoryDao.updateById(localId, userLocalId, companion);
-
-  @override
-  Future<void> updateCategoryByRemoteId(
-    String remoteId,
-    int userLocalId,
-    CategoryTableCompanion companion,
-  ) => _categoryDao.updateByRemoteId(remoteId, userLocalId, companion);
-
-  //endregion
-  //region CREATE
-  @override
-  Future<int> insertCategory(CategoryEntity category) =>
-      _categoryDao.insertOne(category.toInsertCompanion());
-
-  //endregion
-  //region BATCH
 
   @override
   Future<void> reconcileCategories(
@@ -133,22 +110,92 @@ class CategoryLocalSourceImpl implements CategoryLocalSource {
   );
 
   @override
-  Future<void> upsertCategories(List<CategoryTableCompanion> companions) =>
-      _categoryDao.upsertAll(companions);
+  Future<void> upsertCategories(List<CategoryEntity> categories) =>
+      _categoryDao.upsertAll(
+        categories
+            .map(
+              (e) => CategoryTableCompanion(
+                remoteId: Value(e.remoteId),
+                name: Value(e.name),
+                synced: Value(true),
+                updatedAt: Value(_utcNow),
+              ),
+            )
+            .toList(),
+      );
+
+  @override
+  Future<void> upsertCategory(CategoryEntity category) =>
+      _categoryDao.upsertOne(
+        CategoryTableCompanion(
+          remoteId: Value(category.remoteId),
+          name: Value(category.name),
+          synced: Value(category.synced),
+          updatedAt: Value(category.updatedAt),
+        ),
+      );
+
+  @override
+  Future<void> markInsertSynced(
+    int localId,
+    int userLocalId,
+    String remoteId,
+    DateTime updatedAt,
+  ) => _categoryDao.updateById(
+    localId,
+    userLocalId,
+    CategoryTableCompanion(
+      remoteId: Value(remoteId),
+      synced: Value(true),
+      updatedAt: Value(updatedAt),
+    ),
+  );
 
   @override
   Future<void> updateSyncCategories(
-    List<CategoryTableCompanion> category,
+    List<CategoryEntity> category,
     int userLocalId,
   ) {
     final categoryCompanions = category
-        .map((e) => e.copyWith(synced: Value(true)))
+        .map(
+          (e) => CategoryTableCompanion(
+            localId: Value(e.localId),
+            remoteId: Value(e.remoteId),
+            name: Value(e.name),
+            synced: Value(true),
+            updatedAt: Value(_utcNow),
+          ),
+        )
         .toList();
     return _categoryDao.updateMultipleDifferent(
       userLocalId,
       categoryCompanions,
     );
   }
+
+  @override
+  Future<void> markUpdateSynced(
+    int userLocalId,
+    String remoteId,
+    DateTime updatedAt,
+  ) {
+    final categoryCompanion = CategoryTableCompanion(
+      synced: Value(true),
+      updatedAt: Value(updatedAt),
+    );
+    return _categoryDao.updateByRemoteId(
+      remoteId,
+      userLocalId,
+      categoryCompanion,
+    );
+  }
+
+  //endregion
+
+  //region DELETE
+  @override
+  Future<void> deleteCategoryByLocalId(int localId, int userLocalId) =>
+      _categoryDao.deleteById(localId, userLocalId);
 
   @override
   Future<void> deleteCategoriesByLocalIds(
@@ -166,20 +213,9 @@ class CategoryLocalSourceImpl implements CategoryLocalSource {
     List<String> remoteIds,
   ) => _categoryDao.deleteMultipleByRemoteIds(userLocalId, remoteIds);
 
-  @override
-  Future<void> markAsSynced(int userLocalId, List<int> localIds) {
-    final categoryCompanion = CategoryTableCompanion(
-      synced: Value(true),
-      updatedAt: Value(_now),
-    );
-    return _categoryDao.updateMultipleSame(
-      userLocalId,
-      localIds,
-      categoryCompanion,
-    );
-  }
+  //endregion
 
   DateTime get _now => DateTime.now();
 
-  //endregion
+  DateTime get _utcNow => DateTime.now().toUtc();
 }

@@ -3,7 +3,7 @@ import 'package:multiple_result/multiple_result.dart';
 import 'package:taskit/features/auth/data/repo/auth_repo.dart';
 import 'package:taskit/features/auth/domain/usecases/params/login_params.dart';
 
-import '../../../../../shared/domain/usecase/usecase.dart';
+import '../../../../../shared/domain/usecase/future_usecase.dart';
 import '../../../../../shared/exception/failure.dart';
 import '../../../data/repo/auth_repo_impl.dart';
 
@@ -12,7 +12,7 @@ final loginUseCaseProvider = Provider<LoginUseCase>((ref) {
   return LoginUseCase(authRepo);
 });
 
-class LoginUseCase extends UseCase<void, CredentialsLoginParams> {
+class LoginUseCase extends FutureUseCase<void, CredentialsLoginParams> {
   final AuthRepo _repo;
 
   LoginUseCase(this._repo);

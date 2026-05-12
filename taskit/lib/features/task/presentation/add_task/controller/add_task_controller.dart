@@ -4,13 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:taskit/features/auth/presentation/auth/controller/auth_controller.dart';
 import 'package:taskit/features/category/domain/usecases/create_category_usecase.dart';
-import 'package:taskit/features/category/presentation/ui/category_list_provider.dart';
+import 'package:taskit/features/category/presentation/ui/providers/categories_provider.dart';
 import 'package:taskit/features/task/domain/entities/subtask_entity.dart';
 import 'package:taskit/features/task/domain/entities/task_priority_enum.dart';
 import 'package:taskit/features/user/presentation/providers/user_provider.dart';
 import 'package:taskit/shared/log/logger_provider.dart';
 
 import '../../../../category/domain/entities/category_entity.dart';
+import '../../../../category/domain/usecases/validate_category_input_usecase.dart';
 import '../../../application/task_service.dart';
 import '../../../domain/entities/task_entity.dart';
 import '../../../domain/entities/task_status_enum.dart';
@@ -26,7 +27,7 @@ class AddTaskController extends Notifier<AddTaskState> {
 
   @override
   AddTaskState build() {
-    ref.listen(categoryListProvider, (_, next) {
+    ref.listen(categoriesProvider, (_, next) {
       next.whenData((categories) {
         if (categories.isEmpty) return;
         state = state.copyWith(
@@ -87,6 +88,10 @@ class AddTaskController extends Notifier<AddTaskState> {
     );
   }
 
+  String? validateCategoryInput(String value) => ref
+      .read(validateCategoryInputUseCaseProvider)
+      .call(ValidateCategoryInputParams(value, state.categories));
+
   void onDeleteSubtask(int index) {
     final updatedSubtasks = [...state.subtasks];
     updatedSubtasks.removeAt(index);
@@ -125,11 +130,11 @@ class AddTaskController extends Notifier<AddTaskState> {
 
   void setAddTaskForm() {}
 
-  void onAddCategory() async {
+  void onAddCategory(String name) async {
     final user = ref.read(currentUserProvider).value;
     if (user == null) return;
     final category = CategoryEntity.create(
-      name: state.addCategory,
+      name: name,
       userLocalId: user.localId,
     );
     ref.read(createCategoryUseCaseProvider).call(category);

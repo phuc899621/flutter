@@ -14,7 +14,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$CategoryEntity {
 
- String get name; int get localId; String? get remoteId; int get userLocalId; bool get isDefault; bool get synced; bool get deleted; DateTime get createdAt; DateTime get updatedAt;
+ String get name; int get localId; String? get remoteId; int get userLocalId; bool get isDefault; bool get synced; bool get deleted; int get taskCount; DateTime get createdAt; DateTime get updatedAt;
 /// Create a copy of CategoryEntity
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -25,16 +25,16 @@ $CategoryEntityCopyWith<CategoryEntity> get copyWith => _$CategoryEntityCopyWith
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is CategoryEntity&&(identical(other.name, name) || other.name == name)&&(identical(other.localId, localId) || other.localId == localId)&&(identical(other.remoteId, remoteId) || other.remoteId == remoteId)&&(identical(other.userLocalId, userLocalId) || other.userLocalId == userLocalId)&&(identical(other.isDefault, isDefault) || other.isDefault == isDefault)&&(identical(other.synced, synced) || other.synced == synced)&&(identical(other.deleted, deleted) || other.deleted == deleted)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is CategoryEntity&&(identical(other.name, name) || other.name == name)&&(identical(other.localId, localId) || other.localId == localId)&&(identical(other.remoteId, remoteId) || other.remoteId == remoteId)&&(identical(other.userLocalId, userLocalId) || other.userLocalId == userLocalId)&&(identical(other.isDefault, isDefault) || other.isDefault == isDefault)&&(identical(other.synced, synced) || other.synced == synced)&&(identical(other.deleted, deleted) || other.deleted == deleted)&&(identical(other.taskCount, taskCount) || other.taskCount == taskCount)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,name,localId,remoteId,userLocalId,isDefault,synced,deleted,createdAt,updatedAt);
+int get hashCode => Object.hash(runtimeType,name,localId,remoteId,userLocalId,isDefault,synced,deleted,taskCount,createdAt,updatedAt);
 
 @override
 String toString() {
-  return 'CategoryEntity(name: $name, localId: $localId, remoteId: $remoteId, userLocalId: $userLocalId, isDefault: $isDefault, synced: $synced, deleted: $deleted, createdAt: $createdAt, updatedAt: $updatedAt)';
+  return 'CategoryEntity(name: $name, localId: $localId, remoteId: $remoteId, userLocalId: $userLocalId, isDefault: $isDefault, synced: $synced, deleted: $deleted, taskCount: $taskCount, createdAt: $createdAt, updatedAt: $updatedAt)';
 }
 
 
@@ -45,7 +45,7 @@ abstract mixin class $CategoryEntityCopyWith<$Res>  {
   factory $CategoryEntityCopyWith(CategoryEntity value, $Res Function(CategoryEntity) _then) = _$CategoryEntityCopyWithImpl;
 @useResult
 $Res call({
- String name, int localId, String? remoteId, int userLocalId, bool isDefault, bool synced, bool deleted, DateTime createdAt, DateTime updatedAt
+ String name, int localId, String? remoteId, int userLocalId, bool isDefault, bool synced, bool deleted, int taskCount, DateTime createdAt, DateTime updatedAt
 });
 
 
@@ -62,7 +62,7 @@ class _$CategoryEntityCopyWithImpl<$Res>
 
 /// Create a copy of CategoryEntity
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? name = null,Object? localId = null,Object? remoteId = freezed,Object? userLocalId = null,Object? isDefault = null,Object? synced = null,Object? deleted = null,Object? createdAt = null,Object? updatedAt = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? name = null,Object? localId = null,Object? remoteId = freezed,Object? userLocalId = null,Object? isDefault = null,Object? synced = null,Object? deleted = null,Object? taskCount = null,Object? createdAt = null,Object? updatedAt = null,}) {
   return _then(_self.copyWith(
 name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,localId: null == localId ? _self.localId : localId // ignore: cast_nullable_to_non_nullable
@@ -71,7 +71,8 @@ as String?,userLocalId: null == userLocalId ? _self.userLocalId : userLocalId //
 as int,isDefault: null == isDefault ? _self.isDefault : isDefault // ignore: cast_nullable_to_non_nullable
 as bool,synced: null == synced ? _self.synced : synced // ignore: cast_nullable_to_non_nullable
 as bool,deleted: null == deleted ? _self.deleted : deleted // ignore: cast_nullable_to_non_nullable
-as bool,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
+as bool,taskCount: null == taskCount ? _self.taskCount : taskCount // ignore: cast_nullable_to_non_nullable
+as int,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
 as DateTime,updatedAt: null == updatedAt ? _self.updatedAt : updatedAt // ignore: cast_nullable_to_non_nullable
 as DateTime,
   ));
@@ -158,10 +159,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String name,  int localId,  String? remoteId,  int userLocalId,  bool isDefault,  bool synced,  bool deleted,  DateTime createdAt,  DateTime updatedAt)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String name,  int localId,  String? remoteId,  int userLocalId,  bool isDefault,  bool synced,  bool deleted,  int taskCount,  DateTime createdAt,  DateTime updatedAt)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _CategoryEntity() when $default != null:
-return $default(_that.name,_that.localId,_that.remoteId,_that.userLocalId,_that.isDefault,_that.synced,_that.deleted,_that.createdAt,_that.updatedAt);case _:
+return $default(_that.name,_that.localId,_that.remoteId,_that.userLocalId,_that.isDefault,_that.synced,_that.deleted,_that.taskCount,_that.createdAt,_that.updatedAt);case _:
   return orElse();
 
 }
@@ -179,10 +180,10 @@ return $default(_that.name,_that.localId,_that.remoteId,_that.userLocalId,_that.
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String name,  int localId,  String? remoteId,  int userLocalId,  bool isDefault,  bool synced,  bool deleted,  DateTime createdAt,  DateTime updatedAt)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String name,  int localId,  String? remoteId,  int userLocalId,  bool isDefault,  bool synced,  bool deleted,  int taskCount,  DateTime createdAt,  DateTime updatedAt)  $default,) {final _that = this;
 switch (_that) {
 case _CategoryEntity():
-return $default(_that.name,_that.localId,_that.remoteId,_that.userLocalId,_that.isDefault,_that.synced,_that.deleted,_that.createdAt,_that.updatedAt);case _:
+return $default(_that.name,_that.localId,_that.remoteId,_that.userLocalId,_that.isDefault,_that.synced,_that.deleted,_that.taskCount,_that.createdAt,_that.updatedAt);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -199,10 +200,10 @@ return $default(_that.name,_that.localId,_that.remoteId,_that.userLocalId,_that.
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String name,  int localId,  String? remoteId,  int userLocalId,  bool isDefault,  bool synced,  bool deleted,  DateTime createdAt,  DateTime updatedAt)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String name,  int localId,  String? remoteId,  int userLocalId,  bool isDefault,  bool synced,  bool deleted,  int taskCount,  DateTime createdAt,  DateTime updatedAt)?  $default,) {final _that = this;
 switch (_that) {
 case _CategoryEntity() when $default != null:
-return $default(_that.name,_that.localId,_that.remoteId,_that.userLocalId,_that.isDefault,_that.synced,_that.deleted,_that.createdAt,_that.updatedAt);case _:
+return $default(_that.name,_that.localId,_that.remoteId,_that.userLocalId,_that.isDefault,_that.synced,_that.deleted,_that.taskCount,_that.createdAt,_that.updatedAt);case _:
   return null;
 
 }
@@ -214,7 +215,7 @@ return $default(_that.name,_that.localId,_that.remoteId,_that.userLocalId,_that.
 
 
 class _CategoryEntity extends CategoryEntity {
-  const _CategoryEntity({required this.name, required this.localId, this.remoteId, required this.userLocalId, required this.isDefault, required this.synced, required this.deleted, required this.createdAt, required this.updatedAt}): super._();
+  const _CategoryEntity({required this.name, required this.localId, this.remoteId, required this.userLocalId, required this.isDefault, required this.synced, required this.deleted, this.taskCount = 0, required this.createdAt, required this.updatedAt}): super._();
   
 
 @override final  String name;
@@ -224,6 +225,7 @@ class _CategoryEntity extends CategoryEntity {
 @override final  bool isDefault;
 @override final  bool synced;
 @override final  bool deleted;
+@override@JsonKey() final  int taskCount;
 @override final  DateTime createdAt;
 @override final  DateTime updatedAt;
 
@@ -237,16 +239,16 @@ _$CategoryEntityCopyWith<_CategoryEntity> get copyWith => __$CategoryEntityCopyW
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _CategoryEntity&&(identical(other.name, name) || other.name == name)&&(identical(other.localId, localId) || other.localId == localId)&&(identical(other.remoteId, remoteId) || other.remoteId == remoteId)&&(identical(other.userLocalId, userLocalId) || other.userLocalId == userLocalId)&&(identical(other.isDefault, isDefault) || other.isDefault == isDefault)&&(identical(other.synced, synced) || other.synced == synced)&&(identical(other.deleted, deleted) || other.deleted == deleted)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _CategoryEntity&&(identical(other.name, name) || other.name == name)&&(identical(other.localId, localId) || other.localId == localId)&&(identical(other.remoteId, remoteId) || other.remoteId == remoteId)&&(identical(other.userLocalId, userLocalId) || other.userLocalId == userLocalId)&&(identical(other.isDefault, isDefault) || other.isDefault == isDefault)&&(identical(other.synced, synced) || other.synced == synced)&&(identical(other.deleted, deleted) || other.deleted == deleted)&&(identical(other.taskCount, taskCount) || other.taskCount == taskCount)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,name,localId,remoteId,userLocalId,isDefault,synced,deleted,createdAt,updatedAt);
+int get hashCode => Object.hash(runtimeType,name,localId,remoteId,userLocalId,isDefault,synced,deleted,taskCount,createdAt,updatedAt);
 
 @override
 String toString() {
-  return 'CategoryEntity(name: $name, localId: $localId, remoteId: $remoteId, userLocalId: $userLocalId, isDefault: $isDefault, synced: $synced, deleted: $deleted, createdAt: $createdAt, updatedAt: $updatedAt)';
+  return 'CategoryEntity(name: $name, localId: $localId, remoteId: $remoteId, userLocalId: $userLocalId, isDefault: $isDefault, synced: $synced, deleted: $deleted, taskCount: $taskCount, createdAt: $createdAt, updatedAt: $updatedAt)';
 }
 
 
@@ -257,7 +259,7 @@ abstract mixin class _$CategoryEntityCopyWith<$Res> implements $CategoryEntityCo
   factory _$CategoryEntityCopyWith(_CategoryEntity value, $Res Function(_CategoryEntity) _then) = __$CategoryEntityCopyWithImpl;
 @override @useResult
 $Res call({
- String name, int localId, String? remoteId, int userLocalId, bool isDefault, bool synced, bool deleted, DateTime createdAt, DateTime updatedAt
+ String name, int localId, String? remoteId, int userLocalId, bool isDefault, bool synced, bool deleted, int taskCount, DateTime createdAt, DateTime updatedAt
 });
 
 
@@ -274,7 +276,7 @@ class __$CategoryEntityCopyWithImpl<$Res>
 
 /// Create a copy of CategoryEntity
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? name = null,Object? localId = null,Object? remoteId = freezed,Object? userLocalId = null,Object? isDefault = null,Object? synced = null,Object? deleted = null,Object? createdAt = null,Object? updatedAt = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? name = null,Object? localId = null,Object? remoteId = freezed,Object? userLocalId = null,Object? isDefault = null,Object? synced = null,Object? deleted = null,Object? taskCount = null,Object? createdAt = null,Object? updatedAt = null,}) {
   return _then(_CategoryEntity(
 name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,localId: null == localId ? _self.localId : localId // ignore: cast_nullable_to_non_nullable
@@ -283,7 +285,8 @@ as String?,userLocalId: null == userLocalId ? _self.userLocalId : userLocalId //
 as int,isDefault: null == isDefault ? _self.isDefault : isDefault // ignore: cast_nullable_to_non_nullable
 as bool,synced: null == synced ? _self.synced : synced // ignore: cast_nullable_to_non_nullable
 as bool,deleted: null == deleted ? _self.deleted : deleted // ignore: cast_nullable_to_non_nullable
-as bool,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
+as bool,taskCount: null == taskCount ? _self.taskCount : taskCount // ignore: cast_nullable_to_non_nullable
+as int,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
 as DateTime,updatedAt: null == updatedAt ? _self.updatedAt : updatedAt // ignore: cast_nullable_to_non_nullable
 as DateTime,
   ));

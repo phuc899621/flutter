@@ -4,7 +4,7 @@ import 'package:taskit/features/auth/data/repo/auth_repo.dart';
 import 'package:taskit/features/auth/domain/services/google_auth_service.dart';
 import 'package:taskit/features/auth/domain/services/google_auth_service_impl.dart';
 
-import '../../../../../shared/domain/usecase/usecase.dart';
+import '../../../../../shared/domain/usecase/future_usecase.dart';
 import '../../../../../shared/exception/failure.dart';
 import '../../../data/repo/auth_repo_impl.dart';
 
@@ -14,7 +14,7 @@ final loginWithGoogleUseCaseProvider = Provider<LoginWithGoogleUseCase>((ref) {
   return LoginWithGoogleUseCase(authRepo, googleService);
 });
 
-class LoginWithGoogleUseCase extends UseCase<void, NoParam> {
+class LoginWithGoogleUseCase extends FutureUseCase<void, NoParam> {
   final AuthRepo _repo;
   final GoogleAuthService _googleService;
 

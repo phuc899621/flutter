@@ -5,6 +5,7 @@ import 'package:retrofit/error_logger.dart';
 import 'package:retrofit/http.dart';
 import 'package:taskit/features/category/data/dto/fetch/category_res.dart';
 import 'package:taskit/features/category/data/dto/sync/delete/deleted_categories_sync_req.dart';
+import 'package:taskit/shared/data/dto/response/message_response.dart';
 import 'package:taskit/shared/data/source/remote/network/network_service.dart';
 
 import '../../../../../shared/data/dto/response/base_data.dart';
@@ -14,6 +15,7 @@ import '../../dto/add/add_category_res.dart';
 import '../../dto/sync/delete/deleted_categories_sync_res.dart';
 import '../../dto/sync/insert_update/categories_sync_req.dart';
 import '../../dto/sync/insert_update/categories_sync_res.dart';
+import '../../dto/update/update_category_req.dart';
 
 part 'category_api.g.dart';
 
@@ -38,9 +40,16 @@ abstract class CategoryApi {
     @Body() AddCategoryReq addCategoryReq,
   );
 
+  @PUT('/categories/{id}')
+  @Extra({'requireAuth': true, 'requireSession': true})
+  Future<DataResponse<CategoryRes>> update(
+    @Body() UpdateCategoryReq request,
+    @Path('id') String id,
+  );
+
   @DELETE('/categories/{id}')
   @Extra({'requireAuth': true, 'requireSession': true})
-  Future<DataResponse<BaseData>> delete(@Path('id') String id);
+  Future<MessageResponse> delete(@Path('id') String id);
 
   @POST('/categories/sync')
   @Extra({'requireAuth': true, 'requireSession': true})

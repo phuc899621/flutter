@@ -10,7 +10,7 @@ import '../../../../../shared/application/network_status_provider.dart';
 import '../../../../../shared/constants/auth_status.dart';
 import '../../../../../shared/constants/network_status.dart';
 import '../../../../../shared/data/source/remote/socket/socket_service.dart';
-import '../../../../../shared/domain/usecase/usecase.dart';
+import '../../../../../shared/domain/usecase/future_usecase.dart';
 import '../../../../../shared/log/logger_provider.dart';
 import '../../../../category/application/category_sync_service.dart';
 import '../../../../user/domain/entity/user_entity.dart';

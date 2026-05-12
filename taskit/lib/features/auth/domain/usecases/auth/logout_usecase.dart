@@ -2,7 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:multiple_result/multiple_result.dart';
 import 'package:taskit/features/auth/data/repo/auth_repo.dart';
 
-import '../../../../../shared/domain/usecase/usecase.dart';
+import '../../../../../shared/domain/usecase/future_usecase.dart';
 import '../../../../../shared/exception/failure.dart';
 import '../../../data/repo/auth_repo_impl.dart';
 
@@ -11,7 +11,7 @@ final logoutUseCaseProvider = Provider<LogoutUseCase>((ref) {
   return LogoutUseCase(authRepo);
 });
 
-class LogoutUseCase extends UseCase<void, NoParam> {
+class LogoutUseCase extends FutureUseCase<void, NoParam> {
   final AuthRepo _repo;
 
   LogoutUseCase(this._repo);

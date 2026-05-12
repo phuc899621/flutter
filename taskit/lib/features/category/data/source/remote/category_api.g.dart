@@ -8,7 +8,7 @@ part of 'category_api.dart';
 // RetrofitGenerator
 // **************************************************************************
 
-// ignore_for_file: unnecessary_brace_in_string_interps,no_leading_underscores_for_local_identifiers,unused_element,unnecessary_string_interpolations,unused_element_parameter,avoid_unused_constructor_parameters,unreachable_from_main
+// ignore_for_file: unnecessary_brace_in_string_interps,no_leading_underscores_for_local_identifiers,unused_element,unnecessary_string_interpolations,unused_element_parameter,avoid_unused_constructor_parameters,unreachable_from_main,avoid_redundant_argument_values
 
 class _CategoryApi implements CategoryApi {
   _CategoryApi(this._dio, {this.baseUrl, this.errorLogger});
@@ -91,7 +91,43 @@ class _CategoryApi implements CategoryApi {
   }
 
   @override
-  Future<DataResponse<BaseData>> delete(String id) async {
+  Future<DataResponse<CategoryRes>> update(
+    UpdateCategoryReq request,
+    String id,
+  ) async {
+    final _extra = <String, dynamic>{
+      'requireAuth': true,
+      'requireSession': true,
+    };
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = request;
+    final _options = _setStreamType<DataResponse<CategoryRes>>(
+      Options(method: 'PUT', headers: _headers, extra: _extra)
+          .compose(
+            _dio.options,
+            '/categories/${id}',
+            queryParameters: queryParameters,
+            data: _data,
+          )
+          .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
+    );
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    late DataResponse<CategoryRes> _value;
+    try {
+      _value = DataResponse<CategoryRes>.fromJson(
+        _result.data!,
+        (json) => CategoryRes.fromJson(json as Map<String, dynamic>),
+      );
+    } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options, response: _result);
+      rethrow;
+    }
+    return _value;
+  }
+
+  @override
+  Future<MessageResponse> delete(String id) async {
     final _extra = <String, dynamic>{
       'requireAuth': true,
       'requireSession': true,
@@ -99,7 +135,7 @@ class _CategoryApi implements CategoryApi {
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
-    final _options = _setStreamType<DataResponse<BaseData>>(
+    final _options = _setStreamType<MessageResponse>(
       Options(method: 'DELETE', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
@@ -110,12 +146,9 @@ class _CategoryApi implements CategoryApi {
           .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
     );
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late DataResponse<BaseData> _value;
+    late MessageResponse _value;
     try {
-      _value = DataResponse<BaseData>.fromJson(
-        _result.data!,
-        (json) => BaseData.fromJson(json as Map<String, dynamic>),
-      );
+      _value = MessageResponse.fromJson(_result.data!);
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options, response: _result);
       rethrow;

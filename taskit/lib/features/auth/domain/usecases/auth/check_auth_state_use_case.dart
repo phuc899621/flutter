@@ -4,7 +4,7 @@ import 'package:taskit/shared/application/session_service.dart';
 import 'package:taskit/shared/extension/result_return.dart';
 
 import '../../../../../shared/application/credential_service.dart';
-import '../../../../../shared/domain/usecase/usecase.dart';
+import '../../../../../shared/domain/usecase/future_usecase.dart';
 import '../../../../../shared/exception/failure.dart';
 import '../../../../../shared/log/logger_provider.dart';
 import '../../../../user/domain/entity/user_entity.dart';
@@ -20,7 +20,7 @@ final checkAuthStateUseCaseProvider = Provider(
   ),
 );
 
-class CheckAuthStateUseCase extends UseCase<UserEntity?, NoParam> {
+class CheckAuthStateUseCase extends FutureUseCase<UserEntity?, NoParam> {
   final CredentialService _credentialService;
   final GetCurrentUserUseCase _getUser;
   final SyncUserUseCase _syncUser;

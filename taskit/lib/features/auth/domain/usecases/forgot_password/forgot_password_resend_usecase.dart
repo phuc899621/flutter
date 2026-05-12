@@ -3,7 +3,7 @@ import 'package:multiple_result/multiple_result.dart';
 import 'package:taskit/features/auth/data/repo/forgot_password_repo.dart';
 import 'package:taskit/features/auth/domain/usecases/params/forgot_password_params.dart';
 
-import '../../../../../shared/domain/usecase/usecase.dart';
+import '../../../../../shared/domain/usecase/future_usecase.dart';
 import '../../../../../shared/exception/failure.dart';
 import '../../../data/repo/forgot_password_repo_impl.dart';
 
@@ -14,7 +14,7 @@ final forgotPasswordResendUseCaseProvider =
     });
 
 class ForgotPasswordResendUseCase
-    extends UseCase<void, ForgotPasswordResendParams> {
+    extends FutureUseCase<void, ForgotPasswordResendParams> {
   final ForgotPasswordRepo _repo;
 
   ForgotPasswordResendUseCase(this._repo);

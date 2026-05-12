@@ -3,6 +3,7 @@ import 'package:taskit/features/category/data/dto/fetch/category_res.dart';
 import 'package:taskit/features/category/domain/entities/category_entity.dart';
 
 import '../../../../shared/data/source/local/drift/database/database.dart';
+import '../source/local/category.dart';
 
 extension CategoryEntityLocalMapper on CategoryEntity {
   CategoryTableCompanion toInsertCompanion() => CategoryTableCompanion(
@@ -10,6 +11,12 @@ extension CategoryEntityLocalMapper on CategoryEntity {
     name: Value(name),
     remoteId: Value(remoteId),
     synced: Value(synced),
+  );
+
+  CategoryTableCompanion toUpdateCompanion() => CategoryTableCompanion(
+    name: Value(name),
+    synced: Value(synced),
+    updatedAt: Value(DateTime.now().toUtc()),
   );
 
   CategoryTableCompanion toRemoteCompanion() => CategoryTableCompanion(
@@ -61,6 +68,21 @@ extension CategoryEntityLocalMapper on CategoryEntity {
         remoteId: Value(remoteId),
         updatedAt: Value(updatedAt),
       );
+}
+
+extension CategoryWithCountMapper on CategoryWithCount {
+  CategoryEntity toEntity() => CategoryEntity(
+    name: category.name,
+    localId: category.localId,
+    userLocalId: category.userLocalId,
+    isDefault: category.isDefault,
+    synced: category.synced,
+    deleted: category.deleted,
+    createdAt: category.createdAt.toLocal(),
+    updatedAt: category.updatedAt.toLocal(),
+    remoteId: category.remoteId,
+    taskCount: taskCount,
+  );
 }
 
 extension CategoryResMapper on CategoryRes {

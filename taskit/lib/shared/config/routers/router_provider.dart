@@ -3,9 +3,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:smooth_sheets/smooth_sheets.dart';
 import 'package:taskit/features/auth/presentation/auth/controller/auth_controller.dart';
-import 'package:taskit/features/auth/presentation/auth/ui/splash_page.dart';
 import 'package:taskit/features/auth/presentation/forgot_password/ui/forgot_password_reset_page.dart';
 import 'package:taskit/features/auth/presentation/signup/ui/signup_veriry_page.dart';
+import 'package:taskit/features/category/presentation/ui/pages/category_management_page.dart';
 import 'package:taskit/features/main/presentation/ai/ui/ai_page.dart';
 import 'package:taskit/features/main/presentation/home/ui/home_page.dart';
 import 'package:taskit/features/main/presentation/list/ui/list_page.dart';
@@ -22,6 +22,7 @@ import 'package:taskit/features/task/presentation/filter_task/ui/filter_bottom_s
 import 'package:taskit/shared/config/routers/router_name.dart';
 import 'package:taskit/shared/log/logger_provider.dart';
 
+import '../../../features/auth/presentation/auth/ui/splash_page.dart';
 import '../../../features/auth/presentation/forgot_password/ui/forgot_password_page.dart';
 import '../../../features/auth/presentation/forgot_password/ui/forgot_password_verify_page.dart';
 import '../../../features/auth/presentation/login/ui/login_page.dart';
@@ -96,7 +97,20 @@ final goRouterProvider = Provider<GoRouter>((ref) {
       return null;
     },
     routes: [
+      // GoRoute(
+      //   path: '/',
+      //   builder: (context, state) => const CategoryManagementPage(),
+      // ),
       GoRoute(path: '/', builder: (context, state) => const SplashPage()),
+      GoRoute(
+        path: '/category',
+        name: RouteName.category,
+        pageBuilder: (context, state) => TaskitAnimation.slidePageTransition(
+          context,
+          state,
+          const CategoryManagementPage(),
+        ),
+      ),
       GoRoute(
         path: '/login',
         name: RouteName.login,
@@ -233,7 +247,6 @@ final goRouterProvider = Provider<GoRouter>((ref) {
           viewportBuilder: (context, child) {
             return SheetViewport(
               padding: EdgeInsets.only(
-                // Add the top padding to avoid the status bar.
                 top: MediaQuery.viewPaddingOf(context).top,
               ),
               child: child,

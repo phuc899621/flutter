@@ -14,6 +14,7 @@ abstract class CategoryEntity with _$CategoryEntity {
     required bool isDefault,
     required bool synced,
     required bool deleted,
+    @Default(0) int taskCount,
     required DateTime createdAt,
     required DateTime updatedAt,
   }) = _CategoryEntity;
