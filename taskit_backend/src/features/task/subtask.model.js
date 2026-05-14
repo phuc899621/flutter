@@ -8,7 +8,15 @@ const subtaskSchema = new Schema(
       type: String,
       default: "",
     },
-    isCompleted: {
+    completed: {
+      type: Boolean,
+      default: false,
+    },
+    completedAt: {
+      type: Date,
+      default: null,
+    },
+    deleted: {
       type: Boolean,
       default: false,
     },
@@ -23,10 +31,9 @@ const subtaskSchema = new Schema(
     toJSON: {
       virtuals: true,
       transform: function (doc, ret) {
-        const { _id, __v, taskId, ...rest } = ret;
+        const { _id, __v, ...rest } = ret;
         return {
           id: _id.toHexString(),
-          taskId,
           ...rest,
         };
       },
@@ -34,10 +41,9 @@ const subtaskSchema = new Schema(
     toObject: {
       virtuals: true,
       transform: function (doc, ret) {
-        const { _id, __v, taskId, ...rest } = ret;
+        const { _id, __v, ...rest } = ret;
         return {
           id: _id.toHexString(),
-          taskId,
           ...rest,
         };
       },

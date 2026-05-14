@@ -23,6 +23,10 @@ const taskSchema = new Schema(
       enum: ["low", "medium", "high", "none"],
       default: "none",
     },
+    deleted: {
+      type: Boolean,
+      default: false,
+    },
     userId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "user",
@@ -34,6 +38,10 @@ const taskSchema = new Schema(
       default: "pending",
     },
     dueDate: {
+      type: Date,
+      default: null,
+    },
+    completedAt: {
       type: Date,
       default: null,
     },

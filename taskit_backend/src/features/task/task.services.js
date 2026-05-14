@@ -4,6 +4,7 @@ import CategoryModel from "../category/category.model.js";
 import SubtaskModel from "../task/subtask.model.js";
 import db from "../../shared/utils/db.js";
 import UserModel from "../user/user.model.js";
+
 import {
   BaseError,
   NotFoundError,
@@ -12,67 +13,46 @@ import {
 
 class TaskServices {
   //#region CREATE
-  static async createTask(userId, createTask, createSubtasks) {
+  static async createTask(data) {
     const session = await db.startSession();
     session.startTransaction();
     try {
-      const user = await UserModel.findById(userId).session(session);
-      if (!user) {
-        throw new ServerError("User not found", 404);
+      const category = (
+        await CategoryModel.findById(data.categoryId).session(session)
+      )?.toObject();
+      if (!category) {
+        throw new NotFoundError("Category not found");
       }
-      if (createTask.categoryId) {
-        const category = await CategoryModel.findById(
-          createTask.categoryId,
-        ).session(session);
-        if (!category) {
-          throw new ServerError("Category not found", 404);
-        }
-      } else {
-        const defaultCategory = await CategoryModel.findOne(
-          { userId, isDefault: true },
-          { _id: 1 },
-        ).session(session);
-        if (!defaultCategory) {
-          throw new ServerError("Default category not found", 404);
-        }
-        createTask.categoryId = defaultCategory._id;
-      }
-      const taskResult = await TaskModel.create({
-        ...createTask,
-        userId,
-      }).session(session);
-      const subtasksResult = (
-        await SubtaskModel.create(
-          createSubtasks.map((subtask) => ({
-            ...subtask,
-            taskId: taskResult._id,
-          })),
-        )
-      ).toObject();
-      if (
-        subtasksResult.length == 0 ||
-        subtasksResult.length != createSubtasks.length
-      ) {
+      const [taskCreated] = await TaskModel.create([data], { session });
+      console.log("Task created:", taskCreated);
+      const subtasksCreated = await SubtaskModel.insertMany(
+        data.subtasks.map((subtask) => ({
+          ...subtask,
+          taskId: taskCreated.id,
+        })),
+        { session },
+      );
+      console.log("Subtasks created:", subtasksCreated);
+      if (subtasksCreated.length != data.subtasks.length) {
         await session.abortTransaction();
-        throw new ServerError("Subtasks were not created", 500);
-      }
-
-      for (let i = 0; i < subtasksResult.length; i++) {
-        subtasksResult[i].localId = createSubtasks[i].localId;
+        throw new ServerError("Subtasks were not created");
       }
       await session.commitTransaction();
-      return {
-        localId: parseInt(createTask.localId, 10),
-        ...taskResult.toObject(),
-        subtasks: subtasksResult.map((subtask) => ({
-          ...subtask,
-          taskId: taskResult._id,
+      const result = {
+        ...taskCreated.toObject(),
+        ...(data.localId && { localId: data.localId }),
+        subtasks: subtasksCreated.map((subtask, index) => ({
+          ...(data.subtasks[index]?.localId && {
+            localId: data.subtasks[index].localId,
+          }),
+          ...subtask.toObject(),
         })),
       };
+      return result;
     } catch (e) {
       await session.abortTransaction();
       if (e instanceof BaseError) throw e;
-      throw new ServerError(e.message, 500);
+      throw new ServerError(e.message);
     } finally {
       await session.endSession();
     }

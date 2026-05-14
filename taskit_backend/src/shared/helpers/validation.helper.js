@@ -8,6 +8,8 @@ export const joiMsg = (
     exactly = null,
     date = null,
     array = null,
+    boolean = null,
+    values = [],
   } = {},
 ) => {
   return {
@@ -18,6 +20,10 @@ export const joiMsg = (
     ...(email && { "string.email": `Must be a valid email` }),
     ...(exactly && {
       "string.length": `${label} must be exactly ${exactly} characters`,
+    }),
+    ...(boolean && { "boolean.base": `${label} must be a boolean` }),
+    ...(values.length > 0 && {
+      "string.valid": `${label} must be one of ${values.join(", ")}`,
     }),
     ...(min &&
       exactly === null && {
