@@ -6608,3 +6608,7 @@ Error: Access token expired
   "time": "205.88 ms",
   "ip": "::1"
 }
+2026-05-14 18:53:14 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-05-14 18:53:14 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-05-14 19:01:04 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-05-14 19:01:04 [[32minfo[39m]: [1;32mMongoDB connected![0m 

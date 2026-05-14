@@ -40,6 +40,7 @@ export const createTaskValidate = validate({
         }),
       ),
     dueDate: Joi.date()
+      .allow(null)
       .default(null)
       .messages(joiMsg("Due date", { date: true })),
     hasTime: Joi.boolean()
