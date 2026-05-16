@@ -46,5 +46,8 @@ const categorySchema = new mongoose.Schema(
     },
   },
 );
+categorySchema.statics.isValidId = function (id) {
+  return mongoose.Types.ObjectId.isValid(id);
+};
 const Category = db.model("category", categorySchema);
 export default Category;

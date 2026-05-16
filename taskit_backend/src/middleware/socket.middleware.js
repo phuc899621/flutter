@@ -6,7 +6,9 @@ export const socketAuth = (socket, next) => {
   const accessToken =
     socket.handshake.auth?.token ||
     socket.handshake.headers.authorization?.replace("Bearer ", "");
-  const sessionId = socket.handshake.auth?.sessionId;
+  const sessionId =
+    socket.handshake.auth?.sessionId ||
+    socket.handshake.headers["x-session-id"];
   console.log(socket);
   if (!accessToken || !sessionId)
     return next(

@@ -6612,3 +6612,782 @@ Error: Access token expired
 2026-05-14 18:53:14 [[32minfo[39m]: [1;32mMongoDB connected![0m 
 2026-05-14 19:01:04 [[32minfo[39m]: [1;32mRedis client connected[0m 
 2026-05-14 19:01:04 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-05-15 16:25:26 [[31merror[39m]: [1;31mMongoDB connection failed querySrv ECONNREFUSED _mongodb._tcp.taskit.wnyqv.mongodb.net[0m
+Error: querySrv ECONNREFUSED _mongodb._tcp.taskit.wnyqv.mongodb.net
+    at QueryReqWrap.onresolve [as oncomplete] (node:internal/dns/promises:293:17) {
+  "code": "ECONNREFUSED",
+  "syscall": "querySrv",
+  "hostname": "_mongodb._tcp.taskit.wnyqv.mongodb.net"
+}
+2026-05-15 16:25:26 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-05-15 18:38:10 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-05-15 18:38:11 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-05-15 18:40:48 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-05-15 18:40:49 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-05-15 18:40:57 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-05-15 18:40:58 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-05-15 18:41:11 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-05-15 18:41:12 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-05-15 18:41:50 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-05-15 18:41:50 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-05-15 18:42:08 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-05-15 18:42:09 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-05-15 18:43:04 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-05-15 18:43:05 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-05-15 18:43:28 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-05-15 18:43:28 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-05-15 18:43:59 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-05-15 18:43:59 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-05-15 18:44:04 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-05-15 18:44:05 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-05-15 18:45:50 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-05-15 18:45:51 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-05-15 18:47:27 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-05-15 18:47:28 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-05-15 18:49:41 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-05-15 18:49:41 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-05-15 18:51:01 [[32minfo[39m]: [1;32mVerify access token for eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWYwMzZkODYyZWM3MjkyMmVkMDFhNDkiLCJpYXQiOjE3Nzg3NDYxODEsImV4cCI6MTc3ODgzMjU4MX0.jXu0yQotGFGgQxSwkZzHQNW6cN87yMlaV2MXph90Uw8[0m 
+2026-05-15 18:51:01 [[31merror[39m]: [1;31mAccess token expired[0m
+Error: [1;31mAccess token expired[0m
+    at verifyAccessToken (file:///C:/flutter/taskit_backend/src/shared/services/token.service.js:65:11)
+    at Array.socketAuth (file:///C:/flutter/taskit_backend/src/middleware/socket.middleware.js:18:21)
+    at run (C:\flutter\taskit_backend\node_modules\socket.io\dist\namespace.js:133:19)
+    at Namespace.run (C:\flutter\taskit_backend\node_modules\socket.io\dist\namespace.js:144:9)
+    at Namespace._add (C:\flutter\taskit_backend\node_modules\socket.io\dist\namespace.js:221:14)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5) {
+  "statusCode": 401,
+  "type": "AuthenticationError"
+}
+2026-05-15 18:51:14 [[32minfo[39m]: [1;32mRefresh token saved for 69f036d862ec72922ed01a49:604800:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWYwMzZkODYyZWM3MjkyMmVkMDFhNDkiLCJpYXQiOjE3Nzg4NDU4NzQsImV4cCI6MTc3OTQ1MDY3NH0.sp2gHPRwukgKR3qNyJ132ttWX7FscpvnTJCGh1l37t8[0m 
+2026-05-15 18:51:14 [[32minfo[39m]: [1;32mAPI Request[0m {
+  "requestId": "2df7b55e-d4ca-41e7-9e63-ec6c603609eb",
+  "method": "POST",
+  "url": "/api/v1/auth/login",
+  "status": 200,
+  "time": "160.67 ms",
+  "ip": "::1"
+}
+2026-05-15 18:51:26 [[32minfo[39m]: [1;32mVerify access token for eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWYwMzZkODYyZWM3MjkyMmVkMDFhNDkiLCJpYXQiOjE3Nzg4NDU4NzQsImV4cCI6MTc3ODkzMjI3NH0.33wmFOyUFgwgO8KX4dJKEBm8ryFQBRJjcAvc0D7qpfA[0m 
+2026-05-15 18:51:26 [[32minfo[39m]: [1;32mUser 69f036d862ec72922ed01a49 connected with session 123[0m 
+2026-05-15 18:51:26 [[32minfo[39m]: [1;32mUser 69f036d862ec72922ed01a49 connected[0m 
+2026-05-15 19:00:08 [[32minfo[39m]: [1;32mVerify access token for eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWYwMzZkODYyZWM3MjkyMmVkMDFhNDkiLCJpYXQiOjE3Nzg4NDU4NzQsImV4cCI6MTc3ODkzMjI3NH0.33wmFOyUFgwgO8KX4dJKEBm8ryFQBRJjcAvc0D7qpfA[0m 
+2026-05-15 19:00:08 [[32minfo[39m]: [1;32mEmitting task change: userId=69f036d862ec72922ed01a49, sessionId=23, action=CREATE[0m 
+2026-05-15 19:00:08 [[32minfo[39m]: [1;32mAPI Request[0m {
+  "requestId": "ff1905b8-6ca9-469e-9d88-4af0b6faee41",
+  "method": "POST",
+  "url": "/api/v1/tasks",
+  "status": 201,
+  "time": "387.98 ms",
+  "ip": "::1"
+}
+2026-05-15 19:09:22 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-05-15 19:09:23 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-05-15 19:13:37 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-05-15 19:13:38 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-05-15 19:13:49 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-05-15 19:13:50 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-05-15 19:15:30 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-05-15 19:15:30 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-05-15 19:15:41 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-05-15 19:15:42 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-05-15 19:15:57 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-05-15 19:15:57 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-05-15 19:16:16 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-05-15 19:16:16 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-05-15 19:16:34 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-05-15 19:16:35 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-05-15 20:05:29 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-05-15 20:25:58 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-05-15 20:26:31 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-05-15 20:26:31 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-05-15 20:30:14 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-05-15 20:30:15 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-05-15 20:30:34 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-05-15 20:30:34 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-05-15 20:30:59 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-05-15 20:31:00 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-05-15 20:31:47 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-05-15 20:31:47 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-05-15 20:32:06 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-05-15 20:32:06 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-05-15 20:33:23 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-05-15 20:33:23 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-05-15 20:36:04 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-05-15 20:36:05 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-05-15 20:39:54 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-05-15 20:39:54 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-05-15 20:40:52 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-05-15 20:40:52 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-05-15 20:41:17 [[32minfo[39m]: [1;32mVerify access token for eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWYwMzZkODYyZWM3MjkyMmVkMDFhNDkiLCJpYXQiOjE3Nzg4NDU4NzQsImV4cCI6MTc3ODkzMjI3NH0.33wmFOyUFgwgO8KX4dJKEBm8ryFQBRJjcAvc0D7qpfA[0m 
+2026-05-15 20:41:17 [[32minfo[39m]: [1;32mAPI Request[0m {
+  "requestId": "7607ad5a-d7a6-4a59-bef9-0c32aa8fe35e",
+  "method": "GET",
+  "url": "/api/v1/tasks",
+  "status": 200,
+  "time": "185.06 ms",
+  "ip": "::1"
+}
+2026-05-15 20:43:25 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-05-15 20:43:26 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-05-15 20:44:10 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-05-15 20:44:10 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-05-15 20:44:42 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-05-15 20:44:43 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-05-15 20:45:08 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-05-15 20:45:08 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-05-15 20:45:27 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-05-15 20:45:28 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-05-15 20:46:07 [[32minfo[39m]: [1;32mVerify access token for eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWYwMzZkODYyZWM3MjkyMmVkMDFhNDkiLCJpYXQiOjE3Nzg4NDU4NzQsImV4cCI6MTc3ODkzMjI3NH0.33wmFOyUFgwgO8KX4dJKEBm8ryFQBRJjcAvc0D7qpfA[0m 
+2026-05-15 20:46:07 [[32minfo[39m]: [1;32mAPI Request[0m {
+  "requestId": "77a2f130-f91c-485b-a9c1-a3bc782b818d",
+  "method": "GET",
+  "url": "/api/v1/tasks",
+  "status": 200,
+  "time": "227.83 ms",
+  "ip": "::1"
+}
+2026-05-15 20:48:56 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-05-15 20:48:56 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-05-15 20:49:29 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-05-15 20:49:29 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-05-15 20:49:41 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-05-15 20:49:42 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-05-15 20:50:09 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-05-15 20:50:09 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-05-15 20:50:31 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-05-15 20:50:32 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-05-15 20:50:41 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-05-15 20:50:42 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-05-15 20:51:08 [[32minfo[39m]: [1;32mVerify access token for eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWYwMzZkODYyZWM3MjkyMmVkMDFhNDkiLCJpYXQiOjE3Nzg4NDU4NzQsImV4cCI6MTc3ODkzMjI3NH0.33wmFOyUFgwgO8KX4dJKEBm8ryFQBRJjcAvc0D7qpfA[0m 
+2026-05-15 20:51:09 [[32minfo[39m]: [1;32mAPI Request[0m {
+  "requestId": "7842c11e-38d3-43de-852d-f3c459826cb0",
+  "method": "GET",
+  "url": "/api/v1/tasks",
+  "status": 200,
+  "time": "413.25 ms",
+  "ip": "::1"
+}
+2026-05-15 20:52:36 [[32minfo[39m]: [1;32mVerify access token for eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWYwMzZkODYyZWM3MjkyMmVkMDFhNDkiLCJpYXQiOjE3Nzg4NDU4NzQsImV4cCI6MTc3ODkzMjI3NH0.33wmFOyUFgwgO8KX4dJKEBm8ryFQBRJjcAvc0D7qpfA[0m 
+2026-05-15 20:52:36 [[32minfo[39m]: [1;32mAPI Request[0m {
+  "requestId": "183a9eee-fd21-4111-8ddc-59236b73ad00",
+  "method": "GET",
+  "url": "/api/v1/tasks/6a06d4d80bbb2a341a2489e6",
+  "status": 200,
+  "time": "89.80 ms",
+  "ip": "::1"
+}
+2026-05-15 20:53:05 [[32minfo[39m]: [1;32mVerify access token for eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWYwMzZkODYyZWM3MjkyMmVkMDFhNDkiLCJpYXQiOjE3Nzg4NDU4NzQsImV4cCI6MTc3ODkzMjI3NH0.33wmFOyUFgwgO8KX4dJKEBm8ryFQBRJjcAvc0D7qpfA[0m 
+2026-05-15 20:53:05 [[32minfo[39m]: [1;32mUser 69f036d862ec72922ed01a49 connected with session 123[0m 
+2026-05-15 20:53:05 [[32minfo[39m]: [1;32mUser 69f036d862ec72922ed01a49 connected[0m 
+2026-05-15 20:53:24 [[32minfo[39m]: [1;32mVerify access token for eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWYwMzZkODYyZWM3MjkyMmVkMDFhNDkiLCJpYXQiOjE3Nzg4NDU4NzQsImV4cCI6MTc3ODkzMjI3NH0.33wmFOyUFgwgO8KX4dJKEBm8ryFQBRJjcAvc0D7qpfA[0m 
+2026-05-15 20:53:24 [[32minfo[39m]: [1;32mEmitting task change: userId=69f036d862ec72922ed01a49, sessionId=123, action=UPDATE[0m 
+2026-05-15 20:53:24 [[32minfo[39m]: [1;32mAPI Request[0m {
+  "requestId": "43e7b165-29e3-42e2-a973-cb6d6d9c912e",
+  "method": "PUT",
+  "url": "/api/v1/tasks/6a06d4d80bbb2a341a2489e6",
+  "status": 200,
+  "time": "146.47 ms",
+  "ip": "::1"
+}
+2026-05-15 20:55:15 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-05-15 20:55:15 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-05-15 20:55:26 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-05-15 20:55:27 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-05-15 20:57:46 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-05-15 20:57:46 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-05-15 20:57:59 [[32minfo[39m]: [1;32mVerify access token for eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWYwMzZkODYyZWM3MjkyMmVkMDFhNDkiLCJpYXQiOjE3Nzg4NDU4NzQsImV4cCI6MTc3ODkzMjI3NH0.33wmFOyUFgwgO8KX4dJKEBm8ryFQBRJjcAvc0D7qpfA[0m 
+2026-05-15 20:57:59 [[31merror[39m]: [1;31mError At least one field is required[0m
+Error: At least one field is required
+    at file:///C:/flutter/taskit_backend/src/middleware/validate.js:14:15
+    at Layer.handle [as handle_request] (C:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\flutter\taskit_backend\node_modules\express\lib\router\route.js:149:13)
+    at sessionMiddleware (file:///C:/flutter/taskit_backend/src/middleware/session.middleware.js:21:5)
+    at Layer.handle [as handle_request] (C:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\flutter\taskit_backend\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (C:\flutter\taskit_backend\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (C:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:284:15
+    at param (C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:365:14) {
+  "requestId": "b6171204-880d-49c8-83ea-c999f65ba0ae",
+  "method": "PUT",
+  "url": "/api/v1/tasks/6a06d4d80bbb2a341a2489e6",
+  "status": 400
+}
+2026-05-15 20:57:59 [[33mwarn[39m]: [1;33mAPI Warning[0m {
+  "requestId": "b6171204-880d-49c8-83ea-c999f65ba0ae",
+  "method": "PUT",
+  "url": "/api/v1/tasks/6a06d4d80bbb2a341a2489e6",
+  "status": 400,
+  "time": "30.76 ms",
+  "ip": "::1"
+}
+2026-05-15 20:58:23 [[32minfo[39m]: [1;32mVerify access token for eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWYwMzZkODYyZWM3MjkyMmVkMDFhNDkiLCJpYXQiOjE3Nzg4NDU4NzQsImV4cCI6MTc3ODkzMjI3NH0.33wmFOyUFgwgO8KX4dJKEBm8ryFQBRJjcAvc0D7qpfA[0m 
+2026-05-15 20:58:23 [[32minfo[39m]: [1;32mEmitting task change: userId=69f036d862ec72922ed01a49, sessionId=1234, action=UPDATE[0m 
+2026-05-15 20:58:23 [[32minfo[39m]: [1;32mAPI Request[0m {
+  "requestId": "1ad64e53-b0ab-4f94-911e-8cc28d0b2491",
+  "method": "PUT",
+  "url": "/api/v1/tasks/6a06d4d80bbb2a341a2489e6",
+  "status": 200,
+  "time": "156.77 ms",
+  "ip": "::1"
+}
+2026-05-15 20:58:45 [[32minfo[39m]: [1;32mVerify access token for eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWYwMzZkODYyZWM3MjkyMmVkMDFhNDkiLCJpYXQiOjE3Nzg4NDU4NzQsImV4cCI6MTc3ODkzMjI3NH0.33wmFOyUFgwgO8KX4dJKEBm8ryFQBRJjcAvc0D7qpfA[0m 
+2026-05-15 20:58:45 [[31merror[39m]: [1;31mError Update task error: CategoryServices.findById is not a function[0m
+Error: Update task error: CategoryServices.findById is not a function
+    at TaskServices.updateTask (file:///C:/flutter/taskit_backend/src/features/task/task.services.js:238:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async updateTask (file:///C:/flutter/taskit_backend/src/features/task/task.controller.js:80:20) {
+  "requestId": "4bf45bba-3a49-4273-a130-e934a3081a16",
+  "method": "PUT",
+  "url": "/api/v1/tasks/6a06d4d80bbb2a341a2489e6",
+  "status": 500
+}
+2026-05-15 20:58:45 [[31merror[39m]: [1;31mAPI Error[0m {
+  "requestId": "4bf45bba-3a49-4273-a130-e934a3081a16",
+  "method": "PUT",
+  "url": "/api/v1/tasks/6a06d4d80bbb2a341a2489e6",
+  "status": 500,
+  "time": "166.54 ms",
+  "ip": "::1"
+}
+2026-05-15 21:00:11 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-05-15 21:00:11 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-05-15 21:00:13 [[32minfo[39m]: [1;32mVerify access token for eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWYwMzZkODYyZWM3MjkyMmVkMDFhNDkiLCJpYXQiOjE3Nzg4NDU4NzQsImV4cCI6MTc3ODkzMjI3NH0.33wmFOyUFgwgO8KX4dJKEBm8ryFQBRJjcAvc0D7qpfA[0m 
+2026-05-15 21:00:13 [[32minfo[39m]: [1;32mEmitting task change: userId=69f036d862ec72922ed01a49, sessionId=1234, action=UPDATE[0m 
+2026-05-15 21:00:13 [[32minfo[39m]: [1;32mAPI Request[0m {
+  "requestId": "7c360796-ca6a-4c92-bae3-5991557fce11",
+  "method": "PUT",
+  "url": "/api/v1/tasks/6a06d4d80bbb2a341a2489e6",
+  "status": 200,
+  "time": "199.78 ms",
+  "ip": "::1"
+}
+2026-05-15 21:00:19 [[32minfo[39m]: [1;32mVerify access token for eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWYwMzZkODYyZWM3MjkyMmVkMDFhNDkiLCJpYXQiOjE3Nzg4NDU4NzQsImV4cCI6MTc3ODkzMjI3NH0.33wmFOyUFgwgO8KX4dJKEBm8ryFQBRJjcAvc0D7qpfA[0m 
+2026-05-15 21:00:19 [[31merror[39m]: [1;31mError Update task error: Cast to ObjectId failed for value "69f036d862ec72922ed01a4" (type string) at path "_id" for model "category"[0m
+Error: Update task error: Cast to ObjectId failed for value "69f036d862ec72922ed01a4" (type string) at path "_id" for model "category"
+    at TaskServices.updateTask (file:///C:/flutter/taskit_backend/src/features/task/task.services.js:238:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async updateTask (file:///C:/flutter/taskit_backend/src/features/task/task.controller.js:80:20) {
+  "requestId": "ca0fd693-f12d-4122-a7ef-77306c9a850b",
+  "method": "PUT",
+  "url": "/api/v1/tasks/6a06d4d80bbb2a341a2489e6",
+  "status": 500
+}
+2026-05-15 21:00:19 [[31merror[39m]: [1;31mAPI Error[0m {
+  "requestId": "ca0fd693-f12d-4122-a7ef-77306c9a850b",
+  "method": "PUT",
+  "url": "/api/v1/tasks/6a06d4d80bbb2a341a2489e6",
+  "status": 500,
+  "time": "64.04 ms",
+  "ip": "::1"
+}
+2026-05-15 21:02:13 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-05-15 21:02:13 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-05-15 21:04:15 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-05-15 21:04:15 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-05-15 21:04:31 [[32minfo[39m]: [1;32mVerify access token for eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWYwMzZkODYyZWM3MjkyMmVkMDFhNDkiLCJpYXQiOjE3Nzg4NDU4NzQsImV4cCI6MTc3ODkzMjI3NH0.33wmFOyUFgwgO8KX4dJKEBm8ryFQBRJjcAvc0D7qpfA[0m 
+2026-05-15 21:04:31 [[32minfo[39m]: [1;32mEmitting task change: userId=69f036d862ec72922ed01a49, sessionId=1234, action=UPDATE[0m 
+2026-05-15 21:04:31 [[32minfo[39m]: [1;32mAPI Request[0m {
+  "requestId": "6eeba4f7-5449-4b43-9183-850d820f4fdb",
+  "method": "PUT",
+  "url": "/api/v1/tasks/6a06d4d80bbb2a341a2489e6",
+  "status": 200,
+  "time": "248.18 ms",
+  "ip": "::1"
+}
+2026-05-15 21:04:58 [[32minfo[39m]: [1;32mVerify access token for eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWYwMzZkODYyZWM3MjkyMmVkMDFhNDkiLCJpYXQiOjE3Nzg4NDU4NzQsImV4cCI6MTc3ODkzMjI3NH0.33wmFOyUFgwgO8KX4dJKEBm8ryFQBRJjcAvc0D7qpfA[0m 
+2026-05-15 21:04:58 [[32minfo[39m]: [1;32mAPI Request[0m {
+  "requestId": "bfb3c76d-0a0a-49a6-91ab-9ca1a023ab5c",
+  "method": "GET",
+  "url": "/api/v1/categories",
+  "status": 200,
+  "time": "86.20 ms",
+  "ip": "::1"
+}
+2026-05-15 21:05:10 [[32minfo[39m]: [1;32mVerify access token for eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWYwMzZkODYyZWM3MjkyMmVkMDFhNDkiLCJpYXQiOjE3Nzg4NDU4NzQsImV4cCI6MTc3ODkzMjI3NH0.33wmFOyUFgwgO8KX4dJKEBm8ryFQBRJjcAvc0D7qpfA[0m 
+2026-05-15 21:05:10 [[32minfo[39m]: [1;32mEmitting task change: userId=69f036d862ec72922ed01a49, sessionId=1234, action=UPDATE[0m 
+2026-05-15 21:05:10 [[32minfo[39m]: [1;32mAPI Request[0m {
+  "requestId": "3e202c3f-f569-4a7d-9770-3d18e4b9201a",
+  "method": "PUT",
+  "url": "/api/v1/tasks/6a06d4d80bbb2a341a2489e6",
+  "status": 200,
+  "time": "157.09 ms",
+  "ip": "::1"
+}
+2026-05-15 21:05:45 [[32minfo[39m]: [1;32mVerify access token for eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWYwMzZkODYyZWM3MjkyMmVkMDFhNDkiLCJpYXQiOjE3Nzg4NDU4NzQsImV4cCI6MTc3ODkzMjI3NH0.33wmFOyUFgwgO8KX4dJKEBm8ryFQBRJjcAvc0D7qpfA[0m 
+2026-05-15 21:05:45 [[31merror[39m]: [1;31mError title must be a string[0m
+Error: title must be a string
+    at file:///C:/flutter/taskit_backend/src/middleware/validate.js:14:15
+    at Layer.handle [as handle_request] (C:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\flutter\taskit_backend\node_modules\express\lib\router\route.js:149:13)
+    at sessionMiddleware (file:///C:/flutter/taskit_backend/src/middleware/session.middleware.js:21:5)
+    at Layer.handle [as handle_request] (C:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\flutter\taskit_backend\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (C:\flutter\taskit_backend\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (C:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:284:15
+    at param (C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:365:14) {
+  "requestId": "88cda756-d90a-4c61-9b00-22b6f54c774c",
+  "method": "PUT",
+  "url": "/api/v1/tasks/6a06d4d80bbb2a341a2489e6",
+  "status": 400
+}
+2026-05-15 21:05:45 [[33mwarn[39m]: [1;33mAPI Warning[0m {
+  "requestId": "88cda756-d90a-4c61-9b00-22b6f54c774c",
+  "method": "PUT",
+  "url": "/api/v1/tasks/6a06d4d80bbb2a341a2489e6",
+  "status": 400,
+  "time": "6.40 ms",
+  "ip": "::1"
+}
+2026-05-15 21:05:48 [[32minfo[39m]: [1;32mVerify access token for eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWYwMzZkODYyZWM3MjkyMmVkMDFhNDkiLCJpYXQiOjE3Nzg4NDU4NzQsImV4cCI6MTc3ODkzMjI3NH0.33wmFOyUFgwgO8KX4dJKEBm8ryFQBRJjcAvc0D7qpfA[0m 
+2026-05-15 21:05:48 [[32minfo[39m]: [1;32mEmitting task change: userId=69f036d862ec72922ed01a49, sessionId=1234, action=UPDATE[0m 
+2026-05-15 21:05:48 [[32minfo[39m]: [1;32mAPI Request[0m {
+  "requestId": "cdfe7977-5cc4-47a0-abaf-e7d9156d7752",
+  "method": "PUT",
+  "url": "/api/v1/tasks/6a06d4d80bbb2a341a2489e6",
+  "status": 200,
+  "time": "158.05 ms",
+  "ip": "::1"
+}
+2026-05-15 21:06:18 [[32minfo[39m]: [1;32mVerify access token for eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWYwMzZkODYyZWM3MjkyMmVkMDFhNDkiLCJpYXQiOjE3Nzg4NDU4NzQsImV4cCI6MTc3ODkzMjI3NH0.33wmFOyUFgwgO8KX4dJKEBm8ryFQBRJjcAvc0D7qpfA[0m 
+2026-05-15 21:06:18 [[32minfo[39m]: [1;32mEmitting task change: userId=69f036d862ec72922ed01a49, sessionId=1234, action=UPDATE[0m 
+2026-05-15 21:06:18 [[32minfo[39m]: [1;32mAPI Request[0m {
+  "requestId": "59c1cf10-19e9-4de1-957c-87516a4e94d4",
+  "method": "PUT",
+  "url": "/api/v1/tasks/6a06d4d80bbb2a341a2489e6",
+  "status": 200,
+  "time": "159.66 ms",
+  "ip": "::1"
+}
+2026-05-15 21:06:29 [[32minfo[39m]: [1;32mVerify access token for eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWYwMzZkODYyZWM3MjkyMmVkMDFhNDkiLCJpYXQiOjE3Nzg4NDU4NzQsImV4cCI6MTc3ODkzMjI3NH0.33wmFOyUFgwgO8KX4dJKEBm8ryFQBRJjcAvc0D7qpfA[0m 
+2026-05-15 21:06:29 [[31merror[39m]: [1;31mError priority must be one of [low, medium, high, none][0m
+Error: priority must be one of [low, medium, high, none]
+    at file:///C:/flutter/taskit_backend/src/middleware/validate.js:14:15
+    at Layer.handle [as handle_request] (C:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\flutter\taskit_backend\node_modules\express\lib\router\route.js:149:13)
+    at sessionMiddleware (file:///C:/flutter/taskit_backend/src/middleware/session.middleware.js:21:5)
+    at Layer.handle [as handle_request] (C:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\flutter\taskit_backend\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (C:\flutter\taskit_backend\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (C:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:284:15
+    at param (C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:365:14) {
+  "requestId": "99871601-642c-438a-9d7a-d6668dcbfe05",
+  "method": "PUT",
+  "url": "/api/v1/tasks/6a06d4d80bbb2a341a2489e6",
+  "status": 400
+}
+2026-05-15 21:06:29 [[33mwarn[39m]: [1;33mAPI Warning[0m {
+  "requestId": "99871601-642c-438a-9d7a-d6668dcbfe05",
+  "method": "PUT",
+  "url": "/api/v1/tasks/6a06d4d80bbb2a341a2489e6",
+  "status": 400,
+  "time": "5.12 ms",
+  "ip": "::1"
+}
+2026-05-15 21:06:33 [[32minfo[39m]: [1;32mVerify access token for eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWYwMzZkODYyZWM3MjkyMmVkMDFhNDkiLCJpYXQiOjE3Nzg4NDU4NzQsImV4cCI6MTc3ODkzMjI3NH0.33wmFOyUFgwgO8KX4dJKEBm8ryFQBRJjcAvc0D7qpfA[0m 
+2026-05-15 21:06:33 [[31merror[39m]: [1;31mError priority must be one of [low, medium, high, none][0m
+Error: priority must be one of [low, medium, high, none]
+    at file:///C:/flutter/taskit_backend/src/middleware/validate.js:14:15
+    at Layer.handle [as handle_request] (C:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\flutter\taskit_backend\node_modules\express\lib\router\route.js:149:13)
+    at sessionMiddleware (file:///C:/flutter/taskit_backend/src/middleware/session.middleware.js:21:5)
+    at Layer.handle [as handle_request] (C:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\flutter\taskit_backend\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (C:\flutter\taskit_backend\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (C:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:284:15
+    at param (C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:365:14) {
+  "requestId": "cf9bd48f-b49f-4ade-9780-544fcf7f706d",
+  "method": "PUT",
+  "url": "/api/v1/tasks/6a06d4d80bbb2a341a2489e6",
+  "status": 400
+}
+2026-05-15 21:06:33 [[33mwarn[39m]: [1;33mAPI Warning[0m {
+  "requestId": "cf9bd48f-b49f-4ade-9780-544fcf7f706d",
+  "method": "PUT",
+  "url": "/api/v1/tasks/6a06d4d80bbb2a341a2489e6",
+  "status": 400,
+  "time": "2.77 ms",
+  "ip": "::1"
+}
+2026-05-15 21:06:39 [[32minfo[39m]: [1;32mVerify access token for eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWYwMzZkODYyZWM3MjkyMmVkMDFhNDkiLCJpYXQiOjE3Nzg4NDU4NzQsImV4cCI6MTc3ODkzMjI3NH0.33wmFOyUFgwgO8KX4dJKEBm8ryFQBRJjcAvc0D7qpfA[0m 
+2026-05-15 21:06:39 [[31merror[39m]: [1;31mError priority must be one of [low, medium, high, none][0m
+Error: priority must be one of [low, medium, high, none]
+    at file:///C:/flutter/taskit_backend/src/middleware/validate.js:14:15
+    at Layer.handle [as handle_request] (C:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\flutter\taskit_backend\node_modules\express\lib\router\route.js:149:13)
+    at sessionMiddleware (file:///C:/flutter/taskit_backend/src/middleware/session.middleware.js:21:5)
+    at Layer.handle [as handle_request] (C:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\flutter\taskit_backend\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (C:\flutter\taskit_backend\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (C:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:284:15
+    at param (C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:365:14) {
+  "requestId": "a4c1b7e8-7f97-4308-99ca-5ce61622c975",
+  "method": "PUT",
+  "url": "/api/v1/tasks/6a06d4d80bbb2a341a2489e6",
+  "status": 400
+}
+2026-05-15 21:06:39 [[33mwarn[39m]: [1;33mAPI Warning[0m {
+  "requestId": "a4c1b7e8-7f97-4308-99ca-5ce61622c975",
+  "method": "PUT",
+  "url": "/api/v1/tasks/6a06d4d80bbb2a341a2489e6",
+  "status": 400,
+  "time": "2.64 ms",
+  "ip": "::1"
+}
+2026-05-15 21:06:44 [[32minfo[39m]: [1;32mVerify access token for eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWYwMzZkODYyZWM3MjkyMmVkMDFhNDkiLCJpYXQiOjE3Nzg4NDU4NzQsImV4cCI6MTc3ODkzMjI3NH0.33wmFOyUFgwgO8KX4dJKEBm8ryFQBRJjcAvc0D7qpfA[0m 
+2026-05-15 21:06:44 [[32minfo[39m]: [1;32mEmitting task change: userId=69f036d862ec72922ed01a49, sessionId=1234, action=UPDATE[0m 
+2026-05-15 21:06:44 [[32minfo[39m]: [1;32mAPI Request[0m {
+  "requestId": "320dfaf4-ab69-4db4-9139-d88eb7d34656",
+  "method": "PUT",
+  "url": "/api/v1/tasks/6a06d4d80bbb2a341a2489e6",
+  "status": 200,
+  "time": "157.38 ms",
+  "ip": "::1"
+}
+2026-05-15 21:07:02 [[32minfo[39m]: [1;32mVerify access token for eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWYwMzZkODYyZWM3MjkyMmVkMDFhNDkiLCJpYXQiOjE3Nzg4NDU4NzQsImV4cCI6MTc3ODkzMjI3NH0.33wmFOyUFgwgO8KX4dJKEBm8ryFQBRJjcAvc0D7qpfA[0m 
+2026-05-15 21:07:02 [[31merror[39m]: [1;31mError status must be one of [pending, scheduled, completed][0m
+Error: status must be one of [pending, scheduled, completed]
+    at file:///C:/flutter/taskit_backend/src/middleware/validate.js:14:15
+    at Layer.handle [as handle_request] (C:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\flutter\taskit_backend\node_modules\express\lib\router\route.js:149:13)
+    at sessionMiddleware (file:///C:/flutter/taskit_backend/src/middleware/session.middleware.js:21:5)
+    at Layer.handle [as handle_request] (C:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\flutter\taskit_backend\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (C:\flutter\taskit_backend\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (C:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:284:15
+    at param (C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:365:14) {
+  "requestId": "181dc1f1-94d6-43ca-8831-bfbf077a25cb",
+  "method": "PUT",
+  "url": "/api/v1/tasks/6a06d4d80bbb2a341a2489e6",
+  "status": 400
+}
+2026-05-15 21:07:02 [[33mwarn[39m]: [1;33mAPI Warning[0m {
+  "requestId": "181dc1f1-94d6-43ca-8831-bfbf077a25cb",
+  "method": "PUT",
+  "url": "/api/v1/tasks/6a06d4d80bbb2a341a2489e6",
+  "status": 400,
+  "time": "2.61 ms",
+  "ip": "::1"
+}
+2026-05-15 21:07:07 [[32minfo[39m]: [1;32mVerify access token for eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWYwMzZkODYyZWM3MjkyMmVkMDFhNDkiLCJpYXQiOjE3Nzg4NDU4NzQsImV4cCI6MTc3ODkzMjI3NH0.33wmFOyUFgwgO8KX4dJKEBm8ryFQBRJjcAvc0D7qpfA[0m 
+2026-05-15 21:07:07 [[32minfo[39m]: [1;32mEmitting task change: userId=69f036d862ec72922ed01a49, sessionId=1234, action=UPDATE[0m 
+2026-05-15 21:07:07 [[32minfo[39m]: [1;32mAPI Request[0m {
+  "requestId": "1daf680d-071c-44b8-b977-4597ac421732",
+  "method": "PUT",
+  "url": "/api/v1/tasks/6a06d4d80bbb2a341a2489e6",
+  "status": 200,
+  "time": "147.76 ms",
+  "ip": "::1"
+}
+2026-05-15 21:07:22 [[32minfo[39m]: [1;32mVerify access token for eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWYwMzZkODYyZWM3MjkyMmVkMDFhNDkiLCJpYXQiOjE3Nzg4NDU4NzQsImV4cCI6MTc3ODkzMjI3NH0.33wmFOyUFgwgO8KX4dJKEBm8ryFQBRJjcAvc0D7qpfA[0m 
+2026-05-15 21:07:23 [[32minfo[39m]: [1;32mEmitting task change: userId=69f036d862ec72922ed01a49, sessionId=1234, action=UPDATE[0m 
+2026-05-15 21:07:23 [[32minfo[39m]: [1;32mAPI Request[0m {
+  "requestId": "04922bcd-a69c-4a15-8da7-ee6115cd854e",
+  "method": "PUT",
+  "url": "/api/v1/tasks/6a06d4d80bbb2a341a2489e6",
+  "status": 200,
+  "time": "281.89 ms",
+  "ip": "::1"
+}
+2026-05-15 21:07:43 [[32minfo[39m]: [1;32mVerify access token for eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWYwMzZkODYyZWM3MjkyMmVkMDFhNDkiLCJpYXQiOjE3Nzg4NDU4NzQsImV4cCI6MTc3ODkzMjI3NH0.33wmFOyUFgwgO8KX4dJKEBm8ryFQBRJjcAvc0D7qpfA[0m 
+2026-05-15 21:07:43 [[31merror[39m]: [1;31mError dueDate must be a valid date[0m
+Error: dueDate must be a valid date
+    at file:///C:/flutter/taskit_backend/src/middleware/validate.js:14:15
+    at Layer.handle [as handle_request] (C:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\flutter\taskit_backend\node_modules\express\lib\router\route.js:149:13)
+    at sessionMiddleware (file:///C:/flutter/taskit_backend/src/middleware/session.middleware.js:21:5)
+    at Layer.handle [as handle_request] (C:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\flutter\taskit_backend\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (C:\flutter\taskit_backend\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (C:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:284:15
+    at param (C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:365:14) {
+  "requestId": "e9f9a985-c432-4399-8c89-b2f872565791",
+  "method": "PUT",
+  "url": "/api/v1/tasks/6a06d4d80bbb2a341a2489e6",
+  "status": 400
+}
+2026-05-15 21:07:43 [[33mwarn[39m]: [1;33mAPI Warning[0m {
+  "requestId": "e9f9a985-c432-4399-8c89-b2f872565791",
+  "method": "PUT",
+  "url": "/api/v1/tasks/6a06d4d80bbb2a341a2489e6",
+  "status": 400,
+  "time": "3.68 ms",
+  "ip": "::1"
+}
+2026-05-15 21:07:51 [[31merror[39m]: [1;31mError Expected double-quoted property name in JSON at position 189 (line 8 column 1)[0m
+SyntaxError: Expected double-quoted property name in JSON at position 189 (line 8 column 1)
+    at JSON.parse (<anonymous>)
+    at parse (C:\flutter\taskit_backend\node_modules\body-parser\lib\types\json.js:92:19)
+    at C:\flutter\taskit_backend\node_modules\body-parser\lib\read.js:128:18
+    at AsyncResource.runInAsyncScope (node:async_hooks:213:14)
+    at invokeCallback (C:\flutter\taskit_backend\node_modules\raw-body\index.js:238:16)
+    at done (C:\flutter\taskit_backend\node_modules\raw-body\index.js:227:7)
+    at IncomingMessage.onEnd (C:\flutter\taskit_backend\node_modules\raw-body\index.js:287:7)
+    at IncomingMessage.emit (node:events:508:28)
+    at endReadableNT (node:internal/streams/readable:1701:12)
+    at process.processTicksAndRejections (node:internal/process/task_queues:89:21) {
+  "requestId": "67ab6e5c-53e8-400c-bfb7-0f2a2f147766",
+  "method": "PUT",
+  "url": "/api/v1/tasks/6a06d4d80bbb2a341a2489e6",
+  "status": 400
+}
+2026-05-15 21:07:51 [[33mwarn[39m]: [1;33mAPI Warning[0m {
+  "requestId": "67ab6e5c-53e8-400c-bfb7-0f2a2f147766",
+  "method": "PUT",
+  "url": "/api/v1/tasks/6a06d4d80bbb2a341a2489e6",
+  "status": 400,
+  "time": "14.00 ms",
+  "ip": "::1"
+}
+2026-05-15 21:07:54 [[32minfo[39m]: [1;32mVerify access token for eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWYwMzZkODYyZWM3MjkyMmVkMDFhNDkiLCJpYXQiOjE3Nzg4NDU4NzQsImV4cCI6MTc3ODkzMjI3NH0.33wmFOyUFgwgO8KX4dJKEBm8ryFQBRJjcAvc0D7qpfA[0m 
+2026-05-15 21:07:54 [[32minfo[39m]: [1;32mEmitting task change: userId=69f036d862ec72922ed01a49, sessionId=1234, action=UPDATE[0m 
+2026-05-15 21:07:54 [[32minfo[39m]: [1;32mAPI Request[0m {
+  "requestId": "f9553e41-ba22-48c5-8b45-34e1dbe98751",
+  "method": "PUT",
+  "url": "/api/v1/tasks/6a06d4d80bbb2a341a2489e6",
+  "status": 200,
+  "time": "149.20 ms",
+  "ip": "::1"
+}
+2026-05-15 21:08:20 [[32minfo[39m]: [1;32mVerify access token for eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWYwMzZkODYyZWM3MjkyMmVkMDFhNDkiLCJpYXQiOjE3Nzg4NDU4NzQsImV4cCI6MTc3ODkzMjI3NH0.33wmFOyUFgwgO8KX4dJKEBm8ryFQBRJjcAvc0D7qpfA[0m 
+2026-05-15 21:08:20 [[32minfo[39m]: [1;32mEmitting task change: userId=69f036d862ec72922ed01a49, sessionId=1234, action=UPDATE[0m 
+2026-05-15 21:08:20 [[32minfo[39m]: [1;32mAPI Request[0m {
+  "requestId": "670df800-4d6e-43bd-9a61-fc2296e26a85",
+  "method": "PUT",
+  "url": "/api/v1/tasks/6a06d4d80bbb2a341a2489e6",
+  "status": 200,
+  "time": "172.06 ms",
+  "ip": "::1"
+}
+2026-05-15 21:08:32 [[32minfo[39m]: [1;32mVerify access token for eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWYwMzZkODYyZWM3MjkyMmVkMDFhNDkiLCJpYXQiOjE3Nzg4NDU4NzQsImV4cCI6MTc3ODkzMjI3NH0.33wmFOyUFgwgO8KX4dJKEBm8ryFQBRJjcAvc0D7qpfA[0m 
+2026-05-15 21:08:32 [[31merror[39m]: [1;31mError dueDate must be a valid date[0m
+Error: dueDate must be a valid date
+    at file:///C:/flutter/taskit_backend/src/middleware/validate.js:14:15
+    at Layer.handle [as handle_request] (C:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\flutter\taskit_backend\node_modules\express\lib\router\route.js:149:13)
+    at sessionMiddleware (file:///C:/flutter/taskit_backend/src/middleware/session.middleware.js:21:5)
+    at Layer.handle [as handle_request] (C:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\flutter\taskit_backend\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (C:\flutter\taskit_backend\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (C:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:284:15
+    at param (C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:365:14) {
+  "requestId": "80d48416-93ff-4cae-8b4d-e688743b715f",
+  "method": "PUT",
+  "url": "/api/v1/tasks/6a06d4d80bbb2a341a2489e6",
+  "status": 400
+}
+2026-05-15 21:08:32 [[33mwarn[39m]: [1;33mAPI Warning[0m {
+  "requestId": "80d48416-93ff-4cae-8b4d-e688743b715f",
+  "method": "PUT",
+  "url": "/api/v1/tasks/6a06d4d80bbb2a341a2489e6",
+  "status": 400,
+  "time": "3.10 ms",
+  "ip": "::1"
+}
+2026-05-15 21:08:36 [[32minfo[39m]: [1;32mVerify access token for eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWYwMzZkODYyZWM3MjkyMmVkMDFhNDkiLCJpYXQiOjE3Nzg4NDU4NzQsImV4cCI6MTc3ODkzMjI3NH0.33wmFOyUFgwgO8KX4dJKEBm8ryFQBRJjcAvc0D7qpfA[0m 
+2026-05-15 21:08:36 [[32minfo[39m]: [1;32mEmitting task change: userId=69f036d862ec72922ed01a49, sessionId=1234, action=UPDATE[0m 
+2026-05-15 21:08:36 [[32minfo[39m]: [1;32mAPI Request[0m {
+  "requestId": "29b72c4b-10f7-4fe1-8be4-1a53b6676713",
+  "method": "PUT",
+  "url": "/api/v1/tasks/6a06d4d80bbb2a341a2489e6",
+  "status": 200,
+  "time": "150.32 ms",
+  "ip": "::1"
+}
+2026-05-15 21:09:00 [[32minfo[39m]: [1;32mVerify access token for eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWYwMzZkODYyZWM3MjkyMmVkMDFhNDkiLCJpYXQiOjE3Nzg4NDU4NzQsImV4cCI6MTc3ODkzMjI3NH0.33wmFOyUFgwgO8KX4dJKEBm8ryFQBRJjcAvc0D7qpfA[0m 
+2026-05-15 21:09:01 [[32minfo[39m]: [1;32mEmitting task change: userId=69f036d862ec72922ed01a49, sessionId=1234, action=UPDATE[0m 
+2026-05-15 21:09:01 [[32minfo[39m]: [1;32mAPI Request[0m {
+  "requestId": "7390599d-aafd-4d8a-b4aa-3ff882d02daf",
+  "method": "PUT",
+  "url": "/api/v1/tasks/6a06d4d80bbb2a341a2489e6",
+  "status": 200,
+  "time": "404.81 ms",
+  "ip": "::1"
+}
+2026-05-15 21:09:31 [[32minfo[39m]: [1;32mVerify access token for eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWYwMzZkODYyZWM3MjkyMmVkMDFhNDkiLCJpYXQiOjE3Nzg4NDU4NzQsImV4cCI6MTc3ODkzMjI3NH0.33wmFOyUFgwgO8KX4dJKEBm8ryFQBRJjcAvc0D7qpfA[0m 
+2026-05-15 21:09:32 [[32minfo[39m]: [1;32mEmitting task change: userId=69f036d862ec72922ed01a49, sessionId=1234, action=UPDATE[0m 
+2026-05-15 21:09:32 [[32minfo[39m]: [1;32mAPI Request[0m {
+  "requestId": "873b20c0-f0c1-444c-accf-ce203d278d28",
+  "method": "PUT",
+  "url": "/api/v1/tasks/6a06d4d80bbb2a341a2489e6",
+  "status": 200,
+  "time": "149.34 ms",
+  "ip": "::1"
+}
+2026-05-15 21:09:45 [[32minfo[39m]: [1;32mVerify access token for eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWYwMzZkODYyZWM3MjkyMmVkMDFhNDkiLCJpYXQiOjE3Nzg4NDU4NzQsImV4cCI6MTc3ODkzMjI3NH0.33wmFOyUFgwgO8KX4dJKEBm8ryFQBRJjcAvc0D7qpfA[0m 
+2026-05-15 21:09:45 [[32minfo[39m]: [1;32mUser 69f036d862ec72922ed01a49 connected with session 123[0m 
+2026-05-15 21:09:45 [[32minfo[39m]: [1;32mUser 69f036d862ec72922ed01a49 connected[0m 
+2026-05-15 21:09:49 [[32minfo[39m]: [1;32mVerify access token for eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWYwMzZkODYyZWM3MjkyMmVkMDFhNDkiLCJpYXQiOjE3Nzg4NDU4NzQsImV4cCI6MTc3ODkzMjI3NH0.33wmFOyUFgwgO8KX4dJKEBm8ryFQBRJjcAvc0D7qpfA[0m 
+2026-05-15 21:09:49 [[32minfo[39m]: [1;32mEmitting task change: userId=69f036d862ec72922ed01a49, sessionId=1234, action=UPDATE[0m 
+2026-05-15 21:09:49 [[32minfo[39m]: [1;32mAPI Request[0m {
+  "requestId": "113f81ce-eb7c-4a25-bc32-d7823f615cf9",
+  "method": "PUT",
+  "url": "/api/v1/tasks/6a06d4d80bbb2a341a2489e6",
+  "status": 200,
+  "time": "152.99 ms",
+  "ip": "::1"
+}
+2026-05-15 21:11:49 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-05-15 21:11:49 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-05-15 21:11:50 [[32minfo[39m]: [1;32mVerify access token for eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWYwMzZkODYyZWM3MjkyMmVkMDFhNDkiLCJpYXQiOjE3Nzg4NDU4NzQsImV4cCI6MTc3ODkzMjI3NH0.33wmFOyUFgwgO8KX4dJKEBm8ryFQBRJjcAvc0D7qpfA[0m 
+2026-05-15 21:11:50 [[32minfo[39m]: [1;32mEmitting task change: userId=69f036d862ec72922ed01a49, sessionId=1234, action=UPDATE[0m 
+2026-05-15 21:11:50 [[32minfo[39m]: [1;32mAPI Request[0m {
+  "requestId": "97ea7895-4d6a-4c35-9497-8026ca49d9c4",
+  "method": "PUT",
+  "url": "/api/v1/tasks/6a06d4d80bbb2a341a2489e6",
+  "status": 200,
+  "time": "207.93 ms",
+  "ip": "::1"
+}
+2026-05-15 21:12:01 [[31merror[39m]: [1;31mError Access denied. No session id provided[0m
+Error: Access denied. No session id provided
+    at sessionMiddleware (file:///C:/flutter/taskit_backend/src/middleware/session.middleware.js:13:13)
+    at Layer.handle [as handle_request] (C:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\flutter\taskit_backend\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (C:\flutter\taskit_backend\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (C:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:284:15
+    at param (C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:365:14)
+    at param (C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:376:14)
+    at router.process_params (C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:421:3)
+    at next (C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:280:10) {
+  "requestId": "ac1ad3fb-80f7-4ee3-9965-4c2b7369ec7a",
+  "method": "DELETE",
+  "url": "/api/v1/tasks/6a06d4d80bbb2a341a2489e6",
+  "status": 401
+}
+2026-05-15 21:12:01 [[33mwarn[39m]: [1;33mAPI Warning[0m {
+  "requestId": "ac1ad3fb-80f7-4ee3-9965-4c2b7369ec7a",
+  "method": "DELETE",
+  "url": "/api/v1/tasks/6a06d4d80bbb2a341a2489e6",
+  "status": 401,
+  "time": "2.04 ms",
+  "ip": "::1"
+}
+2026-05-15 21:12:14 [[32minfo[39m]: [1;32mVerify access token for eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWYwMzZkODYyZWM3MjkyMmVkMDFhNDkiLCJpYXQiOjE3Nzg4NDU4NzQsImV4cCI6MTc3ODkzMjI3NH0.33wmFOyUFgwgO8KX4dJKEBm8ryFQBRJjcAvc0D7qpfA[0m 
+2026-05-15 21:12:14 [[32minfo[39m]: [1;32mEmitting task change: userId=69f036d862ec72922ed01a49, sessionId=1239, action=DELETE[0m 
+2026-05-15 21:12:14 [[32minfo[39m]: [1;32mAPI Request[0m {
+  "requestId": "f821898b-f761-44bb-a664-ab8828eb80dc",
+  "method": "DELETE",
+  "url": "/api/v1/tasks/6a06d4d80bbb2a341a2489e6",
+  "status": 200,
+  "time": "245.65 ms",
+  "ip": "::1"
+}
+2026-05-15 21:12:25 [[32minfo[39m]: [1;32mVerify access token for eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWYwMzZkODYyZWM3MjkyMmVkMDFhNDkiLCJpYXQiOjE3Nzg4NDU4NzQsImV4cCI6MTc3ODkzMjI3NH0.33wmFOyUFgwgO8KX4dJKEBm8ryFQBRJjcAvc0D7qpfA[0m 
+2026-05-15 21:12:26 [[32minfo[39m]: [1;32mEmitting task change: userId=69f036d862ec72922ed01a49, sessionId=1234, action=UPDATE[0m 
+2026-05-15 21:12:26 [[32minfo[39m]: [1;32mAPI Request[0m {
+  "requestId": "556aafce-7797-4417-a2d7-5367e61675b9",
+  "method": "PUT",
+  "url": "/api/v1/tasks/6a06d4d80bbb2a341a2489e6",
+  "status": 200,
+  "time": "182.33 ms",
+  "ip": "::1"
+}
+2026-05-15 21:14:19 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-05-15 21:14:20 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-05-15 21:15:47 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-05-15 21:15:48 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-05-15 21:16:41 [[32minfo[39m]: [1;32mVerify access token for eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWYwMzZkODYyZWM3MjkyMmVkMDFhNDkiLCJpYXQiOjE3Nzg4NDU4NzQsImV4cCI6MTc3ODkzMjI3NH0.33wmFOyUFgwgO8KX4dJKEBm8ryFQBRJjcAvc0D7qpfA[0m 
+2026-05-15 21:16:41 [[31merror[39m]: [1;31mError Task not found[0m
+Error: Task not found
+    at TaskServices.updateTask (file:///C:/flutter/taskit_backend/src/features/task/task.services.js:220:15)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async updateTask (file:///C:/flutter/taskit_backend/src/features/task/task.controller.js:80:20) {
+  "requestId": "a5749bf3-bd76-4aae-9042-047108f7abf2",
+  "method": "PUT",
+  "url": "/api/v1/tasks/6a06d4d80bbb2a341a2489e6",
+  "status": 404
+}
+2026-05-15 21:16:41 [[33mwarn[39m]: [1;33mAPI Warning[0m {
+  "requestId": "a5749bf3-bd76-4aae-9042-047108f7abf2",
+  "method": "PUT",
+  "url": "/api/v1/tasks/6a06d4d80bbb2a341a2489e6",
+  "status": 404,
+  "time": "75.57 ms",
+  "ip": "::1"
+}
+2026-05-15 21:17:07 [[32minfo[39m]: [1;32mVerify access token for eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWYwMzZkODYyZWM3MjkyMmVkMDFhNDkiLCJpYXQiOjE3Nzg4NDU4NzQsImV4cCI6MTc3ODkzMjI3NH0.33wmFOyUFgwgO8KX4dJKEBm8ryFQBRJjcAvc0D7qpfA[0m 
+2026-05-15 21:17:07 [[32minfo[39m]: [1;32mUser 69f036d862ec72922ed01a49 connected with session 123[0m 
+2026-05-15 21:17:07 [[32minfo[39m]: [1;32mUser 69f036d862ec72922ed01a49 connected[0m 
+2026-05-15 21:17:10 [[32minfo[39m]: [1;32mVerify access token for eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWYwMzZkODYyZWM3MjkyMmVkMDFhNDkiLCJpYXQiOjE3Nzg4NDU4NzQsImV4cCI6MTc3ODkzMjI3NH0.33wmFOyUFgwgO8KX4dJKEBm8ryFQBRJjcAvc0D7qpfA[0m 
+2026-05-15 21:17:10 [[31merror[39m]: [1;31mError Task not found[0m
+Error: Task not found
+    at TaskServices.updateTask (file:///C:/flutter/taskit_backend/src/features/task/task.services.js:220:15)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async updateTask (file:///C:/flutter/taskit_backend/src/features/task/task.controller.js:80:20) {
+  "requestId": "67dcd682-8ee5-47ee-910c-b40e6d99b15c",
+  "method": "PUT",
+  "url": "/api/v1/tasks/6a06d4d80bbb2a341a2489e6",
+  "status": 404
+}
+2026-05-15 21:17:10 [[33mwarn[39m]: [1;33mAPI Warning[0m {
+  "requestId": "67dcd682-8ee5-47ee-910c-b40e6d99b15c",
+  "method": "PUT",
+  "url": "/api/v1/tasks/6a06d4d80bbb2a341a2489e6",
+  "status": 404,
+  "time": "43.57 ms",
+  "ip": "::1"
+}
+2026-05-15 21:19:11 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-05-15 21:19:12 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-05-15 21:19:40 [[32minfo[39m]: [1;32mVerify access token for eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWYwMzZkODYyZWM3MjkyMmVkMDFhNDkiLCJpYXQiOjE3Nzg4NDU4NzQsImV4cCI6MTc3ODkzMjI3NH0.33wmFOyUFgwgO8KX4dJKEBm8ryFQBRJjcAvc0D7qpfA[0m 
+2026-05-15 21:19:40 [[32minfo[39m]: [1;32mUser 69f036d862ec72922ed01a49 connected with session 123[0m 
+2026-05-15 21:19:40 [[32minfo[39m]: [1;32mUser 69f036d862ec72922ed01a49 connected[0m 
+2026-05-15 21:19:42 [[32minfo[39m]: [1;32mVerify access token for eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWYwMzZkODYyZWM3MjkyMmVkMDFhNDkiLCJpYXQiOjE3Nzg4NDU4NzQsImV4cCI6MTc3ODkzMjI3NH0.33wmFOyUFgwgO8KX4dJKEBm8ryFQBRJjcAvc0D7qpfA[0m 
+2026-05-15 21:19:42 [[31merror[39m]: [1;31mError Task not found[0m
+Error: Task not found
+    at TaskServices.updateTask (file:///C:/flutter/taskit_backend/src/features/task/task.services.js:220:15)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async updateTask (file:///C:/flutter/taskit_backend/src/features/task/task.controller.js:80:20) {
+  "requestId": "e4444c6e-3085-4e64-a4e4-4ebfba387e12",
+  "method": "PUT",
+  "url": "/api/v1/tasks/6a06d4d80bbb2a341a2489e6",
+  "status": 404
+}
+2026-05-15 21:19:42 [[33mwarn[39m]: [1;33mAPI Warning[0m {
+  "requestId": "e4444c6e-3085-4e64-a4e4-4ebfba387e12",
+  "method": "PUT",
+  "url": "/api/v1/tasks/6a06d4d80bbb2a341a2489e6",
+  "status": 404,
+  "time": "109.37 ms",
+  "ip": "::1"
+}
+2026-05-15 21:20:16 [[32minfo[39m]: [1;32mVerify access token for eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWYwMzZkODYyZWM3MjkyMmVkMDFhNDkiLCJpYXQiOjE3Nzg4NDU4NzQsImV4cCI6MTc3ODkzMjI3NH0.33wmFOyUFgwgO8KX4dJKEBm8ryFQBRJjcAvc0D7qpfA[0m 
+2026-05-15 21:20:16 [[32minfo[39m]: [1;32mAPI Request[0m {
+  "requestId": "985192f7-7c49-43d7-8a94-bd7eb01a72a4",
+  "method": "GET",
+  "url": "/api/v1/tasks",
+  "status": 200,
+  "time": "202.31 ms",
+  "ip": "::1"
+}
+2026-05-15 21:20:28 [[32minfo[39m]: [1;32mVerify access token for eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWYwMzZkODYyZWM3MjkyMmVkMDFhNDkiLCJpYXQiOjE3Nzg4NDU4NzQsImV4cCI6MTc3ODkzMjI3NH0.33wmFOyUFgwgO8KX4dJKEBm8ryFQBRJjcAvc0D7qpfA[0m 
+2026-05-15 21:20:29 [[32minfo[39m]: [1;32mEmitting task change: userId=69f036d862ec72922ed01a49, sessionId=1234, action=UPDATE[0m 
+2026-05-15 21:20:29 [[32minfo[39m]: [1;32mAPI Request[0m {
+  "requestId": "83e705f4-5bcd-4f83-bd38-d58987088f58",
+  "method": "PUT",
+  "url": "/api/v1/tasks/6a06d42e0bbb2a341a2489e3",
+  "status": 200,
+  "time": "356.20 ms",
+  "ip": "::1"
+}
+2026-05-15 21:20:43 [[32minfo[39m]: [1;32mVerify access token for eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWYwMzZkODYyZWM3MjkyMmVkMDFhNDkiLCJpYXQiOjE3Nzg4NDU4NzQsImV4cCI6MTc3ODkzMjI3NH0.33wmFOyUFgwgO8KX4dJKEBm8ryFQBRJjcAvc0D7qpfA[0m 
+2026-05-15 21:20:43 [[32minfo[39m]: [1;32mEmitting task change: userId=69f036d862ec72922ed01a49, sessionId=1239, action=DELETE[0m 
+2026-05-15 21:20:43 [[32minfo[39m]: [1;32mAPI Request[0m {
+  "requestId": "51f0eed1-060f-46ea-8789-fb5cb9f4ec19",
+  "method": "DELETE",
+  "url": "/api/v1/tasks/6a06d42e0bbb2a341a2489e3",
+  "status": 200,
+  "time": "358.30 ms",
+  "ip": "::1"
+}
+2026-05-15 21:44:56 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-05-15 21:44:56 [[32minfo[39m]: [1;32mMongoDB connected![0m 

@@ -6,19 +6,25 @@ import db from "../../shared/utils/db.js";
 import UserModel from "../user/user.model.js";
 
 import {
+  BadRequestError,
   BaseError,
   NotFoundError,
   ServerError,
 } from "../../shared/utils/error.js";
+import TaskSyncService from "./task.sync.service.js";
 
 class TaskServices {
   //#region CREATE
+
   static async createTask(data) {
     const session = await db.startSession();
     session.startTransaction();
     try {
       const category = (
-        await CategoryModel.findById(data.categoryId).session(session)
+        await CategoryModel.findOne({
+          _id: data.categoryId,
+          deleted: false,
+        }).session(session)
       )?.toObject();
       if (!category) {
         throw new NotFoundError("Category not found");
@@ -48,6 +54,7 @@ class TaskServices {
           ...subtask.toObject(),
         })),
       };
+      TaskSyncService.notifyCreate(data.userId, data.sessionId, result);
       return result;
     } catch (e) {
       await session.abortTransaction();
@@ -68,7 +75,6 @@ class TaskServices {
         sortBy = "createdAt",
         sortOrder = "desc",
         title,
-        description,
         status,
         categoryId,
         dueDate,
@@ -77,15 +83,12 @@ class TaskServices {
       if (userId) {
         const user = await UserModel.findById(userId);
         if (!user) {
-          throw new ServerError("User not found", 404);
+          throw new ServerError("User not found");
         }
       }
-      const filter = { userId };
+      const filter = { userId, deleted: false };
       if (title) {
         filter.title = { $regex: title, $options: "i" };
-      }
-      if (description) {
-        filter.description = { $regex: description, $options: "i" };
       }
       if (status) {
         filter.status = status;
@@ -113,6 +116,7 @@ class TaskServices {
         .limit(parseInt(limit));
       const subtask = await SubtaskModel.find({
         taskId: { $in: tasks.map((task) => task._id) },
+        deleted: false,
       });
       const tasksWithSubtasks = tasks.map((task) => ({
         ...task.toObject(),
@@ -176,96 +180,76 @@ class TaskServices {
       };
     } catch (e) {
       if (e instanceof BaseError) throw e;
-      throw new ServerError(`Get sync tasks error: ${e.message}`, 500);
+      throw new ServerError(`Get sync tasks error: ${e.message}`);
     }
   }
 
   static async getTask(taskId) {
     try {
-      const task = await TaskModel.findById(taskId);
+      const task = await TaskModel.findOne({
+        _id: taskId,
+        deleted: false,
+      });
       if (!task) {
-        throw new ServerError("Task not found", 404);
+        throw new ServerError("Task not found");
       }
-      const subtasks = await SubtaskModel.find({ taskId: taskId });
+      const subtasks = await SubtaskModel.find({
+        taskId: taskId,
+        deleted: false,
+      });
       task.subtasks = subtasks.map((subtask) => subtask.toObject());
       return task.toObject();
     } catch (e) {
       if (e instanceof BaseError) throw e;
-      throw new ServerError(`Get task error: ${e.message}`, 500);
+      throw new ServerError(`Get task error: ${e.message}`);
     }
   }
 
   //#endregion
 
   //#region UPDATE
-  static async updateTaskPartial(taskId, updateData) {
+  static async updateTask(userId, sessionId, taskId, updateData) {
     const session = await db.startSession();
     try {
       session.startTransaction();
-      const task = await TaskModel.findById(taskId).session(session);
+      const task = await TaskModel.findOne({
+        _id: taskId,
+        deleted: false,
+      }).session(session);
       if (!task) {
-        throw new NotFoundError("Task not found", 404);
+        throw new NotFoundError("Task not found");
       }
 
       if (updateData.categoryId) {
-        const category = await CategoryServices.findById(
-          updateData.categoryId,
-        ).session(session);
+        if (!CategoryModel.isValidId(updateData.categoryId)) {
+          throw new BadRequestError("Invalid category id");
+        }
+        const category = await CategoryModel.findOne({
+          _id: updateData.categoryId,
+          deleted: false,
+        }).session(session);
         if (!category) {
-          throw new NotFoundError("Category not found", 404);
+          throw new NotFoundError("Category not found");
         }
       }
 
-      await TaskModel.findByIdAndUpdate(
-        taskId,
-        { $set: updateData },
-        { new: true, session },
-      );
+      const result = (
+        await TaskModel.findByIdAndUpdate(
+          taskId,
+          { $set: updateData },
+          { new: true, session },
+        )
+      ).toObject();
       await session.commitTransaction();
+      TaskSyncService.notifyUpdate(userId, sessionId, result);
       return {
         localId: updateData.localId,
-        id: taskId,
-      };
-    } catch (e) {
-      session.abortTransaction();
-      if (e instanceof BaseError) throw e;
-      throw new ServerError(`Update task error: ${e.message}`, 500);
-    } finally {
-      session.endSession();
-    }
-  }
-  static async updateTaskFull(taskId, updateData) {
-    const session = await db.startSession();
-    session.startTransaction();
-    try {
-      const task = await TaskModel.findById(taskId).session(session);
-      if (!task) {
-        throw new NotFoundError("Task not found", 404);
-      }
-
-      if (updateData.categoryId) {
-        const category = await CategoryModel.findById(
-          updateData.categoryId,
-        ).session(session);
-        if (!category) {
-          throw new NotFoundError("Category not found", 404);
-        }
-      }
-
-      await TaskModel.findByIdAndUpdate(
-        taskId,
-        { $set: updateData },
-        { new: true, overwrite: true, session },
-      );
-      await session.commitTransaction();
-      return {
-        localId: updateData.localId,
-        id: taskId,
+        ...result,
       };
     } catch (e) {
       await session.abortTransaction();
       if (e instanceof BaseError) throw e;
-      throw new ServerError(`Update tasks error: ${e.message}`, 500);
+      throw new ServerError(`Update task error: ${e.message}`);
     } finally {
       session.endSession();
     }
@@ -412,22 +396,41 @@ class TaskServices {
   //#endregion
 
   //#region DELETE
-  static async deleteTask(userId, taskId) {
+  static async deleteTask(userId, sessionId, taskId) {
     const session = await db.startSession();
     try {
       session.startTransaction();
-      const user = await UserModel.findById(userId).session(session);
-      const task = await TaskModel.findById(taskId).session(session);
+      const task = (
+        await TaskModel.findById(taskId).session(session)
+      ).toObject();
+      if (!task) throw new NotFoundError("Task not found");
       const subtaskIds = await SubtaskModel.find(
         { taskId },
-        { _id: 1 },
+        { _id: 1, deleted: false },
       ).session(session);
-      if (!task) throw new NotFoundError("Task not found", 404);
-      if (!user) throw new NotFoundError("User not found", 404);
+      await TaskModel.updateOne(
+        { _id: taskId },
+        {
+          $set: {
+            deleted: true,
+            updatedAt: new Date(),
+          },
+        },
+        { session },
+      );
 
-      await TaskModel.deleteOne({ _id: taskId, userId }, { session });
-      await SubtaskModel.deleteMany({ taskId }, { session });
+      await SubtaskModel.updateMany(
+        { taskId },
+        {
+          $set: {
+            deleted: true,
+            updatedAt: new Date(),
+          },
+        },
+        { session },
+      );
       await session.commitTransaction();
+      TaskSyncService.notifyDelete(userId, sessionId, taskId);
       return {
         taskId,
         subtaskIds,
@@ -435,7 +438,7 @@ class TaskServices {
     } catch (e) {
       await session.abortTransaction();
       if (e instanceof BaseError) throw e;
-      throw new ServerError(`Delete task error: ${e.message}`, 500);
+      throw new ServerError(`Delete task error: ${e.message}`);
     } finally {
       await session.endSession();
     }

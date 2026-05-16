@@ -1,6 +1,78 @@
 import validate from "../../middleware/validate.js";
 import Joi from "joi";
 import { joiMsg } from "../../shared/helpers/validation.helper.js";
+import { param } from "express-validator";
+
+export const getTaskValidate = validate({
+  params: Joi.object({
+    taskId: Joi.string()
+      .trim()
+      .required()
+      .messages(joiMsg("Task id", { required: true })),
+  }),
+});
+
+export const getTasksValidate = validate({
+  query: Joi.object({
+    title: Joi.string()
+      .optional()
+      .trim()
+      .messages(joiMsg("Title", { string: true })),
+    status: Joi.string()
+      .optional()
+      .trim()
+      .valid("scheduled", "pending", "completed")
+      .messages(
+        joiMsg("Status", {
+          string: true,
+          values: ["scheduled", "pending", "completed"],
+        }),
+      ),
+    priority: Joi.string()
+      .optional()
+      .trim()
+      .valid("low", "medium", "high", "none")
+      .messages(
+        joiMsg("Priority", {
+          string: true,
+          values: ["low", "medium", "high", "none"],
+        }),
+      ),
+    dueDate: Joi.date()
+      .optional()
+      .messages(joiMsg("Due date", { date: true })),
+    hasTime: Joi.boolean()
+      .optional()
+      .messages(joiMsg("Has time", { boolean: true })),
+    categoryId: Joi.string()
+      .optional()
+      .trim()
+      .messages(joiMsg("Category id", { string: true })),
+    page: Joi.number()
+      .optional()
+      .messages(joiMsg("Page", { number: true })),
+    limit: Joi.number()
+      .optional()
+      .messages(joiMsg("Limit", { number: true })),
+    sortBy: Joi.string()
+      .optional()
+      .trim()
+      .valid("createdAt", "updatedAt", "dueDate")
+      .messages(
+        joiMsg("Sort by", {
+          string: true,
+          values: ["createdAt", "updatedAt", "dueDate"],
+        }),
+      ),
+    sortOrder: Joi.string()
+      .optional()
+      .valid("asc", "desc")
+      .messages(
+        joiMsg("Sort order", { string: true, values: ["asc", "desc"] }),
+      ),
+  }),
+});
+
 export const createTaskValidate = validate({
   body: Joi.object({
     localId: Joi.number()
@@ -62,5 +134,76 @@ export const createTaskValidate = validate({
         }),
       )
       .default([]),
+  }),
+});
+
+export const updateTaskValidate = validate({
+  params: Joi.object({
+    taskId: Joi.string()
+      .trim()
+      .required()
+      .messages(joiMsg("Task id", { required: true, string: true })),
+  }),
+  body: Joi.object({
+    localId: Joi.number()
+      .optional()
+      .messages(joiMsg("Local id", { number: true })),
+    title: Joi.string()
+      .trim()
+      .optional()
+      .messages(joiMsg("Title", { string: true })),
+    completedAt: Joi.date()
+      .optional()
+      .allow(null)
+      .messages(joiMsg("Completed at", { date: true })),
+    description: Joi.string()
+      .optional()
+      .trim()
+      .allow("")
+      .messages(joiMsg("Description", { string: true })),
+    dueDate: Joi.date()
+      .optional()
+      .allow(null)
+      .messages(joiMsg("Due date", { date: true })),
+    hasTime: Joi.boolean()
+      .optional()
+      .messages(joiMsg("Has time", { boolean: true })),
+    categoryId: Joi.string()
+      .optional()
+      .trim()
+      .messages(joiMsg("Category id", { string: true })),
+    priority: Joi.string()
+      .optional()
+      .trim()
+      .valid("low", "medium", "high", "none")
+      .messages(
+        joiMsg("Priority", {
+          string: true,
+          values: ["low", "medium", "high", "none"],
+        }),
+      ),
+    status: Joi.string()
+      .optional()
+      .trim()
+      .valid("pending", "scheduled", "completed")
+      .messages(
+        joiMsg("Status", {
+          string: true,
+          values: ["pending", "scheduled", "completed"],
+        }),
+      ),
+  })
+    .min(1)
+    .messages({
+      "object.min": "At least one field is required",
+    }),
+});
+
+export const deleteTaskValidate = validate({
+  params: Joi.object({
+    taskId: Joi.string()
+      .trim()
+      .required()
+      .messages(joiMsg("Task id", { required: true })),
   }),
 });

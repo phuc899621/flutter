@@ -2648,3 +2648,257 @@ Error: Access token expired
   "url": "/api/v1/tasks",
   "status": 401
 }
+2026-05-15 16:25:26 [[31merror[39m]: [1;31mMongoDB connection failed querySrv ECONNREFUSED _mongodb._tcp.taskit.wnyqv.mongodb.net[0m
+Error: querySrv ECONNREFUSED _mongodb._tcp.taskit.wnyqv.mongodb.net
+    at QueryReqWrap.onresolve [as oncomplete] (node:internal/dns/promises:293:17) {
+  "code": "ECONNREFUSED",
+  "syscall": "querySrv",
+  "hostname": "_mongodb._tcp.taskit.wnyqv.mongodb.net"
+}
+2026-05-15 18:51:01 [[31merror[39m]: [1;31mAccess token expired[0m
+Error: [1;31mAccess token expired[0m
+    at verifyAccessToken (file:///C:/flutter/taskit_backend/src/shared/services/token.service.js:65:11)
+    at Array.socketAuth (file:///C:/flutter/taskit_backend/src/middleware/socket.middleware.js:18:21)
+    at run (C:\flutter\taskit_backend\node_modules\socket.io\dist\namespace.js:133:19)
+    at Namespace.run (C:\flutter\taskit_backend\node_modules\socket.io\dist\namespace.js:144:9)
+    at Namespace._add (C:\flutter\taskit_backend\node_modules\socket.io\dist\namespace.js:221:14)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5) {
+  "statusCode": 401,
+  "type": "AuthenticationError"
+}
+2026-05-15 20:57:59 [[31merror[39m]: [1;31mError At least one field is required[0m
+Error: At least one field is required
+    at file:///C:/flutter/taskit_backend/src/middleware/validate.js:14:15
+    at Layer.handle [as handle_request] (C:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\flutter\taskit_backend\node_modules\express\lib\router\route.js:149:13)
+    at sessionMiddleware (file:///C:/flutter/taskit_backend/src/middleware/session.middleware.js:21:5)
+    at Layer.handle [as handle_request] (C:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\flutter\taskit_backend\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (C:\flutter\taskit_backend\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (C:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:284:15
+    at param (C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:365:14) {
+  "requestId": "b6171204-880d-49c8-83ea-c999f65ba0ae",
+  "method": "PUT",
+  "url": "/api/v1/tasks/6a06d4d80bbb2a341a2489e6",
+  "status": 400
+}
+2026-05-15 20:58:45 [[31merror[39m]: [1;31mError Update task error: CategoryServices.findById is not a function[0m
+Error: Update task error: CategoryServices.findById is not a function
+    at TaskServices.updateTask (file:///C:/flutter/taskit_backend/src/features/task/task.services.js:238:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async updateTask (file:///C:/flutter/taskit_backend/src/features/task/task.controller.js:80:20) {
+  "requestId": "4bf45bba-3a49-4273-a130-e934a3081a16",
+  "method": "PUT",
+  "url": "/api/v1/tasks/6a06d4d80bbb2a341a2489e6",
+  "status": 500
+}
+2026-05-15 20:58:45 [[31merror[39m]: [1;31mAPI Error[0m {
+  "requestId": "4bf45bba-3a49-4273-a130-e934a3081a16",
+  "method": "PUT",
+  "url": "/api/v1/tasks/6a06d4d80bbb2a341a2489e6",
+  "status": 500,
+  "time": "166.54 ms",
+  "ip": "::1"
+}
+2026-05-15 21:00:19 [[31merror[39m]: [1;31mError Update task error: Cast to ObjectId failed for value "69f036d862ec72922ed01a4" (type string) at path "_id" for model "category"[0m
+Error: Update task error: Cast to ObjectId failed for value "69f036d862ec72922ed01a4" (type string) at path "_id" for model "category"
+    at TaskServices.updateTask (file:///C:/flutter/taskit_backend/src/features/task/task.services.js:238:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async updateTask (file:///C:/flutter/taskit_backend/src/features/task/task.controller.js:80:20) {
+  "requestId": "ca0fd693-f12d-4122-a7ef-77306c9a850b",
+  "method": "PUT",
+  "url": "/api/v1/tasks/6a06d4d80bbb2a341a2489e6",
+  "status": 500
+}
+2026-05-15 21:00:19 [[31merror[39m]: [1;31mAPI Error[0m {
+  "requestId": "ca0fd693-f12d-4122-a7ef-77306c9a850b",
+  "method": "PUT",
+  "url": "/api/v1/tasks/6a06d4d80bbb2a341a2489e6",
+  "status": 500,
+  "time": "64.04 ms",
+  "ip": "::1"
+}
+2026-05-15 21:05:45 [[31merror[39m]: [1;31mError title must be a string[0m
+Error: title must be a string
+    at file:///C:/flutter/taskit_backend/src/middleware/validate.js:14:15
+    at Layer.handle [as handle_request] (C:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\flutter\taskit_backend\node_modules\express\lib\router\route.js:149:13)
+    at sessionMiddleware (file:///C:/flutter/taskit_backend/src/middleware/session.middleware.js:21:5)
+    at Layer.handle [as handle_request] (C:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\flutter\taskit_backend\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (C:\flutter\taskit_backend\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (C:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:284:15
+    at param (C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:365:14) {
+  "requestId": "88cda756-d90a-4c61-9b00-22b6f54c774c",
+  "method": "PUT",
+  "url": "/api/v1/tasks/6a06d4d80bbb2a341a2489e6",
+  "status": 400
+}
+2026-05-15 21:06:29 [[31merror[39m]: [1;31mError priority must be one of [low, medium, high, none][0m
+Error: priority must be one of [low, medium, high, none]
+    at file:///C:/flutter/taskit_backend/src/middleware/validate.js:14:15
+    at Layer.handle [as handle_request] (C:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\flutter\taskit_backend\node_modules\express\lib\router\route.js:149:13)
+    at sessionMiddleware (file:///C:/flutter/taskit_backend/src/middleware/session.middleware.js:21:5)
+    at Layer.handle [as handle_request] (C:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\flutter\taskit_backend\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (C:\flutter\taskit_backend\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (C:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:284:15
+    at param (C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:365:14) {
+  "requestId": "99871601-642c-438a-9d7a-d6668dcbfe05",
+  "method": "PUT",
+  "url": "/api/v1/tasks/6a06d4d80bbb2a341a2489e6",
+  "status": 400
+}
+2026-05-15 21:06:33 [[31merror[39m]: [1;31mError priority must be one of [low, medium, high, none][0m
+Error: priority must be one of [low, medium, high, none]
+    at file:///C:/flutter/taskit_backend/src/middleware/validate.js:14:15
+    at Layer.handle [as handle_request] (C:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\flutter\taskit_backend\node_modules\express\lib\router\route.js:149:13)
+    at sessionMiddleware (file:///C:/flutter/taskit_backend/src/middleware/session.middleware.js:21:5)
+    at Layer.handle [as handle_request] (C:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\flutter\taskit_backend\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (C:\flutter\taskit_backend\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (C:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:284:15
+    at param (C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:365:14) {
+  "requestId": "cf9bd48f-b49f-4ade-9780-544fcf7f706d",
+  "method": "PUT",
+  "url": "/api/v1/tasks/6a06d4d80bbb2a341a2489e6",
+  "status": 400
+}
+2026-05-15 21:06:39 [[31merror[39m]: [1;31mError priority must be one of [low, medium, high, none][0m
+Error: priority must be one of [low, medium, high, none]
+    at file:///C:/flutter/taskit_backend/src/middleware/validate.js:14:15
+    at Layer.handle [as handle_request] (C:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\flutter\taskit_backend\node_modules\express\lib\router\route.js:149:13)
+    at sessionMiddleware (file:///C:/flutter/taskit_backend/src/middleware/session.middleware.js:21:5)
+    at Layer.handle [as handle_request] (C:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\flutter\taskit_backend\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (C:\flutter\taskit_backend\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (C:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:284:15
+    at param (C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:365:14) {
+  "requestId": "a4c1b7e8-7f97-4308-99ca-5ce61622c975",
+  "method": "PUT",
+  "url": "/api/v1/tasks/6a06d4d80bbb2a341a2489e6",
+  "status": 400
+}
+2026-05-15 21:07:02 [[31merror[39m]: [1;31mError status must be one of [pending, scheduled, completed][0m
+Error: status must be one of [pending, scheduled, completed]
+    at file:///C:/flutter/taskit_backend/src/middleware/validate.js:14:15
+    at Layer.handle [as handle_request] (C:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\flutter\taskit_backend\node_modules\express\lib\router\route.js:149:13)
+    at sessionMiddleware (file:///C:/flutter/taskit_backend/src/middleware/session.middleware.js:21:5)
+    at Layer.handle [as handle_request] (C:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\flutter\taskit_backend\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (C:\flutter\taskit_backend\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (C:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:284:15
+    at param (C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:365:14) {
+  "requestId": "181dc1f1-94d6-43ca-8831-bfbf077a25cb",
+  "method": "PUT",
+  "url": "/api/v1/tasks/6a06d4d80bbb2a341a2489e6",
+  "status": 400
+}
+2026-05-15 21:07:43 [[31merror[39m]: [1;31mError dueDate must be a valid date[0m
+Error: dueDate must be a valid date
+    at file:///C:/flutter/taskit_backend/src/middleware/validate.js:14:15
+    at Layer.handle [as handle_request] (C:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\flutter\taskit_backend\node_modules\express\lib\router\route.js:149:13)
+    at sessionMiddleware (file:///C:/flutter/taskit_backend/src/middleware/session.middleware.js:21:5)
+    at Layer.handle [as handle_request] (C:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\flutter\taskit_backend\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (C:\flutter\taskit_backend\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (C:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:284:15
+    at param (C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:365:14) {
+  "requestId": "e9f9a985-c432-4399-8c89-b2f872565791",
+  "method": "PUT",
+  "url": "/api/v1/tasks/6a06d4d80bbb2a341a2489e6",
+  "status": 400
+}
+2026-05-15 21:07:51 [[31merror[39m]: [1;31mError Expected double-quoted property name in JSON at position 189 (line 8 column 1)[0m
+SyntaxError: Expected double-quoted property name in JSON at position 189 (line 8 column 1)
+    at JSON.parse (<anonymous>)
+    at parse (C:\flutter\taskit_backend\node_modules\body-parser\lib\types\json.js:92:19)
+    at C:\flutter\taskit_backend\node_modules\body-parser\lib\read.js:128:18
+    at AsyncResource.runInAsyncScope (node:async_hooks:213:14)
+    at invokeCallback (C:\flutter\taskit_backend\node_modules\raw-body\index.js:238:16)
+    at done (C:\flutter\taskit_backend\node_modules\raw-body\index.js:227:7)
+    at IncomingMessage.onEnd (C:\flutter\taskit_backend\node_modules\raw-body\index.js:287:7)
+    at IncomingMessage.emit (node:events:508:28)
+    at endReadableNT (node:internal/streams/readable:1701:12)
+    at process.processTicksAndRejections (node:internal/process/task_queues:89:21) {
+  "requestId": "67ab6e5c-53e8-400c-bfb7-0f2a2f147766",
+  "method": "PUT",
+  "url": "/api/v1/tasks/6a06d4d80bbb2a341a2489e6",
+  "status": 400
+}
+2026-05-15 21:08:32 [[31merror[39m]: [1;31mError dueDate must be a valid date[0m
+Error: dueDate must be a valid date
+    at file:///C:/flutter/taskit_backend/src/middleware/validate.js:14:15
+    at Layer.handle [as handle_request] (C:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\flutter\taskit_backend\node_modules\express\lib\router\route.js:149:13)
+    at sessionMiddleware (file:///C:/flutter/taskit_backend/src/middleware/session.middleware.js:21:5)
+    at Layer.handle [as handle_request] (C:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\flutter\taskit_backend\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (C:\flutter\taskit_backend\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (C:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:284:15
+    at param (C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:365:14) {
+  "requestId": "80d48416-93ff-4cae-8b4d-e688743b715f",
+  "method": "PUT",
+  "url": "/api/v1/tasks/6a06d4d80bbb2a341a2489e6",
+  "status": 400
+}
+2026-05-15 21:12:01 [[31merror[39m]: [1;31mError Access denied. No session id provided[0m
+Error: Access denied. No session id provided
+    at sessionMiddleware (file:///C:/flutter/taskit_backend/src/middleware/session.middleware.js:13:13)
+    at Layer.handle [as handle_request] (C:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\flutter\taskit_backend\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (C:\flutter\taskit_backend\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (C:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:284:15
+    at param (C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:365:14)
+    at param (C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:376:14)
+    at router.process_params (C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:421:3)
+    at next (C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:280:10) {
+  "requestId": "ac1ad3fb-80f7-4ee3-9965-4c2b7369ec7a",
+  "method": "DELETE",
+  "url": "/api/v1/tasks/6a06d4d80bbb2a341a2489e6",
+  "status": 401
+}
+2026-05-15 21:16:41 [[31merror[39m]: [1;31mError Task not found[0m
+Error: Task not found
+    at TaskServices.updateTask (file:///C:/flutter/taskit_backend/src/features/task/task.services.js:220:15)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async updateTask (file:///C:/flutter/taskit_backend/src/features/task/task.controller.js:80:20) {
+  "requestId": "a5749bf3-bd76-4aae-9042-047108f7abf2",
+  "method": "PUT",
+  "url": "/api/v1/tasks/6a06d4d80bbb2a341a2489e6",
+  "status": 404
+}
+2026-05-15 21:17:10 [[31merror[39m]: [1;31mError Task not found[0m
+Error: Task not found
+    at TaskServices.updateTask (file:///C:/flutter/taskit_backend/src/features/task/task.services.js:220:15)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async updateTask (file:///C:/flutter/taskit_backend/src/features/task/task.controller.js:80:20) {
+  "requestId": "67dcd682-8ee5-47ee-910c-b40e6d99b15c",
+  "method": "PUT",
+  "url": "/api/v1/tasks/6a06d4d80bbb2a341a2489e6",
+  "status": 404
+}
+2026-05-15 21:19:42 [[31merror[39m]: [1;31mError Task not found[0m
+Error: Task not found
+    at TaskServices.updateTask (file:///C:/flutter/taskit_backend/src/features/task/task.services.js:220:15)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async updateTask (file:///C:/flutter/taskit_backend/src/features/task/task.controller.js:80:20) {
+  "requestId": "e4444c6e-3085-4e64-a4e4-4ebfba387e12",
+  "method": "PUT",
+  "url": "/api/v1/tasks/6a06d4d80bbb2a341a2489e6",
+  "status": 404
+}

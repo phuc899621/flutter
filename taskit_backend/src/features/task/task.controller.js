@@ -1,30 +1,27 @@
 import TaskServices from "./task.services.js";
 
 //#region CREATE
-export const createTask = async (req, res) => {
+export const createTask = async (req, res, next) => {
   try {
     console.log("Create task request body:", req.body);
     const data = req.body;
     data.userId = req.user.userId;
+    data.sessionId = req.sessionId;
     const result = await TaskServices.createTask(data);
     return res.status(201).json({
       message: "Task created successfully",
       data: result,
     });
   } catch (e) {
-    const statusCode = e.statusCode || 500;
-    return res.status(statusCode).json({
-      message: e.message,
-      data: {},
-    });
+    next(e);
   }
 };
 //#endregion
 
 //#region READ
-export const getTasks = async (req, res) => {
+export const getTasks = async (req, res, next) => {
   try {
-    const userId = req.user.id;
+    const userId = req.user.userId;
     const result = await TaskServices.getTasks(userId, req.query);
     return res.status(200).json({
       message: "Tasks retrieved successfully",
@@ -32,11 +29,7 @@ export const getTasks = async (req, res) => {
       data: result.data,
     });
   } catch (e) {
-    const statusCode = e.statusCode || 500;
-    return res.status(statusCode).json({
-      message: e.message,
-      data: {},
-    });
+    next(e);
   }
 };
 
@@ -79,36 +72,23 @@ export const getTask = async (req, res) => {
 //#endregion
 
 //#region UPDATE
-export const updateTaskFull = async (req, res) => {
+export const updateTask = async (req, res, next) => {
   try {
+    const userId = req.user.userId;
+    const sessionId = req.sessionId;
     const { taskId } = req.params;
-    const result = await TaskServices.updateTaskFull(taskId, req.body);
+    const result = await TaskServices.updateTask(
+      userId,
+      sessionId,
+      taskId,
+      req.body,
+    );
     return res.status(200).json({
       message: "Task updated successfully",
       data: result,
     });
   } catch (e) {
-    const statusCode = e.statusCode || 500;
-    return res.status(statusCode).json({
-      message: e.message,
-      data: {},
-    });
-  }
-};
-export const updateTaskPartial = async (req, res) => {
-  try {
-    const { taskId } = req.params;
-    const result = await TaskServices.updateTaskPartial(taskId, req.body);
-    return res.status(200).json({
-      message: "Task partially updated successfully",
-      data: result,
-    });
-  } catch (e) {
-    const statusCode = e.statusCode || 500;
-    return res.status(statusCode).json({
-      message: e.message,
-      data: {},
-    });
+    next(e);
   }
 };
 export const updateTasksBulk = async (req, res) => {
@@ -147,21 +127,18 @@ export const updateMultipleTasks = async (req, res) => {
 
 //#region DELETE
 
-export const deleteTask = async (req, res) => {
+export const deleteTask = async (req, res, next) => {
   try {
-    const userId = req.user.id;
+    const userId = req.user.userId;
+    const sessionId = req.sessionId;
     const { taskId } = req.params;
-    const result = await TaskServices.deleteTask(userId, taskId);
+    const result = await TaskServices.deleteTask(userId, sessionId, taskId);
     return res.status(200).json({
       message: "Delete task successfully",
       data: result,
     });
   } catch (e) {
-    const statusCode = e.statusCode || 500;
-    return res.status(statusCode).json({
-      message: e.message,
-      data: {},
-    });
+    next(e);
   }
 };
 
