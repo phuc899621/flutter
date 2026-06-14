@@ -68,7 +68,52 @@ export const getTask = async (req, res) => {
     });
   }
 };
-
+export const syncTasks = async (req, res, next) => {
+  try {
+    const { tasks } = req.body;
+    const userId = req.user.userId;
+    const sessionId = req.sessionId;
+    const result = await TaskServices.syncTasks(userId, sessionId, tasks);
+    return res.status(200).json({
+      message: "Tasks synced successfully",
+      data: result,
+    });
+  } catch (e) {
+    next(e);
+  }
+};
+export const pullTasks = async (req, res, next) => {
+  try {
+    const userId = req.user.userId;
+    const lastSyncTime = req.query.lastSyncTime;
+    console.log(userId, lastSyncTime);
+    const tasks = await TaskServices.pullTasks(userId, lastSyncTime);
+    return res.status(200).json({
+      message: "Tasks pull successfully",
+      data: tasks,
+    });
+  } catch (e) {
+    next(e);
+  }
+};
+export const syncDeletedTasks = async (req, res, next) => {
+  try {
+    const { tasks } = req.body;
+    const userId = req.user.userId;
+    const sessionId = req.sessionId;
+    const result = await TaskServices.syncDeletedTasks(
+      userId,
+      sessionId,
+      tasks,
+    );
+    return res.status(200).json({
+      message: "Deleted tasks synced successfully",
+      data: result,
+    });
+  } catch (e) {
+    next(e);
+  }
+};
 //#endregion
 
 //#region UPDATE

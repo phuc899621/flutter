@@ -12,6 +12,7 @@ import {
   ServerError,
 } from "../../shared/utils/error.js";
 import TaskSyncService from "./task.sync.service.js";
+import UserService from "../user/user.service.js";
 
 class TaskServices {
   //#region CREATE
@@ -202,6 +203,250 @@ class TaskServices {
     } catch (e) {
       if (e instanceof BaseError) throw e;
       throw new ServerError(`Get task error: ${e.message}`);
+    }
+  }
+
+  static async syncTasks(userId, sessionId, tasks) {
+    try {
+      await UserService.ensureUserExistsById(userId);
+      console.log(tasks);
+      const accept = [];
+      const reject = [];
+      const operations = [];
+      const ids = tasks.filter((c) => c.id).map((c) => c.id);
+      let insertIndex = 0;
+      const existingTasks = await TaskModel.find({
+        _id: { $in: ids },
+        userId,
+      });
+
+      const existingMap = new Map(
+        existingTasks.map((c) => [c._id.toString(), c]),
+      );
+      for (const task of tasks) {
+        const { id, localId, updatedAt, ...rest } = task;
+        const clientUpdatedAt = updatedAt ? new Date(updatedAt) : null;
+
+        if (!id) {
+          const currentInsertIndex = insertIndex++;
+          operations.push({
+            insertOne: {
+              document: {
+                userId,
+                ...rest,
+                updatedAt: clientUpdatedAt ?? new Date(),
+              },
+            },
+          });
+
+          accept.push({
+            type: "insert",
+            localId,
+            insertIndex: currentInsertIndex,
+          });
+
+          continue;
+        }
+        const existing = existingMap.get(id);
+        if (!existing) {
+          reject.push({
+            localId,
+            id: null,
+          });
+          continue;
+        }
+
+        const serverUpdatedAt = existing.updatedAt
+          ? new Date(existing.updatedAt)
+          : null;
+
+        const shouldUpdate =
+          !serverUpdatedAt ||
+          (clientUpdatedAt && serverUpdatedAt <= clientUpdatedAt);
+
+        if (shouldUpdate) {
+          operations.push({
+            updateOne: {
+              filter: {
+                _id: id,
+                userId,
+              },
+              update: {
+                $set: {
+                  ...rest,
+                  updatedAt: clientUpdatedAt ?? new Date(),
+                },
+              },
+            },
+          });
+
+          accept.push({
+            type: "update",
+            localId,
+            id,
+          });
+        } else {
+          reject.push({
+            localId,
+            id: existing._id,
+          });
+        }
+      }
+      const result = operations.length
+        ? await TaskModel.bulkWrite(operations)
+        : null;
+
+      for (const item of accept) {
+        if (item.type === "insert") {
+          const insertedId = result?.insertedIds?.[item.insertIndex];
+          item.id = insertedId ? insertedId.toString() : null;
+          delete item.insertIndex;
+        }
+
+        delete item.type;
+      }
+      const affectedIds = accept.map((i) => i.id).filter(Boolean);
+      console.log("affectedIds", affectedIds);
+      const freshTasks = affectedIds.length
+        ? await TaskModel.find({
+            _id: { $in: affectedIds },
+            userId,
+          })
+        : [];
+      console.log("freshTasks", freshTasks);
+      const freshMap = new Map(freshTasks.map((c) => [c._id.toString(), c]));
+      console.log("freshMap", freshMap);
+      const finalAccept = accept.map((item) => {
+        const doc = freshMap.get(item.id?.toString());
+
+        return {
+          localId: item.localId,
+          subtasks: [],
+          ...(doc ? doc.toObject() : {}),
+        };
+      });
+
+      const rejectedIds = reject
+        .filter((item) => item.id)
+        .map((item) => item.id);
+
+      const rejectedTasks = rejectedIds.length
+        ? await TaskModel.find({
+            _id: { $in: rejectedIds },
+            userId,
+          })
+        : [];
+
+      const rejectedMap = new Map(
+        rejectedTasks.map((c) => [c._id.toString(), c]),
+      );
+
+      const finalReject = reject.map((item) => {
+        const doc = item.id ? rejectedMap.get(item.id.toString()) : null;
+        const obj = doc ? doc.toObject() : { id: null };
+        const { id, ...rest } = obj;
+        if (obj.id) {
+          return {
+            localId: item.localId,
+            id: obj.id,
+            serverData: {
+              ...rest,
+            },
+          };
+        }
+        return {
+          localId: item.localId,
+          id: null,
+          serverData: null,
+        };
+      });
+
+      if (finalAccept.length != 0) {
+        TaskSyncService.notifyBulkSync(userId, sessionId, {
+          tasks: finalAccept,
+        });
+      }
+
+      return {
+        accept: finalAccept,
+        reject: finalReject,
+      };
+    } catch (e) {
+      if (e instanceof BaseError) throw e;
+      throw new ServerError(`Sync tasks error: ${e.message}`);
+    }
+  }
+  static async pullTasks(userId, lastSyncTime = null) {
+    try {
+      await UserService.ensureUserExistsById(userId);
+      const query = lastSyncTime
+        ? { userId, updatedAt: { $gt: lastSyncTime } }
+        : { userId };
+      console.log(userId);
+      const tasks = await TaskModel.find(query);
+      console.log(`tasks: ${tasks}`);
+      if (!tasks?.length) {
+        return [];
+      }
+      const taskIds = tasks.map((task) => task._id);
+      console.log(taskIds);
+      const subtasks = await SubtaskModel.find({
+        taskId: { $in: taskIds },
+      });
+      console.log(subtasks);
+      const subtaskMap = new Map();
+
+      for (const subtask of subtasks) {
+        const taskId = subtask.taskId.toString();
+        console.log(taskId);
+        if (!subtaskMap.has(taskId)) {
+          subtaskMap.set(taskId, []);
+        }
+
+        subtaskMap.get(taskId).push(subtask);
+      }
+
+      return tasks.map((task) => ({
+        ...task.toObject(),
+        subtasks:
+          subtaskMap.get(task._id.toString())?.map((c) => c.toObject()) ?? [],
+      }));
+    } catch (e) {
+      throw new ServerError(`Pull new tasks error: ${e.message}`);
+    }
+  }
+  static async syncDeletedTasks(userId, sessionId, tasks) {
+    try {
+      await UserService.ensureUserExistsById(userId);
+      const operations = tasks.map((task) => {
+        const { id, localId } = task;
+        return {
+          updateOne: {
+            filter: { _id: id, userId },
+            update: {
+              $set: {
+                deleted: true,
+                updatedAt: new Date(),
+              },
+            },
+          },
+        };
+      });
+      const result = await TaskModel.bulkWrite(operations);
+      console.log(result);
+      const synced = tasks.map((task, index) => ({
+        localId: task.localId,
+        id: task.id,
+      }));
+      TaskSyncService.notifyBulkDelete(
+        userId,
+        sessionId,
+        synced.map((c) => c.id),
+      );
+      return synced;
+    } catch (e) {
+      if (e instanceof BaseError) throw e;
+      throw new ServerError(`Sync deleted tasks error: ${e.message}`);
     }
   }
 

@@ -2902,3 +2902,106 @@ Error: Task not found
   "url": "/api/v1/tasks/6a06d4d80bbb2a341a2489e6",
   "status": 404
 }
+2026-06-03 17:33:21 [[31merror[39m]: [1;31mError Access denied. No session id provided[0m
+Error: Access denied. No session id provided
+    at sessionMiddleware (file:///C:/flutter/taskit_backend/src/middleware/session.middleware.js:13:13)
+    at Layer.handle [as handle_request] (C:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\flutter\taskit_backend\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (C:\flutter\taskit_backend\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (C:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:284:15
+    at router.process_params (C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:346:12)
+    at next (C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:280:10)
+    at router.handle (C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:175:3)
+    at router (C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:47:12) {
+  "requestId": "8439fc3c-bf19-401d-b579-c55bc0c19c65",
+  "method": "POST",
+  "url": "/api/v1/tasks/sync",
+  "status": 401
+}
+2026-06-03 17:33:35 [[31merror[39m]: [1;31mError Access token expired[0m
+Error: Access token expired
+    at verifyAccessToken (file:///C:/flutter/taskit_backend/src/shared/services/token.service.js:65:11)
+    at sessionMiddleware (file:///C:/flutter/taskit_backend/src/middleware/session.middleware.js:15:21)
+    at Layer.handle [as handle_request] (C:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\flutter\taskit_backend\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (C:\flutter\taskit_backend\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (C:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:284:15
+    at router.process_params (C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:346:12)
+    at next (C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:280:10)
+    at router.handle (C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:175:3) {
+  "requestId": "c1cd5a2b-b5db-43e9-af56-7ded5321743c",
+  "method": "POST",
+  "url": "/api/v1/tasks/sync",
+  "status": 401
+}
+2026-06-03 17:34:12 [[31merror[39m]: [1;31mError Title is required[0m
+Error: Title is required
+    at file:///C:/flutter/taskit_backend/src/middleware/validate.js:14:15
+    at Layer.handle [as handle_request] (C:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\flutter\taskit_backend\node_modules\express\lib\router\route.js:149:13)
+    at sessionMiddleware (file:///C:/flutter/taskit_backend/src/middleware/session.middleware.js:21:5)
+    at Layer.handle [as handle_request] (C:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\flutter\taskit_backend\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (C:\flutter\taskit_backend\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (C:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:284:15
+    at router.process_params (C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:346:12) {
+  "requestId": "d5047b62-23a2-4dcc-af4c-3b5d8f19a69b",
+  "method": "POST",
+  "url": "/api/v1/tasks/sync",
+  "status": 400
+}
+2026-06-03 18:04:19 [[31merror[39m]: [1;31mError Get all categories ServerError: Cannot read properties of undefined (reading 'toObject')[0m
+Error: Get all categories ServerError: Cannot read properties of undefined (reading 'toObject')
+    at TaskServices.pullTasks (file:///C:/flutter/taskit_backend/src/features/task/task.services.js:412:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async pullTasks (file:///C:/flutter/taskit_backend/src/features/task/task.controller.js:90:19) {
+  "requestId": "95d3bcb1-2c8f-4ae8-b12b-b76bd9089f3c",
+  "method": "GET",
+  "url": "/api/v1/tasks/pull",
+  "status": 500
+}
+2026-06-03 18:04:19 [[31merror[39m]: [1;31mAPI Error[0m {
+  "requestId": "95d3bcb1-2c8f-4ae8-b12b-b76bd9089f3c",
+  "method": "GET",
+  "url": "/api/v1/tasks/pull",
+  "status": 500,
+  "time": "221.87 ms",
+  "ip": "::1"
+}
+2026-06-03 18:06:19 [[31merror[39m]: [1;31mError categories is not defined[0m
+ReferenceError: categories is not defined
+    at pullTasks (file:///C:/flutter/taskit_backend/src/features/task/task.controller.js:93:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5) {
+  "requestId": "8494669e-0e33-4e7a-befa-06cb4eb309d2",
+  "method": "GET",
+  "url": "/api/v1/tasks/pull",
+  "status": 500
+}
+2026-06-03 18:06:19 [[31merror[39m]: [1;31mAPI Error[0m {
+  "requestId": "8494669e-0e33-4e7a-befa-06cb4eb309d2",
+  "method": "GET",
+  "url": "/api/v1/tasks/pull",
+  "status": 500,
+  "time": "243.69 ms",
+  "ip": "::1"
+}
+2026-06-14 10:52:34 [[31merror[39m]: [1;31mError Expected property name or '}' in JSON at position 1 (line 1 column 2)[0m
+SyntaxError: Expected property name or '}' in JSON at position 1 (line 1 column 2)
+    at JSON.parse (<anonymous>)
+    at parse (C:\flutter\taskit_backend\node_modules\body-parser\lib\types\json.js:92:19)
+    at C:\flutter\taskit_backend\node_modules\body-parser\lib\read.js:128:18
+    at AsyncResource.runInAsyncScope (node:async_hooks:213:14)
+    at invokeCallback (C:\flutter\taskit_backend\node_modules\raw-body\index.js:238:16)
+    at done (C:\flutter\taskit_backend\node_modules\raw-body\index.js:227:7)
+    at IncomingMessage.onEnd (C:\flutter\taskit_backend\node_modules\raw-body\index.js:287:7)
+    at IncomingMessage.emit (node:events:508:28)
+    at endReadableNT (node:internal/streams/readable:1701:12)
+    at process.processTicksAndRejections (node:internal/process/task_queues:89:21) {
+  "requestId": "668a5525-de44-4725-9bdb-aff2ce14cae1",
+  "method": "POST",
+  "url": "/api/v1/auth/login",
+  "status": 400
+}

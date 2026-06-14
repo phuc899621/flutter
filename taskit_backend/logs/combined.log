@@ -7391,3 +7391,513 @@ Error: Task not found
 }
 2026-05-15 21:44:56 [[32minfo[39m]: [1;32mRedis client connected[0m 
 2026-05-15 21:44:56 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-06-03 16:48:20 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-06-03 16:48:20 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-06-03 17:22:41 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-06-03 17:22:42 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-06-03 17:22:46 [[32minfo[39m]: [1;32mRefresh token saved for 69f036d862ec72922ed01a49:604800:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWYwMzZkODYyZWM3MjkyMmVkMDFhNDkiLCJpYXQiOjE3ODA0ODIxNjYsImV4cCI6MTc4MTA4Njk2Nn0.qOE638P5IFmM7ojoeSvVvtG8RfAWVOp4JDQ81HMLYyc[0m 
+2026-06-03 17:22:46 [[32minfo[39m]: [1;32mAPI Request[0m {
+  "requestId": "eb35a14b-f867-4f35-9e73-428ece236bfe",
+  "method": "POST",
+  "url": "/api/v1/auth/login",
+  "status": 200,
+  "time": "438.03 ms",
+  "ip": "::1"
+}
+2026-06-03 17:23:03 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-06-03 17:23:04 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-06-03 17:25:51 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-06-03 17:25:51 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-06-03 17:26:18 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-06-03 17:26:18 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-06-03 17:28:23 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-06-03 17:28:24 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-06-03 17:30:55 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-06-03 17:30:56 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-06-03 17:31:15 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-06-03 17:31:16 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-06-03 17:31:44 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-06-03 17:31:45 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-06-03 17:32:02 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-06-03 17:32:02 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-06-03 17:33:21 [[31merror[39m]: [1;31mError Access denied. No session id provided[0m
+Error: Access denied. No session id provided
+    at sessionMiddleware (file:///C:/flutter/taskit_backend/src/middleware/session.middleware.js:13:13)
+    at Layer.handle [as handle_request] (C:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\flutter\taskit_backend\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (C:\flutter\taskit_backend\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (C:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:284:15
+    at router.process_params (C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:346:12)
+    at next (C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:280:10)
+    at router.handle (C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:175:3)
+    at router (C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:47:12) {
+  "requestId": "8439fc3c-bf19-401d-b579-c55bc0c19c65",
+  "method": "POST",
+  "url": "/api/v1/tasks/sync",
+  "status": 401
+}
+2026-06-03 17:33:21 [[33mwarn[39m]: [1;33mAPI Warning[0m {
+  "requestId": "8439fc3c-bf19-401d-b579-c55bc0c19c65",
+  "method": "POST",
+  "url": "/api/v1/tasks/sync",
+  "status": 401,
+  "time": "107.12 ms",
+  "ip": "::1"
+}
+2026-06-03 17:33:35 [[32minfo[39m]: [1;32mVerify access token for eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWYwMzZkODYyZWM3MjkyMmVkMDFhNDkiLCJpYXQiOjE3Nzg4NDU4NzQsImV4cCI6MTc3ODkzMjI3NH0.33wmFOyUFgwgO8KX4dJKEBm8ryFQBRJjcAvc0D7qpfA[0m 
+2026-06-03 17:33:35 [[31merror[39m]: [1;31mError Access token expired[0m
+Error: Access token expired
+    at verifyAccessToken (file:///C:/flutter/taskit_backend/src/shared/services/token.service.js:65:11)
+    at sessionMiddleware (file:///C:/flutter/taskit_backend/src/middleware/session.middleware.js:15:21)
+    at Layer.handle [as handle_request] (C:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\flutter\taskit_backend\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (C:\flutter\taskit_backend\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (C:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:284:15
+    at router.process_params (C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:346:12)
+    at next (C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:280:10)
+    at router.handle (C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:175:3) {
+  "requestId": "c1cd5a2b-b5db-43e9-af56-7ded5321743c",
+  "method": "POST",
+  "url": "/api/v1/tasks/sync",
+  "status": 401
+}
+2026-06-03 17:33:35 [[33mwarn[39m]: [1;33mAPI Warning[0m {
+  "requestId": "c1cd5a2b-b5db-43e9-af56-7ded5321743c",
+  "method": "POST",
+  "url": "/api/v1/tasks/sync",
+  "status": 401,
+  "time": "78.49 ms",
+  "ip": "::1"
+}
+2026-06-03 17:33:49 [[32minfo[39m]: [1;32mRefresh token saved for 69f036d862ec72922ed01a49:604800:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWYwMzZkODYyZWM3MjkyMmVkMDFhNDkiLCJpYXQiOjE3ODA0ODI4MjksImV4cCI6MTc4MTA4NzYyOX0.VqlrJaKbybPdiHtj1r--tLDwFEKY_b_3MoDXm6zKwo8[0m 
+2026-06-03 17:33:49 [[32minfo[39m]: [1;32mAPI Request[0m {
+  "requestId": "99349097-b0aa-4772-a463-dfbac7a806c9",
+  "method": "POST",
+  "url": "/api/v1/auth/login",
+  "status": 200,
+  "time": "390.46 ms",
+  "ip": "::1"
+}
+2026-06-03 17:34:01 [[32minfo[39m]: [1;32mVerify access token for eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWYwMzZkODYyZWM3MjkyMmVkMDFhNDkiLCJpYXQiOjE3ODA0ODI4MjksImV4cCI6MTc4MDU2OTIyOX0.eSroQs7IgsWq_iejkHyUM2_g-DzfFvPGUmhBC0sK0y8[0m 
+2026-06-03 17:34:01 [[32minfo[39m]: [1;32mEmitting task change: userId=69f036d862ec72922ed01a49, sessionId=123345235, action=BULK_SYNC[0m 
+2026-06-03 17:34:01 [[32minfo[39m]: [1;32mAPI Request[0m {
+  "requestId": "2bc4a03c-db35-452c-bb94-4ff1d3a7d9fc",
+  "method": "POST",
+  "url": "/api/v1/tasks/sync",
+  "status": 200,
+  "time": "129.73 ms",
+  "ip": "::1"
+}
+2026-06-03 17:34:12 [[32minfo[39m]: [1;32mVerify access token for eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWYwMzZkODYyZWM3MjkyMmVkMDFhNDkiLCJpYXQiOjE3ODA0ODI4MjksImV4cCI6MTc4MDU2OTIyOX0.eSroQs7IgsWq_iejkHyUM2_g-DzfFvPGUmhBC0sK0y8[0m 
+2026-06-03 17:34:12 [[31merror[39m]: [1;31mError Title is required[0m
+Error: Title is required
+    at file:///C:/flutter/taskit_backend/src/middleware/validate.js:14:15
+    at Layer.handle [as handle_request] (C:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\flutter\taskit_backend\node_modules\express\lib\router\route.js:149:13)
+    at sessionMiddleware (file:///C:/flutter/taskit_backend/src/middleware/session.middleware.js:21:5)
+    at Layer.handle [as handle_request] (C:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\flutter\taskit_backend\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (C:\flutter\taskit_backend\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (C:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:284:15
+    at router.process_params (C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:346:12) {
+  "requestId": "d5047b62-23a2-4dcc-af4c-3b5d8f19a69b",
+  "method": "POST",
+  "url": "/api/v1/tasks/sync",
+  "status": 400
+}
+2026-06-03 17:34:12 [[33mwarn[39m]: [1;33mAPI Warning[0m {
+  "requestId": "d5047b62-23a2-4dcc-af4c-3b5d8f19a69b",
+  "method": "POST",
+  "url": "/api/v1/tasks/sync",
+  "status": 400,
+  "time": "11.63 ms",
+  "ip": "::1"
+}
+2026-06-03 17:35:16 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-06-03 17:35:16 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-06-03 17:35:42 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-06-03 17:35:42 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-06-03 17:35:51 [[32minfo[39m]: [1;32mVerify access token for eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWYwMzZkODYyZWM3MjkyMmVkMDFhNDkiLCJpYXQiOjE3ODA0ODI4MjksImV4cCI6MTc4MDU2OTIyOX0.eSroQs7IgsWq_iejkHyUM2_g-DzfFvPGUmhBC0sK0y8[0m 
+2026-06-03 17:35:51 [[32minfo[39m]: [1;32mAPI Request[0m {
+  "requestId": "71e8ba2e-6dac-4f44-ad5e-ffc68abf0190",
+  "method": "GET",
+  "url": "/api/v1/tasks",
+  "status": 200,
+  "time": "370.28 ms",
+  "ip": "::1"
+}
+2026-06-03 17:37:18 [[32minfo[39m]: [1;32mVerify access token for eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWYwMzZkODYyZWM3MjkyMmVkMDFhNDkiLCJpYXQiOjE3ODA0ODI4MjksImV4cCI6MTc4MDU2OTIyOX0.eSroQs7IgsWq_iejkHyUM2_g-DzfFvPGUmhBC0sK0y8[0m 
+2026-06-03 17:37:18 [[32minfo[39m]: [1;32mEmitting task change: userId=69f036d862ec72922ed01a49, sessionId=123345235, action=BULK_SYNC[0m 
+2026-06-03 17:37:18 [[32minfo[39m]: [1;32mAPI Request[0m {
+  "requestId": "f9abac5c-b809-4dd4-903a-7122923f1aa3",
+  "method": "POST",
+  "url": "/api/v1/tasks/sync",
+  "status": 200,
+  "time": "305.58 ms",
+  "ip": "::1"
+}
+2026-06-03 17:38:30 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-06-03 17:38:31 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-06-03 17:38:35 [[32minfo[39m]: [1;32mVerify access token for eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWYwMzZkODYyZWM3MjkyMmVkMDFhNDkiLCJpYXQiOjE3ODA0ODI4MjksImV4cCI6MTc4MDU2OTIyOX0.eSroQs7IgsWq_iejkHyUM2_g-DzfFvPGUmhBC0sK0y8[0m 
+2026-06-03 17:38:35 [[32minfo[39m]: [1;32mEmitting task change: userId=69f036d862ec72922ed01a49, sessionId=123345235, action=BULK_SYNC[0m 
+2026-06-03 17:38:35 [[32minfo[39m]: [1;32mAPI Request[0m {
+  "requestId": "37e888c1-ecbc-4953-a27b-5c3d74f7f3b7",
+  "method": "POST",
+  "url": "/api/v1/tasks/sync",
+  "status": 200,
+  "time": "234.40 ms",
+  "ip": "::1"
+}
+2026-06-03 17:39:54 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-06-03 17:39:55 [[32minfo[39m]: [1;32mVerify access token for eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWYwMzZkODYyZWM3MjkyMmVkMDFhNDkiLCJpYXQiOjE3ODA0ODI4MjksImV4cCI6MTc4MDU2OTIyOX0.eSroQs7IgsWq_iejkHyUM2_g-DzfFvPGUmhBC0sK0y8[0m 
+2026-06-03 17:39:55 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-06-03 17:39:56 [[32minfo[39m]: [1;32mEmitting task change: userId=69f036d862ec72922ed01a49, sessionId=123345235, action=BULK_SYNC[0m 
+2026-06-03 17:39:56 [[32minfo[39m]: [1;32mAPI Request[0m {
+  "requestId": "84b4bd9b-a97e-4e45-ad19-ec04ccdf2ec9",
+  "method": "POST",
+  "url": "/api/v1/tasks/sync",
+  "status": 200,
+  "time": "976.00 ms",
+  "ip": "::1"
+}
+2026-06-03 17:40:53 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-06-03 17:40:53 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-06-03 17:41:01 [[32minfo[39m]: [1;32mVerify access token for eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWYwMzZkODYyZWM3MjkyMmVkMDFhNDkiLCJpYXQiOjE3ODA0ODI4MjksImV4cCI6MTc4MDU2OTIyOX0.eSroQs7IgsWq_iejkHyUM2_g-DzfFvPGUmhBC0sK0y8[0m 
+2026-06-03 17:41:01 [[32minfo[39m]: [1;32mEmitting task change: userId=69f036d862ec72922ed01a49, sessionId=123345235, action=BULK_SYNC[0m 
+2026-06-03 17:41:01 [[32minfo[39m]: [1;32mAPI Request[0m {
+  "requestId": "730baac1-db57-4c7a-b35d-bcd2f91bb500",
+  "method": "POST",
+  "url": "/api/v1/tasks/sync",
+  "status": 200,
+  "time": "303.68 ms",
+  "ip": "::1"
+}
+2026-06-03 17:42:53 [[32minfo[39m]: [1;32mVerify access token for eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWYwMzZkODYyZWM3MjkyMmVkMDFhNDkiLCJpYXQiOjE3ODA0ODI4MjksImV4cCI6MTc4MDU2OTIyOX0.eSroQs7IgsWq_iejkHyUM2_g-DzfFvPGUmhBC0sK0y8[0m 
+2026-06-03 17:42:54 [[32minfo[39m]: [1;32mEmitting task change: userId=69f036d862ec72922ed01a49, sessionId=123345235, action=BULK_SYNC[0m 
+2026-06-03 17:42:54 [[32minfo[39m]: [1;32mAPI Request[0m {
+  "requestId": "61debd91-77d4-477b-ac4c-f8ab9ea00d10",
+  "method": "POST",
+  "url": "/api/v1/tasks/sync",
+  "status": 200,
+  "time": "129.87 ms",
+  "ip": "::1"
+}
+2026-06-03 17:46:42 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-06-03 17:46:43 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-06-03 17:46:56 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-06-03 17:46:56 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-06-03 17:47:04 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-06-03 17:47:05 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-06-03 17:53:23 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-06-03 17:53:24 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-06-03 17:53:40 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-06-03 17:53:40 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-06-03 17:53:46 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-06-03 17:53:46 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-06-03 17:54:41 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-06-03 17:54:42 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-06-03 17:55:21 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-06-03 17:56:02 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-06-03 17:56:03 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-06-03 17:56:11 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-06-03 17:56:12 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-06-03 17:57:19 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-06-03 17:57:20 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-06-03 17:58:04 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-06-03 17:58:15 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-06-03 17:58:33 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-06-03 17:58:34 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-06-03 17:58:53 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-06-03 17:58:54 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-06-03 18:00:13 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-06-03 18:00:13 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-06-03 18:00:35 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-06-03 18:00:36 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-06-03 18:02:37 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-06-03 18:02:38 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-06-03 18:03:41 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-06-03 18:03:41 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-06-03 18:04:05 [[33mwarn[39m]: [1;33mAPI Warning[0m {
+  "requestId": "32f394fa-1680-40da-81e3-d843bafc8d7e",
+  "method": "GET",
+  "url": "/task",
+  "status": 404,
+  "time": "25.24 ms",
+  "ip": "::1"
+}
+2026-06-03 18:04:19 [[32minfo[39m]: [1;32mVerify access token for eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWYwMzZkODYyZWM3MjkyMmVkMDFhNDkiLCJpYXQiOjE3ODA0ODI4MjksImV4cCI6MTc4MDU2OTIyOX0.eSroQs7IgsWq_iejkHyUM2_g-DzfFvPGUmhBC0sK0y8[0m 
+2026-06-03 18:04:19 [[31merror[39m]: [1;31mError Get all categories ServerError: Cannot read properties of undefined (reading 'toObject')[0m
+Error: Get all categories ServerError: Cannot read properties of undefined (reading 'toObject')
+    at TaskServices.pullTasks (file:///C:/flutter/taskit_backend/src/features/task/task.services.js:412:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async pullTasks (file:///C:/flutter/taskit_backend/src/features/task/task.controller.js:90:19) {
+  "requestId": "95d3bcb1-2c8f-4ae8-b12b-b76bd9089f3c",
+  "method": "GET",
+  "url": "/api/v1/tasks/pull",
+  "status": 500
+}
+2026-06-03 18:04:19 [[31merror[39m]: [1;31mAPI Error[0m {
+  "requestId": "95d3bcb1-2c8f-4ae8-b12b-b76bd9089f3c",
+  "method": "GET",
+  "url": "/api/v1/tasks/pull",
+  "status": 500,
+  "time": "221.87 ms",
+  "ip": "::1"
+}
+2026-06-03 18:05:26 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-06-03 18:05:29 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-06-03 18:06:16 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-06-03 18:06:17 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-06-03 18:06:19 [[32minfo[39m]: [1;32mVerify access token for eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWYwMzZkODYyZWM3MjkyMmVkMDFhNDkiLCJpYXQiOjE3ODA0ODI4MjksImV4cCI6MTc4MDU2OTIyOX0.eSroQs7IgsWq_iejkHyUM2_g-DzfFvPGUmhBC0sK0y8[0m 
+2026-06-03 18:06:19 [[31merror[39m]: [1;31mError categories is not defined[0m
+ReferenceError: categories is not defined
+    at pullTasks (file:///C:/flutter/taskit_backend/src/features/task/task.controller.js:93:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5) {
+  "requestId": "8494669e-0e33-4e7a-befa-06cb4eb309d2",
+  "method": "GET",
+  "url": "/api/v1/tasks/pull",
+  "status": 500
+}
+2026-06-03 18:06:19 [[31merror[39m]: [1;31mAPI Error[0m {
+  "requestId": "8494669e-0e33-4e7a-befa-06cb4eb309d2",
+  "method": "GET",
+  "url": "/api/v1/tasks/pull",
+  "status": 500,
+  "time": "243.69 ms",
+  "ip": "::1"
+}
+2026-06-03 18:06:57 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-06-03 18:06:57 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-06-03 18:06:58 [[32minfo[39m]: [1;32mVerify access token for eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWYwMzZkODYyZWM3MjkyMmVkMDFhNDkiLCJpYXQiOjE3ODA0ODI4MjksImV4cCI6MTc4MDU2OTIyOX0.eSroQs7IgsWq_iejkHyUM2_g-DzfFvPGUmhBC0sK0y8[0m 
+2026-06-03 18:06:59 [[32minfo[39m]: [1;32mAPI Request[0m {
+  "requestId": "fc540bb1-93a8-4e84-9f7b-809be82ed8ca",
+  "method": "GET",
+  "url": "/api/v1/tasks/pull",
+  "status": 200,
+  "time": "176.41 ms",
+  "ip": "::1"
+}
+2026-06-03 18:07:31 [[32minfo[39m]: [1;32mVerify access token for eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWYwMzZkODYyZWM3MjkyMmVkMDFhNDkiLCJpYXQiOjE3ODA0ODI4MjksImV4cCI6MTc4MDU2OTIyOX0.eSroQs7IgsWq_iejkHyUM2_g-DzfFvPGUmhBC0sK0y8[0m 
+2026-06-03 18:07:31 [[32minfo[39m]: [1;32mEmitting task change: userId=69f036d862ec72922ed01a49, sessionId=23, action=CREATE[0m 
+2026-06-03 18:07:31 [[32minfo[39m]: [1;32mAPI Request[0m {
+  "requestId": "1a618a32-22f4-4dc8-a589-2f0d8afe8deb",
+  "method": "POST",
+  "url": "/api/v1/tasks",
+  "status": 201,
+  "time": "271.85 ms",
+  "ip": "::1"
+}
+2026-06-03 18:07:45 [[32minfo[39m]: [1;32mVerify access token for eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWYwMzZkODYyZWM3MjkyMmVkMDFhNDkiLCJpYXQiOjE3ODA0ODI4MjksImV4cCI6MTc4MDU2OTIyOX0.eSroQs7IgsWq_iejkHyUM2_g-DzfFvPGUmhBC0sK0y8[0m 
+2026-06-03 18:07:45 [[32minfo[39m]: [1;32mAPI Request[0m {
+  "requestId": "d0479ab0-ec8f-4dd3-882a-63ec6dcff7b1",
+  "method": "GET",
+  "url": "/api/v1/tasks/pull",
+  "status": 200,
+  "time": "123.71 ms",
+  "ip": "::1"
+}
+2026-06-03 18:09:34 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-06-03 18:09:34 [[32minfo[39m]: [1;32mVerify access token for eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWYwMzZkODYyZWM3MjkyMmVkMDFhNDkiLCJpYXQiOjE3ODA0ODI4MjksImV4cCI6MTc4MDU2OTIyOX0.eSroQs7IgsWq_iejkHyUM2_g-DzfFvPGUmhBC0sK0y8[0m 
+2026-06-03 18:09:35 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-06-03 18:09:35 [[32minfo[39m]: [1;32mAPI Request[0m {
+  "requestId": "93a4e65d-877a-4240-b69b-6b9a692c4670",
+  "method": "GET",
+  "url": "/api/v1/tasks/pull",
+  "status": 200,
+  "time": "788.08 ms",
+  "ip": "::1"
+}
+2026-06-03 18:10:14 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-06-03 18:10:15 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-06-03 18:10:20 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-06-03 18:10:21 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-06-03 18:10:31 [[32minfo[39m]: [1;32mVerify access token for eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWYwMzZkODYyZWM3MjkyMmVkMDFhNDkiLCJpYXQiOjE3ODA0ODI4MjksImV4cCI6MTc4MDU2OTIyOX0.eSroQs7IgsWq_iejkHyUM2_g-DzfFvPGUmhBC0sK0y8[0m 
+2026-06-03 18:10:31 [[32minfo[39m]: [1;32mAPI Request[0m {
+  "requestId": "9f3d9612-3c17-4ae7-b50b-a2076bd0d10d",
+  "method": "GET",
+  "url": "/api/v1/tasks/pull",
+  "status": 200,
+  "time": "248.86 ms",
+  "ip": "::1"
+}
+2026-06-03 18:10:57 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-06-03 18:10:58 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-06-03 18:11:09 [[32minfo[39m]: [1;32mVerify access token for eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWYwMzZkODYyZWM3MjkyMmVkMDFhNDkiLCJpYXQiOjE3ODA0ODI4MjksImV4cCI6MTc4MDU2OTIyOX0.eSroQs7IgsWq_iejkHyUM2_g-DzfFvPGUmhBC0sK0y8[0m 
+2026-06-03 18:11:09 [[32minfo[39m]: [1;32mAPI Request[0m {
+  "requestId": "bae1826f-56b2-4cb5-a122-e6da137b3699",
+  "method": "GET",
+  "url": "/api/v1/tasks/pull",
+  "status": 200,
+  "time": "274.59 ms",
+  "ip": "::1"
+}
+2026-06-03 18:12:39 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-06-03 18:12:40 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-06-03 18:13:09 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-06-03 18:13:09 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-06-03 18:13:15 [[32minfo[39m]: [1;32mVerify access token for eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWYwMzZkODYyZWM3MjkyMmVkMDFhNDkiLCJpYXQiOjE3ODA0ODI4MjksImV4cCI6MTc4MDU2OTIyOX0.eSroQs7IgsWq_iejkHyUM2_g-DzfFvPGUmhBC0sK0y8[0m 
+2026-06-03 18:13:15 [[32minfo[39m]: [1;32mAPI Request[0m {
+  "requestId": "4ef5c403-e10b-4b49-a492-426ce39b87d4",
+  "method": "GET",
+  "url": "/api/v1/tasks/pull",
+  "status": 200,
+  "time": "202.69 ms",
+  "ip": "::1"
+}
+2026-06-03 18:13:46 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-06-03 18:13:46 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-06-03 18:14:04 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-06-03 18:14:04 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-06-03 18:14:06 [[32minfo[39m]: [1;32mVerify access token for eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWYwMzZkODYyZWM3MjkyMmVkMDFhNDkiLCJpYXQiOjE3ODA0ODI4MjksImV4cCI6MTc4MDU2OTIyOX0.eSroQs7IgsWq_iejkHyUM2_g-DzfFvPGUmhBC0sK0y8[0m 
+2026-06-03 18:14:06 [[32minfo[39m]: [1;32mAPI Request[0m {
+  "requestId": "702c4160-3653-4804-b77c-a7c04f93e9f3",
+  "method": "GET",
+  "url": "/api/v1/tasks/pull",
+  "status": 200,
+  "time": "192.65 ms",
+  "ip": "::1"
+}
+2026-06-03 18:15:18 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-06-03 18:15:18 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-06-03 18:15:21 [[32minfo[39m]: [1;32mVerify access token for eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWYwMzZkODYyZWM3MjkyMmVkMDFhNDkiLCJpYXQiOjE3ODA0ODI4MjksImV4cCI6MTc4MDU2OTIyOX0.eSroQs7IgsWq_iejkHyUM2_g-DzfFvPGUmhBC0sK0y8[0m 
+2026-06-03 18:15:21 [[32minfo[39m]: [1;32mAPI Request[0m {
+  "requestId": "c26b251c-c50b-4ccd-8269-c914f20302c8",
+  "method": "GET",
+  "url": "/api/v1/tasks",
+  "status": 200,
+  "time": "353.06 ms",
+  "ip": "::1"
+}
+2026-06-03 18:17:42 [[32minfo[39m]: [1;32mVerify access token for eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWYwMzZkODYyZWM3MjkyMmVkMDFhNDkiLCJpYXQiOjE3ODA0ODI4MjksImV4cCI6MTc4MDU2OTIyOX0.eSroQs7IgsWq_iejkHyUM2_g-DzfFvPGUmhBC0sK0y8[0m 
+2026-06-03 18:17:43 [[32minfo[39m]: [1;32mAPI Request[0m {
+  "requestId": "66239dec-1796-446c-9402-2ffbd611204f",
+  "method": "GET",
+  "url": "/api/v1/tasks",
+  "status": 200,
+  "time": "285.63 ms",
+  "ip": "::1"
+}
+2026-06-03 18:17:48 [[32minfo[39m]: [1;32mVerify access token for eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWYwMzZkODYyZWM3MjkyMmVkMDFhNDkiLCJpYXQiOjE3ODA0ODI4MjksImV4cCI6MTc4MDU2OTIyOX0.eSroQs7IgsWq_iejkHyUM2_g-DzfFvPGUmhBC0sK0y8[0m 
+2026-06-03 18:17:49 [[32minfo[39m]: [1;32mAPI Request[0m {
+  "requestId": "beba2fcc-8e49-4816-a0cb-20716dbad9a1",
+  "method": "GET",
+  "url": "/api/v1/tasks/pull",
+  "status": 200,
+  "time": "232.86 ms",
+  "ip": "::1"
+}
+2026-06-03 18:19:39 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-06-03 18:19:40 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-06-03 18:19:43 [[32minfo[39m]: [1;32mVerify access token for eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWYwMzZkODYyZWM3MjkyMmVkMDFhNDkiLCJpYXQiOjE3ODA0ODI4MjksImV4cCI6MTc4MDU2OTIyOX0.eSroQs7IgsWq_iejkHyUM2_g-DzfFvPGUmhBC0sK0y8[0m 
+2026-06-03 18:19:43 [[32minfo[39m]: [1;32mAPI Request[0m {
+  "requestId": "ed879e43-5e44-4e04-a897-420bf22e4362",
+  "method": "GET",
+  "url": "/api/v1/tasks/pull",
+  "status": 200,
+  "time": "209.61 ms",
+  "ip": "::1"
+}
+2026-06-03 18:20:22 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-06-03 18:20:23 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-06-03 18:20:38 [[32minfo[39m]: [1;32mVerify access token for eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWYwMzZkODYyZWM3MjkyMmVkMDFhNDkiLCJpYXQiOjE3ODA0ODI4MjksImV4cCI6MTc4MDU2OTIyOX0.eSroQs7IgsWq_iejkHyUM2_g-DzfFvPGUmhBC0sK0y8[0m 
+2026-06-03 18:20:38 [[32minfo[39m]: [1;32mUser 69f036d862ec72922ed01a49 connected with session 123[0m 
+2026-06-03 18:20:38 [[32minfo[39m]: [1;32mUser 69f036d862ec72922ed01a49 connected[0m 
+2026-06-03 18:21:10 [[32minfo[39m]: [1;32mVerify access token for eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWYwMzZkODYyZWM3MjkyMmVkMDFhNDkiLCJpYXQiOjE3ODA0ODI4MjksImV4cCI6MTc4MDU2OTIyOX0.eSroQs7IgsWq_iejkHyUM2_g-DzfFvPGUmhBC0sK0y8[0m 
+2026-06-03 18:21:10 [[32minfo[39m]: [1;32mEmitting task change: userId=69f036d862ec72922ed01a49, sessionId=123345235, action=BULK_SYNC[0m 
+2026-06-03 18:21:10 [[32minfo[39m]: [1;32mAPI Request[0m {
+  "requestId": "37178882-7594-486d-a958-6e6513a68b2b",
+  "method": "POST",
+  "url": "/api/v1/tasks/sync",
+  "status": 200,
+  "time": "223.47 ms",
+  "ip": "::1"
+}
+2026-06-03 18:22:38 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-06-03 18:22:39 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-06-03 18:22:46 [[32minfo[39m]: [1;32mVerify access token for eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWYwMzZkODYyZWM3MjkyMmVkMDFhNDkiLCJpYXQiOjE3ODA0ODI4MjksImV4cCI6MTc4MDU2OTIyOX0.eSroQs7IgsWq_iejkHyUM2_g-DzfFvPGUmhBC0sK0y8[0m 
+2026-06-03 18:22:46 [[32minfo[39m]: [1;32mAPI Request[0m {
+  "requestId": "0ee63639-d01b-48b6-8b88-e23a4b48a160",
+  "method": "POST",
+  "url": "/api/v1/tasks/sync",
+  "status": 200,
+  "time": "264.43 ms",
+  "ip": "::1"
+}
+2026-06-03 18:22:53 [[32minfo[39m]: [1;32mVerify access token for eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWYwMzZkODYyZWM3MjkyMmVkMDFhNDkiLCJpYXQiOjE3ODA0ODI4MjksImV4cCI6MTc4MDU2OTIyOX0.eSroQs7IgsWq_iejkHyUM2_g-DzfFvPGUmhBC0sK0y8[0m 
+2026-06-03 18:22:53 [[32minfo[39m]: [1;32mUser 69f036d862ec72922ed01a49 connected with session 123[0m 
+2026-06-03 18:22:53 [[32minfo[39m]: [1;32mUser 69f036d862ec72922ed01a49 connected[0m 
+2026-06-03 18:22:56 [[32minfo[39m]: [1;32mVerify access token for eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWYwMzZkODYyZWM3MjkyMmVkMDFhNDkiLCJpYXQiOjE3ODA0ODI4MjksImV4cCI6MTc4MDU2OTIyOX0.eSroQs7IgsWq_iejkHyUM2_g-DzfFvPGUmhBC0sK0y8[0m 
+2026-06-03 18:22:57 [[32minfo[39m]: [1;32mAPI Request[0m {
+  "requestId": "c173e226-b6eb-4060-a4d9-1b024c99d9bf",
+  "method": "POST",
+  "url": "/api/v1/tasks/sync",
+  "status": 200,
+  "time": "168.97 ms",
+  "ip": "::1"
+}
+2026-06-03 18:24:03 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-06-03 18:24:03 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-06-03 19:12:20 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-06-03 19:13:37 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-06-03 19:15:33 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-06-03 19:15:51 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-06-03 19:16:32 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-06-03 19:16:38 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-06-03 19:17:07 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-06-03 19:17:52 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-06-03 19:17:59 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-06-03 19:17:59 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-06-03 19:18:46 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-06-03 19:18:47 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-06-03 19:19:32 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-06-03 19:19:33 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-06-14 10:51:53 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-06-14 10:52:15 [[32minfo[39m]: [1;32mMongoDB connected![0m 
+2026-06-14 10:52:34 [[31merror[39m]: [1;31mError Expected property name or '}' in JSON at position 1 (line 1 column 2)[0m
+SyntaxError: Expected property name or '}' in JSON at position 1 (line 1 column 2)
+    at JSON.parse (<anonymous>)
+    at parse (C:\flutter\taskit_backend\node_modules\body-parser\lib\types\json.js:92:19)
+    at C:\flutter\taskit_backend\node_modules\body-parser\lib\read.js:128:18
+    at AsyncResource.runInAsyncScope (node:async_hooks:213:14)
+    at invokeCallback (C:\flutter\taskit_backend\node_modules\raw-body\index.js:238:16)
+    at done (C:\flutter\taskit_backend\node_modules\raw-body\index.js:227:7)
+    at IncomingMessage.onEnd (C:\flutter\taskit_backend\node_modules\raw-body\index.js:287:7)
+    at IncomingMessage.emit (node:events:508:28)
+    at endReadableNT (node:internal/streams/readable:1701:12)
+    at process.processTicksAndRejections (node:internal/process/task_queues:89:21) {
+  "requestId": "668a5525-de44-4725-9bdb-aff2ce14cae1",
+  "method": "POST",
+  "url": "/api/v1/auth/login",
+  "status": 400
+}
+2026-06-14 10:52:34 [[33mwarn[39m]: [1;33mAPI Warning[0m {
+  "requestId": "668a5525-de44-4725-9bdb-aff2ce14cae1",
+  "method": "POST",
+  "url": "/api/v1/auth/login",
+  "status": 400,
+  "time": "89.30 ms",
+  "ip": "::1"
+}
+2026-06-14 10:54:43 [[32minfo[39m]: [1;32mRefresh token saved for 69f036d862ec72922ed01a49:604800:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWYwMzZkODYyZWM3MjkyMmVkMDFhNDkiLCJpYXQiOjE3ODE0MDkyODMsImV4cCI6MTc4MjAxNDA4M30.o5Cus2lLoeCG5sUkOb4uXAWUIW34FGHVPn4IqH5Wtx8[0m 
+2026-06-14 10:54:43 [[32minfo[39m]: [1;32mAPI Request[0m {
+  "requestId": "94ebb353-6619-4f47-9296-9068bf351aeb",
+  "method": "POST",
+  "url": "/api/v1/auth/login",
+  "status": 200,
+  "time": "374.34 ms",
+  "ip": "::1"
+}
+2026-06-14 10:55:45 [[32minfo[39m]: [1;32mVerify access token for eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWYwMzZkODYyZWM3MjkyMmVkMDFhNDkiLCJpYXQiOjE3ODE0MDkyODMsImV4cCI6MTc4MTQ5NTY4M30.3eTs1k_RLFXBAzyV-vXMrSrEmOpYsTOz7WXqy7zVb5M[0m 
+2026-06-14 10:55:45 [[32minfo[39m]: [1;32mAPI Request[0m {
+  "requestId": "fbac3f2e-03fc-4896-982c-f281e9ead09f",
+  "method": "GET",
+  "url": "/api/v1/tasks/pull",
+  "status": 200,
+  "time": "446.22 ms",
+  "ip": "::1"
+}
+2026-06-14 10:56:09 [[32minfo[39m]: [1;32mRedis client connected[0m 
+2026-06-14 10:56:09 [[32minfo[39m]: [1;32mMongoDB connected![0m 
