@@ -213,8 +213,8 @@ class AuthService {
 
       console.log(payload);
       console.log(userId);
+      await AuthService.handleTokenReturn(userId);
       await session.commitTransaction();
-      return await AuthService.handleTokenReturn(userId);
       return payload;
     } catch (e) {
       await session.abortTransaction();
