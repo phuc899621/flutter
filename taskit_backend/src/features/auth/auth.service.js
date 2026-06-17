@@ -213,9 +213,9 @@ class AuthService {
 
       console.log(payload);
       console.log(userId);
-      await AuthService.handleTokenReturn(userId);
+      const returnResult = await AuthService.handleTokenReturn(userId);
       await session.commitTransaction();
-      return payload;
+      return returnResult;
     } catch (e) {
       await session.abortTransaction();
       if (e instanceof BaseError) throw e;
