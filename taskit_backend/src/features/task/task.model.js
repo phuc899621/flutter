@@ -41,6 +41,19 @@ const taskSchema = new Schema(
       type: Date,
       default: null,
     },
+    reminderAt: {
+      type: Date,
+      default: null,
+    },
+    reminderType: {
+      type: String,
+      enum: ["none", "beforeDeadline", "custom"],
+      default: "none",
+    },
+    reminderOffset: {
+      type: Number,
+      default: null,
+    },
     completedAt: {
       type: Date,
       default: null,

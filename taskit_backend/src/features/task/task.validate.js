@@ -101,6 +101,24 @@ export const createTaskValidate = validate({
           values: ["low", "medium", "high", "none"],
         }),
       ),
+    reminderAt: Joi.date()
+      .allow(null)
+      .default(null)
+      .messages(joiMsg("Reminder", { date: true })),
+    reminderOffset: Joi.number()
+      .allow(null)
+      .default(null)
+      .messages(joiMsg("Reminder offset", { number: true })),
+    reminderType: Joi.string()
+      .trim()
+      .valid("beforeDeadline", "custom", "none")
+      .default("none")
+      .messages(
+        joiMsg("Reminder type", {
+          string: true,
+          values: ["beforeDeadline", "custom", "none"],
+        }),
+      ),
     status: Joi.string()
       .trim()
       .valid("pending", "scheduled", "completed")
@@ -171,6 +189,10 @@ export const syncTasksValidate = validate({
               values: ["low", "medium", "high", "none"],
             }),
           ),
+        reminderAt: Joi.date()
+          .allow(null)
+          .default(null)
+          .messages(joiMsg("Reminder", { date: true })),
         status: Joi.string()
           .trim()
           .valid("pending", "scheduled", "completed")
@@ -252,6 +274,25 @@ export const updateTaskValidate = validate({
       .optional()
       .allow(null)
       .messages(joiMsg("Due date", { date: true })),
+    reminderAt: Joi.date()
+      .optional()
+      .allow(null)
+      .messages(joiMsg("Reminder", { date: true })),
+    reminderOffset: Joi.number()
+      .optional()
+      .allow(null)
+      .messages(joiMsg("Reminder offset", { number: true })),
+    reminderType: Joi.string()
+      .optional()
+      .trim()
+      .valid("beforeDeadline", "custom", "none")
+      .default("none")
+      .messages(
+        joiMsg("Reminder type", {
+          string: true,
+          values: ["beforeDeadline", "custom", "none"],
+        }),
+      ),
     hasTime: Joi.boolean()
       .optional()
       .messages(joiMsg("Has time", { boolean: true })),
