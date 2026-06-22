@@ -13,6 +13,6 @@ class RouteName {
   static const ai = 'ai';
 
   static const addTask = 'add_task';
-  static const editTask = 'edit_task';
+  static const editTask = 'view_task';
   static const category = 'category';
 }

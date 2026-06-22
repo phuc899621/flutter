@@ -7,13 +7,16 @@ class SubtaskTable extends Table {
 
   IntColumn get localId => integer().autoIncrement()();
 
-  TextColumn get remoteId => text().withDefault(const Constant(''))();
+  TextColumn get remoteId =>
+      text().nullable().withDefault(const Constant(null))();
 
   TextColumn get title => text()();
 
-  BoolColumn get isSynced => boolean().withDefault(const Constant(false))();
+  BoolColumn get synced => boolean().withDefault(const Constant(false))();
 
-  BoolColumn get isCompleted => boolean().withDefault(const Constant(false))();
+  BoolColumn get completed => boolean().withDefault(const Constant(false))();
+
+  BoolColumn get deleted => boolean().withDefault(const Constant(false))();
 
   IntColumn get taskLocalId =>
       integer().references(TaskTable, #localId, onDelete: KeyAction.cascade)();

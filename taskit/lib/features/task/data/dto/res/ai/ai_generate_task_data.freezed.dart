@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$AiGenerateTaskData {
 
- String get title; String get description; DateTime? get userUtcDueDate; bool get hasTime; String get categoryId; String get priority; String get status;
+ String get title; String get description; DateTime? get userUtcDueDate; bool get hasTime; DateTime? get reminderAt; String get categoryId; String get priority; String get status;
 /// Create a copy of AiGenerateTaskData
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -28,16 +28,16 @@ $AiGenerateTaskDataCopyWith<AiGenerateTaskData> get copyWith => _$AiGenerateTask
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is AiGenerateTaskData&&(identical(other.title, title) || other.title == title)&&(identical(other.description, description) || other.description == description)&&(identical(other.userUtcDueDate, userUtcDueDate) || other.userUtcDueDate == userUtcDueDate)&&(identical(other.hasTime, hasTime) || other.hasTime == hasTime)&&(identical(other.categoryId, categoryId) || other.categoryId == categoryId)&&(identical(other.priority, priority) || other.priority == priority)&&(identical(other.status, status) || other.status == status));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is AiGenerateTaskData&&(identical(other.title, title) || other.title == title)&&(identical(other.description, description) || other.description == description)&&(identical(other.userUtcDueDate, userUtcDueDate) || other.userUtcDueDate == userUtcDueDate)&&(identical(other.hasTime, hasTime) || other.hasTime == hasTime)&&(identical(other.reminderAt, reminderAt) || other.reminderAt == reminderAt)&&(identical(other.categoryId, categoryId) || other.categoryId == categoryId)&&(identical(other.priority, priority) || other.priority == priority)&&(identical(other.status, status) || other.status == status));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,title,description,userUtcDueDate,hasTime,categoryId,priority,status);
+int get hashCode => Object.hash(runtimeType,title,description,userUtcDueDate,hasTime,reminderAt,categoryId,priority,status);
 
 @override
 String toString() {
-  return 'AiGenerateTaskData(title: $title, description: $description, userUtcDueDate: $userUtcDueDate, hasTime: $hasTime, categoryId: $categoryId, priority: $priority, status: $status)';
+  return 'AiGenerateTaskData(title: $title, description: $description, userUtcDueDate: $userUtcDueDate, hasTime: $hasTime, reminderAt: $reminderAt, categoryId: $categoryId, priority: $priority, status: $status)';
 }
 
 
@@ -48,7 +48,7 @@ abstract mixin class $AiGenerateTaskDataCopyWith<$Res>  {
   factory $AiGenerateTaskDataCopyWith(AiGenerateTaskData value, $Res Function(AiGenerateTaskData) _then) = _$AiGenerateTaskDataCopyWithImpl;
 @useResult
 $Res call({
- String title, String description, DateTime? userUtcDueDate, bool hasTime, String categoryId, String priority, String status
+ String title, String description, DateTime? userUtcDueDate, bool hasTime, DateTime? reminderAt, String categoryId, String priority, String status
 });
 
 
@@ -65,13 +65,14 @@ class _$AiGenerateTaskDataCopyWithImpl<$Res>
 
 /// Create a copy of AiGenerateTaskData
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? title = null,Object? description = null,Object? userUtcDueDate = freezed,Object? hasTime = null,Object? categoryId = null,Object? priority = null,Object? status = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? title = null,Object? description = null,Object? userUtcDueDate = freezed,Object? hasTime = null,Object? reminderAt = freezed,Object? categoryId = null,Object? priority = null,Object? status = null,}) {
   return _then(_self.copyWith(
 title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
 as String,description: null == description ? _self.description : description // ignore: cast_nullable_to_non_nullable
 as String,userUtcDueDate: freezed == userUtcDueDate ? _self.userUtcDueDate : userUtcDueDate // ignore: cast_nullable_to_non_nullable
 as DateTime?,hasTime: null == hasTime ? _self.hasTime : hasTime // ignore: cast_nullable_to_non_nullable
-as bool,categoryId: null == categoryId ? _self.categoryId : categoryId // ignore: cast_nullable_to_non_nullable
+as bool,reminderAt: freezed == reminderAt ? _self.reminderAt : reminderAt // ignore: cast_nullable_to_non_nullable
+as DateTime?,categoryId: null == categoryId ? _self.categoryId : categoryId // ignore: cast_nullable_to_non_nullable
 as String,priority: null == priority ? _self.priority : priority // ignore: cast_nullable_to_non_nullable
 as String,status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
 as String,
@@ -156,10 +157,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String title,  String description,  DateTime? userUtcDueDate,  bool hasTime,  String categoryId,  String priority,  String status)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String title,  String description,  DateTime? userUtcDueDate,  bool hasTime,  DateTime? reminderAt,  String categoryId,  String priority,  String status)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _AiGenerateTaskData() when $default != null:
-return $default(_that.title,_that.description,_that.userUtcDueDate,_that.hasTime,_that.categoryId,_that.priority,_that.status);case _:
+return $default(_that.title,_that.description,_that.userUtcDueDate,_that.hasTime,_that.reminderAt,_that.categoryId,_that.priority,_that.status);case _:
   return orElse();
 
 }
@@ -177,10 +178,10 @@ return $default(_that.title,_that.description,_that.userUtcDueDate,_that.hasTime
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String title,  String description,  DateTime? userUtcDueDate,  bool hasTime,  String categoryId,  String priority,  String status)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String title,  String description,  DateTime? userUtcDueDate,  bool hasTime,  DateTime? reminderAt,  String categoryId,  String priority,  String status)  $default,) {final _that = this;
 switch (_that) {
 case _AiGenerateTaskData():
-return $default(_that.title,_that.description,_that.userUtcDueDate,_that.hasTime,_that.categoryId,_that.priority,_that.status);}
+return $default(_that.title,_that.description,_that.userUtcDueDate,_that.hasTime,_that.reminderAt,_that.categoryId,_that.priority,_that.status);}
 }
 /// A variant of `when` that fallback to returning `null`
 ///
@@ -194,10 +195,10 @@ return $default(_that.title,_that.description,_that.userUtcDueDate,_that.hasTime
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String title,  String description,  DateTime? userUtcDueDate,  bool hasTime,  String categoryId,  String priority,  String status)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String title,  String description,  DateTime? userUtcDueDate,  bool hasTime,  DateTime? reminderAt,  String categoryId,  String priority,  String status)?  $default,) {final _that = this;
 switch (_that) {
 case _AiGenerateTaskData() when $default != null:
-return $default(_that.title,_that.description,_that.userUtcDueDate,_that.hasTime,_that.categoryId,_that.priority,_that.status);case _:
+return $default(_that.title,_that.description,_that.userUtcDueDate,_that.hasTime,_that.reminderAt,_that.categoryId,_that.priority,_that.status);case _:
   return null;
 
 }
@@ -209,13 +210,14 @@ return $default(_that.title,_that.description,_that.userUtcDueDate,_that.hasTime
 @JsonSerializable()
 
 class _AiGenerateTaskData implements AiGenerateTaskData {
-  const _AiGenerateTaskData({required this.title, required this.description, this.userUtcDueDate, required this.hasTime, required this.categoryId, required this.priority, required this.status});
+  const _AiGenerateTaskData({required this.title, required this.description, this.userUtcDueDate, required this.hasTime, this.reminderAt, required this.categoryId, required this.priority, required this.status});
   factory _AiGenerateTaskData.fromJson(Map<String, dynamic> json) => _$AiGenerateTaskDataFromJson(json);
 
 @override final  String title;
 @override final  String description;
 @override final  DateTime? userUtcDueDate;
 @override final  bool hasTime;
+@override final  DateTime? reminderAt;
 @override final  String categoryId;
 @override final  String priority;
 @override final  String status;
@@ -233,16 +235,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _AiGenerateTaskData&&(identical(other.title, title) || other.title == title)&&(identical(other.description, description) || other.description == description)&&(identical(other.userUtcDueDate, userUtcDueDate) || other.userUtcDueDate == userUtcDueDate)&&(identical(other.hasTime, hasTime) || other.hasTime == hasTime)&&(identical(other.categoryId, categoryId) || other.categoryId == categoryId)&&(identical(other.priority, priority) || other.priority == priority)&&(identical(other.status, status) || other.status == status));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _AiGenerateTaskData&&(identical(other.title, title) || other.title == title)&&(identical(other.description, description) || other.description == description)&&(identical(other.userUtcDueDate, userUtcDueDate) || other.userUtcDueDate == userUtcDueDate)&&(identical(other.hasTime, hasTime) || other.hasTime == hasTime)&&(identical(other.reminderAt, reminderAt) || other.reminderAt == reminderAt)&&(identical(other.categoryId, categoryId) || other.categoryId == categoryId)&&(identical(other.priority, priority) || other.priority == priority)&&(identical(other.status, status) || other.status == status));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,title,description,userUtcDueDate,hasTime,categoryId,priority,status);
+int get hashCode => Object.hash(runtimeType,title,description,userUtcDueDate,hasTime,reminderAt,categoryId,priority,status);
 
 @override
 String toString() {
-  return 'AiGenerateTaskData(title: $title, description: $description, userUtcDueDate: $userUtcDueDate, hasTime: $hasTime, categoryId: $categoryId, priority: $priority, status: $status)';
+  return 'AiGenerateTaskData(title: $title, description: $description, userUtcDueDate: $userUtcDueDate, hasTime: $hasTime, reminderAt: $reminderAt, categoryId: $categoryId, priority: $priority, status: $status)';
 }
 
 
@@ -253,7 +255,7 @@ abstract mixin class _$AiGenerateTaskDataCopyWith<$Res> implements $AiGenerateTa
   factory _$AiGenerateTaskDataCopyWith(_AiGenerateTaskData value, $Res Function(_AiGenerateTaskData) _then) = __$AiGenerateTaskDataCopyWithImpl;
 @override @useResult
 $Res call({
- String title, String description, DateTime? userUtcDueDate, bool hasTime, String categoryId, String priority, String status
+ String title, String description, DateTime? userUtcDueDate, bool hasTime, DateTime? reminderAt, String categoryId, String priority, String status
 });
 
 
@@ -270,13 +272,14 @@ class __$AiGenerateTaskDataCopyWithImpl<$Res>
 
 /// Create a copy of AiGenerateTaskData
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? title = null,Object? description = null,Object? userUtcDueDate = freezed,Object? hasTime = null,Object? categoryId = null,Object? priority = null,Object? status = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? title = null,Object? description = null,Object? userUtcDueDate = freezed,Object? hasTime = null,Object? reminderAt = freezed,Object? categoryId = null,Object? priority = null,Object? status = null,}) {
   return _then(_AiGenerateTaskData(
 title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
 as String,description: null == description ? _self.description : description // ignore: cast_nullable_to_non_nullable
 as String,userUtcDueDate: freezed == userUtcDueDate ? _self.userUtcDueDate : userUtcDueDate // ignore: cast_nullable_to_non_nullable
 as DateTime?,hasTime: null == hasTime ? _self.hasTime : hasTime // ignore: cast_nullable_to_non_nullable
-as bool,categoryId: null == categoryId ? _self.categoryId : categoryId // ignore: cast_nullable_to_non_nullable
+as bool,reminderAt: freezed == reminderAt ? _self.reminderAt : reminderAt // ignore: cast_nullable_to_non_nullable
+as DateTime?,categoryId: null == categoryId ? _self.categoryId : categoryId // ignore: cast_nullable_to_non_nullable
 as String,priority: null == priority ? _self.priority : priority // ignore: cast_nullable_to_non_nullable
 as String,status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
 as String,

@@ -5,20 +5,26 @@ import 'package:smooth_sheets/smooth_sheets.dart';
 import 'package:taskit/features/auth/presentation/auth/controller/auth_controller.dart';
 import 'package:taskit/features/auth/presentation/forgot_password/ui/forgot_password_reset_page.dart';
 import 'package:taskit/features/auth/presentation/signup/ui/signup_veriry_page.dart';
+import 'package:taskit/features/category/domain/entities/category_entity.dart';
 import 'package:taskit/features/category/presentation/ui/pages/category_management_page.dart';
 import 'package:taskit/features/main/presentation/ai/ui/ai_page.dart';
-import 'package:taskit/features/main/presentation/home/ui/home_page.dart';
+import 'package:taskit/features/main/presentation/home/ui/pages/home_page.dart';
 import 'package:taskit/features/main/presentation/list/ui/list_page.dart';
 import 'package:taskit/features/main/presentation/main/ui/bottom_sheet/task_generated_bottom_sheet.dart';
-import 'package:taskit/features/task/presentation/add_task/ui/add_task_page.dart';
-import 'package:taskit/features/task/presentation/edit_task/ui/edit_due_date_bottom_sheet.dart';
-import 'package:taskit/features/task/presentation/edit_task/ui/edit_due_time_bottom_sheet.dart';
-import 'package:taskit/features/task/presentation/edit_task/ui/edit_subtasks_bottom_sheet.dart';
-import 'package:taskit/features/task/presentation/edit_task/ui/edit_task_bottom_sheet.dart';
-import 'package:taskit/features/task/presentation/edit_task/ui/sheet_shell.dart';
+import 'package:taskit/features/task/domain/entities/task_entity.dart';
+import 'package:taskit/features/task/presentation/add_task/ui/pages/add_task_page.dart';
 import 'package:taskit/features/task/presentation/filter_task/ui/category_filter_bottom_sheet.dart';
 import 'package:taskit/features/task/presentation/filter_task/ui/end_date_filter_bottom_sheet.dart';
 import 'package:taskit/features/task/presentation/filter_task/ui/filter_bottom_sheet.dart';
+import 'package:taskit/features/task/presentation/view_task/ui/pages/add_subtask_bottom_sheet.dart';
+import 'package:taskit/features/task/presentation/view_task/ui/pages/edit_category_bottom_sheet.dart';
+import 'package:taskit/features/task/presentation/view_task/ui/pages/edit_description_bottom_sheet.dart';
+import 'package:taskit/features/task/presentation/view_task/ui/pages/edit_due_date_bottom_sheet.dart';
+import 'package:taskit/features/task/presentation/view_task/ui/pages/edit_due_time_bottom_sheet.dart';
+import 'package:taskit/features/task/presentation/view_task/ui/pages/edit_priority_bottom_sheet.dart';
+import 'package:taskit/features/task/presentation/view_task/ui/pages/edit_subtasks_bottom_sheet.dart';
+import 'package:taskit/features/task/presentation/view_task/ui/pages/edit_title_bottom_sheet.dart';
+import 'package:taskit/features/task/presentation/view_task/ui/pages/view_task_bottom_sheet.dart';
 import 'package:taskit/shared/config/routers/router_name.dart';
 import 'package:taskit/shared/log/logger_provider.dart';
 
@@ -32,6 +38,7 @@ import '../../../features/main/presentation/timeline/ui/timeline_page.dart';
 import '../../../features/task/presentation/filter_task/ui/date_filter_bottom_sheet.dart';
 import '../../../features/task/presentation/filter_task/ui/priority_filter_bottom_sheet.dart';
 import '../../../features/task/presentation/filter_task/ui/start_date_filter_bottom_sheet.dart';
+import '../../../features/task/presentation/view_task/ui/sheet_shell.dart';
 import '../../constants/auth_status.dart';
 import '../app/animation/router_anim.dart';
 
@@ -97,10 +104,6 @@ final goRouterProvider = Provider<GoRouter>((ref) {
       return null;
     },
     routes: [
-      // GoRoute(
-      //   path: '/',
-      //   builder: (context, state) => const CategoryManagementPage(),
-      // ),
       GoRoute(path: '/', builder: (context, state) => const SplashPage()),
       GoRoute(
         path: '/category',
@@ -190,8 +193,8 @@ final goRouterProvider = Provider<GoRouter>((ref) {
           viewportBuilder: (context, child) {
             return SheetViewport(
               padding: EdgeInsets.only(
-                // Add the top padding to avoid the status bar.
                 top: MediaQuery.viewPaddingOf(context).top,
+                bottom: MediaQuery.of(context).viewInsets.bottom,
               ),
               child: child,
             );
@@ -200,33 +203,15 @@ final goRouterProvider = Provider<GoRouter>((ref) {
         ),
         routes: [
           GoRoute(
-            path: '/edit_task',
+            path: '/view_task',
             pageBuilder: (context, state) {
               final localId = state.extra as int;
               return PagedSheetPage(
                 transitionsBuilder: _fadeAndSlideTransition,
-                child: EditTaskBottomSheet(localId: localId),
+                child: ViewTaskBottomSheet(localId: localId),
               );
             },
             routes: [
-              GoRoute(
-                path: 'due_date',
-                pageBuilder: (context, state) {
-                  return PagedSheetPage(
-                    transitionsBuilder: _fadeAndSlideTransition,
-                    child: EditDueDateBottomSheet(),
-                  );
-                },
-              ),
-              GoRoute(
-                path: 'due_time',
-                pageBuilder: (context, state) {
-                  return PagedSheetPage(
-                    transitionsBuilder: _fadeAndSlideTransition,
-                    child: EditDueTimeBottomSheet(),
-                  );
-                },
-              ),
               GoRoute(
                 path: 'subtasks',
                 pageBuilder: (context, state) {
@@ -235,8 +220,87 @@ final goRouterProvider = Provider<GoRouter>((ref) {
                     child: EditSubtasksBottomSheet(),
                   );
                 },
+                routes: [
+                  GoRoute(
+                    path: 'add',
+                    pageBuilder: (context, state) {
+                      final extra = state.extra as Map<String, dynamic>;
+                      return PagedSheetPage(
+                        transitionsBuilder: _fadeAndSlideTransition,
+                        child: AddSubtaskBottomSheet(
+                          title: extra['title'] as String,
+                          validator:
+                              extra['validator'] as String? Function(String?),
+                          onConfirm:
+                              extra['onConfirm'] as void Function(String),
+                        ),
+                      );
+                    },
+                  ),
+                ],
               ),
             ],
+          ),
+          GoRoute(
+            path: '/edit_task_title',
+            pageBuilder: (context, state) {
+              final title = state.extra as String;
+              return PagedSheetPage(
+                transitionsBuilder: _fadeAndSlideTransition,
+                child: EditTitleBottomSheet(title: title ?? ''),
+              );
+            },
+          ),
+          GoRoute(
+            path: '/edit_task_description',
+            pageBuilder: (context, state) {
+              final description = state.extra as String;
+              return PagedSheetPage(
+                transitionsBuilder: _fadeAndSlideTransition,
+                child: EditDescriptionBottomSheet(
+                  description: description ?? '',
+                ),
+              );
+            },
+          ),
+          GoRoute(
+            path: '/edit_task_priority',
+            pageBuilder: (context, state) {
+              final priority = state.extra as TaskPriority;
+              return PagedSheetPage(
+                transitionsBuilder: _fadeAndSlideTransition,
+                child: EditPriorityBottomSheet(priority: priority),
+              );
+            },
+          ),
+          GoRoute(
+            path: '/edit_task_category',
+            pageBuilder: (context, state) {
+              final category = state.extra as CategoryEntity;
+              return PagedSheetPage(
+                transitionsBuilder: _fadeAndSlideTransition,
+                child: EditCategoryBottomSheet(categoryEntity: category),
+              );
+            },
+          ),
+          GoRoute(
+            path: '/edit_due_date',
+            pageBuilder: (context, state) {
+              final dueDate = state.extra as DateTime?;
+              return PagedSheetPage(
+                transitionsBuilder: _fadeAndSlideTransition,
+                child: EditDueDateBottomSheet(dueDate: dueDate),
+              );
+            },
+          ),
+          GoRoute(
+            path: '/edit_due_time',
+            pageBuilder: (context, state) {
+              return PagedSheetPage(
+                transitionsBuilder: _fadeAndSlideTransition,
+                child: EditDueTimeBottomSheet(),
+              );
+            },
           ),
         ],
       ),

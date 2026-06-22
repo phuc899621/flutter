@@ -2,7 +2,6 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:taskit/features/category/domain/entities/category_entity.dart';
 import 'package:taskit/features/task/domain/entities/filter_date_option_enum.dart';
 import 'package:taskit/features/task/domain/entities/order_option_enum.dart';
-import 'package:taskit/features/task/domain/entities/task_priority_enum.dart';
 
 import '../../../../task/domain/entities/task_entity.dart';
 

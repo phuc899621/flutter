@@ -1,5 +1,4 @@
-import '../../features/task/domain/entities/task_priority_enum.dart';
-import '../../features/task/domain/entities/task_status_enum.dart';
+import '../../features/task/domain/entities/task_entity.dart';
 
 class TaskPriorityUtils {
   static TaskPriority toEnum(String priority) {

@@ -56,31 +56,30 @@ class _TaskApi implements TaskApi {
   }
 
   @override
-  Future<DataResponse<AddTaskData>> createTask(
-    String token,
-    AddTaskReq addTaskReq,
-  ) async {
-    final _extra = <String, dynamic>{};
+  Future<DataResponse<TaskRes>> createTask(AddTaskReq addTaskReq) async {
+    final _extra = <String, dynamic>{
+      'requireAuth': true,
+      'requireSession': true,
+    };
     final queryParameters = <String, dynamic>{};
-    final _headers = <String, dynamic>{r'Authorization': token};
-    _headers.removeWhere((k, v) => v == null);
+    final _headers = <String, dynamic>{};
     final _data = addTaskReq;
-    final _options = _setStreamType<DataResponse<AddTaskData>>(
+    final _options = _setStreamType<DataResponse<TaskRes>>(
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            '/task',
+            '/tasks',
             queryParameters: queryParameters,
             data: _data,
           )
           .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
     );
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late DataResponse<AddTaskData> _value;
+    late DataResponse<TaskRes> _value;
     try {
-      _value = DataResponse<AddTaskData>.fromJson(
+      _value = DataResponse<TaskRes>.fromJson(
         _result.data!,
-        (json) => AddTaskData.fromJson(json as Map<String, dynamic>),
+        (json) => TaskRes.fromJson(json as Map<String, dynamic>),
       );
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options, response: _result);
@@ -90,32 +89,33 @@ class _TaskApi implements TaskApi {
   }
 
   @override
-  Future<DataResponse<UpdateTaskData>> updateTask(
-    String token,
+  Future<DataResponse<UpdateTaskRes>> updateTask(
     String taskId,
     UpdateTaskReq updateTaskReq,
   ) async {
-    final _extra = <String, dynamic>{};
+    final _extra = <String, dynamic>{
+      'requireAuth': true,
+      'requireSession': true,
+    };
     final queryParameters = <String, dynamic>{};
-    final _headers = <String, dynamic>{r'Authorization': token};
-    _headers.removeWhere((k, v) => v == null);
+    final _headers = <String, dynamic>{};
     final _data = updateTaskReq;
-    final _options = _setStreamType<DataResponse<UpdateTaskData>>(
-      Options(method: 'PATCH', headers: _headers, extra: _extra)
+    final _options = _setStreamType<DataResponse<UpdateTaskRes>>(
+      Options(method: 'PUT', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            '/task/${taskId}',
+            '/tasks/${taskId}',
             queryParameters: queryParameters,
             data: _data,
           )
           .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
     );
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late DataResponse<UpdateTaskData> _value;
+    late DataResponse<UpdateTaskRes> _value;
     try {
-      _value = DataResponse<UpdateTaskData>.fromJson(
+      _value = DataResponse<UpdateTaskRes>.fromJson(
         _result.data!,
-        (json) => UpdateTaskData.fromJson(json as Map<String, dynamic>),
+        (json) => UpdateTaskRes.fromJson(json as Map<String, dynamic>),
       );
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options, response: _result);
@@ -125,17 +125,19 @@ class _TaskApi implements TaskApi {
   }
 
   @override
-  Future<DataResponse<BaseData>> deleteTask(String token, String taskId) async {
-    final _extra = <String, dynamic>{};
+  Future<DataResponse<BaseData>> deleteTask(String taskId) async {
+    final _extra = <String, dynamic>{
+      'requireAuth': true,
+      'requireSession': true,
+    };
     final queryParameters = <String, dynamic>{};
-    final _headers = <String, dynamic>{r'Authorization': token};
-    _headers.removeWhere((k, v) => v == null);
+    final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
     final _options = _setStreamType<DataResponse<BaseData>>(
       Options(method: 'DELETE', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            '/task/${taskId}',
+            '/tasks/${taskId}',
             queryParameters: queryParameters,
             data: _data,
           )
@@ -147,6 +149,118 @@ class _TaskApi implements TaskApi {
       _value = DataResponse<BaseData>.fromJson(
         _result.data!,
         (json) => BaseData.fromJson(json as Map<String, dynamic>),
+      );
+    } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options, response: _result);
+      rethrow;
+    }
+    return _value;
+  }
+
+  @override
+  Future<DataResponse<TasksSyncRes>> syncTasks(TasksSyncReq tasks) async {
+    final _extra = <String, dynamic>{
+      'requireAuth': true,
+      'requireSession': true,
+    };
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = tasks;
+    final _options = _setStreamType<DataResponse<TasksSyncRes>>(
+      Options(method: 'POST', headers: _headers, extra: _extra)
+          .compose(
+            _dio.options,
+            '/tasks/sync',
+            queryParameters: queryParameters,
+            data: _data,
+          )
+          .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
+    );
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    late DataResponse<TasksSyncRes> _value;
+    try {
+      _value = DataResponse<TasksSyncRes>.fromJson(
+        _result.data!,
+        (json) => TasksSyncRes.fromJson(json as Map<String, dynamic>),
+      );
+    } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options, response: _result);
+      rethrow;
+    }
+    return _value;
+  }
+
+  @override
+  Future<DataResponse<List<DeletedTasksSyncRes>>> syncDeletedTasks(
+    DeletedTasksSyncReq tasks,
+  ) async {
+    final _extra = <String, dynamic>{
+      'requireAuth': true,
+      'requireSession': true,
+    };
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = tasks;
+    final _options = _setStreamType<DataResponse<List<DeletedTasksSyncRes>>>(
+      Options(method: 'DELETE', headers: _headers, extra: _extra)
+          .compose(
+            _dio.options,
+            '/tasks/sync',
+            queryParameters: queryParameters,
+            data: _data,
+          )
+          .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
+    );
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    late DataResponse<List<DeletedTasksSyncRes>> _value;
+    try {
+      _value = DataResponse<List<DeletedTasksSyncRes>>.fromJson(
+        _result.data!,
+        (json) => json is List<dynamic>
+            ? json
+                  .map<DeletedTasksSyncRes>(
+                    (i) =>
+                        DeletedTasksSyncRes.fromJson(i as Map<String, dynamic>),
+                  )
+                  .toList()
+            : List.empty(),
+      );
+    } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options, response: _result);
+      rethrow;
+    }
+    return _value;
+  }
+
+  @override
+  Future<DataResponse<List<TaskRes>>> pullTasks(String? lastSyncTime) async {
+    final _extra = <String, dynamic>{'requireAuth': true};
+    final queryParameters = <String, dynamic>{r'lastSyncTime': lastSyncTime};
+    queryParameters.removeWhere((k, v) => v == null);
+    final _headers = <String, dynamic>{};
+    const Map<String, dynamic>? _data = null;
+    final _options = _setStreamType<DataResponse<List<TaskRes>>>(
+      Options(method: 'GET', headers: _headers, extra: _extra)
+          .compose(
+            _dio.options,
+            '/tasks/pull',
+            queryParameters: queryParameters,
+            data: _data,
+          )
+          .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
+    );
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    late DataResponse<List<TaskRes>> _value;
+    try {
+      _value = DataResponse<List<TaskRes>>.fromJson(
+        _result.data!,
+        (json) => json is List<dynamic>
+            ? json
+                  .map<TaskRes>(
+                    (i) => TaskRes.fromJson(i as Map<String, dynamic>),
+                  )
+                  .toList()
+            : List.empty(),
       );
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options, response: _result);

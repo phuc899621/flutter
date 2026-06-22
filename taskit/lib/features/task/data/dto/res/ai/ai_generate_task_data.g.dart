@@ -14,6 +14,9 @@ _AiGenerateTaskData _$AiGenerateTaskDataFromJson(Map<String, dynamic> json) =>
           ? null
           : DateTime.parse(json['userUtcDueDate'] as String),
       hasTime: json['hasTime'] as bool,
+      reminderAt: json['reminderAt'] == null
+          ? null
+          : DateTime.parse(json['reminderAt'] as String),
       categoryId: json['categoryId'] as String,
       priority: json['priority'] as String,
       status: json['status'] as String,
@@ -25,6 +28,7 @@ Map<String, dynamic> _$AiGenerateTaskDataToJson(_AiGenerateTaskData instance) =>
       'description': instance.description,
       'userUtcDueDate': instance.userUtcDueDate?.toIso8601String(),
       'hasTime': instance.hasTime,
+      'reminderAt': instance.reminderAt?.toIso8601String(),
       'categoryId': instance.categoryId,
       'priority': instance.priority,
       'status': instance.status,

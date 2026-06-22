@@ -6,8 +6,9 @@ import 'package:socket_io_client/socket_io_client.dart';
 import 'package:taskit/features/auth/data/repo/auth_repo.dart';
 import 'package:taskit/features/auth/data/repo/auth_repo_impl.dart';
 import 'package:taskit/features/auth/presentation/auth/controller/auth_controller.dart';
-import 'package:taskit/features/category/data/repo/category_repo_impl.dart';
+import 'package:taskit/features/task/data/repo/task_repo.dart';
 import 'package:taskit/shared/application/credential_service.dart';
+import 'package:taskit/shared/application/session_service.dart';
 import 'package:taskit/shared/config/app/app_config.dart';
 import 'package:taskit/shared/log/logger_provider.dart';
 
@@ -17,11 +18,15 @@ final socketServiceProvider = Provider<SocketService>((ref) {
   final authRepository = ref.watch(authRepoProvider);
   final credentialService = ref.watch(credentialServiceProvider);
   final categoryRepo = ref.watch(categoryRepoProvider);
+  final taskRepo = ref.watch(taskRepoProvider);
+  final sessionService = ref.watch(sessionServiceProvider);
   final service = SocketService(
     ref,
     authRepository,
     credentialService,
+    sessionService,
     categoryRepo,
+    taskRepo,
   );
   return service;
 });
@@ -29,8 +34,10 @@ final socketServiceProvider = Provider<SocketService>((ref) {
 class SocketService {
   final Ref _ref;
   final CredentialService _credentialService;
+  final SessionService _sessionService;
   final AuthRepo _authRepo;
   final CategoryRepo _categoryRepo;
+  final TaskRepo _taskRepo;
   final Map<String, dynamic> _eventHandlers = {};
   io.Socket? _socket;
 
@@ -42,7 +49,9 @@ class SocketService {
     this._ref,
     this._authRepo,
     this._credentialService,
+    this._sessionService,
     this._categoryRepo,
+    this._taskRepo,
   );
 
   void connect() async {
@@ -107,7 +116,11 @@ class SocketService {
     if (userLocalId == null) return;
     logger.i('[SocketService] Pulling categories for user $userLocalId...');
     await _categoryRepo.pullCategories(userLocalId);
-    _categoryRepo.pushAllUnsynced(userLocalId);
+
+    await _categoryRepo.pushAllUnsynced(userLocalId);
+    await _taskRepo.pullTasks(userLocalId);
+    await _taskRepo.pushAllUnsynced(userLocalId);
+    _sessionService.saveLastSyncTime(DateTime.now().toUtc().toIso8601String());
   }
 
   void on(String event, Function(dynamic) handler) {

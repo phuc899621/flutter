@@ -3,7 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../shared/data/source/remote/socket/socket_service.dart';
 import '../../../shared/log/logger_provider.dart';
 import '../data/repo/category_repo.dart';
-import '../data/repo/category_repo_impl.dart';
 
 final categorySyncServiceProvider = Provider<CategorySyncService>((ref) {
   final repo = ref.watch(categoryRepoProvider);
@@ -11,6 +10,26 @@ final categorySyncServiceProvider = Provider<CategorySyncService>((ref) {
   final service = CategorySyncService(repo, socket);
   return service;
 });
+
+enum CategorySocketAction {
+  create('CREATE'),
+  update('UPDATE'),
+  delete('DELETE'),
+  bulkSync('BULK_SYNC'),
+  bulkDelete('BULK_DELETE'),
+  unknown('UNKNOWN');
+
+  final String value;
+
+  const CategorySocketAction(this.value);
+
+  static CategorySocketAction fromString(String? val) {
+    return CategorySocketAction.values.firstWhere(
+      (e) => e.value == val,
+      orElse: () => CategorySocketAction.unknown,
+    );
+  }
+}
 
 class CategorySyncService {
   final CategoryRepo _categoryRepo;
@@ -41,7 +60,7 @@ class CategorySyncService {
       return;
     }
 
-    final now = DateTime.now();
+    final now = DateTime.now().toUtc();
     if (_lastSyncTime != null &&
         now.difference(_lastSyncTime!) < _syncCooldown) {
       logger.d(
@@ -61,7 +80,7 @@ class CategorySyncService {
       logger.t('[CategorySyncService] Step 2: Pulling remote data...');
       await _categoryRepo.pullCategories(userLocalId);
 
-      _lastSyncTime = DateTime.now();
+      _lastSyncTime = DateTime.now().toUtc();
       logger.i('[CategorySyncService] Sync cycle completed successfully.');
     } catch (e, s) {
       logger.e(
@@ -82,28 +101,28 @@ class CategorySyncService {
       );
       return;
     }
-    final action = payload['action'];
+    final action = CategorySocketAction.fromString(payload['action']);
     final data = payload['data'];
     logger.t('[CategorySyncService] _handleCategoryChanged: $action');
     try {
       switch (action) {
-        case 'CREATE':
-          _categoryRepo.handleRemoteInsert(data, _currentUserLocalId!);
+        case CategorySocketAction.create:
+          await _categoryRepo.handleRemoteInsert(data, _currentUserLocalId!);
           logger.t('[CategorySyncService] Insert completed');
           break;
-        case 'UPDATE':
-          _categoryRepo.handleRemoteUpdate(data, _currentUserLocalId!);
+        case CategorySocketAction.update:
+          await _categoryRepo.handleRemoteUpdate(data, _currentUserLocalId!);
           logger.t('[CategorySyncService] Update completed');
           break;
-        case 'DELETE':
-          _categoryRepo.handleRemoteDelete(data, _currentUserLocalId!);
+        case CategorySocketAction.delete:
+          await _categoryRepo.handleRemoteDelete(data, _currentUserLocalId!);
           logger.t('[CategorySyncService] Delete completed');
           break;
-        case 'BULK_SYNC':
+        case CategorySocketAction.bulkSync:
           await _categoryRepo.handleRemoteBulkSync(data, _currentUserLocalId!);
           logger.t('[CategorySyncService] Bulk sync completed');
           break;
-        case 'BULK_DELETE':
+        case CategorySocketAction.bulkDelete:
           await _categoryRepo.handleRemoteBulkDelete(
             data,
             _currentUserLocalId!,

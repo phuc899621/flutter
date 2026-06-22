@@ -3,6 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:taskit/features/category/domain/entities/category_entity.dart';
 import 'package:taskit/features/category/presentation/controller/category_management_controller.dart';
 
+import '../widgets/add_category_bottom_sheet.dart';
+
 class CategoryManagementPage extends ConsumerStatefulWidget {
   const CategoryManagementPage({super.key});
 
@@ -15,12 +17,13 @@ class _CategoryManagementPageState
     extends ConsumerState<CategoryManagementPage> {
   @override
   Widget build(BuildContext context) {
+    final controller = ref.watch(categoryManagementControllerProvider);
     final color = Theme.of(context).colorScheme;
     return Scaffold(
       appBar: _buildAppBar(),
       backgroundColor: color.surface,
       floatingActionButton: FloatingActionButton(
-        onPressed: () => _onAddCategory(),
+        onPressed: () => _showAddCategory(context, ref),
         child: const Icon(Icons.add),
       ),
       body: SafeArea(
@@ -31,7 +34,22 @@ class _CategoryManagementPageState
     );
   }
 
-  //widget build
+  void _showAddCategory(BuildContext context, WidgetRef ref) {
+    final controller = ref.read(categoryManagementControllerProvider.notifier);
+    final color = Theme.of(context).colorScheme;
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (context) => AddCategoryBottomSheet(
+        title: 'Add Category',
+        validator: (val) => controller.validateCategoryInput(val ?? ''),
+        onConfirm: controller.addCategory,
+      ),
+    );
+  }
+
+  //widgets build
   PreferredSizeWidget _buildAppBar() {
     return AppBar(
       title: const Text('Category Management'),

@@ -1,10 +1,14 @@
 import 'dart:async';
 
-import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:taskit/features/auth/presentation/auth/controller/auth_controller.dart';
 import 'package:taskit/features/main/presentation/home/state/home_state.dart';
-import 'package:taskit/features/task/application/task_service.dart';
+import 'package:taskit/features/task/domain/entities/subtask_entity.dart';
+import 'package:taskit/features/task/domain/usecases/subtask/delete_subtask_usecase.dart';
+import 'package:taskit/features/task/domain/usecases/subtask/update_subtask_status_usecase.dart';
+import 'package:taskit/features/task/domain/usecases/task/delete_task_usecase.dart';
+import 'package:taskit/features/task/domain/usecases/task/update_task_status_usecase.dart';
+import 'package:taskit/features/task/presentation/providers/tasks_provider.dart';
 import 'package:taskit/shared/extension/date_time.dart';
 
 import '../../../../../shared/log/logger_provider.dart';
@@ -15,18 +19,7 @@ final homeControllerProvider =
     NotifierProvider.autoDispose<HomeController, HomeState>(HomeController.new);
 
 class HomeController extends Notifier<HomeState> {
-  StreamSubscription? _todaySub;
-  StreamSubscription? _tomorrowSub;
-  StreamSubscription? _thisWeekSub;
-  StreamSubscription? _todayOverDueSub;
-  StreamSubscription? _thisWeekOverDueSub;
-  StreamSubscription? _pendingSub;
-  StreamSubscription? _completedTodaySub;
-  StreamSubscription? _completedThisWeekSub;
-
-  StreamSubscription? _userSub;
   StreamSubscription? _timeSub;
-  late final ProviderSubscription _authSub;
 
   late final DateTime _lastCheckTime;
 
@@ -39,51 +32,54 @@ class HomeController extends Notifier<HomeState> {
         state = state.copyWith(userName: user?.name ?? 'User');
       });
     });
-    _authSub = ref.listen(
-      authControllerProvider.select((value) => value.user),
-      (_, next) {
-        if (next == null) {
-          _cancelStreams();
-        } else {
-          _startTaskListening(next.localId);
-        }
-      },
-    );
+    ref.listen(todayTasksProvider, (previous, next) {
+      next.whenData((tasks) {
+        state = state.copyWith(todayTasks: tasks);
+      });
+    });
+    ref.listen(tomorrowTasksProvider, (previous, next) {
+      next.whenData((tasks) {
+        state = state.copyWith(tomorrowTasks: tasks);
+      });
+    });
+    ref.listen(thisWeekTasksProvider, (previous, next) {
+      next.whenData((tasks) {
+        state = state.copyWith(thisWeekTasks: tasks);
+      });
+    });
+    ref.listen(todayOverDueTasksProvider, (previous, next) {
+      next.whenData((tasks) {
+        state = state.copyWith(todayOverDueTasks: tasks);
+      });
+    });
+    ref.listen(thisWeekOverDueTasksProvider, (previous, next) {
+      next.whenData((tasks) {
+        state = state.copyWith(thisWeekOverDueTasks: tasks);
+      });
+    });
+    ref.listen(pendingTasksProvider, (previous, next) {
+      next.whenData((tasks) {
+        state = state.copyWith(pendingTasks: tasks);
+      });
+    });
+    ref.listen(completedTodayTasksProvider, (previous, next) {
+      next.whenData((tasks) {
+        state = state.copyWith(todayCompletedTasks: tasks);
+      });
+    });
+    ref.listen(completedThisWeekTasksProvider, (previous, next) {
+      next.whenData((tasks) {
+        state = state.copyWith(thisWeekCompletedTasks: tasks);
+      });
+    });
+
     ref.onDispose(() {
-      _authSub.close();
-      _cancelStreams();
+      _timeSub?.cancel();
     });
     return HomeState();
   }
 
-  void _cancelStreams() {
-    _todaySub?.cancel();
-    _tomorrowSub?.cancel();
-    _thisWeekSub?.cancel();
-    _todayOverDueSub?.cancel();
-    _thisWeekOverDueSub?.cancel();
-    _pendingSub?.cancel();
-    _completedTodaySub?.cancel();
-    _completedThisWeekSub?.cancel();
-    _timeSub?.cancel();
-  }
-
-  void logout() async {
-    logger.i("Logout at home page");
-    await ref.read(authControllerProvider.notifier).logout();
-  }
-
-  void _restartListening(int userLocalId) {
-    _todaySub?.cancel();
-    _tomorrowSub?.cancel();
-    _thisWeekSub?.cancel();
-    _todayOverDueSub?.cancel();
-    _thisWeekOverDueSub?.cancel();
-    _pendingSub?.cancel();
-    _completedTodaySub?.cancel();
-    _completedThisWeekSub?.cancel();
-    _startTaskListening(userLocalId);
-  }
+  void logout() => ref.read(authControllerProvider.notifier).logout();
 
   void onTimeChecker(DateTime now) {
     if (!now.isSameDay(_lastCheckTime)) {
@@ -92,72 +88,29 @@ class HomeController extends Notifier<HomeState> {
         authControllerProvider.select((value) => value.user?.localId),
       );
       if (userLocalId == null) return;
-      _restartListening(userLocalId);
+      //need restart listenner, vi sao can
     }
   }
 
-  void onCheck(int localId) {
-    logger.i("Check $localId");
-    final userLocalId = ref.read(
-      authControllerProvider.select((value) => value.user?.localId),
-    );
-    if (userLocalId == null) return;
-    ref.read(taskServiceProvider).updateTaskStatus(localId, userLocalId);
-  }
+  void onCheck(TaskEntity entity) => ref
+      .read(updateTaskStatusUseCaseProvider)
+      .call(
+        entity.copyWith(
+          status: entity.status == TaskStatus.completed
+              ? TaskStatus.pending
+              : TaskStatus.completed,
+        ),
+      );
 
-  void onSubtaskCheck(int localId) =>
-      ref.read(taskServiceProvider).updateSubtaskStatus(localId);
+  void onSubtaskCheck(SubtaskEntity entity) =>
+      ref.read(updateSubtaskStatusUseCaseProvider).call(entity);
 
-  void onDelete(int localId) =>
-      ref.read(taskServiceProvider).deleteTask(localId);
+  void onDelete(TaskEntity entity) =>
+      ref.read(deleteTaskUseCaseProvider).call(entity);
 
-  void onSubtaskDelete(int localId) =>
-      ref.read(taskServiceProvider).deleteSubtask(localId);
+  void onSubtaskDelete(SubtaskEntity entity) =>
+      ref.read(deleteSubtaskUseCaseProvider).call(entity);
 
   void setSelectedTask(TaskEntity task) =>
       state = state.copyWith(selectedTask: task);
-
-  void _startTaskListening(int userLocalId) {
-    final taskService = ref.watch(taskServiceProvider);
-    _todaySub = taskService.watchTodayTask(userLocalId).listen((tasks) {
-      logger.i("Today Task: $tasks");
-      state = state.copyWith(todayTasks: tasks);
-    });
-    _tomorrowSub = taskService.watchTomorrowTask(userLocalId).listen((tasks) {
-      debugPrint("Tomorrow: $tasks");
-      state = state.copyWith(tomorrowTasks: tasks);
-    });
-    _thisWeekSub = taskService.watchThisWeekTask(userLocalId).listen((tasks) {
-      debugPrint("This Week: $tasks");
-      state = state.copyWith(thisWeekTasks: tasks);
-    });
-    _todayOverDueSub = taskService.watchTodayOverDueTask(userLocalId).listen((
-      tasks,
-    ) {
-      debugPrint("Over Due: $tasks");
-      state = state.copyWith(todayOverDueTasks: tasks);
-    });
-    _thisWeekOverDueSub = taskService
-        .watchThisWeekOverDueTask(userLocalId)
-        .listen((tasks) {
-          debugPrint("Over Due: $tasks");
-          state = state.copyWith(thisWeekOverDueTasks: tasks);
-        });
-    _pendingSub = taskService.watchPendingTask(userLocalId).listen((tasks) {
-      debugPrint("Pending: $tasks");
-      state = state.copyWith(pendingTasks: tasks);
-    });
-    _completedTodaySub = taskService
-        .watchCompletedTodayTask(userLocalId)
-        .listen((tasks) {
-          debugPrint("Completed Today: $tasks");
-          state = state.copyWith(todayCompletedTasks: tasks);
-        });
-    _completedThisWeekSub = taskService
-        .watchCompletedThisWeekTask(userLocalId)
-        .listen((tasks) {
-          debugPrint("Completed This Week: $tasks");
-          state = state.copyWith(thisWeekCompletedTasks: tasks);
-        });
-  }
 }

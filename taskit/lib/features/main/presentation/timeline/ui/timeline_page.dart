@@ -4,11 +4,12 @@ import 'package:flutter_expandable_fab/flutter_expandable_fab.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:taskit/features/main/presentation/timeline/controller/timeline_controller.dart';
+import 'package:taskit/features/task/domain/entities/task_entity.dart';
 import 'package:taskit/shared/extension/date_time.dart';
 
 import '../../../../../shared/config/app/theme/app_color.dart';
 import '../../../../../shared/config/routers/router_provider.dart';
-import '../../home/ui/widget/task_item.dart';
+import '../../../../task/presentation/widgets/task_item.dart';
 import '../../list/controller/list_controller.dart';
 
 class TimelinePage extends ConsumerStatefulWidget {
@@ -27,55 +28,53 @@ class _TimeLinePageState extends ConsumerState<TimelinePage> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       Future.delayed(Duration(milliseconds: 500), () {
         _easyDateController.animateToFocusDate(
-            duration: Duration(milliseconds: 700));
+          duration: Duration(milliseconds: 700),
+        );
       });
     });
   }
 
   void _showBottomSheetEditTask(int localId) {
-    context.push('/edit_task', extra: localId);
+    context.push('/view_task', extra: localId);
   }
 
-  void _showDialogConfirmDeleteTask(int localId) {
+  void _showDialogConfirmDeleteTask(TaskEntity task) {
     final color = Theme.of(context).colorScheme;
     final text = Theme.of(context).textTheme;
     showDialog(
-        context: context,
-        builder: (context) => AlertDialog(
-              titleTextStyle: text.titleLarge?.copyWith(
-                color: color.onSurface,
-                fontWeight: FontWeight.bold,
-              ),
-              title: Text('Delete task'),
-              content: const Text('Are you sure you want to delete this task?'),
-              actions: [
-                TextButton(
-                    onPressed: () => Navigator.pop(context),
-                    child: Text(
-                      'Cancel',
-                      style: text.labelLarge?.copyWith(
-                        color: color.primary,
-                      ),
-                    )),
-                TextButton(
-                    onPressed: () {
-                      ref
-                          .read(timelineControllerProvider.notifier)
-                          .onDelete(localId);
-                      Navigator.pop(context);
-                      context.pop();
-                    },
-                    child: Text(
-                      'Delete',
-                      style: text.labelLarge?.copyWith(
-                        color: color.onError,
-                      ),
-                    )),
-              ],
-            ));
+      context: context,
+      builder: (context) => AlertDialog(
+        titleTextStyle: text.titleLarge?.copyWith(
+          color: color.onSurface,
+          fontWeight: FontWeight.bold,
+        ),
+        title: Text('Delete task'),
+        content: const Text('Are you sure you want to delete this task?'),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: Text(
+              'Cancel',
+              style: text.labelLarge?.copyWith(color: color.primary),
+            ),
+          ),
+          TextButton(
+            onPressed: () {
+              ref.read(timelineControllerProvider.notifier).onDelete(task);
+              Navigator.pop(context);
+              context.pop();
+            },
+            child: Text(
+              'Delete',
+              style: text.labelLarge?.copyWith(color: color.onError),
+            ),
+          ),
+        ],
+      ),
+    );
   }
 
-//region MAIN
+  //region MAIN
   @override
   Widget build(BuildContext context) {
     final color = Theme.of(context).colorScheme;
@@ -92,14 +91,17 @@ class _TimeLinePageState extends ConsumerState<TimelinePage> {
       body: SafeArea(
         top: true,
         child: NestedScrollView(
-            headerSliverBuilder: (context, innerBoxIsScrolled) =>
-                [_topAppBar(), _horizontalCalendar()],
-            body: _body()),
+          headerSliverBuilder: (context, innerBoxIsScrolled) => [
+            _topAppBar(),
+            _horizontalCalendar(),
+          ],
+          body: _body(),
+        ),
       ),
     );
   }
 
-//endregion
+  //endregion
 
   //region FAB
   Widget _fabAddTask() {
@@ -123,33 +125,29 @@ class _TimeLinePageState extends ConsumerState<TimelinePage> {
       ),
       children: [
         FloatingActionButton(
-            heroTag: 'Add Task',
-            shape: CircleBorder(),
-            foregroundColor: color.onPrimaryContainer,
-            splashColor: color.primary,
-            backgroundColor: color.primaryContainer,
-            child: Icon(
-              Icons.note_alt_outlined,
-              size: 30,
-            ),
-            onPressed: () => context.push('/add_task')),
+          heroTag: 'Add Task',
+          shape: CircleBorder(),
+          foregroundColor: color.onPrimaryContainer,
+          splashColor: color.primary,
+          backgroundColor: color.primaryContainer,
+          child: Icon(Icons.note_alt_outlined, size: 30),
+          onPressed: () => context.push('/add_task'),
+        ),
         FloatingActionButton(
-            heroTag: 'Add Task Using Voice',
-            shape: CircleBorder(),
-            foregroundColor: color.onPrimaryContainer,
-            splashColor: color.primary,
-            backgroundColor: color.primaryContainer,
-            onPressed: () => context.push('/voice'),
-            child: Icon(
-              Icons.mic,
-              size: 30,
-            ))
+          heroTag: 'Add Task Using Voice',
+          shape: CircleBorder(),
+          foregroundColor: color.onPrimaryContainer,
+          splashColor: color.primary,
+          backgroundColor: color.primaryContainer,
+          onPressed: () => context.push('/voice'),
+          child: Icon(Icons.mic, size: 30),
+        ),
       ],
     );
   }
 
-//endregion
-//region TopAppBar
+  //endregion
+  //region TopAppBar
   Widget _topAppBar() {
     final color = Theme.of(context).colorScheme;
     final text = Theme.of(context).textTheme;
@@ -170,24 +168,25 @@ class _TimeLinePageState extends ConsumerState<TimelinePage> {
           shape: const CircleBorder(),
           child: Container(
             decoration: BoxDecoration(
-                color: color.primaryContainer, shape: BoxShape.circle),
+              color: color.primaryContainer,
+              shape: BoxShape.circle,
+            ),
             child: IconButton(
-                onPressed: () {
-                  shouldFocus.state = true;
-                  navigationShell.goBranch(1);
-                },
-                color: color.onPrimaryContainer,
-                icon: const Icon(
-                  Icons.search_outlined,
-                )),
+              onPressed: () {
+                shouldFocus.state = true;
+                navigationShell.goBranch(1);
+              },
+              color: color.onPrimaryContainer,
+              icon: const Icon(Icons.search_outlined),
+            ),
           ),
         ),
       ],
     );
   }
 
-//endregion
-//region HorizontalCalendar
+  //endregion
+  //region HorizontalCalendar
   Widget _horizontalCalendar() {
     final color = Theme.of(context).colorScheme;
     final text = Theme.of(context).textTheme;
@@ -195,11 +194,11 @@ class _TimeLinePageState extends ConsumerState<TimelinePage> {
     final state = ref.watch(timelineControllerProvider);
     final focusDate = state.focusDate;
     return SliverAppBar(
-        backgroundColor: color.primary,
-        pinned: true,
-        toolbarHeight: 210,
-        flexibleSpace: FlexibleSpaceBar(
-            background: Padding(
+      backgroundColor: color.primary,
+      pinned: true,
+      toolbarHeight: 210,
+      flexibleSpace: FlexibleSpaceBar(
+        background: Padding(
           padding: const EdgeInsets.only(top: 5),
           child: Container(
             decoration: BoxDecoration(
@@ -207,35 +206,45 @@ class _TimeLinePageState extends ConsumerState<TimelinePage> {
               borderRadius: BorderRadius.vertical(top: Radius.circular(30)),
             ),
             child: EasyDateTimeLinePicker.itemBuilder(
-                physics: BouncingScrollPhysics(),
-                controller: _easyDateController,
-                focusedDate: focusDate ?? DateTime.now(),
-                daySeparatorPadding: 15,
-                timelineOptions: TimelineOptions(
-                  padding: EdgeInsets.only(left: 10, right: 10, top: 8),
-                  height: 130,
-                ),
-                firstDate: DateTime(DateTime.now().year - 1, 1, 1),
-                lastDate: DateTime(DateTime.now().year + 1, 12, 31),
-                itemExtent: 60,
-                selectionMode: SelectionMode.autoCenter(
-                  duration: Duration(seconds: 1),
-                  curve: Curves.easeInOut,
-                ),
-                headerOptions: HeaderOptions(
-                    headerType: HeaderType.picker,
-                    headerBuilder: _calendarHeader),
-                itemBuilder: _calendarCard,
-                currentDate: DateTime.now().toStartOfDay(),
-                onDateChange: controller.setFocusDate),
+              physics: BouncingScrollPhysics(),
+              controller: _easyDateController,
+              focusedDate: focusDate ?? DateTime.now(),
+              daySeparatorPadding: 15,
+              timelineOptions: TimelineOptions(
+                padding: EdgeInsets.only(left: 10, right: 10, top: 8),
+                height: 130,
+              ),
+              firstDate: DateTime(DateTime.now().year - 1, 1, 1),
+              lastDate: DateTime(DateTime.now().year + 1, 12, 31),
+              itemExtent: 60,
+              selectionMode: SelectionMode.autoCenter(
+                duration: Duration(seconds: 1),
+                curve: Curves.easeInOut,
+              ),
+              headerOptions: HeaderOptions(
+                headerType: HeaderType.picker,
+                headerBuilder: _calendarHeader,
+              ),
+              itemBuilder: _calendarCard,
+              currentDate: DateTime.now().toStartOfDay(),
+              onDateChange: controller.setFocusDate,
+            ),
           ),
-        )));
+        ),
+      ),
+    );
   }
 
-//endregion
-//region Calendar card
-  Widget _calendarCard(BuildContext context, DateTime date, bool isSelected,
-      bool isDisable, bool isToday, void Function() onTap) {
+  //endregion
+  //region Calendar card
+  Widget _calendarCard(
+    BuildContext context,
+    DateTime date,
+    bool isSelected,
+    bool isDisable,
+    bool isToday,
+    void Function() onTap,
+  ) {
     final color = Theme.of(context).colorScheme;
     final text = Theme.of(context).textTheme;
     final state = ref.watch(timelineControllerProvider);
@@ -253,12 +262,12 @@ class _TimeLinePageState extends ConsumerState<TimelinePage> {
               onTap: onTap,
               child: Ink(
                 decoration: BoxDecoration(
-                    color:
-                        isSelected ? color.primary : color.surfaceContainerLow,
-                    borderRadius: BorderRadius.circular(15),
-                    border: isToday
-                        ? Border.all(color: color.primary, width: 2)
-                        : null),
+                  color: isSelected ? color.primary : color.surfaceContainerLow,
+                  borderRadius: BorderRadius.circular(15),
+                  border: isToday
+                      ? Border.all(color: color.primary, width: 2)
+                      : null,
+                ),
                 child: Container(
                   padding: EdgeInsets.symmetric(vertical: 3, horizontal: 3),
                   width: double.infinity,
@@ -268,40 +277,46 @@ class _TimeLinePageState extends ConsumerState<TimelinePage> {
                     children: [
                       Expanded(
                         child: Center(
-                            child: Text(
-                          date.threeCharMonth,
-                          style: text.bodySmall?.copyWith(
+                          child: Text(
+                            date.threeCharMonth,
+                            style: text.bodySmall?.copyWith(
                               color: isSelected
                                   ? color.onPrimary
                                   : (isToday
-                                      ? color.primary
-                                      : color.onSurfaceVariant)),
-                        )),
+                                        ? color.primary
+                                        : color.onSurfaceVariant),
+                            ),
+                          ),
+                        ),
                       ),
                       Expanded(
                         child: Center(
-                            child: Text(
-                          date.day.toString(),
-                          style: text.bodyLarge?.copyWith(
+                          child: Text(
+                            date.day.toString(),
+                            style: text.bodyLarge?.copyWith(
                               fontWeight: FontWeight.bold,
                               color: isSelected
                                   ? color.onPrimary
                                   : (isToday
-                                      ? color.primary
-                                      : color.onSurfaceVariant)),
-                        )),
+                                        ? color.primary
+                                        : color.onSurfaceVariant),
+                            ),
+                          ),
+                        ),
                       ),
                       Expanded(
                         child: Center(
-                            child: Text(
-                          date.threeCharDayOfWeek,
-                          style: text.bodySmall?.copyWith(
+                          child: Text(
+                            date.threeCharDayOfWeek,
+                            style: text.bodySmall?.copyWith(
                               color: isSelected
                                   ? color.onPrimary
                                   : (isToday
-                                      ? color.primary
-                                      : color.onSurfaceVariant)),
-                        )),
+                                        ? color.primary
+                                        : color.onSurfaceVariant),
+                            ),
+                          ),
+                        ),
                       ),
                     ],
                   ),
@@ -309,9 +324,7 @@ class _TimeLinePageState extends ConsumerState<TimelinePage> {
               ),
             ),
           ),
-          SizedBox(
-            height: 5,
-          ),
+          SizedBox(height: 5),
           if (state.allTasks.any((task) {
             final dueDate = task.dueDate;
             return dueDate != null && dueDate.isSameDay(date);
@@ -319,18 +332,23 @@ class _TimeLinePageState extends ConsumerState<TimelinePage> {
             Container(
               width: 8,
               height: 8,
-              decoration:
-                  BoxDecoration(color: color.primary, shape: BoxShape.circle),
-            )
+              decoration: BoxDecoration(
+                color: color.primary,
+                shape: BoxShape.circle,
+              ),
+            ),
         ],
       ),
     );
   }
 
-//endregion
-//region Calendar Header
+  //endregion
+  //region Calendar Header
   Widget _calendarHeader(
-      BuildContext context, DateTime date, void Function() onTap) {
+    BuildContext context,
+    DateTime date,
+    void Function() onTap,
+  ) {
     final color = Theme.of(context).colorScheme;
     final text = Theme.of(context).textTheme;
     return Padding(
@@ -349,36 +367,40 @@ class _TimeLinePageState extends ConsumerState<TimelinePage> {
                 color: color.primary,
               ),
             ),
-            icon: Icon(
-              Icons.arrow_right,
-            ),
+            icon: Icon(Icons.arrow_right),
           ),
           Spacer(),
           Container(
             decoration: BoxDecoration(
-                shape: BoxShape.circle, color: AppColor.surfaceContainer),
+              shape: BoxShape.circle,
+              color: AppColor.surfaceContainer,
+            ),
             child: IconButton(
-                onPressed: () {
-                  _easyDateController.animateToCurrentDate();
-                },
-                icon: Icon(Icons.today)),
+              onPressed: () {
+                _easyDateController.animateToCurrentDate();
+              },
+              icon: Icon(Icons.today),
+            ),
           ),
           Container(
             decoration: BoxDecoration(
-                shape: BoxShape.circle, color: AppColor.surfaceContainer),
+              shape: BoxShape.circle,
+              color: AppColor.surfaceContainer,
+            ),
             child: IconButton(
-                onPressed: () {
-                  _easyDateController.animateToFocusDate();
-                },
-                icon: Icon(Icons.push_pin)),
-          )
+              onPressed: () {
+                _easyDateController.animateToFocusDate();
+              },
+              icon: Icon(Icons.push_pin),
+            ),
+          ),
         ],
       ),
     );
   }
 
-//endregion
-//region Body
+  //endregion
+  //region Body
   Widget _body() {
     final color = Theme.of(context).colorScheme;
     final text = Theme.of(context).textTheme;
@@ -389,19 +411,22 @@ class _TimeLinePageState extends ConsumerState<TimelinePage> {
         if (state.tasks.isNotEmpty)
           SliverList(
             delegate: SliverChildBuilderDelegate(
-                childCount: state.tasks.length,
-                (context, index) => Padding(
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 6, horizontal: 14),
-                      child: TaskItem(
-                        task: state.tasks[index],
-                        onDelete: _showDialogConfirmDeleteTask,
-                        onCheck: controller.onCheck,
-                        onEdit: _showBottomSheetEditTask,
-                        onSubtaskCheck: controller.onSubtaskCheck,
-                        onSubtaskDelete: controller.onSubtaskDelete,
-                      ),
-                    )),
+              childCount: state.tasks.length,
+              (context, index) => Padding(
+                padding: const EdgeInsets.symmetric(
+                  vertical: 6,
+                  horizontal: 14,
+                ),
+                child: TaskItem(
+                  task: state.tasks[index],
+                  onDelete: _showDialogConfirmDeleteTask,
+                  onCheck: controller.onCheck,
+                  onEdit: _showBottomSheetEditTask,
+                  onSubtaskCheck: controller.onSubtaskCheck,
+                  onSubtaskDelete: controller.onSubtaskDelete,
+                ),
+              ),
+            ),
           ),
         if (state.tasks.isEmpty)
           SliverFillRemaining(
@@ -409,29 +434,25 @@ class _TimeLinePageState extends ConsumerState<TimelinePage> {
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  mainAxisSize: MainAxisSize.max,
-                  children: [
-                    const SizedBox(
-                      height: 50,
+                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  const SizedBox(height: 50),
+                  const Icon(
+                    Icons.hourglass_bottom,
+                    size: 50,
+                    color: Colors.yellow,
+                  ),
+                  const SizedBox(height: 30),
+                  Text(
+                    'No available tasks',
+                    style: text.headlineSmall?.copyWith(
+                      color: color.onSurfaceVariant,
                     ),
-                    const Icon(
-                      Icons.hourglass_bottom,
-                      size: 50,
-                      color: Colors.yellow,
-                    ),
-                    const SizedBox(
-                      height: 30,
-                    ),
-                    Text(
-                      'No available tasks',
-                      style: text.headlineSmall
-                          ?.copyWith(color: color.onSurfaceVariant),
-                    ),
-                    const SizedBox(
-                      height: 100,
-                    ),
-                  ]),
+                  ),
+                  const SizedBox(height: 100),
+                ],
+              ),
             ),
           ),
       ],

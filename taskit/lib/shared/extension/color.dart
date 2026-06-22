@@ -1,36 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../features/task/domain/entities/task_priority_enum.dart';
-import '../../features/task/domain/entities/task_status_enum.dart';
+import '../../features/task/domain/entities/task_entity.dart';
 import '../config/app/theme/app_color.dart';
-
-extension TaskPriorityColor on TaskPriority {
-  Color toColor() {
-    switch (this) {
-      case TaskPriority.high:
-        return AppColor.onHighContainer;
-      case TaskPriority.medium:
-        return AppColor.onMediumContainer;
-      case TaskPriority.low:
-        return AppColor.onLowContainer;
-      default:
-        return AppColor.onNoneContainer;
-    }
-  }
-
-  Color toColorContainer() {
-    switch (this) {
-      case TaskPriority.high:
-        return AppColor.highContainer;
-      case TaskPriority.medium:
-        return AppColor.mediumContainer;
-      case TaskPriority.low:
-        return AppColor.lowContainer;
-      default:
-        return AppColor.noneContainer;
-    }
-  }
-}
 
 extension TaskStatusColor on TaskStatus {
   Color toColor() {

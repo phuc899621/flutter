@@ -4,13 +4,14 @@ import 'package:flutter/widget_previews.dart';
 import 'package:flutter_expandable_fab/flutter_expandable_fab.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:taskit/features/main/presentation/home/ui/widget/task_item.dart';
 import 'package:taskit/features/main/presentation/list/controller/search_text_controller.dart';
 import 'package:taskit/features/main/presentation/list/controller/tab_selected_index.dart';
 import 'package:taskit/features/task/domain/entities/order_option_enum.dart';
 import 'package:taskit/shared/extension/enum.dart';
 import 'package:taskit/shared/log/logger_provider.dart';
 
+import '../../../../task/domain/entities/task_entity.dart';
+import '../../../../task/presentation/widgets/task_item.dart';
 import '../controller/list_controller.dart';
 
 class ListPage extends ConsumerStatefulWidget {
@@ -39,10 +40,10 @@ class _ListPageState extends ConsumerState<ListPage>
   }
 
   void _showBottomSheetEditTask(int localId) {
-    context.push('/edit_task', extra: localId);
+    context.push('/view_task', extra: localId);
   }
 
-  void _showDialogConfirmDeleteTask(int localId) {
+  void _showDialogConfirmDeleteTask(TaskEntity task) {
     final color = Theme.of(context).colorScheme;
     final text = Theme.of(context).textTheme;
     final controller = ref.read(listControllerProvider.notifier);
@@ -65,7 +66,7 @@ class _ListPageState extends ConsumerState<ListPage>
           ),
           TextButton(
             onPressed: () {
-              controller.onDelete(localId);
+              controller.onDelete(task);
               context.pop();
             },
             child: Text(

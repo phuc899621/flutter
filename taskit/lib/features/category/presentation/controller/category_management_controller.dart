@@ -1,5 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:taskit/features/category/domain/entities/category_entity.dart';
+import 'package:taskit/features/category/domain/usecases/create_category_usecase.dart';
 import 'package:taskit/features/category/domain/usecases/edit_category_usecase.dart';
 import 'package:taskit/features/category/presentation/state/category_management_state.dart';
 import 'package:taskit/features/category/presentation/ui/providers/categories_provider.dart';
@@ -22,6 +23,10 @@ class CategoryManagementController extends Notifier<CategoryManagementState> {
     });
     return CategoryManagementState();
   }
+
+  void addCategory(String name) => ref
+      .read(createCategoryUseCaseProvider)
+      .call(CategoryEntity.insert(name: name, userLocalId: -1));
 
   void editCategory(int localId, String newName) {
     final newCategory = state.categories

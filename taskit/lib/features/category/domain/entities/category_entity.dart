@@ -19,7 +19,19 @@ abstract class CategoryEntity with _$CategoryEntity {
     required DateTime updatedAt,
   }) = _CategoryEntity;
 
-  factory CategoryEntity.create({
+  factory CategoryEntity.empty() => CategoryEntity(
+    localId: -1,
+    name: '',
+    userLocalId: -1,
+    remoteId: null,
+    isDefault: false,
+    synced: false,
+    deleted: false,
+    createdAt: DateTime.now(),
+    updatedAt: DateTime.now(),
+  );
+
+  factory CategoryEntity.insert({
     required String name,
     required int userLocalId,
   }) {
@@ -30,6 +42,21 @@ abstract class CategoryEntity with _$CategoryEntity {
       name: name,
       userLocalId: userLocalId,
       remoteId: null,
+      isDefault: false,
+      synced: false,
+      deleted: false,
+      createdAt: now,
+      updatedAt: now,
+    );
+  }
+
+  factory CategoryEntity.fromRemote({required String id}) {
+    final now = DateTime.now().toUtc();
+    return CategoryEntity(
+      localId: -1,
+      name: "",
+      userLocalId: -1,
+      remoteId: id,
       isDefault: false,
       synced: false,
       deleted: false,

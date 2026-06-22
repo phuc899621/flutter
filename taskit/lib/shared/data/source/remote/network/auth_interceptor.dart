@@ -57,6 +57,11 @@ class AuthInterceptor extends Interceptor {
     if (err.type == DioExceptionType.badResponse &&
         err.response?.statusCode == 401 &&
         autoRefresh) {
+      if (err.requestOptions.extra['isRetry'] == true) {
+        return handler.next(err);
+      }
+
+      err.requestOptions.extra['isRetry'] == true;
       if (!onInternetChecker()) {
         return handler.next(err);
       }

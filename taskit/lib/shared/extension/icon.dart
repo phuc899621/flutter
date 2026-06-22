@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:taskit/features/task/domain/entities/task_status_enum.dart';
+
+import '../../features/task/domain/entities/task_entity.dart';
 
 extension TaskStatusIcon on TaskStatus {
   IconData toIcon() {

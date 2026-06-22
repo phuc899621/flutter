@@ -129,7 +129,6 @@ class CategoryRepoImpl with DioExceptionMapper implements CategoryRepo {
       );
       final deletedIds = result.data.map((e) => e.localId).toList();
       await _source.deleteCategoriesByLocalIds(userLocalId, deletedIds);
-      _updateSyncTime();
     }
     if (unsynced.isNotEmpty) {
       final result = await _api.syncCategories(
@@ -157,24 +156,19 @@ class CategoryRepoImpl with DioExceptionMapper implements CategoryRepo {
         deleteReject.map((e) => e.localId).toList(),
       );
       await _source.updateSyncCategories(updateEntity, userLocalId);
-      _updateSyncTime();
     }
   });
 
   @override
   Future<void> pullCategories(int userLocalId) => callSafe(() async {
-    logger.i('pull categories call');
+    logger.i('[CategoryRepoImpl] pull categories call');
     final lastSyncTime = _sessionService.getLastSyncTime();
-    logger.i('lastSyncTime: $lastSyncTime');
+    logger.i('[CategoryRepoImpl] lastSyncTime: $lastSyncTime');
     final result = await _api.pullCategories(lastSyncTime);
-    logger.i('reulst pull: $result');
+    logger.i('[CategoryRepoImpl] result pull: $result');
     await _source.reconcileCategories(
       userLocalId,
       result.data.map((e) => e.toEntity(userLocalId)).toList(),
-    );
-
-    await _sessionService.saveLastSyncTime(
-      DateTime.now().toUtc().toIso8601String(),
     );
   });
 

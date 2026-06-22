@@ -1,9 +1,11 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:taskit/features/auth/domain/usecases/auth/logout_usecase.dart';
+import 'package:taskit/features/task/application/task_sync_service.dart';
 import 'package:taskit/features/user/domain/params/reconcile_user_param.dart';
 import 'package:taskit/features/user/domain/usecase/get_previous_user_usecase.dart';
 import 'package:taskit/features/user/domain/usecase/reconcile_user_sync_usecase.dart';
 import 'package:taskit/features/user/domain/usecase/sync_user_usecase.dart';
+import 'package:taskit/shared/application/session_service.dart';
 import 'package:taskit/shared/extension/result_return.dart';
 
 import '../../../../../shared/application/network_status_provider.dart';
@@ -43,10 +45,11 @@ class AuthController extends Notifier<AuthState> {
     return const AuthState(status: AuthStatus.initial);
   }
 
-  void _onAuthenticated(UserEntity user) {
+  void _onAuthenticated(UserEntity user)  {
     logger.i('[AuthController] Handling authenticated side-effects');
-    ref.read(categorySyncServiceProvider).init();
-    ref.read(socketServiceProvider).connect();
+     ref.read(categorySyncServiceProvider).init();
+     ref.read(taskSyncServiceProvider).init();
+     ref.read(socketServiceProvider).connect();
     _triggerInitialSync(user.localId);
   }
 
@@ -130,6 +133,10 @@ class AuthController extends Notifier<AuthState> {
   }
 
   Future<void> _triggerInitialSync(int userLocalId) async {
-    ref.read(categorySyncServiceProvider).syncAll(userLocalId);
+    await ref.read(categorySyncServiceProvider).syncAll(userLocalId);
+    await ref.read(taskSyncServiceProvider).syncAll(userLocalId);
+    await ref
+        .read(sessionServiceProvider)
+        .saveLastSyncTime(DateTime.now().toUtc().toIso8601String());
   }
 }

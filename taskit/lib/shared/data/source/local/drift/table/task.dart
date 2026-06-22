@@ -1,4 +1,5 @@
 import 'package:drift/drift.dart';
+import 'package:taskit/features/task/domain/entities/task_entity.dart';
 import 'package:taskit/shared/data/source/local/drift/table/category.dart';
 import 'package:taskit/shared/data/source/local/drift/table/user.dart';
 
@@ -8,18 +9,31 @@ class TaskTable extends Table {
 
   IntColumn get localId => integer().autoIncrement()();
 
-  TextColumn get remoteId => text().withDefault(const Constant(''))();
+  TextColumn get remoteId =>
+      text().unique().nullable().withDefault(const Constant(null))();
 
   TextColumn get title => text()();
 
   TextColumn get description => text().withDefault(const Constant(''))();
 
+  BoolColumn get deleted => boolean().withDefault(const Constant(false))();
+
   IntColumn get categoryLocalId =>
       integer().references(CategoryTable, #localId)();
 
-  BoolColumn get isSynced => boolean().withDefault(const Constant(false))();
+  BoolColumn get synced => boolean().withDefault(const Constant(false))();
 
   TextColumn get priority => text().withDefault(const Constant('none'))();
+
+  DateTimeColumn get reminderAt =>
+      dateTime().nullable().withDefault(const Constant(null))();
+
+  TextColumn get reminderType => textEnum<TaskReminderType>().withDefault(
+    Constant(TaskReminderType.none.name),
+  )();
+
+  IntColumn get reminderOffset =>
+      integer().nullable().withDefault(Constant(null))();
 
   IntColumn get userLocalId =>
       integer().references(UserTable, #localId, onDelete: KeyAction.cascade)();

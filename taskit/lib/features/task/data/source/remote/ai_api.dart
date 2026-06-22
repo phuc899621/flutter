@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:retrofit/dio.dart';
 import 'package:retrofit/error_logger.dart';
 import 'package:retrofit/http.dart';
 import 'package:taskit/shared/data/source/remote/network/network_service.dart';
@@ -21,14 +22,10 @@ abstract class AiApi {
   factory AiApi(Dio dio) => _AiApi(dio);
 
   @GET('/ai/task')
-  Future<DataResponse<AiGenerateTaskData>> generate(
-    @Header('Authorization') String token,
-    @Body() AiReq aiReq,
-  );
+  @Extra({'requireAuth': true})
+  Future<DataResponse<AiGenerateTaskData>> generate(@Body() AiReq aiReq);
 
   @GET('/ai/question')
-  Future<DataResponse<AiQuestionData>> getAnswer(
-    @Header('Authorization') String token,
-    @Body() AiReq aiReq,
-  );
+  @Extra({'requireAuth': true})
+  Future<DataResponse<AiQuestionData>> getAnswer(@Body() AiReq aiReq);
 }

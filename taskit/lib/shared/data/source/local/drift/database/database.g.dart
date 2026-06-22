@@ -1041,10 +1041,11 @@ class $TaskTableTable extends TaskTable
   late final GeneratedColumn<String> remoteId = GeneratedColumn<String>(
     'remote_id',
     aliasedName,
-    false,
+    true,
     type: DriftSqlType.string,
     requiredDuringInsert: false,
-    defaultValue: const Constant(''),
+    defaultConstraints: GeneratedColumn.constraintIsAlways('UNIQUE'),
+    defaultValue: const Constant(null),
   );
   static const VerificationMeta _titleMeta = const VerificationMeta('title');
   @override
@@ -1067,6 +1068,21 @@ class $TaskTableTable extends TaskTable
     requiredDuringInsert: false,
     defaultValue: const Constant(''),
   );
+  static const VerificationMeta _deletedMeta = const VerificationMeta(
+    'deleted',
+  );
+  @override
+  late final GeneratedColumn<bool> deleted = GeneratedColumn<bool>(
+    'deleted',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("deleted" IN (0, 1))',
+    ),
+    defaultValue: const Constant(false),
+  );
   static const VerificationMeta _categoryLocalIdMeta = const VerificationMeta(
     'categoryLocalId',
   );
@@ -1081,18 +1097,16 @@ class $TaskTableTable extends TaskTable
       'REFERENCES category (local_id)',
     ),
   );
-  static const VerificationMeta _isSyncedMeta = const VerificationMeta(
-    'isSynced',
-  );
+  static const VerificationMeta _syncedMeta = const VerificationMeta('synced');
   @override
-  late final GeneratedColumn<bool> isSynced = GeneratedColumn<bool>(
-    'is_synced',
+  late final GeneratedColumn<bool> synced = GeneratedColumn<bool>(
+    'synced',
     aliasedName,
     false,
     type: DriftSqlType.bool,
     requiredDuringInsert: false,
     defaultConstraints: GeneratedColumn.constraintIsAlways(
-      'CHECK ("is_synced" IN (0, 1))',
+      'CHECK ("synced" IN (0, 1))',
     ),
     defaultValue: const Constant(false),
   );
@@ -1107,6 +1121,40 @@ class $TaskTableTable extends TaskTable
     type: DriftSqlType.string,
     requiredDuringInsert: false,
     defaultValue: const Constant('none'),
+  );
+  static const VerificationMeta _reminderAtMeta = const VerificationMeta(
+    'reminderAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> reminderAt = GeneratedColumn<DateTime>(
+    'reminder_at',
+    aliasedName,
+    true,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(null),
+  );
+  @override
+  late final GeneratedColumnWithTypeConverter<TaskReminderType, String>
+  reminderType = GeneratedColumn<String>(
+    'reminder_type',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: Constant(TaskReminderType.none.name),
+  ).withConverter<TaskReminderType>($TaskTableTable.$converterreminderType);
+  static const VerificationMeta _reminderOffsetMeta = const VerificationMeta(
+    'reminderOffset',
+  );
+  @override
+  late final GeneratedColumn<int> reminderOffset = GeneratedColumn<int>(
+    'reminder_offset',
+    aliasedName,
+    true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultValue: Constant(null),
   );
   static const VerificationMeta _userLocalIdMeta = const VerificationMeta(
     'userLocalId',
@@ -1199,9 +1247,13 @@ class $TaskTableTable extends TaskTable
     remoteId,
     title,
     description,
+    deleted,
     categoryLocalId,
-    isSynced,
+    synced,
     priority,
+    reminderAt,
+    reminderType,
+    reminderOffset,
     userLocalId,
     status,
     dueDate,
@@ -1251,6 +1303,12 @@ class $TaskTableTable extends TaskTable
         ),
       );
     }
+    if (data.containsKey('deleted')) {
+      context.handle(
+        _deletedMeta,
+        deleted.isAcceptableOrUnknown(data['deleted']!, _deletedMeta),
+      );
+    }
     if (data.containsKey('category_local_id')) {
       context.handle(
         _categoryLocalIdMeta,
@@ -1262,16 +1320,31 @@ class $TaskTableTable extends TaskTable
     } else if (isInserting) {
       context.missing(_categoryLocalIdMeta);
     }
-    if (data.containsKey('is_synced')) {
+    if (data.containsKey('synced')) {
       context.handle(
-        _isSyncedMeta,
-        isSynced.isAcceptableOrUnknown(data['is_synced']!, _isSyncedMeta),
+        _syncedMeta,
+        synced.isAcceptableOrUnknown(data['synced']!, _syncedMeta),
       );
     }
     if (data.containsKey('priority')) {
       context.handle(
         _priorityMeta,
         priority.isAcceptableOrUnknown(data['priority']!, _priorityMeta),
+      );
+    }
+    if (data.containsKey('reminder_at')) {
+      context.handle(
+        _reminderAtMeta,
+        reminderAt.isAcceptableOrUnknown(data['reminder_at']!, _reminderAtMeta),
+      );
+    }
+    if (data.containsKey('reminder_offset')) {
+      context.handle(
+        _reminderOffsetMeta,
+        reminderOffset.isAcceptableOrUnknown(
+          data['reminder_offset']!,
+          _reminderOffsetMeta,
+        ),
       );
     }
     if (data.containsKey('user_local_id')) {
@@ -1340,7 +1413,7 @@ class $TaskTableTable extends TaskTable
       remoteId: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
         data['${effectivePrefix}remote_id'],
-      )!,
+      ),
       title: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
         data['${effectivePrefix}title'],
@@ -1349,18 +1422,36 @@ class $TaskTableTable extends TaskTable
         DriftSqlType.string,
         data['${effectivePrefix}description'],
       )!,
+      deleted: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}deleted'],
+      )!,
       categoryLocalId: attachedDatabase.typeMapping.read(
         DriftSqlType.int,
         data['${effectivePrefix}category_local_id'],
       )!,
-      isSynced: attachedDatabase.typeMapping.read(
+      synced: attachedDatabase.typeMapping.read(
         DriftSqlType.bool,
-        data['${effectivePrefix}is_synced'],
+        data['${effectivePrefix}synced'],
       )!,
       priority: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
         data['${effectivePrefix}priority'],
       )!,
+      reminderAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}reminder_at'],
+      ),
+      reminderType: $TaskTableTable.$converterreminderType.fromSql(
+        attachedDatabase.typeMapping.read(
+          DriftSqlType.string,
+          data['${effectivePrefix}reminder_type'],
+        )!,
+      ),
+      reminderOffset: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}reminder_offset'],
+      ),
       userLocalId: attachedDatabase.typeMapping.read(
         DriftSqlType.int,
         data['${effectivePrefix}user_local_id'],
@@ -1396,16 +1487,25 @@ class $TaskTableTable extends TaskTable
   $TaskTableTable createAlias(String alias) {
     return $TaskTableTable(attachedDatabase, alias);
   }
+
+  static JsonTypeConverter2<TaskReminderType, String, String>
+  $converterreminderType = const EnumNameConverter<TaskReminderType>(
+    TaskReminderType.values,
+  );
 }
 
 class TaskTableData extends DataClass implements Insertable<TaskTableData> {
   final int localId;
-  final String remoteId;
+  final String? remoteId;
   final String title;
   final String description;
+  final bool deleted;
   final int categoryLocalId;
-  final bool isSynced;
+  final bool synced;
   final String priority;
+  final DateTime? reminderAt;
+  final TaskReminderType reminderType;
+  final int? reminderOffset;
   final int userLocalId;
   final String status;
   final DateTime? dueDate;
@@ -1415,12 +1515,16 @@ class TaskTableData extends DataClass implements Insertable<TaskTableData> {
   final DateTime updatedAt;
   const TaskTableData({
     required this.localId,
-    required this.remoteId,
+    this.remoteId,
     required this.title,
     required this.description,
+    required this.deleted,
     required this.categoryLocalId,
-    required this.isSynced,
+    required this.synced,
     required this.priority,
+    this.reminderAt,
+    required this.reminderType,
+    this.reminderOffset,
     required this.userLocalId,
     required this.status,
     this.dueDate,
@@ -1433,12 +1537,26 @@ class TaskTableData extends DataClass implements Insertable<TaskTableData> {
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
     map['local_id'] = Variable<int>(localId);
-    map['remote_id'] = Variable<String>(remoteId);
+    if (!nullToAbsent || remoteId != null) {
+      map['remote_id'] = Variable<String>(remoteId);
+    }
     map['title'] = Variable<String>(title);
     map['description'] = Variable<String>(description);
+    map['deleted'] = Variable<bool>(deleted);
     map['category_local_id'] = Variable<int>(categoryLocalId);
-    map['is_synced'] = Variable<bool>(isSynced);
+    map['synced'] = Variable<bool>(synced);
     map['priority'] = Variable<String>(priority);
+    if (!nullToAbsent || reminderAt != null) {
+      map['reminder_at'] = Variable<DateTime>(reminderAt);
+    }
+    {
+      map['reminder_type'] = Variable<String>(
+        $TaskTableTable.$converterreminderType.toSql(reminderType),
+      );
+    }
+    if (!nullToAbsent || reminderOffset != null) {
+      map['reminder_offset'] = Variable<int>(reminderOffset);
+    }
     map['user_local_id'] = Variable<int>(userLocalId);
     map['status'] = Variable<String>(status);
     if (!nullToAbsent || dueDate != null) {
@@ -1456,12 +1574,22 @@ class TaskTableData extends DataClass implements Insertable<TaskTableData> {
   TaskTableCompanion toCompanion(bool nullToAbsent) {
     return TaskTableCompanion(
       localId: Value(localId),
-      remoteId: Value(remoteId),
+      remoteId: remoteId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(remoteId),
       title: Value(title),
       description: Value(description),
+      deleted: Value(deleted),
       categoryLocalId: Value(categoryLocalId),
-      isSynced: Value(isSynced),
+      synced: Value(synced),
       priority: Value(priority),
+      reminderAt: reminderAt == null && nullToAbsent
+          ? const Value.absent()
+          : Value(reminderAt),
+      reminderType: Value(reminderType),
+      reminderOffset: reminderOffset == null && nullToAbsent
+          ? const Value.absent()
+          : Value(reminderOffset),
       userLocalId: Value(userLocalId),
       status: Value(status),
       dueDate: dueDate == null && nullToAbsent
@@ -1483,12 +1611,18 @@ class TaskTableData extends DataClass implements Insertable<TaskTableData> {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return TaskTableData(
       localId: serializer.fromJson<int>(json['localId']),
-      remoteId: serializer.fromJson<String>(json['remoteId']),
+      remoteId: serializer.fromJson<String?>(json['remoteId']),
       title: serializer.fromJson<String>(json['title']),
       description: serializer.fromJson<String>(json['description']),
+      deleted: serializer.fromJson<bool>(json['deleted']),
       categoryLocalId: serializer.fromJson<int>(json['categoryLocalId']),
-      isSynced: serializer.fromJson<bool>(json['isSynced']),
+      synced: serializer.fromJson<bool>(json['synced']),
       priority: serializer.fromJson<String>(json['priority']),
+      reminderAt: serializer.fromJson<DateTime?>(json['reminderAt']),
+      reminderType: $TaskTableTable.$converterreminderType.fromJson(
+        serializer.fromJson<String>(json['reminderType']),
+      ),
+      reminderOffset: serializer.fromJson<int?>(json['reminderOffset']),
       userLocalId: serializer.fromJson<int>(json['userLocalId']),
       status: serializer.fromJson<String>(json['status']),
       dueDate: serializer.fromJson<DateTime?>(json['dueDate']),
@@ -1503,12 +1637,18 @@ class TaskTableData extends DataClass implements Insertable<TaskTableData> {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
       'localId': serializer.toJson<int>(localId),
-      'remoteId': serializer.toJson<String>(remoteId),
+      'remoteId': serializer.toJson<String?>(remoteId),
       'title': serializer.toJson<String>(title),
       'description': serializer.toJson<String>(description),
+      'deleted': serializer.toJson<bool>(deleted),
       'categoryLocalId': serializer.toJson<int>(categoryLocalId),
-      'isSynced': serializer.toJson<bool>(isSynced),
+      'synced': serializer.toJson<bool>(synced),
       'priority': serializer.toJson<String>(priority),
+      'reminderAt': serializer.toJson<DateTime?>(reminderAt),
+      'reminderType': serializer.toJson<String>(
+        $TaskTableTable.$converterreminderType.toJson(reminderType),
+      ),
+      'reminderOffset': serializer.toJson<int?>(reminderOffset),
       'userLocalId': serializer.toJson<int>(userLocalId),
       'status': serializer.toJson<String>(status),
       'dueDate': serializer.toJson<DateTime?>(dueDate),
@@ -1521,12 +1661,16 @@ class TaskTableData extends DataClass implements Insertable<TaskTableData> {
 
   TaskTableData copyWith({
     int? localId,
-    String? remoteId,
+    Value<String?> remoteId = const Value.absent(),
     String? title,
     String? description,
+    bool? deleted,
     int? categoryLocalId,
-    bool? isSynced,
+    bool? synced,
     String? priority,
+    Value<DateTime?> reminderAt = const Value.absent(),
+    TaskReminderType? reminderType,
+    Value<int?> reminderOffset = const Value.absent(),
     int? userLocalId,
     String? status,
     Value<DateTime?> dueDate = const Value.absent(),
@@ -1536,12 +1680,18 @@ class TaskTableData extends DataClass implements Insertable<TaskTableData> {
     DateTime? updatedAt,
   }) => TaskTableData(
     localId: localId ?? this.localId,
-    remoteId: remoteId ?? this.remoteId,
+    remoteId: remoteId.present ? remoteId.value : this.remoteId,
     title: title ?? this.title,
     description: description ?? this.description,
+    deleted: deleted ?? this.deleted,
     categoryLocalId: categoryLocalId ?? this.categoryLocalId,
-    isSynced: isSynced ?? this.isSynced,
+    synced: synced ?? this.synced,
     priority: priority ?? this.priority,
+    reminderAt: reminderAt.present ? reminderAt.value : this.reminderAt,
+    reminderType: reminderType ?? this.reminderType,
+    reminderOffset: reminderOffset.present
+        ? reminderOffset.value
+        : this.reminderOffset,
     userLocalId: userLocalId ?? this.userLocalId,
     status: status ?? this.status,
     dueDate: dueDate.present ? dueDate.value : this.dueDate,
@@ -1558,11 +1708,21 @@ class TaskTableData extends DataClass implements Insertable<TaskTableData> {
       description: data.description.present
           ? data.description.value
           : this.description,
+      deleted: data.deleted.present ? data.deleted.value : this.deleted,
       categoryLocalId: data.categoryLocalId.present
           ? data.categoryLocalId.value
           : this.categoryLocalId,
-      isSynced: data.isSynced.present ? data.isSynced.value : this.isSynced,
+      synced: data.synced.present ? data.synced.value : this.synced,
       priority: data.priority.present ? data.priority.value : this.priority,
+      reminderAt: data.reminderAt.present
+          ? data.reminderAt.value
+          : this.reminderAt,
+      reminderType: data.reminderType.present
+          ? data.reminderType.value
+          : this.reminderType,
+      reminderOffset: data.reminderOffset.present
+          ? data.reminderOffset.value
+          : this.reminderOffset,
       userLocalId: data.userLocalId.present
           ? data.userLocalId.value
           : this.userLocalId,
@@ -1584,9 +1744,13 @@ class TaskTableData extends DataClass implements Insertable<TaskTableData> {
           ..write('remoteId: $remoteId, ')
           ..write('title: $title, ')
           ..write('description: $description, ')
+          ..write('deleted: $deleted, ')
           ..write('categoryLocalId: $categoryLocalId, ')
-          ..write('isSynced: $isSynced, ')
+          ..write('synced: $synced, ')
           ..write('priority: $priority, ')
+          ..write('reminderAt: $reminderAt, ')
+          ..write('reminderType: $reminderType, ')
+          ..write('reminderOffset: $reminderOffset, ')
           ..write('userLocalId: $userLocalId, ')
           ..write('status: $status, ')
           ..write('dueDate: $dueDate, ')
@@ -1604,9 +1768,13 @@ class TaskTableData extends DataClass implements Insertable<TaskTableData> {
     remoteId,
     title,
     description,
+    deleted,
     categoryLocalId,
-    isSynced,
+    synced,
     priority,
+    reminderAt,
+    reminderType,
+    reminderOffset,
     userLocalId,
     status,
     dueDate,
@@ -1623,9 +1791,13 @@ class TaskTableData extends DataClass implements Insertable<TaskTableData> {
           other.remoteId == this.remoteId &&
           other.title == this.title &&
           other.description == this.description &&
+          other.deleted == this.deleted &&
           other.categoryLocalId == this.categoryLocalId &&
-          other.isSynced == this.isSynced &&
+          other.synced == this.synced &&
           other.priority == this.priority &&
+          other.reminderAt == this.reminderAt &&
+          other.reminderType == this.reminderType &&
+          other.reminderOffset == this.reminderOffset &&
           other.userLocalId == this.userLocalId &&
           other.status == this.status &&
           other.dueDate == this.dueDate &&
@@ -1637,12 +1809,16 @@ class TaskTableData extends DataClass implements Insertable<TaskTableData> {
 
 class TaskTableCompanion extends UpdateCompanion<TaskTableData> {
   final Value<int> localId;
-  final Value<String> remoteId;
+  final Value<String?> remoteId;
   final Value<String> title;
   final Value<String> description;
+  final Value<bool> deleted;
   final Value<int> categoryLocalId;
-  final Value<bool> isSynced;
+  final Value<bool> synced;
   final Value<String> priority;
+  final Value<DateTime?> reminderAt;
+  final Value<TaskReminderType> reminderType;
+  final Value<int?> reminderOffset;
   final Value<int> userLocalId;
   final Value<String> status;
   final Value<DateTime?> dueDate;
@@ -1655,9 +1831,13 @@ class TaskTableCompanion extends UpdateCompanion<TaskTableData> {
     this.remoteId = const Value.absent(),
     this.title = const Value.absent(),
     this.description = const Value.absent(),
+    this.deleted = const Value.absent(),
     this.categoryLocalId = const Value.absent(),
-    this.isSynced = const Value.absent(),
+    this.synced = const Value.absent(),
     this.priority = const Value.absent(),
+    this.reminderAt = const Value.absent(),
+    this.reminderType = const Value.absent(),
+    this.reminderOffset = const Value.absent(),
     this.userLocalId = const Value.absent(),
     this.status = const Value.absent(),
     this.dueDate = const Value.absent(),
@@ -1671,9 +1851,13 @@ class TaskTableCompanion extends UpdateCompanion<TaskTableData> {
     this.remoteId = const Value.absent(),
     required String title,
     this.description = const Value.absent(),
+    this.deleted = const Value.absent(),
     required int categoryLocalId,
-    this.isSynced = const Value.absent(),
+    this.synced = const Value.absent(),
     this.priority = const Value.absent(),
+    this.reminderAt = const Value.absent(),
+    this.reminderType = const Value.absent(),
+    this.reminderOffset = const Value.absent(),
     required int userLocalId,
     this.status = const Value.absent(),
     this.dueDate = const Value.absent(),
@@ -1689,9 +1873,13 @@ class TaskTableCompanion extends UpdateCompanion<TaskTableData> {
     Expression<String>? remoteId,
     Expression<String>? title,
     Expression<String>? description,
+    Expression<bool>? deleted,
     Expression<int>? categoryLocalId,
-    Expression<bool>? isSynced,
+    Expression<bool>? synced,
     Expression<String>? priority,
+    Expression<DateTime>? reminderAt,
+    Expression<String>? reminderType,
+    Expression<int>? reminderOffset,
     Expression<int>? userLocalId,
     Expression<String>? status,
     Expression<DateTime>? dueDate,
@@ -1705,9 +1893,13 @@ class TaskTableCompanion extends UpdateCompanion<TaskTableData> {
       if (remoteId != null) 'remote_id': remoteId,
       if (title != null) 'title': title,
       if (description != null) 'description': description,
+      if (deleted != null) 'deleted': deleted,
       if (categoryLocalId != null) 'category_local_id': categoryLocalId,
-      if (isSynced != null) 'is_synced': isSynced,
+      if (synced != null) 'synced': synced,
       if (priority != null) 'priority': priority,
+      if (reminderAt != null) 'reminder_at': reminderAt,
+      if (reminderType != null) 'reminder_type': reminderType,
+      if (reminderOffset != null) 'reminder_offset': reminderOffset,
       if (userLocalId != null) 'user_local_id': userLocalId,
       if (status != null) 'status': status,
       if (dueDate != null) 'due_date': dueDate,
@@ -1720,12 +1912,16 @@ class TaskTableCompanion extends UpdateCompanion<TaskTableData> {
 
   TaskTableCompanion copyWith({
     Value<int>? localId,
-    Value<String>? remoteId,
+    Value<String?>? remoteId,
     Value<String>? title,
     Value<String>? description,
+    Value<bool>? deleted,
     Value<int>? categoryLocalId,
-    Value<bool>? isSynced,
+    Value<bool>? synced,
     Value<String>? priority,
+    Value<DateTime?>? reminderAt,
+    Value<TaskReminderType>? reminderType,
+    Value<int?>? reminderOffset,
     Value<int>? userLocalId,
     Value<String>? status,
     Value<DateTime?>? dueDate,
@@ -1739,9 +1935,13 @@ class TaskTableCompanion extends UpdateCompanion<TaskTableData> {
       remoteId: remoteId ?? this.remoteId,
       title: title ?? this.title,
       description: description ?? this.description,
+      deleted: deleted ?? this.deleted,
       categoryLocalId: categoryLocalId ?? this.categoryLocalId,
-      isSynced: isSynced ?? this.isSynced,
+      synced: synced ?? this.synced,
       priority: priority ?? this.priority,
+      reminderAt: reminderAt ?? this.reminderAt,
+      reminderType: reminderType ?? this.reminderType,
+      reminderOffset: reminderOffset ?? this.reminderOffset,
       userLocalId: userLocalId ?? this.userLocalId,
       status: status ?? this.status,
       dueDate: dueDate ?? this.dueDate,
@@ -1767,14 +1967,28 @@ class TaskTableCompanion extends UpdateCompanion<TaskTableData> {
     if (description.present) {
       map['description'] = Variable<String>(description.value);
     }
+    if (deleted.present) {
+      map['deleted'] = Variable<bool>(deleted.value);
+    }
     if (categoryLocalId.present) {
       map['category_local_id'] = Variable<int>(categoryLocalId.value);
     }
-    if (isSynced.present) {
-      map['is_synced'] = Variable<bool>(isSynced.value);
+    if (synced.present) {
+      map['synced'] = Variable<bool>(synced.value);
     }
     if (priority.present) {
       map['priority'] = Variable<String>(priority.value);
+    }
+    if (reminderAt.present) {
+      map['reminder_at'] = Variable<DateTime>(reminderAt.value);
+    }
+    if (reminderType.present) {
+      map['reminder_type'] = Variable<String>(
+        $TaskTableTable.$converterreminderType.toSql(reminderType.value),
+      );
+    }
+    if (reminderOffset.present) {
+      map['reminder_offset'] = Variable<int>(reminderOffset.value);
     }
     if (userLocalId.present) {
       map['user_local_id'] = Variable<int>(userLocalId.value);
@@ -1807,9 +2021,13 @@ class TaskTableCompanion extends UpdateCompanion<TaskTableData> {
           ..write('remoteId: $remoteId, ')
           ..write('title: $title, ')
           ..write('description: $description, ')
+          ..write('deleted: $deleted, ')
           ..write('categoryLocalId: $categoryLocalId, ')
-          ..write('isSynced: $isSynced, ')
+          ..write('synced: $synced, ')
           ..write('priority: $priority, ')
+          ..write('reminderAt: $reminderAt, ')
+          ..write('reminderType: $reminderType, ')
+          ..write('reminderOffset: $reminderOffset, ')
           ..write('userLocalId: $userLocalId, ')
           ..write('status: $status, ')
           ..write('dueDate: $dueDate, ')
@@ -1850,10 +2068,10 @@ class $SubtaskTableTable extends SubtaskTable
   late final GeneratedColumn<String> remoteId = GeneratedColumn<String>(
     'remote_id',
     aliasedName,
-    false,
+    true,
     type: DriftSqlType.string,
     requiredDuringInsert: false,
-    defaultValue: const Constant(''),
+    defaultValue: const Constant(null),
   );
   static const VerificationMeta _titleMeta = const VerificationMeta('title');
   @override
@@ -1864,33 +2082,46 @@ class $SubtaskTableTable extends SubtaskTable
     type: DriftSqlType.string,
     requiredDuringInsert: true,
   );
-  static const VerificationMeta _isSyncedMeta = const VerificationMeta(
-    'isSynced',
-  );
+  static const VerificationMeta _syncedMeta = const VerificationMeta('synced');
   @override
-  late final GeneratedColumn<bool> isSynced = GeneratedColumn<bool>(
-    'is_synced',
+  late final GeneratedColumn<bool> synced = GeneratedColumn<bool>(
+    'synced',
     aliasedName,
     false,
     type: DriftSqlType.bool,
     requiredDuringInsert: false,
     defaultConstraints: GeneratedColumn.constraintIsAlways(
-      'CHECK ("is_synced" IN (0, 1))',
+      'CHECK ("synced" IN (0, 1))',
     ),
     defaultValue: const Constant(false),
   );
-  static const VerificationMeta _isCompletedMeta = const VerificationMeta(
-    'isCompleted',
+  static const VerificationMeta _completedMeta = const VerificationMeta(
+    'completed',
   );
   @override
-  late final GeneratedColumn<bool> isCompleted = GeneratedColumn<bool>(
-    'is_completed',
+  late final GeneratedColumn<bool> completed = GeneratedColumn<bool>(
+    'completed',
     aliasedName,
     false,
     type: DriftSqlType.bool,
     requiredDuringInsert: false,
     defaultConstraints: GeneratedColumn.constraintIsAlways(
-      'CHECK ("is_completed" IN (0, 1))',
+      'CHECK ("completed" IN (0, 1))',
+    ),
+    defaultValue: const Constant(false),
+  );
+  static const VerificationMeta _deletedMeta = const VerificationMeta(
+    'deleted',
+  );
+  @override
+  late final GeneratedColumn<bool> deleted = GeneratedColumn<bool>(
+    'deleted',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("deleted" IN (0, 1))',
     ),
     defaultValue: const Constant(false),
   );
@@ -1948,8 +2179,9 @@ class $SubtaskTableTable extends SubtaskTable
     localId,
     remoteId,
     title,
-    isSynced,
-    isCompleted,
+    synced,
+    completed,
+    deleted,
     taskLocalId,
     completedAt,
     createdAt,
@@ -1987,19 +2219,22 @@ class $SubtaskTableTable extends SubtaskTable
     } else if (isInserting) {
       context.missing(_titleMeta);
     }
-    if (data.containsKey('is_synced')) {
+    if (data.containsKey('synced')) {
       context.handle(
-        _isSyncedMeta,
-        isSynced.isAcceptableOrUnknown(data['is_synced']!, _isSyncedMeta),
+        _syncedMeta,
+        synced.isAcceptableOrUnknown(data['synced']!, _syncedMeta),
       );
     }
-    if (data.containsKey('is_completed')) {
+    if (data.containsKey('completed')) {
       context.handle(
-        _isCompletedMeta,
-        isCompleted.isAcceptableOrUnknown(
-          data['is_completed']!,
-          _isCompletedMeta,
-        ),
+        _completedMeta,
+        completed.isAcceptableOrUnknown(data['completed']!, _completedMeta),
+      );
+    }
+    if (data.containsKey('deleted')) {
+      context.handle(
+        _deletedMeta,
+        deleted.isAcceptableOrUnknown(data['deleted']!, _deletedMeta),
       );
     }
     if (data.containsKey('task_local_id')) {
@@ -2050,18 +2285,22 @@ class $SubtaskTableTable extends SubtaskTable
       remoteId: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
         data['${effectivePrefix}remote_id'],
-      )!,
+      ),
       title: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
         data['${effectivePrefix}title'],
       )!,
-      isSynced: attachedDatabase.typeMapping.read(
+      synced: attachedDatabase.typeMapping.read(
         DriftSqlType.bool,
-        data['${effectivePrefix}is_synced'],
+        data['${effectivePrefix}synced'],
       )!,
-      isCompleted: attachedDatabase.typeMapping.read(
+      completed: attachedDatabase.typeMapping.read(
         DriftSqlType.bool,
-        data['${effectivePrefix}is_completed'],
+        data['${effectivePrefix}completed'],
+      )!,
+      deleted: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}deleted'],
       )!,
       taskLocalId: attachedDatabase.typeMapping.read(
         DriftSqlType.int,
@@ -2091,20 +2330,22 @@ class $SubtaskTableTable extends SubtaskTable
 class SubtaskTableData extends DataClass
     implements Insertable<SubtaskTableData> {
   final int localId;
-  final String remoteId;
+  final String? remoteId;
   final String title;
-  final bool isSynced;
-  final bool isCompleted;
+  final bool synced;
+  final bool completed;
+  final bool deleted;
   final int taskLocalId;
   final DateTime? completedAt;
   final DateTime createdAt;
   final DateTime updatedAt;
   const SubtaskTableData({
     required this.localId,
-    required this.remoteId,
+    this.remoteId,
     required this.title,
-    required this.isSynced,
-    required this.isCompleted,
+    required this.synced,
+    required this.completed,
+    required this.deleted,
     required this.taskLocalId,
     this.completedAt,
     required this.createdAt,
@@ -2114,10 +2355,13 @@ class SubtaskTableData extends DataClass
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
     map['local_id'] = Variable<int>(localId);
-    map['remote_id'] = Variable<String>(remoteId);
+    if (!nullToAbsent || remoteId != null) {
+      map['remote_id'] = Variable<String>(remoteId);
+    }
     map['title'] = Variable<String>(title);
-    map['is_synced'] = Variable<bool>(isSynced);
-    map['is_completed'] = Variable<bool>(isCompleted);
+    map['synced'] = Variable<bool>(synced);
+    map['completed'] = Variable<bool>(completed);
+    map['deleted'] = Variable<bool>(deleted);
     map['task_local_id'] = Variable<int>(taskLocalId);
     if (!nullToAbsent || completedAt != null) {
       map['completed_at'] = Variable<DateTime>(completedAt);
@@ -2130,10 +2374,13 @@ class SubtaskTableData extends DataClass
   SubtaskTableCompanion toCompanion(bool nullToAbsent) {
     return SubtaskTableCompanion(
       localId: Value(localId),
-      remoteId: Value(remoteId),
+      remoteId: remoteId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(remoteId),
       title: Value(title),
-      isSynced: Value(isSynced),
-      isCompleted: Value(isCompleted),
+      synced: Value(synced),
+      completed: Value(completed),
+      deleted: Value(deleted),
       taskLocalId: Value(taskLocalId),
       completedAt: completedAt == null && nullToAbsent
           ? const Value.absent()
@@ -2150,10 +2397,11 @@ class SubtaskTableData extends DataClass
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return SubtaskTableData(
       localId: serializer.fromJson<int>(json['localId']),
-      remoteId: serializer.fromJson<String>(json['remoteId']),
+      remoteId: serializer.fromJson<String?>(json['remoteId']),
       title: serializer.fromJson<String>(json['title']),
-      isSynced: serializer.fromJson<bool>(json['isSynced']),
-      isCompleted: serializer.fromJson<bool>(json['isCompleted']),
+      synced: serializer.fromJson<bool>(json['synced']),
+      completed: serializer.fromJson<bool>(json['completed']),
+      deleted: serializer.fromJson<bool>(json['deleted']),
       taskLocalId: serializer.fromJson<int>(json['taskLocalId']),
       completedAt: serializer.fromJson<DateTime?>(json['completedAt']),
       createdAt: serializer.fromJson<DateTime>(json['createdAt']),
@@ -2165,10 +2413,11 @@ class SubtaskTableData extends DataClass
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
       'localId': serializer.toJson<int>(localId),
-      'remoteId': serializer.toJson<String>(remoteId),
+      'remoteId': serializer.toJson<String?>(remoteId),
       'title': serializer.toJson<String>(title),
-      'isSynced': serializer.toJson<bool>(isSynced),
-      'isCompleted': serializer.toJson<bool>(isCompleted),
+      'synced': serializer.toJson<bool>(synced),
+      'completed': serializer.toJson<bool>(completed),
+      'deleted': serializer.toJson<bool>(deleted),
       'taskLocalId': serializer.toJson<int>(taskLocalId),
       'completedAt': serializer.toJson<DateTime?>(completedAt),
       'createdAt': serializer.toJson<DateTime>(createdAt),
@@ -2178,20 +2427,22 @@ class SubtaskTableData extends DataClass
 
   SubtaskTableData copyWith({
     int? localId,
-    String? remoteId,
+    Value<String?> remoteId = const Value.absent(),
     String? title,
-    bool? isSynced,
-    bool? isCompleted,
+    bool? synced,
+    bool? completed,
+    bool? deleted,
     int? taskLocalId,
     Value<DateTime?> completedAt = const Value.absent(),
     DateTime? createdAt,
     DateTime? updatedAt,
   }) => SubtaskTableData(
     localId: localId ?? this.localId,
-    remoteId: remoteId ?? this.remoteId,
+    remoteId: remoteId.present ? remoteId.value : this.remoteId,
     title: title ?? this.title,
-    isSynced: isSynced ?? this.isSynced,
-    isCompleted: isCompleted ?? this.isCompleted,
+    synced: synced ?? this.synced,
+    completed: completed ?? this.completed,
+    deleted: deleted ?? this.deleted,
     taskLocalId: taskLocalId ?? this.taskLocalId,
     completedAt: completedAt.present ? completedAt.value : this.completedAt,
     createdAt: createdAt ?? this.createdAt,
@@ -2202,10 +2453,9 @@ class SubtaskTableData extends DataClass
       localId: data.localId.present ? data.localId.value : this.localId,
       remoteId: data.remoteId.present ? data.remoteId.value : this.remoteId,
       title: data.title.present ? data.title.value : this.title,
-      isSynced: data.isSynced.present ? data.isSynced.value : this.isSynced,
-      isCompleted: data.isCompleted.present
-          ? data.isCompleted.value
-          : this.isCompleted,
+      synced: data.synced.present ? data.synced.value : this.synced,
+      completed: data.completed.present ? data.completed.value : this.completed,
+      deleted: data.deleted.present ? data.deleted.value : this.deleted,
       taskLocalId: data.taskLocalId.present
           ? data.taskLocalId.value
           : this.taskLocalId,
@@ -2223,8 +2473,9 @@ class SubtaskTableData extends DataClass
           ..write('localId: $localId, ')
           ..write('remoteId: $remoteId, ')
           ..write('title: $title, ')
-          ..write('isSynced: $isSynced, ')
-          ..write('isCompleted: $isCompleted, ')
+          ..write('synced: $synced, ')
+          ..write('completed: $completed, ')
+          ..write('deleted: $deleted, ')
           ..write('taskLocalId: $taskLocalId, ')
           ..write('completedAt: $completedAt, ')
           ..write('createdAt: $createdAt, ')
@@ -2238,8 +2489,9 @@ class SubtaskTableData extends DataClass
     localId,
     remoteId,
     title,
-    isSynced,
-    isCompleted,
+    synced,
+    completed,
+    deleted,
     taskLocalId,
     completedAt,
     createdAt,
@@ -2252,8 +2504,9 @@ class SubtaskTableData extends DataClass
           other.localId == this.localId &&
           other.remoteId == this.remoteId &&
           other.title == this.title &&
-          other.isSynced == this.isSynced &&
-          other.isCompleted == this.isCompleted &&
+          other.synced == this.synced &&
+          other.completed == this.completed &&
+          other.deleted == this.deleted &&
           other.taskLocalId == this.taskLocalId &&
           other.completedAt == this.completedAt &&
           other.createdAt == this.createdAt &&
@@ -2262,10 +2515,11 @@ class SubtaskTableData extends DataClass
 
 class SubtaskTableCompanion extends UpdateCompanion<SubtaskTableData> {
   final Value<int> localId;
-  final Value<String> remoteId;
+  final Value<String?> remoteId;
   final Value<String> title;
-  final Value<bool> isSynced;
-  final Value<bool> isCompleted;
+  final Value<bool> synced;
+  final Value<bool> completed;
+  final Value<bool> deleted;
   final Value<int> taskLocalId;
   final Value<DateTime?> completedAt;
   final Value<DateTime> createdAt;
@@ -2274,8 +2528,9 @@ class SubtaskTableCompanion extends UpdateCompanion<SubtaskTableData> {
     this.localId = const Value.absent(),
     this.remoteId = const Value.absent(),
     this.title = const Value.absent(),
-    this.isSynced = const Value.absent(),
-    this.isCompleted = const Value.absent(),
+    this.synced = const Value.absent(),
+    this.completed = const Value.absent(),
+    this.deleted = const Value.absent(),
     this.taskLocalId = const Value.absent(),
     this.completedAt = const Value.absent(),
     this.createdAt = const Value.absent(),
@@ -2285,8 +2540,9 @@ class SubtaskTableCompanion extends UpdateCompanion<SubtaskTableData> {
     this.localId = const Value.absent(),
     this.remoteId = const Value.absent(),
     required String title,
-    this.isSynced = const Value.absent(),
-    this.isCompleted = const Value.absent(),
+    this.synced = const Value.absent(),
+    this.completed = const Value.absent(),
+    this.deleted = const Value.absent(),
     required int taskLocalId,
     this.completedAt = const Value.absent(),
     this.createdAt = const Value.absent(),
@@ -2297,8 +2553,9 @@ class SubtaskTableCompanion extends UpdateCompanion<SubtaskTableData> {
     Expression<int>? localId,
     Expression<String>? remoteId,
     Expression<String>? title,
-    Expression<bool>? isSynced,
-    Expression<bool>? isCompleted,
+    Expression<bool>? synced,
+    Expression<bool>? completed,
+    Expression<bool>? deleted,
     Expression<int>? taskLocalId,
     Expression<DateTime>? completedAt,
     Expression<DateTime>? createdAt,
@@ -2308,8 +2565,9 @@ class SubtaskTableCompanion extends UpdateCompanion<SubtaskTableData> {
       if (localId != null) 'local_id': localId,
       if (remoteId != null) 'remote_id': remoteId,
       if (title != null) 'title': title,
-      if (isSynced != null) 'is_synced': isSynced,
-      if (isCompleted != null) 'is_completed': isCompleted,
+      if (synced != null) 'synced': synced,
+      if (completed != null) 'completed': completed,
+      if (deleted != null) 'deleted': deleted,
       if (taskLocalId != null) 'task_local_id': taskLocalId,
       if (completedAt != null) 'completed_at': completedAt,
       if (createdAt != null) 'created_at': createdAt,
@@ -2319,10 +2577,11 @@ class SubtaskTableCompanion extends UpdateCompanion<SubtaskTableData> {
 
   SubtaskTableCompanion copyWith({
     Value<int>? localId,
-    Value<String>? remoteId,
+    Value<String?>? remoteId,
     Value<String>? title,
-    Value<bool>? isSynced,
-    Value<bool>? isCompleted,
+    Value<bool>? synced,
+    Value<bool>? completed,
+    Value<bool>? deleted,
     Value<int>? taskLocalId,
     Value<DateTime?>? completedAt,
     Value<DateTime>? createdAt,
@@ -2332,8 +2591,9 @@ class SubtaskTableCompanion extends UpdateCompanion<SubtaskTableData> {
       localId: localId ?? this.localId,
       remoteId: remoteId ?? this.remoteId,
       title: title ?? this.title,
-      isSynced: isSynced ?? this.isSynced,
-      isCompleted: isCompleted ?? this.isCompleted,
+      synced: synced ?? this.synced,
+      completed: completed ?? this.completed,
+      deleted: deleted ?? this.deleted,
       taskLocalId: taskLocalId ?? this.taskLocalId,
       completedAt: completedAt ?? this.completedAt,
       createdAt: createdAt ?? this.createdAt,
@@ -2353,11 +2613,14 @@ class SubtaskTableCompanion extends UpdateCompanion<SubtaskTableData> {
     if (title.present) {
       map['title'] = Variable<String>(title.value);
     }
-    if (isSynced.present) {
-      map['is_synced'] = Variable<bool>(isSynced.value);
+    if (synced.present) {
+      map['synced'] = Variable<bool>(synced.value);
     }
-    if (isCompleted.present) {
-      map['is_completed'] = Variable<bool>(isCompleted.value);
+    if (completed.present) {
+      map['completed'] = Variable<bool>(completed.value);
+    }
+    if (deleted.present) {
+      map['deleted'] = Variable<bool>(deleted.value);
     }
     if (taskLocalId.present) {
       map['task_local_id'] = Variable<int>(taskLocalId.value);
@@ -2380,8 +2643,9 @@ class SubtaskTableCompanion extends UpdateCompanion<SubtaskTableData> {
           ..write('localId: $localId, ')
           ..write('remoteId: $remoteId, ')
           ..write('title: $title, ')
-          ..write('isSynced: $isSynced, ')
-          ..write('isCompleted: $isCompleted, ')
+          ..write('synced: $synced, ')
+          ..write('completed: $completed, ')
+          ..write('deleted: $deleted, ')
           ..write('taskLocalId: $taskLocalId, ')
           ..write('completedAt: $completedAt, ')
           ..write('createdAt: $createdAt, ')
@@ -4016,12 +4280,16 @@ typedef $$CategoryTableTableProcessedTableManager =
 typedef $$TaskTableTableCreateCompanionBuilder =
     TaskTableCompanion Function({
       Value<int> localId,
-      Value<String> remoteId,
+      Value<String?> remoteId,
       required String title,
       Value<String> description,
+      Value<bool> deleted,
       required int categoryLocalId,
-      Value<bool> isSynced,
+      Value<bool> synced,
       Value<String> priority,
+      Value<DateTime?> reminderAt,
+      Value<TaskReminderType> reminderType,
+      Value<int?> reminderOffset,
       required int userLocalId,
       Value<String> status,
       Value<DateTime?> dueDate,
@@ -4033,12 +4301,16 @@ typedef $$TaskTableTableCreateCompanionBuilder =
 typedef $$TaskTableTableUpdateCompanionBuilder =
     TaskTableCompanion Function({
       Value<int> localId,
-      Value<String> remoteId,
+      Value<String?> remoteId,
       Value<String> title,
       Value<String> description,
+      Value<bool> deleted,
       Value<int> categoryLocalId,
-      Value<bool> isSynced,
+      Value<bool> synced,
       Value<String> priority,
+      Value<DateTime?> reminderAt,
+      Value<TaskReminderType> reminderType,
+      Value<int?> reminderOffset,
       Value<int> userLocalId,
       Value<String> status,
       Value<DateTime?> dueDate,
@@ -4145,13 +4417,34 @@ class $$TaskTableTableFilterComposer
     builder: (column) => ColumnFilters(column),
   );
 
-  ColumnFilters<bool> get isSynced => $composableBuilder(
-    column: $table.isSynced,
+  ColumnFilters<bool> get deleted => $composableBuilder(
+    column: $table.deleted,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get synced => $composableBuilder(
+    column: $table.synced,
     builder: (column) => ColumnFilters(column),
   );
 
   ColumnFilters<String> get priority => $composableBuilder(
     column: $table.priority,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get reminderAt => $composableBuilder(
+    column: $table.reminderAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnWithTypeConverterFilters<TaskReminderType, TaskReminderType, String>
+  get reminderType => $composableBuilder(
+    column: $table.reminderType,
+    builder: (column) => ColumnWithTypeConverterFilters(column),
+  );
+
+  ColumnFilters<int> get reminderOffset => $composableBuilder(
+    column: $table.reminderOffset,
     builder: (column) => ColumnFilters(column),
   );
 
@@ -4286,13 +4579,33 @@ class $$TaskTableTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
-  ColumnOrderings<bool> get isSynced => $composableBuilder(
-    column: $table.isSynced,
+  ColumnOrderings<bool> get deleted => $composableBuilder(
+    column: $table.deleted,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get synced => $composableBuilder(
+    column: $table.synced,
     builder: (column) => ColumnOrderings(column),
   );
 
   ColumnOrderings<String> get priority => $composableBuilder(
     column: $table.priority,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get reminderAt => $composableBuilder(
+    column: $table.reminderAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get reminderType => $composableBuilder(
+    column: $table.reminderType,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get reminderOffset => $composableBuilder(
+    column: $table.reminderOffset,
     builder: (column) => ColumnOrderings(column),
   );
 
@@ -4396,11 +4709,30 @@ class $$TaskTableTableAnnotationComposer
     builder: (column) => column,
   );
 
-  GeneratedColumn<bool> get isSynced =>
-      $composableBuilder(column: $table.isSynced, builder: (column) => column);
+  GeneratedColumn<bool> get deleted =>
+      $composableBuilder(column: $table.deleted, builder: (column) => column);
+
+  GeneratedColumn<bool> get synced =>
+      $composableBuilder(column: $table.synced, builder: (column) => column);
 
   GeneratedColumn<String> get priority =>
       $composableBuilder(column: $table.priority, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get reminderAt => $composableBuilder(
+    column: $table.reminderAt,
+    builder: (column) => column,
+  );
+
+  GeneratedColumnWithTypeConverter<TaskReminderType, String> get reminderType =>
+      $composableBuilder(
+        column: $table.reminderType,
+        builder: (column) => column,
+      );
+
+  GeneratedColumn<int> get reminderOffset => $composableBuilder(
+    column: $table.reminderOffset,
+    builder: (column) => column,
+  );
 
   GeneratedColumn<String> get status =>
       $composableBuilder(column: $table.status, builder: (column) => column);
@@ -4527,12 +4859,16 @@ class $$TaskTableTableTableManager
           updateCompanionCallback:
               ({
                 Value<int> localId = const Value.absent(),
-                Value<String> remoteId = const Value.absent(),
+                Value<String?> remoteId = const Value.absent(),
                 Value<String> title = const Value.absent(),
                 Value<String> description = const Value.absent(),
+                Value<bool> deleted = const Value.absent(),
                 Value<int> categoryLocalId = const Value.absent(),
-                Value<bool> isSynced = const Value.absent(),
+                Value<bool> synced = const Value.absent(),
                 Value<String> priority = const Value.absent(),
+                Value<DateTime?> reminderAt = const Value.absent(),
+                Value<TaskReminderType> reminderType = const Value.absent(),
+                Value<int?> reminderOffset = const Value.absent(),
                 Value<int> userLocalId = const Value.absent(),
                 Value<String> status = const Value.absent(),
                 Value<DateTime?> dueDate = const Value.absent(),
@@ -4545,9 +4881,13 @@ class $$TaskTableTableTableManager
                 remoteId: remoteId,
                 title: title,
                 description: description,
+                deleted: deleted,
                 categoryLocalId: categoryLocalId,
-                isSynced: isSynced,
+                synced: synced,
                 priority: priority,
+                reminderAt: reminderAt,
+                reminderType: reminderType,
+                reminderOffset: reminderOffset,
                 userLocalId: userLocalId,
                 status: status,
                 dueDate: dueDate,
@@ -4559,12 +4899,16 @@ class $$TaskTableTableTableManager
           createCompanionCallback:
               ({
                 Value<int> localId = const Value.absent(),
-                Value<String> remoteId = const Value.absent(),
+                Value<String?> remoteId = const Value.absent(),
                 required String title,
                 Value<String> description = const Value.absent(),
+                Value<bool> deleted = const Value.absent(),
                 required int categoryLocalId,
-                Value<bool> isSynced = const Value.absent(),
+                Value<bool> synced = const Value.absent(),
                 Value<String> priority = const Value.absent(),
+                Value<DateTime?> reminderAt = const Value.absent(),
+                Value<TaskReminderType> reminderType = const Value.absent(),
+                Value<int?> reminderOffset = const Value.absent(),
                 required int userLocalId,
                 Value<String> status = const Value.absent(),
                 Value<DateTime?> dueDate = const Value.absent(),
@@ -4577,9 +4921,13 @@ class $$TaskTableTableTableManager
                 remoteId: remoteId,
                 title: title,
                 description: description,
+                deleted: deleted,
                 categoryLocalId: categoryLocalId,
-                isSynced: isSynced,
+                synced: synced,
                 priority: priority,
+                reminderAt: reminderAt,
+                reminderType: reminderType,
+                reminderOffset: reminderOffset,
                 userLocalId: userLocalId,
                 status: status,
                 dueDate: dueDate,
@@ -4704,10 +5052,11 @@ typedef $$TaskTableTableProcessedTableManager =
 typedef $$SubtaskTableTableCreateCompanionBuilder =
     SubtaskTableCompanion Function({
       Value<int> localId,
-      Value<String> remoteId,
+      Value<String?> remoteId,
       required String title,
-      Value<bool> isSynced,
-      Value<bool> isCompleted,
+      Value<bool> synced,
+      Value<bool> completed,
+      Value<bool> deleted,
       required int taskLocalId,
       Value<DateTime?> completedAt,
       Value<DateTime> createdAt,
@@ -4716,10 +5065,11 @@ typedef $$SubtaskTableTableCreateCompanionBuilder =
 typedef $$SubtaskTableTableUpdateCompanionBuilder =
     SubtaskTableCompanion Function({
       Value<int> localId,
-      Value<String> remoteId,
+      Value<String?> remoteId,
       Value<String> title,
-      Value<bool> isSynced,
-      Value<bool> isCompleted,
+      Value<bool> synced,
+      Value<bool> completed,
+      Value<bool> deleted,
       Value<int> taskLocalId,
       Value<DateTime?> completedAt,
       Value<DateTime> createdAt,
@@ -4775,13 +5125,18 @@ class $$SubtaskTableTableFilterComposer
     builder: (column) => ColumnFilters(column),
   );
 
-  ColumnFilters<bool> get isSynced => $composableBuilder(
-    column: $table.isSynced,
+  ColumnFilters<bool> get synced => $composableBuilder(
+    column: $table.synced,
     builder: (column) => ColumnFilters(column),
   );
 
-  ColumnFilters<bool> get isCompleted => $composableBuilder(
-    column: $table.isCompleted,
+  ColumnFilters<bool> get completed => $composableBuilder(
+    column: $table.completed,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get deleted => $composableBuilder(
+    column: $table.deleted,
     builder: (column) => ColumnFilters(column),
   );
 
@@ -4848,13 +5203,18 @@ class $$SubtaskTableTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
-  ColumnOrderings<bool> get isSynced => $composableBuilder(
-    column: $table.isSynced,
+  ColumnOrderings<bool> get synced => $composableBuilder(
+    column: $table.synced,
     builder: (column) => ColumnOrderings(column),
   );
 
-  ColumnOrderings<bool> get isCompleted => $composableBuilder(
-    column: $table.isCompleted,
+  ColumnOrderings<bool> get completed => $composableBuilder(
+    column: $table.completed,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get deleted => $composableBuilder(
+    column: $table.deleted,
     builder: (column) => ColumnOrderings(column),
   );
 
@@ -4915,13 +5275,14 @@ class $$SubtaskTableTableAnnotationComposer
   GeneratedColumn<String> get title =>
       $composableBuilder(column: $table.title, builder: (column) => column);
 
-  GeneratedColumn<bool> get isSynced =>
-      $composableBuilder(column: $table.isSynced, builder: (column) => column);
+  GeneratedColumn<bool> get synced =>
+      $composableBuilder(column: $table.synced, builder: (column) => column);
 
-  GeneratedColumn<bool> get isCompleted => $composableBuilder(
-    column: $table.isCompleted,
-    builder: (column) => column,
-  );
+  GeneratedColumn<bool> get completed =>
+      $composableBuilder(column: $table.completed, builder: (column) => column);
+
+  GeneratedColumn<bool> get deleted =>
+      $composableBuilder(column: $table.deleted, builder: (column) => column);
 
   GeneratedColumn<DateTime> get completedAt => $composableBuilder(
     column: $table.completedAt,
@@ -4987,10 +5348,11 @@ class $$SubtaskTableTableTableManager
           updateCompanionCallback:
               ({
                 Value<int> localId = const Value.absent(),
-                Value<String> remoteId = const Value.absent(),
+                Value<String?> remoteId = const Value.absent(),
                 Value<String> title = const Value.absent(),
-                Value<bool> isSynced = const Value.absent(),
-                Value<bool> isCompleted = const Value.absent(),
+                Value<bool> synced = const Value.absent(),
+                Value<bool> completed = const Value.absent(),
+                Value<bool> deleted = const Value.absent(),
                 Value<int> taskLocalId = const Value.absent(),
                 Value<DateTime?> completedAt = const Value.absent(),
                 Value<DateTime> createdAt = const Value.absent(),
@@ -4999,8 +5361,9 @@ class $$SubtaskTableTableTableManager
                 localId: localId,
                 remoteId: remoteId,
                 title: title,
-                isSynced: isSynced,
-                isCompleted: isCompleted,
+                synced: synced,
+                completed: completed,
+                deleted: deleted,
                 taskLocalId: taskLocalId,
                 completedAt: completedAt,
                 createdAt: createdAt,
@@ -5009,10 +5372,11 @@ class $$SubtaskTableTableTableManager
           createCompanionCallback:
               ({
                 Value<int> localId = const Value.absent(),
-                Value<String> remoteId = const Value.absent(),
+                Value<String?> remoteId = const Value.absent(),
                 required String title,
-                Value<bool> isSynced = const Value.absent(),
-                Value<bool> isCompleted = const Value.absent(),
+                Value<bool> synced = const Value.absent(),
+                Value<bool> completed = const Value.absent(),
+                Value<bool> deleted = const Value.absent(),
                 required int taskLocalId,
                 Value<DateTime?> completedAt = const Value.absent(),
                 Value<DateTime> createdAt = const Value.absent(),
@@ -5021,8 +5385,9 @@ class $$SubtaskTableTableTableManager
                 localId: localId,
                 remoteId: remoteId,
                 title: title,
-                isSynced: isSynced,
-                isCompleted: isCompleted,
+                synced: synced,
+                completed: completed,
+                deleted: deleted,
                 taskLocalId: taskLocalId,
                 completedAt: completedAt,
                 createdAt: createdAt,

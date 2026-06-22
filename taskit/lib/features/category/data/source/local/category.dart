@@ -96,6 +96,17 @@ class CategoryDao extends DatabaseAccessor<AppDatabase>
           ))
           .getSingleOrNull();
 
+  Future<List<CategoryTableData>> findByRemoteIds(
+    List<String> remoteIds,
+    int userLocalId,
+  ) =>
+      (select(categoryTable)..where(
+            (tbl) =>
+                tbl.remoteId.isIn(remoteIds) &
+                tbl.userLocalId.equals(userLocalId),
+          ))
+          .get();
+
   Future<CategoryTableData?> findOneByName(String name, int userLocalId) =>
       (select(categoryTable)
             ..where(

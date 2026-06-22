@@ -1,8 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:taskit/features/main/presentation/ai/state/ai_state.dart';
 import 'package:taskit/features/main/presentation/main/controller/main_controller.dart';
-import 'package:taskit/features/task/application/task_service.dart';
-import 'package:taskit/main_widget.dart';
+import 'package:taskit/features/task/domain/usecases/ai/get_ai_answer.dart';
 import 'package:taskit/shared/log/logger_provider.dart';
 
 import '../../../domain/entity/message.dart';
@@ -25,9 +24,7 @@ class AiController extends Notifier<AiState> {
     try {
       state = state.copyWith(isLoading: true, isReceiveAiMessage: null);
       final errorController = ref.read(mainControllerProvider.notifier);
-      final aiService = ref.read(taskServiceProvider);
-      final languageCode = ref.read(languageCodeProvider);
-      final result = await aiService.getAiAnswer(s, languageCode);
+      final result = await ref.watch(getAiAnswerUseCaseProvider).call(s);
       logger.i('ask ai $result');
       result.when(
         (value) {

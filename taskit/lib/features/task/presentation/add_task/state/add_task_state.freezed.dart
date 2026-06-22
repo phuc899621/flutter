@@ -14,7 +14,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$AddTaskState {
 
- bool get isLoading; bool get isCategoriesLoading; bool? get isCreateTaskSuccess; String? get error; List<CategoryEntity> get categories; List<CategoryEntity> get aiCategories; List<SubtaskEntity> get subtasks; TaskPriority get selectedPriority; CategoryEntity? get selectedCategory; String get addCategory; DateTime? get selectedDate; Map<String, dynamic> get addTaskForm; String get title; String get description; bool get isTimeSelected;
+ AddTaskStatus get status; String? get apiError; List<CategoryEntity> get categories; List<CategoryEntity> get aiCategories; List<TextEditingController> get subtasks; TaskPriority get selectedPriority; TaskReminderType get reminderType; DateTime? get reminderAt; int? get reminderOffset; CategoryEntity? get selectedCategory; DateTime? get selectedDate; Map<String, dynamic> get addTaskForm; bool get isTimeSelected;
 /// Create a copy of AddTaskState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -25,16 +25,16 @@ $AddTaskStateCopyWith<AddTaskState> get copyWith => _$AddTaskStateCopyWithImpl<A
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is AddTaskState&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading)&&(identical(other.isCategoriesLoading, isCategoriesLoading) || other.isCategoriesLoading == isCategoriesLoading)&&(identical(other.isCreateTaskSuccess, isCreateTaskSuccess) || other.isCreateTaskSuccess == isCreateTaskSuccess)&&(identical(other.error, error) || other.error == error)&&const DeepCollectionEquality().equals(other.categories, categories)&&const DeepCollectionEquality().equals(other.aiCategories, aiCategories)&&const DeepCollectionEquality().equals(other.subtasks, subtasks)&&(identical(other.selectedPriority, selectedPriority) || other.selectedPriority == selectedPriority)&&(identical(other.selectedCategory, selectedCategory) || other.selectedCategory == selectedCategory)&&(identical(other.addCategory, addCategory) || other.addCategory == addCategory)&&(identical(other.selectedDate, selectedDate) || other.selectedDate == selectedDate)&&const DeepCollectionEquality().equals(other.addTaskForm, addTaskForm)&&(identical(other.title, title) || other.title == title)&&(identical(other.description, description) || other.description == description)&&(identical(other.isTimeSelected, isTimeSelected) || other.isTimeSelected == isTimeSelected));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is AddTaskState&&(identical(other.status, status) || other.status == status)&&(identical(other.apiError, apiError) || other.apiError == apiError)&&const DeepCollectionEquality().equals(other.categories, categories)&&const DeepCollectionEquality().equals(other.aiCategories, aiCategories)&&const DeepCollectionEquality().equals(other.subtasks, subtasks)&&(identical(other.selectedPriority, selectedPriority) || other.selectedPriority == selectedPriority)&&(identical(other.reminderType, reminderType) || other.reminderType == reminderType)&&(identical(other.reminderAt, reminderAt) || other.reminderAt == reminderAt)&&(identical(other.reminderOffset, reminderOffset) || other.reminderOffset == reminderOffset)&&(identical(other.selectedCategory, selectedCategory) || other.selectedCategory == selectedCategory)&&(identical(other.selectedDate, selectedDate) || other.selectedDate == selectedDate)&&const DeepCollectionEquality().equals(other.addTaskForm, addTaskForm)&&(identical(other.isTimeSelected, isTimeSelected) || other.isTimeSelected == isTimeSelected));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,isLoading,isCategoriesLoading,isCreateTaskSuccess,error,const DeepCollectionEquality().hash(categories),const DeepCollectionEquality().hash(aiCategories),const DeepCollectionEquality().hash(subtasks),selectedPriority,selectedCategory,addCategory,selectedDate,const DeepCollectionEquality().hash(addTaskForm),title,description,isTimeSelected);
+int get hashCode => Object.hash(runtimeType,status,apiError,const DeepCollectionEquality().hash(categories),const DeepCollectionEquality().hash(aiCategories),const DeepCollectionEquality().hash(subtasks),selectedPriority,reminderType,reminderAt,reminderOffset,selectedCategory,selectedDate,const DeepCollectionEquality().hash(addTaskForm),isTimeSelected);
 
 @override
 String toString() {
-  return 'AddTaskState(isLoading: $isLoading, isCategoriesLoading: $isCategoriesLoading, isCreateTaskSuccess: $isCreateTaskSuccess, error: $error, categories: $categories, aiCategories: $aiCategories, subtasks: $subtasks, selectedPriority: $selectedPriority, selectedCategory: $selectedCategory, addCategory: $addCategory, selectedDate: $selectedDate, addTaskForm: $addTaskForm, title: $title, description: $description, isTimeSelected: $isTimeSelected)';
+  return 'AddTaskState(status: $status, apiError: $apiError, categories: $categories, aiCategories: $aiCategories, subtasks: $subtasks, selectedPriority: $selectedPriority, reminderType: $reminderType, reminderAt: $reminderAt, reminderOffset: $reminderOffset, selectedCategory: $selectedCategory, selectedDate: $selectedDate, addTaskForm: $addTaskForm, isTimeSelected: $isTimeSelected)';
 }
 
 
@@ -45,7 +45,7 @@ abstract mixin class $AddTaskStateCopyWith<$Res>  {
   factory $AddTaskStateCopyWith(AddTaskState value, $Res Function(AddTaskState) _then) = _$AddTaskStateCopyWithImpl;
 @useResult
 $Res call({
- bool isLoading, bool isCategoriesLoading, bool? isCreateTaskSuccess, String? error, List<CategoryEntity> categories, List<CategoryEntity> aiCategories, List<SubtaskEntity> subtasks, TaskPriority selectedPriority, CategoryEntity? selectedCategory, String addCategory, DateTime? selectedDate, Map<String, dynamic> addTaskForm, String title, String description, bool isTimeSelected
+ AddTaskStatus status, String? apiError, List<CategoryEntity> categories, List<CategoryEntity> aiCategories, List<TextEditingController> subtasks, TaskPriority selectedPriority, TaskReminderType reminderType, DateTime? reminderAt, int? reminderOffset, CategoryEntity? selectedCategory, DateTime? selectedDate, Map<String, dynamic> addTaskForm, bool isTimeSelected
 });
 
 
@@ -62,23 +62,21 @@ class _$AddTaskStateCopyWithImpl<$Res>
 
 /// Create a copy of AddTaskState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? isLoading = null,Object? isCategoriesLoading = null,Object? isCreateTaskSuccess = freezed,Object? error = freezed,Object? categories = null,Object? aiCategories = null,Object? subtasks = null,Object? selectedPriority = null,Object? selectedCategory = freezed,Object? addCategory = null,Object? selectedDate = freezed,Object? addTaskForm = null,Object? title = null,Object? description = null,Object? isTimeSelected = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? status = null,Object? apiError = freezed,Object? categories = null,Object? aiCategories = null,Object? subtasks = null,Object? selectedPriority = null,Object? reminderType = null,Object? reminderAt = freezed,Object? reminderOffset = freezed,Object? selectedCategory = freezed,Object? selectedDate = freezed,Object? addTaskForm = null,Object? isTimeSelected = null,}) {
   return _then(_self.copyWith(
-isLoading: null == isLoading ? _self.isLoading : isLoading // ignore: cast_nullable_to_non_nullable
-as bool,isCategoriesLoading: null == isCategoriesLoading ? _self.isCategoriesLoading : isCategoriesLoading // ignore: cast_nullable_to_non_nullable
-as bool,isCreateTaskSuccess: freezed == isCreateTaskSuccess ? _self.isCreateTaskSuccess : isCreateTaskSuccess // ignore: cast_nullable_to_non_nullable
-as bool?,error: freezed == error ? _self.error : error // ignore: cast_nullable_to_non_nullable
+status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
+as AddTaskStatus,apiError: freezed == apiError ? _self.apiError : apiError // ignore: cast_nullable_to_non_nullable
 as String?,categories: null == categories ? _self.categories : categories // ignore: cast_nullable_to_non_nullable
 as List<CategoryEntity>,aiCategories: null == aiCategories ? _self.aiCategories : aiCategories // ignore: cast_nullable_to_non_nullable
 as List<CategoryEntity>,subtasks: null == subtasks ? _self.subtasks : subtasks // ignore: cast_nullable_to_non_nullable
-as List<SubtaskEntity>,selectedPriority: null == selectedPriority ? _self.selectedPriority : selectedPriority // ignore: cast_nullable_to_non_nullable
-as TaskPriority,selectedCategory: freezed == selectedCategory ? _self.selectedCategory : selectedCategory // ignore: cast_nullable_to_non_nullable
-as CategoryEntity?,addCategory: null == addCategory ? _self.addCategory : addCategory // ignore: cast_nullable_to_non_nullable
-as String,selectedDate: freezed == selectedDate ? _self.selectedDate : selectedDate // ignore: cast_nullable_to_non_nullable
+as List<TextEditingController>,selectedPriority: null == selectedPriority ? _self.selectedPriority : selectedPriority // ignore: cast_nullable_to_non_nullable
+as TaskPriority,reminderType: null == reminderType ? _self.reminderType : reminderType // ignore: cast_nullable_to_non_nullable
+as TaskReminderType,reminderAt: freezed == reminderAt ? _self.reminderAt : reminderAt // ignore: cast_nullable_to_non_nullable
+as DateTime?,reminderOffset: freezed == reminderOffset ? _self.reminderOffset : reminderOffset // ignore: cast_nullable_to_non_nullable
+as int?,selectedCategory: freezed == selectedCategory ? _self.selectedCategory : selectedCategory // ignore: cast_nullable_to_non_nullable
+as CategoryEntity?,selectedDate: freezed == selectedDate ? _self.selectedDate : selectedDate // ignore: cast_nullable_to_non_nullable
 as DateTime?,addTaskForm: null == addTaskForm ? _self.addTaskForm : addTaskForm // ignore: cast_nullable_to_non_nullable
-as Map<String, dynamic>,title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
-as String,description: null == description ? _self.description : description // ignore: cast_nullable_to_non_nullable
-as String,isTimeSelected: null == isTimeSelected ? _self.isTimeSelected : isTimeSelected // ignore: cast_nullable_to_non_nullable
+as Map<String, dynamic>,isTimeSelected: null == isTimeSelected ? _self.isTimeSelected : isTimeSelected // ignore: cast_nullable_to_non_nullable
 as bool,
   ));
 }
@@ -173,10 +171,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( bool isLoading,  bool isCategoriesLoading,  bool? isCreateTaskSuccess,  String? error,  List<CategoryEntity> categories,  List<CategoryEntity> aiCategories,  List<SubtaskEntity> subtasks,  TaskPriority selectedPriority,  CategoryEntity? selectedCategory,  String addCategory,  DateTime? selectedDate,  Map<String, dynamic> addTaskForm,  String title,  String description,  bool isTimeSelected)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( AddTaskStatus status,  String? apiError,  List<CategoryEntity> categories,  List<CategoryEntity> aiCategories,  List<TextEditingController> subtasks,  TaskPriority selectedPriority,  TaskReminderType reminderType,  DateTime? reminderAt,  int? reminderOffset,  CategoryEntity? selectedCategory,  DateTime? selectedDate,  Map<String, dynamic> addTaskForm,  bool isTimeSelected)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _AddTaskState() when $default != null:
-return $default(_that.isLoading,_that.isCategoriesLoading,_that.isCreateTaskSuccess,_that.error,_that.categories,_that.aiCategories,_that.subtasks,_that.selectedPriority,_that.selectedCategory,_that.addCategory,_that.selectedDate,_that.addTaskForm,_that.title,_that.description,_that.isTimeSelected);case _:
+return $default(_that.status,_that.apiError,_that.categories,_that.aiCategories,_that.subtasks,_that.selectedPriority,_that.reminderType,_that.reminderAt,_that.reminderOffset,_that.selectedCategory,_that.selectedDate,_that.addTaskForm,_that.isTimeSelected);case _:
   return orElse();
 
 }
@@ -194,10 +192,10 @@ return $default(_that.isLoading,_that.isCategoriesLoading,_that.isCreateTaskSucc
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( bool isLoading,  bool isCategoriesLoading,  bool? isCreateTaskSuccess,  String? error,  List<CategoryEntity> categories,  List<CategoryEntity> aiCategories,  List<SubtaskEntity> subtasks,  TaskPriority selectedPriority,  CategoryEntity? selectedCategory,  String addCategory,  DateTime? selectedDate,  Map<String, dynamic> addTaskForm,  String title,  String description,  bool isTimeSelected)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( AddTaskStatus status,  String? apiError,  List<CategoryEntity> categories,  List<CategoryEntity> aiCategories,  List<TextEditingController> subtasks,  TaskPriority selectedPriority,  TaskReminderType reminderType,  DateTime? reminderAt,  int? reminderOffset,  CategoryEntity? selectedCategory,  DateTime? selectedDate,  Map<String, dynamic> addTaskForm,  bool isTimeSelected)  $default,) {final _that = this;
 switch (_that) {
 case _AddTaskState():
-return $default(_that.isLoading,_that.isCategoriesLoading,_that.isCreateTaskSuccess,_that.error,_that.categories,_that.aiCategories,_that.subtasks,_that.selectedPriority,_that.selectedCategory,_that.addCategory,_that.selectedDate,_that.addTaskForm,_that.title,_that.description,_that.isTimeSelected);}
+return $default(_that.status,_that.apiError,_that.categories,_that.aiCategories,_that.subtasks,_that.selectedPriority,_that.reminderType,_that.reminderAt,_that.reminderOffset,_that.selectedCategory,_that.selectedDate,_that.addTaskForm,_that.isTimeSelected);}
 }
 /// A variant of `when` that fallback to returning `null`
 ///
@@ -211,10 +209,10 @@ return $default(_that.isLoading,_that.isCategoriesLoading,_that.isCreateTaskSucc
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( bool isLoading,  bool isCategoriesLoading,  bool? isCreateTaskSuccess,  String? error,  List<CategoryEntity> categories,  List<CategoryEntity> aiCategories,  List<SubtaskEntity> subtasks,  TaskPriority selectedPriority,  CategoryEntity? selectedCategory,  String addCategory,  DateTime? selectedDate,  Map<String, dynamic> addTaskForm,  String title,  String description,  bool isTimeSelected)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( AddTaskStatus status,  String? apiError,  List<CategoryEntity> categories,  List<CategoryEntity> aiCategories,  List<TextEditingController> subtasks,  TaskPriority selectedPriority,  TaskReminderType reminderType,  DateTime? reminderAt,  int? reminderOffset,  CategoryEntity? selectedCategory,  DateTime? selectedDate,  Map<String, dynamic> addTaskForm,  bool isTimeSelected)?  $default,) {final _that = this;
 switch (_that) {
 case _AddTaskState() when $default != null:
-return $default(_that.isLoading,_that.isCategoriesLoading,_that.isCreateTaskSuccess,_that.error,_that.categories,_that.aiCategories,_that.subtasks,_that.selectedPriority,_that.selectedCategory,_that.addCategory,_that.selectedDate,_that.addTaskForm,_that.title,_that.description,_that.isTimeSelected);case _:
+return $default(_that.status,_that.apiError,_that.categories,_that.aiCategories,_that.subtasks,_that.selectedPriority,_that.reminderType,_that.reminderAt,_that.reminderOffset,_that.selectedCategory,_that.selectedDate,_that.addTaskForm,_that.isTimeSelected);case _:
   return null;
 
 }
@@ -226,13 +224,11 @@ return $default(_that.isLoading,_that.isCategoriesLoading,_that.isCreateTaskSucc
 
 
 class _AddTaskState implements AddTaskState {
-  const _AddTaskState({this.isLoading = false, this.isCategoriesLoading = false, this.isCreateTaskSuccess, this.error, final  List<CategoryEntity> categories = const [], final  List<CategoryEntity> aiCategories = const [], final  List<SubtaskEntity> subtasks = const [], this.selectedPriority = TaskPriority.none, this.selectedCategory, this.addCategory = '', this.selectedDate, final  Map<String, dynamic> addTaskForm = const {}, this.title = '', this.description = '', this.isTimeSelected = false}): _categories = categories,_aiCategories = aiCategories,_subtasks = subtasks,_addTaskForm = addTaskForm;
+  const _AddTaskState({this.status = AddTaskStatus.initial, this.apiError, final  List<CategoryEntity> categories = const [], final  List<CategoryEntity> aiCategories = const [], final  List<TextEditingController> subtasks = const [], this.selectedPriority = TaskPriority.none, this.reminderType = TaskReminderType.none, this.reminderAt, this.reminderOffset, this.selectedCategory, this.selectedDate, final  Map<String, dynamic> addTaskForm = const {}, this.isTimeSelected = false}): _categories = categories,_aiCategories = aiCategories,_subtasks = subtasks,_addTaskForm = addTaskForm;
   
 
-@override@JsonKey() final  bool isLoading;
-@override@JsonKey() final  bool isCategoriesLoading;
-@override final  bool? isCreateTaskSuccess;
-@override final  String? error;
+@override@JsonKey() final  AddTaskStatus status;
+@override final  String? apiError;
  final  List<CategoryEntity> _categories;
 @override@JsonKey() List<CategoryEntity> get categories {
   if (_categories is EqualUnmodifiableListView) return _categories;
@@ -247,16 +243,18 @@ class _AddTaskState implements AddTaskState {
   return EqualUnmodifiableListView(_aiCategories);
 }
 
- final  List<SubtaskEntity> _subtasks;
-@override@JsonKey() List<SubtaskEntity> get subtasks {
+ final  List<TextEditingController> _subtasks;
+@override@JsonKey() List<TextEditingController> get subtasks {
   if (_subtasks is EqualUnmodifiableListView) return _subtasks;
   // ignore: implicit_dynamic_type
   return EqualUnmodifiableListView(_subtasks);
 }
 
 @override@JsonKey() final  TaskPriority selectedPriority;
+@override@JsonKey() final  TaskReminderType reminderType;
+@override final  DateTime? reminderAt;
+@override final  int? reminderOffset;
 @override final  CategoryEntity? selectedCategory;
-@override@JsonKey() final  String addCategory;
 @override final  DateTime? selectedDate;
  final  Map<String, dynamic> _addTaskForm;
 @override@JsonKey() Map<String, dynamic> get addTaskForm {
@@ -265,8 +263,6 @@ class _AddTaskState implements AddTaskState {
   return EqualUnmodifiableMapView(_addTaskForm);
 }
 
-@override@JsonKey() final  String title;
-@override@JsonKey() final  String description;
 @override@JsonKey() final  bool isTimeSelected;
 
 /// Create a copy of AddTaskState
@@ -279,16 +275,16 @@ _$AddTaskStateCopyWith<_AddTaskState> get copyWith => __$AddTaskStateCopyWithImp
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _AddTaskState&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading)&&(identical(other.isCategoriesLoading, isCategoriesLoading) || other.isCategoriesLoading == isCategoriesLoading)&&(identical(other.isCreateTaskSuccess, isCreateTaskSuccess) || other.isCreateTaskSuccess == isCreateTaskSuccess)&&(identical(other.error, error) || other.error == error)&&const DeepCollectionEquality().equals(other._categories, _categories)&&const DeepCollectionEquality().equals(other._aiCategories, _aiCategories)&&const DeepCollectionEquality().equals(other._subtasks, _subtasks)&&(identical(other.selectedPriority, selectedPriority) || other.selectedPriority == selectedPriority)&&(identical(other.selectedCategory, selectedCategory) || other.selectedCategory == selectedCategory)&&(identical(other.addCategory, addCategory) || other.addCategory == addCategory)&&(identical(other.selectedDate, selectedDate) || other.selectedDate == selectedDate)&&const DeepCollectionEquality().equals(other._addTaskForm, _addTaskForm)&&(identical(other.title, title) || other.title == title)&&(identical(other.description, description) || other.description == description)&&(identical(other.isTimeSelected, isTimeSelected) || other.isTimeSelected == isTimeSelected));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _AddTaskState&&(identical(other.status, status) || other.status == status)&&(identical(other.apiError, apiError) || other.apiError == apiError)&&const DeepCollectionEquality().equals(other._categories, _categories)&&const DeepCollectionEquality().equals(other._aiCategories, _aiCategories)&&const DeepCollectionEquality().equals(other._subtasks, _subtasks)&&(identical(other.selectedPriority, selectedPriority) || other.selectedPriority == selectedPriority)&&(identical(other.reminderType, reminderType) || other.reminderType == reminderType)&&(identical(other.reminderAt, reminderAt) || other.reminderAt == reminderAt)&&(identical(other.reminderOffset, reminderOffset) || other.reminderOffset == reminderOffset)&&(identical(other.selectedCategory, selectedCategory) || other.selectedCategory == selectedCategory)&&(identical(other.selectedDate, selectedDate) || other.selectedDate == selectedDate)&&const DeepCollectionEquality().equals(other._addTaskForm, _addTaskForm)&&(identical(other.isTimeSelected, isTimeSelected) || other.isTimeSelected == isTimeSelected));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,isLoading,isCategoriesLoading,isCreateTaskSuccess,error,const DeepCollectionEquality().hash(_categories),const DeepCollectionEquality().hash(_aiCategories),const DeepCollectionEquality().hash(_subtasks),selectedPriority,selectedCategory,addCategory,selectedDate,const DeepCollectionEquality().hash(_addTaskForm),title,description,isTimeSelected);
+int get hashCode => Object.hash(runtimeType,status,apiError,const DeepCollectionEquality().hash(_categories),const DeepCollectionEquality().hash(_aiCategories),const DeepCollectionEquality().hash(_subtasks),selectedPriority,reminderType,reminderAt,reminderOffset,selectedCategory,selectedDate,const DeepCollectionEquality().hash(_addTaskForm),isTimeSelected);
 
 @override
 String toString() {
-  return 'AddTaskState(isLoading: $isLoading, isCategoriesLoading: $isCategoriesLoading, isCreateTaskSuccess: $isCreateTaskSuccess, error: $error, categories: $categories, aiCategories: $aiCategories, subtasks: $subtasks, selectedPriority: $selectedPriority, selectedCategory: $selectedCategory, addCategory: $addCategory, selectedDate: $selectedDate, addTaskForm: $addTaskForm, title: $title, description: $description, isTimeSelected: $isTimeSelected)';
+  return 'AddTaskState(status: $status, apiError: $apiError, categories: $categories, aiCategories: $aiCategories, subtasks: $subtasks, selectedPriority: $selectedPriority, reminderType: $reminderType, reminderAt: $reminderAt, reminderOffset: $reminderOffset, selectedCategory: $selectedCategory, selectedDate: $selectedDate, addTaskForm: $addTaskForm, isTimeSelected: $isTimeSelected)';
 }
 
 
@@ -299,7 +295,7 @@ abstract mixin class _$AddTaskStateCopyWith<$Res> implements $AddTaskStateCopyWi
   factory _$AddTaskStateCopyWith(_AddTaskState value, $Res Function(_AddTaskState) _then) = __$AddTaskStateCopyWithImpl;
 @override @useResult
 $Res call({
- bool isLoading, bool isCategoriesLoading, bool? isCreateTaskSuccess, String? error, List<CategoryEntity> categories, List<CategoryEntity> aiCategories, List<SubtaskEntity> subtasks, TaskPriority selectedPriority, CategoryEntity? selectedCategory, String addCategory, DateTime? selectedDate, Map<String, dynamic> addTaskForm, String title, String description, bool isTimeSelected
+ AddTaskStatus status, String? apiError, List<CategoryEntity> categories, List<CategoryEntity> aiCategories, List<TextEditingController> subtasks, TaskPriority selectedPriority, TaskReminderType reminderType, DateTime? reminderAt, int? reminderOffset, CategoryEntity? selectedCategory, DateTime? selectedDate, Map<String, dynamic> addTaskForm, bool isTimeSelected
 });
 
 
@@ -316,23 +312,21 @@ class __$AddTaskStateCopyWithImpl<$Res>
 
 /// Create a copy of AddTaskState
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? isLoading = null,Object? isCategoriesLoading = null,Object? isCreateTaskSuccess = freezed,Object? error = freezed,Object? categories = null,Object? aiCategories = null,Object? subtasks = null,Object? selectedPriority = null,Object? selectedCategory = freezed,Object? addCategory = null,Object? selectedDate = freezed,Object? addTaskForm = null,Object? title = null,Object? description = null,Object? isTimeSelected = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? status = null,Object? apiError = freezed,Object? categories = null,Object? aiCategories = null,Object? subtasks = null,Object? selectedPriority = null,Object? reminderType = null,Object? reminderAt = freezed,Object? reminderOffset = freezed,Object? selectedCategory = freezed,Object? selectedDate = freezed,Object? addTaskForm = null,Object? isTimeSelected = null,}) {
   return _then(_AddTaskState(
-isLoading: null == isLoading ? _self.isLoading : isLoading // ignore: cast_nullable_to_non_nullable
-as bool,isCategoriesLoading: null == isCategoriesLoading ? _self.isCategoriesLoading : isCategoriesLoading // ignore: cast_nullable_to_non_nullable
-as bool,isCreateTaskSuccess: freezed == isCreateTaskSuccess ? _self.isCreateTaskSuccess : isCreateTaskSuccess // ignore: cast_nullable_to_non_nullable
-as bool?,error: freezed == error ? _self.error : error // ignore: cast_nullable_to_non_nullable
+status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
+as AddTaskStatus,apiError: freezed == apiError ? _self.apiError : apiError // ignore: cast_nullable_to_non_nullable
 as String?,categories: null == categories ? _self._categories : categories // ignore: cast_nullable_to_non_nullable
 as List<CategoryEntity>,aiCategories: null == aiCategories ? _self._aiCategories : aiCategories // ignore: cast_nullable_to_non_nullable
 as List<CategoryEntity>,subtasks: null == subtasks ? _self._subtasks : subtasks // ignore: cast_nullable_to_non_nullable
-as List<SubtaskEntity>,selectedPriority: null == selectedPriority ? _self.selectedPriority : selectedPriority // ignore: cast_nullable_to_non_nullable
-as TaskPriority,selectedCategory: freezed == selectedCategory ? _self.selectedCategory : selectedCategory // ignore: cast_nullable_to_non_nullable
-as CategoryEntity?,addCategory: null == addCategory ? _self.addCategory : addCategory // ignore: cast_nullable_to_non_nullable
-as String,selectedDate: freezed == selectedDate ? _self.selectedDate : selectedDate // ignore: cast_nullable_to_non_nullable
+as List<TextEditingController>,selectedPriority: null == selectedPriority ? _self.selectedPriority : selectedPriority // ignore: cast_nullable_to_non_nullable
+as TaskPriority,reminderType: null == reminderType ? _self.reminderType : reminderType // ignore: cast_nullable_to_non_nullable
+as TaskReminderType,reminderAt: freezed == reminderAt ? _self.reminderAt : reminderAt // ignore: cast_nullable_to_non_nullable
+as DateTime?,reminderOffset: freezed == reminderOffset ? _self.reminderOffset : reminderOffset // ignore: cast_nullable_to_non_nullable
+as int?,selectedCategory: freezed == selectedCategory ? _self.selectedCategory : selectedCategory // ignore: cast_nullable_to_non_nullable
+as CategoryEntity?,selectedDate: freezed == selectedDate ? _self.selectedDate : selectedDate // ignore: cast_nullable_to_non_nullable
 as DateTime?,addTaskForm: null == addTaskForm ? _self._addTaskForm : addTaskForm // ignore: cast_nullable_to_non_nullable
-as Map<String, dynamic>,title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
-as String,description: null == description ? _self.description : description // ignore: cast_nullable_to_non_nullable
-as String,isTimeSelected: null == isTimeSelected ? _self.isTimeSelected : isTimeSelected // ignore: cast_nullable_to_non_nullable
+as Map<String, dynamic>,isTimeSelected: null == isTimeSelected ? _self.isTimeSelected : isTimeSelected // ignore: cast_nullable_to_non_nullable
 as bool,
   ));
 }

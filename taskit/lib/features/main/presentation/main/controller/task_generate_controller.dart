@@ -1,10 +1,9 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:taskit/features/main/presentation/main/controller/main_controller.dart';
 import 'package:taskit/features/main/presentation/main/state/task_generate_state.dart';
-import 'package:taskit/features/task/application/task_service.dart';
+import 'package:taskit/features/task/domain/usecases/ai/create_ai_task_usecase.dart';
 
 import '../../../../../shared/log/logger_provider.dart';
-import '../../../../auth/presentation/auth/controller/auth_controller.dart';
 
 final taskGenerateControllerProvider =
     NotifierProvider.autoDispose<TaskGenerateController, TaskGenerateState>(
@@ -40,11 +39,6 @@ class TaskGenerateController extends Notifier<TaskGenerateState> {
 
   void generateTask() async {
     try {
-      final aiService = ref.read(taskServiceProvider);
-      final userLocalId = ref.read(
-        authControllerProvider.select((value) => value.user?.localId),
-      );
-      if (userLocalId == null) return;
       state = state.copyWith(
         isGenerating: true,
         error: null,
@@ -54,11 +48,12 @@ class TaskGenerateController extends Notifier<TaskGenerateState> {
         state = state.copyWith(isGenerating: false, error: 'Text is empty');
         return;
       }
-      final result = await aiService.generateAiTask(state.text, userLocalId);
+      final result = await ref
+          .read(createAiTaskUseCaseProvider)
+          .call(state.text);
       result.when(
         (success) {
-          final text =
-              'Task generated successfully with title: ${success.title}';
+          final text = 'Task generated successfully';
           ref.read(mainControllerProvider.notifier).setGenerateTaskText(text);
           state = state.copyWith(
             isGenerating: false,

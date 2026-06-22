@@ -2,12 +2,16 @@ import 'dart:async';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:taskit/features/main/presentation/timeline/state/timeline_state.dart';
-import 'package:taskit/features/task/application/task_service.dart';
 import 'package:taskit/features/task/domain/entities/task_entity.dart';
+import 'package:taskit/features/task/domain/usecases/subtask/delete_subtask_usecase.dart';
+import 'package:taskit/features/task/presentation/providers/tasks_provider.dart';
 import 'package:taskit/shared/extension/date_time.dart';
 import 'package:taskit/shared/log/logger_provider.dart';
 
-import '../../../../auth/presentation/auth/controller/auth_controller.dart';
+import '../../../../task/domain/entities/subtask_entity.dart';
+import '../../../../task/domain/usecases/subtask/update_subtask_status_usecase.dart';
+import '../../../../task/domain/usecases/task/delete_task_usecase.dart';
+import '../../../../task/domain/usecases/task/update_task_status_usecase.dart';
 
 final timelineControllerProvider =
     NotifierProvider<TimelineController, TimelineState>(TimelineController.new);
@@ -18,50 +22,37 @@ class TimelineController extends Notifier<TimelineState> {
 
   @override
   TimelineState build() {
-    _authSub = ref.listen(
-      authControllerProvider.select((value) => value.user),
-      (_, next) {
-        if (next == null) {
-          _taskSubscription.cancel();
-        } else {
-          startListener(next.localId);
-        }
-      },
-    );
+    ref.listen(tasksProvider, (_, next) {
+      next.whenData((tasks) {
+        state = state.copyWith(
+          allTasks: tasks,
+          tasks: _getTaskByDate(state.focusDate ?? DateTime.now(), tasks),
+        );
+        logger.i('[Timeline] tasks: $tasks');
+      });
+    });
 
     return TimelineState();
   }
 
-  void startListener(int userLocalId) {
-    _taskSubscription = ref
-        .watch(taskServiceProvider)
-        .watchAllTasks(userLocalId)
-        .listen((tasks) {
-          state = state.copyWith(
-            allTasks: tasks,
-            tasks: _getTaskByDate(state.focusDate ?? DateTime.now(), tasks),
-          );
-          logger.i('dates $tasks');
-        });
-  }
+  void onCheck(TaskEntity entity) => ref
+      .read(updateTaskStatusUseCaseProvider)
+      .call(
+        entity.copyWith(
+          status: entity.status == TaskStatus.completed
+              ? TaskStatus.pending
+              : TaskStatus.completed,
+        ),
+      );
 
-  void onCheck(int localId) {
-    logger.i("Check $localId");
-    final userLocalId = ref.read(
-      authControllerProvider.select((value) => value.user?.localId),
-    );
-    if (userLocalId == null) return;
-    ref.read(taskServiceProvider).updateTaskStatus(localId, userLocalId);
-  }
+  void onSubtaskCheck(SubtaskEntity entity) =>
+      ref.read(updateSubtaskStatusUseCaseProvider).call(entity);
 
-  void onSubtaskCheck(int localId) =>
-      ref.read(taskServiceProvider).updateSubtaskStatus(localId);
+  void onDelete(TaskEntity task) =>
+      ref.read(deleteTaskUseCaseProvider).call(task);
 
-  void onDelete(int localId) =>
-      ref.read(taskServiceProvider).deleteTask(localId);
-
-  void onSubtaskDelete(int localId) =>
-      ref.read(taskServiceProvider).deleteSubtask(localId);
+  void onSubtaskDelete(SubtaskEntity subtask) =>
+      ref.read(deleteSubtaskUseCaseProvider).call(subtask);
 
   void setFocusDate(DateTime focusDate) {
     state = state.copyWith(

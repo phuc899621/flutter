@@ -5,11 +5,11 @@ import 'package:taskit/features/category/domain/entities/category_entity.dart';
 import 'package:taskit/features/category/domain/usecases/watch_categories_usecase.dart';
 import 'package:taskit/features/main/presentation/list/controller/list_controller.dart';
 import 'package:taskit/features/task/domain/entities/filter_date_option_enum.dart';
-import 'package:taskit/features/task/domain/entities/task_priority_enum.dart';
 import 'package:taskit/features/task/presentation/filter_task/state/filter_state.dart';
 import 'package:taskit/shared/log/logger_provider.dart';
 
 import '../../../../auth/presentation/auth/controller/auth_controller.dart';
+import '../../../domain/entities/task_entity.dart';
 
 final filterControllerProvider =
     NotifierProvider.autoDispose<FilterController, FilterState>(

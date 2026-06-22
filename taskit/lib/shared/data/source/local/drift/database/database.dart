@@ -11,9 +11,10 @@ import 'package:storage_inspector/storage_inspector.dart';
 import 'package:taskit/shared/log/logger_provider.dart';
 
 import '../../../../../../features/category/data/source/local/category.dart';
+import '../../../../../../features/task/data/source/local/subtask/subtask.dart';
+import '../../../../../../features/task/data/source/local/task/task.dart';
+import '../../../../../../features/task/domain/entities/task_entity.dart';
 import '../dao/setting.dart';
-import '../dao/subtask.dart';
-import '../dao/task.dart';
 import '../dao/user.dart';
 import '../table/category.dart';
 import '../table/setting.dart';
@@ -35,10 +36,25 @@ class AppDatabase extends _$AppDatabase {
   AppDatabase([QueryExecutor? executor]) : super(executor ?? _openConnection());
 
   @override
-  int get schemaVersion => 1;
+  int get schemaVersion => 3;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
+    onUpgrade: (m, from, to) async {
+      if (from < 2) {
+        await m.createIndex(
+          Index(
+            'task',
+            'CREATE UNIQUE INDEX IF NOT EXISTS task_remote_id_idx ON task (remote_id);',
+          ),
+        );
+      }
+      if (from < 3) {
+        await m.addColumn(taskTable, taskTable.reminderAt);
+        await m.addColumn(taskTable, taskTable.reminderOffset);
+        await m.addColumn(taskTable, taskTable.reminderType);
+      }
+    },
     beforeOpen: (details) async {
       await customStatement('PRAGMA foreign_keys = ON;');
     },

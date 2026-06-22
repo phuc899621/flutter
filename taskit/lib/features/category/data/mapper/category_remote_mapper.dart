@@ -36,7 +36,7 @@ extension CategoryResMapper on CategoryRes {
 }
 
 extension AcceptCategorySyncDataMapper on AcceptCategorySyncRes {
-  CategoryEntity toEntity(int userLocalId) => CategoryEntity.create(
+  CategoryEntity toEntity(int userLocalId) => CategoryEntity.insert(
     name: name,
     userLocalId: userLocalId,
   ).copyWith(remoteId: id, localId: localId);

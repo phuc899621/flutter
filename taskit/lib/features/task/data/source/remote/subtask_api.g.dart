@@ -20,31 +20,34 @@ class _SubtaskApi implements SubtaskApi {
   final ParseErrorLogger? errorLogger;
 
   @override
-  Future<DataResponse<UpdateSubtaskData>> update(
-    String token,
-    UpdateSubtaskListReq updateList,
+  Future<DataResponse<SubtaskRes>> update(
+    String taskId,
+    String subtaskId,
+    UpdateSubtaskReq update,
   ) async {
-    final _extra = <String, dynamic>{};
+    final _extra = <String, dynamic>{
+      'requireAuth': true,
+      'requireSession': true,
+    };
     final queryParameters = <String, dynamic>{};
-    final _headers = <String, dynamic>{r'Authorization': token};
-    _headers.removeWhere((k, v) => v == null);
-    final _data = updateList;
-    final _options = _setStreamType<DataResponse<UpdateSubtaskData>>(
+    final _headers = <String, dynamic>{};
+    final _data = update;
+    final _options = _setStreamType<DataResponse<SubtaskRes>>(
       Options(method: 'PUT', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            '/subtask',
+            '/tasks/${taskId}/subtasks/${subtaskId}',
             queryParameters: queryParameters,
             data: _data,
           )
           .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
     );
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late DataResponse<UpdateSubtaskData> _value;
+    late DataResponse<SubtaskRes> _value;
     try {
-      _value = DataResponse<UpdateSubtaskData>.fromJson(
+      _value = DataResponse<SubtaskRes>.fromJson(
         _result.data!,
-        (json) => UpdateSubtaskData.fromJson(json as Map<String, dynamic>),
+        (json) => SubtaskRes.fromJson(json as Map<String, dynamic>),
       );
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options, response: _result);
@@ -54,38 +57,30 @@ class _SubtaskApi implements SubtaskApi {
   }
 
   @override
-  Future<DataResponse<List<AddSubtaskData>>> add(
-    String token,
-    String taskId,
-    AddSubtaskListReq addList,
-  ) async {
-    final _extra = <String, dynamic>{};
+  Future<DataResponse<SubtaskRes>> add(String taskId, AddSubtaskReq add) async {
+    final _extra = <String, dynamic>{
+      'requireAuth': true,
+      'requireSession': true,
+    };
     final queryParameters = <String, dynamic>{};
-    final _headers = <String, dynamic>{r'Authorization': token};
-    _headers.removeWhere((k, v) => v == null);
-    final _data = addList;
-    final _options = _setStreamType<DataResponse<List<AddSubtaskData>>>(
+    final _headers = <String, dynamic>{};
+    final _data = add;
+    final _options = _setStreamType<DataResponse<SubtaskRes>>(
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            '/task/${taskId}/subtask',
+            '/tasks/${taskId}/subtasks',
             queryParameters: queryParameters,
             data: _data,
           )
           .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
     );
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late DataResponse<List<AddSubtaskData>> _value;
+    late DataResponse<SubtaskRes> _value;
     try {
-      _value = DataResponse<List<AddSubtaskData>>.fromJson(
+      _value = DataResponse<SubtaskRes>.fromJson(
         _result.data!,
-        (json) => json is List<dynamic>
-            ? json
-                  .map<AddSubtaskData>(
-                    (i) => AddSubtaskData.fromJson(i as Map<String, dynamic>),
-                  )
-                  .toList()
-            : List.empty(),
+        (json) => SubtaskRes.fromJson(json as Map<String, dynamic>),
       );
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options, response: _result);
@@ -95,17 +90,19 @@ class _SubtaskApi implements SubtaskApi {
   }
 
   @override
-  Future<DataResponse<BaseData>> delete(String token, String subtaskId) async {
-    final _extra = <String, dynamic>{};
+  Future<DataResponse<BaseData>> delete(String taskId, String subtaskId) async {
+    final _extra = <String, dynamic>{
+      'requireAuth': true,
+      'requireSession': true,
+    };
     final queryParameters = <String, dynamic>{};
-    final _headers = <String, dynamic>{r'Authorization': token};
-    _headers.removeWhere((k, v) => v == null);
+    final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
     final _options = _setStreamType<DataResponse<BaseData>>(
       Options(method: 'DELETE', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            '/subtask/${subtaskId}',
+            '/tasks/${taskId}/subtasks/${subtaskId}',
             queryParameters: queryParameters,
             data: _data,
           )

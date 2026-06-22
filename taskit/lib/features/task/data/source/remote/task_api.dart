@@ -1,16 +1,21 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:retrofit/dio.dart';
 import 'package:retrofit/error_logger.dart';
 import 'package:retrofit/http.dart';
-import 'package:taskit/features/task/data/dto/req/add_task/add_task.dart';
-import 'package:taskit/features/task/data/dto/req/update_task/update_task_req.dart';
-import 'package:taskit/features/task/data/dto/res/task/add_task_data.dart';
-import 'package:taskit/features/task/data/dto/res/task/update_task_data.dart';
+import 'package:taskit/features/task/data/dto/sync/request/deleted_tasks_sync_request.dart';
+import 'package:taskit/features/task/data/dto/sync/request/tasks_sync_request.dart';
+import 'package:taskit/features/task/data/dto/sync/response/deleted_tasks_sync_res.dart';
+import 'package:taskit/features/task/data/dto/sync/response/tasks_sync_res.dart';
+import 'package:taskit/features/task/data/dto/task/request/add_task_req.dart';
+import 'package:taskit/features/task/data/dto/task/request/update_task_req.dart';
+import 'package:taskit/features/task/data/dto/task/response/update_task_res.dart';
 import 'package:taskit/shared/data/source/remote/network/network_service.dart';
 
 import '../../../../../shared/data/dto/response/base_data.dart';
 import '../../../../../shared/data/dto/response/data_response.dart';
 import '../../dto/req/ai_category/ai_category.dart';
+import '../../dto/task/response/task_res.dart';
 
 part 'task_api.g.dart';
 
@@ -29,22 +34,34 @@ abstract class TaskApi {
     @Body() AiCategoryReq categoryReq,
   );
 
-  @POST('/task')
-  Future<DataResponse<AddTaskData>> createTask(
-    @Header('Authorization') String token,
-    @Body() AddTaskReq addTaskReq,
-  );
+  @POST('/tasks')
+  @Extra({'requireAuth': true, 'requireSession': true})
+  Future<DataResponse<TaskRes>> createTask(@Body() AddTaskReq addTaskReq);
 
-  @PATCH('/task/{id}')
-  Future<DataResponse<UpdateTaskData>> updateTask(
-    @Header('Authorization') String token,
+  @PUT('/tasks/{id}')
+  @Extra({'requireAuth': true, 'requireSession': true})
+  Future<DataResponse<UpdateTaskRes>> updateTask(
     @Path('id') String taskId,
     @Body() UpdateTaskReq updateTaskReq,
   );
 
-  @DELETE('/task/{id}')
-  Future<DataResponse<BaseData>> deleteTask(
-    @Header('Authorization') String token,
-    @Path('id') String taskId,
+  @DELETE('/tasks/{id}')
+  @Extra({'requireAuth': true, 'requireSession': true})
+  Future<DataResponse<BaseData>> deleteTask(@Path('id') String taskId);
+
+  @POST('/tasks/sync')
+  @Extra({'requireAuth': true, 'requireSession': true})
+  Future<DataResponse<TasksSyncRes>> syncTasks(@Body() TasksSyncReq tasks);
+
+  @DELETE('/tasks/sync')
+  @Extra({'requireAuth': true, 'requireSession': true})
+  Future<DataResponse<List<DeletedTasksSyncRes>>> syncDeletedTasks(
+    @Body() DeletedTasksSyncReq tasks,
+  );
+
+  @GET('/tasks/pull')
+  @Extra({'requireAuth': true})
+  Future<DataResponse<List<TaskRes>>> pullTasks(
+    @Query('lastSyncTime') String? lastSyncTime,
   );
 }

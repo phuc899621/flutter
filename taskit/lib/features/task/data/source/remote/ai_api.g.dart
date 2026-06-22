@@ -20,14 +20,10 @@ class _AiApi implements AiApi {
   final ParseErrorLogger? errorLogger;
 
   @override
-  Future<DataResponse<AiGenerateTaskData>> generate(
-    String token,
-    AiReq aiReq,
-  ) async {
-    final _extra = <String, dynamic>{};
+  Future<DataResponse<AiGenerateTaskData>> generate(AiReq aiReq) async {
+    final _extra = <String, dynamic>{'requireAuth': true};
     final queryParameters = <String, dynamic>{};
-    final _headers = <String, dynamic>{r'Authorization': token};
-    _headers.removeWhere((k, v) => v == null);
+    final _headers = <String, dynamic>{};
     final _data = aiReq;
     final _options = _setStreamType<DataResponse<AiGenerateTaskData>>(
       Options(method: 'GET', headers: _headers, extra: _extra)
@@ -54,14 +50,10 @@ class _AiApi implements AiApi {
   }
 
   @override
-  Future<DataResponse<AiQuestionData>> getAnswer(
-    String token,
-    AiReq aiReq,
-  ) async {
-    final _extra = <String, dynamic>{};
+  Future<DataResponse<AiQuestionData>> getAnswer(AiReq aiReq) async {
+    final _extra = <String, dynamic>{'requireAuth': true};
     final queryParameters = <String, dynamic>{};
-    final _headers = <String, dynamic>{r'Authorization': token};
-    _headers.removeWhere((k, v) => v == null);
+    final _headers = <String, dynamic>{};
     final _data = aiReq;
     final _options = _setStreamType<DataResponse<AiQuestionData>>(
       Options(method: 'GET', headers: _headers, extra: _extra)

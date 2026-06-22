@@ -1,53 +1,33 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/legacy.dart';
 import 'package:taskit/features/category/domain/entities/category_entity.dart';
 import 'package:taskit/features/main/presentation/list/state/list_state.dart';
 import 'package:taskit/features/task/domain/entities/filter_date_option_enum.dart';
-import 'package:taskit/features/task/domain/entities/task_priority_enum.dart';
+import 'package:taskit/features/task/domain/usecases/subtask/delete_subtask_usecase.dart';
+import 'package:taskit/features/task/domain/usecases/task/delete_task_usecase.dart';
+import 'package:taskit/features/task/presentation/providers/tasks_provider.dart';
 import 'package:taskit/shared/extension/date_time.dart';
 import 'package:taskit/shared/extension/string.dart';
 import 'package:taskit/shared/log/logger_provider.dart';
 
-import '../../../../auth/presentation/auth/controller/auth_controller.dart';
-import '../../../../task/application/task_service.dart';
 import '../../../../task/domain/entities/order_option_enum.dart';
+import '../../../../task/domain/entities/subtask_entity.dart';
 import '../../../../task/domain/entities/task_entity.dart';
-import '../../../../task/domain/entities/task_status_enum.dart';
+import '../../../../task/domain/usecases/subtask/update_subtask_status_usecase.dart';
+import '../../../../task/domain/usecases/task/update_task_status_usecase.dart';
 
 final listControllerProvider =
     NotifierProvider.autoDispose<ListController, ListState>(ListController.new);
 final shouldFocusSearchTextFieldProvider = StateProvider<bool>((ref) => false);
 
 class ListController extends Notifier<ListState> {
-  late StreamSubscription _taskSub;
-  late final ProviderSubscription _authSub;
   ValueChanged<bool>? onFiltering;
 
   @override
   ListState build() {
-    _authSub = ref.listen(
-      authControllerProvider.select((value) => value.user),
-      (_, next) {
-        if (next == null) {
-          _taskSub.cancel();
-        } else {
-          _startTaskListener(next.localId);
-        }
-      },
-    );
-    ref.onDispose(() {
-      _authSub.close();
-      _taskSub.cancel();
-    });
-    return const ListState();
-  }
-
-  void _startTaskListener(int userLocalId) {
-    _taskSub = ref.watch(taskServiceProvider).watchAllTasks(userLocalId).listen(
-      (tasks) {
+    ref.listen(tasksProvider, (_, next) {
+      next.whenData((tasks) {
         state = state.copyWith(
           filteringTask: _filteringTasks(tasks),
           allTask: tasks,
@@ -55,29 +35,32 @@ class ListController extends Notifier<ListState> {
           filteringCompletedTask: _filteringCompletedTasks(tasks),
           filteringScheduledTask: _filteringScheduledTasks(tasks),
         );
-      },
-    );
+      });
+    });
+    return const ListState();
   }
 
   void setFilteringCallback(ValueChanged<bool> callback) =>
       onFiltering = callback;
 
-  void onCheck(int localId) {
-    final userLocalId = ref.read(
-      authControllerProvider.select((value) => value.user?.localId),
-    );
-    if (userLocalId == null) return;
-    ref.read(taskServiceProvider).updateTaskStatus(localId, userLocalId);
-  }
+  void onCheck(TaskEntity entity) => ref
+      .read(updateTaskStatusUseCaseProvider)
+      .call(
+        entity.copyWith(
+          status: entity.status == TaskStatus.completed
+              ? TaskStatus.pending
+              : TaskStatus.completed,
+        ),
+      );
 
-  void onSubtaskCheck(int localId) =>
-      ref.read(taskServiceProvider).updateSubtaskStatus(localId);
+  void onSubtaskCheck(SubtaskEntity entity) =>
+      ref.read(updateSubtaskStatusUseCaseProvider).call(entity);
 
-  void onDelete(int localId) =>
-      ref.read(taskServiceProvider).deleteTask(localId);
+  void onDelete(TaskEntity task) =>
+      ref.read(deleteTaskUseCaseProvider).call(task);
 
-  void onSubtaskDelete(int localId) =>
-      ref.read(taskServiceProvider).deleteSubtask(localId);
+  void onSubtaskDelete(SubtaskEntity entity) =>
+      ref.read(deleteSubtaskUseCaseProvider).call(entity);
 
   void onEdit(int localId) {}
 
