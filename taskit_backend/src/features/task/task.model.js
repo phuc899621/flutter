@@ -54,6 +54,11 @@ const taskSchema = new Schema(
       type: Number,
       default: null,
     },
+    repeatType: {
+      type: String,
+      enum: ["none", "daily", "weekly", "monthly"],
+      default: "none",
+    },
     completedAt: {
       type: Date,
       default: null,

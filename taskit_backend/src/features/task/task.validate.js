@@ -119,6 +119,16 @@ export const createTaskValidate = validate({
           values: ["beforeDeadline", "custom", "none"],
         }),
       ),
+    repeatType: Joi.string()
+      .trim()
+      .valid("none", "daily", "weekly", "monthly")
+      .default("none")
+      .messages(
+        joiMsg("Repeat type", {
+          string: true,
+          values: ["none", "daily", "weekly", "monthly"],
+        }),
+      ),
     status: Joi.string()
       .trim()
       .valid("pending", "scheduled", "completed")
@@ -187,6 +197,16 @@ export const syncTasksValidate = validate({
             joiMsg("Priority", {
               string: true,
               values: ["low", "medium", "high", "none"],
+            }),
+          ),
+        repeatType: Joi.string()
+          .trim()
+          .valid("none", "daily", "weekly", "monthly")
+          .default("none")
+          .messages(
+            joiMsg("Repeat type", {
+              string: true,
+              values: ["none", "daily", "weekly", "monthly"],
             }),
           ),
         reminderAt: Joi.date()
@@ -291,6 +311,16 @@ export const updateTaskValidate = validate({
         joiMsg("Reminder type", {
           string: true,
           values: ["beforeDeadline", "custom", "none"],
+        }),
+      ),
+    repeatType: Joi.string()
+      .optional()
+      .trim()
+      .valid("none", "daily", "weekly", "monthly")
+      .messages(
+        joiMsg("Repeat type", {
+          string: true,
+          values: ["none", "daily", "weekly", "monthly"],
         }),
       ),
     hasTime: Joi.boolean()

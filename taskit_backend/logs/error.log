@@ -3005,3 +3005,532 @@ SyntaxError: Expected property name or '}' in JSON at position 1 (line 1 column 
   "url": "/api/v1/auth/login",
   "status": 400
 }
+2026-07-02 09:39:45 [[31merror[39m]: [1;31mRedis connection failed[0m
+AggregateError [ECONNREFUSED]: 
+    at internalConnectMultiple (node:net:1134:18)
+    at afterConnectMultiple (node:net:1715:7) {
+  "code": "ECONNREFUSED"
+}
+2026-07-02 09:39:46 [[31merror[39m]: [1;31mRedis connection failed[0m
+AggregateError [ECONNREFUSED]: 
+    at internalConnectMultiple (node:net:1134:18)
+    at afterConnectMultiple (node:net:1715:7) {
+  "code": "ECONNREFUSED"
+}
+2026-07-02 09:39:46 [[31merror[39m]: [1;31mRedis connection failed[0m
+AggregateError [ECONNREFUSED]: 
+    at internalConnectMultiple (node:net:1134:18)
+    at afterConnectMultiple (node:net:1715:7) {
+  "code": "ECONNREFUSED"
+}
+2026-07-02 09:39:46 [[31merror[39m]: [1;31mRedis connection failed[0m
+AggregateError [ECONNREFUSED]: 
+    at internalConnectMultiple (node:net:1134:18)
+    at afterConnectMultiple (node:net:1715:7) {
+  "code": "ECONNREFUSED"
+}
+2026-07-02 09:39:47 [[31merror[39m]: [1;31mRedis connection failed[0m
+AggregateError [ECONNREFUSED]: 
+    at internalConnectMultiple (node:net:1134:18)
+    at afterConnectMultiple (node:net:1715:7) {
+  "code": "ECONNREFUSED"
+}
+2026-07-02 09:39:48 [[31merror[39m]: [1;31mRedis connection failed[0m
+AggregateError [ECONNREFUSED]: 
+    at internalConnectMultiple (node:net:1134:18)
+    at afterConnectMultiple (node:net:1715:7) {
+  "code": "ECONNREFUSED"
+}
+2026-07-02 09:39:49 [[31merror[39m]: [1;31mRedis connection failed[0m
+AggregateError [ECONNREFUSED]: 
+    at internalConnectMultiple (node:net:1134:18)
+    at afterConnectMultiple (node:net:1715:7) {
+  "code": "ECONNREFUSED"
+}
+2026-07-02 09:39:51 [[31merror[39m]: [1;31mRedis connection failed[0m
+AggregateError [ECONNREFUSED]: 
+    at internalConnectMultiple (node:net:1134:18)
+    at afterConnectMultiple (node:net:1715:7) {
+  "code": "ECONNREFUSED"
+}
+2026-07-02 09:39:54 [[31merror[39m]: [1;31mRedis connection failed[0m
+AggregateError [ECONNREFUSED]: 
+    at internalConnectMultiple (node:net:1134:18)
+    at afterConnectMultiple (node:net:1715:7) {
+  "code": "ECONNREFUSED"
+}
+2026-07-02 09:39:56 [[31merror[39m]: [1;31mRedis connection failed[0m
+AggregateError [ECONNREFUSED]: 
+    at internalConnectMultiple (node:net:1134:18)
+    at afterConnectMultiple (node:net:1715:7) {
+  "code": "ECONNREFUSED"
+}
+2026-07-02 09:39:58 [[31merror[39m]: [1;31mRedis connection failed[0m
+AggregateError [ECONNREFUSED]: 
+    at internalConnectMultiple (node:net:1134:18)
+    at afterConnectMultiple (node:net:1715:7) {
+  "code": "ECONNREFUSED"
+}
+2026-07-02 09:40:00 [[31merror[39m]: [1;31mRedis connection failed[0m
+AggregateError [ECONNREFUSED]: 
+    at internalConnectMultiple (node:net:1134:18)
+    at afterConnectMultiple (node:net:1715:7) {
+  "code": "ECONNREFUSED"
+}
+2026-07-02 09:40:02 [[31merror[39m]: [1;31mRedis connection failed[0m
+AggregateError [ECONNREFUSED]: 
+    at internalConnectMultiple (node:net:1134:18)
+    at afterConnectMultiple (node:net:1715:7) {
+  "code": "ECONNREFUSED"
+}
+2026-07-02 09:40:04 [[31merror[39m]: [1;31mRedis connection failed[0m
+AggregateError [ECONNREFUSED]: 
+    at internalConnectMultiple (node:net:1134:18)
+    at afterConnectMultiple (node:net:1715:7) {
+  "code": "ECONNREFUSED"
+}
+2026-07-02 09:40:06 [[31merror[39m]: [1;31mRedis connection failed[0m
+AggregateError [ECONNREFUSED]: 
+    at internalConnectMultiple (node:net:1134:18)
+    at afterConnectMultiple (node:net:1715:7) {
+  "code": "ECONNREFUSED"
+}
+2026-07-02 09:40:08 [[31merror[39m]: [1;31mRedis connection failed[0m
+AggregateError [ECONNREFUSED]: 
+    at internalConnectMultiple (node:net:1134:18)
+    at afterConnectMultiple (node:net:1715:7) {
+  "code": "ECONNREFUSED"
+}
+2026-07-02 09:40:10 [[31merror[39m]: [1;31mRedis connection failed[0m
+AggregateError [ECONNREFUSED]: 
+    at internalConnectMultiple (node:net:1134:18)
+    at afterConnectMultiple (node:net:1715:7) {
+  "code": "ECONNREFUSED"
+}
+2026-07-02 09:40:12 [[31merror[39m]: [1;31mRedis connection failed[0m
+AggregateError [ECONNREFUSED]: 
+    at internalConnectMultiple (node:net:1134:18)
+    at afterConnectMultiple (node:net:1715:7) {
+  "code": "ECONNREFUSED"
+}
+2026-07-02 09:40:15 [[31merror[39m]: [1;31mRedis connection failed[0m
+AggregateError [ECONNREFUSED]: 
+    at internalConnectMultiple (node:net:1134:18)
+    at afterConnectMultiple (node:net:1715:7) {
+  "code": "ECONNREFUSED"
+}
+2026-07-02 09:40:17 [[31merror[39m]: [1;31mRedis connection failed[0m
+AggregateError [ECONNREFUSED]: 
+    at internalConnectMultiple (node:net:1134:18)
+    at afterConnectMultiple (node:net:1715:7) {
+  "code": "ECONNREFUSED"
+}
+2026-07-02 09:40:19 [[31merror[39m]: [1;31mRedis connection failed[0m
+AggregateError [ECONNREFUSED]: 
+    at internalConnectMultiple (node:net:1134:18)
+    at afterConnectMultiple (node:net:1715:7) {
+  "code": "ECONNREFUSED"
+}
+2026-07-02 09:40:21 [[31merror[39m]: [1;31mRedis connection failed[0m
+AggregateError [ECONNREFUSED]: 
+    at internalConnectMultiple (node:net:1134:18)
+    at afterConnectMultiple (node:net:1715:7) {
+  "code": "ECONNREFUSED"
+}
+2026-07-02 09:40:23 [[31merror[39m]: [1;31mRedis connection failed[0m
+AggregateError [ECONNREFUSED]: 
+    at internalConnectMultiple (node:net:1134:18)
+    at afterConnectMultiple (node:net:1715:7) {
+  "code": "ECONNREFUSED"
+}
+2026-07-02 09:40:25 [[31merror[39m]: [1;31mRedis connection failed[0m
+AggregateError [ECONNREFUSED]: 
+    at internalConnectMultiple (node:net:1134:18)
+    at afterConnectMultiple (node:net:1715:7) {
+  "code": "ECONNREFUSED"
+}
+2026-07-02 09:40:27 [[31merror[39m]: [1;31mRedis connection failed[0m
+AggregateError [ECONNREFUSED]: 
+    at internalConnectMultiple (node:net:1134:18)
+    at afterConnectMultiple (node:net:1715:7) {
+  "code": "ECONNREFUSED"
+}
+2026-07-02 09:40:29 [[31merror[39m]: [1;31mRedis connection failed[0m
+AggregateError [ECONNREFUSED]: 
+    at internalConnectMultiple (node:net:1134:18)
+    at afterConnectMultiple (node:net:1715:7) {
+  "code": "ECONNREFUSED"
+}
+2026-07-02 09:40:31 [[31merror[39m]: [1;31mRedis connection failed[0m
+AggregateError [ECONNREFUSED]: 
+    at internalConnectMultiple (node:net:1134:18)
+    at afterConnectMultiple (node:net:1715:7) {
+  "code": "ECONNREFUSED"
+}
+2026-07-02 09:40:33 [[31merror[39m]: [1;31mRedis connection failed[0m
+AggregateError [ECONNREFUSED]: 
+    at internalConnectMultiple (node:net:1134:18)
+    at afterConnectMultiple (node:net:1715:7) {
+  "code": "ECONNREFUSED"
+}
+2026-07-02 09:40:35 [[31merror[39m]: [1;31mRedis connection failed[0m
+AggregateError [ECONNREFUSED]: 
+    at internalConnectMultiple (node:net:1134:18)
+    at afterConnectMultiple (node:net:1715:7) {
+  "code": "ECONNREFUSED"
+}
+2026-07-02 09:40:38 [[31merror[39m]: [1;31mRedis connection failed[0m
+AggregateError [ECONNREFUSED]: 
+    at internalConnectMultiple (node:net:1134:18)
+    at afterConnectMultiple (node:net:1715:7) {
+  "code": "ECONNREFUSED"
+}
+2026-07-02 09:40:48 [[31merror[39m]: [1;31mRedis connection failed read ECONNRESET[0m
+Error: read ECONNRESET
+    at TCP.onStreamRead (node:internal/stream_base_commons:216:20) {
+  "errno": -4077,
+  "code": "ECONNRESET",
+  "syscall": "read"
+}
+2026-07-02 09:40:48 [[31merror[39m]: [1;31mRedis connection failed[0m
+AggregateError [ECONNREFUSED]: 
+    at internalConnectMultiple (node:net:1134:18)
+    at afterConnectMultiple (node:net:1715:7) {
+  "code": "ECONNREFUSED"
+}
+2026-07-02 09:40:48 [[31merror[39m]: [1;31mRedis connection failed[0m
+AggregateError [ECONNREFUSED]: 
+    at internalConnectMultiple (node:net:1134:18)
+    at afterConnectMultiple (node:net:1715:7) {
+  "code": "ECONNREFUSED"
+}
+2026-07-02 09:40:48 [[31merror[39m]: [1;31mRedis connection failed[0m
+AggregateError [ECONNREFUSED]: 
+    at internalConnectMultiple (node:net:1134:18)
+    at afterConnectMultiple (node:net:1715:7) {
+  "code": "ECONNREFUSED"
+}
+2026-07-02 09:40:48 [[31merror[39m]: [1;31mRedis connection failed[0m
+AggregateError [ECONNREFUSED]: 
+    at internalConnectMultiple (node:net:1134:18)
+    at afterConnectMultiple (node:net:1715:7) {
+  "code": "ECONNREFUSED"
+}
+2026-07-02 09:40:49 [[31merror[39m]: [1;31mRedis connection failed[0m
+AggregateError [ECONNREFUSED]: 
+    at internalConnectMultiple (node:net:1134:18)
+    at afterConnectMultiple (node:net:1715:7) {
+  "code": "ECONNREFUSED"
+}
+2026-07-02 09:40:50 [[31merror[39m]: [1;31mRedis connection failed[0m
+AggregateError [ECONNREFUSED]: 
+    at internalConnectMultiple (node:net:1134:18)
+    at afterConnectMultiple (node:net:1715:7) {
+  "code": "ECONNREFUSED"
+}
+2026-07-02 09:40:52 [[31merror[39m]: [1;31mRedis connection failed[0m
+AggregateError [ECONNREFUSED]: 
+    at internalConnectMultiple (node:net:1134:18)
+    at afterConnectMultiple (node:net:1715:7) {
+  "code": "ECONNREFUSED"
+}
+2026-07-02 09:40:54 [[31merror[39m]: [1;31mRedis connection failed[0m
+AggregateError [ECONNREFUSED]: 
+    at internalConnectMultiple (node:net:1134:18)
+    at afterConnectMultiple (node:net:1715:7) {
+  "code": "ECONNREFUSED"
+}
+2026-07-02 09:40:56 [[31merror[39m]: [1;31mRedis connection failed[0m
+AggregateError [ECONNREFUSED]: 
+    at internalConnectMultiple (node:net:1134:18)
+    at afterConnectMultiple (node:net:1715:7) {
+  "code": "ECONNREFUSED"
+}
+2026-07-02 09:40:58 [[31merror[39m]: [1;31mRedis connection failed[0m
+AggregateError [ECONNREFUSED]: 
+    at internalConnectMultiple (node:net:1134:18)
+    at afterConnectMultiple (node:net:1715:7) {
+  "code": "ECONNREFUSED"
+}
+2026-07-02 09:44:22 [[31merror[39m]: [1;31mRedis connection failed read ECONNRESET[0m
+Error: read ECONNRESET
+    at TCP.onStreamRead (node:internal/stream_base_commons:216:20) {
+  "errno": -4077,
+  "code": "ECONNRESET",
+  "syscall": "read"
+}
+2026-07-02 09:44:22 [[31merror[39m]: [1;31mRedis connection failed[0m
+AggregateError [ECONNREFUSED]: 
+    at internalConnectMultiple (node:net:1134:18)
+    at afterConnectMultiple (node:net:1715:7) {
+  "code": "ECONNREFUSED"
+}
+2026-07-02 09:44:22 [[31merror[39m]: [1;31mRedis connection failed[0m
+AggregateError [ECONNREFUSED]: 
+    at internalConnectMultiple (node:net:1134:18)
+    at afterConnectMultiple (node:net:1715:7) {
+  "code": "ECONNREFUSED"
+}
+2026-07-02 09:44:22 [[31merror[39m]: [1;31mRedis connection failed[0m
+AggregateError [ECONNREFUSED]: 
+    at internalConnectMultiple (node:net:1134:18)
+    at afterConnectMultiple (node:net:1715:7) {
+  "code": "ECONNREFUSED"
+}
+2026-07-02 09:44:23 [[31merror[39m]: [1;31mRedis connection failed[0m
+AggregateError [ECONNREFUSED]: 
+    at internalConnectMultiple (node:net:1134:18)
+    at afterConnectMultiple (node:net:1715:7) {
+  "code": "ECONNREFUSED"
+}
+2026-07-02 09:44:23 [[31merror[39m]: [1;31mRedis connection failed[0m
+AggregateError [ECONNREFUSED]: 
+    at internalConnectMultiple (node:net:1134:18)
+    at afterConnectMultiple (node:net:1715:7) {
+  "code": "ECONNREFUSED"
+}
+2026-07-02 09:44:24 [[31merror[39m]: [1;31mRedis connection failed[0m
+AggregateError [ECONNREFUSED]: 
+    at internalConnectMultiple (node:net:1134:18)
+    at afterConnectMultiple (node:net:1715:7) {
+  "code": "ECONNREFUSED"
+}
+2026-07-02 09:44:26 [[31merror[39m]: [1;31mRedis connection failed[0m
+AggregateError [ECONNREFUSED]: 
+    at internalConnectMultiple (node:net:1134:18)
+    at afterConnectMultiple (node:net:1715:7) {
+  "code": "ECONNREFUSED"
+}
+2026-07-02 09:44:28 [[31merror[39m]: [1;31mRedis connection failed[0m
+AggregateError [ECONNREFUSED]: 
+    at internalConnectMultiple (node:net:1134:18)
+    at afterConnectMultiple (node:net:1715:7) {
+  "code": "ECONNREFUSED"
+}
+2026-07-02 09:44:30 [[31merror[39m]: [1;31mRedis connection failed[0m
+AggregateError [ECONNREFUSED]: 
+    at internalConnectMultiple (node:net:1134:18)
+    at afterConnectMultiple (node:net:1715:7) {
+  "code": "ECONNREFUSED"
+}
+2026-07-02 09:44:32 [[31merror[39m]: [1;31mRedis connection failed[0m
+AggregateError [ECONNREFUSED]: 
+    at internalConnectMultiple (node:net:1134:18)
+    at afterConnectMultiple (node:net:1715:7) {
+  "code": "ECONNREFUSED"
+}
+2026-07-02 09:44:34 [[31merror[39m]: [1;31mRedis connection failed[0m
+AggregateError [ECONNREFUSED]: 
+    at internalConnectMultiple (node:net:1134:18)
+    at afterConnectMultiple (node:net:1715:7) {
+  "code": "ECONNREFUSED"
+}
+2026-07-02 09:44:36 [[31merror[39m]: [1;31mRedis connection failed[0m
+AggregateError [ECONNREFUSED]: 
+    at internalConnectMultiple (node:net:1134:18)
+    at afterConnectMultiple (node:net:1715:7) {
+  "code": "ECONNREFUSED"
+}
+2026-07-02 09:44:38 [[31merror[39m]: [1;31mRedis connection failed[0m
+AggregateError [ECONNREFUSED]: 
+    at internalConnectMultiple (node:net:1134:18)
+    at afterConnectMultiple (node:net:1715:7) {
+  "code": "ECONNREFUSED"
+}
+2026-07-02 09:44:40 [[31merror[39m]: [1;31mRedis connection failed[0m
+AggregateError [ECONNREFUSED]: 
+    at internalConnectMultiple (node:net:1134:18)
+    at afterConnectMultiple (node:net:1715:7) {
+  "code": "ECONNREFUSED"
+}
+2026-07-02 09:44:43 [[31merror[39m]: [1;31mRedis connection failed[0m
+AggregateError [ECONNREFUSED]: 
+    at internalConnectMultiple (node:net:1134:18)
+    at afterConnectMultiple (node:net:1715:7) {
+  "code": "ECONNREFUSED"
+}
+2026-07-02 09:44:45 [[31merror[39m]: [1;31mRedis connection failed[0m
+AggregateError [ECONNREFUSED]: 
+    at internalConnectMultiple (node:net:1134:18)
+    at afterConnectMultiple (node:net:1715:7) {
+  "code": "ECONNREFUSED"
+}
+2026-07-02 09:44:47 [[31merror[39m]: [1;31mRedis connection failed[0m
+AggregateError [ECONNREFUSED]: 
+    at internalConnectMultiple (node:net:1134:18)
+    at afterConnectMultiple (node:net:1715:7) {
+  "code": "ECONNREFUSED"
+}
+2026-07-02 09:44:49 [[31merror[39m]: [1;31mRedis connection failed[0m
+AggregateError [ECONNREFUSED]: 
+    at internalConnectMultiple (node:net:1134:18)
+    at afterConnectMultiple (node:net:1715:7) {
+  "code": "ECONNREFUSED"
+}
+2026-07-02 09:44:51 [[31merror[39m]: [1;31mRedis connection failed[0m
+AggregateError [ECONNREFUSED]: 
+    at internalConnectMultiple (node:net:1134:18)
+    at afterConnectMultiple (node:net:1715:7) {
+  "code": "ECONNREFUSED"
+}
+2026-07-02 09:44:53 [[31merror[39m]: [1;31mRedis connection failed[0m
+AggregateError [ECONNREFUSED]: 
+    at internalConnectMultiple (node:net:1134:18)
+    at afterConnectMultiple (node:net:1715:7) {
+  "code": "ECONNREFUSED"
+}
+2026-07-02 09:44:55 [[31merror[39m]: [1;31mRedis connection failed[0m
+AggregateError [ECONNREFUSED]: 
+    at internalConnectMultiple (node:net:1134:18)
+    at afterConnectMultiple (node:net:1715:7) {
+  "code": "ECONNREFUSED"
+}
+2026-07-02 09:44:57 [[31merror[39m]: [1;31mRedis connection failed[0m
+AggregateError [ECONNREFUSED]: 
+    at internalConnectMultiple (node:net:1134:18)
+    at afterConnectMultiple (node:net:1715:7) {
+  "code": "ECONNREFUSED"
+}
+2026-07-02 09:44:59 [[31merror[39m]: [1;31mRedis connection failed[0m
+AggregateError [ECONNREFUSED]: 
+    at internalConnectMultiple (node:net:1134:18)
+    at afterConnectMultiple (node:net:1715:7) {
+  "code": "ECONNREFUSED"
+}
+2026-07-02 09:45:01 [[31merror[39m]: [1;31mRedis connection failed[0m
+AggregateError [ECONNREFUSED]: 
+    at internalConnectMultiple (node:net:1134:18)
+    at afterConnectMultiple (node:net:1715:7) {
+  "code": "ECONNREFUSED"
+}
+2026-07-02 09:45:04 [[31merror[39m]: [1;31mRedis connection failed[0m
+AggregateError [ECONNREFUSED]: 
+    at internalConnectMultiple (node:net:1134:18)
+    at afterConnectMultiple (node:net:1715:7) {
+  "code": "ECONNREFUSED"
+}
+2026-07-02 09:45:06 [[31merror[39m]: [1;31mRedis connection failed[0m
+AggregateError [ECONNREFUSED]: 
+    at internalConnectMultiple (node:net:1134:18)
+    at afterConnectMultiple (node:net:1715:7) {
+  "code": "ECONNREFUSED"
+}
+2026-07-03 11:04:53 [[31merror[39m]: [1;31mError Access denied. No session id provided[0m
+Error: Access denied. No session id provided
+    at sessionMiddleware (file:///C:/flutter/taskit_backend/src/middleware/session.middleware.js:13:13)
+    at Layer.handle [as handle_request] (C:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\flutter\taskit_backend\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (C:\flutter\taskit_backend\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (C:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:284:15
+    at router.process_params (C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:346:12)
+    at next (C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:280:10)
+    at router.handle (C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:175:3)
+    at router (C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:47:12) {
+  "requestId": "74a5073c-6fc4-4d5e-ba8c-a4b252f08d7e",
+  "method": "POST",
+  "url": "/api/v1/tasks/",
+  "status": 401
+}
+2026-07-03 11:05:31 [[31merror[39m]: [1;31mError Category id is required[0m
+Error: Category id is required
+    at file:///C:/flutter/taskit_backend/src/middleware/validate.js:14:15
+    at Layer.handle [as handle_request] (C:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\flutter\taskit_backend\node_modules\express\lib\router\route.js:149:13)
+    at sessionMiddleware (file:///C:/flutter/taskit_backend/src/middleware/session.middleware.js:21:5)
+    at Layer.handle [as handle_request] (C:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\flutter\taskit_backend\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (C:\flutter\taskit_backend\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (C:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:284:15
+    at router.process_params (C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:346:12) {
+  "requestId": "3f40e286-7946-4b3d-937a-9bc0aa1021da",
+  "method": "POST",
+  "url": "/api/v1/tasks/",
+  "status": 400
+}
+2026-07-03 11:05:58 [[31merror[39m]: [1;31mError Access denied. No authorization provided[0m
+Error: Access denied. No authorization provided
+    at authMiddleware (file:///C:/flutter/taskit_backend/src/middleware/auth.middleware.js:9:13)
+    at Layer.handle [as handle_request] (C:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\flutter\taskit_backend\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (C:\flutter\taskit_backend\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (C:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:284:15
+    at router.process_params (C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:346:12)
+    at next (C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:280:10)
+    at router.handle (C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:175:3)
+    at router (C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:47:12) {
+  "requestId": "f17e4fa7-3991-43b9-b590-941500614304",
+  "method": "GET",
+  "url": "/api/v1/categories/",
+  "status": 401
+}
+2026-07-04 17:46:11 [[31merror[39m]: [1;31mError platform must be one of [android, ios][0m
+Error: platform must be one of [android, ios]
+    at file:///C:/flutter/taskit_backend/src/middleware/validate.js:14:15
+    at Layer.handle [as handle_request] (C:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\flutter\taskit_backend\node_modules\express\lib\router\route.js:149:13)
+    at authMiddleware (file:///C:/flutter/taskit_backend/src/middleware/auth.middleware.js:15:5)
+    at Layer.handle [as handle_request] (C:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\flutter\taskit_backend\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (C:\flutter\taskit_backend\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (C:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:284:15
+    at router.process_params (C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:346:12) {
+  "requestId": "57e2b8e0-6a4e-417d-bbd2-9338eafee43a",
+  "method": "POST",
+  "url": "/api/v1/devices",
+  "status": 400
+}
+2026-07-04 17:47:05 [[31merror[39m]: [1;31mError Fcm token is required[0m
+Error: Fcm token is required
+    at file:///C:/flutter/taskit_backend/src/middleware/validate.js:14:15
+    at Layer.handle [as handle_request] (C:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\flutter\taskit_backend\node_modules\express\lib\router\route.js:149:13)
+    at authMiddleware (file:///C:/flutter/taskit_backend/src/middleware/auth.middleware.js:15:5)
+    at Layer.handle [as handle_request] (C:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\flutter\taskit_backend\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (C:\flutter\taskit_backend\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (C:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:284:15
+    at router.process_params (C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:346:12) {
+  "requestId": "8e005b48-a582-45f6-9eb5-aa9ace433b0f",
+  "method": "PUT",
+  "url": "/api/v1/devices",
+  "status": 400
+}
+2026-07-04 17:47:30 [[31merror[39m]: [1;31mError Device id is required[0m
+Error: Device id is required
+    at file:///C:/flutter/taskit_backend/src/middleware/validate.js:14:15
+    at Layer.handle [as handle_request] (C:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\flutter\taskit_backend\node_modules\express\lib\router\route.js:149:13)
+    at authMiddleware (file:///C:/flutter/taskit_backend/src/middleware/auth.middleware.js:15:5)
+    at Layer.handle [as handle_request] (C:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\flutter\taskit_backend\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (C:\flutter\taskit_backend\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (C:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:284:15
+    at router.process_params (C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:346:12) {
+  "requestId": "cdc5324e-86b5-445c-96b0-d5be625303f2",
+  "method": "PUT",
+  "url": "/api/v1/devices",
+  "status": 400
+}
+2026-07-04 17:52:22 [[31merror[39m]: [1;31mError Device id is required[0m
+Error: Device id is required
+    at file:///C:/flutter/taskit_backend/src/middleware/validate.js:14:15
+    at Layer.handle [as handle_request] (C:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\flutter\taskit_backend\node_modules\express\lib\router\route.js:149:13)
+    at authMiddleware (file:///C:/flutter/taskit_backend/src/middleware/auth.middleware.js:15:5)
+    at Layer.handle [as handle_request] (C:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\flutter\taskit_backend\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (C:\flutter\taskit_backend\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (C:\flutter\taskit_backend\node_modules\express\lib\router\layer.js:95:5)
+    at C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:284:15
+    at router.process_params (C:\flutter\taskit_backend\node_modules\express\lib\router\index.js:346:12) {
+  "requestId": "e92b4ea4-4943-4b38-ab6b-b8721115ca11",
+  "method": "DELETE",
+  "url": "/api/v1/devices",
+  "status": 400
+}

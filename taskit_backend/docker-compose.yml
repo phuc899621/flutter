@@ -11,15 +11,50 @@ services:
       - REDIS_HOST=redis
     env_file:
       - .env
+    restart: unless-stopped
+  scheduler:
+    build: .
+    container_name: scheduler
+    command: npm run scheduler
+    depends_on:
+      - redis
+    environment:
+      - REDIS_HOST=redis
+    env_file:
+      - .env
+    restart: unless-stopped
+  worker-1:
+    build: .
+    container_name: worker-1
+    command: npm run worker
+    depends_on:
+      - redis
+    environment:
+      - REDIS_HOST=redis
+    env_file:
+      - .env
+    restart: unless-stopped
 
+  worker-2:
+    build: .
+    container_name: worker-2
+    command: npm run worker
+    depends_on:
+      - redis
+    environment:
+      - REDIS_HOST=redis
+    env_file:
+      - .env
+    restart: unless-stopped
   redis:
-    image: redis
+    image: redis:7
     command: redis-server /usr/local/etc/redis/redis.conf
     volumes:
       - redis_data:/data
       - ./redis.conf:/usr/local/etc/redis/redis.conf
     ports:
       - "6379:6379"
+    restart: unless-stopped
 
 volumes:
   redis_data:

@@ -25,6 +25,7 @@ router.post(
   createTaskValidate,
   TaskController.createTask,
 );
+router.get("/queue", TaskController.testQueue);
 router.get(
   "/pull",
   authMiddleware,

@@ -1,3 +1,5 @@
+import { reminderQueue } from "../../config/bullmq.js";
+import { scheduleReminder } from "../../shared/services/reminder.service.js";
 import TaskServices from "./task.services.js";
 
 //#region CREATE
@@ -206,3 +208,18 @@ export const deleteBulkTasks = async (req, res) => {
 };
 
 //#endregion
+
+export const testQueue = async (req, res, next) => {
+  try {
+    await scheduleReminder({
+      message: "Hello",
+      delay: 5000,
+      fcmToken: req.body.fcmToken,
+    });
+    res.status(200).json({
+      message: "Task scheduled successfully",
+    });
+  } catch (e) {
+    next(e);
+  }
+};

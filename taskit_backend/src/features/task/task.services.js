@@ -4,7 +4,7 @@ import CategoryModel from "../category/category.model.js";
 import SubtaskModel from "../task/subtask.model.js";
 import db from "../../shared/utils/db.js";
 import UserModel from "../user/user.model.js";
-
+import "dotenv/config";
 import {
   BadRequestError,
   BaseError,
@@ -686,6 +686,50 @@ class TaskServices {
       throw new ServerError(`Delete task error: ${e.message}`);
     } finally {
       await session.endSession();
+    }
+  }
+  static async findUpcommingTasks() {
+    const lookahead = Number(process.env.SCHEDULER_LOOKAHEAD_MINUTES ?? 15);
+    const now = new Date();
+    const end = new Date(now.getTime() + lookahead * 60 * 1000);
+    try {
+      const tasks = await TaskModel.aggregate([
+        {
+          $match: {
+            reminderType: { $ne: "none" },
+          },
+        },
+        {
+          $addFields: {
+            notifyAt: {
+              $cond: [
+                { $eq: ["$reminderType", "beforeDeadline"] },
+                {
+                  $subtract: [
+                    "$dueDate",
+                    { $multiply: ["$reminderOffset", 60 * 1000] },
+                  ],
+                },
+                "$reminderAt",
+              ],
+            },
+          },
+        },
+        {
+          $match: {
+            notifyAt: {
+              $gte: now,
+              $lte: end,
+            },
+          },
+        },
+      ]);
+      return tasks;
+    } catch (e) {
+      if (e instanceof BaseError) throw e;
+      throw new ServerError(
+        `[TaskService] Find upcomming tasks error: ${e.message}`,
+      );
     }
   }
   static async deleteBulkTasks(userId, ids) {

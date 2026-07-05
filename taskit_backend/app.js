@@ -7,6 +7,7 @@ import apiV1 from "./src/api/v1/index.js";
 import requestIdMiddleware from "./src/middleware/requestId.js";
 import timingMiddleware from "./src/middleware/timing.js";
 import { initSocket } from "./src/config/socket.js";
+import "./src/config/firebase.js";
 import { createServer } from "http";
 const app = express();
 const server = createServer(app);

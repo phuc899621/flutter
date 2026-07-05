@@ -40,6 +40,7 @@ const userSchema = new mongoose.Schema(
     timestamps: true,
     toJSON: {
       virtuals: true,
+
       transform: function (doc, ret) {
         const { _id, auth, __v, ...rest } = ret;
         return {
