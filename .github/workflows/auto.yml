@@ -27,5 +27,5 @@ jobs:
             git reset --hard HEAD
             git pull origin dev
             cd taskit_backend
-            docker compose down
+            docker compose pull
             docker compose up -d --build
