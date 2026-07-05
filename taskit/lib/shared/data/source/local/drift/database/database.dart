@@ -53,6 +53,7 @@ class AppDatabase extends _$AppDatabase {
         await m.addColumn(taskTable, taskTable.reminderAt);
         await m.addColumn(taskTable, taskTable.reminderOffset);
         await m.addColumn(taskTable, taskTable.reminderType);
+        await m.addColumn(taskTable, taskTable.repeatType);
       }
     },
     beforeOpen: (details) async {

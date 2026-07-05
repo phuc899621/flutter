@@ -1,5 +1,8 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:taskit/features/auth/domain/usecases/auth/logout_usecase.dart';
+import 'package:taskit/features/notification/application/notification_provider.dart';
+import 'package:taskit/features/notification/domain/usecases/delete_device_usecase.dart';
+import 'package:taskit/features/notification/domain/usecases/get_fcm_token_usecase.dart';
 import 'package:taskit/features/task/application/task_sync_service.dart';
 import 'package:taskit/features/user/domain/params/reconcile_user_param.dart';
 import 'package:taskit/features/user/domain/usecase/get_previous_user_usecase.dart';
@@ -45,12 +48,13 @@ class AuthController extends Notifier<AuthState> {
     return const AuthState(status: AuthStatus.initial);
   }
 
-  void _onAuthenticated(UserEntity user)  {
+  void _onAuthenticated(UserEntity user) {
     logger.i('[AuthController] Handling authenticated side-effects');
-     ref.read(categorySyncServiceProvider).init();
-     ref.read(taskSyncServiceProvider).init();
-     ref.read(socketServiceProvider).connect();
+    ref.read(categorySyncServiceProvider).init();
+    ref.read(taskSyncServiceProvider).init();
+    ref.read(socketServiceProvider).connect();
     _triggerInitialSync(user.localId);
+    ref.read(notificationProvider.notifier).initialize();
   }
 
   Future<void> init() async {
@@ -105,6 +109,8 @@ class AuthController extends Notifier<AuthState> {
         await ref
             .read(reconcileUserSyncUseCaseProvider)
             .call(ReconcileUserParam(newUser: user, oldUser: oldUser));
+        (await ref.read(getFcmTokenUseCaseProvider).call(NoParam()));
+        ref.read(notificationProvider.notifier).initialize();
         logger.d('[AuthController] fetchUser: user fetched successfully');
         state = state.copyWith(status: AuthStatus.authenticated, user: user);
         _onAuthenticated(user);
@@ -121,7 +127,9 @@ class AuthController extends Notifier<AuthState> {
   Future<void> logout() async {
     logger.i('[AuthController] logout');
     try {
+      await ref.read(removeDeviceUseCaseProvider).call(NoParam());
       await ref.read(logoutUseCaseProvider).call(NoParam());
+      await ref.read(notificationProvider.notifier).disposeNotification();
       ref.read(socketServiceProvider).disconnect();
     } catch (e) {
       logger.i('[AuthController] logout failed');

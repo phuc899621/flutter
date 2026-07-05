@@ -1156,6 +1156,16 @@ class $TaskTableTable extends TaskTable
     requiredDuringInsert: false,
     defaultValue: Constant(null),
   );
+  @override
+  late final GeneratedColumnWithTypeConverter<ReminderRepeatType, String>
+  repeatType = GeneratedColumn<String>(
+    'repeat_type',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: Constant(ReminderRepeatType.none.name),
+  ).withConverter<ReminderRepeatType>($TaskTableTable.$converterrepeatType);
   static const VerificationMeta _userLocalIdMeta = const VerificationMeta(
     'userLocalId',
   );
@@ -1254,6 +1264,7 @@ class $TaskTableTable extends TaskTable
     reminderAt,
     reminderType,
     reminderOffset,
+    repeatType,
     userLocalId,
     status,
     dueDate,
@@ -1452,6 +1463,12 @@ class $TaskTableTable extends TaskTable
         DriftSqlType.int,
         data['${effectivePrefix}reminder_offset'],
       ),
+      repeatType: $TaskTableTable.$converterrepeatType.fromSql(
+        attachedDatabase.typeMapping.read(
+          DriftSqlType.string,
+          data['${effectivePrefix}repeat_type'],
+        )!,
+      ),
       userLocalId: attachedDatabase.typeMapping.read(
         DriftSqlType.int,
         data['${effectivePrefix}user_local_id'],
@@ -1492,6 +1509,10 @@ class $TaskTableTable extends TaskTable
   $converterreminderType = const EnumNameConverter<TaskReminderType>(
     TaskReminderType.values,
   );
+  static JsonTypeConverter2<ReminderRepeatType, String, String>
+  $converterrepeatType = const EnumNameConverter<ReminderRepeatType>(
+    ReminderRepeatType.values,
+  );
 }
 
 class TaskTableData extends DataClass implements Insertable<TaskTableData> {
@@ -1506,6 +1527,7 @@ class TaskTableData extends DataClass implements Insertable<TaskTableData> {
   final DateTime? reminderAt;
   final TaskReminderType reminderType;
   final int? reminderOffset;
+  final ReminderRepeatType repeatType;
   final int userLocalId;
   final String status;
   final DateTime? dueDate;
@@ -1525,6 +1547,7 @@ class TaskTableData extends DataClass implements Insertable<TaskTableData> {
     this.reminderAt,
     required this.reminderType,
     this.reminderOffset,
+    required this.repeatType,
     required this.userLocalId,
     required this.status,
     this.dueDate,
@@ -1556,6 +1579,11 @@ class TaskTableData extends DataClass implements Insertable<TaskTableData> {
     }
     if (!nullToAbsent || reminderOffset != null) {
       map['reminder_offset'] = Variable<int>(reminderOffset);
+    }
+    {
+      map['repeat_type'] = Variable<String>(
+        $TaskTableTable.$converterrepeatType.toSql(repeatType),
+      );
     }
     map['user_local_id'] = Variable<int>(userLocalId);
     map['status'] = Variable<String>(status);
@@ -1590,6 +1618,7 @@ class TaskTableData extends DataClass implements Insertable<TaskTableData> {
       reminderOffset: reminderOffset == null && nullToAbsent
           ? const Value.absent()
           : Value(reminderOffset),
+      repeatType: Value(repeatType),
       userLocalId: Value(userLocalId),
       status: Value(status),
       dueDate: dueDate == null && nullToAbsent
@@ -1623,6 +1652,9 @@ class TaskTableData extends DataClass implements Insertable<TaskTableData> {
         serializer.fromJson<String>(json['reminderType']),
       ),
       reminderOffset: serializer.fromJson<int?>(json['reminderOffset']),
+      repeatType: $TaskTableTable.$converterrepeatType.fromJson(
+        serializer.fromJson<String>(json['repeatType']),
+      ),
       userLocalId: serializer.fromJson<int>(json['userLocalId']),
       status: serializer.fromJson<String>(json['status']),
       dueDate: serializer.fromJson<DateTime?>(json['dueDate']),
@@ -1649,6 +1681,9 @@ class TaskTableData extends DataClass implements Insertable<TaskTableData> {
         $TaskTableTable.$converterreminderType.toJson(reminderType),
       ),
       'reminderOffset': serializer.toJson<int?>(reminderOffset),
+      'repeatType': serializer.toJson<String>(
+        $TaskTableTable.$converterrepeatType.toJson(repeatType),
+      ),
       'userLocalId': serializer.toJson<int>(userLocalId),
       'status': serializer.toJson<String>(status),
       'dueDate': serializer.toJson<DateTime?>(dueDate),
@@ -1671,6 +1706,7 @@ class TaskTableData extends DataClass implements Insertable<TaskTableData> {
     Value<DateTime?> reminderAt = const Value.absent(),
     TaskReminderType? reminderType,
     Value<int?> reminderOffset = const Value.absent(),
+    ReminderRepeatType? repeatType,
     int? userLocalId,
     String? status,
     Value<DateTime?> dueDate = const Value.absent(),
@@ -1692,6 +1728,7 @@ class TaskTableData extends DataClass implements Insertable<TaskTableData> {
     reminderOffset: reminderOffset.present
         ? reminderOffset.value
         : this.reminderOffset,
+    repeatType: repeatType ?? this.repeatType,
     userLocalId: userLocalId ?? this.userLocalId,
     status: status ?? this.status,
     dueDate: dueDate.present ? dueDate.value : this.dueDate,
@@ -1723,6 +1760,9 @@ class TaskTableData extends DataClass implements Insertable<TaskTableData> {
       reminderOffset: data.reminderOffset.present
           ? data.reminderOffset.value
           : this.reminderOffset,
+      repeatType: data.repeatType.present
+          ? data.repeatType.value
+          : this.repeatType,
       userLocalId: data.userLocalId.present
           ? data.userLocalId.value
           : this.userLocalId,
@@ -1751,6 +1791,7 @@ class TaskTableData extends DataClass implements Insertable<TaskTableData> {
           ..write('reminderAt: $reminderAt, ')
           ..write('reminderType: $reminderType, ')
           ..write('reminderOffset: $reminderOffset, ')
+          ..write('repeatType: $repeatType, ')
           ..write('userLocalId: $userLocalId, ')
           ..write('status: $status, ')
           ..write('dueDate: $dueDate, ')
@@ -1775,6 +1816,7 @@ class TaskTableData extends DataClass implements Insertable<TaskTableData> {
     reminderAt,
     reminderType,
     reminderOffset,
+    repeatType,
     userLocalId,
     status,
     dueDate,
@@ -1798,6 +1840,7 @@ class TaskTableData extends DataClass implements Insertable<TaskTableData> {
           other.reminderAt == this.reminderAt &&
           other.reminderType == this.reminderType &&
           other.reminderOffset == this.reminderOffset &&
+          other.repeatType == this.repeatType &&
           other.userLocalId == this.userLocalId &&
           other.status == this.status &&
           other.dueDate == this.dueDate &&
@@ -1819,6 +1862,7 @@ class TaskTableCompanion extends UpdateCompanion<TaskTableData> {
   final Value<DateTime?> reminderAt;
   final Value<TaskReminderType> reminderType;
   final Value<int?> reminderOffset;
+  final Value<ReminderRepeatType> repeatType;
   final Value<int> userLocalId;
   final Value<String> status;
   final Value<DateTime?> dueDate;
@@ -1838,6 +1882,7 @@ class TaskTableCompanion extends UpdateCompanion<TaskTableData> {
     this.reminderAt = const Value.absent(),
     this.reminderType = const Value.absent(),
     this.reminderOffset = const Value.absent(),
+    this.repeatType = const Value.absent(),
     this.userLocalId = const Value.absent(),
     this.status = const Value.absent(),
     this.dueDate = const Value.absent(),
@@ -1858,6 +1903,7 @@ class TaskTableCompanion extends UpdateCompanion<TaskTableData> {
     this.reminderAt = const Value.absent(),
     this.reminderType = const Value.absent(),
     this.reminderOffset = const Value.absent(),
+    this.repeatType = const Value.absent(),
     required int userLocalId,
     this.status = const Value.absent(),
     this.dueDate = const Value.absent(),
@@ -1880,6 +1926,7 @@ class TaskTableCompanion extends UpdateCompanion<TaskTableData> {
     Expression<DateTime>? reminderAt,
     Expression<String>? reminderType,
     Expression<int>? reminderOffset,
+    Expression<String>? repeatType,
     Expression<int>? userLocalId,
     Expression<String>? status,
     Expression<DateTime>? dueDate,
@@ -1900,6 +1947,7 @@ class TaskTableCompanion extends UpdateCompanion<TaskTableData> {
       if (reminderAt != null) 'reminder_at': reminderAt,
       if (reminderType != null) 'reminder_type': reminderType,
       if (reminderOffset != null) 'reminder_offset': reminderOffset,
+      if (repeatType != null) 'repeat_type': repeatType,
       if (userLocalId != null) 'user_local_id': userLocalId,
       if (status != null) 'status': status,
       if (dueDate != null) 'due_date': dueDate,
@@ -1922,6 +1970,7 @@ class TaskTableCompanion extends UpdateCompanion<TaskTableData> {
     Value<DateTime?>? reminderAt,
     Value<TaskReminderType>? reminderType,
     Value<int?>? reminderOffset,
+    Value<ReminderRepeatType>? repeatType,
     Value<int>? userLocalId,
     Value<String>? status,
     Value<DateTime?>? dueDate,
@@ -1942,6 +1991,7 @@ class TaskTableCompanion extends UpdateCompanion<TaskTableData> {
       reminderAt: reminderAt ?? this.reminderAt,
       reminderType: reminderType ?? this.reminderType,
       reminderOffset: reminderOffset ?? this.reminderOffset,
+      repeatType: repeatType ?? this.repeatType,
       userLocalId: userLocalId ?? this.userLocalId,
       status: status ?? this.status,
       dueDate: dueDate ?? this.dueDate,
@@ -1990,6 +2040,11 @@ class TaskTableCompanion extends UpdateCompanion<TaskTableData> {
     if (reminderOffset.present) {
       map['reminder_offset'] = Variable<int>(reminderOffset.value);
     }
+    if (repeatType.present) {
+      map['repeat_type'] = Variable<String>(
+        $TaskTableTable.$converterrepeatType.toSql(repeatType.value),
+      );
+    }
     if (userLocalId.present) {
       map['user_local_id'] = Variable<int>(userLocalId.value);
     }
@@ -2028,6 +2083,7 @@ class TaskTableCompanion extends UpdateCompanion<TaskTableData> {
           ..write('reminderAt: $reminderAt, ')
           ..write('reminderType: $reminderType, ')
           ..write('reminderOffset: $reminderOffset, ')
+          ..write('repeatType: $repeatType, ')
           ..write('userLocalId: $userLocalId, ')
           ..write('status: $status, ')
           ..write('dueDate: $dueDate, ')
@@ -4290,6 +4346,7 @@ typedef $$TaskTableTableCreateCompanionBuilder =
       Value<DateTime?> reminderAt,
       Value<TaskReminderType> reminderType,
       Value<int?> reminderOffset,
+      Value<ReminderRepeatType> repeatType,
       required int userLocalId,
       Value<String> status,
       Value<DateTime?> dueDate,
@@ -4311,6 +4368,7 @@ typedef $$TaskTableTableUpdateCompanionBuilder =
       Value<DateTime?> reminderAt,
       Value<TaskReminderType> reminderType,
       Value<int?> reminderOffset,
+      Value<ReminderRepeatType> repeatType,
       Value<int> userLocalId,
       Value<String> status,
       Value<DateTime?> dueDate,
@@ -4446,6 +4504,12 @@ class $$TaskTableTableFilterComposer
   ColumnFilters<int> get reminderOffset => $composableBuilder(
     column: $table.reminderOffset,
     builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnWithTypeConverterFilters<ReminderRepeatType, ReminderRepeatType, String>
+  get repeatType => $composableBuilder(
+    column: $table.repeatType,
+    builder: (column) => ColumnWithTypeConverterFilters(column),
   );
 
   ColumnFilters<String> get status => $composableBuilder(
@@ -4609,6 +4673,11 @@ class $$TaskTableTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
+  ColumnOrderings<String> get repeatType => $composableBuilder(
+    column: $table.repeatType,
+    builder: (column) => ColumnOrderings(column),
+  );
+
   ColumnOrderings<String> get status => $composableBuilder(
     column: $table.status,
     builder: (column) => ColumnOrderings(column),
@@ -4733,6 +4802,12 @@ class $$TaskTableTableAnnotationComposer
     column: $table.reminderOffset,
     builder: (column) => column,
   );
+
+  GeneratedColumnWithTypeConverter<ReminderRepeatType, String> get repeatType =>
+      $composableBuilder(
+        column: $table.repeatType,
+        builder: (column) => column,
+      );
 
   GeneratedColumn<String> get status =>
       $composableBuilder(column: $table.status, builder: (column) => column);
@@ -4869,6 +4944,7 @@ class $$TaskTableTableTableManager
                 Value<DateTime?> reminderAt = const Value.absent(),
                 Value<TaskReminderType> reminderType = const Value.absent(),
                 Value<int?> reminderOffset = const Value.absent(),
+                Value<ReminderRepeatType> repeatType = const Value.absent(),
                 Value<int> userLocalId = const Value.absent(),
                 Value<String> status = const Value.absent(),
                 Value<DateTime?> dueDate = const Value.absent(),
@@ -4888,6 +4964,7 @@ class $$TaskTableTableTableManager
                 reminderAt: reminderAt,
                 reminderType: reminderType,
                 reminderOffset: reminderOffset,
+                repeatType: repeatType,
                 userLocalId: userLocalId,
                 status: status,
                 dueDate: dueDate,
@@ -4909,6 +4986,7 @@ class $$TaskTableTableTableManager
                 Value<DateTime?> reminderAt = const Value.absent(),
                 Value<TaskReminderType> reminderType = const Value.absent(),
                 Value<int?> reminderOffset = const Value.absent(),
+                Value<ReminderRepeatType> repeatType = const Value.absent(),
                 required int userLocalId,
                 Value<String> status = const Value.absent(),
                 Value<DateTime?> dueDate = const Value.absent(),
@@ -4928,6 +5006,7 @@ class $$TaskTableTableTableManager
                 reminderAt: reminderAt,
                 reminderType: reminderType,
                 reminderOffset: reminderOffset,
+                repeatType: repeatType,
                 userLocalId: userLocalId,
                 status: status,
                 dueDate: dueDate,

@@ -211,14 +211,14 @@ return categoryId(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( int localId,  String title)?  title,TResult Function( int localId,  String status,  DateTime? completedAt)?  status,TResult Function( int localId,  String priority)?  priority,TResult Function( int localId,  DateTime? dueDate,  String status,  bool hasTime,  DateTime? completedAt)?  dueDate,TResult Function( int localId,  DateTime? reminderAt,  int? reminderOffset,  String reminderType)?  reminder,TResult Function( int localId,  String description)?  description,TResult Function( int localId,  String categoryId)?  categoryId,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( int localId,  String title)?  title,TResult Function( int localId,  String status,  DateTime? completedAt)?  status,TResult Function( int localId,  String priority)?  priority,TResult Function( int localId,  DateTime? dueDate,  String status,  bool hasTime,  DateTime? completedAt)?  dueDate,TResult Function( int localId,  DateTime? reminderAt,  int? reminderOffset,  String reminderType,  String repeatType)?  reminder,TResult Function( int localId,  String description)?  description,TResult Function( int localId,  String categoryId)?  categoryId,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _UpdateTaskTitleReq() when title != null:
 return title(_that.localId,_that.title);case _UpdateTaskStatusReq() when status != null:
 return status(_that.localId,_that.status,_that.completedAt);case _UpdateTaskPriorityReq() when priority != null:
 return priority(_that.localId,_that.priority);case _UpdateTaskDueDateReq() when dueDate != null:
 return dueDate(_that.localId,_that.dueDate,_that.status,_that.hasTime,_that.completedAt);case _UpdateTaskReminderReq() when reminder != null:
-return reminder(_that.localId,_that.reminderAt,_that.reminderOffset,_that.reminderType);case _UpdateTaskDescriptionReq() when description != null:
+return reminder(_that.localId,_that.reminderAt,_that.reminderOffset,_that.reminderType,_that.repeatType);case _UpdateTaskDescriptionReq() when description != null:
 return description(_that.localId,_that.description);case _UpdateTaskCategoryIdReq() when categoryId != null:
 return categoryId(_that.localId,_that.categoryId);case _:
   return orElse();
@@ -238,14 +238,14 @@ return categoryId(_that.localId,_that.categoryId);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( int localId,  String title)  title,required TResult Function( int localId,  String status,  DateTime? completedAt)  status,required TResult Function( int localId,  String priority)  priority,required TResult Function( int localId,  DateTime? dueDate,  String status,  bool hasTime,  DateTime? completedAt)  dueDate,required TResult Function( int localId,  DateTime? reminderAt,  int? reminderOffset,  String reminderType)  reminder,required TResult Function( int localId,  String description)  description,required TResult Function( int localId,  String categoryId)  categoryId,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( int localId,  String title)  title,required TResult Function( int localId,  String status,  DateTime? completedAt)  status,required TResult Function( int localId,  String priority)  priority,required TResult Function( int localId,  DateTime? dueDate,  String status,  bool hasTime,  DateTime? completedAt)  dueDate,required TResult Function( int localId,  DateTime? reminderAt,  int? reminderOffset,  String reminderType,  String repeatType)  reminder,required TResult Function( int localId,  String description)  description,required TResult Function( int localId,  String categoryId)  categoryId,}) {final _that = this;
 switch (_that) {
 case _UpdateTaskTitleReq():
 return title(_that.localId,_that.title);case _UpdateTaskStatusReq():
 return status(_that.localId,_that.status,_that.completedAt);case _UpdateTaskPriorityReq():
 return priority(_that.localId,_that.priority);case _UpdateTaskDueDateReq():
 return dueDate(_that.localId,_that.dueDate,_that.status,_that.hasTime,_that.completedAt);case _UpdateTaskReminderReq():
-return reminder(_that.localId,_that.reminderAt,_that.reminderOffset,_that.reminderType);case _UpdateTaskDescriptionReq():
+return reminder(_that.localId,_that.reminderAt,_that.reminderOffset,_that.reminderType,_that.repeatType);case _UpdateTaskDescriptionReq():
 return description(_that.localId,_that.description);case _UpdateTaskCategoryIdReq():
 return categoryId(_that.localId,_that.categoryId);}
 }
@@ -261,14 +261,14 @@ return categoryId(_that.localId,_that.categoryId);}
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( int localId,  String title)?  title,TResult? Function( int localId,  String status,  DateTime? completedAt)?  status,TResult? Function( int localId,  String priority)?  priority,TResult? Function( int localId,  DateTime? dueDate,  String status,  bool hasTime,  DateTime? completedAt)?  dueDate,TResult? Function( int localId,  DateTime? reminderAt,  int? reminderOffset,  String reminderType)?  reminder,TResult? Function( int localId,  String description)?  description,TResult? Function( int localId,  String categoryId)?  categoryId,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( int localId,  String title)?  title,TResult? Function( int localId,  String status,  DateTime? completedAt)?  status,TResult? Function( int localId,  String priority)?  priority,TResult? Function( int localId,  DateTime? dueDate,  String status,  bool hasTime,  DateTime? completedAt)?  dueDate,TResult? Function( int localId,  DateTime? reminderAt,  int? reminderOffset,  String reminderType,  String repeatType)?  reminder,TResult? Function( int localId,  String description)?  description,TResult? Function( int localId,  String categoryId)?  categoryId,}) {final _that = this;
 switch (_that) {
 case _UpdateTaskTitleReq() when title != null:
 return title(_that.localId,_that.title);case _UpdateTaskStatusReq() when status != null:
 return status(_that.localId,_that.status,_that.completedAt);case _UpdateTaskPriorityReq() when priority != null:
 return priority(_that.localId,_that.priority);case _UpdateTaskDueDateReq() when dueDate != null:
 return dueDate(_that.localId,_that.dueDate,_that.status,_that.hasTime,_that.completedAt);case _UpdateTaskReminderReq() when reminder != null:
-return reminder(_that.localId,_that.reminderAt,_that.reminderOffset,_that.reminderType);case _UpdateTaskDescriptionReq() when description != null:
+return reminder(_that.localId,_that.reminderAt,_that.reminderOffset,_that.reminderType,_that.repeatType);case _UpdateTaskDescriptionReq() when description != null:
 return description(_that.localId,_that.description);case _UpdateTaskCategoryIdReq() when categoryId != null:
 return categoryId(_that.localId,_that.categoryId);case _:
   return null;
@@ -590,13 +590,14 @@ as DateTime?,
 @JsonSerializable()
 
 class _UpdateTaskReminderReq implements UpdateTaskReq {
-  const _UpdateTaskReminderReq({required this.localId, this.reminderAt, this.reminderOffset, required this.reminderType, final  String? $type}): $type = $type ?? 'reminder';
+  const _UpdateTaskReminderReq({required this.localId, this.reminderAt, this.reminderOffset, required this.reminderType, required this.repeatType, final  String? $type}): $type = $type ?? 'reminder';
   factory _UpdateTaskReminderReq.fromJson(Map<String, dynamic> json) => _$UpdateTaskReminderReqFromJson(json);
 
 @override final  int localId;
  final  DateTime? reminderAt;
  final  int? reminderOffset;
  final  String reminderType;
+ final  String repeatType;
 
 @JsonKey(name: 'runtimeType')
 final String $type;
@@ -615,16 +616,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _UpdateTaskReminderReq&&(identical(other.localId, localId) || other.localId == localId)&&(identical(other.reminderAt, reminderAt) || other.reminderAt == reminderAt)&&(identical(other.reminderOffset, reminderOffset) || other.reminderOffset == reminderOffset)&&(identical(other.reminderType, reminderType) || other.reminderType == reminderType));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _UpdateTaskReminderReq&&(identical(other.localId, localId) || other.localId == localId)&&(identical(other.reminderAt, reminderAt) || other.reminderAt == reminderAt)&&(identical(other.reminderOffset, reminderOffset) || other.reminderOffset == reminderOffset)&&(identical(other.reminderType, reminderType) || other.reminderType == reminderType)&&(identical(other.repeatType, repeatType) || other.repeatType == repeatType));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,localId,reminderAt,reminderOffset,reminderType);
+int get hashCode => Object.hash(runtimeType,localId,reminderAt,reminderOffset,reminderType,repeatType);
 
 @override
 String toString() {
-  return 'UpdateTaskReq.reminder(localId: $localId, reminderAt: $reminderAt, reminderOffset: $reminderOffset, reminderType: $reminderType)';
+  return 'UpdateTaskReq.reminder(localId: $localId, reminderAt: $reminderAt, reminderOffset: $reminderOffset, reminderType: $reminderType, repeatType: $repeatType)';
 }
 
 
@@ -635,7 +636,7 @@ abstract mixin class _$UpdateTaskReminderReqCopyWith<$Res> implements $UpdateTas
   factory _$UpdateTaskReminderReqCopyWith(_UpdateTaskReminderReq value, $Res Function(_UpdateTaskReminderReq) _then) = __$UpdateTaskReminderReqCopyWithImpl;
 @override @useResult
 $Res call({
- int localId, DateTime? reminderAt, int? reminderOffset, String reminderType
+ int localId, DateTime? reminderAt, int? reminderOffset, String reminderType, String repeatType
 });
 
 
@@ -652,12 +653,13 @@ class __$UpdateTaskReminderReqCopyWithImpl<$Res>
 
 /// Create a copy of UpdateTaskReq
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? localId = null,Object? reminderAt = freezed,Object? reminderOffset = freezed,Object? reminderType = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? localId = null,Object? reminderAt = freezed,Object? reminderOffset = freezed,Object? reminderType = null,Object? repeatType = null,}) {
   return _then(_UpdateTaskReminderReq(
 localId: null == localId ? _self.localId : localId // ignore: cast_nullable_to_non_nullable
 as int,reminderAt: freezed == reminderAt ? _self.reminderAt : reminderAt // ignore: cast_nullable_to_non_nullable
 as DateTime?,reminderOffset: freezed == reminderOffset ? _self.reminderOffset : reminderOffset // ignore: cast_nullable_to_non_nullable
 as int?,reminderType: null == reminderType ? _self.reminderType : reminderType // ignore: cast_nullable_to_non_nullable
+as String,repeatType: null == repeatType ? _self.repeatType : repeatType // ignore: cast_nullable_to_non_nullable
 as String,
   ));
 }

@@ -35,6 +35,10 @@ class TaskTable extends Table {
   IntColumn get reminderOffset =>
       integer().nullable().withDefault(Constant(null))();
 
+  TextColumn get repeatType => textEnum<ReminderRepeatType>().withDefault(
+    Constant(ReminderRepeatType.none.name),
+  )();
+
   IntColumn get userLocalId =>
       integer().references(UserTable, #localId, onDelete: KeyAction.cascade)();
 

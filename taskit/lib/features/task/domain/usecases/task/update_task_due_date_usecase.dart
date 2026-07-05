@@ -16,6 +16,17 @@ class UpdateTaskDueDateUseCase extends FutureUseCase<void, TaskEntity> {
   UpdateTaskDueDateUseCase(this._repo);
 
   @override
-  Future<Result<void, Failure>> call(TaskEntity params) =>
-      runSafe(() => _repo.updateTask(TaskUpdateField.dueDate, params));
+  Future<Result<void, Failure>> call(TaskEntity params) => runSafe(() async {
+    await _repo.updateTask(TaskUpdateField.dueDate, params);
+    if (params.dueDate == null &&
+        params.reminderType != TaskReminderType.none) {
+      await _repo.updateTask(
+        TaskUpdateField.reminder,
+        params.copyWith(
+          reminderType: TaskReminderType.none,
+          repeatType: ReminderRepeatType.none,
+        ),
+      );
+    }
+  });
 }

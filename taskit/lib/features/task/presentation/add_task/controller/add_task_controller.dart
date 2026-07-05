@@ -54,13 +54,15 @@ class AddTaskController extends Notifier<AddTaskState> {
   }
 
   void removeSelectedDate() {
-    state = state.copyWith(selectedDate: null, isTimeSelected: false);
-  }
-
-  void addSubtask() {
-    state = state.copyWith(
-      subtasks: [...state.subtasks, TextEditingController()],
-    );
+    if (state.reminderType == TaskReminderType.beforeDeadline) {
+      state = state.copyWith(
+        selectedDate: null,
+        isTimeSelected: false,
+        reminderType: TaskReminderType.none,
+      );
+    } else {
+      state = state.copyWith(selectedDate: null, isTimeSelected: false);
+    }
   }
 
   String? validateCategoryInput(String value) => ref
@@ -71,6 +73,20 @@ class AddTaskController extends Notifier<AddTaskState> {
     final updatedSubtasks = [...state.subtasks];
     updatedSubtasks.removeAt(index);
     state = state.copyWith(subtasks: updatedSubtasks);
+  }
+
+  void onSetReminder({
+    DateTime? reminderAt,
+    int? reminderOffset,
+    TaskReminderType reminderType = TaskReminderType.none,
+    ReminderRepeatType repeatType = ReminderRepeatType.none,
+  }) {
+    state = state.copyWith(
+      reminderOffset: reminderOffset,
+      reminderAt: reminderAt,
+      reminderType: reminderType,
+      repeatType: repeatType,
+    );
   }
 
   void setSelectedTime(TimeOfDay? s) {
@@ -98,8 +114,28 @@ class AddTaskController extends Notifier<AddTaskState> {
     ref.read(createCategoryUseCaseProvider).call(category);
   }
 
+  void onAddSubtask(String title) async {
+    final user = ref.read(currentUserProvider).value;
+    if (user == null) return;
+    final subtask = SubtaskEntity.insert(title, -1);
+    state = state.copyWith(subtasks: [...state.subtasks, subtask]);
+  }
+
+  void onEditSubtask(SubtaskEntity entity, int index) async {
+    final subtasks = [...state.subtasks];
+    subtasks[index] = entity;
+    state = state.copyWith(subtasks: subtasks);
+  }
+
   void removeSelectedTime() {
     state = state.copyWith(isTimeSelected: false);
+  }
+
+  String? validateSubtaskInput(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Subtask title must not be empty';
+    }
+    return null;
   }
 
   Future<void> addTask(String title, String description) async {
@@ -117,13 +153,11 @@ class AddTaskController extends Notifier<AddTaskState> {
           state.selectedCategory ??
           state.categories.where((e) => e.isDefault).first,
       priority: state.selectedPriority,
+      repeatType: state.repeatType,
       userLocalId: userLocalId,
       dueDate: state.selectedDate,
       hasTime: state.isTimeSelected,
-      subtasks: state.subtasks
-          .where((e) => e.text.trim().isNotEmpty)
-          .map((e) => SubtaskEntity.insert(e.text.trim(), -1))
-          .toList(),
+      subtasks: state.subtasks,
     );
 
     final result = await ref.read(createTaskUseCaseProvider).call(task);

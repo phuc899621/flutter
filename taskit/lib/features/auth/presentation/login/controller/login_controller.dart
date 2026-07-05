@@ -4,6 +4,7 @@ import 'package:taskit/features/auth/domain/usecases/auth/login_with_google_usec
 import 'package:taskit/features/auth/domain/usecases/params/login_params.dart';
 import 'package:taskit/features/auth/presentation/auth/controller/auth_controller.dart';
 import 'package:taskit/features/auth/presentation/login/state/login_state.dart';
+import 'package:taskit/features/notification/application/notification_provider.dart';
 import 'package:taskit/shared/application/network_status_provider.dart';
 
 import '../../../../../shared/constants/login_status.dart';
@@ -51,6 +52,7 @@ class LoginController extends Notifier<LoginState> {
         (_) async {
           logger.d('[LoginController] Login with Google successful');
           await authController.fetchUser();
+          ref.read(notificationProvider.notifier).initialize();
           state = state.copyWith(status: LoginStatus.success);
         },
         (failure) {

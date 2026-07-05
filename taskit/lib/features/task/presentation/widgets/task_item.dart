@@ -199,7 +199,12 @@ class TaskItem extends ConsumerWidget {
                         child: Text(
                           e.title,
                           style: text.titleSmall?.copyWith(
-                            color: color.onSurfaceVariant,
+                            color: e.completed
+                                ? color.onSurfaceVariant
+                                : color.onSurface,
+                            decoration: e.completed
+                                ? TextDecoration.lineThrough
+                                : TextDecoration.none,
                           ),
                         ),
                       ),

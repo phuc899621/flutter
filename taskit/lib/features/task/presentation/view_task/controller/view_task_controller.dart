@@ -7,6 +7,7 @@ import 'package:taskit/features/task/domain/usecases/subtask/create_subtask_usec
 import 'package:taskit/features/task/domain/usecases/subtask/delete_subtask_usecase.dart';
 import 'package:taskit/features/task/domain/usecases/subtask/update_subtask_status_usecase.dart';
 import 'package:taskit/features/task/domain/usecases/task/update_task_due_date_usecase.dart';
+import 'package:taskit/features/task/domain/usecases/task/update_task_reminder_use_case.dart';
 import 'package:taskit/features/task/domain/usecases/task/update_task_title_usecase.dart';
 import 'package:taskit/shared/log/logger_provider.dart';
 
@@ -58,6 +59,24 @@ class ViewTaskController extends Notifier<ViewTaskState> {
     _authSub.close();
     _taskSub?.cancel();
     _subtaskSub.cancel();
+  }
+
+  void onEditReminder({
+    DateTime? reminderAt,
+    int? reminderOffset,
+    TaskReminderType? reminderType,
+    ReminderRepeatType? repeatType,
+  }) {
+    final task = state.task;
+    if (task == null) return;
+    final newTask = task.copyWith(
+      reminderType: reminderType ?? task.reminderType,
+      reminderAt: reminderAt,
+      reminderOffset: reminderOffset,
+      repeatType: repeatType ?? task.repeatType,
+    );
+    logger.d('[ViewTaskController] task not null');
+    ref.read(updateTaskReminderUseCaseProvider).call(newTask);
   }
 
   String? validateSubtaskInput(String? value) {

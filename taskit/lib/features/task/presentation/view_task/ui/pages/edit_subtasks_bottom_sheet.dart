@@ -107,7 +107,13 @@ class _EditSubtasksBottomSheetState
                           onSelected: (value) {
                             switch (value) {
                               case 'edit':
-                                //edit
+                                context.push(
+                                  '/view_task/subtasks/edit',
+                                  extra: {
+                                    'entity': subtask,
+                                    'onConfirm': controller.updateSubtaskTitle,
+                                  },
+                                );
                                 break;
                               case 'delete':
                                 controller.deleteSubtask(subtask);

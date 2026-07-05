@@ -254,9 +254,10 @@ class TaskRepoImpl with DioExceptionMapper implements TaskRepo {
       ),
       TaskUpdateField.reminder => UpdateTaskReq.reminder(
         localId: taskLocalId,
-        reminderAt: task.reminderAt,
+        reminderAt: task.reminderAt?.toUtc(),
         reminderType: task.reminderType.name,
         reminderOffset: task.reminderOffset,
+        repeatType: task.repeatType.name,
       ),
       TaskUpdateField.priority => UpdateTaskReq.priority(
         localId: taskLocalId,

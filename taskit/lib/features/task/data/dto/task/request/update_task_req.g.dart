@@ -90,6 +90,7 @@ _UpdateTaskReminderReq _$UpdateTaskReminderReqFromJson(
       : DateTime.parse(json['reminderAt'] as String),
   reminderOffset: (json['reminderOffset'] as num?)?.toInt(),
   reminderType: json['reminderType'] as String,
+  repeatType: json['repeatType'] as String,
   $type: json['runtimeType'] as String?,
 );
 
@@ -100,6 +101,7 @@ Map<String, dynamic> _$UpdateTaskReminderReqToJson(
   'reminderAt': instance.reminderAt?.toIso8601String(),
   'reminderOffset': instance.reminderOffset,
   'reminderType': instance.reminderType,
+  'repeatType': instance.repeatType,
   'runtimeType': instance.$type,
 };
 

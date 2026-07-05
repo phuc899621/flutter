@@ -34,6 +34,7 @@ sealed class UpdateTaskReq with _$UpdateTaskReq {
     DateTime? reminderAt,
     int? reminderOffset,
     required String reminderType,
+    required String repeatType,
   }) = _UpdateTaskReminderReq;
 
   const factory UpdateTaskReq.description({

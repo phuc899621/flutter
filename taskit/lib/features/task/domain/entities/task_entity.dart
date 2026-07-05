@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:intl/intl.dart';
 import 'package:taskit/features/category/domain/entities/category_entity.dart';
 import 'package:taskit/features/task/domain/entities/subtask_entity.dart';
 import 'package:taskit/shared/config/app/theme/app_color.dart';
+import 'package:taskit/shared/log/logger_provider.dart';
 
 part 'task_entity.freezed.dart';
 
@@ -23,6 +25,7 @@ abstract class TaskEntity with _$TaskEntity {
     DateTime? reminderAt,
     int? reminderOffset,
     @Default(TaskReminderType.none) TaskReminderType reminderType,
+    @Default(ReminderRepeatType.none) ReminderRepeatType repeatType,
     DateTime? completedAt,
     required TaskStatus status,
     DateTime? dueDate,
@@ -47,6 +50,7 @@ abstract class TaskEntity with _$TaskEntity {
     reminderAt: null,
     reminderOffset: null,
     reminderType: TaskReminderType.none,
+    repeatType: ReminderRepeatType.none,
     hasTime: false,
     subtasks: [],
   );
@@ -60,6 +64,7 @@ abstract class TaskEntity with _$TaskEntity {
     DateTime? dueDate,
     DateTime? reminderAt,
     int? reminderOffset,
+    @Default(ReminderRepeatType.none) required ReminderRepeatType repeatType,
     @Default(TaskReminderType.none) required TaskReminderType reminderType,
     required bool hasTime,
     required List<SubtaskEntity> subtasks,
@@ -76,6 +81,7 @@ abstract class TaskEntity with _$TaskEntity {
     reminderAt: reminderAt,
     reminderOffset: reminderOffset,
     reminderType: reminderType,
+    repeatType: repeatType,
     synced: false,
     status: dueDate == null ? TaskStatus.pending : TaskStatus.scheduled,
     hasTime: hasTime,
@@ -105,6 +111,84 @@ enum TaskUpdateField {
 }
 
 enum TaskReminderType { none, beforeDeadline, custom }
+
+extension TaskReminderTypeExtension on TaskReminderType {
+  String get label {
+    switch (this) {
+      case TaskReminderType.none:
+        return 'Not set';
+      case TaskReminderType.beforeDeadline:
+        return 'Before deadline';
+      case TaskReminderType.custom:
+        return 'Custom';
+    }
+  }
+
+  String display({int? reminderOffset, DateTime? customDate}) {
+    logger.i('[TaskEntity][DisplayTaskReminder] $reminderOffset $customDate');
+    switch (this) {
+      case TaskReminderType.none:
+        return 'Not set';
+
+      case TaskReminderType.beforeDeadline:
+        if (reminderOffset == null) {
+          return 'Before due date';
+        }
+        if (reminderOffset == 0) {
+          return 'At deadline';
+        }
+
+        final duration = Duration(minutes: reminderOffset);
+
+        final days = duration.inDays;
+        final hours = duration.inHours % 24;
+        final minutes = duration.inMinutes % 60;
+
+        final parts = <String>[];
+
+        if (days > 0) {
+          parts.add('$days day${days > 1 ? 's' : ''}');
+        }
+
+        if (hours > 0) {
+          parts.add('$hours hour${hours > 1 ? 's' : ''}');
+        }
+
+        if (minutes > 0) {
+          parts.add('$minutes minute${minutes > 1 ? 's' : ''}');
+        }
+
+        return '${parts.join(' ')} before due date';
+
+      case TaskReminderType.custom:
+        if (customDate == null) {
+          return 'Specific date';
+        }
+
+        return DateFormat('h:mm a dd/MM/yyyy').format(customDate);
+    }
+  }
+}
+
+enum ReminderRepeatType { none, daily, weekly, monthly }
+
+extension ReminderRepeatTypeExtension on ReminderRepeatType {
+  String get display {
+    switch (this) {
+      case ReminderRepeatType.none:
+        return 'No repeat';
+
+      case ReminderRepeatType.daily:
+        return 'Repeat daily';
+
+      case ReminderRepeatType.weekly:
+        return 'Repeat weekly';
+
+      case ReminderRepeatType.monthly:
+        return 'Repeat monthly';
+    }
+  }
+}
 
 enum TaskPriority {
   none,

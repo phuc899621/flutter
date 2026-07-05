@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
+import 'package:taskit/shared/widget/custom_taskit_button.dart';
 
 class AddCategoryBottomSheet extends ConsumerStatefulWidget {
   final String title;
@@ -61,20 +63,25 @@ class _AddCategoryBottomSheetState
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
+                  IconButton(
+                    onPressed: context.pop,
+                    icon: Icon(Icons.arrow_back_rounded),
+                  ),
                   Text(
                     widget.title,
-                    style: text.titleLarge?.copyWith(
+                    style: text.titleMedium?.copyWith(
                       fontWeight: FontWeight.w600,
+                      color: color.onSurface,
                     ),
                   ),
-                  FilledButton(
+                  TaskitButton(
                     onPressed: () {
                       if (_formKey.currentState?.validate() ?? false) {
                         widget.onConfirm(_controller.text);
                         Navigator.pop(context);
                       }
                     },
-                    child: const Text('Confirm'),
+                    text: 'Confirm',
                   ),
                 ],
               ),

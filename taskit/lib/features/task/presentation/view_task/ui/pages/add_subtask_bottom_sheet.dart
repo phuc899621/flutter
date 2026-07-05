@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
@@ -40,17 +41,24 @@ class _AddSubtaskBottomSheetState extends ConsumerState<AddSubtaskBottomSheet> {
 
   @override
   Widget build(BuildContext context) {
-    final text = Theme.of(context).textTheme;
-    final color = Theme.of(context).colorScheme;
+    final text = Theme
+        .of(context)
+        .textTheme;
+    final color = Theme
+        .of(context)
+        .colorScheme;
     return Padding(
       padding: EdgeInsets.only(
-        bottom: MediaQuery.of(context).viewInsets.bottom,
+        bottom: MediaQuery
+            .of(context)
+            .viewInsets
+            .bottom,
       ),
       child: Container(
-        padding: const EdgeInsets.all(20),
+        padding: const EdgeInsets.all(12),
         decoration: BoxDecoration(
           color: color.surface,
-          borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
+          borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
         ),
         child: Form(
           key: _formKey,
@@ -101,7 +109,7 @@ class _AddSubtaskBottomSheetState extends ConsumerState<AddSubtaskBottomSheet> {
               TextFormField(
                 controller: _controller,
                 autofocus: true,
-                maxLength: 20,
+                inputFormatters: [LengthLimitingTextInputFormatter(50)],
                 textCapitalization: TextCapitalization.sentences,
                 decoration: InputDecoration(
                   hintText: 'Enter subtask',

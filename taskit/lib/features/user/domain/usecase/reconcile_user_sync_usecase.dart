@@ -1,6 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:multiple_result/multiple_result.dart';
 import 'package:taskit/features/category/application/category_sync_service.dart';
+import 'package:taskit/features/notification/domain/usecases/delete_device_usecase.dart';
 import 'package:taskit/features/task/application/task_sync_service.dart';
 import 'package:taskit/features/user/domain/params/reconcile_user_param.dart';
 import 'package:taskit/features/user/domain/usecase/wipe_user_usecase.dart';
@@ -17,11 +18,13 @@ final reconcileUserSyncUseCaseProvider = Provider<ReconcileUserSyncUseCase>((
   final syncTasks = ref.watch(taskSyncServiceProvider);
   final wipeUser = ref.read(wipeUserUseCaseProvider);
   final sessionService = ref.read(sessionServiceProvider);
+  final removeDevice = ref.read(removeDeviceUseCaseProvider);
   return ReconcileUserSyncUseCase(
     syncCategories,
     syncTasks,
     wipeUser,
     sessionService,
+    removeDevice,
   );
 });
 
@@ -30,12 +33,14 @@ class ReconcileUserSyncUseCase extends FutureUseCase<void, ReconcileUserParam> {
   final TaskSyncService _syncTasks;
   final WipeUserUseCase _wipeUser;
   final SessionService _sessionService;
+  final RemoveDeviceUseCase _removeDevice;
 
   ReconcileUserSyncUseCase(
     this._syncCategories,
     this._syncTasks,
     this._wipeUser,
     this._sessionService,
+    this._removeDevice,
   );
 
   @override
@@ -50,6 +55,7 @@ class ReconcileUserSyncUseCase extends FutureUseCase<void, ReconcileUserParam> {
       if (oldUser != null) {
         if (oldUser.remoteId != newUser.remoteId) {
           await _wipeUser.call(oldUser.localId);
+          await _removeDevice.call(NoParam());
           logger.i('[ReconcileUserSync] User wiped: ${oldUser.localId}');
         } else {
           logger.i(

@@ -11,8 +11,11 @@ import 'package:taskit/features/main/presentation/ai/ui/ai_page.dart';
 import 'package:taskit/features/main/presentation/home/ui/pages/home_page.dart';
 import 'package:taskit/features/main/presentation/list/ui/list_page.dart';
 import 'package:taskit/features/main/presentation/main/ui/bottom_sheet/task_generated_bottom_sheet.dart';
+import 'package:taskit/features/notification/application/notification_provider.dart';
+import 'package:taskit/features/task/domain/entities/subtask_entity.dart';
 import 'package:taskit/features/task/domain/entities/task_entity.dart';
 import 'package:taskit/features/task/presentation/add_task/ui/pages/add_task_page.dart';
+import 'package:taskit/features/task/presentation/add_task/ui/widgets/task_reminder_picker.dart';
 import 'package:taskit/features/task/presentation/filter_task/ui/category_filter_bottom_sheet.dart';
 import 'package:taskit/features/task/presentation/filter_task/ui/end_date_filter_bottom_sheet.dart';
 import 'package:taskit/features/task/presentation/filter_task/ui/filter_bottom_sheet.dart';
@@ -22,13 +25,14 @@ import 'package:taskit/features/task/presentation/view_task/ui/pages/edit_descri
 import 'package:taskit/features/task/presentation/view_task/ui/pages/edit_due_date_bottom_sheet.dart';
 import 'package:taskit/features/task/presentation/view_task/ui/pages/edit_due_time_bottom_sheet.dart';
 import 'package:taskit/features/task/presentation/view_task/ui/pages/edit_priority_bottom_sheet.dart';
+import 'package:taskit/features/task/presentation/view_task/ui/pages/edit_subtask_title_bottom_sheet.dart';
 import 'package:taskit/features/task/presentation/view_task/ui/pages/edit_subtasks_bottom_sheet.dart';
 import 'package:taskit/features/task/presentation/view_task/ui/pages/edit_title_bottom_sheet.dart';
 import 'package:taskit/features/task/presentation/view_task/ui/pages/view_task_bottom_sheet.dart';
 import 'package:taskit/shared/config/routers/router_name.dart';
 import 'package:taskit/shared/log/logger_provider.dart';
+import 'package:taskit/test_page.dart';
 
-import '../../../features/auth/presentation/auth/ui/splash_page.dart';
 import '../../../features/auth/presentation/forgot_password/ui/forgot_password_page.dart';
 import '../../../features/auth/presentation/forgot_password/ui/forgot_password_verify_page.dart';
 import '../../../features/auth/presentation/login/ui/login_page.dart';
@@ -39,7 +43,6 @@ import '../../../features/task/presentation/filter_task/ui/date_filter_bottom_sh
 import '../../../features/task/presentation/filter_task/ui/priority_filter_bottom_sheet.dart';
 import '../../../features/task/presentation/filter_task/ui/start_date_filter_bottom_sheet.dart';
 import '../../../features/task/presentation/view_task/ui/sheet_shell.dart';
-import '../../constants/auth_status.dart';
 import '../app/animation/router_anim.dart';
 
 int i = 0;
@@ -80,7 +83,8 @@ final goRouterProvider = Provider<GoRouter>((ref) {
     initialLocation: '/',
     refreshListenable: routerNotifier,
     redirect: (context, state) {
-      final authState = ref.read(authControllerProvider);
+      ref.read(notificationProvider.notifier).initialize();
+      /*final authState = ref.read(authControllerProvider);
       logger.i(
         'state.matchedLocation: ${state.matchedLocation} and authStatus: ${authState.status}',
       );
@@ -101,10 +105,11 @@ final goRouterProvider = Provider<GoRouter>((ref) {
         logger.i('status4: $status');
         return '/home';
       }
-      return null;
+      return null;*/
     },
     routes: [
-      GoRoute(path: '/', builder: (context, state) => const SplashPage()),
+      // GoRoute(path: '/', builder: (context, state) => const SplashPage()),
+      GoRoute(path: '/', builder: (context, state) => const TestPage()),
       GoRoute(
         path: '/category',
         name: RouteName.category,
@@ -237,6 +242,21 @@ final goRouterProvider = Provider<GoRouter>((ref) {
                       );
                     },
                   ),
+                  GoRoute(
+                    path: 'edit',
+                    pageBuilder: (context, state) {
+                      final extra = state.extra as Map<String, dynamic>;
+                      return PagedSheetPage(
+                        transitionsBuilder: _fadeAndSlideTransition,
+                        child: EditSubtaskTitleBottomSheet(
+                          entity: extra['entity'] as SubtaskEntity,
+                          onConfirm:
+                              extra['onConfirm']
+                                  as void Function(SubtaskEntity),
+                        ),
+                      );
+                    },
+                  ),
                 ],
               ),
             ],
@@ -299,6 +319,33 @@ final goRouterProvider = Provider<GoRouter>((ref) {
               return PagedSheetPage(
                 transitionsBuilder: _fadeAndSlideTransition,
                 child: EditDueTimeBottomSheet(),
+              );
+            },
+          ),
+          GoRoute(
+            path: '/edit_reminder',
+            pageBuilder: (context, state) {
+              final extra = state.extra as Map<String, dynamic>;
+              return PagedSheetPage(
+                transitionsBuilder: _fadeAndSlideTransition,
+                child: TaskReminderPicker(
+                  title: extra['title'] as String,
+                  dueDate: extra['dueDate'] as DateTime?,
+                  initialRepeatType:
+                      extra['initialRepeatType'] as ReminderRepeatType?,
+                  initialReminderType:
+                      extra['initialReminder'] as TaskReminderType?,
+                  initialReminderOffset: extra['initialReminderOffset'] as int?,
+                  initialReminderAt: extra['initialReminderAt'] as DateTime?,
+                  onConfirm:
+                      extra['onConfirm']
+                          as Function({
+                            TaskReminderType reminderType,
+                            int? reminderOffset,
+                            DateTime? reminderAt,
+                            ReminderRepeatType repeatType,
+                          }),
+                ),
               );
             },
           ),

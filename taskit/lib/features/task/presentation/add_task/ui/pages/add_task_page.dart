@@ -6,6 +6,7 @@ import 'package:taskit/features/task/presentation/add_task/controller/add_task_c
 import 'package:taskit/features/task/presentation/add_task/state/add_task_state.dart';
 import 'package:taskit/features/task/presentation/add_task/ui/widgets/task_description_input.dart';
 import 'package:taskit/features/task/presentation/add_task/ui/widgets/task_priority_picker.dart';
+import 'package:taskit/features/task/presentation/add_task/ui/widgets/task_reminder_section.dart';
 import 'package:taskit/features/task/presentation/add_task/ui/widgets/task_subtask_section.dart';
 import 'package:taskit/features/task/presentation/add_task/ui/widgets/task_title_input.dart';
 import 'package:taskit/shared/log/logger_provider.dart';
@@ -68,14 +69,9 @@ class _AddTaskPageState extends ConsumerState<AddTaskPage> {
             leading: context.canPop()
                 ? IconButton(
                     onPressed: () => Navigator.pop(context),
-                    icon: Icon(Icons.arrow_back, color: color.onPrimary),
+                    icon: Icon(Icons.arrow_back),
                   )
                 : null,
-            backgroundColor: color.primary,
-            elevation: 3,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.vertical(bottom: Radius.circular(10)),
-            ),
             title: Text('Add Task', style: text.headlineMedium),
           ),
           body: SafeArea(
@@ -157,6 +153,7 @@ class _AddTaskPageState extends ConsumerState<AddTaskPage> {
                         ],
                       ),
                     TaskDueDateTimePicker(),
+                    TaskReminderSection(),
                     TaskDescriptionInput(
                       controller: _descriptionController,
                       focusNode: _focusDescriptionNode,

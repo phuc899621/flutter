@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:taskit/shared/widget/custom_taskit_button.dart';
 
 import '../../controller/view_task_controller.dart';
 
@@ -52,27 +53,15 @@ class _EditTitleBottomSheetState extends ConsumerState<EditTitleBottomSheet> {
                       ),
                     ),
                   ),
-                  ElevatedButton(
-                    style: ButtonStyle(
-                      backgroundColor: WidgetStatePropertyAll(color.primary),
-                      shape: WidgetStatePropertyAll(
-                        RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                      ),
-                    ),
+                  TaskitButton(
+                    text: 'Save',
                     onPressed: () {
-                      //validate
                       if (!_formKey.currentState!.validate()) return;
                       ref
                           .read(viewTaskControllerProvider.notifier)
                           .updateTitle(_titleController.text);
                       context.pop();
                     },
-                    child: Text(
-                      'Save',
-                      style: TextStyle(color: color.onPrimary),
-                    ),
                   ),
                 ],
               ),

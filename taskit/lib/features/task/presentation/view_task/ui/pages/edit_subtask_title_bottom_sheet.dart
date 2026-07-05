@@ -7,8 +7,13 @@ import '../../controller/view_task_controller.dart';
 
 class EditSubtaskTitleBottomSheet extends ConsumerStatefulWidget {
   final SubtaskEntity entity;
+  final void Function(SubtaskEntity)? onConfirm;
 
-  const EditSubtaskTitleBottomSheet({super.key, required this.entity});
+  const EditSubtaskTitleBottomSheet({
+    super.key,
+    required this.entity,
+    this.onConfirm,
+  });
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() =>
@@ -35,114 +40,126 @@ class _EditSubtaskTitleBottomSheetState
         .of(context)
         .colorScheme;
     return SafeArea(
-      child: SingleChildScrollView(
-        padding: const EdgeInsets.all(12),
-        child: Form(
-          key: _formKey,
-          child: Column(
-            mainAxisSize: MainAxisSize.max,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  IconButton(
-                    onPressed: context.pop,
-                    icon: Icon(Icons.arrow_back_rounded),
-                  ),
-                  Center(
-                    child: Text(
-                      'Edit Title',
-                      style: text.titleMedium?.copyWith(
-                        fontWeight: FontWeight.w500,
-                        color: color.onSurface,
-                      ),
+      child: Padding(
+        padding: EdgeInsets.only(
+          bottom: MediaQuery
+              .of(context)
+              .viewInsets
+              .bottom,
+        ),
+        child: Container(
+          padding: const EdgeInsets.all(12),
+          decoration: BoxDecoration(
+            color: color.surface,
+            borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
+          ),
+          child: Form(
+            key: _formKey,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    IconButton(
+                      onPressed: context.pop,
+                      icon: Icon(Icons.arrow_back_rounded),
                     ),
-                  ),
-                  ElevatedButton(
-                    style: ButtonStyle(
-                      backgroundColor: WidgetStatePropertyAll(color.primary),
-                      shape: WidgetStatePropertyAll(
-                        RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
+                    Center(
+                      child: Text(
+                        'Edit Title',
+                        style: text.titleMedium?.copyWith(
+                          fontWeight: FontWeight.w500,
+                          color: color.onSurface,
                         ),
                       ),
                     ),
-                    onPressed: () {
-                      if (!_formKey.currentState!.validate()) return;
-                      ref
-                          .read(viewTaskControllerProvider.notifier)
-                          .updateSubtaskTitle(widget.entity.copyWith(title: _titleController.text));
-                      context.pop();
-                    },
-                    child: Text(
-                      'Save',
-                      style: TextStyle(color: color.onPrimary),
+                    ElevatedButton(
+                      style: ButtonStyle(
+                        backgroundColor: WidgetStatePropertyAll(color.primary),
+                        shape: WidgetStatePropertyAll(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                        ),
+                      ),
+                      onPressed: () {
+                        if (!_formKey.currentState!.validate()) return;
+                        widget.onConfirm?.call(
+                          widget.entity.copyWith(title: _titleController.text),
+                        );
+                        context.pop();
+                      },
+                      child: Text(
+                        'Save',
+                        style: TextStyle(color: color.onPrimary),
+                      ),
                     ),
-                  ),
-                ],
-              ),
-              TextFormField(
-                maxLines: 1,
-                maxLength: 35,
-                autofocus: true,
-                onTapOutside: (event) {
-                  FocusScope.of(context).unfocus();
-                },
-                controller: _titleController,
-                validator: (value) {
-                  final title = value?.trim() ?? '';
-                  return ref
-                      .read(viewTaskControllerProvider.notifier)
-                      .validateSubtaskInput(title);
-                },
-                decoration: InputDecoration(
-                  hint: Text(
-                    'Title',
-                    style: text.titleLarge?.copyWith(
-                      fontWeight: FontWeight.w400,
-                      color: color.onSurfaceVariant,
+                  ],
+                ),
+                TextFormField(
+                  maxLines: 1,
+                  maxLength: 35,
+                  autofocus: true,
+                  onTapOutside: (event) {
+                    FocusScope.of(context).unfocus();
+                  },
+                  controller: _titleController,
+                  validator: (value) {
+                    final title = value?.trim() ?? '';
+                    return ref
+                        .read(viewTaskControllerProvider.notifier)
+                        .validateSubtaskInput(title);
+                  },
+                  decoration: InputDecoration(
+                    hint: Text(
+                      'Title',
+                      style: text.titleLarge?.copyWith(
+                        fontWeight: FontWeight.w400,
+                        color: color.onSurfaceVariant,
+                      ),
                     ),
+                    counterText: '',
+                    border: OutlineInputBorder(borderSide: BorderSide.none),
                   ),
-                  counterText: '',
-                  border: OutlineInputBorder(borderSide: BorderSide.none),
+                  style: text.titleLarge?.copyWith(
+                    fontWeight: FontWeight.w500,
+                    color: color.onSurface,
+                  ),
                 ),
-                style: text.titleLarge?.copyWith(
-                  fontWeight: FontWeight.w500,
-                  color: color.onSurface,
-                ),
-              ),
-              SizedBox(height: 20),
-              // TextFormField(
-              //   maxLines: 2,
-              //   maxLength: 50,
-              //   autofocus: false,
-              //   onTapOutside: (event) {
-              //     FocusScope.of(context).unfocus();
-              //   },
-              //   controller: _descriptionController,
-              //   decoration: InputDecoration(
-              //     hint: Text(
-              //       'Description',
-              //       style: text.bodyMedium?.copyWith(
-              //         fontWeight: FontWeight.w400,
-              //         color: color.onSurfaceVariant,
-              //       ),
-              //     ),
-              //     counterText: '',
-              //     border: OutlineInputBorder(borderSide: BorderSide.none),
-              //   ),
-              //   style: text.bodyMedium?.copyWith(
-              //     fontWeight: FontWeight.w400,
-              //     color: color.onSurface,
-              //   ),
-              //   onChanged: (value) {
-              //     logger.i('on description change: $value');
-              //     ref
-              //         .read(viewTaskControllerProvider.notifier)
-              //         .updateDescription(value);
-              //   },
-              // ),
-            ],
+                SizedBox(height: 20),
+                // TextFormField(
+                //   maxLines: 2,
+                //   maxLength: 50,
+                //   autofocus: false,
+                //   onTapOutside: (event) {
+                //     FocusScope.of(context).unfocus();
+                //   },
+                //   controller: _descriptionController,
+                //   decoration: InputDecoration(
+                //     hint: Text(
+                //       'Description',
+                //       style: text.bodyMedium?.copyWith(
+                //         fontWeight: FontWeight.w400,
+                //         color: color.onSurfaceVariant,
+                //       ),
+                //     ),
+                //     counterText: '',
+                //     border: OutlineInputBorder(borderSide: BorderSide.none),
+                //   ),
+                //   style: text.bodyMedium?.copyWith(
+                //     fontWeight: FontWeight.w400,
+                //     color: color.onSurface,
+                //   ),
+                //   onChanged: (value) {
+                //     logger.i('on description change: $value');
+                //     ref
+                //         .read(viewTaskControllerProvider.notifier)
+                //         .updateDescription(value);
+                //   },
+                // ),
+              ],
+            ),
           ),
         ),
       ),

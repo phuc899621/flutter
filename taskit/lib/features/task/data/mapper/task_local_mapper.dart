@@ -82,6 +82,9 @@ extension TaskDetailMapper on TaskDetailTableData {
     priority: TaskPriority.fromString(data.priority),
     userLocalId: data.userLocalId,
     reminderAt: data.reminderAt?.toLocal(),
+    reminderType: data.reminderType,
+    reminderOffset: data.reminderOffset,
+    repeatType: data.repeatType,
     synced: data.synced,
     status: data.completedAt != null
         ? TaskStatus.completed
