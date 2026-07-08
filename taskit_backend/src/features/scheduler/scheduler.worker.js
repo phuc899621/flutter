@@ -9,7 +9,7 @@ export const schedulerWorker = new Worker(
   async (job) => {
     console.log(`Processing job: ${job.name}`);
     const { taskId } = job.data;
-    const task = await TaskServices.findById(taskId);
+    const task = await TaskServices.getTaskWithoutSubtasks(taskId);
     if (!task) return;
     const { title, dueDate } = task;
     const fcmTokens = await UserDeviceService.getFcmTokensByUserId({

@@ -205,6 +205,13 @@ class TaskServices {
       throw new ServerError(`Get task error: ${e.message}`);
     }
   }
+  static async getTaskWithoutSubtasks(taskId) {
+    const task = await TaskModel.findOne({
+      _id: taskId,
+      deleted: false,
+    });
+    return task?.toObject();
+  }
 
   static async syncTasks(userId, sessionId, tasks) {
     try {
