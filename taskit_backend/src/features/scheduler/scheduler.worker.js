@@ -25,7 +25,7 @@ export const schedulerWorker = new Worker(
     }
     await getMessaging()
       .sendEachForMulticast({
-        token: validTokens,
+        tokens: validTokens,
         notification: {
           title,
           body: `You have a task due on ${dueDate}`,
