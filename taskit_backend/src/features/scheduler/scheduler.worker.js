@@ -15,17 +15,14 @@ export const schedulerWorker = new Worker(
     const fcmTokens = await UserDeviceService.getFcmTokensByUserId({
       userId: task.userId,
     });
-    const validTokens = fcmTokens
-      .map((item) => item.fcmToken)
-      .filter((token) => token?.trim());
-    console.log("validTokens: ", validTokens);
-    if (validTokens.length === 0) {
+    console.log("validTokens: ", fcmTokens);
+    if (fcmTokens.length === 0) {
       console.log("No valid FCM tokens");
       return;
     }
     await getMessaging()
       .sendEachForMulticast({
-        tokens: validTokens,
+        tokens: fcmTokens,
         notification: {
           title,
           body: `You have a task due on ${dueDate}`,

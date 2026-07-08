@@ -67,7 +67,9 @@ export default class UserDeviceService {
         { userId },
         { fcmToken: 1, _id: 0 },
       );
-      return devices.map((device) => device.fcmToken);
+      return devices
+        .map((device) => device.fcmToken)
+        .filter((token) => token != null);
     } catch (e) {
       if (e instanceof BaseError) throw e;
       throw new ServerError(`Get devices by user id ServerError: ${e.message}`);
