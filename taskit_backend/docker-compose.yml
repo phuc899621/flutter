@@ -47,7 +47,7 @@ services:
       - .env
     restart: unless-stopped
   redis:
-    image: redis:8
+    image: redis:7
     command: redis-server /usr/local/etc/redis/redis.conf
     volumes:
       - redis_data:/data
