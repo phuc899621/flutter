@@ -11,6 +11,9 @@ _AddTaskReq _$AddTaskReqFromJson(Map<String, dynamic> json) => _AddTaskReq(
   localId: (json['localId'] as num).toInt(),
   description: json['description'] as String,
   categoryId: json['categoryId'] as String?,
+  reminderType: json['reminderType'] as String,
+  reminderOffset: (json['reminderOffset'] as num?)?.toInt(),
+  repeatType: json['repeatType'] as String,
   reminderAt: json['reminderAt'] == null
       ? null
       : DateTime.parse(json['reminderAt'] as String),
@@ -31,6 +34,9 @@ Map<String, dynamic> _$AddTaskReqToJson(_AddTaskReq instance) =>
       'localId': instance.localId,
       'description': instance.description,
       'categoryId': instance.categoryId,
+      'reminderType': instance.reminderType,
+      'reminderOffset': instance.reminderOffset,
+      'repeatType': instance.repeatType,
       'reminderAt': instance.reminderAt?.toIso8601String(),
       'priority': instance.priority,
       'dueDate': instance.dueDate?.toIso8601String(),

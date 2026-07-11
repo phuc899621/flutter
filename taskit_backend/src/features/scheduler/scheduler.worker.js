@@ -15,6 +15,10 @@ export const schedulerWorker = new Worker(
     const fcmTokens = await UserDeviceService.getFcmTokensByUserId({
       userId: task.userId,
     });
+    let notificationBody =
+      dueDate != null
+        ? `You have a task due on ${dueDate}`
+        : `Don't forget to complete your task!`;
     console.log("validTokens: ", fcmTokens);
     if (fcmTokens.length === 0) {
       console.log("No valid FCM tokens");
@@ -25,7 +29,7 @@ export const schedulerWorker = new Worker(
         tokens: fcmTokens,
         notification: {
           title,
-          body: `You have a task due on ${dueDate}`,
+          body: notificationBody,
         },
         android: {
           priority: "high",

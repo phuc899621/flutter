@@ -45,7 +45,7 @@ class TaskSyncService {
 
   void init() {
     if (_isInit) return;
-    logger.i('task socket listen');
+    logger.i('[TaskSyncService] Task socket listen');
     _socketService.on('task_changed', _handleTaskChanged);
     _isInit = true;
   }
@@ -71,15 +71,24 @@ class TaskSyncService {
 
     _isSyncing = true;
     try {
-      logger.i('[TaskSyncService] Starting sync cycle. Triggered by: $caller');
-      logger.t('[TaskSyncService] Step 1: Pushing unsynced local data...');
-      await _taskRepo.pushAllUnsynced(userLocalId);
+      int retryCount = 0;
+      const maxRetries = 2;
+      bool success = false;
 
-      logger.t('[TaskSyncService] Step 2: Pulling remote data...');
-      await _taskRepo.pullTasks(userLocalId);
-
-      _lastSyncTime = DateTime.now().toUtc();
-      logger.i('[TaskSyncService] Sync cycle completed successfully.');
+      while (retryCount < maxRetries && !success) {
+        try {
+          logger.i(
+            '[TaskSyncService] Starting sync cycle. Triggered by: $caller',
+          );
+          await _taskRepo.pushAllUnsynced(userLocalId);
+          await _taskRepo.pullTasks(userLocalId);
+          success = true;
+        } catch (e) {
+          retryCount++;
+          if (retryCount >= maxRetries) rethrow;
+          await Future.delayed(Duration(seconds: 2));
+        }
+      }
     } catch (e, s) {
       logger.e(
         '[TaskSyncService] Sync failed for user $userLocalId',
@@ -87,6 +96,7 @@ class TaskSyncService {
         stackTrace: s,
       );
     } finally {
+      _lastSyncTime = DateTime.now().toUtc();
       _isSyncing = false;
     }
   }

@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$AddTaskReq {
 
- String get title; int get localId; String get description; String? get categoryId; DateTime? get reminderAt; String get priority; DateTime? get dueDate; bool get hasTime; String get status; List<AddSubtaskReq> get subtasks;
+ String get title; int get localId; String get description; String? get categoryId; String get reminderType; int? get reminderOffset; String get repeatType; DateTime? get reminderAt; String get priority; DateTime? get dueDate; bool get hasTime; String get status; List<AddSubtaskReq> get subtasks;
 /// Create a copy of AddTaskReq
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -28,16 +28,16 @@ $AddTaskReqCopyWith<AddTaskReq> get copyWith => _$AddTaskReqCopyWithImpl<AddTask
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is AddTaskReq&&(identical(other.title, title) || other.title == title)&&(identical(other.localId, localId) || other.localId == localId)&&(identical(other.description, description) || other.description == description)&&(identical(other.categoryId, categoryId) || other.categoryId == categoryId)&&(identical(other.reminderAt, reminderAt) || other.reminderAt == reminderAt)&&(identical(other.priority, priority) || other.priority == priority)&&(identical(other.dueDate, dueDate) || other.dueDate == dueDate)&&(identical(other.hasTime, hasTime) || other.hasTime == hasTime)&&(identical(other.status, status) || other.status == status)&&const DeepCollectionEquality().equals(other.subtasks, subtasks));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is AddTaskReq&&(identical(other.title, title) || other.title == title)&&(identical(other.localId, localId) || other.localId == localId)&&(identical(other.description, description) || other.description == description)&&(identical(other.categoryId, categoryId) || other.categoryId == categoryId)&&(identical(other.reminderType, reminderType) || other.reminderType == reminderType)&&(identical(other.reminderOffset, reminderOffset) || other.reminderOffset == reminderOffset)&&(identical(other.repeatType, repeatType) || other.repeatType == repeatType)&&(identical(other.reminderAt, reminderAt) || other.reminderAt == reminderAt)&&(identical(other.priority, priority) || other.priority == priority)&&(identical(other.dueDate, dueDate) || other.dueDate == dueDate)&&(identical(other.hasTime, hasTime) || other.hasTime == hasTime)&&(identical(other.status, status) || other.status == status)&&const DeepCollectionEquality().equals(other.subtasks, subtasks));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,title,localId,description,categoryId,reminderAt,priority,dueDate,hasTime,status,const DeepCollectionEquality().hash(subtasks));
+int get hashCode => Object.hash(runtimeType,title,localId,description,categoryId,reminderType,reminderOffset,repeatType,reminderAt,priority,dueDate,hasTime,status,const DeepCollectionEquality().hash(subtasks));
 
 @override
 String toString() {
-  return 'AddTaskReq(title: $title, localId: $localId, description: $description, categoryId: $categoryId, reminderAt: $reminderAt, priority: $priority, dueDate: $dueDate, hasTime: $hasTime, status: $status, subtasks: $subtasks)';
+  return 'AddTaskReq(title: $title, localId: $localId, description: $description, categoryId: $categoryId, reminderType: $reminderType, reminderOffset: $reminderOffset, repeatType: $repeatType, reminderAt: $reminderAt, priority: $priority, dueDate: $dueDate, hasTime: $hasTime, status: $status, subtasks: $subtasks)';
 }
 
 
@@ -48,7 +48,7 @@ abstract mixin class $AddTaskReqCopyWith<$Res>  {
   factory $AddTaskReqCopyWith(AddTaskReq value, $Res Function(AddTaskReq) _then) = _$AddTaskReqCopyWithImpl;
 @useResult
 $Res call({
- String title, int localId, String description, String? categoryId, DateTime? reminderAt, String priority, DateTime? dueDate, bool hasTime, String status, List<AddSubtaskReq> subtasks
+ String title, int localId, String description, String? categoryId, String reminderType, int? reminderOffset, String repeatType, DateTime? reminderAt, String priority, DateTime? dueDate, bool hasTime, String status, List<AddSubtaskReq> subtasks
 });
 
 
@@ -65,13 +65,16 @@ class _$AddTaskReqCopyWithImpl<$Res>
 
 /// Create a copy of AddTaskReq
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? title = null,Object? localId = null,Object? description = null,Object? categoryId = freezed,Object? reminderAt = freezed,Object? priority = null,Object? dueDate = freezed,Object? hasTime = null,Object? status = null,Object? subtasks = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? title = null,Object? localId = null,Object? description = null,Object? categoryId = freezed,Object? reminderType = null,Object? reminderOffset = freezed,Object? repeatType = null,Object? reminderAt = freezed,Object? priority = null,Object? dueDate = freezed,Object? hasTime = null,Object? status = null,Object? subtasks = null,}) {
   return _then(_self.copyWith(
 title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
 as String,localId: null == localId ? _self.localId : localId // ignore: cast_nullable_to_non_nullable
 as int,description: null == description ? _self.description : description // ignore: cast_nullable_to_non_nullable
 as String,categoryId: freezed == categoryId ? _self.categoryId : categoryId // ignore: cast_nullable_to_non_nullable
-as String?,reminderAt: freezed == reminderAt ? _self.reminderAt : reminderAt // ignore: cast_nullable_to_non_nullable
+as String?,reminderType: null == reminderType ? _self.reminderType : reminderType // ignore: cast_nullable_to_non_nullable
+as String,reminderOffset: freezed == reminderOffset ? _self.reminderOffset : reminderOffset // ignore: cast_nullable_to_non_nullable
+as int?,repeatType: null == repeatType ? _self.repeatType : repeatType // ignore: cast_nullable_to_non_nullable
+as String,reminderAt: freezed == reminderAt ? _self.reminderAt : reminderAt // ignore: cast_nullable_to_non_nullable
 as DateTime?,priority: null == priority ? _self.priority : priority // ignore: cast_nullable_to_non_nullable
 as String,dueDate: freezed == dueDate ? _self.dueDate : dueDate // ignore: cast_nullable_to_non_nullable
 as DateTime?,hasTime: null == hasTime ? _self.hasTime : hasTime // ignore: cast_nullable_to_non_nullable
@@ -162,10 +165,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String title,  int localId,  String description,  String? categoryId,  DateTime? reminderAt,  String priority,  DateTime? dueDate,  bool hasTime,  String status,  List<AddSubtaskReq> subtasks)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String title,  int localId,  String description,  String? categoryId,  String reminderType,  int? reminderOffset,  String repeatType,  DateTime? reminderAt,  String priority,  DateTime? dueDate,  bool hasTime,  String status,  List<AddSubtaskReq> subtasks)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _AddTaskReq() when $default != null:
-return $default(_that.title,_that.localId,_that.description,_that.categoryId,_that.reminderAt,_that.priority,_that.dueDate,_that.hasTime,_that.status,_that.subtasks);case _:
+return $default(_that.title,_that.localId,_that.description,_that.categoryId,_that.reminderType,_that.reminderOffset,_that.repeatType,_that.reminderAt,_that.priority,_that.dueDate,_that.hasTime,_that.status,_that.subtasks);case _:
   return orElse();
 
 }
@@ -183,10 +186,10 @@ return $default(_that.title,_that.localId,_that.description,_that.categoryId,_th
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String title,  int localId,  String description,  String? categoryId,  DateTime? reminderAt,  String priority,  DateTime? dueDate,  bool hasTime,  String status,  List<AddSubtaskReq> subtasks)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String title,  int localId,  String description,  String? categoryId,  String reminderType,  int? reminderOffset,  String repeatType,  DateTime? reminderAt,  String priority,  DateTime? dueDate,  bool hasTime,  String status,  List<AddSubtaskReq> subtasks)  $default,) {final _that = this;
 switch (_that) {
 case _AddTaskReq():
-return $default(_that.title,_that.localId,_that.description,_that.categoryId,_that.reminderAt,_that.priority,_that.dueDate,_that.hasTime,_that.status,_that.subtasks);case _:
+return $default(_that.title,_that.localId,_that.description,_that.categoryId,_that.reminderType,_that.reminderOffset,_that.repeatType,_that.reminderAt,_that.priority,_that.dueDate,_that.hasTime,_that.status,_that.subtasks);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -203,10 +206,10 @@ return $default(_that.title,_that.localId,_that.description,_that.categoryId,_th
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String title,  int localId,  String description,  String? categoryId,  DateTime? reminderAt,  String priority,  DateTime? dueDate,  bool hasTime,  String status,  List<AddSubtaskReq> subtasks)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String title,  int localId,  String description,  String? categoryId,  String reminderType,  int? reminderOffset,  String repeatType,  DateTime? reminderAt,  String priority,  DateTime? dueDate,  bool hasTime,  String status,  List<AddSubtaskReq> subtasks)?  $default,) {final _that = this;
 switch (_that) {
 case _AddTaskReq() when $default != null:
-return $default(_that.title,_that.localId,_that.description,_that.categoryId,_that.reminderAt,_that.priority,_that.dueDate,_that.hasTime,_that.status,_that.subtasks);case _:
+return $default(_that.title,_that.localId,_that.description,_that.categoryId,_that.reminderType,_that.reminderOffset,_that.repeatType,_that.reminderAt,_that.priority,_that.dueDate,_that.hasTime,_that.status,_that.subtasks);case _:
   return null;
 
 }
@@ -218,13 +221,16 @@ return $default(_that.title,_that.localId,_that.description,_that.categoryId,_th
 @JsonSerializable()
 
 class _AddTaskReq implements AddTaskReq {
-  const _AddTaskReq({required this.title, required this.localId, required this.description, this.categoryId, this.reminderAt, required this.priority, this.dueDate, required this.hasTime, required this.status, required final  List<AddSubtaskReq> subtasks}): _subtasks = subtasks;
+  const _AddTaskReq({required this.title, required this.localId, required this.description, this.categoryId, required this.reminderType, this.reminderOffset, required this.repeatType, this.reminderAt, required this.priority, this.dueDate, required this.hasTime, required this.status, required final  List<AddSubtaskReq> subtasks}): _subtasks = subtasks;
   factory _AddTaskReq.fromJson(Map<String, dynamic> json) => _$AddTaskReqFromJson(json);
 
 @override final  String title;
 @override final  int localId;
 @override final  String description;
 @override final  String? categoryId;
+@override final  String reminderType;
+@override final  int? reminderOffset;
+@override final  String repeatType;
 @override final  DateTime? reminderAt;
 @override final  String priority;
 @override final  DateTime? dueDate;
@@ -251,16 +257,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _AddTaskReq&&(identical(other.title, title) || other.title == title)&&(identical(other.localId, localId) || other.localId == localId)&&(identical(other.description, description) || other.description == description)&&(identical(other.categoryId, categoryId) || other.categoryId == categoryId)&&(identical(other.reminderAt, reminderAt) || other.reminderAt == reminderAt)&&(identical(other.priority, priority) || other.priority == priority)&&(identical(other.dueDate, dueDate) || other.dueDate == dueDate)&&(identical(other.hasTime, hasTime) || other.hasTime == hasTime)&&(identical(other.status, status) || other.status == status)&&const DeepCollectionEquality().equals(other._subtasks, _subtasks));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _AddTaskReq&&(identical(other.title, title) || other.title == title)&&(identical(other.localId, localId) || other.localId == localId)&&(identical(other.description, description) || other.description == description)&&(identical(other.categoryId, categoryId) || other.categoryId == categoryId)&&(identical(other.reminderType, reminderType) || other.reminderType == reminderType)&&(identical(other.reminderOffset, reminderOffset) || other.reminderOffset == reminderOffset)&&(identical(other.repeatType, repeatType) || other.repeatType == repeatType)&&(identical(other.reminderAt, reminderAt) || other.reminderAt == reminderAt)&&(identical(other.priority, priority) || other.priority == priority)&&(identical(other.dueDate, dueDate) || other.dueDate == dueDate)&&(identical(other.hasTime, hasTime) || other.hasTime == hasTime)&&(identical(other.status, status) || other.status == status)&&const DeepCollectionEquality().equals(other._subtasks, _subtasks));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,title,localId,description,categoryId,reminderAt,priority,dueDate,hasTime,status,const DeepCollectionEquality().hash(_subtasks));
+int get hashCode => Object.hash(runtimeType,title,localId,description,categoryId,reminderType,reminderOffset,repeatType,reminderAt,priority,dueDate,hasTime,status,const DeepCollectionEquality().hash(_subtasks));
 
 @override
 String toString() {
-  return 'AddTaskReq(title: $title, localId: $localId, description: $description, categoryId: $categoryId, reminderAt: $reminderAt, priority: $priority, dueDate: $dueDate, hasTime: $hasTime, status: $status, subtasks: $subtasks)';
+  return 'AddTaskReq(title: $title, localId: $localId, description: $description, categoryId: $categoryId, reminderType: $reminderType, reminderOffset: $reminderOffset, repeatType: $repeatType, reminderAt: $reminderAt, priority: $priority, dueDate: $dueDate, hasTime: $hasTime, status: $status, subtasks: $subtasks)';
 }
 
 
@@ -271,7 +277,7 @@ abstract mixin class _$AddTaskReqCopyWith<$Res> implements $AddTaskReqCopyWith<$
   factory _$AddTaskReqCopyWith(_AddTaskReq value, $Res Function(_AddTaskReq) _then) = __$AddTaskReqCopyWithImpl;
 @override @useResult
 $Res call({
- String title, int localId, String description, String? categoryId, DateTime? reminderAt, String priority, DateTime? dueDate, bool hasTime, String status, List<AddSubtaskReq> subtasks
+ String title, int localId, String description, String? categoryId, String reminderType, int? reminderOffset, String repeatType, DateTime? reminderAt, String priority, DateTime? dueDate, bool hasTime, String status, List<AddSubtaskReq> subtasks
 });
 
 
@@ -288,13 +294,16 @@ class __$AddTaskReqCopyWithImpl<$Res>
 
 /// Create a copy of AddTaskReq
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? title = null,Object? localId = null,Object? description = null,Object? categoryId = freezed,Object? reminderAt = freezed,Object? priority = null,Object? dueDate = freezed,Object? hasTime = null,Object? status = null,Object? subtasks = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? title = null,Object? localId = null,Object? description = null,Object? categoryId = freezed,Object? reminderType = null,Object? reminderOffset = freezed,Object? repeatType = null,Object? reminderAt = freezed,Object? priority = null,Object? dueDate = freezed,Object? hasTime = null,Object? status = null,Object? subtasks = null,}) {
   return _then(_AddTaskReq(
 title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
 as String,localId: null == localId ? _self.localId : localId // ignore: cast_nullable_to_non_nullable
 as int,description: null == description ? _self.description : description // ignore: cast_nullable_to_non_nullable
 as String,categoryId: freezed == categoryId ? _self.categoryId : categoryId // ignore: cast_nullable_to_non_nullable
-as String?,reminderAt: freezed == reminderAt ? _self.reminderAt : reminderAt // ignore: cast_nullable_to_non_nullable
+as String?,reminderType: null == reminderType ? _self.reminderType : reminderType // ignore: cast_nullable_to_non_nullable
+as String,reminderOffset: freezed == reminderOffset ? _self.reminderOffset : reminderOffset // ignore: cast_nullable_to_non_nullable
+as int?,repeatType: null == repeatType ? _self.repeatType : repeatType // ignore: cast_nullable_to_non_nullable
+as String,reminderAt: freezed == reminderAt ? _self.reminderAt : reminderAt // ignore: cast_nullable_to_non_nullable
 as DateTime?,priority: null == priority ? _self.priority : priority // ignore: cast_nullable_to_non_nullable
 as String,dueDate: freezed == dueDate ? _self.dueDate : dueDate // ignore: cast_nullable_to_non_nullable
 as DateTime?,hasTime: null == hasTime ? _self.hasTime : hasTime // ignore: cast_nullable_to_non_nullable

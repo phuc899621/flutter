@@ -45,7 +45,7 @@ class CategorySyncService {
 
   void init() {
     if (_isInit) return;
-    logger.i('category socket listen');
+    logger.i('[CategorySyncService] category socket listen');
     _socketService.on('category_changed', _handleCategoryChanged);
     _isInit = true;
   }
@@ -71,17 +71,28 @@ class CategorySyncService {
 
     _isSyncing = true;
     try {
+      int retryCount = 0;
+      const maxRetries = 2;
+      bool success = false;
       logger.i(
         '[CategorySyncService] Starting sync cycle. Triggered by: $caller',
       );
-      logger.t('[CategorySyncService] Step 1: Pushing unsynced local data...');
-      await _categoryRepo.pushAllUnsynced(userLocalId);
-
-      logger.t('[CategorySyncService] Step 2: Pulling remote data...');
-      await _categoryRepo.pullCategories(userLocalId);
-
-      _lastSyncTime = DateTime.now().toUtc();
-      logger.i('[CategorySyncService] Sync cycle completed successfully.');
+      while (retryCount < maxRetries && !success) {
+        try {
+          await _categoryRepo.pushAllUnsynced(userLocalId);
+          await _categoryRepo.pullCategories(userLocalId);
+          success = true;
+        } catch (e, s) {
+          logger.e(
+            '[CategorySyncService] Sync failed for user $userLocalId',
+            error: e,
+            stackTrace: s,
+          );
+          retryCount++;
+          if (retryCount >= maxRetries) rethrow;
+          await Future.delayed(const Duration(seconds: 2));
+        }
+      }
     } catch (e, s) {
       logger.e(
         '[CategorySyncService] Sync failed for user $userLocalId',
@@ -89,6 +100,7 @@ class CategorySyncService {
         stackTrace: s,
       );
     } finally {
+      _lastSyncTime = DateTime.now().toUtc();
       _isSyncing = false;
     }
   }

@@ -61,7 +61,7 @@ class AuthInterceptor extends Interceptor {
         return handler.next(err);
       }
 
-      err.requestOptions.extra['isRetry'] == true;
+      err.requestOptions.extra['isRetry'] = true;
       if (!onInternetChecker()) {
         return handler.next(err);
       }

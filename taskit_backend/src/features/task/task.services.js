@@ -13,6 +13,7 @@ import {
 } from "../../shared/utils/error.js";
 import TaskSyncService from "./task.sync.service.js";
 import UserService from "../user/user.service.js";
+import { SchedulerService } from "../scheduler/scheduler.service.js";
 
 class TaskServices {
   //#region CREATE
@@ -56,6 +57,7 @@ class TaskServices {
         })),
       };
       TaskSyncService.notifyCreate(data.userId, data.sessionId, result);
+      await SchedulerService.scheduleTask(taskCreated);
       return result;
     } catch (e) {
       await session.abortTransaction();
@@ -485,18 +487,17 @@ class TaskServices {
         }
       }
 
-      const result = (
-        await TaskModel.findByIdAndUpdate(
-          taskId,
-          { $set: updateData },
-          { new: true, session },
-        )
-      ).toObject();
+      const result = await TaskModel.findByIdAndUpdate(
+        taskId,
+        { $set: updateData },
+        { new: true, session },
+      );
       await session.commitTransaction();
-      TaskSyncService.notifyUpdate(userId, sessionId, result);
+      TaskSyncService.notifyUpdate(userId, sessionId, result.toObject());
+      await SchedulerService.handleTaskUpdated(result);
       return {
         localId: updateData.localId,
-        ...result,
+        ...result.toObject(),
       };
     } catch (e) {
       await session.abortTransaction();

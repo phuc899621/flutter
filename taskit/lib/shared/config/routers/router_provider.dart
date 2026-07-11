@@ -33,6 +33,7 @@ import 'package:taskit/shared/config/routers/router_name.dart';
 import 'package:taskit/shared/log/logger_provider.dart';
 import 'package:taskit/test_page.dart';
 
+import '../../../features/auth/presentation/auth/ui/splash_page.dart';
 import '../../../features/auth/presentation/forgot_password/ui/forgot_password_page.dart';
 import '../../../features/auth/presentation/forgot_password/ui/forgot_password_verify_page.dart';
 import '../../../features/auth/presentation/login/ui/login_page.dart';
@@ -43,6 +44,7 @@ import '../../../features/task/presentation/filter_task/ui/date_filter_bottom_sh
 import '../../../features/task/presentation/filter_task/ui/priority_filter_bottom_sheet.dart';
 import '../../../features/task/presentation/filter_task/ui/start_date_filter_bottom_sheet.dart';
 import '../../../features/task/presentation/view_task/ui/sheet_shell.dart';
+import '../../constants/auth_status.dart';
 import '../app/animation/router_anim.dart';
 
 int i = 0;
@@ -83,8 +85,7 @@ final goRouterProvider = Provider<GoRouter>((ref) {
     initialLocation: '/',
     refreshListenable: routerNotifier,
     redirect: (context, state) {
-      ref.read(notificationProvider.notifier).initialize();
-      /*final authState = ref.read(authControllerProvider);
+      final authState = ref.read(authControllerProvider);
       logger.i(
         'state.matchedLocation: ${state.matchedLocation} and authStatus: ${authState.status}',
       );
@@ -105,11 +106,11 @@ final goRouterProvider = Provider<GoRouter>((ref) {
         logger.i('status4: $status');
         return '/home';
       }
-      return null;*/
+      return null;
     },
     routes: [
-      // GoRoute(path: '/', builder: (context, state) => const SplashPage()),
-      GoRoute(path: '/', builder: (context, state) => const TestPage()),
+      GoRoute(path: '/', builder: (context, state) => const SplashPage()),
+      /*GoRoute(path: '/', builder: (context, state) => const TestPage()),*/
       GoRoute(
         path: '/category',
         name: RouteName.category,

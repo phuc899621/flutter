@@ -114,13 +114,12 @@ class SocketService {
     logger.i('[SocketService] Syncing data after reconnect...');
     final userLocalId = _ref.read(authControllerProvider).user?.localId;
     if (userLocalId == null) return;
-    logger.i('[SocketService] Pulling categories for user $userLocalId...');
-    await _categoryRepo.pullCategories(userLocalId);
-
     await _categoryRepo.pushAllUnsynced(userLocalId);
-    await _taskRepo.pullTasks(userLocalId);
+    await _categoryRepo.pullCategories(userLocalId);
     await _taskRepo.pushAllUnsynced(userLocalId);
+    await _taskRepo.pullTasks(userLocalId);
     _sessionService.saveLastSyncTime(DateTime.now().toUtc().toIso8601String());
+    logger.i('[SocketService] Data synced after reconnect');
   }
 
   void on(String event, Function(dynamic) handler) {
