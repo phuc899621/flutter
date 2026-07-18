@@ -11,7 +11,6 @@ import 'package:taskit/features/main/presentation/ai/ui/ai_page.dart';
 import 'package:taskit/features/main/presentation/home/ui/pages/home_page.dart';
 import 'package:taskit/features/main/presentation/list/ui/list_page.dart';
 import 'package:taskit/features/main/presentation/main/ui/bottom_sheet/task_generated_bottom_sheet.dart';
-import 'package:taskit/features/notification/application/notification_provider.dart';
 import 'package:taskit/features/task/domain/entities/subtask_entity.dart';
 import 'package:taskit/features/task/domain/entities/task_entity.dart';
 import 'package:taskit/features/task/presentation/add_task/ui/pages/add_task_page.dart';
@@ -31,7 +30,6 @@ import 'package:taskit/features/task/presentation/view_task/ui/pages/edit_title_
 import 'package:taskit/features/task/presentation/view_task/ui/pages/view_task_bottom_sheet.dart';
 import 'package:taskit/shared/config/routers/router_name.dart';
 import 'package:taskit/shared/log/logger_provider.dart';
-import 'package:taskit/test_page.dart';
 
 import '../../../features/auth/presentation/auth/ui/splash_page.dart';
 import '../../../features/auth/presentation/forgot_password/ui/forgot_password_page.dart';
@@ -110,7 +108,7 @@ final goRouterProvider = Provider<GoRouter>((ref) {
     },
     routes: [
       GoRoute(path: '/', builder: (context, state) => const SplashPage()),
-      /*GoRoute(path: '/', builder: (context, state) => const TestPage()),*/
+      //GoRoute(path: '/', builder: (context, state) => const TestPage()),
       GoRoute(
         path: '/category',
         name: RouteName.category,

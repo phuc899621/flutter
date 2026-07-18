@@ -38,7 +38,7 @@ final networkServiceProvider = Provider<Dio>((ref) {
         );
       },
       onAuthExpired: () {
-        ref.read(authControllerProvider.notifier).logout();
+        ref.read(authControllerProvider.notifier).onSessionExpired();
       },
       onInternetChecker: () =>
           ref.read(networkStatusProvider).value == NetworkStatus.online,

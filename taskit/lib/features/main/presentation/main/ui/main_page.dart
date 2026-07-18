@@ -6,16 +6,16 @@ import 'package:go_router/go_router.dart';
 import 'package:taskit/features/main/presentation/main/controller/main_controller.dart';
 import 'package:taskit/shared/extension/color.dart';
 import 'package:taskit/shared/log/logger_provider.dart';
+import 'package:taskit/shared/widget/session_expired_dialog.dart';
 
 import '../../../../../shared/config/routers/router_provider.dart';
+import '../../../../../shared/constants/auth_status.dart';
+import '../../../../auth/presentation/auth/controller/auth_controller.dart';
 
 class MainPage extends ConsumerStatefulWidget {
   final StatefulNavigationShell navigationShell;
 
-  const MainPage({
-    super.key,
-    required this.navigationShell,
-  });
+  const MainPage({super.key, required this.navigationShell});
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => _MainPageState();
@@ -37,66 +37,64 @@ class _MainPageState extends ConsumerState<MainPage> {
 
     return ProviderScope(
       overrides: [
-        navigationShellProvider.overrideWithValue(widget.navigationShell)
+        navigationShellProvider.overrideWithValue(widget.navigationShell),
       ],
       child: Scaffold(
-          key: _scaffoldKey,
-          body: widget.navigationShell,
-          floatingActionButton:
-              widget.navigationShell.currentIndex != 3 ? _fabAddTask() : null,
-          floatingActionButtonLocation: ExpandableFab.location,
-          bottomNavigationBar: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-            child: Material(
-              elevation: 1,
-              color: color.surfaceContainerLow,
-              borderRadius: BorderRadius.circular(20),
-              child: NavigationBar(
-                height: 70,
-                backgroundColor: Colors.transparent,
-                destinations: [
-                  NavigationDestination(
-                    icon: Icon(
-                      Icons.home_outlined,
-                    ),
-                    label: '',
-                    selectedIcon: Icon(
-                      Icons.home_rounded,
-                      color: color.onPrimaryContainer,
-                    ),
+        key: _scaffoldKey,
+        body: widget.navigationShell,
+        floatingActionButton: widget.navigationShell.currentIndex != 3
+            ? _fabAddTask()
+            : null,
+        floatingActionButtonLocation: ExpandableFab.location,
+        bottomNavigationBar: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+          child: Material(
+            elevation: 1,
+            color: color.surfaceContainerLow,
+            borderRadius: BorderRadius.circular(20),
+            child: NavigationBar(
+              height: 70,
+              backgroundColor: Colors.transparent,
+              destinations: [
+                NavigationDestination(
+                  icon: Icon(Icons.home_outlined),
+                  label: '',
+                  selectedIcon: Icon(
+                    Icons.home_rounded,
+                    color: color.onPrimaryContainer,
                   ),
-                  NavigationDestination(
-                    icon: Icon(Icons.assignment_outlined),
-                    label: '',
-                    selectedIcon: Icon(
-                      Icons.assignment_rounded,
-                      color: color.onPrimaryContainer,
-                    ),
+                ),
+                NavigationDestination(
+                  icon: Icon(Icons.assignment_outlined),
+                  label: '',
+                  selectedIcon: Icon(
+                    Icons.assignment_rounded,
+                    color: color.onPrimaryContainer,
                   ),
-                  NavigationDestination(
-                    icon: Icon(Icons.calendar_month_outlined),
-                    label: '',
-                    selectedIcon: Icon(
-                      Icons.calendar_month,
-                      color: color.onPrimaryContainer,
-                    ),
+                ),
+                NavigationDestination(
+                  icon: Icon(Icons.calendar_month_outlined),
+                  label: '',
+                  selectedIcon: Icon(
+                    Icons.calendar_month,
+                    color: color.onPrimaryContainer,
                   ),
-                  NavigationDestination(
-                    icon: Icon(
-                      Icons.smart_toy_outlined,
-                    ),
-                    label: '',
-                    selectedIcon: Icon(
-                      Icons.smart_toy_rounded,
-                      color: color.onPrimaryContainer,
-                    ),
-                  )
-                ],
-                selectedIndex: widget.navigationShell.currentIndex,
-                onDestinationSelected: widget.navigationShell.goBranch,
-              ),
+                ),
+                NavigationDestination(
+                  icon: Icon(Icons.smart_toy_outlined),
+                  label: '',
+                  selectedIcon: Icon(
+                    Icons.smart_toy_rounded,
+                    color: color.onPrimaryContainer,
+                  ),
+                ),
+              ],
+              selectedIndex: widget.navigationShell.currentIndex,
+              onDestinationSelected: widget.navigationShell.goBranch,
             ),
-          )),
+          ),
+        ),
+      ),
     );
   }
 
@@ -121,27 +119,23 @@ class _MainPageState extends ConsumerState<MainPage> {
       ),
       children: [
         FloatingActionButton(
-            heroTag: 'Add Task',
-            shape: CircleBorder(),
-            foregroundColor: color.onPrimaryContainer,
-            splashColor: color.primary,
-            backgroundColor: color.primaryContainer,
-            child: Icon(
-              Icons.note_alt_outlined,
-              size: 30,
-            ),
-            onPressed: () => context.push('/add_task')),
+          heroTag: 'Add Task',
+          shape: CircleBorder(),
+          foregroundColor: color.onPrimaryContainer,
+          splashColor: color.primary,
+          backgroundColor: color.primaryContainer,
+          child: Icon(Icons.note_alt_outlined, size: 30),
+          onPressed: () => context.push('/add_task'),
+        ),
         FloatingActionButton(
-            heroTag: 'Add Task Using Voice',
-            shape: CircleBorder(),
-            foregroundColor: color.onPrimaryContainer,
-            splashColor: color.primary,
-            backgroundColor: color.primaryContainer,
-            onPressed: () => context.push('/voice'),
-            child: Icon(
-              Icons.mic,
-              size: 30,
-            ))
+          heroTag: 'Add Task Using Voice',
+          shape: CircleBorder(),
+          foregroundColor: color.onPrimaryContainer,
+          splashColor: color.primary,
+          backgroundColor: color.primaryContainer,
+          onPressed: () => context.push('/voice'),
+          child: Icon(Icons.mic, size: 30),
+        ),
       ],
     );
   }
@@ -149,25 +143,32 @@ class _MainPageState extends ConsumerState<MainPage> {
   void _listen() {
     final color = Theme.of(context).colorScheme;
     final text = Theme.of(context).textTheme;
-    ref.listen(mainControllerProvider.select((value) => value.generateTaskText),
-        (_, next) {
-      if (next != null) {
-        logger.i('generate');
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            duration: const Duration(seconds: 3),
-            backgroundColor: color.success,
-            content: Text(
-              next,
-              style: text.titleMedium?.copyWith(
-                  color: color.onSuccess, fontWeight: FontWeight.w600),
+    ref.listen(
+      mainControllerProvider.select((value) => value.generateTaskText),
+      (_, next) {
+        if (next != null) {
+          logger.i('generate');
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              duration: const Duration(seconds: 3),
+              backgroundColor: color.success,
+              content: Text(
+                next,
+                style: text.titleMedium?.copyWith(
+                  color: color.onSuccess,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
             ),
-          ),
-        );
-      }
-    });
-    ref.listen(mainControllerProvider.select((value) => value.error),
-        (_, next) {
+          );
+        }
+      },
+    );
+
+    ref.listen(mainControllerProvider.select((value) => value.error), (
+      _,
+      next,
+    ) {
       if (next != null) {
         logger.i('generate');
         ScaffoldMessenger.of(context).showSnackBar(
@@ -176,10 +177,22 @@ class _MainPageState extends ConsumerState<MainPage> {
             backgroundColor: color.error,
             content: Text(
               next,
-              style: text.titleMedium
-                  ?.copyWith(color: color.onError, fontWeight: FontWeight.w600),
+              style: text.titleMedium?.copyWith(
+                color: color.onError,
+                fontWeight: FontWeight.w600,
+              ),
             ),
           ),
+        );
+      }
+    });
+
+    ref.listen(authControllerProvider.select((v) => v.status), (prev, next) {
+      if (next == AuthStatus.sessionExpired) {
+        showDialog(
+          context: context,
+          barrierDismissible: false,
+          builder: (_) => SessionExpiredDialog(),
         );
       }
     });

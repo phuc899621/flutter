@@ -145,7 +145,7 @@ class AuthService {
       const userId = await isRefreshTokenValid(refreshToken, sessionId);
       console.log(`User id: ${userId}`);
 
-      if (!userId) throw new AuthorizationError("Invalid refresh token");
+      if (!userId) throw new AuthenticationError("Invalid refresh token");
       verifyRefreshToken(refreshToken);
       const accessToken = generateAccessToken(userId);
       return { accessToken };
