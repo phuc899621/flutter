@@ -70,6 +70,6 @@ export const verifyRefreshToken = (token) => {
     logger.info(`Verify refresh token for ${token}`);
     return verifyToken(token, JWT_CONFIG.REFRESH);
   } catch (e) {
-    throw new AuthorizationError("Invalid refresh token");
+    throw new AuthenticationError("Invalid refresh token");
   }
 };
